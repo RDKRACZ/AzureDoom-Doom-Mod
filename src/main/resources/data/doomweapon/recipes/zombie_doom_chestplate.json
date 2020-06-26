@@ -1,0 +1,19 @@
+{
+  "result": {
+    "item": "doomweapon:zombie_doom_chestplate"
+  },
+  "type": "minecraft:crafting_shaped",
+   "pattern": [
+        "@ @",
+        "@@@",
+        " # "
+    ],
+    "key": {
+        "#": {
+            "item": "doomweapon:argent_energy"
+        },
+		"@": {
+			"item": "minecraft:rotten_flesh"
+		}
+    }
+}

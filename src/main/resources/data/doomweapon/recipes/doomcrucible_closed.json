@@ -1,0 +1,19 @@
+{
+  "result": {
+    "item": "doomweapon:doomcrucible_closed"
+  },
+  "type": "minecraft:crafting_shaped",
+   "pattern": [
+        " # ",
+        "#I#",
+        " # "
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:nether_brick"
+        },
+        "I": {
+            "item": "minecraft:ghast_tear"
+        }
+    }
+}

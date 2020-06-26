@@ -1,0 +1,22 @@
+{
+  "result": {
+    "item": "doomweapon:painter_doom_chestplate"
+  },
+  "type": "minecraft:crafting_shaped",
+   "pattern": [
+        "#$#",
+        "###",
+        "#&#"
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:white_dye"
+        },
+        "$": {
+            "item": "doomweapon:argent_energy"
+        },
+        "&": {
+            "item": "minecraft:painting"
+        }
+    }
+}

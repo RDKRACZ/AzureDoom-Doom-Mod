@@ -1,0 +1,23 @@
+{
+  "id": "doom_crucible",
+  "weight": 250,
+  "rarity": 4,
+  "tier": 5,
+  "registry": "unique_gear",
+  "lang_file_string": "item.doomweapon.uniques.sword.doom_crucible",
+  "lang_file_desc_string": "item.doomweapon.uniques.sword.doom_crucible.desc",
+  "primary_stats": [
+    "low_attack_fire_damage_flat"
+  ],
+  "unique_stats": [
+    "high_fire_spell_to_attack_dmg_percent",
+    "high_energy_regen_percent",
+    "lifesteal_percent"
+  ],
+  "can_get_set": false,
+  "requirements": {
+    "strength": 0.75
+  },
+  "gear_type": "sword",
+  "item_id": "doomweapon:doomcrucible_open"
+}

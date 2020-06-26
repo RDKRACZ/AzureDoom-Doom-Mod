@@ -1,0 +1,19 @@
+{
+  "result": {
+    "item": "doomweapon:astro_doom_helmet"
+  },
+  "type": "minecraft:crafting_shaped",
+   "pattern": [
+        "###",
+        "@@@",
+        "@#@"
+    ],
+    "key": {
+        "#": {
+            "item": "doomweapon:argent_energy"
+        },
+		"@": {
+			"item": "minecraft:iron_ingot"
+		}
+    }
+}

@@ -1,0 +1,24 @@
+{
+	"id": "helmetdoom",
+	"weight": 10000,
+	"rarity": 1,
+	"tier": 5,
+	"registry": "unique_gear",
+	"lang_file_string": "item.doomweapon.uniques.helmet.helmetdoom",
+	"lang_file_desc_string": "item.doomweapon.uniques.helmet.helmetdoom.desc",
+	"primary_stats": [
+		"spell_fire_damage_flat"
+	],
+	"unique_stats": [
+		"high_armor_flat",
+		"high_energy_regen_flat",
+		"fire_resist_flat"
+	],
+	"can_get_set": false,
+	"requirements": {
+		"vitality": 0.5,
+		"intelligence": 0.75
+	},
+	"gear_type": "plate_helmet",
+	"item_id": "doomweapon:doom_helmet"
+}

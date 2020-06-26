@@ -1,0 +1,25 @@
+{
+  "result": {
+    "item": "doomweapon:redneck_doom1_chestplate"
+  },
+  "type": "minecraft:crafting_shaped",
+   "pattern": [
+        "@ @",
+        "@@@",
+        "c#d"
+    ],
+    "key": {
+        "#": {
+            "item": "doomweapon:argent_energy"
+        },
+		"@": {
+			"item": "minecraft:leather"
+		},
+		"c": {
+			"item": "minecraft:red_dye"
+		},
+		"d": {
+			"item": "minecraft:blue_dye"
+		}
+    }
+}

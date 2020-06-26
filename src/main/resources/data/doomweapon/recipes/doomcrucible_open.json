@@ -1,0 +1,25 @@
+{
+  "result": {
+    "item": "doomweapon:doomcrucible_open"
+  },
+  "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "m#m",
+        " / ",
+        " I "
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:nether_star"
+        },
+        "m": {
+            "item": "minecraft:ghast_tear"
+        },
+        "/": {
+            "item": "doomweapon:argent_energy"
+        },
+        "I": {
+            "item": "doomweapon:doomcrucible_closed"
+        }
+    }
+}

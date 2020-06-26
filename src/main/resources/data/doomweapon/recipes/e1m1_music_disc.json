@@ -1,0 +1,19 @@
+{
+	"result": {
+		"item": "doomweapon:e1m1_music_disc"
+	},
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"$",
+		"#",
+		"$"
+	],
+	"key": {
+		"#": {
+			"item": "minecraft:music_disc_11"
+		},
+		"$": {
+			"item": "doomweapon:argent_energy"
+		}
+	}
+}

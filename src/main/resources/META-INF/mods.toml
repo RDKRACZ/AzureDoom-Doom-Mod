@@ -1,0 +1,12 @@
+modLoader="javafml"
+loaderVersion="[31,)"
+[[mods]]
+modId="doomweapon"
+version="${file.jarVersion}"
+displayName="Azuredooms Doom Mod"
+logoFile="doomlogo.png"
+authors="AzureDoomC" 
+credits="Thanks to Narial/ulnight for the awesome Sword/Axe and textures! Also Credit to C-Legend for the tools and armor textures! Credit to Marctron for the new armor textures!"
+description='''
+Adds Doom into Minecraft
+'''

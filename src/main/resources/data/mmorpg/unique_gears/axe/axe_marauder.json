@@ -1,0 +1,23 @@
+{
+  "id": "axe_marauder",
+  "weight": 250,
+  "rarity": 4,
+  "tier": 5,
+  "registry": "unique_gear",
+  "lang_file_string": "item.doomweapon.uniques.axe.axe_marauder",
+  "lang_file_desc_string": "item.doomweapon.uniques.axe.axe_marauder.desc",
+  "primary_stats": [
+    "attack_fire_damage_flat"
+  ],
+  "unique_stats": [
+    "critical_hit_multi",
+    "critical_damage_percent",
+    "fire_penetration_flat"
+  ],
+  "can_get_set": false,
+  "requirements": {
+    "strength": 0.75
+  },
+  "gear_type": "axe",
+  "item_id": "doomweapon:axe_marauder_open"
+}

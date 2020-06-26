@@ -1,0 +1,24 @@
+{
+	"id": "doomleggings",
+	"weight": 10000,
+	"rarity": 1,
+	"tier": 5,
+	"registry": "unique_gear",
+	"lang_file_string": "item.doomweapon.uniques.pants.doomleggings",
+	"lang_file_desc_string": "item.doomweapon.uniques.pants.doomleggings.desc",
+	"primary_stats": [
+		"fire_affinity_flat"
+	],
+	"unique_stats": [
+		"high_armor_flat",
+		"armor_multi",
+		"nature_to_fire_transfer_flat"
+	],
+	"can_get_set": false,
+	"requirements": {
+		"stamina": 1.0,
+		"intelligence": 0.5
+	},
+	"gear_type": "plate_pants",
+	"item_id": "doomweapon:doom_leggings"
+}
