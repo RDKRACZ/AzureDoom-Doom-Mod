@@ -3,8 +3,8 @@ package mod.azure.doomweapon.entity;
 import java.util.EnumSet;
 import java.util.Random;
 
+import mod.azure.doomweapon.entity.ai.goal.DemonAttackGoal;
 import mod.azure.doomweapon.util.registry.DoomItems;
-import mod.azure.doomweapon.util.registry.ModEntityTypes;
 import mod.azure.doomweapon.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -12,6 +12,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityPredicate;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -19,11 +20,9 @@ import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.HurtByTargetGoal;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.monster.EndermanEntity;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.IPacket;
@@ -41,17 +40,13 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class ArchvileEntity extends MonsterEntity {
+public class ArchvileEntity extends DemonEntity {
 
 	private static final DataParameter<Boolean> field_226535_bx_ = EntityDataManager.createKey(EndermanEntity.class,
 			DataSerializers.BOOLEAN);
 
 	public ArchvileEntity(EntityType<ArchvileEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
-	}
-
-	public ArchvileEntity(World worldIn) {
-		this(ModEntityTypes.ARCHVILE.get(), worldIn);
 	}
 
 	@Override
@@ -62,6 +57,12 @@ public class ArchvileEntity extends MonsterEntity {
 	public static boolean spawning(EntityType<ArchvileEntity> p_223337_0_, IWorld p_223337_1_, SpawnReason reason,
 			BlockPos p_223337_3_, Random p_223337_4_) {
 		return p_223337_1_.getDifficulty() != Difficulty.PEACEFUL;
+	}
+
+	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
+		return MobEntity.func_233666_p_().func_233815_a_(Attributes.field_233819_b_, 25.0D)
+				.func_233815_a_(Attributes.field_233818_a_, 20.0D).func_233815_a_(Attributes.field_233821_d_, 0.5D)
+				.func_233815_a_(Attributes.field_233823_f_, 7.0D);
 	}
 
 	@Override
@@ -82,24 +83,18 @@ public class ArchvileEntity extends MonsterEntity {
 		ItemEntity itementity = this.entityDropItem(DoomItems.ARGENT_ENERGY.get());
 		if (itementity != null) {
 			itementity.setNoDespawn();
+			itementity.setGlowing(true);
 		}
 	}
 
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(1, new ArchvileEntity.StareGoal(this));
-		this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.0D, false));
+		this.goalSelector.addGoal(2, new DemonAttackGoal(this, 1.0D, false));
 		this.goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8.0F));
 		this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
 		this.targetSelector.addGoal(1, new ArchvileEntity.FindPlayerGoal(this));
 		this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
-	}
-
-	public static AttributeModifierMap.MutableAttribute func_234342_eQ_() {
-		return MonsterEntity.func_234295_eP_().func_233815_a_(Attributes.field_233819_b_, 35.0D)
-				.func_233815_a_(Attributes.field_233821_d_, (double) 0.23F)
-				.func_233815_a_(Attributes.field_233823_f_, 5.0D).func_233815_a_(Attributes.field_233826_i_, 2.0D)
-				.func_233814_a_(Attributes.field_233829_l_);
 	}
 
 	protected boolean teleportRandomly() {

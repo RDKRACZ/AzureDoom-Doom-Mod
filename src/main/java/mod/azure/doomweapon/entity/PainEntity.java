@@ -4,22 +4,28 @@ import java.util.EnumSet;
 import java.util.Random;
 
 import mod.azure.doomweapon.util.registry.DoomItems;
-import mod.azure.doomweapon.util.registry.ModEntityTypes;
 import mod.azure.doomweapon.util.registry.ModSoundEvents;
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.FlyingEntity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.controller.MovementController;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.monster.GhastEntity;
+import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.FireballEntity;
 import net.minecraft.network.IPacket;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -30,19 +36,23 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class PainEntity extends GhastEntity {
+public class PainEntity extends FlyingEntity implements IMob {
+
+	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(PainEntity.class,
+			DataSerializers.BOOLEAN);
 
 	public PainEntity(EntityType<? extends PainEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
 
-	public PainEntity(World worldIn) {
-		this(ModEntityTypes.PAIN.get(), worldIn);
-	}
-
 	@Override
 	public IPacket<?> createSpawnPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
+	}
+	
+	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
+		return MobEntity.func_233666_p_().func_233815_a_(Attributes.field_233819_b_, 50.0D)
+				.func_233815_a_(Attributes.field_233818_a_, 19.0D).func_233815_a_(Attributes.field_233821_d_, 0.5D);
 	}
 
 	@Override
@@ -62,7 +72,6 @@ public class PainEntity extends GhastEntity {
 				&& canSpawnOn(p_223368_0_, p_223368_1_, reason, p_223368_3_, p_223368_4_);
 	}
 
-	@Override
 	public int getFireballStrength() {
 		return 1;
 	}
@@ -70,6 +79,10 @@ public class PainEntity extends GhastEntity {
 	@Override
 	protected boolean isDespawnPeaceful() {
 		return true;
+	}
+
+	public void setAttacking(boolean attacking) {
+		this.dataManager.set(ATTACKING, attacking);
 	}
 
 	static class FireballAttackGoal extends Goal {
@@ -94,7 +107,6 @@ public class PainEntity extends GhastEntity {
 
 		public void tick() {
 			LivingEntity livingentity = this.parentEntity.getAttackTarget();
-			double d0 = 64.0D;
 			if (livingentity.getDistanceSq(this.parentEntity) < 4096.0D
 					&& this.parentEntity.canEntityBeSeen(livingentity)) {
 				World world = this.parentEntity.world;
@@ -104,7 +116,6 @@ public class PainEntity extends GhastEntity {
 				}
 
 				if (this.attackTimer == 20) {
-					double d1 = 4.0D;
 					Vector3d vector3d = this.parentEntity.getLook(1.0F);
 					double d2 = livingentity.getPosX() - (this.parentEntity.getPosX() + vector3d.x * 4.0D);
 					double d3 = livingentity.getPosYHeight(0.5D) - (0.5D + this.parentEntity.getPosYHeight(0.5D));
@@ -207,6 +218,7 @@ public class PainEntity extends GhastEntity {
 		ItemEntity itementity = this.entityDropItem(DoomItems.ARGENT_ENERGY.get());
 		if (itementity != null) {
 			itementity.setNoDespawn();
+			itementity.setGlowing(true);
 		}
 	}
 

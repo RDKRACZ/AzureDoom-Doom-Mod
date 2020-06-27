@@ -11,7 +11,6 @@ import mod.azure.doomweapon.entity.projectiles.ShotgunShellEntity;
 import mod.azure.doomweapon.item.ammo.ShellAmmo;
 import mod.azure.doomweapon.item.weapons.Shotgun;
 import mod.azure.doomweapon.util.registry.DoomItems;
-import mod.azure.doomweapon.util.registry.ModEntityTypes;
 import mod.azure.doomweapon.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -21,6 +20,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
@@ -72,10 +72,6 @@ public class ShotgunguyEntity extends MonsterEntity implements IRangedAttackMob 
 		this.setCombatTask();
 	}
 
-	public ShotgunguyEntity(World worldIn) {
-		this(ModEntityTypes.SHOTGUNGUY.get(), worldIn);
-	}
-
 	@Override
 	public IPacket<?> createSpawnPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
@@ -97,15 +93,16 @@ public class ShotgunguyEntity extends MonsterEntity implements IRangedAttackMob 
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, UnwillingEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Imp2016Entity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, ZombiemanEntity.class, true));
+		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, PossessedScientistEntity.class, true));
+		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, PossessedSoldierEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, ChaingunnerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
 	}
 
-	public static AttributeModifierMap.MutableAttribute func_234342_eQ_() {
-		return MonsterEntity.func_234295_eP_().func_233815_a_(Attributes.field_233819_b_, 35.0D)
-				.func_233815_a_(Attributes.field_233821_d_, (double) 0.23F)
-				.func_233815_a_(Attributes.field_233823_f_, 4.0D).func_233815_a_(Attributes.field_233826_i_, 2.0D)
-				.func_233814_a_(Attributes.field_233829_l_);
+	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
+		return MobEntity.func_233666_p_().func_233815_a_(Attributes.field_233819_b_, 50.0D)
+				.func_233815_a_(Attributes.field_233818_a_, 15.0D).func_233815_a_(Attributes.field_233821_d_, 0.5D)
+				.func_233815_a_(Attributes.field_233823_f_, 4.0D);
 	}
 
 	@Override
@@ -214,6 +211,7 @@ public class ShotgunguyEntity extends MonsterEntity implements IRangedAttackMob 
 		ItemEntity itementity = this.entityDropItem(DoomItems.SHOTGUN_SHELLS.get());
 		if (itementity != null) {
 			itementity.setNoDespawn();
+			itementity.setGlowing(true);
 		}
 	}
 
