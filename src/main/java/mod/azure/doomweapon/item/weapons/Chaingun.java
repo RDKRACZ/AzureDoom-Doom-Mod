@@ -72,8 +72,8 @@ public class Chaingun extends ShootableItem {
 							: DoomItems.CHAINGUN_BULLETS.get());
 					ChaingunBulletEntity abstractarrowentity = arrowitem.createArrow(worldIn, itemstack, playerentity);
 					abstractarrowentity = customeArrow(abstractarrowentity);
-					abstractarrowentity.func_234612_a_(playerentity, playerentity.rotationPitch,
-							playerentity.rotationYaw, 0.0F, 1 * 3.0F, 1.0F);
+					abstractarrowentity.shoot(playerentity, playerentity.rotationPitch, playerentity.rotationYaw, 0.0F,
+							1 * 3.0F, 1.0F);
 					abstractarrowentity.setIsCritical(true);
 
 					int j = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, stack);
@@ -128,7 +128,7 @@ public class Chaingun extends ShootableItem {
 	public UseAction getUseAction(ItemStack stack) {
 		return UseAction.NONE;
 	}
-
+	
 	@Override
 	public int getUseDuration(ItemStack stack) {
 		return 72000;
@@ -159,10 +159,5 @@ public class Chaingun extends ShootableItem {
 
 	public ChaingunBulletEntity customeArrow(ChaingunBulletEntity arrow) {
 		return arrow;
-	}
-
-	@Override
-	public int func_230305_d_() {
-		return 15;
 	}
 }

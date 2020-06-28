@@ -11,16 +11,18 @@ import mod.azure.doomweapon.item.ammo.ArgentBolt;
 import mod.azure.doomweapon.util.registry.DoomItems;
 import mod.azure.doomweapon.util.registry.ModSoundEvents;
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.client.renderer.Quaternion;
+import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ICrossbowUser;
+import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.item.FireworkRocketEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.entity.projectile.FireworkRocketEntity;
-import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.CrossbowItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -36,9 +38,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.vector.Quaternion;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class Ballista extends CrossbowItem {
@@ -230,7 +230,7 @@ public class Ballista extends CrossbowItem {
 
 	}
 
-	public static boolean hasChargedProjectile(ItemStack stack, Item ammoItem) {
+	private static boolean hasChargedProjectile(ItemStack stack, Item ammoItem) {
 		return getChargedProjectiles(stack).stream().anyMatch((p_220010_1_) -> {
 			return p_220010_1_.getItem() == ammoItem;
 		});
@@ -241,7 +241,7 @@ public class Ballista extends CrossbowItem {
 			float projectileAngle) {
 		if (!worldIn.isRemote) {
 			boolean flag = projectile.getItem() == Items.FIREWORK_ROCKET;
-			ProjectileEntity iprojectile;
+			IProjectile iprojectile;
 			if (flag) {
 				iprojectile = new FireworkRocketEntity(worldIn, projectile, shooter.getPosX(),
 						shooter.getPosYEye() - (double) 0.15F, shooter.getPosZ(), true);
@@ -254,11 +254,11 @@ public class Ballista extends CrossbowItem {
 
 			if (shooter instanceof ICrossbowUser) {
 				ICrossbowUser icrossbowuser = (ICrossbowUser) shooter;
-				icrossbowuser.func_230284_a_(icrossbowuser.getAttackTarget(), crossbow, iprojectile, projectileAngle);
+				icrossbowuser.shoot(icrossbowuser.getAttackTarget(), crossbow, iprojectile, projectileAngle);
 			} else {
-				Vector3d vec3d1 = shooter.getUpVector(1.0F);
+				Vec3d vec3d1 = shooter.getUpVector(1.0F);
 				Quaternion quaternion = new Quaternion(new Vector3f(vec3d1), projectileAngle, true);
-				Vector3d vec3d = shooter.getLook(1.0F);
+				Vec3d vec3d = shooter.getLook(1.0F);
 				Vector3f vector3f = new Vector3f(vec3d);
 				vector3f.transform(quaternion);
 				iprojectile.shoot((double) vector3f.getX(), (double) vector3f.getY(), (double) vector3f.getZ(),

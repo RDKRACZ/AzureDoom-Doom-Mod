@@ -9,7 +9,6 @@ import mod.azure.doomweapon.util.registry.DoomItems;
 import mod.azure.doomweapon.util.registry.ModSoundEvents;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
-import net.minecraft.enchantment.IVanishable;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
@@ -22,13 +21,27 @@ import net.minecraft.stats.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 
-public class Shotgun extends ShootableItem implements IVanishable {
+public class Shotgun extends ShootableItem {
 
 	public Shotgun() {
 		super(new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1));
+		this.addPropertyOverride(new ResourceLocation("pull"), (p_210310_0_, p_210310_1_, p_210310_2_) -> {
+			if (p_210310_2_ == null) {
+				return 0.0F;
+			} else {
+				return !(p_210310_2_.getActiveItemStack().getItem() instanceof Shotgun) ? 0.0F
+						: (float) (p_210310_0_.getUseDuration() - p_210310_2_.getItemInUseCount()) / 20.0F;
+			}
+		});
+		this.addPropertyOverride(new ResourceLocation("pulling"), (p_210309_0_, p_210309_1_, p_210309_2_) -> {
+			return p_210309_2_ != null && p_210309_2_.isHandActive() && p_210309_2_.getActiveItemStack() == p_210309_0_
+					? 1.0F
+					: 0.0F;
+		});
 	}
 
 	@Override
@@ -84,8 +97,8 @@ public class Shotgun extends ShootableItem implements IVanishable {
 						ShotgunShellEntity abstractarrowentity = arrowitem.createArrow(worldIn, itemstack,
 								playerentity);
 						abstractarrowentity = customeArrow(abstractarrowentity);
-						abstractarrowentity.func_234612_a_(playerentity, playerentity.rotationPitch,
-								playerentity.rotationYaw, 0.0F, f * 3.0F, 1.0F);
+						abstractarrowentity.shoot(playerentity, playerentity.rotationPitch, playerentity.rotationYaw,
+								0.0F, f * 3.0F, 1.0F);
 						if (f == 1.0F) {
 							abstractarrowentity.setIsCritical(true);
 						}
@@ -179,10 +192,5 @@ public class Shotgun extends ShootableItem implements IVanishable {
 
 	public ShotgunShellEntity customeArrow(ShotgunShellEntity arrow) {
 		return arrow;
-	}
-
-	@Override
-	public int func_230305_d_() {
-		return 15;
 	}
 }

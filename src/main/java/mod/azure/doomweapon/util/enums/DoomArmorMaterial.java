@@ -167,9 +167,4 @@ public enum DoomArmorMaterial implements IArmorMaterial {
 	public float getToughness() {
 		return this.toughness;
 	}
-
-	@Override
-	public float func_230304_f_() {
-		return 0;
-	}
 }

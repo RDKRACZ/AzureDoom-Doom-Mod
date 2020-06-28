@@ -6,8 +6,8 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import mod.azure.doomweapon.entity.ai.goal.DemonAttackGoal;
 import mod.azure.doomweapon.util.registry.DoomItems;
+import mod.azure.doomweapon.util.registry.ModEntityTypes;
 import mod.azure.doomweapon.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -15,23 +15,22 @@ import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
-import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.Pose;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
+import net.minecraft.entity.ai.goal.ZombieAttackGoal;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
+import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
-import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -41,10 +40,14 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class CyberdemonEntity extends DemonEntity {
+public class CyberdemonEntity extends ZombieEntity {
 
-	public CyberdemonEntity(EntityType<? extends CyberdemonEntity> entityType, World worldIn) {
+	public CyberdemonEntity(EntityType<CyberdemonEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
+	}
+
+	public CyberdemonEntity(World worldIn) {
+		this(ModEntityTypes.CYBERDEMON.get(), worldIn);
 	}
 
 	@Override
@@ -52,10 +55,9 @@ public class CyberdemonEntity extends DemonEntity {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
-	public static boolean func_223368_b(EntityType<CyberdemonEntity> p_223368_0_, IWorld p_223368_1_,
-			SpawnReason reason, BlockPos p_223368_3_, Random p_223368_4_) {
-		return p_223368_1_.getDifficulty() != Difficulty.PEACEFUL && p_223368_4_.nextInt(20) == 0
-				&& canSpawnOn(p_223368_0_, p_223368_1_, reason, p_223368_3_, p_223368_4_);
+	public static boolean spawning(EntityType<CyberdemonEntity> p_223337_0_, IWorld p_223337_1_, SpawnReason reason,
+			BlockPos p_223337_3_, Random p_223337_4_) {
+		return p_223337_1_.getDifficulty() != Difficulty.PEACEFUL;
 	}
 
 	@Override
@@ -66,51 +68,19 @@ public class CyberdemonEntity extends DemonEntity {
 	}
 
 	protected void applyEntityAI() {
-		this.goalSelector.addGoal(2, new DemonAttackGoal(this, 1.0D, false));
+		this.goalSelector.addGoal(2, new ZombieAttackGoal(this, 1.0D, false));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, false));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
 	}
 
-	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
-		return MobEntity.func_233666_p_().func_233815_a_(Attributes.field_233819_b_, 50.0D)
-				.func_233815_a_(Attributes.field_233818_a_, 40.0D)
-				.func_233815_a_(Attributes.field_233823_f_, 15.0D);
-	}
-
 	@Override
-	protected void registerData() {
-		super.registerData();
-	}
-
-	@Override
-	public void notifyDataManagerChange(DataParameter<?> key) {
-		super.notifyDataManagerChange(key);
-	}
-
-	@Override
-	public void tick() {
-		super.tick();
-	}
-
-	@Override
-	public void livingTick() {
-		super.livingTick();
-	}
-
-	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
-	}
-
-	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
-	}
-
-	@Override
-	protected int getExperiencePoints(PlayerEntity player) {
-		return super.getExperiencePoints(player);
+	protected void registerAttributes() {
+		super.registerAttributes();
+		this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(35.0D);
+		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double) 0.23F);
+		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(3.0D);
+		this.getAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(2.0D);
 	}
 
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
@@ -124,6 +94,21 @@ public class CyberdemonEntity extends DemonEntity {
 		spawnDataIn = super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 		float f = difficultyIn.getClampedAdditionalDifficulty();
 		this.setCanPickUpLoot(this.rand.nextFloat() < 0.55F * f);
+		if (spawnDataIn == null) {
+			spawnDataIn = new CyberdemonEntity.GroupData(worldIn.getRandom()
+					.nextFloat() < net.minecraftforge.common.ForgeConfig.SERVER.zombieBabyChance.get());
+		}
+
+		if (spawnDataIn instanceof CyberdemonEntity.GroupData) {
+			CyberdemonEntity.GroupData zombieentity$groupdata = (CyberdemonEntity.GroupData) spawnDataIn;
+			if (zombieentity$groupdata.isChild) {
+				this.setChild(true);
+			}
+
+			this.setBreakDoorsAItask(this.canBreakDoors() && this.rand.nextFloat() < f * 0.1F);
+			this.setEquipmentBasedOnDifficulty(difficultyIn);
+			this.setEnchantmentBasedOnDifficulty(difficultyIn);
+		}
 
 		if (this.getItemStackFromSlot(EquipmentSlotType.HEAD).isEmpty()) {
 			LocalDate localdate = LocalDate.now();
@@ -136,11 +121,16 @@ public class CyberdemonEntity extends DemonEntity {
 			}
 		}
 
+		this.applyAttributeBonuses(f);
 		return spawnDataIn;
 	}
 
-	public static class GroupData implements ILivingEntityData {
+	public class GroupData implements ILivingEntityData {
+		public final boolean isChild;
 
+		private GroupData(boolean isChildIn) {
+			this.isChild = isChildIn;
+		}
 	}
 
 	@Override
@@ -160,6 +150,7 @@ public class CyberdemonEntity extends DemonEntity {
 		super.dropSpecialItems(source, looting, recentlyHitIn);
 		ItemEntity itementity = this.entityDropItem(DoomItems.ENERGY_CELLS.get());
 		if (itementity != null) {
+			itementity.isImmuneToFire();
 			itementity.setNoDespawn();
 			itementity.setGlowing(true);
 		}

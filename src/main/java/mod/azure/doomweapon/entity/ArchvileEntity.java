@@ -3,8 +3,8 @@ package mod.azure.doomweapon.entity;
 import java.util.EnumSet;
 import java.util.Random;
 
-import mod.azure.doomweapon.entity.ai.goal.DemonAttackGoal;
 import mod.azure.doomweapon.util.registry.DoomItems;
+import mod.azure.doomweapon.util.registry.ModEntityTypes;
 import mod.azure.doomweapon.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -12,17 +12,17 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityPredicate;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.HurtByTargetGoal;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
+import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.monster.EndermanEntity;
+import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.IPacket;
@@ -34,19 +34,23 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class ArchvileEntity extends DemonEntity {
+public class ArchvileEntity extends MonsterEntity {
 
 	private static final DataParameter<Boolean> field_226535_bx_ = EntityDataManager.createKey(EndermanEntity.class,
 			DataSerializers.BOOLEAN);
 
 	public ArchvileEntity(EntityType<ArchvileEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
+	}
+
+	public ArchvileEntity(World worldIn) {
+		this(ModEntityTypes.ARCHVILE.get(), worldIn);
 	}
 
 	@Override
@@ -57,12 +61,6 @@ public class ArchvileEntity extends DemonEntity {
 	public static boolean spawning(EntityType<ArchvileEntity> p_223337_0_, IWorld p_223337_1_, SpawnReason reason,
 			BlockPos p_223337_3_, Random p_223337_4_) {
 		return p_223337_1_.getDifficulty() != Difficulty.PEACEFUL;
-	}
-
-	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
-		return MobEntity.func_233666_p_().func_233815_a_(Attributes.field_233819_b_, 25.0D)
-				.func_233815_a_(Attributes.field_233818_a_, 20.0D)
-				.func_233815_a_(Attributes.field_233823_f_, 7.0D);
 	}
 
 	@Override
@@ -82,6 +80,7 @@ public class ArchvileEntity extends DemonEntity {
 		super.dropSpecialItems(source, looting, recentlyHitIn);
 		ItemEntity itementity = this.entityDropItem(DoomItems.ARGENT_ENERGY.get());
 		if (itementity != null) {
+			itementity.isImmuneToFire();
 			itementity.setNoDespawn();
 			itementity.setGlowing(true);
 		}
@@ -90,11 +89,20 @@ public class ArchvileEntity extends DemonEntity {
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(1, new ArchvileEntity.StareGoal(this));
-		this.goalSelector.addGoal(2, new DemonAttackGoal(this, 1.0D, false));
+		this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.0D, false));
 		this.goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8.0F));
 		this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
 		this.targetSelector.addGoal(1, new ArchvileEntity.FindPlayerGoal(this));
 		this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
+	}
+
+	@Override
+	protected void registerAttributes() {
+		super.registerAttributes();
+		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(40.0D);
+		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double) 0.3F);
+		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(7.0D);
+		this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(64.0D);
 	}
 
 	protected boolean teleportRandomly() {
@@ -109,7 +117,7 @@ public class ArchvileEntity extends DemonEntity {
 	}
 
 	private boolean teleportToEntity(Entity p_70816_1_) {
-		Vector3d vec3d = new Vector3d(this.getPosX() - p_70816_1_.getPosX(),
+		Vec3d vec3d = new Vec3d(this.getPosX() - p_70816_1_.getPosX(),
 				this.getPosYHeight(0.5D) - p_70816_1_.getPosYEye(), this.getPosZ() - p_70816_1_.getPosZ());
 		vec3d = vec3d.normalize();
 		double d1 = this.getPosX() + (this.rand.nextDouble() - 0.5D) * 8.0D - vec3d.x * 16.0D;
@@ -123,8 +131,8 @@ public class ArchvileEntity extends DemonEntity {
 		if (itemstack.getItem() == Blocks.CARVED_PUMPKIN.asItem()) {
 			return false;
 		} else {
-			Vector3d vec3d = player.getLook(1.0F).normalize();
-			Vector3d vec3d1 = new Vector3d(this.getPosX() - player.getPosX(), this.getPosYEye() - player.getPosYEye(),
+			Vec3d vec3d = player.getLook(1.0F).normalize();
+			Vec3d vec3d1 = new Vec3d(this.getPosX() - player.getPosX(), this.getPosYEye() - player.getPosYEye(),
 					this.getPosZ() - player.getPosZ());
 			double d0 = vec3d1.length();
 			vec3d1 = vec3d1.normalize();

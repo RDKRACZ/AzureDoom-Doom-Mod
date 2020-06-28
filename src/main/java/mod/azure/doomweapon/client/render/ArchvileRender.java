@@ -9,7 +9,7 @@ import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.math.Vec3d;
 
 public class ArchvileRender extends MobRenderer<ArchvileEntity, ArchvileModel<ArchvileEntity>> {
 
@@ -27,7 +27,7 @@ public class ArchvileRender extends MobRenderer<ArchvileEntity, ArchvileModel<Ar
 	}
 
 	@Override
-	public Vector3d getRenderOffset(ArchvileEntity entityIn, float partialTicks) {
+	public Vec3d getRenderOffset(ArchvileEntity entityIn, float partialTicks) {
 		return super.getRenderOffset(entityIn, partialTicks);
 	}
 

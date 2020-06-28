@@ -84,7 +84,7 @@ public class BFG extends BowItem {
 								: DoomItems.ENERGY_CELLS.get());
 						EnergyCellEntity abstractarrowentity = arrowitem.createArrow(worldIn, itemstack, playerentity);
 						abstractarrowentity = customeArrow(abstractarrowentity);
-						abstractarrowentity.func_234612_a_(playerentity, playerentity.rotationPitch, playerentity.rotationYaw,
+						abstractarrowentity.shoot(playerentity, playerentity.rotationPitch, playerentity.rotationYaw,
 								0.0F, f * 3.0F, 1.0F);
 						if (f == 1.0F) {
 							abstractarrowentity.setIsCritical(true);

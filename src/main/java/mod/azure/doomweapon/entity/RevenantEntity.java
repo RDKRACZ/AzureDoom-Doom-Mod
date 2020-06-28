@@ -6,10 +6,10 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import mod.azure.doomweapon.entity.ai.goal.DemonAttackGoal;
 import mod.azure.doomweapon.entity.projectiles.ShotgunShellEntity;
 import mod.azure.doomweapon.item.weapons.Shotgun;
 import mod.azure.doomweapon.util.registry.DoomItems;
+import mod.azure.doomweapon.util.registry.ModEntityTypes;
 import mod.azure.doomweapon.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -18,17 +18,16 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
+import net.minecraft.entity.ai.goal.ZombieAttackGoal;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
 import net.minecraft.entity.monster.AbstractIllagerEntity;
-import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileHelper;
@@ -49,21 +48,19 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class RevenantEntity extends DemonEntity implements IRangedAttackMob {
+public class RevenantEntity extends ZombieEntity implements IRangedAttackMob {
 
 	public RevenantEntity(EntityType<RevenantEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
 	}
 
+	public RevenantEntity(World worldIn) {
+		this(ModEntityTypes.REVENANT.get(), worldIn);
+	}
+
 	@Override
 	public IPacket<?> createSpawnPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
-	}
-
-	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
-		return MobEntity.func_233666_p_().func_233815_a_(Attributes.field_233819_b_, 50.0D)
-				.func_233815_a_(Attributes.field_233818_a_, 20.0D)
-				.func_233815_a_(Attributes.field_233823_f_, 6.0D);
 	}
 
 	public static boolean spawning(EntityType<RevenantEntity> p_223337_0_, IWorld p_223337_1_, SpawnReason reason,
@@ -79,7 +76,7 @@ public class RevenantEntity extends DemonEntity implements IRangedAttackMob {
 	}
 
 	protected void applyEntityAI() {
-		this.goalSelector.addGoal(2, new DemonAttackGoal(this, 1.0D, false));
+		this.goalSelector.addGoal(2, new ZombieAttackGoal(this, 1.0D, false));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, false));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, PinkyEntity.class, true));
@@ -87,11 +84,13 @@ public class RevenantEntity extends DemonEntity implements IRangedAttackMob {
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
 	}
 
-	public static AttributeModifierMap.MutableAttribute func_234342_eQ_() {
-		return MonsterEntity.func_234295_eP_().func_233815_a_(Attributes.field_233819_b_, 35.0D)
-				.func_233815_a_(Attributes.field_233821_d_, (double) 0.23F)
-				.func_233815_a_(Attributes.field_233823_f_, 4.0D).func_233815_a_(Attributes.field_233826_i_, 2.0D)
-				.func_233814_a_(Attributes.field_233829_l_);
+	@Override
+	protected void registerAttributes() {
+		super.registerAttributes();
+		this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(35.0D);
+		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double) 0.23F);
+		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(3.0D);
+		this.getAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(2.0D);
 	}
 
 	@Nullable
@@ -112,6 +111,7 @@ public class RevenantEntity extends DemonEntity implements IRangedAttackMob {
 				this.setChild(true);
 			}
 
+			this.setBreakDoorsAItask(this.canBreakDoors() && this.rand.nextFloat() < f * 0.1F);
 			this.setEquipmentBasedOnDifficulty(difficultyIn);
 			this.setEnchantmentBasedOnDifficulty(difficultyIn);
 		}
@@ -127,6 +127,7 @@ public class RevenantEntity extends DemonEntity implements IRangedAttackMob {
 			}
 		}
 
+		this.applyAttributeBonuses(f);
 		return spawnDataIn;
 	}
 
@@ -155,6 +156,7 @@ public class RevenantEntity extends DemonEntity implements IRangedAttackMob {
 		super.dropSpecialItems(source, looting, recentlyHitIn);
 		ItemEntity itementity = this.entityDropItem(DoomItems.ARGENT_ENERGY.get());
 		if (itementity != null) {
+			itementity.isImmuneToFire();
 			itementity.setNoDespawn();
 			itementity.setGlowing(true);
 		}

@@ -6,20 +6,23 @@ bin
 .classpath
 .project
 
-# idea
-out
-*.ipr
-*.iws
-*.iml
-.idea
-
 # gradle
 build
 .gradle
+gradlew
+gradlew.bat
+gradle/wrapper/gradle-wrapper.jar
+gradle/wrapper/gradle-wrapper.properties
+build.bat
+gradle.properties
 
 # other
 eclipse
 run
+src/generated
 
-# Files from Forge MDK
-forge*changelog.txt
+Build.bat
+gradle/wrapper
+gradlew
+gradlew.bat
+gradle.properties

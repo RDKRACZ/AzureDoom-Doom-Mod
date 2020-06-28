@@ -11,6 +11,7 @@ import mod.azure.doomweapon.entity.projectiles.BulletEntity;
 import mod.azure.doomweapon.item.ammo.ClipAmmo;
 import mod.azure.doomweapon.item.weapons.PistolItem;
 import mod.azure.doomweapon.util.registry.DoomItems;
+import mod.azure.doomweapon.util.registry.ModEntityTypes;
 import mod.azure.doomweapon.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -20,11 +21,9 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.Pose;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.HurtByTargetGoal;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
@@ -53,8 +52,8 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 public class PossessedSoldierEntity extends MonsterEntity implements IRangedAttackMob {
 
-	private final RangedBulletAttackGoal<PossessedSoldierEntity> aiArrowAttack = new RangedBulletAttackGoal<>(this,
-			1.0D, 20, 15.0F);
+	private final RangedBulletAttackGoal<PossessedSoldierEntity> aiArrowAttack = new RangedBulletAttackGoal<>(this, 1.0D, 20,
+			15.0F);
 	private final MeleeAttackGoal aiAttackOnCollide = new MeleeAttackGoal(this, 1.2D, false) {
 		public void resetTask() {
 			super.resetTask();
@@ -72,13 +71,17 @@ public class PossessedSoldierEntity extends MonsterEntity implements IRangedAtta
 		this.setCombatTask();
 	}
 
+	public PossessedSoldierEntity(World worldIn) {
+		this(ModEntityTypes.POSSESSEDSOLDIER.get(), worldIn);
+	}
+
 	@Override
 	public IPacket<?> createSpawnPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
-	public static boolean spawning(EntityType<PossessedSoldierEntity> p_223337_0_, IWorld p_223337_1_,
-			SpawnReason reason, BlockPos p_223337_3_, Random p_223337_4_) {
+	public static boolean spawning(EntityType<PossessedSoldierEntity> p_223337_0_, IWorld p_223337_1_, SpawnReason reason,
+			BlockPos p_223337_3_, Random p_223337_4_) {
 		return p_223337_1_.getDifficulty() != Difficulty.PEACEFUL;
 	}
 
@@ -97,10 +100,13 @@ public class PossessedSoldierEntity extends MonsterEntity implements IRangedAtta
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
 	}
 
-	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
-		return MobEntity.func_233666_p_().func_233815_a_(Attributes.field_233819_b_, 50.0D)
-				.func_233815_a_(Attributes.field_233818_a_, 15.0D)
-				.func_233815_a_(Attributes.field_233823_f_, 4.0D);
+	@Override
+	protected void registerAttributes() {
+		super.registerAttributes();
+		this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(35.0D);
+		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double) 0.23F);
+		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(3.0D);
+		this.getAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(2.0D);
 	}
 
 	@Override
@@ -204,6 +210,7 @@ public class PossessedSoldierEntity extends MonsterEntity implements IRangedAtta
 		super.dropSpecialItems(source, looting, recentlyHitIn);
 		ItemEntity itementity = this.entityDropItem(DoomItems.BULLETS.get());
 		if (itementity != null) {
+			itementity.isImmuneToFire();
 			itementity.setNoDespawn();
 			itementity.setGlowing(true);
 		}

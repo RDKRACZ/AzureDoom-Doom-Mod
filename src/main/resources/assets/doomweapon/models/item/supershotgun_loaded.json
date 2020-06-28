@@ -5,8 +5,8 @@
     },
     "display": {
         "gui": {
-            "rotation": [ 0, 90, 0 ],
-            "translation": [ -3.7, 5.5, 0 ],
+            "rotation": [ 90, 315, 90 ],
+            "translation": [ -2.5, 6.8, 0 ],
             "scale": [ 1, 1, 1 ]
         },
         "ground": {

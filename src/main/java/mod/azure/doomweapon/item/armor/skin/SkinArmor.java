@@ -46,18 +46,18 @@ public class SkinArmor extends ArmorItem {
 		final BipedModelSkin model = new BipedModelSkin(0f, false);
 		if (!itemStack.isEmpty()) {
 			if (itemStack.getItem() instanceof ArmorItem) {
-				model.bipedHead.showModel = armorSlot == EquipmentSlotType.HEAD;
-				model.bipedBody.showModel = armorSlot == EquipmentSlotType.CHEST;
-				model.bipedRightArm.showModel = armorSlot == EquipmentSlotType.CHEST;
-				model.bipedLeftArm.showModel = armorSlot == EquipmentSlotType.CHEST;
-				model.bipedRightLeg.showModel = armorSlot == EquipmentSlotType.LEGS;
-				model.bipedLeftLeg.showModel = armorSlot == EquipmentSlotType.LEGS;
-				model.bipedHeadwear.showModel = armorSlot == EquipmentSlotType.HEAD;
-				model.bipedBodyWear.showModel = armorSlot == EquipmentSlotType.CHEST;
-				model.bipedRightArmwear.showModel = armorSlot == EquipmentSlotType.CHEST;
-				model.bipedLeftArmwear.showModel = armorSlot == EquipmentSlotType.CHEST;
-				model.bipedRightLegwear.showModel = (armorSlot == EquipmentSlotType.LEGS);
-				model.bipedLeftLegwear.showModel = (armorSlot == EquipmentSlotType.LEGS);
+				model.Head.showModel = armorSlot == EquipmentSlotType.HEAD;
+				model.Body.showModel = armorSlot == EquipmentSlotType.CHEST;
+				model.RightArm.showModel = armorSlot == EquipmentSlotType.CHEST;
+				model.LeftArm.showModel = armorSlot == EquipmentSlotType.CHEST;
+				model.RightLeg.showModel = armorSlot == EquipmentSlotType.LEGS;
+				model.LeftLeg.showModel = armorSlot == EquipmentSlotType.LEGS;
+				model.HeadWear.showModel = armorSlot == EquipmentSlotType.HEAD;
+				model.BodyWear.showModel = armorSlot == EquipmentSlotType.CHEST;
+				model.RightArmWear.showModel = armorSlot == EquipmentSlotType.CHEST;
+				model.LeftArmWear.showModel = armorSlot == EquipmentSlotType.CHEST;
+				model.RightLegWear.showModel = (armorSlot == EquipmentSlotType.LEGS);
+				model.LeftLegWear.showModel = (armorSlot == EquipmentSlotType.LEGS);
 				model.isSneak = _default.isSneak;
 				model.isSitting = _default.isSitting;
 				model.isChild = _default.isChild;

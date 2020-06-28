@@ -3,61 +3,53 @@ package mod.azure.doomweapon.entity;
 import java.util.EnumSet;
 import java.util.Random;
 
+import mod.azure.doomweapon.entity.ai.goal.LostSoulAttackGoal;
 import mod.azure.doomweapon.util.registry.DoomItems;
+import mod.azure.doomweapon.util.registry.ModEntityTypes;
 import mod.azure.doomweapon.util.registry.ModSoundEvents;
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.FlyingEntity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.controller.MovementController;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.monster.IMob;
+import net.minecraft.entity.monster.GhastEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.FireballEntity;
 import net.minecraft.network.IPacket;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class LostSoulEntity extends FlyingEntity implements IMob {
-
-	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(LostSoulEntity.class,
-			DataSerializers.BOOLEAN);
+public class LostSoulEntity extends GhastEntity {
 
 	public LostSoulEntity(EntityType<LostSoulEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
+	}
+
+	public LostSoulEntity(World worldIn) {
+		this(ModEntityTypes.LOST_SOUL.get(), worldIn);
 	}
 
 	@Override
 	public IPacket<?> createSpawnPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
-	
-	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
-		return MobEntity.func_233666_p_().func_233815_a_(Attributes.field_233819_b_, 50.0D)
-				.func_233815_a_(Attributes.field_233818_a_, 5.0D);
-	}
 
 	@Override
 	protected void registerGoals() {
+		this.goalSelector.addGoal(2, new LostSoulAttackGoal(this, 1.0D, false));
 		this.goalSelector.addGoal(5, new LostSoulEntity.RandomFlyGoal(this));
 		this.goalSelector.addGoal(7, new LostSoulEntity.LookAroundGoal(this));
 		this.goalSelector.addGoal(7, new LostSoulEntity.FireballAttackGoal(this));
@@ -70,6 +62,7 @@ public class LostSoulEntity extends FlyingEntity implements IMob {
 				&& canSpawnOn(p_223368_0_, p_223368_1_, reason, p_223368_3_, p_223368_4_);
 	}
 
+	@Override
 	public int getFireballStrength() {
 		return 1;
 	}
@@ -77,10 +70,6 @@ public class LostSoulEntity extends FlyingEntity implements IMob {
 	@Override
 	protected boolean isDespawnPeaceful() {
 		return true;
-	}
-
-	public void setAttacking(boolean attacking) {
-		this.dataManager.set(ATTACKING, attacking);
 	}
 
 	@Override
@@ -92,6 +81,7 @@ public class LostSoulEntity extends FlyingEntity implements IMob {
 		super.dropSpecialItems(source, looting, recentlyHitIn);
 		ItemEntity itementity = this.entityDropItem(DoomItems.ARGENT_ENERGY.get());
 		if (itementity != null) {
+			itementity.isImmuneToFire();
 			itementity.setNoDespawn();
 			itementity.setGlowing(true);
 		}
@@ -123,23 +113,20 @@ public class LostSoulEntity extends FlyingEntity implements IMob {
 					&& this.parentEntity.canEntityBeSeen(livingentity)) {
 				World world = this.parentEntity.world;
 				++this.attackTimer;
-				if (this.attackTimer == 10 && !this.parentEntity.isSilent()) {
-					world.playEvent((PlayerEntity) null, 1015, this.parentEntity.func_233580_cy_(), 0);
+				if (this.attackTimer == 10) {
+					world.playEvent((PlayerEntity) null, 1015, new BlockPos(this.parentEntity), 0);
 				}
 
 				if (this.attackTimer == 20) {
-					Vector3d vector3d = this.parentEntity.getLook(1.0F);
-					double d2 = livingentity.getPosX() - (this.parentEntity.getPosX() + vector3d.x * 4.0D);
+					Vec3d vec3d = this.parentEntity.getLook(1.0F);
+					double d2 = livingentity.getPosX() - (this.parentEntity.getPosX() + vec3d.x * 4.0D);
 					double d3 = livingentity.getPosYHeight(0.5D) - (0.5D + this.parentEntity.getPosYHeight(0.5D));
-					double d4 = livingentity.getPosZ() - (this.parentEntity.getPosZ() + vector3d.z * 4.0D);
-					if (!this.parentEntity.isSilent()) {
-						world.playEvent((PlayerEntity) null, 1016, this.parentEntity.func_233580_cy_(), 0);
-					}
-
+					double d4 = livingentity.getPosZ() - (this.parentEntity.getPosZ() + vec3d.z * 4.0D);
+					world.playEvent((PlayerEntity) null, 1016, new BlockPos(this.parentEntity), 0);
 					FireballEntity fireballentity = new FireballEntity(world, this.parentEntity, d2, d3, d4);
 					fireballentity.explosionPower = this.parentEntity.getFireballStrength();
-					fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 4.0D,
-							this.parentEntity.getPosYHeight(0.5D) + 0.5D, fireballentity.getPosZ() + vector3d.z * 4.0D);
+					fireballentity.setPosition(this.parentEntity.getPosX() + vec3d.x * 4.0D,
+							this.parentEntity.getPosYHeight(0.5D) + 0.5D, fireballentity.getPosZ() + vec3d.z * 4.0D);
 					world.addEntity(fireballentity);
 					this.attackTimer = -40;
 				}
@@ -165,7 +152,7 @@ public class LostSoulEntity extends FlyingEntity implements IMob {
 
 		public void tick() {
 			if (this.parentEntity.getAttackTarget() == null) {
-				Vector3d vec3d = this.parentEntity.getMotion();
+				Vec3d vec3d = this.parentEntity.getMotion();
 				this.parentEntity.rotationYaw = -((float) MathHelper.atan2(vec3d.x, vec3d.z))
 						* (180F / (float) Math.PI);
 				this.parentEntity.renderYawOffset = this.parentEntity.rotationYaw;

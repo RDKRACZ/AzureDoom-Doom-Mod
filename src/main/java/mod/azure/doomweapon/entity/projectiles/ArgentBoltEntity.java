@@ -25,7 +25,6 @@ public class ArgentBoltEntity extends AbstractArrowEntity {
 		this.referenceItem = referenceItemIn;
 	}
 
-	@Override
 	protected void func_225516_i_() {
 		this.remove();
 	}

@@ -5,10 +5,10 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import mod.azure.doomweapon.DoomMod;
 import mod.azure.doomweapon.client.models.MancubusModel;
 import mod.azure.doomweapon.entity.MancubusEntity;
+import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.vector.Vector3f;
 
 public class MancubusRender extends MobRenderer<MancubusEntity, MancubusModel<MancubusEntity>> {
 

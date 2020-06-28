@@ -11,17 +11,18 @@ import mod.azure.doomweapon.item.ammo.ShellAmmo;
 import mod.azure.doomweapon.util.registry.DoomItems;
 import mod.azure.doomweapon.util.registry.ModSoundEvents;
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.client.renderer.Quaternion;
+import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
-import net.minecraft.enchantment.IVanishable;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ICrossbowUser;
+import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.item.FireworkRocketEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.entity.projectile.FireworkRocketEntity;
-import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.CrossbowItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -34,21 +35,40 @@ import net.minecraft.stats.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.vector.Quaternion;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public class SuperShotgun extends CrossbowItem implements IVanishable {
+public class SuperShotgun extends CrossbowItem {
 
 	private boolean isLoadingStart = false;
 	private boolean isLoadingMiddle = false;
 
 	public SuperShotgun() {
 		super(new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1));
+		this.addPropertyOverride(new ResourceLocation("pull"), (p_220022_1_, p_220022_2_, p_220022_3_) -> {
+			if (p_220022_3_ != null && p_220022_1_.getItem() == this) {
+				return isCharged(p_220022_1_) ? 0.0F
+						: (float) (p_220022_1_.getUseDuration() - p_220022_3_.getItemInUseCount())
+								/ (float) getChargeTime(p_220022_1_);
+			} else {
+				return 0.0F;
+			}
+		});
+		this.addPropertyOverride(new ResourceLocation("pulling"), (p_220033_0_, p_220033_1_, p_220033_2_) -> {
+			return p_220033_2_ != null && p_220033_2_.isHandActive() && p_220033_2_.getActiveItemStack() == p_220033_0_
+					&& !isCharged(p_220033_0_) ? 1.0F : 0.0F;
+		});
+		this.addPropertyOverride(new ResourceLocation("charged"), (p_220030_0_, p_220030_1_, p_220030_2_) -> {
+			return p_220030_2_ != null && isCharged(p_220030_0_) ? 1.0F : 0.0F;
+		});
+		this.addPropertyOverride(new ResourceLocation("firework"), (p_220020_0_, p_220020_1_, p_220020_2_) -> {
+			return p_220020_2_ != null && isCharged(p_220020_0_)
+					&& hasChargedProjectile(p_220020_0_, Items.FIREWORK_ROCKET) ? 1.0F : 0.0F;
+		});
 	}
 
 	@Override
@@ -210,7 +230,7 @@ public class SuperShotgun extends CrossbowItem implements IVanishable {
 
 	}
 
-	public static boolean hasChargedProjectile(ItemStack stack, Item ammoItem) {
+	private static boolean hasChargedProjectile(ItemStack stack, Item ammoItem) {
 		return getChargedProjectiles(stack).stream().anyMatch((p_220010_1_) -> {
 			return p_220010_1_.getItem() == ammoItem;
 		});
@@ -221,7 +241,7 @@ public class SuperShotgun extends CrossbowItem implements IVanishable {
 			float projectileAngle) {
 		if (!worldIn.isRemote) {
 			boolean flag = projectile.getItem() == Items.FIREWORK_ROCKET;
-			ProjectileEntity iprojectile;
+			IProjectile iprojectile;
 			if (flag) {
 				iprojectile = new FireworkRocketEntity(worldIn, projectile, shooter.getPosX(),
 						shooter.getPosYEye() - (double) 0.15F, shooter.getPosZ(), true);
@@ -234,11 +254,11 @@ public class SuperShotgun extends CrossbowItem implements IVanishable {
 
 			if (shooter instanceof ICrossbowUser) {
 				ICrossbowUser icrossbowuser = (ICrossbowUser) shooter;
-				icrossbowuser.func_230284_a_(icrossbowuser.getAttackTarget(), crossbow, iprojectile, projectileAngle);
+				icrossbowuser.shoot(icrossbowuser.getAttackTarget(), crossbow, iprojectile, projectileAngle);
 			} else {
-				Vector3d vec3d1 = shooter.getUpVector(1.0F);
+				Vec3d vec3d1 = shooter.getUpVector(1.0F);
 				Quaternion quaternion = new Quaternion(new Vector3f(vec3d1), projectileAngle, true);
-				Vector3d vec3d = shooter.getLook(1.0F);
+				Vec3d vec3d = shooter.getLook(1.0F);
 				Vector3f vector3f = new Vector3f(vec3d);
 				vector3f.transform(quaternion);
 				iprojectile.shoot((double) vector3f.getX(), (double) vector3f.getY(), (double) vector3f.getZ(),

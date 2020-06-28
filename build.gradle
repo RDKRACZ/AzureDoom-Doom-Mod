@@ -1,7 +1,7 @@
 buildscript {
     repositories {
         maven { url = 'https://files.minecraftforge.net/maven' }
-		maven { url  = 'https://plugins.gradle.org/m2/' }
+        maven { url  = 'https://plugins.gradle.org/m2/' }
         jcenter()
         mavenCentral()
     }
@@ -18,22 +18,22 @@ apply plugin: "com.wynprice.cursemaven"
 import groovy.json.JsonSlurper
 import groovy.json.JsonOutput
 
-version = "1.0.0"
+version = "2.0.3"
 group = "mod.azure.doomweapon"
-archivesBaseName = "AzureDooms-Doom-Mod-1.16.1"
+archivesBaseName = "AzureDooms-Doom-Mod-1.15.2"
 
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 minecraft {
-    mappings channel: 'snapshot', version: '20200514-1.16'
-    // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+    mappings channel: 'snapshot', version: '20200615-1.15.1'
+    //accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
     runs {
         client {
             workingDirectory project.file('run')
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
             mods {
-                doomweapon {
+                wowweapons {
                     source sourceSets.main
                 }
             }
@@ -43,7 +43,7 @@ minecraft {
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
             mods {
-                doomweapon {
+                wowweapons {
                     source sourceSets.main
                 }
             }
@@ -52,9 +52,9 @@ minecraft {
             workingDirectory project.file('run')
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
-            args '--mod', 'doomweapon', '--all', '--output', file('src/generated/resources/')
+            args '--mod', 'wowweapons', '--all', '--output', file('src/generated/resources/'),  '--existing', sourceSets.main.resources.srcDirs[0]
             mods {
-                doomweapon {
+                wowweapons {
                     source sourceSets.main
                 }
             }
@@ -62,30 +62,48 @@ minecraft {
     }
 }
 
+repositories {
+    jcenter()
+    maven {
+        name = "jitpack"
+        url "https://jitpack.io"
+    }
+	maven { url = "https://maven.tterrag.com" }
+    maven { url = "https://maven.theillusivec4.top/" }
+}
+
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.1-32.0.24'
+    minecraft 'net.minecraftforge:forge:1.15.2-31.2.20'
+    compile fg.deobf("top.theillusivec4.curios:curios:FORGE-1.15.2-2.0-beta2")
+	compile fg.deobf("curse.maven:MaS:2941071")
+	compile fg.deobf("curse.maven:WE:2873556")
+	compile fg.deobf("curse.maven:JEI:2866141")
+	compile fg.deobf("curse.maven:GS:2984788")
 }
 
 jar {
     manifest {
         attributes([
-            "Specification-Title": "examplemod",
-            "Specification-Vendor": "examplemodsareus",
+            "Specification-Title": "dotHack Weapons",
+            "Specification-Vendor": "AzureDoomC",
             "Specification-Version": "1", // We are version 1 of ourselves
             "Implementation-Title": project.name,
             "Implementation-Version": "${version}",
-            "Implementation-Vendor" :"examplemodsareus",
+            "Implementation-Vendor" :"AzureDoomC",
             "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }
 }
 
-jar.finalizedBy('reobfJar') 
-
+def reobfFile = file("$buildDir/reobfJar/output.jar")
+def reobfArtifact = artifacts.add('default', reobfFile) {
+    type 'jar'
+    builtBy 'reobfJar'
+}
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            artifact jar
+            artifact reobfArtifact
         }
     }
     repositories {
