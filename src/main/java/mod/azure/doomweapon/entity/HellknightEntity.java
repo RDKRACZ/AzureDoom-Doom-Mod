@@ -78,7 +78,7 @@ public class HellknightEntity extends DemonEntity {
 
 	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
 		return MobEntity.func_233666_p_().func_233815_a_(Attributes.field_233819_b_, 50.0D)
-				.func_233815_a_(Attributes.field_233818_a_, 30.0D).func_233815_a_(Attributes.field_233821_d_, 1.1D)
+				.func_233815_a_(Attributes.field_233818_a_, 30.0D)
 				.func_233815_a_(Attributes.field_233823_f_, 8.0D);
 	}
 

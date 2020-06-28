@@ -75,7 +75,7 @@ public class PossessedScientistEntity extends DemonEntity {
 
 	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
 		return MobEntity.func_233666_p_().func_233815_a_(Attributes.field_233819_b_, 25.0D)
-				.func_233815_a_(Attributes.field_233818_a_, 15.0D).func_233815_a_(Attributes.field_233821_d_, 0.5D)
+				.func_233815_a_(Attributes.field_233818_a_, 15.0D)
 				.func_233815_a_(Attributes.field_233823_f_, 4.0D);
 	}
 
