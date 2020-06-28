@@ -6,25 +6,23 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
+import mod.azure.doomweapon.entity.ai.goal.DemonAttackGoal;
 import mod.azure.doomweapon.util.registry.DoomItems;
-import mod.azure.doomweapon.util.registry.ModEntityTypes;
 import mod.azure.doomweapon.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.ai.goal.ZombieAttackGoal;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -40,14 +38,10 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class MarauderEntity extends ZombieEntity {
+public class MarauderEntity extends DemonEntity {
 
 	public MarauderEntity(EntityType<MarauderEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
-	}
-
-	public MarauderEntity(World worldIn) {
-		this(ModEntityTypes.MARAUDER.get(), worldIn);
 	}
 
 	@Override
@@ -67,19 +61,17 @@ public class MarauderEntity extends ZombieEntity {
 		this.applyEntityAI();
 	}
 
-	@Override
 	protected void applyEntityAI() {
-		this.goalSelector.addGoal(2, new ZombieAttackGoal(this, 1.0D, false));
+		this.goalSelector.addGoal(2, new DemonAttackGoal(this, 1.0D, false));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, false));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
 	}
 
-	public static AttributeModifierMap.MutableAttribute func_234342_eQ_() {
-		return MonsterEntity.func_234295_eP_().func_233815_a_(Attributes.field_233819_b_, 35.0D)
-				.func_233815_a_(Attributes.field_233821_d_, (double) 0.23F)
-				.func_233815_a_(Attributes.field_233823_f_, 7.0D).func_233815_a_(Attributes.field_233826_i_, 2.0D)
-				.func_233814_a_(Attributes.field_233829_l_);
+	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
+		return MobEntity.func_233666_p_().func_233815_a_(Attributes.field_233819_b_, 50.0D)
+				.func_233815_a_(Attributes.field_233818_a_, 45.0D).func_233815_a_(Attributes.field_233821_d_, 0.4D)
+				.func_233815_a_(Attributes.field_233823_f_, 12.0D);
 	}
 
 	@Override
@@ -114,21 +106,12 @@ public class MarauderEntity extends ZombieEntity {
 		return false;
 	}
 
-	@Override
-	protected boolean shouldDrown() {
-		return false;
-	}
-
-	@Override
-	protected boolean shouldBurnInDay() {
-		return false;
-	}
-
 	protected void dropSpecialItems(DamageSource source, int looting, boolean recentlyHitIn) {
 		super.dropSpecialItems(source, looting, recentlyHitIn);
 		ItemEntity itementity = this.entityDropItem(DoomItems.AXE_CLOSED.get());
 		if (itementity != null) {
 			itementity.setNoDespawn();
+			itementity.setGlowing(true);
 		}
 	}
 

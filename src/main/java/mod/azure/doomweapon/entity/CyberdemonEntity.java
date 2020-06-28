@@ -6,8 +6,8 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
+import mod.azure.doomweapon.entity.ai.goal.DemonAttackGoal;
 import mod.azure.doomweapon.util.registry.DoomItems;
-import mod.azure.doomweapon.util.registry.ModEntityTypes;
 import mod.azure.doomweapon.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -18,17 +18,13 @@ import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.ai.goal.ZombieAttackGoal;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -45,14 +41,10 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class CyberdemonEntity extends ZombieEntity {
+public class CyberdemonEntity extends DemonEntity {
 
 	public CyberdemonEntity(EntityType<? extends CyberdemonEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
-	}
-
-	public CyberdemonEntity(World worldIn) {
-		this(ModEntityTypes.CYBERDEMON.get(), worldIn);
 	}
 
 	@Override
@@ -73,24 +65,18 @@ public class CyberdemonEntity extends ZombieEntity {
 		this.applyEntityAI();
 	}
 
-	@Override
 	protected void applyEntityAI() {
-		this.goalSelector.addGoal(2, new ZombieAttackGoal(this, 1.0D, false));
+		this.goalSelector.addGoal(2, new DemonAttackGoal(this, 1.0D, false));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, false));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
 	}
 
-	public static AttributeModifierMap.MutableAttribute func_234342_eQ_() {
-		return CyberdemonEntity.func_234295_eP_().func_233815_a_(Attributes.field_233819_b_, 35.0D)
-				.func_233815_a_(Attributes.field_233821_d_, (double) 0.23F)
-				.func_233815_a_(Attributes.field_233823_f_, 3.0D).func_233815_a_(Attributes.field_233826_i_, 2.0D)
-				.func_233814_a_(Attributes.field_233829_l_);
+	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
+		return MobEntity.func_233666_p_().func_233815_a_(Attributes.field_233819_b_, 50.0D)
+				.func_233815_a_(Attributes.field_233818_a_, 40.0D)
+				.func_233815_a_(Attributes.field_233823_f_, 15.0D);
 	}
-	
-	public static AttributeModifierMap.MutableAttribute func_234295_eP_() {
-	      return MobEntity.func_233666_p_().func_233814_a_(Attributes.field_233823_f_);
-	   }
 
 	@Override
 	protected void registerData() {
@@ -150,30 +136,7 @@ public class CyberdemonEntity extends ZombieEntity {
 			}
 		}
 
-		this.applyAttributeBonuses(f);
 		return spawnDataIn;
-	}
-	
-
-	@Override
-	protected void applyAttributeBonuses(float difficulty) {
-		this.func_230291_eT_();
-		this.getAttribute(Attributes.field_233820_c_).func_233769_c_(new AttributeModifier("Random spawn bonus",
-				this.rand.nextDouble() * (double) 0.05F, AttributeModifier.Operation.ADDITION));
-		double d0 = this.rand.nextDouble() * 1.5D * (double) difficulty;
-		if (d0 > 1.0D) {
-			this.getAttribute(Attributes.field_233819_b_).func_233769_c_(
-					new AttributeModifier("Random zombie-spawn bonus", d0, AttributeModifier.Operation.MULTIPLY_TOTAL));
-		}
-
-		if (this.rand.nextFloat() < difficulty * 0.05F) {
-			this.getAttribute(Attributes.field_233829_l_).func_233769_c_(new AttributeModifier("Leader zombie bonus",
-					this.rand.nextDouble() * 0.25D + 0.5D, AttributeModifier.Operation.ADDITION));
-			this.getAttribute(Attributes.field_233818_a_).func_233769_c_(new AttributeModifier("Leader zombie bonus",
-					this.rand.nextDouble() * 3.0D + 1.0D, AttributeModifier.Operation.MULTIPLY_TOTAL));
-			this.setBreakDoorsAItask(this.canBreakDoors());
-		}
-
 	}
 
 	public static class GroupData implements ILivingEntityData {
@@ -198,6 +161,7 @@ public class CyberdemonEntity extends ZombieEntity {
 		ItemEntity itementity = this.entityDropItem(DoomItems.ENERGY_CELLS.get());
 		if (itementity != null) {
 			itementity.setNoDespawn();
+			itementity.setGlowing(true);
 		}
 	}
 
