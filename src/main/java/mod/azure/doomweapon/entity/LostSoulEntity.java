@@ -50,10 +50,10 @@ public class LostSoulEntity extends FlyingEntity implements IMob {
 	public IPacket<?> createSpawnPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
-	
+
 	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
 		return MobEntity.func_233666_p_().func_233815_a_(Attributes.field_233819_b_, 50.0D)
-				.func_233815_a_(Attributes.field_233818_a_, 5.0D);
+				.func_233815_a_(Attributes.field_233821_d_, 0.1D).func_233815_a_(Attributes.field_233818_a_, 5.0D);
 	}
 
 	@Override

@@ -90,7 +90,7 @@ public class RevenantEntity extends DemonEntity implements IRangedAttackMob {
 	public static AttributeModifierMap.MutableAttribute func_234342_eQ_() {
 		return MonsterEntity.func_234295_eP_().func_233815_a_(Attributes.field_233819_b_, 35.0D)
 				.func_233815_a_(Attributes.field_233821_d_, (double) 0.23F)
-				.func_233815_a_(Attributes.field_233823_f_, 4.0D).func_233815_a_(Attributes.field_233826_i_, 2.0D)
+				.func_233815_a_(Attributes.field_233823_f_, 4.0D).func_233815_a_(Attributes.field_233826_i_, 0.1D)
 				.func_233814_a_(Attributes.field_233829_l_);
 	}
 
