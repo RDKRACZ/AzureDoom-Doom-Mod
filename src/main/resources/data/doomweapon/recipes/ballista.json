@@ -1,19 +1,19 @@
 {
 	"result": {
-		"item": "doomweapon:e1m1_music_disc"
+		"item": "doomweapon:ballista"
 	},
 	"type": "minecraft:crafting_shaped",
 	"pattern": [
-		"$",
-		"#",
-		"$"
+		"  C",
+		"CC$",
+		"  C"
 	],
 	"key": {
-		"#": {
-			"item": "minecraft:iron_bars"
-		},
 		"$": {
 			"item": "doomweapon:argent_energy"
+		},
+		"C": {
+			"item": "minecraft:iron_ingot"
 		}
 	}
 }
