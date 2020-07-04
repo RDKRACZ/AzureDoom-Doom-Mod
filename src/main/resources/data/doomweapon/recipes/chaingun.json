@@ -1,19 +1,22 @@
 {
 	"result": {
-		"item": "doomweapon:e1m1_music_disc"
+		"item": "doomweapon:chaingun"
 	},
 	"type": "minecraft:crafting_shaped",
 	"pattern": [
-		"$",
-		"#",
-		"$"
+		"  C",
+		"$II",
+		"  C"
 	],
 	"key": {
-		"#": {
+		"I": {
 			"item": "minecraft:iron_bars"
 		},
 		"$": {
 			"item": "doomweapon:argent_energy"
+		},
+		"C": {
+			"item": "minecraft:iron_ingot"
 		}
 	}
 }

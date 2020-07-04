@@ -18,7 +18,7 @@ apply plugin: "com.wynprice.cursemaven"
 import groovy.json.JsonSlurper
 import groovy.json.JsonOutput
 
-version = "1.0.2"
+version = "1.0.3"
 group = "mod.azure.doomweapon"
 archivesBaseName = "AzureDooms-Doom-Mod-1.16.1"
 
@@ -63,7 +63,7 @@ minecraft {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.1-32.0.24'
+    minecraft 'net.minecraftforge:forge:1.16.1-32.0.38'
 }
 
 jar {
