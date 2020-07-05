@@ -24,22 +24,22 @@ public class BipedModelSkin<T extends LivingEntity> extends BipedModel<T> {
 	public BipedModelSkin(float modelSize, boolean smallArmsIn) {
 		super(modelSize, 0.0F, 64, 64);
 		this.bipedLeftArmwear = new ModelRenderer(this, 48, 48);
-		this.bipedLeftArmwear.addBox(-1.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, modelSize + 0.25F);
+		this.bipedLeftArmwear.addBox(-1.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, modelSize + 0.26F);
 		bipedLeftArmwear.setRotationPoint(0.0F, 0.0F, 0.0F);
 		this.bipedRightArmwear = new ModelRenderer(this, 40, 32);
-		this.bipedRightArmwear.addBox(-3.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, modelSize + 0.25F);
+		this.bipedRightArmwear.addBox(-3.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, modelSize + 0.26F);
 		this.bipedRightArmwear.setRotationPoint(0.0F, 0.0F, 0.0F);
 		this.bipedLeftLeg = new ModelRenderer(this, 16, 48);
 		this.bipedLeftLeg.addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, modelSize + 0.01F);
 		this.bipedLeftLeg.setRotationPoint(1.9F, 12.0F, 0.0F);
 		this.bipedLeftLegwear = new ModelRenderer(this, 0, 48);
-		this.bipedLeftLegwear.addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, modelSize + 0.25F);
+		this.bipedLeftLegwear.addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, modelSize + 0.26F);
 		this.bipedLeftLegwear.setRotationPoint(0.0F, 0.0F, 0.0F);
 		this.bipedRightLeg = new ModelRenderer(this).setTextureOffset(0, 16);
 		this.bipedRightLeg.setRotationPoint(-1.899999976158142F, 12.0F, 0.0F);
 		this.bipedRightLeg.addBox(-2.0F, 0.0F, -2.0F, 4, 12, 4, modelSize + 0.01F);
 		this.bipedRightLegwear = new ModelRenderer(this, 0, 32);
-		this.bipedRightLegwear.addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, modelSize + 0.25F);
+		this.bipedRightLegwear.addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, modelSize + 0.26F);
 		this.bipedRightLegwear.setRotationPoint(0.0F, 0.0F, 0.0F);
 		this.bipedHead = new ModelRenderer(this).setTextureOffset(0, 0);
 		this.bipedHead.setRotationPoint(0.0F, 0.0F, 0.0F);
