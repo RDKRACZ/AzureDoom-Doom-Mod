@@ -3,7 +3,6 @@ package mod.azure.doomweapon.item.weapons;
 import java.util.List;
 
 import mod.azure.doomweapon.DoomMod;
-import mod.azure.doomweapon.util.Config;
 import mod.azure.doomweapon.util.enums.DoomTier;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantments;
@@ -13,6 +12,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
@@ -22,8 +22,14 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class AxeMarauderItem extends AxeItem {
 
 	public AxeMarauderItem() {
-		super(DoomTier.DOOM, Config.SERVER.AXE_CRUCIBLE_ATTACK.get(), -2.4F, new Item.Properties()
-				.group(DoomMod.DoomItemGroup).maxDamage(Config.SERVER.AXE_CRUCIBLE_MAXDAMAGE.get()));
+		super(DoomTier.DOOM, 12, -2.4F, new Item.Properties().group(DoomMod.DoomItemGroup).maxDamage(300));
+		this.addPropertyOverride(new ResourceLocation("broken"), (p_210312_0_, p_210312_1_, p_210312_2_) -> {
+			return isUsable(p_210312_0_) ? 0.0F : 1.0F;
+		});
+	}
+
+	public static boolean isUsable(ItemStack stack) {
+		return stack.getDamage() < stack.getMaxDamage() - 1;
 	}
 
 	@Override
