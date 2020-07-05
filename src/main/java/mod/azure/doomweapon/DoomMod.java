@@ -11,7 +11,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -67,11 +66,6 @@ public class DoomMod {
 		ItemModelsProperties.func_239418_a_(DoomItems.SSG.get(), new ResourceLocation("charged"),
 				(p_239425_0_, p_239425_1_, p_239425_2_) -> {
 					return p_239425_2_ != null && SuperShotgun.isCharged(p_239425_0_) ? 1.0F : 0.0F;
-				});
-		ItemModelsProperties.func_239418_a_(DoomItems.SSG.get(), new ResourceLocation("firework"),
-				(p_239424_0_, p_239424_1_, p_239424_2_) -> {
-					return p_239424_2_ != null && SuperShotgun.isCharged(p_239424_0_)
-							&& SuperShotgun.hasChargedProjectile(p_239424_0_, Items.FIREWORK_ROCKET) ? 1.0F : 0.0F;
 				});
 		// ShotGun
 		ItemModelsProperties.func_239418_a_(DoomItems.SG.get(), new ResourceLocation("pull"),
