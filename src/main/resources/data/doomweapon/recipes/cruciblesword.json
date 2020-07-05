@@ -1,6 +1,6 @@
 {
   "result": {
-    "item": "doomweapon:doomcrucible_open"
+    "item": "doomweapon:cruciblesword"
   },
   "type": "minecraft:crafting_shaped",
     "pattern": [
@@ -19,7 +19,7 @@
             "item": "doomweapon:argent_energy"
         },
         "I": {
-            "item": "doomweapon:doomcrucible_closed"
+            "item": "doomweapon:cruciblesword_closed"
         }
     }
 }
