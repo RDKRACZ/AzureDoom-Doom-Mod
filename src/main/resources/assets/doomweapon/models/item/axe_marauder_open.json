@@ -43,5 +43,13 @@
         		"translation": [ 10.00, 3.50, 10.00 ],
         		"scale": [ 1.00, 1.00, 1.00 ]
         	}
-	}
+	},
+	"overrides": [
+        {
+            "predicate": {
+                "broken": 1
+            },
+            "model": "doomweapon:item/axe_marauder_closed"
+        }
+    ]
 }

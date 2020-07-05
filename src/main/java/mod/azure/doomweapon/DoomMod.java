@@ -97,6 +97,17 @@ public class DoomMod {
 					return p_239428_2_ != null && p_239428_2_.isHandActive()
 							&& p_239428_2_.getActiveItemStack() == p_239428_0_ ? 1.0F : 0.0F;
 				});
+		// Crucible
+		ItemModelsProperties.func_239418_a_(DoomItems.CRUCIBLESWORD.get(), new ResourceLocation("broken"),
+				(p_210312_0_, p_210312_1_, p_210312_2_) -> {
+					return isUsable(p_210312_0_) ? 0.0F : 1.0F;
+				});
+		// Marauder Axe
+		ItemModelsProperties.func_239418_a_(DoomItems.AXE_OPEN.get(), new ResourceLocation("broken"),
+				(p_210312_0_, p_210312_1_, p_210312_2_) -> {
+					return isUsable(p_210312_0_) ? 0.0F : 1.0F;
+				});
+	}
 	}
 
 	public static final ItemGroup DoomItemGroup = (new ItemGroup("doomweapon") {
