@@ -148,7 +148,7 @@ public class DoomItems {
 	public static final RegistryObject<Item> POSSESSED_SOLDIER_SPAWN_EGG = ITEMS.register("possessed_soldier_spawn_egg",
 			() -> new PossessedSoldierSpawnEgg(0x2800db, 0x4f7ff7));
 	// WEAPONS AND TOOLS
-	public static final RegistryObject<Item> ICON = ITEMS.register("doomcrucible_open", () -> new SwordCrucibleItem());
+	public static final RegistryObject<Item> CRUCIBLESWORD = ITEMS.register("cruciblesword", () -> new SwordCrucibleItem());
 	public static final RegistryObject<Item> ARGENT_AXE = ITEMS.register("argent_axe", () -> new ArgentAxe());
 	public static final RegistryObject<Item> ARGENT_HOE = ITEMS.register("argent_hoe", () -> new ArgentHoe());
 	public static final RegistryObject<Item> ARGENT_PICKAXE = ITEMS.register("argent_pickaxe",
@@ -157,7 +157,7 @@ public class DoomItems {
 	public static final RegistryObject<Item> ARGENT_SWORD = ITEMS.register("argent_sword", () -> new ArgentSword());
 	public static final RegistryObject<Item> CHAINSAW = ITEMS.register("chainsaw", () -> new SwordItem(DoomTier.DOOM, 6,
 			-2.4F, new Item.Properties().group(DoomMod.DoomItemGroup).maxDamage(1)));
-	public static final RegistryObject<Item> SWORD_CLOSED = ITEMS.register("doomcrucible_closed",
+	public static final RegistryObject<Item> SWORD_CLOSED = ITEMS.register("cruciblesword_closed",
 			() -> new UnopenedItem());
 	public static final RegistryObject<Item> AXE_OPEN = ITEMS.register("axe_marauder_open",
 			() -> new AxeMarauderItem());
