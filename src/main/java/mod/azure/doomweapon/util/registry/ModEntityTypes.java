@@ -52,7 +52,7 @@ public class ModEntityTypes {
 
 	public static final RegistryObject<EntityType<EnergyCellEntity>> ENERGY_CELL = ENTITY_TYPES.register("energy_cell",
 			() -> EntityType.Builder.<EnergyCellEntity>create(EnergyCellEntity::new, EntityClassification.MISC)
-					.size(4.0F, 2.0F).build(new ResourceLocation(DoomMod.MODID, "energy_cell").toString()));
+					.size(12.0F, 2.0F).build(new ResourceLocation(DoomMod.MODID, "energy_cell").toString()));
 
 	public static final RegistryObject<EntityType<BulletEntity>> BULLETS = ENTITY_TYPES.register("bullets",
 			() -> EntityType.Builder.<BulletEntity>create(BulletEntity::new, EntityClassification.MISC).size(0.5F, 0.5F)
