@@ -148,7 +148,7 @@ public class DoomItems {
 	public static final RegistryObject<Item> POSSESSED_SOLDIER_SPAWN_EGG = ITEMS.register("possessed_soldier_spawn_egg",
 			() -> new PossessedSoldierSpawnEgg(0x2800db, 0x4f7ff7));
 	// WEAPONS AND TOOLS
-	public static final RegistryObject<Item> ICON = ITEMS.register("cruciblesword", () -> new SwordCrucibleItem());
+	public static final RegistryObject<Item> CRUCIBLESWORD = ITEMS.register("cruciblesword", () -> new SwordCrucibleItem());
 	public static final RegistryObject<Item> ARGENT_AXE = ITEMS.register("argent_axe", () -> new ArgentAxe());
 	public static final RegistryObject<Item> ARGENT_HOE = ITEMS.register("argent_hoe", () -> new ArgentHoe());
 	public static final RegistryObject<Item> ARGENT_PICKAXE = ITEMS.register("argent_pickaxe",

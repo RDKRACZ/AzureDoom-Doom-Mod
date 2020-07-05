@@ -102,7 +102,7 @@ public class DoomMod {
 	public static final ItemGroup DoomItemGroup = (new ItemGroup("doomweapon") {
 		@OnlyIn(Dist.CLIENT)
 		public ItemStack createIcon() {
-			return new ItemStack(DoomItems.ICON.get());
+			return new ItemStack(DoomItems.CRUCIBLESWORD.get());
 		}
 
 		public boolean hasSearchBar() {
