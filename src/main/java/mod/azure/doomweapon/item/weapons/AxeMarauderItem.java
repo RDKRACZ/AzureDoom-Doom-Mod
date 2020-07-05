@@ -3,7 +3,6 @@ package mod.azure.doomweapon.item.weapons;
 import java.util.List;
 
 import mod.azure.doomweapon.DoomMod;
-import mod.azure.doomweapon.util.Config;
 import mod.azure.doomweapon.util.enums.DoomTier;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantments;
@@ -22,8 +21,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class AxeMarauderItem extends AxeItem {
 
 	public AxeMarauderItem() {
-		super(DoomTier.DOOM, Config.SERVER.AXE_CRUCIBLE_ATTACK.get(), -2.4F, new Item.Properties()
-				.group(DoomMod.DoomItemGroup).maxDamage(Config.SERVER.AXE_CRUCIBLE_MAXDAMAGE.get()));
+		super(DoomTier.DOOM, 12, -2.4F,
+				new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1).maxDamage(300));
 	}
 
 	@Override
