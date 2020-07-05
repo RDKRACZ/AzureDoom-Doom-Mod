@@ -6,6 +6,7 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
+import mod.azure.doomweapon.entity.ai.goal.DemonAttackGoal;
 import mod.azure.doomweapon.entity.projectiles.ShotgunShellEntity;
 import mod.azure.doomweapon.item.weapons.Shotgun;
 import mod.azure.doomweapon.util.registry.DoomItems;
@@ -23,11 +24,9 @@ import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.ai.goal.ZombieAttackGoal;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
 import net.minecraft.entity.monster.AbstractIllagerEntity;
-import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileHelper;
@@ -48,7 +47,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class RevenantEntity extends ZombieEntity implements IRangedAttackMob {
+public class RevenantEntity extends DemonEntity implements IRangedAttackMob {
 
 	public RevenantEntity(EntityType<RevenantEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
@@ -76,7 +75,7 @@ public class RevenantEntity extends ZombieEntity implements IRangedAttackMob {
 	}
 
 	protected void applyEntityAI() {
-		this.goalSelector.addGoal(2, new ZombieAttackGoal(this, 1.0D, false));
+		this.goalSelector.addGoal(2, new DemonAttackGoal(this, 1.0D, false));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, false));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, PinkyEntity.class, true));
@@ -105,16 +104,8 @@ public class RevenantEntity extends ZombieEntity implements IRangedAttackMob {
 					.nextFloat() < net.minecraftforge.common.ForgeConfig.SERVER.zombieBabyChance.get());
 		}
 
-		if (spawnDataIn instanceof RevenantEntity.GroupData) {
-			RevenantEntity.GroupData zombieentity$groupdata = (RevenantEntity.GroupData) spawnDataIn;
-			if (zombieentity$groupdata.isChild) {
-				this.setChild(true);
-			}
-
-			this.setBreakDoorsAItask(this.canBreakDoors() && this.rand.nextFloat() < f * 0.1F);
-			this.setEquipmentBasedOnDifficulty(difficultyIn);
-			this.setEnchantmentBasedOnDifficulty(difficultyIn);
-		}
+		this.setEquipmentBasedOnDifficulty(difficultyIn);
+		this.setEnchantmentBasedOnDifficulty(difficultyIn);
 
 		if (this.getItemStackFromSlot(EquipmentSlotType.HEAD).isEmpty()) {
 			LocalDate localdate = LocalDate.now();
@@ -126,8 +117,6 @@ public class RevenantEntity extends ZombieEntity implements IRangedAttackMob {
 				this.inventoryArmorDropChances[EquipmentSlotType.HEAD.getIndex()] = 0.0F;
 			}
 		}
-
-		this.applyAttributeBonuses(f);
 		return spawnDataIn;
 	}
 

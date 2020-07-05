@@ -31,7 +31,6 @@ import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileHelper;
@@ -50,7 +49,7 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class ShotgunguyEntity extends MonsterEntity implements IRangedAttackMob {
+public class ShotgunguyEntity extends DemonEntity implements IRangedAttackMob {
 
 	private final RangedShotgunAttackGoal<ShotgunguyEntity> aiArrowAttack = new RangedShotgunAttackGoal<>(this, 1.0D,
 			20, 15.0F);

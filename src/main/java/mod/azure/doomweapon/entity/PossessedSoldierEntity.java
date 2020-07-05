@@ -31,7 +31,6 @@ import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileHelper;
@@ -50,10 +49,10 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class PossessedSoldierEntity extends MonsterEntity implements IRangedAttackMob {
+public class PossessedSoldierEntity extends DemonEntity implements IRangedAttackMob {
 
-	private final RangedBulletAttackGoal<PossessedSoldierEntity> aiArrowAttack = new RangedBulletAttackGoal<>(this, 1.0D, 20,
-			15.0F);
+	private final RangedBulletAttackGoal<PossessedSoldierEntity> aiArrowAttack = new RangedBulletAttackGoal<>(this,
+			1.0D, 20, 15.0F);
 	private final MeleeAttackGoal aiAttackOnCollide = new MeleeAttackGoal(this, 1.2D, false) {
 		public void resetTask() {
 			super.resetTask();
@@ -80,8 +79,8 @@ public class PossessedSoldierEntity extends MonsterEntity implements IRangedAtta
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
-	public static boolean spawning(EntityType<PossessedSoldierEntity> p_223337_0_, IWorld p_223337_1_, SpawnReason reason,
-			BlockPos p_223337_3_, Random p_223337_4_) {
+	public static boolean spawning(EntityType<PossessedSoldierEntity> p_223337_0_, IWorld p_223337_1_,
+			SpawnReason reason, BlockPos p_223337_3_, Random p_223337_4_) {
 		return p_223337_1_.getDifficulty() != Difficulty.PEACEFUL;
 	}
 
