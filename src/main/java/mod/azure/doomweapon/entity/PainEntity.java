@@ -33,8 +33,6 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 public class PainEntity extends FlyingEntity implements IMob {
@@ -79,11 +77,6 @@ public class PainEntity extends FlyingEntity implements IMob {
 	@Override
 	protected boolean isDespawnPeaceful() {
 		return true;
-	}
-
-	@OnlyIn(Dist.CLIENT)
-	public boolean isAttacking() {
-		return this.dataManager.get(ATTACKING);
 	}
 
 	public void setAttacking(boolean attacking) {

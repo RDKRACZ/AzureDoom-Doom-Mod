@@ -12,8 +12,6 @@ import net.minecraft.util.ResourceLocation;
 public class CacodemonRender extends MobRenderer<CacodemonEntity, CacodemonModel<CacodemonEntity>> {
 	private static final ResourceLocation GHAST_TEXTURES = new ResourceLocation(DoomMod.MODID,
 			"textures/entity/cacodemon.png");
-	private static final ResourceLocation GHAST_SHOOTING_TEXTURES = new ResourceLocation(DoomMod.MODID,
-			"textures/entity/cacodemon_shooting.png");
 
 	public CacodemonRender(EntityRendererManager renderManagerIn) {
 		super(renderManagerIn, new CacodemonModel<>(), 1.5F);
@@ -21,7 +19,7 @@ public class CacodemonRender extends MobRenderer<CacodemonEntity, CacodemonModel
 
 	@Override
 	public ResourceLocation getEntityTexture(CacodemonEntity entity) {
-		return entity.isAttacking() ? GHAST_SHOOTING_TEXTURES : GHAST_TEXTURES;
+		return GHAST_TEXTURES;
 	}
 
 	@SuppressWarnings("unused")
