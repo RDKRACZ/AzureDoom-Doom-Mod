@@ -1,0 +1,25 @@
+{
+	"result": {
+		"item": "doomweapon:argent_paxel"
+	},
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"AQ$",
+		" I ",
+		" I "
+	],
+	"key": {
+		"I": {
+			"item": "minecraft:stick"
+		},
+		"$": {
+			"item": "doomweapon:argent_axe"
+		},
+		"Q": {
+			"item": "doomweapon:argent_shovel"
+		},
+		"A": {
+			"item": "doomweapon:argent_pickaxe"
+		}
+	}
+}

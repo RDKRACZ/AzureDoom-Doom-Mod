@@ -56,6 +56,7 @@ import mod.azure.doomweapon.item.powerup.PowerSphereItem;
 import mod.azure.doomweapon.item.powerup.SoulCubeItem;
 import mod.azure.doomweapon.item.tools.ArgentAxe;
 import mod.azure.doomweapon.item.tools.ArgentHoe;
+import mod.azure.doomweapon.item.tools.ArgentPaxel;
 import mod.azure.doomweapon.item.tools.ArgentPickaxe;
 import mod.azure.doomweapon.item.tools.ArgentShovel;
 import mod.azure.doomweapon.item.weapons.ArgentSword;
@@ -78,7 +79,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class DoomItems {
 
-	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS,DoomMod.MODID);
+	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, DoomMod.MODID);
 
 	// AMMO
 	public static final RegistryObject<Item> SHOTGUN_SHELLS = ITEMS.register("shotgun_shells",
@@ -143,14 +144,16 @@ public class DoomItems {
 			() -> new IconofsinSpawnEgg(0x2800db, 0x4f7ff7));
 	public static final RegistryObject<Item> UNWILLING_SPAWN_EGG = ITEMS.register("unwilling_spawn_egg",
 			() -> new UnwillingSpawnEgg(0x2800db, 0x4f7ff7));
-	public static final RegistryObject<Item> POSSESSED_SCIENTIST_SPAWN_EGG = ITEMS.register("possessed_scientist_spawn_egg",
-			() -> new PossessedScientistSpawnEgg(0x2800db, 0x4f7ff7));
+	public static final RegistryObject<Item> POSSESSED_SCIENTIST_SPAWN_EGG = ITEMS
+			.register("possessed_scientist_spawn_egg", () -> new PossessedScientistSpawnEgg(0x2800db, 0x4f7ff7));
 	public static final RegistryObject<Item> POSSESSED_SOLDIER_SPAWN_EGG = ITEMS.register("possessed_soldier_spawn_egg",
 			() -> new PossessedSoldierSpawnEgg(0x2800db, 0x4f7ff7));
 	// WEAPONS AND TOOLS
-	public static final RegistryObject<Item> CRUCIBLESWORD = ITEMS.register("cruciblesword", () -> new SwordCrucibleItem());
+	public static final RegistryObject<Item> CRUCIBLESWORD = ITEMS.register("cruciblesword",
+			() -> new SwordCrucibleItem());
 	public static final RegistryObject<Item> ARGENT_AXE = ITEMS.register("argent_axe", () -> new ArgentAxe());
 	public static final RegistryObject<Item> ARGENT_HOE = ITEMS.register("argent_hoe", () -> new ArgentHoe());
+	public static final RegistryObject<Item> ARGENT_PAXEL = ITEMS.register("argent_paxel", () -> new ArgentPaxel());
 	public static final RegistryObject<Item> ARGENT_PICKAXE = ITEMS.register("argent_pickaxe",
 			() -> new ArgentPickaxe());
 	public static final RegistryObject<Item> ARGENT_SHOVEL = ITEMS.register("argent_shovel", () -> new ArgentShovel());
