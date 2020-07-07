@@ -18,7 +18,7 @@ import net.minecraftforge.common.ToolType;
 public class ArgentPaxel extends PickaxeItem {
 
 	public ArgentPaxel() {
-		super(DoomTier.DOOM, 6, -2.4F, new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1)
+		super(DoomTier.DOOM, 8, -2.4F, new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1)
 				.addToolType(ToolType.AXE, 6).addToolType(ToolType.SHOVEL, 6));
 	}
 
