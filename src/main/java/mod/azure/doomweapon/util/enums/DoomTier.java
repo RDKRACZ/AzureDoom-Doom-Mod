@@ -8,7 +8,7 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.LazyValue;
 
 public enum DoomTier implements IItemTier {
-	DOOM(6, 1561, 16.0F, 3.0F, 30, () -> {
+	DOOM(18, 1561, 16.0F, 3.0F, 30, () -> {
 		return Ingredient.fromItems(DoomItems.ARGENT_ENERGY.get());
 	});
 
