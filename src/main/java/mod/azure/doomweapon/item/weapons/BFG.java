@@ -86,23 +86,8 @@ public class BFG extends BowItem {
 						abstractarrowentity = customeArrow(abstractarrowentity);
 						abstractarrowentity.func_234612_a_(playerentity, playerentity.rotationPitch, playerentity.rotationYaw,
 								0.0F, f * 3.0F, 1.0F);
-						if (f == 1.0F) {
-							abstractarrowentity.setIsCritical(true);
-						}
-
-						int j = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, stack);
-						if (j > 0) {
-							abstractarrowentity.setDamage(abstractarrowentity.getDamage() + (double) j * 0.5D + 0.5D);
-						}
-
-						int k = EnchantmentHelper.getEnchantmentLevel(Enchantments.PUNCH, stack);
-						if (k > 0) {
-							abstractarrowentity.setKnockbackStrength(k);
-						}
-
-						if (EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAME, stack) > 0) {
-							abstractarrowentity.setFire(100);
-						}
+						
+						abstractarrowentity.hasNoGravity();
 
 						stack.damageItem(1, playerentity, (p_220009_1_) -> {
 							p_220009_1_.sendBreakAnimation(playerentity.getActiveHand());
