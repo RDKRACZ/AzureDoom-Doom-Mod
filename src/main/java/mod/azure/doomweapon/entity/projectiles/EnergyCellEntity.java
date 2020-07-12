@@ -7,7 +7,6 @@ import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.IPacket;
-import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
@@ -41,22 +40,14 @@ public class EnergyCellEntity extends AbstractArrowEntity {
 	public IPacket<?> createSpawnPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
-	
+
 	@Override
 	public boolean hasNoGravity() {
 		return true;
 	}
-	
-	@Override
-	protected void onImpact(RayTraceResult result) {
-		this.remove();
-		if (!this.world.isRemote) {
-			this.explode();
-		}
-	}
 
 	@Override
-	protected void onEntityHit(EntityRayTraceResult p_213868_1_) {
+	protected void onImpact(RayTraceResult result) {
 		this.remove();
 		if (!this.world.isRemote) {
 			this.explode();
