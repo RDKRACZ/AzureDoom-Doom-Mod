@@ -24,8 +24,6 @@ import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
-import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
@@ -35,13 +33,19 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.BossInfo;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerBossInfo;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 public class IconofsinEntity extends DemonEntity {
+
+	private final ServerBossInfo bossInfo = (ServerBossInfo) (new ServerBossInfo(this.getDisplayName(),
+			BossInfo.Color.PURPLE, BossInfo.Overlay.PROGRESS)).setDarkenSky(true);
 
 	public IconofsinEntity(EntityType<IconofsinEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
@@ -57,6 +61,10 @@ public class IconofsinEntity extends DemonEntity {
 		return p_223337_1_.getDifficulty() != Difficulty.PEACEFUL;
 	}
 
+	public ServerBossInfo getBossInfo() {
+		return bossInfo;
+	}
+
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8.0F));
@@ -67,13 +75,11 @@ public class IconofsinEntity extends DemonEntity {
 	protected void applyEntityAI() {
 		this.goalSelector.addGoal(2, new DemonAttackGoal(this, 1.0D, false));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
-		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, false));
-		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
 	}
 
 	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
 		return MobEntity.func_233666_p_().func_233815_a_(Attributes.field_233819_b_, 100.0D)
-				.func_233815_a_(Attributes.field_233818_a_, 150.0D).func_233815_a_(Attributes.field_233821_d_, 0.1D)
+				.func_233815_a_(Attributes.field_233818_a_, 1000.0D).func_233815_a_(Attributes.field_233821_d_, 0.1D)
 				.func_233815_a_(Attributes.field_233823_f_, 30.0D);
 	}
 
@@ -145,6 +151,30 @@ public class IconofsinEntity extends DemonEntity {
 			itementity.setNoDespawn();
 			itementity.setGlowing(true);
 		}
+	}
+
+	public void writeAdditional(CompoundNBT compound) {
+		super.writeAdditional(compound);
+	}
+
+	/**
+	 * (abstract) Protected helper method to read subclass entity data from NBT.
+	 */
+	public void readAdditional(CompoundNBT compound) {
+		super.readAdditional(compound);
+		if (this.hasCustomName()) {
+			this.bossInfo.setName(this.getDisplayName());
+		}
+
+	}
+
+	public void setCustomName(@Nullable ITextComponent name) {
+		super.setCustomName(name);
+		this.bossInfo.setName(this.getDisplayName());
+	}
+
+	protected void updateAITasks() {
+		this.bossInfo.setPercent(this.getHealth() / this.getMaxHealth());
 	}
 
 	@Override

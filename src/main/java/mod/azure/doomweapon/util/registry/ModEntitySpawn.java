@@ -7,6 +7,7 @@ import mod.azure.doomweapon.entity.ChaingunnerEntity;
 import mod.azure.doomweapon.entity.Cyberdemon2016Entity;
 import mod.azure.doomweapon.entity.CyberdemonEntity;
 import mod.azure.doomweapon.entity.HellknightEntity;
+import mod.azure.doomweapon.entity.IconofsinEntity;
 import mod.azure.doomweapon.entity.Imp2016Entity;
 import mod.azure.doomweapon.entity.ImpEntity;
 import mod.azure.doomweapon.entity.LostSoulEntity;
@@ -73,6 +74,7 @@ public class ModEntitySpawn {
 				Biomes.field_235251_aB_, Biomes.field_235253_az_, Biomes.field_235252_ay_);
 		registerEntityWorldSpawn(ModEntityTypes.CYBERDEMON2016.get(), 2, 1, 1, Biomes.field_235250_aA_,
 				Biomes.field_235251_aB_, Biomes.field_235253_az_, Biomes.field_235252_ay_);
+		registerEntityWorldSpawn(ModEntityTypes.ICONOFSIN.get(), 1, 1, 1, Biomes.field_235254_j_);
 	}
 
 	public static void EntitySpawnPlacementRegistry() {
@@ -139,6 +141,9 @@ public class ModEntitySpawn {
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.POSSESSEDSOLDIER.get(),
 				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
 				PossessedSoldierEntity::spawning);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.ICONOFSIN.get(),
+				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+				IconofsinEntity::spawning);
 	}
 
 	public static void registerEntityWorldSpawn(EntityType<?> entity, int weight, int minGroup, int maxGroup,
