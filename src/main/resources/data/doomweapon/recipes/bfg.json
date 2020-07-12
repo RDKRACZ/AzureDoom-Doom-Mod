@@ -1,0 +1,22 @@
+{
+	"result": {
+		"item": "doomweapon:bfg9000"
+	},
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"CmC",
+		"$C$",
+		"CmC"
+	],
+	"key": {
+		"$": {
+			"item": "doomweapon:argent_energy"
+		},
+		"C": {
+			"item": "minecraft:iron_ingot"
+		},
+		"m": {
+			"item": "minecraft:ghast_tear"
+		}
+	}
+}
