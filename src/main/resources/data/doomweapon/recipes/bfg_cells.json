@@ -1,11 +1,11 @@
 {
   "result": {
-    "item": "doomweapon:energy_cells"
+    "item": "doomweapon:bfg_cell"
   },
   "type": "minecraft:crafting_shaped",
    "pattern": [
         "###",
-        " $ ",
+        "m$m",
         "###"
     ],
     "key": {
@@ -14,6 +14,9 @@
         },
         "$": {
             "item": "doomweapon:argent_energy"
+        },
+        "m": {
+            "item": "minecraft:gold_ingot"
         }
     }
 }

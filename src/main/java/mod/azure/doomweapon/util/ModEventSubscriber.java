@@ -24,9 +24,11 @@ import mod.azure.doomweapon.entity.SpiderdemonEntity;
 import mod.azure.doomweapon.entity.UnwillingEntity;
 import mod.azure.doomweapon.entity.ZombiemanEntity;
 import mod.azure.doomweapon.item.ammo.ArgentBolt;
+import mod.azure.doomweapon.item.ammo.BFGCell;
 import mod.azure.doomweapon.item.ammo.ChaingunAmmo;
 import mod.azure.doomweapon.item.ammo.ClipAmmo;
 import mod.azure.doomweapon.item.ammo.EnergyCell;
+import mod.azure.doomweapon.item.ammo.Rocket;
 import mod.azure.doomweapon.item.ammo.ShellAmmo;
 import mod.azure.doomweapon.util.registry.DoomItems;
 import mod.azure.doomweapon.util.registry.ModEntitySpawn;
@@ -54,6 +56,8 @@ public class ModEventSubscriber {
 		((EnergyCell) (DoomItems.ENERGY_CELLS.get())).setItemReference(DoomItems.ENERGY_CELLS);
 		((ChaingunAmmo) (DoomItems.CHAINGUN_BULLETS.get())).setItemReference(DoomItems.CHAINGUN_BULLETS);
 		((ClipAmmo) (DoomItems.BULLETS.get())).setItemReference(DoomItems.BULLETS);
+		((BFGCell) (DoomItems.BFG_CELL.get())).setItemReference(DoomItems.BFG_CELL);
+		((Rocket) (DoomItems.ROCKET.get())).setItemReference(DoomItems.ROCKET);
 	}
 
 	@SubscribeEvent

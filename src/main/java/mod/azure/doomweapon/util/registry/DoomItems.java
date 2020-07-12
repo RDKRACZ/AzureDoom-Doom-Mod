@@ -5,9 +5,11 @@ import mod.azure.doomweapon.item.ArgentEnergyItem;
 import mod.azure.doomweapon.item.E1M1MusicDisc;
 import mod.azure.doomweapon.item.UnopenedItem;
 import mod.azure.doomweapon.item.ammo.ArgentBolt;
+import mod.azure.doomweapon.item.ammo.BFGCell;
 import mod.azure.doomweapon.item.ammo.ChaingunAmmo;
 import mod.azure.doomweapon.item.ammo.ClipAmmo;
 import mod.azure.doomweapon.item.ammo.EnergyCell;
+import mod.azure.doomweapon.item.ammo.Rocket;
 import mod.azure.doomweapon.item.ammo.ShellAmmo;
 import mod.azure.doomweapon.item.armor.AstroDoomArmor;
 import mod.azure.doomweapon.item.armor.ClassicDoomArmor;
@@ -65,6 +67,8 @@ import mod.azure.doomweapon.item.weapons.BFG;
 import mod.azure.doomweapon.item.weapons.Ballista;
 import mod.azure.doomweapon.item.weapons.Chaingun;
 import mod.azure.doomweapon.item.weapons.PistolItem;
+import mod.azure.doomweapon.item.weapons.PlasmaGun;
+import mod.azure.doomweapon.item.weapons.RocketLauncher;
 import mod.azure.doomweapon.item.weapons.Shotgun;
 import mod.azure.doomweapon.item.weapons.SuperShotgun;
 import mod.azure.doomweapon.item.weapons.SwordCrucibleItem;
@@ -92,6 +96,10 @@ public class DoomItems {
 			() -> new ChaingunAmmo(new Item.Properties().group(DoomMod.DoomItemGroup), 10.0F));
 	public static final RegistryObject<Item> BULLETS = ITEMS.register("bullets",
 			() -> new ClipAmmo(new Item.Properties().group(DoomMod.DoomItemGroup), 1.2F));
+	public static final RegistryObject<Item> BFG_CELL = ITEMS.register("bfg_cell",
+			() -> new BFGCell(new Item.Properties().group(DoomMod.DoomItemGroup), 1.2F));
+	public static final RegistryObject<Item> ROCKET = ITEMS.register("rocket",
+			() -> new Rocket(new Item.Properties().group(DoomMod.DoomItemGroup), 1.2F));
 	// MISC
 	public static final RegistryObject<Item> ARGENT_ENERGY = ITEMS.register("argent_energy",
 			() -> new ArgentEnergyItem());
@@ -169,9 +177,9 @@ public class DoomItems {
 	public static final RegistryObject<Item> SSG = ITEMS.register("supershotgun", () -> new SuperShotgun());
 	public static final RegistryObject<Item> SG = ITEMS.register("shotgun", () -> new Shotgun());
 	public static final RegistryObject<Item> BFG = ITEMS.register("bfg9000", () -> new BFG());
-//	public static final RegistryObject<Item> PLASMAGUN = ITEMS.register("plasmagun", () -> new PlasmaGun());
-//	public static final RegistryObject<Item> ROCKETLAUNCHER = ITEMS.register("rocketlauncher",
-//			() -> new RocketLauncher());
+	public static final RegistryObject<Item> PLASMAGUN = ITEMS.register("plasmagun", () -> new PlasmaGun());
+	public static final RegistryObject<Item> ROCKETLAUNCHER = ITEMS.register("rocketlauncher",
+			() -> new RocketLauncher());
 //	public static final RegistryObject<Item> UNMAYKR = ITEMS.register("unmaykr", () -> new Unmaykr());
 	public static final RegistryObject<Item> BALLISTA = ITEMS.register("ballista", () -> new Ballista());
 	public static final RegistryObject<Item> CHAINGUN = ITEMS.register("chaingun", () -> new Chaingun());

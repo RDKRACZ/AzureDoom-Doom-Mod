@@ -8,29 +8,28 @@ import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.IPacket;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class EnergyCellEntity extends AbstractArrowEntity {
+public class RocketEntity extends AbstractArrowEntity {
 
 	private final Item referenceItem;
 
 	@SuppressWarnings("unchecked")
-	public EnergyCellEntity(EntityType<?> type, World world) {
+	public RocketEntity(EntityType<?> type, World world) {
 		super((EntityType<? extends AbstractArrowEntity>) type, world);
 		this.referenceItem = null;
 	}
 
-	public EnergyCellEntity(LivingEntity shooter, World world, Item referenceItemIn) {
-		super(ModEntityTypes.ENERGY_CELL.get(), shooter, world);
+	public RocketEntity(LivingEntity shooter, World world, Item referenceItemIn) {
+		super(ModEntityTypes.ROCKET.get(), shooter, world);
 		this.referenceItem = referenceItemIn;
 	}
 
+	@Override
 	protected void func_225516_i_() {
 		this.remove();
 	}
@@ -46,21 +45,12 @@ public class EnergyCellEntity extends AbstractArrowEntity {
 	}
 
 	@Override
-	public boolean hasNoGravity() {
-		return true;
-	}
-
-	protected IParticleData getParticle() {
-		return ParticleTypes.TOTEM_OF_UNDYING;
-	}
-
-	@Override
 	protected void onEntityHit(EntityRayTraceResult p_213868_1_) {
 		super.onEntityHit(p_213868_1_);
 		if (!this.world.isRemote) {
 			this.explode();
 		}
-		this.playSound(ModSoundEvents.PLASMA_HIT.get(), 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
+		this.playSound(ModSoundEvents.ROCKET_HIT.get(), 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 	}
 
 	protected void onImpact(RayTraceResult result) {
@@ -70,7 +60,8 @@ public class EnergyCellEntity extends AbstractArrowEntity {
 	}
 
 	protected void explode() {
-		this.world.createExplosion(this, this.getPosX(), this.getPosYHeight(0.0625D), this.getPosZ(), 1.0F,
+		this.world.createExplosion(this, this.getPosX(), this.getPosYHeight(0.0625D), this.getPosZ(), 2.0F,
 				Explosion.Mode.NONE);
 	}
+
 }

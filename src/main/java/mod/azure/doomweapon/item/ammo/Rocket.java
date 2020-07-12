@@ -2,7 +2,7 @@ package mod.azure.doomweapon.item.ammo;
 
 import java.util.List;
 
-import mod.azure.doomweapon.entity.projectiles.EnergyCellEntity;
+import mod.azure.doomweapon.entity.projectiles.RocketEntity;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ArrowItem;
@@ -15,12 +15,12 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.RegistryObject;
 
-public class EnergyCell extends ArrowItem {
+public class Rocket extends ArrowItem {
 
 	public final float damage;
 	private RegistryObject<Item> ref;
 
-	public EnergyCell(Properties properties, float damageIn) {
+	public Rocket(Properties properties, float damageIn) {
 		super(properties);
 		this.damage = damageIn;
 	}
@@ -28,7 +28,7 @@ public class EnergyCell extends ArrowItem {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new StringTextComponent("\u00A7o" + "Used for the Plasma Gun."));
+		tooltip.add(new StringTextComponent("\u00A7o" + "Used for the Rocket Launcher."));
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 
@@ -36,17 +36,17 @@ public class EnergyCell extends ArrowItem {
 	public boolean isInfinite(ItemStack stack, ItemStack bow, net.minecraft.entity.player.PlayerEntity player) {
 		int enchant = net.minecraft.enchantment.EnchantmentHelper
 				.getEnchantmentLevel(net.minecraft.enchantment.Enchantments.INFINITY, bow);
-		return enchant <= 0 ? false : this instanceof EnergyCell;
+		return enchant <= 0 ? false : this instanceof Rocket;
 	}
 
-	public EnergyCell setItemReference(RegistryObject<Item> refIn) {
+	public Rocket setItemReference(RegistryObject<Item> refIn) {
 		this.ref = refIn;
 		return this;
 	}
 
 	@Override
-	public EnergyCellEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
-		EnergyCellEntity arrowentity = new EnergyCellEntity(shooter, worldIn, ref.get());
+	public RocketEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
+		RocketEntity arrowentity = new RocketEntity(shooter, worldIn, ref.get());
 		arrowentity.setDamage(this.damage);
 		return arrowentity;
 	}

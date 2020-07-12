@@ -24,9 +24,11 @@ import mod.azure.doomweapon.entity.SpiderdemonEntity;
 import mod.azure.doomweapon.entity.UnwillingEntity;
 import mod.azure.doomweapon.entity.ZombiemanEntity;
 import mod.azure.doomweapon.entity.projectiles.ArgentBoltEntity;
+import mod.azure.doomweapon.entity.projectiles.BFGEntity;
 import mod.azure.doomweapon.entity.projectiles.BulletEntity;
 import mod.azure.doomweapon.entity.projectiles.ChaingunBulletEntity;
 import mod.azure.doomweapon.entity.projectiles.EnergyCellEntity;
+import mod.azure.doomweapon.entity.projectiles.RocketEntity;
 import mod.azure.doomweapon.entity.projectiles.ShotgunShellEntity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
@@ -52,7 +54,15 @@ public class ModEntityTypes {
 
 	public static final RegistryObject<EntityType<EnergyCellEntity>> ENERGY_CELL = ENTITY_TYPES.register("energy_cell",
 			() -> EntityType.Builder.<EnergyCellEntity>create(EnergyCellEntity::new, EntityClassification.MISC)
-					.size(2.0F, 2.0F).build(new ResourceLocation(DoomMod.MODID, "energy_cell").toString()));
+					.size(0.5F, 0.5F).build(new ResourceLocation(DoomMod.MODID, "energy_cell").toString()));
+
+	public static final RegistryObject<EntityType<BFGEntity>> BFG_CELL = ENTITY_TYPES.register("bfg_cell",
+			() -> EntityType.Builder.<BFGEntity>create(BFGEntity::new, EntityClassification.MISC).size(2.0F, 2.0F)
+					.build(new ResourceLocation(DoomMod.MODID, "bfg_cell").toString()));
+
+	public static final RegistryObject<EntityType<RocketEntity>> ROCKET = ENTITY_TYPES.register("rocket",
+			() -> EntityType.Builder.<RocketEntity>create(RocketEntity::new, EntityClassification.MISC).size(0.5F, 0.5F)
+					.build(new ResourceLocation(DoomMod.MODID, "rocket").toString()));
 
 	public static final RegistryObject<EntityType<BulletEntity>> BULLETS = ENTITY_TYPES.register("bullets",
 			() -> EntityType.Builder.<BulletEntity>create(BulletEntity::new, EntityClassification.MISC).size(0.5F, 0.5F)

@@ -24,9 +24,11 @@ import mod.azure.doomweapon.client.render.SpiderdemonRender;
 import mod.azure.doomweapon.client.render.UnwillingRender;
 import mod.azure.doomweapon.client.render.ZombiemanRender;
 import mod.azure.doomweapon.client.render.projectiles.ArgentBoltRender;
+import mod.azure.doomweapon.client.render.projectiles.BFGCellRender;
 import mod.azure.doomweapon.client.render.projectiles.BulletsRender;
 import mod.azure.doomweapon.client.render.projectiles.ChaingunBulletRender;
 import mod.azure.doomweapon.client.render.projectiles.EnergyCellRender;
+import mod.azure.doomweapon.client.render.projectiles.RocketRender;
 import mod.azure.doomweapon.client.render.projectiles.ShotgunShellRender;
 import mod.azure.doomweapon.util.registry.ModEntityTypes;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -53,6 +55,8 @@ public class ClientModEventSubscriber {
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ARGENT_BOLT.get(), ArgentBoltRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ENERGY_CELL.get(), EnergyCellRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BULLETS.get(), BulletsRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BFG_CELL.get(), BFGCellRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ROCKET.get(), RocketRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.CHAINGUN_BULLET.get(),
 				ChaingunBulletRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.IMP.get(), ImpRender::new);

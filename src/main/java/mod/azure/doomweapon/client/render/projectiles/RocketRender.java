@@ -4,7 +4,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import mod.azure.doomweapon.DoomMod;
-import mod.azure.doomweapon.entity.projectiles.EnergyCellEntity;
+import mod.azure.doomweapon.entity.projectiles.RocketEntity;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -16,26 +16,26 @@ import net.minecraft.util.math.vector.Matrix3f;
 import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraft.util.math.vector.Vector3f;
 
-public class EnergyCellRender extends EntityRenderer<EnergyCellEntity> {
+public class RocketRender extends EntityRenderer<RocketEntity> {
 
-	private static final ResourceLocation ENERGY_CELL_TEXTURE = new ResourceLocation(DoomMod.MODID,
-			"textures/entity/projectiles/plasma_ball.png");
-	private static final RenderType field_229044_e_ = RenderType.getEntityCutoutNoCull(ENERGY_CELL_TEXTURE);
+	private static final ResourceLocation ROCKET_TEXTURE = new ResourceLocation(DoomMod.MODID,
+			"textures/entity/projectiles/fire_charge.png");
+	private static final RenderType field_229044_e_ = RenderType.getEntityCutoutNoCull(ROCKET_TEXTURE);
 
-	public EnergyCellRender(EntityRendererManager renderManagerIn) {
+	public RocketRender(EntityRendererManager renderManagerIn) {
 		super(renderManagerIn);
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(EnergyCellEntity entity) {
-		return ENERGY_CELL_TEXTURE;
+	public ResourceLocation getEntityTexture(RocketEntity entity) {
+		return ROCKET_TEXTURE;
 	}
 
-	protected int getBlockLight(EnergyCellEntity entityIn, BlockPos partialTicks) {
+	protected int getBlockLight(RocketEntity entityIn, BlockPos partialTicks) {
 		return 15;
 	}
 
-	public void render(EnergyCellEntity entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn,
+	public void render(RocketEntity entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn,
 			IRenderTypeBuffer bufferIn, int packedLightIn) {
 		matrixStackIn.push();
 		matrixStackIn.scale(1.0F, 1.0F, 1.0F);

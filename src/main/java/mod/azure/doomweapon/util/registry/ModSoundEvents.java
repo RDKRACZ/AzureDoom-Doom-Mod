@@ -17,6 +17,16 @@ public class ModSoundEvents {
 	public static final RegistryObject<SoundEvent> BFG_HIT = MOD_SOUNDS.register("doom.bfg_hit",
 			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.bfg_hit")));
 
+	public static final RegistryObject<SoundEvent> PLASMA_FIRING = MOD_SOUNDS.register("doom.plasmafire",
+			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.plasmafire")));
+	public static final RegistryObject<SoundEvent> PLASMA_HIT = MOD_SOUNDS.register("doom.plasmahit",
+			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.plasmahit")));
+
+	public static final RegistryObject<SoundEvent> ROCKET_FIRING = MOD_SOUNDS.register("doom.rocketfire",
+			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.rocketfire")));
+	public static final RegistryObject<SoundEvent> ROCKET_HIT = MOD_SOUNDS.register("doom.rockethit",
+			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.rockethit")));
+
 	public static final RegistryObject<SoundEvent> SHOOT1 = MOD_SOUNDS.register("doom.shoot1",
 			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.shoot1")));
 	public static final RegistryObject<SoundEvent> SHOOT2 = MOD_SOUNDS.register("doom.shoot2",

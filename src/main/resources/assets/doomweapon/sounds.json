@@ -226,5 +226,17 @@
 	},
 	"doom.bfg_firing": {
 		"category": "music", "sounds": [{"name": "doomweapon:bfg_firing", "stream": true}]
+	},
+	"doom.plasmahit": {
+		"category": "music", "sounds": [{"name": "doomweapon:plasmahit", "stream": true}]
+	},
+	"doom.plasmafire": {
+		"category": "music", "sounds": [{"name": "doomweapon:plasmafire", "stream": true}]
+	},
+	"doom.rockethit": {
+		"category": "music", "sounds": [{"name": "doomweapon:rockethit", "stream": true}]
+	},
+	"doom.rocketfire": {
+		"category": "music", "sounds": [{"name": "doomweapon:rocketfire", "stream": true}]
 	}
 }

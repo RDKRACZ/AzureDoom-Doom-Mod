@@ -3,8 +3,8 @@ package mod.azure.doomweapon.item.weapons;
 import java.util.function.Predicate;
 
 import mod.azure.doomweapon.DoomMod;
-import mod.azure.doomweapon.entity.projectiles.ChaingunBulletEntity;
-import mod.azure.doomweapon.item.ammo.ChaingunAmmo;
+import mod.azure.doomweapon.entity.projectiles.EnergyCellEntity;
+import mod.azure.doomweapon.item.ammo.EnergyCell;
 import mod.azure.doomweapon.util.registry.DoomItems;
 import mod.azure.doomweapon.util.registry.ModSoundEvents;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -61,48 +61,35 @@ public class PlasmaGun extends ShootableItem {
 
 			if (!itemstack.isEmpty() || flag) {
 				if (itemstack.isEmpty()) {
-					itemstack = new ItemStack(DoomItems.CHAINGUN_BULLETS.get());
+					itemstack = new ItemStack(DoomItems.ENERGY_CELLS.get());
 				}
 
-				boolean flag1 = playerentity.abilities.isCreativeMode || (itemstack.getItem() instanceof ChaingunAmmo
-						&& ((ChaingunAmmo) itemstack.getItem()).isInfinite(itemstack, stack, playerentity));
+				boolean flag1 = playerentity.abilities.isCreativeMode || (itemstack.getItem() instanceof EnergyCell
+						&& ((EnergyCell) itemstack.getItem()).isInfinite(itemstack, stack, playerentity));
 				if (!worldIn.isRemote) {
-					ChaingunAmmo arrowitem = (ChaingunAmmo) (itemstack.getItem() instanceof ChaingunAmmo
-							? itemstack.getItem()
-							: DoomItems.CHAINGUN_BULLETS.get());
-					ChaingunBulletEntity abstractarrowentity = arrowitem.createArrow(worldIn, itemstack, playerentity);
+					EnergyCell arrowitem = (EnergyCell) (itemstack.getItem() instanceof EnergyCell ? itemstack.getItem()
+							: DoomItems.ENERGY_CELLS.get());
+					EnergyCellEntity abstractarrowentity = arrowitem.createArrow(worldIn, itemstack, playerentity);
 					abstractarrowentity = customeArrow(abstractarrowentity);
 					abstractarrowentity.func_234612_a_(playerentity, playerentity.rotationPitch,
-							playerentity.rotationYaw, 0.0F, 1 * 3.0F, 1.0F);
+							playerentity.rotationYaw, 0.0F, 0.5F * 3.0F, 1.0F);
 					abstractarrowentity.setIsCritical(true);
 
-					int j = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, stack);
-					if (j > 0) {
-						abstractarrowentity.setDamage(abstractarrowentity.getDamage() + (double) j * 0.5D + 0.5D);
-					}
-
-					int k = EnchantmentHelper.getEnchantmentLevel(Enchantments.PUNCH, stack);
-					if (k > 0) {
-						abstractarrowentity.setKnockbackStrength(k);
-					}
-
-					if (EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAME, stack) > 0) {
-						abstractarrowentity.setFire(100);
-					}
+					abstractarrowentity.hasNoGravity();
 
 					stack.damageItem(1, playerentity, (p_220009_1_) -> {
 						p_220009_1_.sendBreakAnimation(playerentity.getActiveHand());
 					});
 					if (flag1 || playerentity.abilities.isCreativeMode
-							&& (itemstack.getItem() == DoomItems.CHAINGUN_BULLETS.get()
-									|| itemstack.getItem() == DoomItems.CHAINGUN_BULLETS.get())) {
+							&& (itemstack.getItem() == DoomItems.ENERGY_CELLS.get()
+									|| itemstack.getItem() == DoomItems.ENERGY_CELLS.get())) {
 						abstractarrowentity.pickupStatus = AbstractArrowEntity.PickupStatus.DISALLOWED;
 					}
 					worldIn.addEntity(abstractarrowentity);
 				}
 				worldIn.playSound((PlayerEntity) null, playerentity.getPosX(), playerentity.getPosY(),
-						playerentity.getPosZ(), ModSoundEvents.CHAINGUN_SHOOT.get(), SoundCategory.PLAYERS, 1.0F,
-						1.0F / (random.nextFloat() * 0.4F + 1.2F) + 1 * 0.5F);
+						playerentity.getPosZ(), ModSoundEvents.PLASMA_FIRING.get(), SoundCategory.PLAYERS, 1.0F,
+						1.0F / (random.nextFloat() * 0.4F + 1.2F) + 0.5F * 0.5F);
 				if (!flag1 && !playerentity.abilities.isCreativeMode) {
 					itemstack.shrink(1);
 					if (itemstack.isEmpty()) {
@@ -112,16 +99,6 @@ public class PlasmaGun extends ShootableItem {
 				playerentity.addStat(Stats.ITEM_USED.get(this));
 			}
 		}
-	}
-
-	public static float getArrowVelocity(int charge) {
-		float f = (float) charge / 20.0F;
-		f = (f * f + f * 2.0F) / 3.0F;
-		if (f > 1.0F) {
-			f = 1.0F;
-		}
-
-		return f;
 	}
 
 	@Override
@@ -154,10 +131,10 @@ public class PlasmaGun extends ShootableItem {
 
 	@Override
 	public Predicate<ItemStack> getAmmoPredicate() {
-		return itemStack -> itemStack.getItem() instanceof ChaingunAmmo;
+		return itemStack -> itemStack.getItem() instanceof EnergyCell;
 	}
 
-	public ChaingunBulletEntity customeArrow(ChaingunBulletEntity arrow) {
+	public EnergyCellEntity customeArrow(EnergyCellEntity arrow) {
 		return arrow;
 	}
 
