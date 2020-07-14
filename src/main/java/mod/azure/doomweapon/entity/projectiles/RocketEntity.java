@@ -49,14 +49,18 @@ public class RocketEntity extends AbstractArrowEntity {
 		super.onEntityHit(p_213868_1_);
 		if (!this.world.isRemote) {
 			this.explode();
+			this.remove();
 		}
 		this.playSound(ModSoundEvents.ROCKET_HIT.get(), 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 	}
 
 	protected void onImpact(RayTraceResult result) {
+		super.onImpact(result);
 		if (!this.world.isRemote) {
 			this.explode();
+			this.remove();
 		}
+		this.playSound(ModSoundEvents.ROCKET_HIT.get(), 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 	}
 
 	protected void explode() {

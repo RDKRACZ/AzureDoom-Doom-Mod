@@ -70,7 +70,6 @@ public class RocketLauncher extends ShootableItem {
 					abstractarrowentity = customeArrow(abstractarrowentity);
 					abstractarrowentity.func_234612_a_(playerentity, playerentity.rotationPitch,
 							playerentity.rotationYaw, 0.0F, 0.25F * 3.0F, 1.0F);
-					abstractarrowentity.setIsCritical(true);
 
 					abstractarrowentity.setNoGravity(true);
 
