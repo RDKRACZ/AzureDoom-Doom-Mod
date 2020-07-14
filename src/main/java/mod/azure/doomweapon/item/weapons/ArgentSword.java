@@ -17,7 +17,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class ArgentSword extends SwordItem {
 
 	public ArgentSword() {
-		super(DoomTier.DOOM, 6, -2.4F, new Item.Properties().group(DoomMod.DoomItemGroup));
+		super(DoomTier.DOOM, 6, -2.4F, new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1));
 	}
 
 	@Override
