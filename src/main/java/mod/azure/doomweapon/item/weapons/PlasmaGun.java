@@ -34,7 +34,6 @@ public class PlasmaGun extends ShootableItem {
 	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
 		ItemStack stack = new ItemStack(this);
 		stack.hasTag();
-		stack.addEnchantment(Enchantments.PUNCH, 2);
 		if (group == DoomMod.DoomItemGroup) {
 			items.add(stack);
 		}
@@ -43,7 +42,6 @@ public class PlasmaGun extends ShootableItem {
 	@Override
 	public void onCreated(ItemStack stack, World worldIn, PlayerEntity playerIn) {
 		stack.hasTag();
-		stack.addEnchantment(Enchantments.PUNCH, 2);
 	}
 
 	@Override
@@ -52,9 +50,9 @@ public class PlasmaGun extends ShootableItem {
 	}
 
 	@Override
-	public void onPlayerStoppedUsing(ItemStack stack, World worldIn, LivingEntity entityLiving, int timeLeft) {
-		if (entityLiving instanceof PlayerEntity) {
-			PlayerEntity playerentity = (PlayerEntity) entityLiving;
+	public void onUse(World worldIn, LivingEntity livingEntityIn, ItemStack stack, int count) {
+		if (livingEntityIn instanceof PlayerEntity) {
+			PlayerEntity playerentity = (PlayerEntity) livingEntityIn;
 			boolean flag = playerentity.abilities.isCreativeMode
 					|| EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, stack) > 0;
 			ItemStack itemstack = playerentity.findAmmo(stack);
@@ -72,8 +70,7 @@ public class PlasmaGun extends ShootableItem {
 					EnergyCellEntity abstractarrowentity = arrowitem.createArrow(worldIn, itemstack, playerentity);
 					abstractarrowentity = customeArrow(abstractarrowentity);
 					abstractarrowentity.func_234612_a_(playerentity, playerentity.rotationPitch,
-							playerentity.rotationYaw, 0.0F, 0.5F * 3.0F, 1.0F);
-					abstractarrowentity.setIsCritical(true);
+							playerentity.rotationYaw, 0.0F, 0.10F * 3.0F, 1.0F);
 
 					abstractarrowentity.hasNoGravity();
 
@@ -89,7 +86,7 @@ public class PlasmaGun extends ShootableItem {
 				}
 				worldIn.playSound((PlayerEntity) null, playerentity.getPosX(), playerentity.getPosY(),
 						playerentity.getPosZ(), ModSoundEvents.PLASMA_FIRING.get(), SoundCategory.PLAYERS, 1.0F,
-						1.0F / (random.nextFloat() * 0.4F + 1.2F) + 0.5F * 0.5F);
+						1.0F / (random.nextFloat() * 0.4F + 1.2F) + 0.10F * 0.5F);
 				if (!flag1 && !playerentity.abilities.isCreativeMode) {
 					itemstack.shrink(1);
 					if (itemstack.isEmpty()) {
