@@ -3,6 +3,7 @@ package mod.azure.doomweapon;
 import java.util.UUID;
 
 import mod.azure.doomweapon.client.ModItemModelsProperties;
+import mod.azure.doomweapon.util.LootHandler;
 import mod.azure.doomweapon.util.registry.DoomItems;
 import mod.azure.doomweapon.util.registry.ModEntityTypes;
 import mod.azure.doomweapon.util.registry.ModSoundEvents;
@@ -17,6 +18,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 @Mod(DoomMod.MODID)
@@ -28,6 +30,7 @@ public class DoomMod {
 	public DoomMod() {
 		instance = this;
 		final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+		modEventBus.addListener(this::setup);
 		modEventBus.addListener(this::clientSetup);
 		MinecraftForge.EVENT_BUS.register(this);
 		ModSoundEvents.MOD_SOUNDS.register(modEventBus);
@@ -36,8 +39,11 @@ public class DoomMod {
 	}
 
 	private void clientSetup(FMLClientSetupEvent event) {
-
 		MinecraftForge.EVENT_BUS.register(new ModItemModelsProperties());
+	}
+
+	private void setup(final FMLCommonSetupEvent event) {
+		MinecraftForge.EVENT_BUS.register(new LootHandler());
 	}
 
 	public static final ItemGroup DoomItemGroup = (new ItemGroup("doomweapon") {
