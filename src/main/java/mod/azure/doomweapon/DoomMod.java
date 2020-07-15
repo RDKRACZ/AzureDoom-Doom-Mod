@@ -16,10 +16,14 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import top.theillusivec4.curios.api.SlotTypeMessage;
+import top.theillusivec4.curios.api.SlotTypePreset;
 
 @Mod(DoomMod.MODID)
 public class DoomMod {
@@ -30,9 +34,10 @@ public class DoomMod {
 	public DoomMod() {
 		instance = this;
 		final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+		MinecraftForge.EVENT_BUS.register(this);
 		modEventBus.addListener(this::setup);
 		modEventBus.addListener(this::clientSetup);
-		MinecraftForge.EVENT_BUS.register(this);
+		modEventBus.addListener(this::enqueueIMC);
 		ModSoundEvents.MOD_SOUNDS.register(modEventBus);
 		ModEntityTypes.ENTITY_TYPES.register(modEventBus);
 		DoomItems.ITEMS.register(modEventBus);
@@ -44,6 +49,11 @@ public class DoomMod {
 
 	private void setup(final FMLCommonSetupEvent event) {
 		MinecraftForge.EVENT_BUS.register(new LootHandler());
+	}
+
+	private void enqueueIMC(InterModEnqueueEvent event) {
+		InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE,
+				() -> SlotTypePreset.CHARM.getMessageBuilder().build());
 	}
 
 	public static final ItemGroup DoomItemGroup = (new ItemGroup("doomweapon") {
