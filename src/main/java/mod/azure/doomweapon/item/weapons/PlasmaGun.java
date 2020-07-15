@@ -70,7 +70,7 @@ public class PlasmaGun extends ShootableItem {
 					EnergyCellEntity abstractarrowentity = arrowitem.createArrow(worldIn, itemstack, playerentity);
 					abstractarrowentity = customeArrow(abstractarrowentity);
 					abstractarrowentity.func_234612_a_(playerentity, playerentity.rotationPitch,
-							playerentity.rotationYaw, 0.0F, 0.10F * 3.0F, 1.0F);
+							playerentity.rotationYaw, 0.0F, 0.15F * 3.0F, 1.0F);
 
 					abstractarrowentity.hasNoGravity();
 
@@ -100,7 +100,7 @@ public class PlasmaGun extends ShootableItem {
 
 	@Override
 	public UseAction getUseAction(ItemStack stack) {
-		return UseAction.NONE;
+		return UseAction.BOW;
 	}
 
 	@Override
