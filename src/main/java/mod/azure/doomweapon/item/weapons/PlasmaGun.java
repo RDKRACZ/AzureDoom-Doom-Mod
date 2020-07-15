@@ -23,8 +23,9 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
+import net.minecraftforge.common.extensions.IForgeItem;
 
-public class PlasmaGun extends ShootableItem {
+public class PlasmaGun extends ShootableItem implements IForgeItem {
 
 	public PlasmaGun() {
 		super(new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1));
@@ -96,6 +97,11 @@ public class PlasmaGun extends ShootableItem {
 				playerentity.addStat(Stats.ITEM_USED.get(this));
 			}
 		}
+	}
+
+	@Override
+	public boolean canDisableShield(ItemStack stack, ItemStack shield, LivingEntity entity, LivingEntity attacker) {
+		return true;
 	}
 
 	@Override

@@ -56,7 +56,7 @@ public class ModItemModelsProperties {
 				(p_210312_0_, p_210312_1_, p_210312_2_) -> {
 					return isUsable(p_210312_0_) ? 0.0F : 1.0F;
 				});
-		// ShotGun
+		// Plasma Gun
 		ItemModelsProperties.func_239418_a_(DoomItems.PLASMAGUN.get(), new ResourceLocation("pull"),
 				(p_239429_0_, p_239429_1_, p_239429_2_) -> {
 					if (p_239429_2_ == null) {
