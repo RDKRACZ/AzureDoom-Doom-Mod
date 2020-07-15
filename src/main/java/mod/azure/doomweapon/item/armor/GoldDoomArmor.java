@@ -6,6 +6,7 @@ import mod.azure.doomweapon.DoomMod;
 import mod.azure.doomweapon.item.armor.skin.SkinArmor;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantments;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.IArmorMaterial;
@@ -18,12 +19,13 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.extensions.IForgeItem;
 
-public class GoldDoomArmor extends SkinArmor {
+public class GoldDoomArmor extends SkinArmor implements IForgeItem {
 
 	public GoldDoomArmor(IArmorMaterial materialIn, EquipmentSlotType slot) {
 		super(materialIn, slot, new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1));
-		
+
 	}
 
 	@Override
@@ -54,4 +56,15 @@ public class GoldDoomArmor extends SkinArmor {
 		stack.addEnchantment(Enchantments.BINDING_CURSE, 1);
 		stack.addEnchantment(Enchantments.BLAST_PROTECTION, 5);
 	}
+
+	@Override
+	public boolean makesPiglinsNeutral(ItemStack stack, LivingEntity wearer) {
+		return true;
+	}
+
+	@Override
+	public boolean isPiglinCurrency(ItemStack stack) {
+		return true;
+	}
+
 }
