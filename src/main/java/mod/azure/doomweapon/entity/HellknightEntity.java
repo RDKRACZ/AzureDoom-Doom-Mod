@@ -7,7 +7,6 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import mod.azure.doomweapon.entity.ai.goal.DemonAttackGoal;
-import mod.azure.doomweapon.util.registry.DoomItems;
 import mod.azure.doomweapon.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -23,7 +22,6 @@ import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
 import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
@@ -142,15 +140,6 @@ public class HellknightEntity extends DemonEntity {
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
 		return 2.4F;
-	}
-
-	protected void dropSpecialItems(DamageSource source, int looting, boolean recentlyHitIn) {
-		super.dropSpecialItems(source, looting, recentlyHitIn);
-		ItemEntity itementity = this.entityDropItem(DoomItems.ARGENT_ENERGY.get());
-		if (itementity != null) {
-			itementity.setNoDespawn();
-			itementity.setGlowing(true);
-		}
 	}
 
 	@OnlyIn(Dist.CLIENT)

@@ -25,7 +25,6 @@ import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
 import net.minecraft.entity.monster.AbstractIllagerEntity;
 import net.minecraft.entity.monster.MonsterEntity;
@@ -62,8 +61,7 @@ public class RevenantEntity extends DemonEntity implements IRangedAttackMob {
 
 	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
 		return MobEntity.func_233666_p_().func_233815_a_(Attributes.field_233819_b_, 50.0D)
-				.func_233815_a_(Attributes.field_233818_a_, 20.0D)
-				.func_233815_a_(Attributes.field_233823_f_, 6.0D);
+				.func_233815_a_(Attributes.field_233818_a_, 20.0D).func_233815_a_(Attributes.field_233823_f_, 6.0D);
 	}
 
 	public static boolean spawning(EntityType<RevenantEntity> p_223337_0_, IWorld p_223337_1_, SpawnReason reason,
@@ -149,15 +147,6 @@ public class RevenantEntity extends DemonEntity implements IRangedAttackMob {
 
 	protected boolean shouldBurnInDay() {
 		return false;
-	}
-
-	protected void dropSpecialItems(DamageSource source, int looting, boolean recentlyHitIn) {
-		super.dropSpecialItems(source, looting, recentlyHitIn);
-		ItemEntity itementity = this.entityDropItem(DoomItems.ARGENT_ENERGY.get());
-		if (itementity != null) {
-			itementity.setNoDespawn();
-			itementity.setGlowing(true);
-		}
 	}
 
 	@Override
