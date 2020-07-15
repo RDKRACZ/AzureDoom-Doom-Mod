@@ -45,7 +45,7 @@ public class LootHandler {
 
 	@SuppressWarnings("rawtypes")
 	private static LootEntry.Builder getInjectEntry(String name, int weight) {
-		ResourceLocation table = new ResourceLocation(DoomMod.MODID, name);
+		ResourceLocation table = new ResourceLocation(DoomMod.MODID, "chests/" + name);
 		return TableLootEntry.builder(table).weight(weight);
 	}
 }

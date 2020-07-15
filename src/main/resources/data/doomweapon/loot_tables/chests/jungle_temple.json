@@ -23,10 +23,6 @@
                     "type": "item",
                     "weight": 1,
                     "name": "doomweapon:powersphere"
-                },
-                {
-                    "type": "empty",
-                    "weight": 96
                 }
             ]
         }
