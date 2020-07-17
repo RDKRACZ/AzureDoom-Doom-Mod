@@ -1,0 +1,22 @@
+{
+	"result": {
+		"item": "doomweapon:rocket"
+	},
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		" # ",
+		" $ ",
+		"#m#"
+	],
+	"key": {
+		"#": {
+			"item": "minecraft:iron_ingot"
+		},
+		"$": {
+			"item": "doomweapon:argent_energy"
+		},
+		"m": {
+			"item": "minecraft:tnt"
+		}
+	}
+}

@@ -19,7 +19,7 @@ import net.minecraft.util.math.BlockPos;
 public class EnergyCellRender extends EntityRenderer<EnergyCellEntity> {
 
 	private static final ResourceLocation ENERGY_CELL_TEXTURE = new ResourceLocation(DoomMod.MODID,
-			"textures/entity/projectiles/bfg.png");
+			"textures/entity/projectiles/plasma_ball.png");
 	private static final RenderType field_229044_e_ = RenderType.getEntityCutoutNoCull(ENERGY_CELL_TEXTURE);
 
 	public EnergyCellRender(EntityRendererManager renderManagerIn) {
@@ -38,7 +38,7 @@ public class EnergyCellRender extends EntityRenderer<EnergyCellEntity> {
 	public void render(EnergyCellEntity entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn,
 			IRenderTypeBuffer bufferIn, int packedLightIn) {
 		matrixStackIn.push();
-		matrixStackIn.scale(4.0F, 4.0F, 4.0F);
+		matrixStackIn.scale(1.0F, 1.0F, 1.0F);
 		matrixStackIn.rotate(this.renderManager.getCameraOrientation());
 		matrixStackIn.rotate(Vector3f.YP.rotationDegrees(180.0F));
 		MatrixStack.Entry matrixstack$entry = matrixStackIn.getLast();

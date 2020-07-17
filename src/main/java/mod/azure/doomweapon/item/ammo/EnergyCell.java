@@ -28,7 +28,7 @@ public class EnergyCell extends ArrowItem {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new StringTextComponent("\u00A7o" + "Used for the BFG."));
+		tooltip.add(new StringTextComponent("\u00A7o" + "Used for the Plasma Gun."));
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 

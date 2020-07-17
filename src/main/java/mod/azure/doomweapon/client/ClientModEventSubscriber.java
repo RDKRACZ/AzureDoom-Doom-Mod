@@ -24,14 +24,25 @@ import mod.azure.doomweapon.client.render.SpiderdemonRender;
 import mod.azure.doomweapon.client.render.UnwillingRender;
 import mod.azure.doomweapon.client.render.ZombiemanRender;
 import mod.azure.doomweapon.client.render.projectiles.ArgentBoltRender;
+import mod.azure.doomweapon.client.render.projectiles.BFGCellRender;
 import mod.azure.doomweapon.client.render.projectiles.BulletsRender;
 import mod.azure.doomweapon.client.render.projectiles.ChaingunBulletRender;
 import mod.azure.doomweapon.client.render.projectiles.EnergyCellRender;
+import mod.azure.doomweapon.client.render.projectiles.RocketRender;
 import mod.azure.doomweapon.client.render.projectiles.ShotgunShellRender;
 import mod.azure.doomweapon.util.registry.ModEntityTypes;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
+import net.minecraft.item.ArmorItem;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
@@ -44,6 +55,8 @@ public class ClientModEventSubscriber {
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ARGENT_BOLT.get(), ArgentBoltRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ENERGY_CELL.get(), EnergyCellRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BULLETS.get(), BulletsRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BFG_CELL.get(), BFGCellRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ROCKET.get(), RocketRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.CHAINGUN_BULLET.get(),
 				ChaingunBulletRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.IMP.get(), ImpRender::new);
@@ -71,6 +84,46 @@ public class ClientModEventSubscriber {
 				PossessedScientistRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.POSSESSEDSOLDIER.get(),
 				PossessedSoldierRender::new);
+	}
+
+	@Mod.EventBusSubscriber(value = Dist.CLIENT, modid = DoomMod.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+	public static class ClientEvents {
+		private static boolean isAboutToBreak(ItemStack stack) {
+			return stack.isDamageable() && (stack.getDamage() + 1) >= stack.getMaxDamage();
+		}
+
+		public static int adjustedDurability(ItemStack stack, int remaining) {
+			int unbreaking = EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack);
+
+			double chance = 1.0 / (unbreaking + 1);
+			if (stack.getItem() instanceof ArmorItem) {
+				chance *= 0.4;
+			}
+
+			double durability_coef = 1 / chance;
+
+			return MathHelper.floor(remaining * durability_coef);
+		}
+
+		@SubscribeEvent
+		public static void itemInteractEvent(AttackEntityEvent event) {
+			if (event.getPlayer().isCreative())
+				return;
+			ItemStack stack = event.getPlayer().getHeldItemMainhand();
+			if (isAboutToBreak(stack)) {
+				event.setCanceled(true);
+			}
+		}
+
+		@SubscribeEvent
+		public static void itemInteractEvent(PlayerInteractEvent.LeftClickBlock event) {
+			if (event.getPlayer().isCreative())
+				return;
+			ItemStack stack = event.getItemStack();
+			if (isAboutToBreak(stack)) {
+				event.setUseItem(Event.Result.DENY);
+			}
+		}
 	}
 
 }

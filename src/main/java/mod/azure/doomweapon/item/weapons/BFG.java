@@ -3,8 +3,8 @@ package mod.azure.doomweapon.item.weapons;
 import java.util.function.Predicate;
 
 import mod.azure.doomweapon.DoomMod;
-import mod.azure.doomweapon.entity.projectiles.EnergyCellEntity;
-import mod.azure.doomweapon.item.ammo.EnergyCell;
+import mod.azure.doomweapon.entity.projectiles.BFGEntity;
+import mod.azure.doomweapon.item.ammo.BFGCell;
 import mod.azure.doomweapon.util.registry.DoomItems;
 import mod.azure.doomweapon.util.registry.ModSoundEvents;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -64,15 +64,15 @@ public class BFG extends ShootableItem {
 
 			if (!itemstack.isEmpty() || flag) {
 				if (itemstack.isEmpty()) {
-					itemstack = new ItemStack(DoomItems.ENERGY_CELLS.get());
+					itemstack = new ItemStack(DoomItems.BFG_CELL.get());
 				}
 
-				boolean flag1 = playerentity.abilities.isCreativeMode || (itemstack.getItem() instanceof EnergyCell
-						&& ((EnergyCell) itemstack.getItem()).isInfinite(itemstack, stack, playerentity));
+				boolean flag1 = playerentity.abilities.isCreativeMode || (itemstack.getItem() instanceof BFGCell
+						&& ((BFGCell) itemstack.getItem()).isInfinite(itemstack, stack, playerentity));
 				if (!worldIn.isRemote) {
-					EnergyCell arrowitem = (EnergyCell) (itemstack.getItem() instanceof EnergyCell ? itemstack.getItem()
-							: DoomItems.ENERGY_CELLS.get());
-					EnergyCellEntity abstractarrowentity = arrowitem.createArrow(worldIn, itemstack, playerentity);
+					BFGCell arrowitem = (BFGCell) (itemstack.getItem() instanceof BFGCell ? itemstack.getItem()
+							: DoomItems.BFG_CELL.get());
+					BFGEntity abstractarrowentity = arrowitem.createArrow(worldIn, itemstack, playerentity);
 					abstractarrowentity = customeArrow(abstractarrowentity);
 					abstractarrowentity.shoot(playerentity, playerentity.rotationPitch, playerentity.rotationYaw, 0.0F,
 							0.25F * 3.0F, 1.0F);
@@ -82,9 +82,9 @@ public class BFG extends ShootableItem {
 					stack.damageItem(1, playerentity, (p_220009_1_) -> {
 						p_220009_1_.sendBreakAnimation(playerentity.getActiveHand());
 					});
-					if (flag1 || playerentity.abilities.isCreativeMode
-							&& (itemstack.getItem() == DoomItems.ENERGY_CELLS.get()
-									|| itemstack.getItem() == DoomItems.ENERGY_CELLS.get())) {
+					if (flag1
+							|| playerentity.abilities.isCreativeMode && (itemstack.getItem() == DoomItems.BFG_CELL.get()
+									|| itemstack.getItem() == DoomItems.BFG_CELL.get())) {
 						abstractarrowentity.pickupStatus = AbstractArrowEntity.PickupStatus.DISALLOWED;
 					}
 					worldIn.addEntity(abstractarrowentity);
@@ -114,7 +114,7 @@ public class BFG extends ShootableItem {
 				itemstack = itemstack1.copy();
 			}
 			if (itemstack.isEmpty() && flag) {
-				itemstack = new ItemStack(DoomItems.ENERGY_CELLS.get());
+				itemstack = new ItemStack(DoomItems.BFG_CELL.get());
 				itemstack1 = itemstack.copy();
 			}
 
@@ -131,7 +131,7 @@ public class BFG extends ShootableItem {
 		if (p_220023_2_.isEmpty()) {
 			return false;
 		} else {
-			boolean flag = p_220023_4_ && p_220023_2_.getItem() instanceof EnergyCell;
+			boolean flag = p_220023_4_ && p_220023_2_.getItem() instanceof BFGCell;
 			ItemStack itemstack;
 			if (!flag && !p_220023_4_ && !p_220023_3_) {
 				itemstack = p_220023_2_.split(1);
@@ -207,10 +207,10 @@ public class BFG extends ShootableItem {
 
 	@Override
 	public Predicate<ItemStack> getAmmoPredicate() {
-		return itemStack -> itemStack.getItem() instanceof EnergyCell;
+		return itemStack -> itemStack.getItem() instanceof BFGCell;
 	}
 
-	public EnergyCellEntity customeArrow(EnergyCellEntity arrow) {
+	public BFGEntity customeArrow(BFGEntity arrow) {
 		return arrow;
 	}
 }

@@ -5,9 +5,11 @@ import mod.azure.doomweapon.item.ArgentEnergyItem;
 import mod.azure.doomweapon.item.E1M1MusicDisc;
 import mod.azure.doomweapon.item.UnopenedItem;
 import mod.azure.doomweapon.item.ammo.ArgentBolt;
+import mod.azure.doomweapon.item.ammo.BFGCell;
 import mod.azure.doomweapon.item.ammo.ChaingunAmmo;
 import mod.azure.doomweapon.item.ammo.ClipAmmo;
 import mod.azure.doomweapon.item.ammo.EnergyCell;
+import mod.azure.doomweapon.item.ammo.Rocket;
 import mod.azure.doomweapon.item.ammo.ShellAmmo;
 import mod.azure.doomweapon.item.armor.AstroDoomArmor;
 import mod.azure.doomweapon.item.armor.ClassicDoomArmor;
@@ -32,6 +34,7 @@ import mod.azure.doomweapon.item.eggs.ArchvileSpawnEgg;
 import mod.azure.doomweapon.item.eggs.BaronSpawnEgg;
 import mod.azure.doomweapon.item.eggs.CacodemonSpawnEgg;
 import mod.azure.doomweapon.item.eggs.ChaingunnerSpawnEgg;
+import mod.azure.doomweapon.item.eggs.Cyberdemon2016SpawnEgg;
 import mod.azure.doomweapon.item.eggs.CyberdemonSpawnEgg;
 import mod.azure.doomweapon.item.eggs.HellknightSpawnEgg;
 import mod.azure.doomweapon.item.eggs.IconofsinSpawnEgg;
@@ -65,6 +68,8 @@ import mod.azure.doomweapon.item.weapons.BFG;
 import mod.azure.doomweapon.item.weapons.Ballista;
 import mod.azure.doomweapon.item.weapons.Chaingun;
 import mod.azure.doomweapon.item.weapons.PistolItem;
+import mod.azure.doomweapon.item.weapons.PlasmaGun;
+import mod.azure.doomweapon.item.weapons.RocketLauncher;
 import mod.azure.doomweapon.item.weapons.Shotgun;
 import mod.azure.doomweapon.item.weapons.SuperShotgun;
 import mod.azure.doomweapon.item.weapons.SwordCrucibleItem;
@@ -92,6 +97,10 @@ public class DoomItems {
 			() -> new ChaingunAmmo(new Item.Properties().group(DoomMod.DoomItemGroup), 10.0F));
 	public static final RegistryObject<Item> BULLETS = ITEMS.register("bullets",
 			() -> new ClipAmmo(new Item.Properties().group(DoomMod.DoomItemGroup), 1.2F));
+	public static final RegistryObject<Item> BFG_CELL = ITEMS.register("bfg_cell",
+			() -> new BFGCell(new Item.Properties().group(DoomMod.DoomItemGroup), 1.2F));
+	public static final RegistryObject<Item> ROCKET = ITEMS.register("rocket",
+			() -> new Rocket(new Item.Properties().group(DoomMod.DoomItemGroup), 1.2F));
 	// MISC
 	public static final RegistryObject<Item> ARGENT_ENERGY = ITEMS.register("argent_energy",
 			() -> new ArgentEnergyItem());
@@ -140,6 +149,8 @@ public class DoomItems {
 			() -> new ShotgunguySpawnEgg(16500000, 11998228));
 	public static final RegistryObject<Item> CYBERDEMON_SPAWN_EGG = ITEMS.register("cyberdemon_spawn_egg",
 			() -> new CyberdemonSpawnEgg(16500000, 11998228));
+	public static final RegistryObject<Item> CYBERDEMON2016_SPAWN_EGG = ITEMS.register("cyberdemon2016_spawn_egg",
+			() -> new Cyberdemon2016SpawnEgg(16500000, 11998228));
 	public static final RegistryObject<Item> ICON_SPAWN_EGG = ITEMS.register("icon_of_sin_spawn_egg",
 			() -> new IconofsinSpawnEgg(0x2800db, 0x4f7ff7));
 	public static final RegistryObject<Item> UNWILLING_SPAWN_EGG = ITEMS.register("unwilling_spawn_egg",
@@ -169,6 +180,10 @@ public class DoomItems {
 	public static final RegistryObject<Item> SSG = ITEMS.register("supershotgun", () -> new SuperShotgun());
 	public static final RegistryObject<Item> SG = ITEMS.register("shotgun", () -> new Shotgun());
 	public static final RegistryObject<Item> BFG = ITEMS.register("bfg9000", () -> new BFG());
+	public static final RegistryObject<Item> PLASMAGUN = ITEMS.register("plasmagun", () -> new PlasmaGun());
+	public static final RegistryObject<Item> ROCKETLAUNCHER = ITEMS.register("rocketlauncher",
+			() -> new RocketLauncher());
+//	public static final RegistryObject<Item> UNMAYKR = ITEMS.register("unmaykr", () -> new Unmaykr());
 	public static final RegistryObject<Item> BALLISTA = ITEMS.register("ballista", () -> new Ballista());
 	public static final RegistryObject<Item> CHAINGUN = ITEMS.register("chaingun", () -> new Chaingun());
 	public static final RegistryObject<Item> PISTOL = ITEMS.register("pistol", () -> new PistolItem());
