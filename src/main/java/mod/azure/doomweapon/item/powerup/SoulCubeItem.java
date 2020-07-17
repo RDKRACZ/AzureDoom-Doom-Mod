@@ -49,8 +49,4 @@ public class SoulCubeItem extends Item {
 			}
 		};
 	}
-
-	public static boolean isCharmInCuriosSlot(ItemStack charm, LivingEntity player) {
-		return CuriosApi.getCuriosHelper().findEquippedCurio(charm.getItem(), player).isPresent();
-	}
 }

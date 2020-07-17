@@ -3,6 +3,7 @@ package mod.azure.doomweapon.item.armor.skin;
 import mod.azure.doomweapon.client.models.BipedModelSkin;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.IArmorMaterial;
@@ -10,9 +11,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.extensions.IForgeItem;
 
 //created by Marctron
-public class SkinArmor extends ArmorItem {
+public class SkinArmor extends ArmorItem implements IForgeItem {
 
 	public SkinArmor(IArmorMaterial materialIn, EquipmentSlotType slot, Properties builder) {
 		super(materialIn, slot, builder);
@@ -68,4 +70,12 @@ public class SkinArmor extends ArmorItem {
 		}
 		return null;
 	}
+
+	@OnlyIn(Dist.CLIENT)
+	public void renderHelmetOverlay(ItemStack stack, PlayerEntity player, int width, int height, float partialTicks) {
+		if (stack.getItem() instanceof ArmorItem) {
+
+		}
+	}
+
 }
