@@ -34,6 +34,7 @@ import mod.azure.doomweapon.item.eggs.ArchvileSpawnEgg;
 import mod.azure.doomweapon.item.eggs.BaronSpawnEgg;
 import mod.azure.doomweapon.item.eggs.CacodemonSpawnEgg;
 import mod.azure.doomweapon.item.eggs.ChaingunnerSpawnEgg;
+import mod.azure.doomweapon.item.eggs.Cyberdemon2016SpawnEgg;
 import mod.azure.doomweapon.item.eggs.CyberdemonSpawnEgg;
 import mod.azure.doomweapon.item.eggs.HellknightSpawnEgg;
 import mod.azure.doomweapon.item.eggs.IconofsinSpawnEgg;
@@ -147,6 +148,8 @@ public class DoomItems {
 			() -> new ShotgunguySpawnEgg(16500000, 11998228));
 	public static final RegistryObject<Item> CYBERDEMON_SPAWN_EGG = ITEMS.register("cyberdemon_spawn_egg",
 			() -> new CyberdemonSpawnEgg(16500000, 11998228));
+	public static final RegistryObject<Item> CYBERDEMON2016_SPAWN_EGG = ITEMS.register("cyberdemon2016_spawn_egg",
+			() -> new Cyberdemon2016SpawnEgg(16500000, 11998228));
 	public static final RegistryObject<Item> ICON_SPAWN_EGG = ITEMS.register("icon_of_sin_spawn_egg",
 			() -> new IconofsinSpawnEgg(0x2800db, 0x4f7ff7));
 	public static final RegistryObject<Item> UNWILLING_SPAWN_EGG = ITEMS.register("unwilling_spawn_egg",
