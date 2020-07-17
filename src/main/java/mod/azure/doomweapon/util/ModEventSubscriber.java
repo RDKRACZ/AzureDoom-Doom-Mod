@@ -36,10 +36,15 @@ import mod.azure.doomweapon.util.registry.ModEntityTypes;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryEntry;
@@ -122,6 +127,45 @@ public class ModEventSubscriber {
 	public static <T extends IForgeRegistryEntry<T>> T setup(final T entry, final ResourceLocation registryName) {
 		entry.setRegistryName(registryName);
 		return entry;
+	}
+
+	@Mod.EventBusSubscriber(modid = DoomMod.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+	public static class ItemEvents {
+		private static boolean swordBreak(ItemStack stack) {
+			return stack.isDamageable()
+					&& (stack.getDamage() + 1) >= new ItemStack(DoomItems.CRUCIBLESWORD.get()).getMaxDamage();
+		}
+
+		private static boolean axeBreak(ItemStack stack) {
+			return stack.isDamageable()
+					&& (stack.getDamage() + 1) >= new ItemStack(DoomItems.AXE_OPEN.get()).getMaxDamage();
+		}
+
+		@SubscribeEvent
+		public static void itemInteractEvent(AttackEntityEvent event) {
+			if (event.getPlayer().isCreative())
+				return;
+			ItemStack stack = event.getPlayer().getHeldItemMainhand();
+			if (swordBreak(stack)) {
+				event.setCanceled(true);
+			}
+			if (axeBreak(stack)) {
+				event.setCanceled(true);
+			}
+		}
+
+		@SubscribeEvent
+		public static void itemInteractEvent(PlayerInteractEvent.LeftClickBlock event) {
+			if (event.getPlayer().isCreative())
+				return;
+			ItemStack stack = event.getItemStack();
+			if (swordBreak(stack)) {
+				event.setUseItem(Event.Result.DENY);
+			}
+			if (axeBreak(stack)) {
+				event.setUseItem(Event.Result.DENY);
+			}
+		}
 	}
 
 }
