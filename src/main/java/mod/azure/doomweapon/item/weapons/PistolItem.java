@@ -28,7 +28,7 @@ import net.minecraft.world.World;
 public class PistolItem extends BowItem {
 
 	public PistolItem() {
-		super(new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1));
+		super(new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1).maxDamage(9000));
 		this.addPropertyOverride(new ResourceLocation("pull"), (p_210310_0_, p_210310_1_, p_210310_2_) -> {
 			if (p_210310_2_ == null) {
 				return 0.0F;

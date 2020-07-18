@@ -28,7 +28,7 @@ import net.minecraft.world.World;
 public class BFG extends ShootableItem {
 
 	public BFG() {
-		super(new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1));
+		super(new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1).maxDamage(9000));
 	}
 
 	@Override

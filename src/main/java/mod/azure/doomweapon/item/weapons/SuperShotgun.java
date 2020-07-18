@@ -48,7 +48,7 @@ public class SuperShotgun extends CrossbowItem {
 	private boolean isLoadingMiddle = false;
 
 	public SuperShotgun() {
-		super(new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1));
+		super(new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1).maxDamage(9000));
 		this.addPropertyOverride(new ResourceLocation("pull"), (p_220022_1_, p_220022_2_, p_220022_3_) -> {
 			if (p_220022_3_ != null && p_220022_1_.getItem() == this) {
 				return isCharged(p_220022_1_) ? 0.0F
