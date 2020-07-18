@@ -7,6 +7,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
@@ -17,6 +18,7 @@ import net.minecraftforge.fml.network.NetworkHooks;
 public class EnergyCellEntity extends AbstractArrowEntity {
 
 	private final Item referenceItem;
+	private int ticksInAir;
 
 	@SuppressWarnings("unchecked")
 	public EnergyCellEntity(EntityType<?> type, World world) {
@@ -30,7 +32,26 @@ public class EnergyCellEntity extends AbstractArrowEntity {
 	}
 
 	protected void func_225516_i_() {
-		this.remove();
+		++this.ticksInAir;
+		if (this.ticksInAir >= 600) {
+			this.remove();
+		}
+	}
+
+	@Override
+	public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
+		super.shoot(x, y, z, velocity, inaccuracy);
+		this.ticksInAir = 0;
+	}
+	
+	public void writeAdditional(CompoundNBT compound) {
+	      super.writeAdditional(compound);
+	      compound.putShort("life", (short)this.ticksInAir);
+	}
+	
+	public void readAdditional(CompoundNBT compound) {
+	      super.readAdditional(compound);
+	      this.ticksInAir = compound.getShort("life");
 	}
 
 	@Override
@@ -45,7 +66,16 @@ public class EnergyCellEntity extends AbstractArrowEntity {
 
 	@Override
 	public boolean hasNoGravity() {
-		return true;
+		if (this.isInWater()) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	@Override
+	public boolean isPushedByWater() {
+		return false;
 	}
 
 	@Override
