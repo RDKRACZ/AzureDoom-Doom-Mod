@@ -67,6 +67,7 @@ import mod.azure.doomweapon.item.weapons.AxeMarauderItem;
 import mod.azure.doomweapon.item.weapons.BFG;
 import mod.azure.doomweapon.item.weapons.Ballista;
 import mod.azure.doomweapon.item.weapons.Chaingun;
+import mod.azure.doomweapon.item.weapons.Chainsaw;
 import mod.azure.doomweapon.item.weapons.PistolItem;
 import mod.azure.doomweapon.item.weapons.PlasmaGun;
 import mod.azure.doomweapon.item.weapons.RocketLauncher;
@@ -74,10 +75,8 @@ import mod.azure.doomweapon.item.weapons.Shotgun;
 import mod.azure.doomweapon.item.weapons.SuperShotgun;
 import mod.azure.doomweapon.item.weapons.SwordCrucibleItem;
 import mod.azure.doomweapon.util.enums.DoomArmorMaterial;
-import mod.azure.doomweapon.util.enums.DoomTier;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
-import net.minecraft.item.SwordItem;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -106,8 +105,6 @@ public class DoomItems {
 			() -> new ArgentEnergyItem());
 	public static final RegistryObject<Item> E1M1_MUSIC_DISC = ITEMS.register("e1m1_music_disc",
 			() -> new E1M1MusicDisc());
-	public static final RegistryObject<Item> GAS_BARREL = ITEMS.register("gas_barrel",
-			() -> new Item(new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(16)));
 	public static final RegistryObject<Item> INMORTAL = ITEMS.register("inmortalsphere",
 			() -> new InmortalSphereItem());
 	public static final RegistryObject<Item> INVISIBLE = ITEMS.register("invisiblesphere",
@@ -169,8 +166,7 @@ public class DoomItems {
 			() -> new ArgentPickaxe());
 	public static final RegistryObject<Item> ARGENT_SHOVEL = ITEMS.register("argent_shovel", () -> new ArgentShovel());
 	public static final RegistryObject<Item> ARGENT_SWORD = ITEMS.register("argent_sword", () -> new ArgentSword());
-	public static final RegistryObject<Item> CHAINSAW = ITEMS.register("chainsaw", () -> new SwordItem(DoomTier.DOOM, 6,
-			-2.4F, new Item.Properties().group(DoomMod.DoomItemGroup).maxDamage(1)));
+	public static final RegistryObject<Item> CHAINSAW = ITEMS.register("chainsaw", () -> new Chainsaw());
 	public static final RegistryObject<Item> SWORD_CLOSED = ITEMS.register("cruciblesword_closed",
 			() -> new UnopenedItem());
 	public static final RegistryObject<Item> AXE_OPEN = ITEMS.register("axe_marauder_open",
