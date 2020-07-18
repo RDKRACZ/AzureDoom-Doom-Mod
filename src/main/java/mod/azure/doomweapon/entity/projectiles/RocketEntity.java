@@ -44,6 +44,20 @@ public class RocketEntity extends AbstractArrowEntity {
 	}
 
 	@Override
+	public boolean hasNoGravity() {
+		if (this.isInWater()) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	@Override
+	public boolean isPushedByWater() {
+		return false;
+	}
+
+	@Override
 	protected void onHit(RayTraceResult result) {
 		super.onHit(result);
 		if (!this.world.isRemote) {

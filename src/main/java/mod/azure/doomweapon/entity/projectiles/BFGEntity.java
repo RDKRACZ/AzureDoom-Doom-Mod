@@ -52,7 +52,16 @@ public class BFGEntity extends AbstractArrowEntity {
 
 	@Override
 	public boolean hasNoGravity() {
-		return true;
+		if (this.isInWater()) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	@Override
+	public boolean isPushedByWater() {
+		return false;
 	}
 
 	protected IParticleData getParticle() {
