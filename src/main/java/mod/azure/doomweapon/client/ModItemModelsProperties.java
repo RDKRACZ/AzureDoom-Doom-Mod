@@ -1,5 +1,6 @@
 package mod.azure.doomweapon.client;
 
+import mod.azure.doomweapon.item.weapons.Ballista;
 import mod.azure.doomweapon.item.weapons.SuperShotgun;
 import mod.azure.doomweapon.util.registry.DoomItems;
 import net.minecraft.item.ItemModelsProperties;
@@ -30,6 +31,28 @@ public class ModItemModelsProperties {
 		ItemModelsProperties.func_239418_a_(DoomItems.SSG.get(), new ResourceLocation("charged"),
 				(p_239425_0_, p_239425_1_, p_239425_2_) -> {
 					return p_239425_2_ != null && SuperShotgun.isCharged(p_239425_0_) ? 1.0F : 0.0F;
+				});
+		// Ballista
+		ItemModelsProperties.func_239418_a_(DoomItems.BALLISTA.get(), new ResourceLocation("pull"),
+				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
+					if (p_239427_2_ == null) {
+						return 0.0F;
+					} else {
+						return Ballista.isCharged(p_239427_0_) ? 0.0F
+								: (float) (p_239427_0_.getUseDuration() - p_239427_2_.getItemInUseCount())
+										/ (float) Ballista.getChargeTime(p_239427_0_);
+					}
+				});
+		ItemModelsProperties.func_239418_a_(DoomItems.BALLISTA.get(), new ResourceLocation("pulling"),
+				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
+					return p_239426_2_ != null && p_239426_2_.isHandActive()
+							&& p_239426_2_.getActiveItemStack() == p_239426_0_ && !Ballista.isCharged(p_239426_0_)
+									? 1.0F
+									: 0.0F;
+				});
+		ItemModelsProperties.func_239418_a_(DoomItems.BALLISTA.get(), new ResourceLocation("charged"),
+				(p_239425_0_, p_239425_1_, p_239425_2_) -> {
+					return p_239425_2_ != null && Ballista.isCharged(p_239425_0_) ? 1.0F : 0.0F;
 				});
 		// ShotGun
 		ItemModelsProperties.func_239418_a_(DoomItems.SG.get(), new ResourceLocation("pull"),
