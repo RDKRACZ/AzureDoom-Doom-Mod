@@ -105,8 +105,6 @@ public class DoomItems {
 			() -> new ArgentEnergyItem());
 	public static final RegistryObject<Item> E1M1_MUSIC_DISC = ITEMS.register("e1m1_music_disc",
 			() -> new E1M1MusicDisc());
-	public static final RegistryObject<Item> GAS_BARREL = ITEMS.register("gas_barrel",
-			() -> new Item(new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(16)));
 	public static final RegistryObject<Item> INMORTAL = ITEMS.register("inmortalsphere",
 			() -> new InmortalSphereItem());
 	public static final RegistryObject<Item> INVISIBLE = ITEMS.register("invisiblesphere",

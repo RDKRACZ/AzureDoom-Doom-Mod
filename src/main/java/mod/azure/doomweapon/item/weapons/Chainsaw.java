@@ -8,7 +8,8 @@ import net.minecraft.item.SwordItem;
 public class Chainsaw extends SwordItem {
 
 	public Chainsaw() {
-		super(DoomTier.DOOM, 4, -2.4F, new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1));
+		super(DoomTier.DOOM, 2, -2.4F,
+				new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1).maxDamage(600));
 	}
 
 }
