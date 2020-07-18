@@ -48,7 +48,7 @@ public class SuperShotgun extends CrossbowItem implements IVanishable {
 	private boolean isLoadingMiddle = false;
 
 	public SuperShotgun() {
-		super(new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1));
+		super(new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1).maxDamage(9000));
 	}
 
 	@Override

@@ -26,7 +26,7 @@ public class SwordCrucibleItem extends SwordItem {
 
 	public SwordCrucibleItem() {
 		super(DoomTier.DOOM, 12, -2.4F,
-				new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1).maxDamage(300));
+				new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1).maxDamage(9000));
 	}
 
 	@Override

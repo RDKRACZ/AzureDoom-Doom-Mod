@@ -22,7 +22,7 @@ public class AxeMarauderItem extends AxeItem {
 
 	public AxeMarauderItem() {
 		super(DoomTier.DOOM, 12, -2.4F,
-				new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1).maxDamage(300));
+				new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1).maxDamage(9000));
 	}
 
 	@Override

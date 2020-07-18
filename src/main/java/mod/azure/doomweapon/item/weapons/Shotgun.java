@@ -28,7 +28,7 @@ import net.minecraft.world.World;
 public class Shotgun extends ShootableItem implements IVanishable {
 
 	public Shotgun() {
-		super(new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1));
+		super(new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1).maxDamage(9000));
 	}
 
 	@Override

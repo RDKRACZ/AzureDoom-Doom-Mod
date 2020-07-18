@@ -28,7 +28,7 @@ import net.minecraftforge.common.extensions.IForgeItem;
 public class PlasmaGun extends ShootableItem implements IForgeItem {
 
 	public PlasmaGun() {
-		super(new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1));
+		super(new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1).maxDamage(9000));
 	}
 
 	@Override

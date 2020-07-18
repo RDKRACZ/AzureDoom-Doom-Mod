@@ -28,7 +28,7 @@ import net.minecraft.world.World;
 public class BFG extends ShootableItem {
 
 	public BFG() {
-		super(new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1));
+		super(new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1).maxDamage(9000));
 	}
 
 	@Override
@@ -82,8 +82,8 @@ public class BFG extends ShootableItem {
 					stack.damageItem(1, playerentity, (p_220009_1_) -> {
 						p_220009_1_.sendBreakAnimation(playerentity.getActiveHand());
 					});
-					if (flag1 || playerentity.abilities.isCreativeMode
-							&& (itemstack.getItem() == DoomItems.BFG_CELL.get()
+					if (flag1
+							|| playerentity.abilities.isCreativeMode && (itemstack.getItem() == DoomItems.BFG_CELL.get()
 									|| itemstack.getItem() == DoomItems.BFG_CELL.get())) {
 						abstractarrowentity.pickupStatus = AbstractArrowEntity.PickupStatus.DISALLOWED;
 					}

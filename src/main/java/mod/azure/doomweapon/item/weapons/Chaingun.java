@@ -27,7 +27,7 @@ import net.minecraft.world.World;
 public class Chaingun extends ShootableItem {
 
 	public Chaingun() {
-		super(new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1));
+		super(new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1).maxDamage(9000));
 	}
 
 	@Override

@@ -26,7 +26,7 @@ import net.minecraft.world.World;
 public class RocketLauncher extends ShootableItem {
 
 	public RocketLauncher() {
-		super(new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1));
+		super(new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1).maxDamage(9000));
 	}
 
 	@Override
