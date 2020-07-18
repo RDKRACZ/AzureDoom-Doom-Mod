@@ -25,7 +25,7 @@ public class BipedModelSkin<T extends LivingEntity> extends BipedModel<T> {
 		super(modelSize, 0.0F, 64, 64);
 		this.bipedLeftArmwear = new ModelRenderer(this, 48, 48);
 		this.bipedLeftArmwear.addBox(-1.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, modelSize + 0.26F);
-		bipedLeftArmwear.setRotationPoint(0.0F, 0.0F, 0.0F);
+		this.bipedLeftArmwear.setRotationPoint(0.0F, 0.0F, 0.0F);
 		this.bipedRightArmwear = new ModelRenderer(this, 40, 32);
 		this.bipedRightArmwear.addBox(-3.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, modelSize + 0.26F);
 		this.bipedRightArmwear.setRotationPoint(0.0F, 0.0F, 0.0F);
