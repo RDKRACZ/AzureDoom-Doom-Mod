@@ -68,38 +68,29 @@ public class ModEventSubscriber {
 
 	@Mod.EventBusSubscriber(modid = DoomMod.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 	public static class ItemEvents {
-		private static boolean swordBreak(ItemStack stack) {
+		private static boolean noBreak(ItemStack stack) {
 			return stack.isDamageable()
-					&& (stack.getDamage() + 1) >= new ItemStack(DoomItems.CRUCIBLESWORD.get()).getMaxDamage();
-		}
-
-		private static boolean axeBreak(ItemStack stack) {
-			return stack.isDamageable()
-					&& (stack.getDamage() + 1) >= new ItemStack(DoomItems.AXE_OPEN.get()).getMaxDamage();
+					&& (stack.getDamage() + 1) >= new ItemStack(DoomItems.CRUCIBLESWORD.get()).getMaxDamage()
+					|| stack.isDamageable()
+							&& (stack.getDamage() + 1) >= new ItemStack(DoomItems.AXE_OPEN.get()).getMaxDamage();
 		}
 
 		@SubscribeEvent
-		public static void itemInteractEvent(AttackEntityEvent event) {
+		public static void itemAttackEvent(AttackEntityEvent event) {
 			if (event.getPlayer().isCreative())
 				return;
 			ItemStack stack = event.getPlayer().getHeldItemMainhand();
-			if (swordBreak(stack)) {
-				event.setCanceled(true);
-			}
-			if (axeBreak(stack)) {
+			if (noBreak(stack)) {
 				event.setCanceled(true);
 			}
 		}
 
 		@SubscribeEvent
-		public static void itemInteractEvent(PlayerInteractEvent.LeftClickBlock event) {
+		public static void itemBlockEvent(PlayerInteractEvent.LeftClickBlock event) {
 			if (event.getPlayer().isCreative())
 				return;
 			ItemStack stack = event.getItemStack();
-			if (swordBreak(stack)) {
-				event.setUseItem(Event.Result.DENY);
-			}
-			if (axeBreak(stack)) {
+			if (noBreak(stack)) {
 				event.setUseItem(Event.Result.DENY);
 			}
 		}

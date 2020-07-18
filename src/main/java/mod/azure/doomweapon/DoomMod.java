@@ -1,20 +1,15 @@
 package mod.azure.doomweapon;
 
-import java.util.UUID;
-
 import mod.azure.doomweapon.util.LootHandler;
 import mod.azure.doomweapon.util.registry.DoomItems;
 import mod.azure.doomweapon.util.registry.ModEntityTypes;
 import mod.azure.doomweapon.util.registry.ModSoundEvents;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -58,13 +53,4 @@ public class DoomMod {
 			return true;
 		}
 	}).setBackgroundImageName("item_search.png");
-
-	@SubscribeEvent
-	public static void entityJoin(EntityJoinWorldEvent event) {
-		if (event.getEntity() instanceof PlayerEntity && UUID.fromString("fbcf9922-df24-49bb-8f0f-d2ec6f5a3232")
-				.equals(((PlayerEntity) event.getEntity()).getUniqueID())) {
-			// Please Note This is a joke and does nothing. It was a joke about landmaster
-			// and would only affect myself.
-		}
-	}
 }
