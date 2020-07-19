@@ -20,13 +20,9 @@ import net.minecraft.entity.ai.goal.HurtByTargetGoal;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.monster.EndermanEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.IPacket;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
@@ -39,9 +35,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 public class ArchvileEntity extends DemonEntity {
-
-	private static final DataParameter<Boolean> field_226535_bx_ = EntityDataManager.createKey(EndermanEntity.class,
-			DataSerializers.BOOLEAN);
 
 	public ArchvileEntity(EntityType<ArchvileEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
@@ -166,16 +159,8 @@ public class ArchvileEntity extends DemonEntity {
 		return ModSoundEvents.ARCHVILE_DEATH.get();
 	}
 
-	public boolean func_226537_et_() {
-		return this.dataManager.get(field_226535_bx_);
-	}
-
-	public void func_226538_eu_() {
-		this.dataManager.set(field_226535_bx_, true);
-	}
-
 	static class FindPlayerGoal extends NearestAttackableTargetGoal<PlayerEntity> {
-		private final ArchvileEntity enderman;
+		private final ArchvileEntity archvile;
 		/** The player */
 		private PlayerEntity player;
 		private int aggroTime;
@@ -183,24 +168,23 @@ public class ArchvileEntity extends DemonEntity {
 		private final EntityPredicate field_220791_m;
 		private final EntityPredicate field_220792_n = (new EntityPredicate()).setLineOfSiteRequired();
 
-		public FindPlayerGoal(ArchvileEntity endermanIn) {
-			super(endermanIn, PlayerEntity.class, false);
-			this.enderman = endermanIn;
+		public FindPlayerGoal(ArchvileEntity archvileIn) {
+			super(archvileIn, PlayerEntity.class, false);
+			this.archvile = archvileIn;
 			this.field_220791_m = (new EntityPredicate()).setDistance(this.getTargetDistance())
 					.setCustomPredicate((p_220790_1_) -> {
-						return endermanIn.shouldAttackPlayer((PlayerEntity) p_220790_1_);
+						return archvileIn.shouldAttackPlayer((PlayerEntity) p_220790_1_);
 					});
 		}
 
 		public boolean shouldExecute() {
-			this.player = this.enderman.world.getClosestPlayer(this.field_220791_m, this.enderman);
+			this.player = this.archvile.world.getClosestPlayer(this.field_220791_m, this.archvile);
 			return this.player != null;
 		}
 
 		public void startExecuting() {
 			this.aggroTime = 5;
 			this.teleportTime = 0;
-			this.enderman.func_226538_eu_();
 		}
 
 		public void resetTask() {
@@ -210,14 +194,14 @@ public class ArchvileEntity extends DemonEntity {
 
 		public boolean shouldContinueExecuting() {
 			if (this.player != null) {
-				if (!this.enderman.shouldAttackPlayer(this.player)) {
+				if (!this.archvile.shouldAttackPlayer(this.player)) {
 					return false;
 				} else {
-					this.enderman.faceEntity(this.player, 10.0F, 10.0F);
+					this.archvile.faceEntity(this.player, 10.0F, 10.0F);
 					return true;
 				}
 			} else {
-				return this.nearestTarget != null && this.field_220792_n.canTarget(this.enderman, this.nearestTarget)
+				return this.nearestTarget != null && this.field_220792_n.canTarget(this.archvile, this.nearestTarget)
 						? true
 						: super.shouldContinueExecuting();
 			}
@@ -231,15 +215,15 @@ public class ArchvileEntity extends DemonEntity {
 					super.startExecuting();
 				}
 			} else {
-				if (this.nearestTarget != null && !this.enderman.isPassenger()) {
-					if (this.enderman.shouldAttackPlayer((PlayerEntity) this.nearestTarget)) {
-						if (this.nearestTarget.getDistanceSq(this.enderman) < 16.0D) {
-							this.enderman.teleportRandomly();
+				if (this.nearestTarget != null && !this.archvile.isPassenger()) {
+					if (this.archvile.shouldAttackPlayer((PlayerEntity) this.nearestTarget)) {
+						if (this.nearestTarget.getDistanceSq(this.archvile) < 16.0D) {
+							this.archvile.teleportRandomly();
 						}
 
 						this.teleportTime = 0;
-					} else if (this.nearestTarget.getDistanceSq(this.enderman) > 256.0D && this.teleportTime++ >= 30
-							&& this.enderman.teleportToEntity(this.nearestTarget)) {
+					} else if (this.nearestTarget.getDistanceSq(this.archvile) > 256.0D && this.teleportTime++ >= 30
+							&& this.archvile.teleportToEntity(this.nearestTarget)) {
 						this.teleportTime = 0;
 					}
 				}
@@ -251,30 +235,30 @@ public class ArchvileEntity extends DemonEntity {
 	}
 
 	static class StareGoal extends Goal {
-		private final ArchvileEntity enderman;
+		private final ArchvileEntity archvile;
 		private LivingEntity targetPlayer;
 
-		public StareGoal(ArchvileEntity endermanIn) {
-			this.enderman = endermanIn;
+		public StareGoal(ArchvileEntity archvileIn) {
+			this.archvile = archvileIn;
 			this.setMutexFlags(EnumSet.of(Goal.Flag.JUMP, Goal.Flag.MOVE));
 		}
 
 		public boolean shouldExecute() {
-			this.targetPlayer = this.enderman.getAttackTarget();
+			this.targetPlayer = this.archvile.getAttackTarget();
 			if (!(this.targetPlayer instanceof PlayerEntity)) {
 				return false;
 			} else {
-				double d0 = this.targetPlayer.getDistanceSq(this.enderman);
-				return d0 > 256.0D ? false : this.enderman.shouldAttackPlayer((PlayerEntity) this.targetPlayer);
+				double d0 = this.targetPlayer.getDistanceSq(this.archvile);
+				return d0 > 256.0D ? false : this.archvile.shouldAttackPlayer((PlayerEntity) this.targetPlayer);
 			}
 		}
 
 		public void startExecuting() {
-			this.enderman.getNavigator().clearPath();
+			this.archvile.getNavigator().clearPath();
 		}
 
 		public void tick() {
-			this.enderman.getLookController().setLookPosition(this.targetPlayer.getPosX(),
+			this.archvile.getLookController().setLookPosition(this.targetPlayer.getPosX(),
 					this.targetPlayer.getPosYEye(), this.targetPlayer.getPosZ());
 		}
 	}
