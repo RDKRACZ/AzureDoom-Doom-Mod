@@ -18,7 +18,7 @@ apply plugin: "com.wynprice.cursemaven"
 import groovy.json.JsonSlurper
 import groovy.json.JsonOutput
 
-version = "2.3.5"
+version = "2.3.6"
 group = "mod.azure.doomweapon"
 archivesBaseName = "AzureDooms-Doom-Mod-1.15.2"
 
@@ -80,6 +80,8 @@ dependencies {
 	compile fg.deobf("curse.maven:JEI:2866141")
 	compile fg.deobf("curse.maven:GS:2984788")
 	compile fg.deobf("curse.maven:SD:2996966")
+	compile fg.deobf("curse.maven:EN:3003127")
+	compile fg.deobf("curse.maven:AC:2980113")
 }
 
 jar {
