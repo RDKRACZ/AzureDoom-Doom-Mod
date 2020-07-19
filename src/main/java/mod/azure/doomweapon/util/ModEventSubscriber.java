@@ -9,6 +9,7 @@ import mod.azure.doomweapon.item.ammo.EnergyCell;
 import mod.azure.doomweapon.item.ammo.Rocket;
 import mod.azure.doomweapon.item.ammo.ShellAmmo;
 import mod.azure.doomweapon.util.registry.DoomItems;
+import mod.azure.doomweapon.util.registry.ExtraModSpawns;
 import mod.azure.doomweapon.util.registry.ModEntitySpawn;
 import mod.azure.doomweapon.util.registry.ModEntityTypes;
 import net.minecraft.entity.EntityType;
@@ -20,6 +21,7 @@ import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -55,6 +57,9 @@ public class ModEventSubscriber {
 				ModEntityTypes.POSSESSEDSCIENTIST.get(), ModEntityTypes.ZOMBIEMAN.get());
 		ModEntitySpawn.registerEntityWorldSpawns();
 		ModEntitySpawn.EntitySpawnPlacementRegistry();
+		if (ModList.get().isLoaded("extendednether")) {
+			ExtraModSpawns.registerEntityModWorldSpawns();
+		}
 	}
 
 	public static <T extends IForgeRegistryEntry<T>> T setup(final T entry, final String name) {
