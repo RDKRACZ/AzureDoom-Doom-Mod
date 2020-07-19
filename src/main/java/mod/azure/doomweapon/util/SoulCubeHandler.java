@@ -86,6 +86,6 @@ public class SoulCubeHandler {
 		livingEntity.setHealth(20.0F);
 		livingEntity.addPotionEffect(new EffectInstance(Effects.RESISTANCE, 100, 4));
 		livingEntity.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 100, 4));
-		livingEntity.world.setEntityState(livingEntity, (byte) 35);
+		livingEntity.world.setEntityState(livingEntity, (byte) 36);
 	}
 }
