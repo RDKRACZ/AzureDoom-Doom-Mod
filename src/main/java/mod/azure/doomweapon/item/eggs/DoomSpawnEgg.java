@@ -1,24 +1,27 @@
 package mod.azure.doomweapon.item.eggs;
 
+import java.util.function.Supplier;
+
+import javax.annotation.Nullable;
+
 import mod.azure.doomweapon.DoomMod;
+import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.item.SpawnEggItem;
+import net.minecraft.nbt.CompoundNBT;
 
-public class DoomSpawnEgg extends Item {
+public class DoomSpawnEgg extends SpawnEggItem {
+	private Supplier<? extends EntityType<?>> typeGetter;
 
-	private final int primaryColor;
-	private final int secondaryColor;
-
-	public DoomSpawnEgg(int primaryColorIn, int secondaryColorIn) {
-		super(new Item.Properties().maxStackSize(1).group(DoomMod.DoomItemGroup));
-		this.primaryColor = primaryColorIn;
-		this.secondaryColor = secondaryColorIn;
+	public DoomSpawnEgg(Supplier<? extends EntityType<?>> typeIn, int primaryColorIn, int secondaryColorIn) {
+		super(null, primaryColorIn, secondaryColorIn,
+				new Item.Properties().maxStackSize(1).group(DoomMod.DoomItemGroup));
+		typeGetter = typeIn;
 	}
 
-	@OnlyIn(Dist.CLIENT)
-	public int getColor(int tintIndex) {
-		return tintIndex == 0 ? this.primaryColor : this.secondaryColor;
+	@Override
+	public EntityType<?> getType(@Nullable CompoundNBT p_208076_1_) {
+		return typeGetter.get();
 	}
 
 }
