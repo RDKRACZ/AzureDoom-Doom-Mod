@@ -5,6 +5,7 @@ import javax.annotation.Nullable;
 
 import mod.azure.doomweapon.util.registry.DoomItems;
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -25,6 +26,8 @@ import top.theillusivec4.curios.api.CuriosCapability;
 import top.theillusivec4.curios.api.type.capability.ICurio;
 
 public class SoulCubeHandler {
+
+	ClientWorld world;
 
 	@SubscribeEvent
 	public void attachCapabilities(AttachCapabilitiesEvent<ItemStack> evt) {
@@ -86,6 +89,6 @@ public class SoulCubeHandler {
 		livingEntity.setHealth(20.0F);
 		livingEntity.addPotionEffect(new EffectInstance(Effects.RESISTANCE, 100, 4));
 		livingEntity.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 100, 4));
-		livingEntity.world.setEntityState(livingEntity, (byte) 36);
+		livingEntity.world.setEntityState(livingEntity, (byte) 90);
 	}
 }
