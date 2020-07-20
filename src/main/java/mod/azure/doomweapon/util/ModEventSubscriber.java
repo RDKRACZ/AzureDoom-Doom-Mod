@@ -170,6 +170,8 @@ public class ModEventSubscriber {
 			BlockPos respawnPos = serverPlayer.func_241140_K_();
 			if (respawnPos == null && Config.SERVER.NEHTER_SPAWN.get()) {
 				SpawnHandler.respawnInNether(player);
+			} else if (respawnPos == null && Config.SERVER.END_SPAWN.get()) {
+				SpawnHandler.respawnInEnd(player);
 			}
 		}
 
