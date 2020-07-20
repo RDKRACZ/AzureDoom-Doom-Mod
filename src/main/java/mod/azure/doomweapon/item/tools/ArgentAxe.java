@@ -49,7 +49,7 @@ public class ArgentAxe extends ToolItem {
 			.put(Blocks.field_235379_ms_, Blocks.field_235380_mt_).build();
 
 	public ArgentAxe() {
-		super(-2.4F, 8, DoomTier.DOOM, field_150917_d_,
+		super(8, -2.4F, DoomTier.DOOM, field_150917_d_,
 				new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1));
 	}
 
