@@ -23,13 +23,13 @@ public class Config {
 	}
 
 	public static class ServerConfig {
-		public final BooleanValue NEHTER_SPAWN;
+		public final BooleanValue NETHER_SPAWN;
 		public final BooleanValue END_SPAWN;
 
 		ServerConfig(ForgeConfigSpec.Builder builder) {
 			builder.push("spawn");
-			NEHTER_SPAWN = builder.comment("Do you want to Spawn in the Nether?")
-					.translation(DoomMod.MODID + ".config.nether_spawn").define("NEHTER_SPAWN", false);
+			NETHER_SPAWN = builder.comment("Do you want to Spawn in the Nether?")
+					.translation(DoomMod.MODID + ".config.nether_spawn").define("NETHER_SPAWN", false);
 			END_SPAWN = builder.comment("Do you want to Spawn in the End?")
 					.translation(DoomMod.MODID + ".config.end_spawn").define("END_SPAWN", false);
 			builder.pop();

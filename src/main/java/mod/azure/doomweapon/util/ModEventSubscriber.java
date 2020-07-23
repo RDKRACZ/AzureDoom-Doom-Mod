@@ -168,7 +168,7 @@ public class ModEventSubscriber {
 			PlayerEntity player = event.getPlayer();
 			ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
 			BlockPos respawnPos = serverPlayer.func_241140_K_();
-			if (respawnPos == null && Config.SERVER.NEHTER_SPAWN.get()) {
+			if (respawnPos == null && Config.SERVER.NETHER_SPAWN.get()) {
 				SpawnHandler.respawnInNether(player);
 			} else if (respawnPos == null && Config.SERVER.END_SPAWN.get()) {
 				SpawnHandler.respawnInEnd(player);
@@ -183,7 +183,7 @@ public class ModEventSubscriber {
 			int firstjoin = serverPlayer.getStats().getValue(Stats.CUSTOM.get(Stats.PLAY_ONE_MINUTE));
 
 			if (firstjoin == 0) {
-				if (Config.SERVER.NEHTER_SPAWN.get()) {
+				if (Config.SERVER.NETHER_SPAWN.get()) {
 					SpawnHandler.respawnInNether(player);
 				} else if (Config.SERVER.END_SPAWN.get()) {
 					SpawnHandler.respawnInEnd(player);
