@@ -47,7 +47,7 @@ public class BFGEntity extends AbstractArrowEntity {
 
 	protected void func_225516_i_() {
 		++this.ticksInAir;
-		if (this.ticksExisted >= 200) {
+		if (this.ticksExisted >= 40) {
 			this.remove();
 		}
 	}
