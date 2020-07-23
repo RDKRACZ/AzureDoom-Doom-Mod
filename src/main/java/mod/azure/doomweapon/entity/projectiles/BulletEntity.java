@@ -167,4 +167,28 @@ public class BulletEntity extends AbstractArrowEntity  {
 		}
 	}
 
+	@Override
+	protected void onEntityHit(EntityRayTraceResult p_213868_1_) {
+		super.onEntityHit(p_213868_1_);
+		Entity entity = this.func_234616_v_();
+		if (p_213868_1_.getType() != RayTraceResult.Type.ENTITY
+				|| !((EntityRayTraceResult) p_213868_1_).getEntity().isEntityEqual(entity)) {
+			if (!this.world.isRemote) {
+				this.remove();
+			}
+		}
+	}
+
+	@Override
+	protected void onImpact(RayTraceResult result) {
+		super.onImpact(result);
+		Entity entity = this.func_234616_v_();
+		if (result.getType() != RayTraceResult.Type.ENTITY
+				|| !((EntityRayTraceResult) result).getEntity().isEntityEqual(entity)) {
+			if (!this.world.isRemote) {
+				this.remove();
+			}
+		}
+	}
+
 }
