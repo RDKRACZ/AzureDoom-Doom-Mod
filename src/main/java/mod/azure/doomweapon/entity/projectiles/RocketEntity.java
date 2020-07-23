@@ -41,7 +41,7 @@ public class RocketEntity extends AbstractArrowEntity {
 
 	protected void func_225516_i_() {
 		++this.ticksInAir;
-		if (this.ticksExisted >= 600) {
+		if (this.ticksExisted >= 200) {
 			this.remove();
 		}
 	}
