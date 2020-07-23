@@ -146,6 +146,7 @@ public class DoomItems {
 			() -> new ArgentPickaxe());
 	public static final RegistryObject<Item> ARGENT_SHOVEL = ITEMS.register("argent_shovel", () -> new ArgentShovel());
 	public static final RegistryObject<Item> ARGENT_SWORD = ITEMS.register("argent_sword", () -> new ArgentSword());
+	//public static final RegistryObject<Item> ARGENT_SHIELD = ITEMS.register("argent_shield", () -> new ArgentShield());
 	public static final RegistryObject<Item> CHAINSAW = ITEMS.register("chainsaw", () -> new Chainsaw());
 	public static final RegistryObject<Item> SWORD_CLOSED = ITEMS.register("cruciblesword_closed",
 			() -> new UnopenedItem());
