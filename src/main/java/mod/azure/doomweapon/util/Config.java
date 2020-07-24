@@ -25,6 +25,7 @@ public class Config {
 	public static class ServerConfig {
 		public final BooleanValue NETHER_SPAWN;
 		public final BooleanValue END_SPAWN;
+		public final BooleanValue DARTH_ZOMBIE;
 
 		ServerConfig(ForgeConfigSpec.Builder builder) {
 			builder.push("spawn");
@@ -32,6 +33,10 @@ public class Config {
 					.translation(DoomMod.MODID + ".config.nether_spawn").define("NETHER_SPAWN", false);
 			END_SPAWN = builder.comment("Do you want to Spawn in the End?")
 					.translation(DoomMod.MODID + ".config.end_spawn").define("END_SPAWN", false);
+			builder.pop();
+			builder.push("extra");
+			DARTH_ZOMBIE = builder.comment("Setting for Darth for Zombie Armor")
+					.translation(DoomMod.MODID + ".config.darth_zombie").define("DARTH_ZOMBIE", false);
 			builder.pop();
 		}
 	}
