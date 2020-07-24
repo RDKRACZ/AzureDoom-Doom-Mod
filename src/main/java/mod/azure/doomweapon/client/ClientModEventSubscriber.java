@@ -25,9 +25,11 @@ import mod.azure.doomweapon.client.render.UnwillingRender;
 import mod.azure.doomweapon.client.render.ZombiemanRender;
 import mod.azure.doomweapon.client.render.projectiles.ArgentBoltRender;
 import mod.azure.doomweapon.client.render.projectiles.BFGCellRender;
+import mod.azure.doomweapon.client.render.projectiles.BarenBlastRender;
 import mod.azure.doomweapon.client.render.projectiles.BulletsRender;
 import mod.azure.doomweapon.client.render.projectiles.ChaingunBulletRender;
 import mod.azure.doomweapon.client.render.projectiles.EnergyCellRender;
+import mod.azure.doomweapon.client.render.projectiles.LostSoulShootRender;
 import mod.azure.doomweapon.client.render.projectiles.RocketRender;
 import mod.azure.doomweapon.client.render.projectiles.ShotgunShellRender;
 import mod.azure.doomweapon.util.registry.ModEntityTypes;
@@ -50,6 +52,9 @@ public class ClientModEventSubscriber {
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ROCKET.get(), RocketRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.CHAINGUN_BULLET.get(),
 				ChaingunBulletRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BARENBLAST.get(), BarenBlastRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.LOST_SOUL_SHOOT.get(),
+				LostSoulShootRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.IMP.get(), ImpRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.PINKY.get(), PinkyRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.LOST_SOUL.get(), LostSoulRender::new);

@@ -3,6 +3,7 @@ package mod.azure.doomweapon.entity;
 import java.util.EnumSet;
 import java.util.Random;
 
+import mod.azure.doomweapon.entity.projectiles.PainShootEntity;
 import mod.azure.doomweapon.util.registry.ModSoundEvents;
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.EntitySize;
@@ -19,11 +20,7 @@ import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.FireballEntity;
 import net.minecraft.network.IPacket;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -35,9 +32,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 public class PainEntity extends FlyingEntity implements IMob {
-
-	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(PainEntity.class,
-			DataSerializers.BOOLEAN);
 
 	public PainEntity(EntityType<? extends PainEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -58,10 +52,8 @@ public class PainEntity extends FlyingEntity implements IMob {
 		this.goalSelector.addGoal(5, new PainEntity.RandomFlyGoal(this));
 		this.goalSelector.addGoal(7, new PainEntity.LookAroundGoal(this));
 		this.goalSelector.addGoal(7, new PainEntity.FireballAttackGoal(this));
-		this.targetSelector.addGoal(1,
-				new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 10, true, false, (p_213812_1_) -> {
-					return Math.abs(p_213812_1_.getPosY() - this.getPosY()) <= 4.0D;
-				}));
+		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
+		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, CyberdemonEntity.class, true));
 	}
 
 	public static boolean spawning(EntityType<PainEntity> p_223368_0_, IWorld p_223368_1_, SpawnReason reason,
@@ -79,10 +71,6 @@ public class PainEntity extends FlyingEntity implements IMob {
 		return true;
 	}
 
-	public void setAttacking(boolean attacking) {
-		this.dataManager.set(ATTACKING, attacking);
-	}
-
 	static class FireballAttackGoal extends Goal {
 		private final PainEntity parentEntity;
 		public int attackTimer;
@@ -97,10 +85,6 @@ public class PainEntity extends FlyingEntity implements IMob {
 
 		public void startExecuting() {
 			this.attackTimer = 0;
-		}
-
-		public void resetTask() {
-			this.parentEntity.setAttacking(false);
 		}
 
 		public void tick() {
@@ -122,7 +106,7 @@ public class PainEntity extends FlyingEntity implements IMob {
 						world.playEvent((PlayerEntity) null, 1016, this.parentEntity.func_233580_cy_(), 0);
 					}
 
-					FireballEntity fireballentity = new FireballEntity(world, this.parentEntity, d2, d3, d4);
+					PainShootEntity fireballentity = new PainShootEntity(world, this.parentEntity, d2, d3, d4);
 					fireballentity.explosionPower = this.parentEntity.getFireballStrength();
 					fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 4.0D,
 							this.parentEntity.getPosYHeight(0.5D) + 0.5D, fireballentity.getPosZ() + vector3d.z * 4.0D);
@@ -132,8 +116,6 @@ public class PainEntity extends FlyingEntity implements IMob {
 			} else if (this.attackTimer > 0) {
 				--this.attackTimer;
 			}
-
-			this.parentEntity.setAttacking(this.attackTimer > 10);
 		}
 	}
 
