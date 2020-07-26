@@ -21,6 +21,8 @@ import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
+import net.minecraft.entity.monster.IFlinging;
+import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -37,7 +39,7 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class PinkyEntity extends DemonEntity {
+public class PinkyEntity extends DemonEntity implements IMob, IFlinging {
 
 	public PinkyEntity(EntityType<PinkyEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
@@ -154,6 +156,11 @@ public class PinkyEntity extends DemonEntity {
 	@Override
 	public int getMaxSpawnedInChunk() {
 		return 7;
+	}
+
+	@Override
+	public int func_230290_eL_() {
+		return 10;
 	}
 
 }
