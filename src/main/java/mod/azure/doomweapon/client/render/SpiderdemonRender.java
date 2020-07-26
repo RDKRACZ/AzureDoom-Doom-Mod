@@ -16,7 +16,6 @@ public class SpiderdemonRender<T extends SpiderdemonEntity> extends MobRenderer<
 
 	public SpiderdemonRender(EntityRendererManager renderManagerIn) {
 		super(renderManagerIn, new SpiderdemonModel<>(), 0.8F);
-		//this.addLayer(new SpiderdemonLayer<>(this));
 	}
 
 	@Override
@@ -26,7 +25,7 @@ public class SpiderdemonRender<T extends SpiderdemonEntity> extends MobRenderer<
 
 	protected void preRenderCallback(SpiderdemonEntity entitylivingbaseIn, MatrixStack matrixStackIn,
 			float partialTickTime) {
-		matrixStackIn.scale(2.5F, 2.5F, 2.5F);
+		matrixStackIn.scale(4.0F, 4.0F, 3.0F);
 	}
 
 }

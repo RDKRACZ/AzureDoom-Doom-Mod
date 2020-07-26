@@ -30,7 +30,6 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
@@ -147,7 +146,7 @@ public class SpiderdemonEntity extends DemonEntity {
 	}
 
 	protected SoundEvent getStepSound() {
-		return SoundEvents.ENTITY_SPIDER_STEP;
+		return ModSoundEvents.SPIDERDEMON_AMBIENT.get();
 	}
 
 	@Override
