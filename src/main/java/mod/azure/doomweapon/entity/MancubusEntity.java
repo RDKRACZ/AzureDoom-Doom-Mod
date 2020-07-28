@@ -74,9 +74,9 @@ public class MancubusEntity extends DemonEntity {
 	}
 
 	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
-		return MobEntity.func_233666_p_().func_233815_a_(Attributes.field_233819_b_, 50.0D)
-				.func_233815_a_(Attributes.field_233818_a_, 25.0D).func_233815_a_(Attributes.field_233821_d_, 0.25D)
-				.func_233815_a_(Attributes.field_233823_f_, 8.0D);
+		return MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 50.0D)
+				.createMutableAttribute(Attributes.MAX_HEALTH, 25.0D).createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D)
+				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 8.0D);
 	}
 
 	@Nullable

@@ -94,7 +94,7 @@ public class ModEntityTypes {
 					.immuneToFire().func_233606_a_(9).build(new ResourceLocation(DoomMod.MODID, "imp").toString()));
 
 	public static final RegistryObject<EntityType<PinkyEntity>> PINKY = ENTITY_TYPES.register("pinky",
-			() -> EntityType.Builder.create(PinkyEntity::new, EntityClassification.MONSTER).size(0.6f, 1.95F)
+			() -> EntityType.Builder.create(PinkyEntity::new, EntityClassification.MONSTER).size(1.6f, 3.5F)
 					.immuneToFire().func_233606_a_(9).build(new ResourceLocation(DoomMod.MODID, "pinky").toString()));
 
 	public static final RegistryObject<EntityType<LostSoulEntity>> LOST_SOUL = ENTITY_TYPES.register("lost_soul",

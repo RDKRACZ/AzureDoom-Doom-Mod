@@ -76,9 +76,9 @@ public class IconofsinEntity extends DemonEntity {
 	}
 
 	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
-		return MobEntity.func_233666_p_().func_233815_a_(Attributes.field_233819_b_, 100.0D)
-				.func_233815_a_(Attributes.field_233818_a_, 1000.0D).func_233815_a_(Attributes.field_233821_d_, 0.25D)
-				.func_233815_a_(Attributes.field_233823_f_, 30.0D);
+		return MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 100.0D)
+				.createMutableAttribute(Attributes.MAX_HEALTH, 1000.0D).createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D)
+				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 30.0D);
 	}
 
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {

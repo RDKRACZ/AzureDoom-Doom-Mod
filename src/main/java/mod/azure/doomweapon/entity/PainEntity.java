@@ -43,8 +43,8 @@ public class PainEntity extends FlyingEntity implements IMob {
 	}
 
 	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
-		return MobEntity.func_233666_p_().func_233815_a_(Attributes.field_233819_b_, 50.0D)
-				.func_233815_a_(Attributes.field_233821_d_, 0.25D).func_233815_a_(Attributes.field_233818_a_, 19.0D);
+		return MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 50.0D)
+				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D).createMutableAttribute(Attributes.MAX_HEALTH, 19.0D);
 	}
 
 	@Override
@@ -94,7 +94,7 @@ public class PainEntity extends FlyingEntity implements IMob {
 				World world = this.parentEntity.world;
 				++this.attackTimer;
 				if (this.attackTimer == 10 && !this.parentEntity.isSilent()) {
-					world.playEvent((PlayerEntity) null, 1015, this.parentEntity.func_233580_cy_(), 0);
+					world.playEvent((PlayerEntity) null, 1015, this.parentEntity.getPosition(), 0);
 				}
 
 				if (this.attackTimer == 20) {
@@ -103,7 +103,7 @@ public class PainEntity extends FlyingEntity implements IMob {
 					double d3 = livingentity.getPosYHeight(0.5D) - (0.5D + this.parentEntity.getPosYHeight(0.5D));
 					double d4 = livingentity.getPosZ() - (this.parentEntity.getPosZ() + vector3d.z * 4.0D);
 					if (!this.parentEntity.isSilent()) {
-						world.playEvent((PlayerEntity) null, 1016, this.parentEntity.func_233580_cy_(), 0);
+						world.playEvent((PlayerEntity) null, 1016, this.parentEntity.getPosition(), 0);
 					}
 
 					PainShootEntity fireballentity = new PainShootEntity(world, this.parentEntity, d2, d3, d4);

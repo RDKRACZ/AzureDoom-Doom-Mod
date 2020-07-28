@@ -32,49 +32,49 @@ import net.minecraft.world.gen.Heightmap;
 public class ModEntitySpawn {
 
 	public static void registerEntityWorldSpawns() {
-		registerEntityWorldSpawn(ModEntityTypes.IMP.get(), 12, 2, 7, Biomes.field_235250_aA_, Biomes.field_235251_aB_,
-				Biomes.field_235253_az_, Biomes.field_235252_ay_);
-		registerEntityWorldSpawn(ModEntityTypes.PINKY.get(), 12, 2, 4, Biomes.field_235250_aA_, Biomes.field_235251_aB_,
-				Biomes.field_235253_az_, Biomes.field_235252_ay_);
-		registerEntityWorldSpawn(ModEntityTypes.LOST_SOUL.get(), 8, 1, 3, Biomes.field_235250_aA_,
-				Biomes.field_235251_aB_, Biomes.field_235253_az_, Biomes.field_235252_ay_);
-		registerEntityWorldSpawn(ModEntityTypes.CACODEMON.get(), 8, 1, 2, Biomes.field_235250_aA_,
-				Biomes.field_235251_aB_, Biomes.field_235253_az_, Biomes.field_235252_ay_);
-		registerEntityWorldSpawn(ModEntityTypes.ARCHVILE.get(), 4, 1, 2, Biomes.field_235250_aA_,
-				Biomes.field_235251_aB_, Biomes.field_235253_az_, Biomes.field_235252_ay_);
-		registerEntityWorldSpawn(ModEntityTypes.BARON.get(), 2, 1, 1, Biomes.field_235250_aA_, Biomes.field_235251_aB_,
-				Biomes.field_235253_az_, Biomes.field_235252_ay_);
-		registerEntityWorldSpawn(ModEntityTypes.MANCUBUS.get(), 2, 1, 1, Biomes.field_235250_aA_,
-				Biomes.field_235251_aB_, Biomes.field_235253_az_, Biomes.field_235252_ay_);
-		registerEntityWorldSpawn(ModEntityTypes.REVENANT.get(), 2, 1, 1, Biomes.field_235250_aA_,
-				Biomes.field_235251_aB_, Biomes.field_235253_az_, Biomes.field_235252_ay_);
-		registerEntityWorldSpawn(ModEntityTypes.SPIDERDEMON.get(), 2, 1, 1, Biomes.field_235250_aA_,
-				Biomes.field_235251_aB_, Biomes.field_235253_az_, Biomes.field_235252_ay_);
-		registerEntityWorldSpawn(ModEntityTypes.ZOMBIEMAN.get(), 12, 2, 7, Biomes.field_235250_aA_,
-				Biomes.field_235251_aB_, Biomes.field_235253_az_, Biomes.field_235252_ay_);
-		registerEntityWorldSpawn(ModEntityTypes.IMP2016.get(), 12, 2, 7, Biomes.field_235250_aA_,
-				Biomes.field_235251_aB_, Biomes.field_235253_az_, Biomes.field_235252_ay_);
-		registerEntityWorldSpawn(ModEntityTypes.CHAINGUNNER.get(), 12, 2, 7, Biomes.field_235250_aA_,
-				Biomes.field_235251_aB_, Biomes.field_235253_az_, Biomes.field_235252_ay_);
-		registerEntityWorldSpawn(ModEntityTypes.SHOTGUNGUY.get(), 12, 2, 7, Biomes.field_235250_aA_,
-				Biomes.field_235251_aB_, Biomes.field_235253_az_, Biomes.field_235252_ay_);
-		registerEntityWorldSpawn(ModEntityTypes.MARAUDER.get(), 1, 1, 1, Biomes.field_235250_aA_,
-				Biomes.field_235251_aB_, Biomes.field_235253_az_, Biomes.field_235252_ay_);
-		registerEntityWorldSpawn(ModEntityTypes.PAIN.get(), 8, 1, 2, Biomes.field_235250_aA_, Biomes.field_235251_aB_,
-				Biomes.field_235253_az_, Biomes.field_235252_ay_);
-		registerEntityWorldSpawn(ModEntityTypes.HELLKNIGHT.get(), 2, 1, 1, Biomes.field_235250_aA_,
-				Biomes.field_235251_aB_, Biomes.field_235253_az_, Biomes.field_235252_ay_);
-		registerEntityWorldSpawn(ModEntityTypes.CYBERDEMON.get(), 2, 1, 1, Biomes.field_235250_aA_,
-				Biomes.field_235251_aB_, Biomes.field_235253_az_, Biomes.field_235252_ay_);
-		registerEntityWorldSpawn(ModEntityTypes.UNWILLING.get(), 12, 2, 7, Biomes.field_235250_aA_,
-				Biomes.field_235251_aB_, Biomes.field_235253_az_, Biomes.field_235252_ay_);
-		registerEntityWorldSpawn(ModEntityTypes.POSSESSEDSCIENTIST.get(), 12, 2, 7, Biomes.field_235250_aA_,
-				Biomes.field_235251_aB_, Biomes.field_235253_az_, Biomes.field_235252_ay_);
-		registerEntityWorldSpawn(ModEntityTypes.POSSESSEDSOLDIER.get(), 12, 2, 7, Biomes.field_235250_aA_,
-				Biomes.field_235251_aB_, Biomes.field_235253_az_, Biomes.field_235252_ay_);
-		registerEntityWorldSpawn(ModEntityTypes.CYBERDEMON2016.get(), 2, 1, 1, Biomes.field_235250_aA_,
-				Biomes.field_235251_aB_, Biomes.field_235253_az_, Biomes.field_235252_ay_);
-		registerEntityWorldSpawn(ModEntityTypes.ICONOFSIN.get(), 1, 1, 1, Biomes.field_235254_j_);
+		registerEntityWorldSpawn(ModEntityTypes.IMP.get(), 12, 2, 7, Biomes.WARPED_FOREST, Biomes.BASALT_DELTAS,
+				Biomes.CRIMSON_FOREST, Biomes.SOUL_SAND_VALLEY, Biomes.NETHER_WASTES);
+		registerEntityWorldSpawn(ModEntityTypes.PINKY.get(), 12, 2, 4, Biomes.WARPED_FOREST, Biomes.BASALT_DELTAS,
+				Biomes.CRIMSON_FOREST, Biomes.SOUL_SAND_VALLEY, Biomes.NETHER_WASTES);
+		registerEntityWorldSpawn(ModEntityTypes.LOST_SOUL.get(), 8, 1, 3, Biomes.WARPED_FOREST, Biomes.BASALT_DELTAS,
+				Biomes.CRIMSON_FOREST, Biomes.SOUL_SAND_VALLEY, Biomes.NETHER_WASTES);
+		registerEntityWorldSpawn(ModEntityTypes.CACODEMON.get(), 8, 1, 2, Biomes.WARPED_FOREST, Biomes.BASALT_DELTAS,
+				Biomes.CRIMSON_FOREST, Biomes.SOUL_SAND_VALLEY, Biomes.NETHER_WASTES);
+		registerEntityWorldSpawn(ModEntityTypes.ARCHVILE.get(), 4, 1, 2, Biomes.WARPED_FOREST, Biomes.BASALT_DELTAS,
+				Biomes.CRIMSON_FOREST, Biomes.SOUL_SAND_VALLEY, Biomes.NETHER_WASTES);
+		registerEntityWorldSpawn(ModEntityTypes.BARON.get(), 2, 1, 1, Biomes.WARPED_FOREST, Biomes.BASALT_DELTAS,
+				Biomes.CRIMSON_FOREST, Biomes.SOUL_SAND_VALLEY, Biomes.NETHER_WASTES);
+		registerEntityWorldSpawn(ModEntityTypes.MANCUBUS.get(), 2, 1, 1, Biomes.WARPED_FOREST, Biomes.BASALT_DELTAS,
+				Biomes.CRIMSON_FOREST, Biomes.SOUL_SAND_VALLEY, Biomes.NETHER_WASTES);
+		registerEntityWorldSpawn(ModEntityTypes.REVENANT.get(), 2, 1, 1, Biomes.WARPED_FOREST, Biomes.BASALT_DELTAS,
+				Biomes.CRIMSON_FOREST, Biomes.SOUL_SAND_VALLEY, Biomes.NETHER_WASTES);
+		registerEntityWorldSpawn(ModEntityTypes.SPIDERDEMON.get(), 2, 1, 1, Biomes.WARPED_FOREST, Biomes.BASALT_DELTAS,
+				Biomes.CRIMSON_FOREST, Biomes.SOUL_SAND_VALLEY, Biomes.NETHER_WASTES);
+		registerEntityWorldSpawn(ModEntityTypes.ZOMBIEMAN.get(), 12, 2, 7, Biomes.WARPED_FOREST, Biomes.BASALT_DELTAS,
+				Biomes.CRIMSON_FOREST, Biomes.SOUL_SAND_VALLEY, Biomes.NETHER_WASTES);
+		registerEntityWorldSpawn(ModEntityTypes.IMP2016.get(), 12, 2, 7, Biomes.WARPED_FOREST, Biomes.BASALT_DELTAS,
+				Biomes.CRIMSON_FOREST, Biomes.SOUL_SAND_VALLEY, Biomes.NETHER_WASTES);
+		registerEntityWorldSpawn(ModEntityTypes.CHAINGUNNER.get(), 12, 2, 7, Biomes.WARPED_FOREST, Biomes.BASALT_DELTAS,
+				Biomes.CRIMSON_FOREST, Biomes.SOUL_SAND_VALLEY, Biomes.NETHER_WASTES);
+		registerEntityWorldSpawn(ModEntityTypes.SHOTGUNGUY.get(), 12, 2, 7, Biomes.WARPED_FOREST, Biomes.BASALT_DELTAS,
+				Biomes.CRIMSON_FOREST, Biomes.SOUL_SAND_VALLEY, Biomes.NETHER_WASTES);
+		registerEntityWorldSpawn(ModEntityTypes.MARAUDER.get(), 1, 1, 1, Biomes.WARPED_FOREST, Biomes.BASALT_DELTAS,
+				Biomes.CRIMSON_FOREST, Biomes.SOUL_SAND_VALLEY, Biomes.NETHER_WASTES);
+		registerEntityWorldSpawn(ModEntityTypes.PAIN.get(), 8, 1, 2, Biomes.WARPED_FOREST, Biomes.BASALT_DELTAS,
+				Biomes.CRIMSON_FOREST, Biomes.SOUL_SAND_VALLEY, Biomes.NETHER_WASTES);
+		registerEntityWorldSpawn(ModEntityTypes.HELLKNIGHT.get(), 2, 1, 1, Biomes.WARPED_FOREST, Biomes.BASALT_DELTAS,
+				Biomes.CRIMSON_FOREST, Biomes.SOUL_SAND_VALLEY, Biomes.NETHER_WASTES);
+		registerEntityWorldSpawn(ModEntityTypes.CYBERDEMON.get(), 2, 1, 1, Biomes.WARPED_FOREST, Biomes.BASALT_DELTAS,
+				Biomes.CRIMSON_FOREST, Biomes.SOUL_SAND_VALLEY, Biomes.NETHER_WASTES);
+		registerEntityWorldSpawn(ModEntityTypes.UNWILLING.get(), 12, 2, 7, Biomes.WARPED_FOREST, Biomes.BASALT_DELTAS,
+				Biomes.CRIMSON_FOREST, Biomes.SOUL_SAND_VALLEY, Biomes.NETHER_WASTES);
+		registerEntityWorldSpawn(ModEntityTypes.POSSESSEDSCIENTIST.get(), 12, 2, 7, Biomes.WARPED_FOREST,
+				Biomes.BASALT_DELTAS, Biomes.CRIMSON_FOREST, Biomes.SOUL_SAND_VALLEY, Biomes.NETHER_WASTES);
+		registerEntityWorldSpawn(ModEntityTypes.POSSESSEDSOLDIER.get(), 12, 2, 7, Biomes.WARPED_FOREST,
+				Biomes.BASALT_DELTAS, Biomes.CRIMSON_FOREST, Biomes.SOUL_SAND_VALLEY, Biomes.NETHER_WASTES);
+		registerEntityWorldSpawn(ModEntityTypes.CYBERDEMON2016.get(), 2, 1, 1, Biomes.WARPED_FOREST,
+				Biomes.BASALT_DELTAS, Biomes.CRIMSON_FOREST, Biomes.SOUL_SAND_VALLEY, Biomes.NETHER_WASTES);
+		registerEntityWorldSpawn(ModEntityTypes.ICONOFSIN.get(), 1, 1, 1, Biomes.NETHER_WASTES);
 	}
 
 	public static void EntitySpawnPlacementRegistry() {

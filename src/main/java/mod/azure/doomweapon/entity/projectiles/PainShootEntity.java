@@ -70,7 +70,7 @@ public class PainShootEntity extends DamagingProjectileEntity {
 	public void tick() {
 		Entity entity = this.func_234616_v_();
 		if (this.world.isRemote
-				|| (entity == null || !entity.removed) && this.world.isBlockLoaded(this.func_233580_cy_())) {
+				|| (entity == null || !entity.removed) && this.world.isBlockLoaded(this.getPosition())) {
 			super.tick();
 			if (this.isFireballFiery()) {
 				this.setFire(0);

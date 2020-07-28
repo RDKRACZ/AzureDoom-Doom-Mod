@@ -216,7 +216,7 @@ public class BFGEntity extends AbstractArrowEntity {
 					}
 				}
 
-				this.world.playEvent(2006, this.func_233580_cy_(), this.isSilent() ? -1 : 1);
+				this.world.playEvent(2006, this.getPosition(), this.isSilent() ? -1 : 1);
 				this.world.addEntity(areaeffectcloudentity);
 				this.explode();
 				this.remove();
@@ -257,7 +257,7 @@ public class BFGEntity extends AbstractArrowEntity {
 					}
 				}
 
-				this.world.playEvent(2006, this.func_233580_cy_(), this.isSilent() ? -1 : 1);
+				this.world.playEvent(2006, this.getPosition(), this.isSilent() ? -1 : 1);
 				this.world.addEntity(areaeffectcloudentity);
 				this.explode();
 				this.remove();

@@ -60,8 +60,8 @@ public class RevenantEntity extends DemonEntity implements IRangedAttackMob {
 	}
 
 	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
-		return MobEntity.func_233666_p_().func_233815_a_(Attributes.field_233819_b_, 50.0D)
-				.func_233815_a_(Attributes.field_233818_a_, 20.0D).func_233815_a_(Attributes.field_233823_f_, 6.0D);
+		return MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 50.0D)
+				.createMutableAttribute(Attributes.MAX_HEALTH, 20.0D).createMutableAttribute(Attributes.ATTACK_DAMAGE, 6.0D);
 	}
 
 	public static boolean spawning(EntityType<RevenantEntity> p_223337_0_, IWorld p_223337_1_, SpawnReason reason,
@@ -86,10 +86,10 @@ public class RevenantEntity extends DemonEntity implements IRangedAttackMob {
 	}
 
 	public static AttributeModifierMap.MutableAttribute func_234342_eQ_() {
-		return MonsterEntity.func_234295_eP_().func_233815_a_(Attributes.field_233819_b_, 35.0D)
-				.func_233815_a_(Attributes.field_233821_d_, (double) 0.23F)
-				.func_233815_a_(Attributes.field_233823_f_, 4.0D).func_233815_a_(Attributes.field_233826_i_, 0.25D)
-				.func_233814_a_(Attributes.field_233829_l_);
+		return MonsterEntity.func_234295_eP_().createMutableAttribute(Attributes.FOLLOW_RANGE, 35.0D)
+				.createMutableAttribute(Attributes.MOVEMENT_SPEED, (double) 0.23F)
+				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 4.0D).createMutableAttribute(Attributes.ARMOR, 0.25D)
+				.createMutableAttribute(Attributes.ZOMBIE_SPAWN_REINFORCEMENTS);
 	}
 
 	@Nullable

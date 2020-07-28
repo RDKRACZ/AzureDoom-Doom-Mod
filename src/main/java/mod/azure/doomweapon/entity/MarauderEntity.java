@@ -68,9 +68,9 @@ public class MarauderEntity extends DemonEntity {
 	}
 
 	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
-		return MobEntity.func_233666_p_().func_233815_a_(Attributes.field_233819_b_, 50.0D)
-				.func_233815_a_(Attributes.field_233818_a_, 45.0D).func_233815_a_(Attributes.field_233821_d_, 0.35D)
-				.func_233815_a_(Attributes.field_233823_f_, 12.0D);
+		return MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 50.0D)
+				.createMutableAttribute(Attributes.MAX_HEALTH, 45.0D).createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.35D)
+				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 12.0D);
 	}
 
 	@Override

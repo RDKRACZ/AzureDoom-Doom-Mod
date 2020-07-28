@@ -91,41 +91,31 @@ public class ModEventSubscriber {
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public static void imstuff(final RegistryEvent.Register<EntityType<?>> event) {
-		GlobalEntityTypeAttributes.put(ModEntityTypes.CYBERDEMON.get(),
-				CyberdemonEntity.func_234200_m_().func_233813_a_());
-		GlobalEntityTypeAttributes.put(ModEntityTypes.ARCHVILE.get(), ArchvileEntity.func_234200_m_().func_233813_a_());
-		GlobalEntityTypeAttributes.put(ModEntityTypes.BARON.get(), BaronEntity.func_234200_m_().func_233813_a_());
-		GlobalEntityTypeAttributes.put(ModEntityTypes.CHAINGUNNER.get(),
-				ChaingunnerEntity.func_234200_m_().func_233813_a_());
+		GlobalEntityTypeAttributes.put(ModEntityTypes.CYBERDEMON.get(), CyberdemonEntity.func_234200_m_().create());
+		GlobalEntityTypeAttributes.put(ModEntityTypes.ARCHVILE.get(), ArchvileEntity.func_234200_m_().create());
+		GlobalEntityTypeAttributes.put(ModEntityTypes.BARON.get(), BaronEntity.func_234200_m_().create());
+		GlobalEntityTypeAttributes.put(ModEntityTypes.CHAINGUNNER.get(), ChaingunnerEntity.func_234200_m_().create());
 		GlobalEntityTypeAttributes.put(ModEntityTypes.CYBERDEMON2016.get(),
-				Cyberdemon2016Entity.func_234200_m_().func_233813_a_());
-		GlobalEntityTypeAttributes.put(ModEntityTypes.HELLKNIGHT.get(),
-				HellknightEntity.func_234200_m_().func_233813_a_());
-		GlobalEntityTypeAttributes.put(ModEntityTypes.ICONOFSIN.get(),
-				IconofsinEntity.func_234200_m_().func_233813_a_());
-		GlobalEntityTypeAttributes.put(ModEntityTypes.IMP2016.get(), Imp2016Entity.func_234200_m_().func_233813_a_());
-		GlobalEntityTypeAttributes.put(ModEntityTypes.IMP.get(), ImpEntity.func_234200_m_().func_233813_a_());
-		GlobalEntityTypeAttributes.put(ModEntityTypes.MANCUBUS.get(), MancubusEntity.func_234200_m_().func_233813_a_());
-		GlobalEntityTypeAttributes.put(ModEntityTypes.MARAUDER.get(), MarauderEntity.func_234200_m_().func_233813_a_());
-		GlobalEntityTypeAttributes.put(ModEntityTypes.PINKY.get(), PinkyEntity.func_234200_m_().func_233813_a_());
+				Cyberdemon2016Entity.func_234200_m_().create());
+		GlobalEntityTypeAttributes.put(ModEntityTypes.HELLKNIGHT.get(), HellknightEntity.func_234200_m_().create());
+		GlobalEntityTypeAttributes.put(ModEntityTypes.ICONOFSIN.get(), IconofsinEntity.func_234200_m_().create());
+		GlobalEntityTypeAttributes.put(ModEntityTypes.IMP2016.get(), Imp2016Entity.func_234200_m_().create());
+		GlobalEntityTypeAttributes.put(ModEntityTypes.IMP.get(), ImpEntity.func_234200_m_().create());
+		GlobalEntityTypeAttributes.put(ModEntityTypes.MANCUBUS.get(), MancubusEntity.func_234200_m_().create());
+		GlobalEntityTypeAttributes.put(ModEntityTypes.MARAUDER.get(), MarauderEntity.func_234200_m_().create());
+		GlobalEntityTypeAttributes.put(ModEntityTypes.PINKY.get(), PinkyEntity.func_234200_m_().create());
 		GlobalEntityTypeAttributes.put(ModEntityTypes.POSSESSEDSCIENTIST.get(),
-				PossessedScientistEntity.func_234200_m_().func_233813_a_());
+				PossessedScientistEntity.func_234200_m_().create());
 		GlobalEntityTypeAttributes.put(ModEntityTypes.POSSESSEDSOLDIER.get(),
-				PossessedSoldierEntity.func_234200_m_().func_233813_a_());
-		GlobalEntityTypeAttributes.put(ModEntityTypes.REVENANT.get(), RevenantEntity.func_234200_m_().func_233813_a_());
-		GlobalEntityTypeAttributes.put(ModEntityTypes.SHOTGUNGUY.get(),
-				ShotgunguyEntity.func_234200_m_().func_233813_a_());
-		GlobalEntityTypeAttributes.put(ModEntityTypes.SPIDERDEMON.get(),
-				SpiderdemonEntity.func_234200_m_().func_233813_a_());
-		GlobalEntityTypeAttributes.put(ModEntityTypes.UNWILLING.get(),
-				UnwillingEntity.func_234200_m_().func_233813_a_());
-		GlobalEntityTypeAttributes.put(ModEntityTypes.ZOMBIEMAN.get(),
-				ZombiemanEntity.func_234200_m_().func_233813_a_());
-		GlobalEntityTypeAttributes.put(ModEntityTypes.CACODEMON.get(),
-				CacodemonEntity.func_234200_m_().func_233813_a_());
-		GlobalEntityTypeAttributes.put(ModEntityTypes.LOST_SOUL.get(),
-				LostSoulEntity.func_234200_m_().func_233813_a_());
-		GlobalEntityTypeAttributes.put(ModEntityTypes.PAIN.get(), PainEntity.func_234200_m_().func_233813_a_());
+				PossessedSoldierEntity.func_234200_m_().create());
+		GlobalEntityTypeAttributes.put(ModEntityTypes.REVENANT.get(), RevenantEntity.func_234200_m_().create());
+		GlobalEntityTypeAttributes.put(ModEntityTypes.SHOTGUNGUY.get(), ShotgunguyEntity.func_234200_m_().create());
+		GlobalEntityTypeAttributes.put(ModEntityTypes.SPIDERDEMON.get(), SpiderdemonEntity.func_234200_m_().create());
+		GlobalEntityTypeAttributes.put(ModEntityTypes.UNWILLING.get(), UnwillingEntity.func_234200_m_().create());
+		GlobalEntityTypeAttributes.put(ModEntityTypes.ZOMBIEMAN.get(), ZombiemanEntity.func_234200_m_().create());
+		GlobalEntityTypeAttributes.put(ModEntityTypes.CACODEMON.get(), CacodemonEntity.func_234200_m_().create());
+		GlobalEntityTypeAttributes.put(ModEntityTypes.LOST_SOUL.get(), LostSoulEntity.func_234200_m_().create());
+		GlobalEntityTypeAttributes.put(ModEntityTypes.PAIN.get(), PainEntity.func_234200_m_().create());
 	}
 
 	public static <T extends IForgeRegistryEntry<T>> T setup(final T entry, final String name) {
