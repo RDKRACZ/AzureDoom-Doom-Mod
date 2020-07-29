@@ -123,7 +123,7 @@ public class ModEntityTypes {
 					.build(new ResourceLocation(DoomMod.MODID, "mancubus").toString()));
 
 	public static final RegistryObject<EntityType<SpiderdemonEntity>> SPIDERDEMON = ENTITY_TYPES.register("spiderdemon",
-			() -> EntityType.Builder.create(SpiderdemonEntity::new, EntityClassification.MONSTER).size(2.5F, 3.8F)
+			() -> EntityType.Builder.create(SpiderdemonEntity::new, EntityClassification.MONSTER).size(3.0F, 3.5F)
 					.immuneToFire().func_233606_a_(9)
 					.build(new ResourceLocation(DoomMod.MODID, "spiderdemon").toString()));
 
