@@ -13,7 +13,7 @@ public class PinkyRender extends MobRenderer<PinkyEntity, PinkyModel<PinkyEntity
 			"textures/entity/new_pinky.png");
 
 	public PinkyRender(EntityRendererManager renderManagerIn) {
-		super(renderManagerIn, new PinkyModel<>(), 0.5f);
+		super(renderManagerIn, new PinkyModel<>(), 0.7F);
 	}
 
 	@Override
