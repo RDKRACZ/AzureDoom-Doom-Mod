@@ -7,6 +7,7 @@ import mod.azure.doomweapon.util.registry.DoomItems;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
@@ -21,6 +22,7 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.CuriosCapability;
 import top.theillusivec4.curios.api.type.capability.ICurio;
@@ -86,9 +88,18 @@ public class SoulCubeHandler {
 			ServerPlayerEntity serverPlayer = (ServerPlayerEntity) livingEntity;
 			CriteriaTriggers.USED_TOTEM.trigger(serverPlayer, copy);
 		}
-		livingEntity.setHealth(20.0F);
-		livingEntity.addPotionEffect(new EffectInstance(Effects.RESISTANCE, 100, 4));
-		livingEntity.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 100, 4));
-		livingEntity.world.setEntityState(livingEntity, (byte) 90);
+		if (livingEntity instanceof PlayerEntity) {
+			livingEntity.setHealth(20.0F);
+			livingEntity.addPotionEffect(new EffectInstance(Effects.RESISTANCE, 100, 4));
+			livingEntity.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 100, 4));
+			livingEntity.world.setEntityState(livingEntity, (byte) 90);
+		}
+
+		if (soulcube.isEmpty()) {
+			ServerPlayerEntity playerentity = (ServerPlayerEntity) livingEntity;
+			if (ModList.get().isLoaded("pmmo")) {
+				PMMOCompat.awardSoulXp(playerentity);
+			}
+		}
 	}
 }

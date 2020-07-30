@@ -3,9 +3,11 @@ package mod.azure.doomweapon.item.powerup;
 import java.util.List;
 
 import mod.azure.doomweapon.DoomMod;
+import mod.azure.doomweapon.util.PMMOCompat;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.UseAction;
@@ -18,6 +20,7 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.ModList;
 
 public class InvisibleSphereItem extends Item {
 
@@ -27,10 +30,13 @@ public class InvisibleSphereItem extends Item {
 
 	@Override
 	public void onUse(World worldIn, LivingEntity livingEntityIn, ItemStack stack, int count) {
-		if (livingEntityIn instanceof PlayerEntity) {
-			PlayerEntity playerentity = (PlayerEntity) livingEntityIn;
+		if (livingEntityIn instanceof ServerPlayerEntity) {
+			ServerPlayerEntity playerentity = (ServerPlayerEntity) livingEntityIn;
 			if (!worldIn.isRemote) {
 				livingEntityIn.addPotionEffect(new EffectInstance(Effects.INVISIBILITY, 1200, 1));
+				if (ModList.get().isLoaded("pmmo")) {
+					PMMOCompat.awardInvisibleXp(playerentity);
+				}
 				if (!playerentity.abilities.isCreativeMode) {
 					stack.shrink(1);
 					if (stack.isEmpty()) {
