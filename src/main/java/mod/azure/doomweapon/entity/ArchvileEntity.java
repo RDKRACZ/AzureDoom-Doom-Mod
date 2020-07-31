@@ -19,14 +19,10 @@ import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
-import net.minecraft.entity.monster.EndermanEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.IPacket;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
@@ -39,9 +35,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 public class ArchvileEntity extends DemonEntity {
-
-	private static final DataParameter<Boolean> field_226535_bx_ = EntityDataManager.createKey(EndermanEntity.class,
-			DataSerializers.BOOLEAN);
 
 	public ArchvileEntity(EntityType<ArchvileEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
@@ -180,15 +173,6 @@ public class ArchvileEntity extends DemonEntity {
 	protected SoundEvent getDeathSound() {
 		return ModSoundEvents.ARCHVILE_DEATH.get();
 	}
-
-	public boolean func_226537_et_() {
-		return this.dataManager.get(field_226535_bx_);
-	}
-
-	public void func_226538_eu_() {
-		this.dataManager.set(field_226535_bx_, true);
-	}
-
 	static class FindPlayerGoal extends NearestAttackableTargetGoal<PlayerEntity> {
 		private final ArchvileEntity enderman;
 		/** The player */
@@ -215,7 +199,6 @@ public class ArchvileEntity extends DemonEntity {
 		public void startExecuting() {
 			this.aggroTime = 5;
 			this.teleportTime = 0;
-			this.enderman.func_226538_eu_();
 		}
 
 		public void resetTask() {

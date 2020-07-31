@@ -3,7 +3,6 @@ package mod.azure.doomweapon.entity;
 import java.util.EnumSet;
 import java.util.Random;
 
-import mod.azure.doomweapon.entity.ai.goal.LostSoulAttackGoal;
 import mod.azure.doomweapon.util.registry.DoomItems;
 import mod.azure.doomweapon.util.registry.ModEntityTypes;
 import mod.azure.doomweapon.util.registry.ModSoundEvents;
@@ -18,14 +17,10 @@ import net.minecraft.entity.ai.controller.MovementController;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.monster.GhastEntity;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.FireballEntity;
 import net.minecraft.network.IPacket;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
@@ -38,9 +33,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 public class LostSoulEntity extends FlyingEntity implements IMob {
-
-	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(GhastEntity.class,
-			DataSerializers.BOOLEAN);
 
 	public LostSoulEntity(EntityType<LostSoulEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
@@ -57,7 +49,6 @@ public class LostSoulEntity extends FlyingEntity implements IMob {
 
 	@Override
 	protected void registerGoals() {
-		this.goalSelector.addGoal(2, new LostSoulAttackGoal(this, 1.0D, false));
 		this.goalSelector.addGoal(5, new LostSoulEntity.RandomFlyGoal(this));
 		this.goalSelector.addGoal(7, new LostSoulEntity.LookAroundGoal(this));
 		this.goalSelector.addGoal(7, new LostSoulEntity.FireballAttackGoal(this));
@@ -77,10 +68,6 @@ public class LostSoulEntity extends FlyingEntity implements IMob {
 	@Override
 	protected boolean isDespawnPeaceful() {
 		return true;
-	}
-
-	public void setAttacking(boolean attacking) {
-		this.dataManager.set(ATTACKING, attacking);
 	}
 
 	@Override
@@ -114,10 +101,6 @@ public class LostSoulEntity extends FlyingEntity implements IMob {
 			this.attackTimer = 0;
 		}
 
-		public void resetTask() {
-			this.parentEntity.setAttacking(false);
-		}
-
 		public void tick() {
 			LivingEntity livingentity = this.parentEntity.getAttackTarget();
 			if (livingentity.getDistanceSq(this.parentEntity) < 4096.0D
@@ -144,8 +127,6 @@ public class LostSoulEntity extends FlyingEntity implements IMob {
 			} else if (this.attackTimer > 0) {
 				--this.attackTimer;
 			}
-
-			this.parentEntity.setAttacking(this.attackTimer > 10);
 		}
 	}
 

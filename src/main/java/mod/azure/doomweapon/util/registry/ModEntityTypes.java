@@ -25,9 +25,11 @@ import mod.azure.doomweapon.entity.UnwillingEntity;
 import mod.azure.doomweapon.entity.ZombiemanEntity;
 import mod.azure.doomweapon.entity.projectiles.ArgentBoltEntity;
 import mod.azure.doomweapon.entity.projectiles.BFGEntity;
+import mod.azure.doomweapon.entity.projectiles.BarenBlastEntity;
 import mod.azure.doomweapon.entity.projectiles.BulletEntity;
 import mod.azure.doomweapon.entity.projectiles.ChaingunBulletEntity;
 import mod.azure.doomweapon.entity.projectiles.EnergyCellEntity;
+import mod.azure.doomweapon.entity.projectiles.PainShootEntity;
 import mod.azure.doomweapon.entity.projectiles.RocketEntity;
 import mod.azure.doomweapon.entity.projectiles.ShotgunShellEntity;
 import net.minecraft.entity.EntityClassification;
@@ -63,6 +65,15 @@ public class ModEntityTypes {
 	public static final RegistryObject<EntityType<RocketEntity>> ROCKET = ENTITY_TYPES.register("rocket",
 			() -> EntityType.Builder.<RocketEntity>create(RocketEntity::new, EntityClassification.MISC).size(0.5F, 0.5F)
 					.build(new ResourceLocation(DoomMod.MODID, "rocket").toString()));
+
+	public static final RegistryObject<EntityType<PainShootEntity>> LOST_SOUL_SHOOT = ENTITY_TYPES.register(
+			"lost_soul_shot",
+			() -> EntityType.Builder.<PainShootEntity>create(PainShootEntity::new, EntityClassification.MISC)
+					.size(1.0F, 1.0F).build(new ResourceLocation(DoomMod.MODID, "lost_soul_shot").toString()));
+
+	public static final RegistryObject<EntityType<BarenBlastEntity>> BARENBLAST = ENTITY_TYPES.register("barenblast",
+			() -> EntityType.Builder.<BarenBlastEntity>create(BarenBlastEntity::new, EntityClassification.MISC)
+					.size(1.0F, 1.0F).build(new ResourceLocation(DoomMod.MODID, "barenblast").toString()));
 
 	public static final RegistryObject<EntityType<BulletEntity>> BULLETS = ENTITY_TYPES.register("bullets",
 			() -> EntityType.Builder.<BulletEntity>create(BulletEntity::new, EntityClassification.MISC).size(0.5F, 0.5F)
