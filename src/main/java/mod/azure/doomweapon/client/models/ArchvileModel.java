@@ -8,6 +8,8 @@ public class ArchvileModel<T extends ArchvileEntity> extends BipedModel<T> {
 	public boolean isCarrying;
 	public boolean isAttacking;
 
+	public ModelRenderer bipedBody_1;
+
 	public ArchvileModel(float scale) {
 		super(0.0F, -14.0F, 64, 32);
 		this.bipedHeadwear = new ModelRenderer(this, 0, 16);
@@ -16,6 +18,9 @@ public class ArchvileModel<T extends ArchvileEntity> extends BipedModel<T> {
 		this.bipedBody = new ModelRenderer(this, 32, 16);
 		this.bipedBody.addBox(-4.0F, 0.0F, -2.0F, 8.0F, 12.0F, 4.0F, scale);
 		this.bipedBody.setRotationPoint(0.0F, -14.0F, 0.0F);
+		this.bipedBody_1 = new ModelRenderer(this, 37, 19);
+		this.bipedBody_1.setRotationPoint(0.0F, 0.0F, 0.0F);
+		this.bipedBody_1.setTextureOffset(4, 0).addBox(-4.0F, 9.9F, -2.0F, 8.0F, 0.1F, 4.0F, 0.0F, 0.0F, 0.0F);
 		this.bipedRightArm = new ModelRenderer(this, 56, 0);
 		this.bipedRightArm.addBox(-1.0F, -2.0F, -1.0F, 2.0F, 30.0F, 2.0F, scale);
 		this.bipedRightArm.setRotationPoint(-3.0F, -12.0F, 0.0F);
@@ -24,17 +29,15 @@ public class ArchvileModel<T extends ArchvileEntity> extends BipedModel<T> {
 		this.bipedLeftArm.addBox(-1.0F, -2.0F, -1.0F, 2.0F, 30.0F, 2.0F, scale);
 		this.bipedLeftArm.setRotationPoint(5.0F, -12.0F, 0.0F);
 		this.bipedRightLeg = new ModelRenderer(this, 56, 0);
-		this.bipedRightLeg.addBox(-1.0F, 0.0F, -1.0F, 2.0F, 30.0F, 2.0F, scale);
-		this.bipedRightLeg.setRotationPoint(-2.0F, -2.0F, 0.0F);
+		this.bipedRightLeg.addBox(-1.0F, 0.5F, -1.0F, 2.0F, 30.0F, 2.0F, 0.0F, -1.5F, 0.0F);
+		this.bipedRightLeg.setRotationPoint(-2.0F, -5.0F, 0.0F);
 		this.bipedLeftLeg = new ModelRenderer(this, 56, 0);
 		this.bipedLeftLeg.mirror = true;
-		this.bipedLeftLeg.addBox(-1.0F, 0.0F, -1.0F, 2.0F, 30.0F, 2.0F, scale);
-		this.bipedLeftLeg.setRotationPoint(2.0F, -2.0F, 0.0F);
+		this.bipedLeftLeg.addBox(-1.0F, 0.5F, -1.0F, 2.0F, 30.0F, 2.0F, 0.0F, -1.5F, 0.0F);
+		this.bipedLeftLeg.setRotationPoint(2.0F, -5.0F, 0.0F);
+		this.bipedBody.addChild(this.bipedBody_1);
 	}
 
-	/**
-	 * Sets this entity's model rotation angles
-	 */
 	public void setRotationAngles(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks,
 			float netHeadYaw, float headPitch) {
 		super.setRotationAngles(entityIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
