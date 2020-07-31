@@ -337,16 +337,28 @@ public class DoomItems {
 			() -> new ClassicDoomArmor(DoomArmorMaterial.CLASSIC_BRONZE_ARMOR, EquipmentSlotType.LEGS));
 	public static final RegistryObject<Item> CLASSIC_DOOM_BOOTS = ITEMS.register("classic_doom_boots",
 			() -> new ClassicDoomArmor(DoomArmorMaterial.CLASSIC_DOOM_ARMOR, EquipmentSlotType.FEET));
-	public static final RegistryObject<Item> MULLET_DOOM_HELMET = ITEMS.register("redneck_doom_helmet",
+	public static final RegistryObject<Item> MULLET_DOOM_HELMET1 = ITEMS.register("redneck_doom1_helmet",
 			() -> new MulletDoomArmor(DoomArmorMaterial.REDNECK1_ARMOR, EquipmentSlotType.HEAD));
-	public static final RegistryObject<Item> DOOM_CHESTPLATE1 = ITEMS.register("redneck_doom1_chestplate",
+	public static final RegistryObject<Item> MULLET_DOOM_HELMET2 = ITEMS.register("redneck_doom2_helmet",
+			() -> new MulletDoomArmor(DoomArmorMaterial.REDNECK2_ARMOR, EquipmentSlotType.HEAD));
+	public static final RegistryObject<Item> MULLET_DOOM_HELMET3 = ITEMS.register("redneck_doom3_helmet",
+			() -> new MulletDoomArmor(DoomArmorMaterial.REDNECK3_ARMOR, EquipmentSlotType.HEAD));
+	public static final RegistryObject<Item> MULLET_DOOM_CHESTPLATE1 = ITEMS.register("redneck_doom1_chestplate",
 			() -> new MulletDoomArmor(DoomArmorMaterial.REDNECK1_ARMOR, EquipmentSlotType.CHEST));
 	public static final RegistryObject<Item> MULLET_DOOM_CHESTPLATE2 = ITEMS.register("redneck_doom2_chestplate",
 			() -> new MulletDoomArmor(DoomArmorMaterial.REDNECK2_ARMOR, EquipmentSlotType.CHEST));
 	public static final RegistryObject<Item> MULLET_DOOM_CHESTPLATE3 = ITEMS.register("redneck_doom3_chestplate",
 			() -> new MulletDoomArmor(DoomArmorMaterial.REDNECK3_ARMOR, EquipmentSlotType.CHEST));
-	public static final RegistryObject<Item> MULLET_DOOM_LEGGINGS = ITEMS.register("redneck_doom_leggings",
+	public static final RegistryObject<Item> MULLET_DOOM_LEGGINGS1 = ITEMS.register("redneck_doom1_leggings",
 			() -> new MulletDoomArmor(DoomArmorMaterial.REDNECK1_ARMOR, EquipmentSlotType.LEGS));
-	public static final RegistryObject<Item> MULLET_DOOM_BOOTS = ITEMS.register("redneck_doom_boots",
+	public static final RegistryObject<Item> MULLET_DOOM_LEGGINGS2 = ITEMS.register("redneck_doom2_leggings",
+			() -> new MulletDoomArmor(DoomArmorMaterial.REDNECK2_ARMOR, EquipmentSlotType.LEGS));
+	public static final RegistryObject<Item> MULLET_DOOM_LEGGINGS3 = ITEMS.register("redneck_doom3_leggings",
+			() -> new MulletDoomArmor(DoomArmorMaterial.REDNECK3_ARMOR, EquipmentSlotType.LEGS));
+	public static final RegistryObject<Item> MULLET_DOOM_BOOTS1 = ITEMS.register("redneck_doom1_boots",
 			() -> new MulletDoomArmor(DoomArmorMaterial.REDNECK1_ARMOR, EquipmentSlotType.FEET));
+	public static final RegistryObject<Item> MULLET_DOOM_BOOTS2 = ITEMS.register("redneck_doom2_boots",
+			() -> new MulletDoomArmor(DoomArmorMaterial.REDNECK2_ARMOR, EquipmentSlotType.FEET));
+	public static final RegistryObject<Item> MULLET_DOOM_BOOTS3 = ITEMS.register("redneck_doom3_boots",
+			() -> new MulletDoomArmor(DoomArmorMaterial.REDNECK3_ARMOR, EquipmentSlotType.FEET));
 }
