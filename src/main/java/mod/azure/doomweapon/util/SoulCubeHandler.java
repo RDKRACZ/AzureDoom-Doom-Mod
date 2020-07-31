@@ -20,6 +20,7 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import top.theillusivec4.curios.api.CuriosAPI;
 import top.theillusivec4.curios.api.capability.CuriosCapability;
 import top.theillusivec4.curios.api.capability.ICurio;
@@ -87,5 +88,12 @@ public class SoulCubeHandler {
 		livingEntity.addPotionEffect(new EffectInstance(Effects.RESISTANCE, 100, 4));
 		livingEntity.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 100, 4));
 		livingEntity.world.setEntityState(livingEntity, (byte) 36);
+
+		if (soulcube.isEmpty()) {
+			ServerPlayerEntity playerentity = (ServerPlayerEntity) livingEntity;
+			if (ModList.get().isLoaded("pmmo")) {
+				PMMOCompat.awardSoulXp(playerentity);
+			}
+		}
 	}
 }
