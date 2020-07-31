@@ -21,9 +21,6 @@ import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.FireballEntity;
 import net.minecraft.network.IPacket;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
@@ -37,9 +34,6 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 public class LostSoulEntity extends FlyingEntity implements IMob {
 
-	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(LostSoulEntity.class,
-			DataSerializers.BOOLEAN);
-
 	public LostSoulEntity(EntityType<LostSoulEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
 	}
@@ -51,7 +45,8 @@ public class LostSoulEntity extends FlyingEntity implements IMob {
 
 	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
 		return MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 50.0D)
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D).createMutableAttribute(Attributes.MAX_HEALTH, 5.0D);
+				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D)
+				.createMutableAttribute(Attributes.MAX_HEALTH, 5.0D);
 	}
 
 	@Override
@@ -77,10 +72,6 @@ public class LostSoulEntity extends FlyingEntity implements IMob {
 		return true;
 	}
 
-	public void setAttacking(boolean attacking) {
-		this.dataManager.set(ATTACKING, attacking);
-	}
-
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
 		return 0.5F;
@@ -100,10 +91,6 @@ public class LostSoulEntity extends FlyingEntity implements IMob {
 
 		public void startExecuting() {
 			this.attackTimer = 0;
-		}
-
-		public void resetTask() {
-			this.parentEntity.setAttacking(false);
 		}
 
 		public void tick() {
@@ -135,8 +122,6 @@ public class LostSoulEntity extends FlyingEntity implements IMob {
 			} else if (this.attackTimer > 0) {
 				--this.attackTimer;
 			}
-
-			this.parentEntity.setAttacking(this.attackTimer > 10);
 		}
 	}
 
