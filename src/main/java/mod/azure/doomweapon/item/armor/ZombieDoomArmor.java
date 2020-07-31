@@ -4,6 +4,7 @@ import java.util.List;
 
 import mod.azure.doomweapon.DoomMod;
 import mod.azure.doomweapon.item.armor.skin.SkinArmor;
+import mod.azure.doomweapon.util.Config;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.player.PlayerEntity;
@@ -23,14 +24,13 @@ public class ZombieDoomArmor extends SkinArmor {
 
 	public ZombieDoomArmor(IArmorMaterial materialIn, EquipmentSlotType slot) {
 		super(materialIn, slot, new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1));
-		
+
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new StringTextComponent(
-				"\u00A7o" + "\u00A7e" + "Even Death can not hold back the Slayer."));
+		tooltip.add(new StringTextComponent("\u00A7o" + "\u00A7e" + "Even Death can not hold back the Slayer."));
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 
@@ -38,8 +38,15 @@ public class ZombieDoomArmor extends SkinArmor {
 	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
 		ItemStack stack = new ItemStack(this);
 		stack.hasTag();
-		stack.addEnchantment(Enchantments.FEATHER_FALLING, 1);
-		stack.addEnchantment(Enchantments.THORNS, 1);
+		if (Config.SERVER.DARTH_ZOMBIE.get()) {
+			stack.addEnchantment(Enchantments.BLAST_PROTECTION, 20);
+			stack.addEnchantment(Enchantments.FEATHER_FALLING, 20);
+			stack.addEnchantment(Enchantments.FIRE_PROTECTION, 20);
+			stack.addEnchantment(Enchantments.THORNS, 20);
+		} else {
+			stack.addEnchantment(Enchantments.FEATHER_FALLING, 1);
+			stack.addEnchantment(Enchantments.THORNS, 1);
+		}
 		if (group == DoomMod.DoomItemGroup) {
 			items.add(stack);
 		}
@@ -48,8 +55,15 @@ public class ZombieDoomArmor extends SkinArmor {
 	@Override
 	public void onCreated(ItemStack stack, World worldIn, PlayerEntity playerIn) {
 		stack.hasTag();
-		stack.addEnchantment(Enchantments.FEATHER_FALLING, 1);
-		stack.addEnchantment(Enchantments.THORNS, 1);
+		if (Config.SERVER.DARTH_ZOMBIE.get()) {
+			stack.addEnchantment(Enchantments.BLAST_PROTECTION, 20);
+			stack.addEnchantment(Enchantments.FEATHER_FALLING, 20);
+			stack.addEnchantment(Enchantments.FIRE_PROTECTION, 20);
+			stack.addEnchantment(Enchantments.THORNS, 20);
+		} else {
+			stack.addEnchantment(Enchantments.FEATHER_FALLING, 1);
+			stack.addEnchantment(Enchantments.THORNS, 1);
+		}
 	}
 
 }
