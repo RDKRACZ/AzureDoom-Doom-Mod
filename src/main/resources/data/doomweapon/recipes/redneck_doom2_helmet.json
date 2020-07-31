@@ -1,11 +1,11 @@
 {
   "result": {
-    "item": "doomweapon:redneck_doom_boots"
+    "item": "doomweapon:redneck_doom2_helmet"
   },
   "type": "minecraft:crafting_shaped",
    "pattern": [
-        "   ",
-        "@c@",
+        " cc",
+        "@@@",
         "@#@"
     ],
     "key": {
