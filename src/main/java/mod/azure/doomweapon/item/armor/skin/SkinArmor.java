@@ -21,11 +21,6 @@ public class SkinArmor extends ArmorItem implements IForgeItem {
 	}
 
 	@Override
-	public boolean hasEffect(ItemStack stack) {
-		return false;
-	}
-
-	@Override
 	public boolean shouldSyncTag() {
 		return true;
 	}
