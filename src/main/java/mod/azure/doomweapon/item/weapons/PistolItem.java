@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 import mod.azure.doomweapon.DoomMod;
 import mod.azure.doomweapon.entity.projectiles.BulletEntity;
 import mod.azure.doomweapon.item.ammo.ClipAmmo;
+import mod.azure.doomweapon.util.enums.DoomTier;
 import mod.azure.doomweapon.util.registry.DoomItems;
 import mod.azure.doomweapon.util.registry.ModSoundEvents;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -40,13 +41,13 @@ public class PistolItem extends BowItem {
 	}
 
 	@Override
-	public void onCreated(ItemStack stack, World worldIn, PlayerEntity playerIn) {
-		stack.hasTag();
+	public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+		return DoomTier.DOOM.getRepairMaterial().test(repair) || super.getIsRepairable(toRepair, repair);
 	}
 
 	@Override
-	public boolean hasEffect(ItemStack stack) {
-		return false;
+	public void onCreated(ItemStack stack, World worldIn, PlayerEntity playerIn) {
+		stack.hasTag();
 	}
 
 	@Override

@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 import mod.azure.doomweapon.DoomMod;
 import mod.azure.doomweapon.entity.projectiles.ArgentBoltEntity;
 import mod.azure.doomweapon.item.ammo.ArgentBolt;
+import mod.azure.doomweapon.util.enums.DoomTier;
 import mod.azure.doomweapon.util.registry.DoomItems;
 import mod.azure.doomweapon.util.registry.ModSoundEvents;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -48,8 +49,8 @@ public class Unmaykr extends CrossbowItem {
 	}
 
 	@Override
-	public boolean hasEffect(ItemStack stack) {
-		return false;
+	public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+		return DoomTier.DOOM.getRepairMaterial().test(repair) || super.getIsRepairable(toRepair, repair);
 	}
 
 	@Override
