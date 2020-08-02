@@ -21,9 +21,6 @@ import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.FireballEntity;
 import net.minecraft.network.IPacket;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -35,9 +32,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 public class CacodemonEntity extends FlyingEntity implements IMob {
-
-	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(CacodemonEntity.class,
-			DataSerializers.BOOLEAN);
 
 	public CacodemonEntity(EntityType<? extends CacodemonEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -80,10 +74,6 @@ public class CacodemonEntity extends FlyingEntity implements IMob {
 		return true;
 	}
 
-	public void setAttacking(boolean attacking) {
-		this.dataManager.set(ATTACKING, attacking);
-	}
-
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
 		return 1.0F;
@@ -103,10 +93,6 @@ public class CacodemonEntity extends FlyingEntity implements IMob {
 
 		public void startExecuting() {
 			this.attackTimer = 0;
-		}
-
-		public void resetTask() {
-			this.parentEntity.setAttacking(false);
 		}
 
 		public void tick() {
@@ -138,8 +124,6 @@ public class CacodemonEntity extends FlyingEntity implements IMob {
 			} else if (this.attackTimer > 0) {
 				--this.attackTimer;
 			}
-
-			this.parentEntity.setAttacking(this.attackTimer > 10);
 		}
 	}
 
