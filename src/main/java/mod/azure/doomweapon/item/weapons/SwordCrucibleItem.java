@@ -74,9 +74,4 @@ public class SwordCrucibleItem extends SwordItem {
 		stack.addEnchantment(Enchantments.SHARPNESS, 10);
 		stack.addEnchantment(Enchantments.SWEEPING, 10);
 	}
-
-	@Override
-	public boolean hasEffect(ItemStack stack) {
-		return false;
-	}
 }
