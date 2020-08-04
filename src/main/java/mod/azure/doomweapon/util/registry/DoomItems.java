@@ -58,6 +58,7 @@ import mod.azure.doomweapon.item.weapons.SuperShotgun;
 import mod.azure.doomweapon.item.weapons.SwordCrucibleItem;
 import mod.azure.doomweapon.util.enums.DoomArmorMaterial;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -67,6 +68,8 @@ public class DoomItems {
 
 	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, DoomMod.MODID);
 
+	public static final RegistryObject<Item> ITEM = ITEMS.register("barrel",
+			() -> new BlockItem(DoomBlocks.BLOCK.get(), new Item.Properties().group(DoomMod.DoomItemGroup)));
 	// AMMO
 	public static final RegistryObject<Item> SHOTGUN_SHELLS = ITEMS.register("shotgun_shells",
 			() -> new ShellAmmo(new Item.Properties().group(DoomMod.DoomItemGroup), 2.0F));

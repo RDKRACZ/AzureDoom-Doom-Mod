@@ -3,6 +3,7 @@ package mod.azure.doomweapon.client;
 import mod.azure.doomweapon.DoomMod;
 import mod.azure.doomweapon.client.render.ArchvileRender;
 import mod.azure.doomweapon.client.render.BaronRender;
+import mod.azure.doomweapon.client.render.BarrelRender;
 import mod.azure.doomweapon.client.render.CacodemonRender;
 import mod.azure.doomweapon.client.render.ChaingunnerRender;
 import mod.azure.doomweapon.client.render.Cyberdemon2016Render;
@@ -44,6 +45,7 @@ public class ClientModEventSubscriber {
 
 	@SubscribeEvent
 	public static void onClientSetup(final FMLClientSetupEvent event) {
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BARREL.get(), BarrelRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.SHOTGUN_SHELL.get(), ShotgunShellRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ARGENT_BOLT.get(), ArgentBoltRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ENERGY_CELL.get(), EnergyCellRender::new);

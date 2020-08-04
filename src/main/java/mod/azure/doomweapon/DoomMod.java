@@ -4,6 +4,7 @@ import mod.azure.doomweapon.client.ModItemModelsProperties;
 import mod.azure.doomweapon.util.Config;
 import mod.azure.doomweapon.util.LootHandler;
 import mod.azure.doomweapon.util.SoulCubeHandler;
+import mod.azure.doomweapon.util.registry.DoomBlocks;
 import mod.azure.doomweapon.util.registry.DoomItems;
 import mod.azure.doomweapon.util.registry.ModEntityTypes;
 import mod.azure.doomweapon.util.registry.ModSoundEvents;
@@ -45,6 +46,7 @@ public class DoomMod {
 		ModSoundEvents.MOD_SOUNDS.register(modEventBus);
 		ModEntityTypes.ENTITY_TYPES.register(modEventBus);
 		DoomItems.ITEMS.register(modEventBus);
+		DoomBlocks.BLOCKS.register(modEventBus);
 	}
 
 	private void clientSetup(FMLClientSetupEvent event) {

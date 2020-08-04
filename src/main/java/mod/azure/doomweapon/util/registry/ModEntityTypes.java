@@ -26,6 +26,7 @@ import mod.azure.doomweapon.entity.ZombiemanEntity;
 import mod.azure.doomweapon.entity.projectiles.ArgentBoltEntity;
 import mod.azure.doomweapon.entity.projectiles.BFGEntity;
 import mod.azure.doomweapon.entity.projectiles.BarenBlastEntity;
+import mod.azure.doomweapon.entity.projectiles.BarrelEntity;
 import mod.azure.doomweapon.entity.projectiles.BulletEntity;
 import mod.azure.doomweapon.entity.projectiles.ChaingunBulletEntity;
 import mod.azure.doomweapon.entity.projectiles.EnergyCellEntity;
@@ -43,6 +44,11 @@ public class ModEntityTypes {
 
 	public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITIES,
 			DoomMod.MODID);
+
+	public static final RegistryObject<EntityType<BarrelEntity>> BARREL = ENTITY_TYPES.register("barrel",
+			() -> EntityType.Builder.<BarrelEntity>create(BarrelEntity::new, EntityClassification.MISC)
+					.size(0.98F, 0.98F).func_233606_a_(10)
+					.build(new ResourceLocation(DoomMod.MODID, "barrel").toString()));
 
 	public static final RegistryObject<EntityType<ShotgunShellEntity>> SHOTGUN_SHELL = ENTITY_TYPES.register(
 			"shotgun_shell",
