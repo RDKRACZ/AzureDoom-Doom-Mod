@@ -87,7 +87,7 @@ public class RevenantEntity extends DemonEntity implements IRangedAttackMob {
 
 	public static AttributeModifierMap.MutableAttribute func_234342_eQ_() {
 		return MonsterEntity.func_234295_eP_().createMutableAttribute(Attributes.FOLLOW_RANGE, 35.0D)
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, (double) 0.23F)
+				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.23F)
 				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 4.0D).createMutableAttribute(Attributes.ARMOR, 0.25D)
 				.createMutableAttribute(Attributes.ZOMBIE_SPAWN_REINFORCEMENTS);
 	}
