@@ -60,6 +60,8 @@ public class DoomMod {
 	private void enqueueIMC(InterModEnqueueEvent event) {
 		InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE,
 				() -> SlotTypePreset.CHARM.getMessageBuilder().build());
+		InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE,
+				() -> SlotTypePreset.BELT.getMessageBuilder().build());
 	}
 
 	public static final ItemGroup DoomItemGroup = (new ItemGroup("doomweapon") {
