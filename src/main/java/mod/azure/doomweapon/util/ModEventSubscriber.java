@@ -12,6 +12,7 @@ import mod.azure.doomweapon.util.registry.DoomItems;
 import mod.azure.doomweapon.util.registry.ExtraModSpawns;
 import mod.azure.doomweapon.util.registry.ModEntitySpawn;
 import mod.azure.doomweapon.util.registry.ModEntityTypes;
+import mod.azure.doomweapon.util.registry.NetherExSpawns;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -59,6 +60,9 @@ public class ModEventSubscriber {
 		ModEntitySpawn.EntitySpawnPlacementRegistry();
 		if (ModList.get().isLoaded("extendednether")) {
 			ExtraModSpawns.registerEntityModWorldSpawns();
+		}
+		if (ModList.get().isLoaded("netherex")) {
+			NetherExSpawns.registerEntityModWorldSpawns();
 		}
 	}
 
