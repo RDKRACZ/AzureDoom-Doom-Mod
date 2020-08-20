@@ -3,7 +3,6 @@ package mod.azure.doomweapon.item.powerup;
 import java.util.List;
 
 import mod.azure.doomweapon.DoomMod;
-import mod.azure.doomweapon.util.PMMOCompat;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -38,7 +37,7 @@ public class MegaSphereItem extends Item {
 			livingEntityIn.addPotionEffect(new EffectInstance(Effects.RESISTANCE, 600, 4));
 			livingEntityIn.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 600, 4));
 			if (ModList.get().isLoaded("pmmo")) {
-				PMMOCompat.awardMegaXp(playerentity);
+//				PMMOCompat.awardMegaXp(playerentity);
 			}
 			if (!playerentity.abilities.isCreativeMode) {
 				stack.shrink(1);

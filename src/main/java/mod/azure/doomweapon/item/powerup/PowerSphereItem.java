@@ -3,7 +3,6 @@ package mod.azure.doomweapon.item.powerup;
 import java.util.List;
 
 import mod.azure.doomweapon.DoomMod;
-import mod.azure.doomweapon.util.PMMOCompat;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -33,7 +32,7 @@ public class PowerSphereItem extends Item {
 			if (!worldIn.isRemote) {
 				livingEntityIn.heal(20);
 				if (ModList.get().isLoaded("pmmo")) {
-					PMMOCompat.awardPowerXp(playerentity);
+//					PMMOCompat.awardPowerXp(playerentity);
 				}
 				if (!playerentity.abilities.isCreativeMode) {
 					stack.shrink(1);

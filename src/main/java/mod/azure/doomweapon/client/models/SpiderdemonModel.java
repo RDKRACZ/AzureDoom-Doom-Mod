@@ -8,7 +8,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
 public class SpiderdemonModel<T extends Entity> extends SegmentedModel<T> {
-	public ModelRenderer spiderNeck;
+	public ModelRenderer spiderBody;
 	public ModelRenderer spiderLLegF;
 	public ModelRenderer spiderRLegR;
 	public ModelRenderer spiderLLegR;
@@ -39,9 +39,9 @@ public class SpiderdemonModel<T extends Entity> extends SegmentedModel<T> {
 		this.spiderLLegF.setRotationPoint(4.0F, 15.0F, -1.0F);
 		this.spiderLLegF.addBox(-4.0F, 1.4F, -4.1F, 8.0F, 2.0F, 2.0F, -1.8F, 0.0F, 0.0F);
 		this.setRotateAngle(spiderLLegF, 0.0F, 0.0F, -0.8192575269176885F);
-		this.spiderNeck = new ModelRenderer(this, 0, 12);
-		this.spiderNeck.setRotationPoint(0.0F, 15.0F, 0.0F);
-		this.spiderNeck.addBox(-5.0F, -4.2F, -6.0F, 10.0F, 8.0F, 12.0F, 0.0F, 0.0F, -0.7F);
+		this.spiderBody = new ModelRenderer(this, 0, 12);
+		this.spiderBody.setRotationPoint(0.0F, 15.0F, 0.0F);
+		this.spiderBody.addBox(-5.0F, -4.2F, -6.0F, 10.0F, 8.0F, 12.0F, 0.0F, 0.0F, -0.7F);
 		this.spiderRLegF = new ModelRenderer(this, 18, 0);
 		this.spiderRLegF.setRotationPoint(-4.0F, 15.0F, 0.0F);
 		this.spiderRLegF.addBox(-4.0F, 1.4F, -5.0F, 8.0F, 2.0F, 2.0F, -1.8F, 0.0F, 0.0F);
@@ -61,7 +61,7 @@ public class SpiderdemonModel<T extends Entity> extends SegmentedModel<T> {
 	}
 
 	public Iterable<ModelRenderer> getParts() {
-		return ImmutableList.of(this.spiderNeck, this.spiderRLegR, this.spiderLLegR, this.spiderRLegF,
+		return ImmutableList.of(this.spiderBody, this.spiderRLegR, this.spiderLLegR, this.spiderRLegF,
 				this.spiderLLegF);
 	}
 

@@ -71,6 +71,12 @@ public class DoomItems {
 
 	public static final RegistryObject<Item> ITEM = ITEMS.register("barrel",
 			() -> new BlockItem(DoomBlocks.BLOCK.get(), new Item.Properties().group(DoomMod.DoomItemGroup)));
+	
+	public static final RegistryObject<Item> ARGENT_BLOCK = ITEMS.register("argent_block",
+			() -> new BlockItem(DoomBlocks.ARGENT_BLOCK.get(), new Item.Properties().group(DoomMod.DoomItemGroup)));
+	
+	public static final RegistryObject<Item> ARGENT_LAMP_BLOCK = ITEMS.register("argent_lamp_block",
+			() -> new BlockItem(DoomBlocks.ARGENT_LAMP_BLOCK.get(), new Item.Properties().group(DoomMod.DoomItemGroup)));
 	// AMMO
 	public static final RegistryObject<Item> SHOTGUN_SHELLS = ITEMS.register("shotgun_shells",
 			() -> new ShellAmmo(new Item.Properties().group(DoomMod.DoomItemGroup), 2.0F));

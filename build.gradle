@@ -2,34 +2,38 @@ buildscript {
     repositories {
         maven { url = 'https://files.minecraftforge.net/maven' }
 		maven { url  = 'https://plugins.gradle.org/m2/' }
+        maven {url='https://dist.creeper.host/Sponge/maven'}
         jcenter()
         mavenCentral()
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
 		classpath "com.wynprice.cursemaven:CurseMaven:2.1.5"
+        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 apply plugin: "com.wynprice.cursemaven"
+apply plugin: 'org.spongepowered.mixin'
 
 import groovy.json.JsonSlurper
 import groovy.json.JsonOutput
 
-version = "1.6.6"
+version = "1.0.0"
 group = "mod.azure.doomweapon"
-archivesBaseName = "AzureDooms-Doom-Mod-1.16.1"
+archivesBaseName = "AzureDooms-Doom-Mod-1.16.2"
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
 minecraft {
-    mappings channel: 'snapshot', version: '20200723-1.16.1'
-    // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+    mappings channel: 'snapshot', version: '20200813-1.16.1'
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
     runs {
         client {
             workingDirectory project.file('run')
+            arg "-mixin.config=doom.mixins.json"
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
             mods {
@@ -40,6 +44,7 @@ minecraft {
         }
         server {
             workingDirectory project.file('run')
+            arg "-mixin.config=doom.mixins.json"
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
             mods {
@@ -64,17 +69,20 @@ minecraft {
 
 repositories {
     maven { url = "https://maven.theillusivec4.top/" }
+    maven {
+        url 'https://www.dogforce-games.com/maven/'
+    }
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.1-32.0.93'
-    runtimeOnly fg.deobf("top.theillusivec4.curios:curios:FORGE-1.16.1-3.0")
-    compileOnly fg.deobf("top.theillusivec4.curios:curios:FORGE-1.16.1-3.0:api")
-	compile fg.deobf("curse.maven:JEI:2995910")
-	compile fg.deobf("curse.maven:WZ:3009586")
-	compile fg.deobf("curse.maven:PMMO:3017932")
-	compile fg.deobf("curse.maven:Model1:3017687")
-	compile fg.deobf("curse.maven:Model2:3016191")
+    minecraft 'net.minecraftforge:forge:1.16.2-33.0.7'
+    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.2-4.0.0.0")
+    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.2-4.0.0.0:api")
+	//compile fg.deobf("curse.maven:JEI:2995910")
+	//compile fg.deobf("curse.maven:WZ:3009586")
+	//compile fg.deobf("curse.maven:PMMO:3026743")
+	//compile fg.deobf("curse.maven:Model1:3017687")
+	//compile fg.deobf("curse.maven:Model2:3016191")
 	//compile fg.deobf("curse.maven:NPF:2993052")
 }
 
@@ -87,7 +95,8 @@ jar {
             "Implementation-Title": project.name,
             "Implementation-Version": "${version}",
             "Implementation-Vendor" :"examplemodsareus",
-            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+            "MixinConfigs": "doom.mixins.json"
         ])
     }
 }
@@ -120,4 +129,8 @@ processResources {
         }
         println('Minified ' + jsonMinified + ' json files. Saved ' + jsonBytesSaved + ' bytes. Took ' + (System.currentTimeMillis() - jsonMinifyStart) + 'ms.')
     }
+}
+
+mixin {
+    add sourceSets.main, "doom.refmap.json"
 }

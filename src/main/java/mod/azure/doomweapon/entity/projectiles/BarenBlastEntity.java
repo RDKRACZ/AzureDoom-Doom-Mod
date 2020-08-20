@@ -13,7 +13,6 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.Explosion;
@@ -73,8 +72,7 @@ public class BarenBlastEntity extends AbstractArrowEntity {
 				this.setFire(0);
 			}
 
-			RayTraceResult raytraceresult = ProjectileHelper.func_234618_a_(this, this::func_230298_a_,
-					RayTraceContext.BlockMode.COLLIDER);
+			RayTraceResult raytraceresult = ProjectileHelper.func_234618_a_(this, this::func_230298_a_);
 			if (raytraceresult.getType() != RayTraceResult.Type.MISS
 					&& !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, raytraceresult)) {
 				this.onImpact(raytraceresult);

@@ -36,16 +36,11 @@ import mod.azure.doomweapon.util.registry.ModEntitySpawn;
 import mod.azure.doomweapon.util.registry.ModEntityTypes;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.stats.Stats;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -85,7 +80,8 @@ public class ModEventSubscriber {
 				ModEntityTypes.CHAINGUN_BULLET.get(), ModEntityTypes.ENERGY_CELL.get(),
 				ModEntityTypes.SHOTGUN_SHELL.get(), ModEntityTypes.ARGENT_BOLT.get(),
 				ModEntityTypes.POSSESSEDSCIENTIST.get(), ModEntityTypes.ZOMBIEMAN.get());
-		ModEntitySpawn.registerEntityWorldSpawns();
+//		ModEntitySpawn.registerEntityWorldSpawns();
+		ModEntitySpawn.addSpawnEntries();
 		ModEntitySpawn.EntitySpawnPlacementRegistry();
 	}
 
@@ -153,34 +149,6 @@ public class ModEventSubscriber {
 			ItemStack stack = event.getItemStack();
 			if (noBreak(stack)) {
 				event.setUseItem(Event.Result.DENY);
-			}
-		}
-
-		@SubscribeEvent
-		public static void playerRespawnEvent(PlayerEvent.PlayerRespawnEvent event) {
-			PlayerEntity player = event.getPlayer();
-			ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
-			BlockPos respawnPos = serverPlayer.func_241140_K_();
-			if (respawnPos == null && Config.SERVER.NETHER_SPAWN.get()) {
-				SpawnHandler.respawnInNether(player);
-			} else if (respawnPos == null && Config.SERVER.END_SPAWN.get()) {
-				SpawnHandler.respawnInEnd(player);
-			}
-		}
-
-		@SubscribeEvent
-		public static void playerLoggedInEvent(PlayerEvent.PlayerLoggedInEvent event) {
-			PlayerEntity player = event.getPlayer();
-			ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
-
-			int firstjoin = serverPlayer.getStats().getValue(Stats.CUSTOM.get(Stats.PLAY_ONE_MINUTE));
-
-			if (firstjoin == 0) {
-				if (Config.SERVER.NETHER_SPAWN.get()) {
-					SpawnHandler.respawnInNether(player);
-				} else if (Config.SERVER.END_SPAWN.get()) {
-					SpawnHandler.respawnInEnd(player);
-				}
 			}
 		}
 	}

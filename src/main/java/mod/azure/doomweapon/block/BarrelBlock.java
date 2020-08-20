@@ -25,6 +25,9 @@ import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
@@ -38,6 +41,8 @@ public class BarrelBlock extends Block {
 		this.setDefaultState(
 				this.stateContainer.getBaseState().with(direction, Direction.NORTH).with(light, Boolean.valueOf(true)));
 	}
+	
+	
 
 	@Override
 	public boolean canDropFromExplosion(Explosion explosionIn) {
@@ -46,7 +51,7 @@ public class BarrelBlock extends Block {
 
 	@Override
 	public int getFlammability(BlockState state, IBlockReader world, BlockPos pos, Direction face) {
-		return 150;
+		return 300;
 	}
 
 	@Override
@@ -150,6 +155,12 @@ public class BarrelBlock extends Block {
 	@Override
 	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
 		builder.add(direction, light);
+	}
+	
+	@Override
+	public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos,
+			ISelectionContext context) {
+		return VoxelShapes.create(0.06f, 0f, 0.06f, 0.94f, 1.0f, 0.94f);
 	}
 
 }
