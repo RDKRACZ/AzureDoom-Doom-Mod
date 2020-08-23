@@ -467,8 +467,8 @@
 			"translation": [0, 10.5, 0]
 		},
 		"gui": {
-			"rotation": [50, -133, 25],
-			"translation": [2.25, 3.5, 0],
+			"rotation": [50, -45, 25],
+			"translation": [-0.75, 5, 0],
 			"scale": [0.8, 0.8, 0.8]
 		},
 		"fixed": {

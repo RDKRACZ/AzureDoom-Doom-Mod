@@ -15,7 +15,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class UnopenedItem extends Item {
 
 	public UnopenedItem() {
-		super(new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1));
+		super(new Item.Properties().group(DoomMod.DoomWeaponItemGroup).maxStackSize(1));
 	}
 
 	@Override

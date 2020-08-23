@@ -22,7 +22,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class MidnightDoomArmor extends SkinArmor {
 
 	public MidnightDoomArmor(IArmorMaterial materialIn, EquipmentSlotType slot) {
-		super(materialIn, slot, new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1));
+		super(materialIn, slot, new Item.Properties().group(DoomMod.DoomArmorItemGroup).maxStackSize(1));
 		
 	}
 
@@ -41,7 +41,7 @@ public class MidnightDoomArmor extends SkinArmor {
 		stack.addEnchantment(Enchantments.BLAST_PROTECTION, 3);
 		stack.addEnchantment(Enchantments.FEATHER_FALLING, 2);
 		stack.addEnchantment(Enchantments.PROTECTION, 3);
-		if (group == DoomMod.DoomItemGroup) {
+		if (group == DoomMod.DoomArmorItemGroup) {
 			items.add(stack);
 		}
 	}

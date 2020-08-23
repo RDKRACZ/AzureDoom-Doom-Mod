@@ -16,15 +16,15 @@ public class DoomBlocks {
 
 	public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, DoomMod.MODID);
 
-	public static final RegistryObject<Block> BLOCK = BLOCKS.register("barrel",
+	public static final RegistryObject<Block> BARREL_BLOCK = BLOCKS.register("barrel",
 			() -> new BarrelBlock((AbstractBlock.Properties.create(Material.TNT).zeroHardnessAndResistance()
 					.sound(SoundType.PLANT).notSolid())));
 
 	public static final RegistryObject<Block> ARGENT_BLOCK = BLOCKS.register("argent_block",
-			() -> new ArgentBlock((AbstractBlock.Properties.create(Material.LAVA).zeroHardnessAndResistance()
-					.sound(SoundType.BONE).notSolid())));
+			() -> new ArgentBlock((AbstractBlock.Properties.create(Material.ANVIL).hardnessAndResistance(4.0F)
+					.sound(SoundType.BONE))));
 
 	public static final RegistryObject<Block> ARGENT_LAMP_BLOCK = BLOCKS.register("argent_lamp_block",
-			() -> new ArgentLampBlock((AbstractBlock.Properties.create(Material.LAVA).zeroHardnessAndResistance()
-					.sound(SoundType.BONE).notSolid())));
+			() -> new ArgentLampBlock((AbstractBlock.Properties.create(Material.ANVIL).hardnessAndResistance(4.0F)
+					.sound(SoundType.BONE))));
 }

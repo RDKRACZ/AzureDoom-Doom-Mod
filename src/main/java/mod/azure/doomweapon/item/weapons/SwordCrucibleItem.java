@@ -26,7 +26,7 @@ public class SwordCrucibleItem extends SwordItem {
 
 	public SwordCrucibleItem() {
 		super(DoomTier.DOOM, 12, -2.4F,
-				new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1).maxDamage(9000));
+				new Item.Properties().group(DoomMod.DoomWeaponItemGroup).maxStackSize(1).maxDamage(9000));
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public class SwordCrucibleItem extends SwordItem {
 		stack.addEnchantment(Enchantments.LOOTING, 10);
 		stack.addEnchantment(Enchantments.SHARPNESS, 10);
 		stack.addEnchantment(Enchantments.SWEEPING, 10);
-		if (group == DoomMod.DoomItemGroup) {
+		if (group == DoomMod.DoomWeaponItemGroup) {
 			items.add(stack);
 		}
 	}

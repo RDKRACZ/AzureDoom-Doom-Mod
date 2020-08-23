@@ -64,14 +64,38 @@ public class DoomMod {
 				() -> SlotTypePreset.BELT.getMessageBuilder().build());
 	}
 
-	public static final ItemGroup DoomItemGroup = (new ItemGroup("doomweapon") {
+	public static final ItemGroup DoomWeaponItemGroup = (new ItemGroup("doomweapons") {
 		@OnlyIn(Dist.CLIENT)
 		public ItemStack createIcon() {
 			return new ItemStack(DoomItems.CRUCIBLESWORD.get());
 		}
+	});
 
-		public boolean hasSearchBar() {
-			return true;
+	public static final ItemGroup DoomArmorItemGroup = (new ItemGroup("doomarmor") {
+		@OnlyIn(Dist.CLIENT)
+		public ItemStack createIcon() {
+			return new ItemStack(DoomItems.DOOM_HELMET.get());
 		}
-	}).setBackgroundImageName("item_search.png");
+	});
+
+	public static final ItemGroup DoomBlockItemGroup = (new ItemGroup("doomblocks") {
+		@OnlyIn(Dist.CLIENT)
+		public ItemStack createIcon() {
+			return new ItemStack(DoomBlocks.BARREL_BLOCK.get());
+		}
+	});
+
+	public static final ItemGroup DoomEggItemGroup = (new ItemGroup("doomeggs") {
+		@OnlyIn(Dist.CLIENT)
+		public ItemStack createIcon() {
+			return new ItemStack(DoomItems.IMP_SPAWN_EGG.get());
+		}
+	});
+
+	public static final ItemGroup DoomPowerUPItemGroup = (new ItemGroup("doompowerup") {
+		@OnlyIn(Dist.CLIENT)
+		public ItemStack createIcon() {
+			return new ItemStack(DoomItems.INMORTAL.get());
+		}
+	});
 }

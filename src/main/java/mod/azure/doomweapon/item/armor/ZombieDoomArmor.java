@@ -23,7 +23,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class ZombieDoomArmor extends SkinArmor {
 
 	public ZombieDoomArmor(IArmorMaterial materialIn, EquipmentSlotType slot) {
-		super(materialIn, slot, new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1));
+		super(materialIn, slot, new Item.Properties().group(DoomMod.DoomArmorItemGroup).maxStackSize(1));
 
 	}
 
@@ -47,7 +47,7 @@ public class ZombieDoomArmor extends SkinArmor {
 			stack.addEnchantment(Enchantments.FEATHER_FALLING, 1);
 			stack.addEnchantment(Enchantments.THORNS, 1);
 		}
-		if (group == DoomMod.DoomItemGroup) {
+		if (group == DoomMod.DoomArmorItemGroup) {
 			items.add(stack);
 		}
 	}

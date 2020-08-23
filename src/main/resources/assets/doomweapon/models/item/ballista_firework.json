@@ -1,6 +1,15 @@
 {
-    "parent": "item/crossbow",
-    "textures": {
-        "layer0": "doomweapon:items/ballista_firework"
-    }
+	"parent": "item/crossbow",
+	"textures": {
+		"layer0": "doomweapon:items/ballista_firework"
+	},
+	"display": {
+		"gui": {
+			"rotation": [
+				0,
+				180,
+				0
+			]
+		}
+	}
 }

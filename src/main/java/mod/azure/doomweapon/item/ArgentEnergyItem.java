@@ -5,9 +5,7 @@ import java.util.List;
 import mod.azure.doomweapon.DoomMod;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
@@ -17,7 +15,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class ArgentEnergyItem extends Item {
 
 	public ArgentEnergyItem() {
-		super(new Item.Properties().group(DoomMod.DoomItemGroup));
+		super(new Item.Properties().group(DoomMod.DoomPowerUPItemGroup));
 	}
 
 	@Override
@@ -41,14 +39,5 @@ public class ArgentEnergyItem extends Item {
 
 	public int GetFuelValue() {
 		return 1200;
-	}
-
-	@Override
-	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
-		ItemStack stack = new ItemStack(this);
-		stack.hasTag();
-		if (group == DoomMod.DoomItemGroup) {
-			items.add(stack);
-		}
 	}
 }

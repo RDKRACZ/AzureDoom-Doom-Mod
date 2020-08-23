@@ -17,7 +17,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class ArgentHoe extends HoeItem {
 
 	public ArgentHoe() {
-		super(DoomTier.DOOM, 4, -2.4F, new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1));
+		super(DoomTier.DOOM, 4, -2.4F, new Item.Properties().group(DoomMod.DoomWeaponItemGroup).maxStackSize(1));
 	}
 
 	@Override

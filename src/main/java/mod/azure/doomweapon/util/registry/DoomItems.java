@@ -70,33 +70,35 @@ public class DoomItems {
 	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, DoomMod.MODID);
 
 	public static final RegistryObject<Item> ITEM = ITEMS.register("barrel",
-			() -> new BlockItem(DoomBlocks.BLOCK.get(), new Item.Properties().group(DoomMod.DoomItemGroup)));
-	
+			() -> new BlockItem(DoomBlocks.BARREL_BLOCK.get(),
+					new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+
 	public static final RegistryObject<Item> ARGENT_BLOCK = ITEMS.register("argent_block",
-			() -> new BlockItem(DoomBlocks.ARGENT_BLOCK.get(), new Item.Properties().group(DoomMod.DoomItemGroup)));
-	
+			() -> new BlockItem(DoomBlocks.ARGENT_BLOCK.get(),
+					new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+
 	public static final RegistryObject<Item> ARGENT_LAMP_BLOCK = ITEMS.register("argent_lamp_block",
-			() -> new BlockItem(DoomBlocks.ARGENT_LAMP_BLOCK.get(), new Item.Properties().group(DoomMod.DoomItemGroup)));
+			() -> new BlockItem(DoomBlocks.ARGENT_LAMP_BLOCK.get(),
+					new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
 	// AMMO
 	public static final RegistryObject<Item> SHOTGUN_SHELLS = ITEMS.register("shotgun_shells",
-			() -> new ShellAmmo(new Item.Properties().group(DoomMod.DoomItemGroup), 2.0F));
+			() -> new ShellAmmo(new Item.Properties().group(DoomMod.DoomWeaponItemGroup), 2.0F));
 	public static final RegistryObject<Item> ARGENT_BOLT = ITEMS.register("argent_bolt",
-			() -> new ArgentBolt(new Item.Properties().group(DoomMod.DoomItemGroup), 2.7F));
+			() -> new ArgentBolt(new Item.Properties().group(DoomMod.DoomWeaponItemGroup), 2.7F));
 	public static final RegistryObject<Item> ENERGY_CELLS = ITEMS.register("energy_cells",
-			() -> new EnergyCell(new Item.Properties().group(DoomMod.DoomItemGroup), 10.0F));
+			() -> new EnergyCell(new Item.Properties().group(DoomMod.DoomWeaponItemGroup), 10.0F));
 	public static final RegistryObject<Item> CHAINGUN_BULLETS = ITEMS.register("chaingunbullets",
-			() -> new ChaingunAmmo(new Item.Properties().group(DoomMod.DoomItemGroup), 10.0F));
+			() -> new ChaingunAmmo(new Item.Properties().group(DoomMod.DoomWeaponItemGroup), 10.0F));
 	public static final RegistryObject<Item> BULLETS = ITEMS.register("bullets",
-			() -> new ClipAmmo(new Item.Properties().group(DoomMod.DoomItemGroup), 1.2F));
+			() -> new ClipAmmo(new Item.Properties().group(DoomMod.DoomWeaponItemGroup), 1.2F));
 	public static final RegistryObject<Item> BFG_CELL = ITEMS.register("bfg_cell",
-			() -> new BFGCell(new Item.Properties().group(DoomMod.DoomItemGroup), 1.2F));
+			() -> new BFGCell(new Item.Properties().group(DoomMod.DoomWeaponItemGroup), 1.2F));
 	public static final RegistryObject<Item> ROCKET = ITEMS.register("rocket",
-			() -> new Rocket(new Item.Properties().group(DoomMod.DoomItemGroup), 1.2F));
+			() -> new Rocket(new Item.Properties().group(DoomMod.DoomWeaponItemGroup), 1.2F));
 	// MISC
 	public static final RegistryObject<Item> ARGENT_ENERGY = ITEMS.register("argent_energy",
 			() -> new ArgentEnergyItem());
-	public static final RegistryObject<Item> DAISY = ITEMS.register("daisy",
-			() -> new DaisyItem());
+	public static final RegistryObject<Item> DAISY = ITEMS.register("daisy", () -> new DaisyItem());
 	public static final RegistryObject<Item> E1M1_MUSIC_DISC = ITEMS.register("e1m1_music_disc",
 			() -> new E1M1MusicDisc());
 	public static final RegistryObject<Item> INMORTAL = ITEMS.register("inmortalsphere",

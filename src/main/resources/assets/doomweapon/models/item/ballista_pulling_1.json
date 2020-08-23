@@ -1,6 +1,15 @@
 {
-    "parent": "item/crossbow",
-    "textures": {
-        "layer0": "doomweapon:items/ballista_pulling_1"
-    }
+	"parent": "item/crossbow",
+	"textures": {
+		"layer0": "doomweapon:items/ballista_pulling_1"
+	},
+	"display": {
+		"gui": {
+			"rotation": [
+				0,
+				180,
+				0
+			]
+		}
+	}
 }

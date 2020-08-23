@@ -56,7 +56,7 @@ public class ArgentPaxel extends ToolItem {
 
 	public ArgentPaxel() {
 		super(8, -2.4F, DoomTier.DOOM, Collections.emptySet(),
-				new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1).addToolType(ToolType.AXE, 18)
+				new Item.Properties().group(DoomMod.DoomWeaponItemGroup).maxStackSize(1).addToolType(ToolType.AXE, 18)
 						.addToolType(ToolType.SHOVEL, 18).addToolType(ToolType.PICKAXE, 18));
 	}
 

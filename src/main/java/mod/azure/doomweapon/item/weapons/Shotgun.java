@@ -29,7 +29,7 @@ import net.minecraft.world.World;
 public class Shotgun extends ShootableItem implements IVanishable {
 
 	public Shotgun() {
-		super(new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1).maxDamage(9000));
+		super(new Item.Properties().group(DoomMod.DoomWeaponItemGroup).maxStackSize(1).maxDamage(9000));
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class Shotgun extends ShootableItem implements IVanishable {
 		stack.hasTag();
 		stack.addEnchantment(Enchantments.PUNCH, 2);
 		stack.addEnchantment(Enchantments.POWER, 3);
-		if (group == DoomMod.DoomItemGroup) {
+		if (group == DoomMod.DoomWeaponItemGroup) {
 			items.add(stack);
 		}
 	}

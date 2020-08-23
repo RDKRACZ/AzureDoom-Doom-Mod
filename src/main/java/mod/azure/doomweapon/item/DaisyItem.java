@@ -31,7 +31,7 @@ import top.theillusivec4.curios.api.type.capability.ICurio;
 public class DaisyItem extends Item {
 
 	public DaisyItem() {
-		super(new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1));
+		super(new Item.Properties().group(DoomMod.DoomPowerUPItemGroup).maxStackSize(1));
 	}
 
 	@Override

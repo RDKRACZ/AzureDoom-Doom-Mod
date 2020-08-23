@@ -4,68 +4,6 @@
 		"0": "doomweapon:items/rifle",
 		"particle": "doomweapon:items/rifle"
 	},
- "overrides": [
-        {
-            "predicate": {
-                "pulling": 1
-            },
-            "model": "doomweapon:item/plasmagun_pulling_2"
-        },
-        {
-            "predicate": {
-                "pulling": 1,
-                "pull": 0.2           },
-            "model": "doomweapon:item/plasmagun_pulling_1"
-        },
-        {
-            "predicate": {
-                "pulling": 1,
-                "pull": 0.3           },
-            "model": "doomweapon:item/plasmagun_pulling_2"
-        }
-,
-        {
-            "predicate": {
-                "pulling": 1,
-                "pull": 0.4           },
-            "model": "doomweapon:item/plasmagun_pulling_1"
-        },
-        {
-            "predicate": {
-                "pulling": 1,
-                "pull": 0.5           },
-            "model": "doomweapon:item/plasmagun_pulling_2"
-        },
-        {
-            "predicate": {
-                "pulling": 1,
-                "pull": 0.6           },
-            "model": "doomweapon:item/plasmagun_pulling_1"
-        },
-        {
-            "predicate": {
-                "pulling": 1,
-                "pull": 0.7           },
-            "model": "doomweapon:item/plasmagun_pulling_2"
-        },
-        {
-            "predicate": {
-                "pulling": 1,
-                "pull": 0.8           },
-            "model": "doomweapon:item/plasmagun_pulling_1"
-        },
-        {
-            "predicate": {
-                "pulling": 1,
-                "pull": 0.9           },
-            "model": "doomweapon:item/plasmagun_pulling_2"
-        } ,
-        {
-            "predicate": {
-                "pulling": 1,
-                "pull": 1           },
-            "model": "doomweapon:item/plasmagun_pulling_1"
-        }   ],
 	"elements": [
 		{
 			"from": [7.0874, 5, -0.7318],
@@ -512,12 +450,10 @@
 	],
 	"display": {
 		"thirdperson_righthand": {
-			"rotation": [-4, 97, -13],
-			"translation": [-10.5, 7.5, -0.75]
+			"translation": [-0.25, 7.5, -8.25]
 		},
 		"thirdperson_lefthand": {
-			"rotation": [-4, 97, -13],
-			"translation": [-10.5, 7.5, -0.75]
+			"translation": [0, 7.5, -8.75]
 		},
 		"firstperson_righthand": {
 			"translation": [-9, 6.25, 0]
@@ -529,13 +465,17 @@
 			"translation": [0, 10.5, 0]
 		},
 		"gui": {
-			"rotation": [50, -133, 25],
-			"translation": [2.25, 3.5, 0],
+			"rotation": [50, -45, 25],
+			"translation": [-0.75, 5, 0],
 			"scale": [0.8, 0.8, 0.8]
+		},
+		"head": {
+			"scale": [0, 0, 0]
 		},
 		"fixed": {
 			"rotation": [0, -90, 0],
-			"translation": [1.0, 5.5, -1.5]
+			"translation": [1, 5.5, -1.5],
+			"scale": [0.75, 0.75, 0.75]
 		}
 	}
 }

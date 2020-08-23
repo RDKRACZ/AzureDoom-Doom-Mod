@@ -49,7 +49,7 @@ public class SuperShotgun extends CrossbowItem implements IVanishable {
 	private boolean isLoadingMiddle = false;
 
 	public SuperShotgun() {
-		super(new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1).maxDamage(9000));
+		super(new Item.Properties().group(DoomMod.DoomWeaponItemGroup).maxStackSize(1).maxDamage(9000));
 	}
 
 	@Override
@@ -380,7 +380,7 @@ public class SuperShotgun extends CrossbowItem implements IVanishable {
 		stack.addEnchantment(Enchantments.MULTISHOT, 1);
 		stack.addEnchantment(Enchantments.PIERCING, 10);
 		stack.addEnchantment(Enchantments.QUICK_CHARGE, 1);
-		if (group == DoomMod.DoomItemGroup) {
+		if (group == DoomMod.DoomWeaponItemGroup) {
 			items.add(stack);
 		}
 	}

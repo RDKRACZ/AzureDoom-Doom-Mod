@@ -22,7 +22,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class SentinelDoomArmor extends SkinArmor {
 
 	public SentinelDoomArmor(IArmorMaterial materialIn, EquipmentSlotType slot) {
-		super(materialIn, slot, new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1));
+		super(materialIn, slot, new Item.Properties().group(DoomMod.DoomArmorItemGroup).maxStackSize(1));
 		
 	}
 
@@ -40,7 +40,7 @@ public class SentinelDoomArmor extends SkinArmor {
 		stack.hasTag();
 		stack.addEnchantment(Enchantments.BLAST_PROTECTION, 2);
 		stack.addEnchantment(Enchantments.FEATHER_FALLING, 2);
-		if (group == DoomMod.DoomItemGroup) {
+		if (group == DoomMod.DoomArmorItemGroup) {
 			items.add(stack);
 		}
 	}

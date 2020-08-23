@@ -51,7 +51,7 @@ public class ArgentAxe extends ToolItem {
 
 	public ArgentAxe() {
 		super(8, -2.4F, DoomTier.DOOM, field_150917_d_,
-				new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1));
+				new Item.Properties().group(DoomMod.DoomWeaponItemGroup).maxStackSize(1));
 	}
 
 	public float getDestroySpeed(ItemStack stack, BlockState state) {
