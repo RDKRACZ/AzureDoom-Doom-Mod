@@ -17,7 +17,6 @@ import mod.azure.doomweapon.entity.HellknightEntity;
 import mod.azure.doomweapon.entity.IconofsinEntity;
 import mod.azure.doomweapon.entity.Imp2016Entity;
 import mod.azure.doomweapon.entity.ImpEntity;
-import mod.azure.doomweapon.entity.LostSoulEntity;
 import mod.azure.doomweapon.entity.MancubusEntity;
 import mod.azure.doomweapon.entity.MarauderEntity;
 import mod.azure.doomweapon.entity.PainEntity;
@@ -38,14 +37,14 @@ import net.minecraft.world.gen.Heightmap;
 
 public class ModEntitySpawn {
 
-	/*Major fucking thanks to Corgi Taco for figuring this shit out*/
+	/* Major fucking thanks to Corgi Taco for figuring this shit out */
+	@SuppressWarnings("deprecation")
 	public static void addSpawnEntries() {
 		for (Biome biome : WorldGenRegistries.field_243657_i) {
 			if (biome.getCategory().equals(Biome.Category.NETHER)) {
 				addMobSpawnToBiome(biome, EntityClassification.MONSTER,
 						new MobSpawnInfo.Spawners(ModEntityTypes.IMP.get(), 30, 1, 4),
 						new MobSpawnInfo.Spawners(ModEntityTypes.PINKY.get(), 12, 2, 4),
-						new MobSpawnInfo.Spawners(ModEntityTypes.LOST_SOUL.get(), 8, 1, 3),
 						new MobSpawnInfo.Spawners(ModEntityTypes.CACODEMON.get(), 8, 1, 2),
 						new MobSpawnInfo.Spawners(ModEntityTypes.ARCHVILE.get(), 4, 1, 2),
 						new MobSpawnInfo.Spawners(ModEntityTypes.BARON.get(), 10, 1, 1),
@@ -112,9 +111,6 @@ public class ModEntitySpawn {
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.CACODEMON.get(),
 				EntitySpawnPlacementRegistry.PlacementType.IN_LAVA, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
 				CacodemonEntity::spawning);
-		EntitySpawnPlacementRegistry.register(ModEntityTypes.LOST_SOUL.get(),
-				EntitySpawnPlacementRegistry.PlacementType.IN_LAVA, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
-				LostSoulEntity::spawning);
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.IMP2016.get(),
 				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
 				Imp2016Entity::spawning);

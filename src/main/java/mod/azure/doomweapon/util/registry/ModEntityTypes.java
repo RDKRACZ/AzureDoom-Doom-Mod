@@ -11,7 +11,6 @@ import mod.azure.doomweapon.entity.HellknightEntity;
 import mod.azure.doomweapon.entity.IconofsinEntity;
 import mod.azure.doomweapon.entity.Imp2016Entity;
 import mod.azure.doomweapon.entity.ImpEntity;
-import mod.azure.doomweapon.entity.LostSoulEntity;
 import mod.azure.doomweapon.entity.MancubusEntity;
 import mod.azure.doomweapon.entity.MarauderEntity;
 import mod.azure.doomweapon.entity.PainEntity;
@@ -33,6 +32,7 @@ import mod.azure.doomweapon.entity.projectiles.EnergyCellEntity;
 import mod.azure.doomweapon.entity.projectiles.PainShootEntity;
 import mod.azure.doomweapon.entity.projectiles.RocketEntity;
 import mod.azure.doomweapon.entity.projectiles.ShotgunShellEntity;
+import mod.azure.doomweapon.entity.projectiles.UnmaykrBoltEntity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.ResourceLocation;
@@ -60,6 +60,11 @@ public class ModEntityTypes {
 			() -> EntityType.Builder.<ArgentBoltEntity>create(ArgentBoltEntity::new, EntityClassification.MISC)
 					.func_233606_a_(9).size(0.5F, 0.5F)
 					.build(new ResourceLocation(DoomMod.MODID, "argent_bolt").toString()));
+
+	public static final RegistryObject<EntityType<UnmaykrBoltEntity>> UNMAYKR = ENTITY_TYPES.register("unmaykr_bolt",
+			() -> EntityType.Builder.<UnmaykrBoltEntity>create(UnmaykrBoltEntity::new, EntityClassification.MISC)
+					.func_233606_a_(9).size(0.5F, 0.5F)
+					.build(new ResourceLocation(DoomMod.MODID, "unmaykr_bolt").toString()));
 
 	public static final RegistryObject<EntityType<EnergyCellEntity>> ENERGY_CELL = ENTITY_TYPES.register("energy_cell",
 			() -> EntityType.Builder.<EnergyCellEntity>create(EnergyCellEntity::new, EntityClassification.MISC)
@@ -102,11 +107,6 @@ public class ModEntityTypes {
 	public static final RegistryObject<EntityType<PinkyEntity>> PINKY = ENTITY_TYPES.register("pinky",
 			() -> EntityType.Builder.create(PinkyEntity::new, EntityClassification.MONSTER).size(1.7f, 2.2F)
 					.immuneToFire().func_233606_a_(9).build(new ResourceLocation(DoomMod.MODID, "pinky").toString()));
-
-	public static final RegistryObject<EntityType<LostSoulEntity>> LOST_SOUL = ENTITY_TYPES.register("lost_soul",
-			() -> EntityType.Builder.create(LostSoulEntity::new, EntityClassification.MONSTER).size(1.0F, 1.0F)
-					.immuneToFire().func_233606_a_(9)
-					.build(new ResourceLocation(DoomMod.MODID, "lost_soul").toString()));
 
 	public static final RegistryObject<EntityType<CacodemonEntity>> CACODEMON = ENTITY_TYPES.register("cacodemon",
 			() -> EntityType.Builder.create(CacodemonEntity::new, EntityClassification.MONSTER).size(2.0F, 2.0F)

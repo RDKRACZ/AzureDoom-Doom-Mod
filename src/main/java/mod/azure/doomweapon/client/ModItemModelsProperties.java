@@ -5,6 +5,7 @@ import mod.azure.doomweapon.item.weapons.SuperShotgun;
 import mod.azure.doomweapon.util.registry.DoomItems;
 import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.util.ResourceLocation;
 
 public class ModItemModelsProperties {
@@ -34,25 +35,30 @@ public class ModItemModelsProperties {
 				});
 		// Ballista
 		ItemModelsProperties.func_239418_a_(DoomItems.BALLISTA.get(), new ResourceLocation("pull"),
-				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
-					if (p_239427_2_ == null) {
+				(itemStack, clientWorld, livingEntity) -> {
+					if (livingEntity == null) {
 						return 0.0F;
 					} else {
-						return Ballista.isCharged(p_239427_0_) ? 0.0F
-								: (float) (p_239427_0_.getUseDuration() - p_239427_2_.getItemInUseCount())
-										/ (float) Ballista.getChargeTime(p_239427_0_);
+						return SuperShotgun.isCharged(itemStack) ? 0.0F
+								: (float) (itemStack.getUseDuration() - livingEntity.getItemInUseMaxCount())
+										/ (float) Ballista.getChargeTime(itemStack);
 					}
 				});
 		ItemModelsProperties.func_239418_a_(DoomItems.BALLISTA.get(), new ResourceLocation("pulling"),
-				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
-					return p_239426_2_ != null && p_239426_2_.isHandActive()
-							&& p_239426_2_.getActiveItemStack() == p_239426_0_ && !Ballista.isCharged(p_239426_0_)
+				(itemStack, clientWorld, livingEntity) -> {
+					return livingEntity != null && livingEntity.isHandActive()
+							&& livingEntity.getActiveItemStack() == itemStack && !Ballista.isCharged(itemStack)
 									? 1.0F
 									: 0.0F;
 				});
 		ItemModelsProperties.func_239418_a_(DoomItems.BALLISTA.get(), new ResourceLocation("charged"),
-				(p_239425_0_, p_239425_1_, p_239425_2_) -> {
-					return p_239425_2_ != null && Ballista.isCharged(p_239425_0_) ? 1.0F : 0.0F;
+				(itemStack, clientWorld, livingEntity) -> {
+					return livingEntity != null && Ballista.isCharged(itemStack) ? 1.0F : 0.0F;
+				});
+		ItemModelsProperties.func_239418_a_(DoomItems.BALLISTA.get(), new ResourceLocation("firework"),
+				(itemStack, clientWorld, livingEntity) -> {
+					return livingEntity != null && Ballista.isCharged(itemStack)
+							&& Ballista.hasChargedProjectile(itemStack, Items.FIREWORK_ROCKET) ? 1.0F : 0.0F;
 				});
 		// ShotGun
 		ItemModelsProperties.func_239418_a_(DoomItems.SG.get(), new ResourceLocation("pull"),

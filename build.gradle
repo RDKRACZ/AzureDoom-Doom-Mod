@@ -21,7 +21,7 @@ apply plugin: 'org.spongepowered.mixin'
 import groovy.json.JsonSlurper
 import groovy.json.JsonOutput
 
-version = "1.1.0"
+version = "1.2.0"
 group = "mod.azure.doomweapon"
 archivesBaseName = "AzureDooms-Doom-Mod-1.16.2"
 
@@ -75,9 +75,9 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.2-33.0.7'
-    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.2-4.0.0.0")
-    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.2-4.0.0.0:api")
+    minecraft 'net.minecraftforge:forge:1.16.2-33.0.22'
+    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.2-4.0.0.1")
+    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.2-4.0.0.1:api")
 	//compile fg.deobf("curse.maven:JEI:2995910")
 	//compile fg.deobf("curse.maven:WZ:3009586")
 	//compile fg.deobf("curse.maven:PMMO:3026743")

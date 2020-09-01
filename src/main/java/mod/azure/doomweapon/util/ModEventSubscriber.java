@@ -11,7 +11,6 @@ import mod.azure.doomweapon.entity.HellknightEntity;
 import mod.azure.doomweapon.entity.IconofsinEntity;
 import mod.azure.doomweapon.entity.Imp2016Entity;
 import mod.azure.doomweapon.entity.ImpEntity;
-import mod.azure.doomweapon.entity.LostSoulEntity;
 import mod.azure.doomweapon.entity.MancubusEntity;
 import mod.azure.doomweapon.entity.MarauderEntity;
 import mod.azure.doomweapon.entity.PainEntity;
@@ -30,6 +29,7 @@ import mod.azure.doomweapon.item.ammo.ClipAmmo;
 import mod.azure.doomweapon.item.ammo.EnergyCell;
 import mod.azure.doomweapon.item.ammo.Rocket;
 import mod.azure.doomweapon.item.ammo.ShellAmmo;
+import mod.azure.doomweapon.item.ammo.UnmaykrBolt;
 import mod.azure.doomweapon.item.entityweapons.BarenBlastItem;
 import mod.azure.doomweapon.util.registry.DoomItems;
 import mod.azure.doomweapon.util.registry.ModEntitySpawn;
@@ -65,19 +65,19 @@ public class ModEventSubscriber {
 		((BFGCell) (DoomItems.BFG_CELL.get())).setItemReference(DoomItems.BFG_CELL);
 		((Rocket) (DoomItems.ROCKET.get())).setItemReference(DoomItems.ROCKET);
 		((BarenBlastItem) (DoomItems.BARENBLAST.get())).setItemReference(DoomItems.BARENBLAST);
+		((UnmaykrBolt) (DoomItems.UNMAKRY_BOLT.get())).setItemReference(DoomItems.UNMAKRY_BOLT);
 	}
 
 	@SubscribeEvent
 	public static void registerEntities(final RegistryEvent.Register<EntityType<?>> event) {
 		event.getRegistry().registerAll(ModEntityTypes.IMP.get(), ModEntityTypes.ARCHVILE.get(),
 				ModEntityTypes.LOST_SOUL_SHOOT.get(), ModEntityTypes.BARENBLAST.get(), ModEntityTypes.BARON.get(),
-				ModEntityTypes.CACODEMON.get(), ModEntityTypes.LOST_SOUL.get(), ModEntityTypes.MANCUBUS.get(),
-				ModEntityTypes.PINKY.get(), ModEntityTypes.CYBERDEMON.get(), ModEntityTypes.CYBERDEMON2016.get(),
-				ModEntityTypes.UNWILLING.get(), ModEntityTypes.IMP2016.get(), ModEntityTypes.CHAINGUNNER.get(),
-				ModEntityTypes.SHOTGUNGUY.get(), ModEntityTypes.MARAUDER.get(), ModEntityTypes.REVENANT.get(),
-				ModEntityTypes.SPIDERDEMON.get(), ModEntityTypes.HELLKNIGHT.get(), ModEntityTypes.ICONOFSIN.get(),
-				ModEntityTypes.POSSESSEDSOLDIER.get(), ModEntityTypes.BULLETS.get(),
-				ModEntityTypes.CHAINGUN_BULLET.get(), ModEntityTypes.ENERGY_CELL.get(),
+				ModEntityTypes.CACODEMON.get(), ModEntityTypes.MANCUBUS.get(), ModEntityTypes.PINKY.get(),
+				ModEntityTypes.CYBERDEMON.get(), ModEntityTypes.CYBERDEMON2016.get(), ModEntityTypes.UNWILLING.get(),
+				ModEntityTypes.IMP2016.get(), ModEntityTypes.CHAINGUNNER.get(), ModEntityTypes.SHOTGUNGUY.get(),
+				ModEntityTypes.MARAUDER.get(), ModEntityTypes.REVENANT.get(), ModEntityTypes.SPIDERDEMON.get(),
+				ModEntityTypes.HELLKNIGHT.get(), ModEntityTypes.ICONOFSIN.get(), ModEntityTypes.POSSESSEDSOLDIER.get(),
+				ModEntityTypes.BULLETS.get(), ModEntityTypes.CHAINGUN_BULLET.get(), ModEntityTypes.ENERGY_CELL.get(),
 				ModEntityTypes.SHOTGUN_SHELL.get(), ModEntityTypes.ARGENT_BOLT.get(),
 				ModEntityTypes.POSSESSEDSCIENTIST.get(), ModEntityTypes.ZOMBIEMAN.get());
 		ModEntitySpawn.addSpawnEntries();
@@ -109,7 +109,6 @@ public class ModEventSubscriber {
 		GlobalEntityTypeAttributes.put(ModEntityTypes.UNWILLING.get(), UnwillingEntity.func_234200_m_().create());
 		GlobalEntityTypeAttributes.put(ModEntityTypes.ZOMBIEMAN.get(), ZombiemanEntity.func_234200_m_().create());
 		GlobalEntityTypeAttributes.put(ModEntityTypes.CACODEMON.get(), CacodemonEntity.func_234200_m_().create());
-		GlobalEntityTypeAttributes.put(ModEntityTypes.LOST_SOUL.get(), LostSoulEntity.func_234200_m_().create());
 		GlobalEntityTypeAttributes.put(ModEntityTypes.PAIN.get(), PainEntity.func_234200_m_().create());
 	}
 

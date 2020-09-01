@@ -14,6 +14,7 @@ import mod.azure.doomweapon.util.registry.ModSoundEvents;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
+import net.minecraft.enchantment.IVanishable;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ICrossbowUser;
 import net.minecraft.entity.LivingEntity;
@@ -22,11 +23,11 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.entity.projectile.FireworkRocketEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
-import net.minecraft.item.CrossbowItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.item.ShootableItem;
 import net.minecraft.item.UseAction;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
@@ -42,7 +43,7 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.world.World;
 
-public class Ballista extends CrossbowItem {
+public class Ballista extends ShootableItem implements IVanishable {
 
 	private boolean isLoadingStart = false;
 	private boolean isLoadingMiddle = false;
@@ -65,6 +66,11 @@ public class Ballista extends CrossbowItem {
 	public void onCreated(ItemStack stack, World worldIn, PlayerEntity playerIn) {
 		stack.hasTag();
 		stack.addEnchantment(Enchantments.PIERCING, 10);
+	}
+
+	@Override
+	public boolean hasEffect(ItemStack stack) {
+		return false;
 	}
 
 	@Override
@@ -390,5 +396,10 @@ public class Ballista extends CrossbowItem {
 		default:
 			return ModSoundEvents.LOADING_START.get();
 		}
+	}
+
+	@Override
+	public int func_230305_d_() {
+		return 15;
 	}
 }

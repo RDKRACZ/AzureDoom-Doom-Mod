@@ -21,6 +21,11 @@ public class Cyberdemon2016Model<T extends Cyberdemon2016Entity> extends BipedMo
 	public final ModelRenderer bipedLeftLegwear;
 	public final ModelRenderer bipedRightLegwear;
 	public final ModelRenderer bipedBodyWear;
+	public final ModelRenderer hornLeft;
+	public final ModelRenderer hornLeft_1;
+	public final ModelRenderer hornLeft_2;
+	public final ModelRenderer hornRight;
+	public final ModelRenderer hornRight_1;
 
 	public Cyberdemon2016Model(float modelSize, boolean smallArmsIn) {
 		super(RenderType::getEntityTranslucent, modelSize, 0.0F, 64, 64);
@@ -45,6 +50,28 @@ public class Cyberdemon2016Model<T extends Cyberdemon2016Entity> extends BipedMo
 		this.bipedBodyWear = new ModelRenderer(this, 16, 32);
 		this.bipedBodyWear.addBox(-4.0F, 0.0F, -2.0F, 8.0F, 12.0F, 4.0F, modelSize + 0.25F);
 		this.bipedBodyWear.setRotationPoint(0.0F, 0.0F, 0.0F);
+		this.hornLeft_2 = new ModelRenderer(this, 40, 2);
+		this.hornLeft_2.setRotationPoint(0.0F, 0.0F, 0.0F);
+		this.hornLeft_2.addBox(3.1F, -9.0F, 9.0F, 0.5F, 0.6F, 0.5F, 1.0F, 1.0F, 1.0F);
+		this.hornLeft_1 = new ModelRenderer(this, 40, 2);
+		this.hornLeft_1.setRotationPoint(0.0F, 0.0F, 0.0F);
+		this.hornLeft_1.addBox(3.1F, -8.0F, 6.5F, 0.5F, 0.6F, 0.5F, 1.0F, 2.0F, 1.0F);
+		this.hornLeft = new ModelRenderer(this, 40, 2);
+		this.hornLeft.setRotationPoint(0.0F, 0.0F, 0.0F);
+		this.hornLeft.addBox(3.1F, -4.7F, 6.5F, 0.5F, 0.6F, 0.5F, 0.8F, 1.0F, 0.8F);
+		this.setRotateAngle(hornLeft, 1.3484414173750743F, 1.5707963267948966F, 0.0F);
+		this.hornRight = new ModelRenderer(this, 40, 2);
+		this.hornRight.setRotationPoint(0.0F, 0.0F, 0.0F);
+		this.hornRight.addBox(-3.6F, -4.7F, 6.5F, 0.5F, 0.6F, 0.5F, 0.8F, 1.0F, 0.8F);
+		this.setRotateAngle(hornRight, 1.3484414173750743F, -1.5707963267948966F, 0.0F);
+		this.hornRight_1 = new ModelRenderer(this, 40, 2);
+		this.hornRight_1.setRotationPoint(0.0F, 0.0F, 0.0F);
+		this.hornRight_1.addBox(-3.6F, -8.0F, 6.5F, 0.5F, 0.6F, 0.5F, 0.7F, 2.0F, 0.8F);
+		this.bipedHead.addChild(this.hornRight);
+		this.hornLeft_1.addChild(this.hornLeft_2);
+		this.hornLeft.addChild(this.hornLeft_1);
+		this.bipedHead.addChild(this.hornLeft);
+		this.hornRight.addChild(this.hornRight_1);
 	}
 
 	protected Iterable<ModelRenderer> getBodyParts() {
@@ -69,6 +96,12 @@ public class Cyberdemon2016Model<T extends Cyberdemon2016Entity> extends BipedMo
 		this.bipedLeftLegwear.showModel = visible;
 		this.bipedRightLegwear.showModel = visible;
 		this.bipedBodyWear.showModel = visible;
+	}
+
+	public void setRotateAngle(ModelRenderer modelRenderer, float x, float y, float z) {
+		modelRenderer.rotateAngleX = x;
+		modelRenderer.rotateAngleY = y;
+		modelRenderer.rotateAngleZ = z;
 	}
 
 	public void translateHand(HandSide sideIn, MatrixStack matrixStackIn) {

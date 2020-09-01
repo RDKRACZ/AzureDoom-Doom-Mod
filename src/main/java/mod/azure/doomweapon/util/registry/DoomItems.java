@@ -12,6 +12,7 @@ import mod.azure.doomweapon.item.ammo.ClipAmmo;
 import mod.azure.doomweapon.item.ammo.EnergyCell;
 import mod.azure.doomweapon.item.ammo.Rocket;
 import mod.azure.doomweapon.item.ammo.ShellAmmo;
+import mod.azure.doomweapon.item.ammo.UnmaykrBolt;
 import mod.azure.doomweapon.item.armor.AstroDoomArmor;
 import mod.azure.doomweapon.item.armor.ClassicDoomArmor;
 import mod.azure.doomweapon.item.armor.CrimsonDoomArmor;
@@ -57,6 +58,7 @@ import mod.azure.doomweapon.item.weapons.RocketLauncher;
 import mod.azure.doomweapon.item.weapons.Shotgun;
 import mod.azure.doomweapon.item.weapons.SuperShotgun;
 import mod.azure.doomweapon.item.weapons.SwordCrucibleItem;
+import mod.azure.doomweapon.item.weapons.Unmaykr;
 import mod.azure.doomweapon.util.enums.DoomArmorMaterial;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.BlockItem;
@@ -85,6 +87,7 @@ public class DoomItems {
 			() -> new ShellAmmo(new Item.Properties().group(DoomMod.DoomWeaponItemGroup), 2.0F));
 	public static final RegistryObject<Item> ARGENT_BOLT = ITEMS.register("argent_bolt",
 			() -> new ArgentBolt(new Item.Properties().group(DoomMod.DoomWeaponItemGroup), 2.7F));
+	public static final RegistryObject<Item> UNMAKRY_BOLT = ITEMS.register("unmaykr_bolt", () -> new UnmaykrBolt(10.7F));
 	public static final RegistryObject<Item> ENERGY_CELLS = ITEMS.register("energy_cells",
 			() -> new EnergyCell(new Item.Properties().group(DoomMod.DoomWeaponItemGroup), 10.0F));
 	public static final RegistryObject<Item> CHAINGUN_BULLETS = ITEMS.register("chaingunbullets",
@@ -120,8 +123,6 @@ public class DoomItems {
 			() -> new DoomSpawnEgg(ModEntityTypes.CACODEMON, 11022961, 11035249));
 	public static final RegistryObject<Item> MANCUBUS_SPAWN_EGG = ITEMS.register("mancubus_spawn_egg",
 			() -> new DoomSpawnEgg(ModEntityTypes.MANCUBUS, 11022961, 11035249));
-	public static final RegistryObject<Item> LOST_SOUL_SPAWN_EGG = ITEMS.register("lost_soul_spawn_egg",
-			() -> new DoomSpawnEgg(ModEntityTypes.LOST_SOUL, 11022961, 11035249));
 	public static final RegistryObject<Item> SPIDERDEMON_SPAWN_EGG = ITEMS.register("spiderdemon_spawn_egg",
 			() -> new DoomSpawnEgg(ModEntityTypes.SPIDERDEMON, 11022961, 11035249));
 	public static final RegistryObject<Item> ZOMBIEMAN_SPAWN_EGG = ITEMS.register("zombieman_spawn_egg",
@@ -178,7 +179,7 @@ public class DoomItems {
 	public static final RegistryObject<Item> PLASMAGUN = ITEMS.register("plasmagun", () -> new PlasmaGun());
 	public static final RegistryObject<Item> ROCKETLAUNCHER = ITEMS.register("rocketlauncher",
 			() -> new RocketLauncher());
-//	public static final RegistryObject<Item> UNMAYKR = ITEMS.register("unmaykr", () -> new Unmaykr());
+	public static final RegistryObject<Item> UNMAYKR = ITEMS.register("unmaykr", () -> new Unmaykr());
 	public static final RegistryObject<Item> BALLISTA = ITEMS.register("ballista", () -> new Ballista());
 	public static final RegistryObject<Item> CHAINGUN = ITEMS.register("chaingun", () -> new Chaingun());
 	public static final RegistryObject<Item> PISTOL = ITEMS.register("pistol", () -> new PistolItem());

@@ -18,7 +18,7 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class ArgentBoltEntity extends AbstractArrowEntity {
+public class UnmaykrBoltEntity extends AbstractArrowEntity {
 
 	private final Item referenceItem;
 	protected int timeInAir;
@@ -26,13 +26,13 @@ public class ArgentBoltEntity extends AbstractArrowEntity {
 	private int ticksInAir;
 
 	@SuppressWarnings("unchecked")
-	public ArgentBoltEntity(EntityType<?> type, World world) {
+	public UnmaykrBoltEntity(EntityType<?> type, World world) {
 		super((EntityType<? extends AbstractArrowEntity>) type, world);
 		this.referenceItem = null;
 	}
 
-	public ArgentBoltEntity(LivingEntity shooter, World world, Item referenceItemIn) {
-		super(ModEntityTypes.ARGENT_BOLT.get(), shooter, world);
+	public UnmaykrBoltEntity(LivingEntity shooter, World world, Item referenceItemIn) {
+		super(ModEntityTypes.UNMAYKR.get(), shooter, world);
 		this.referenceItem = referenceItemIn;
 	}
 
