@@ -176,6 +176,7 @@ public class DoomItems {
 	public static final RegistryObject<Item> SSG = ITEMS.register("supershotgun", () -> new SuperShotgun());
 	public static final RegistryObject<Item> SG = ITEMS.register("shotgun", () -> new Shotgun());
 	public static final RegistryObject<Item> BFG = ITEMS.register("bfg9000", () -> new BFG());
+	public static final RegistryObject<Item> BFG_ETERNAL = ITEMS.register("bfg_eternal", () -> new BFG());
 	public static final RegistryObject<Item> PLASMAGUN = ITEMS.register("plasmagun", () -> new PlasmaGun());
 	public static final RegistryObject<Item> ROCKETLAUNCHER = ITEMS.register("rocketlauncher",
 			() -> new RocketLauncher());

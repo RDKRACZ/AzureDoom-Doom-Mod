@@ -3,6 +3,7 @@ package mod.azure.doomweapon.item.powerup;
 import java.util.List;
 
 import mod.azure.doomweapon.DoomMod;
+import mod.azure.doomweapon.util.PMMOCompat;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -34,7 +35,7 @@ public class InvisibleSphereItem extends Item {
 			if (!worldIn.isRemote) {
 				livingEntityIn.addPotionEffect(new EffectInstance(Effects.INVISIBILITY, 1200, 1));
 				if (ModList.get().isLoaded("pmmo")) {
-//					PMMOCompat.awardInvisibleXp(playerentity);
+					PMMOCompat.awardInvisibleXp(playerentity);
 				}
 				if (!playerentity.abilities.isCreativeMode) {
 					stack.shrink(1);

@@ -1,0 +1,22 @@
+{
+	"result": {
+		"item": "doomweapon:bfg_eternal"
+	},
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"CmC",
+		"$$$",
+		"CmC"
+	],
+	"key": {
+		"$": {
+			"item": "doomweapon:argent_energy"
+		},
+		"C": {
+			"item": "minecraft:iron_ingot"
+		},
+		"m": {
+			"item": "minecraft:ghast_tear"
+		}
+	}
+}

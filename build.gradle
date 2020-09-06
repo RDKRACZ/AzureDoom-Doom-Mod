@@ -2,26 +2,26 @@ buildscript {
     repositories {
         maven { url = 'https://files.minecraftforge.net/maven' }
 		maven { url  = 'https://plugins.gradle.org/m2/' }
-        maven {url='https://dist.creeper.host/Sponge/maven'}
+       	//maven {url='https://dist.creeper.host/Sponge/maven'}
         jcenter()
         mavenCentral()
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
 		classpath "com.wynprice.cursemaven:CurseMaven:2.1.5"
-        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
+        //classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 apply plugin: "com.wynprice.cursemaven"
-apply plugin: 'org.spongepowered.mixin'
+//apply plugin: 'org.spongepowered.mixin'
 
 import groovy.json.JsonSlurper
 import groovy.json.JsonOutput
 
-version = "1.2.0"
+version = "1.2.3"
 group = "mod.azure.doomweapon"
 archivesBaseName = "AzureDooms-Doom-Mod-1.16.2"
 
@@ -33,7 +33,7 @@ minecraft {
     runs {
         client {
             workingDirectory project.file('run')
-            arg "-mixin.config=doom.mixins.json"
+            //arg "-mixin.config=doom.mixins.json"
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
             mods {
@@ -44,7 +44,7 @@ minecraft {
         }
         server {
             workingDirectory project.file('run')
-            arg "-mixin.config=doom.mixins.json"
+            //arg "-mixin.config=doom.mixins.json"
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
             mods {
@@ -75,12 +75,12 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.2-33.0.22'
+    minecraft 'net.minecraftforge:forge:1.16.2-33.0.32'
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.2-4.0.0.1")
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.2-4.0.0.1:api")
-	//compile fg.deobf("curse.maven:JEI:2995910")
+	//compile fg.deobf("curse.maven:JEI:3046220")
 	//compile fg.deobf("curse.maven:WZ:3009586")
-	//compile fg.deobf("curse.maven:PMMO:3026743")
+	compileOnly fg.deobf("curse.maven:PMMO:3047383")
 	//compile fg.deobf("curse.maven:Model1:3017687")
 	//compile fg.deobf("curse.maven:Model2:3016191")
 	//compile fg.deobf("curse.maven:NPF:2993052")
@@ -131,6 +131,6 @@ processResources {
     }
 }
 
-mixin {
-    add sourceSets.main, "doom.refmap.json"
-}
+//mixin {
+    //add sourceSets.main, "doom.refmap.json"
+//}

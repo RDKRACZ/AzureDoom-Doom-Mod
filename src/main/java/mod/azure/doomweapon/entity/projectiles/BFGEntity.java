@@ -199,7 +199,7 @@ public class BFGEntity extends AbstractArrowEntity {
 					areaeffectcloudentity.setOwner((LivingEntity) entity);
 				}
 
-				areaeffectcloudentity.setParticleData(ParticleTypes.TOTEM_OF_UNDYING);
+				areaeffectcloudentity.setParticleData(this.getParticle());
 				areaeffectcloudentity.setRadius(1.0F);
 				areaeffectcloudentity.setDuration(10);
 				areaeffectcloudentity.setRadiusPerTick(
@@ -223,7 +223,7 @@ public class BFGEntity extends AbstractArrowEntity {
 			}
 
 		}
-		this.playSound(ModSoundEvents.ROCKET_HIT.get(), 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
+		this.playSound(ModSoundEvents.BFG_HIT.get(), 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 	}
 
 	protected void onImpact(RayTraceResult result) {
@@ -240,7 +240,7 @@ public class BFGEntity extends AbstractArrowEntity {
 					areaeffectcloudentity.setOwner((LivingEntity) entity);
 				}
 
-				areaeffectcloudentity.setParticleData(ParticleTypes.TOTEM_OF_UNDYING);
+				areaeffectcloudentity.setParticleData(this.getParticle());
 				areaeffectcloudentity.setRadius(1.0F);
 				areaeffectcloudentity.setDuration(10);
 				areaeffectcloudentity.setRadiusPerTick(
@@ -262,12 +262,12 @@ public class BFGEntity extends AbstractArrowEntity {
 				this.explode();
 				this.remove();
 			}
-			this.playSound(ModSoundEvents.ROCKET_HIT.get(), 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
+			this.playSound(ModSoundEvents.BFG_HIT.get(), 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 		}
 	}
 
 	protected void explode() {
-		this.world.createExplosion(this, this.getPosX(), this.getPosYHeight(0.0625D), this.getPosZ(), 12.0F,
+		this.world.createExplosion(this, this.getPosX(), this.getPosY(), this.getPosZ(), 12.0F, false,
 				Explosion.Mode.NONE);
 	}
 }
