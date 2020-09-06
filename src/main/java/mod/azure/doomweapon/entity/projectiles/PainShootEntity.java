@@ -3,12 +3,10 @@ package mod.azure.doomweapon.entity.projectiles;
 import mod.azure.doomweapon.util.registry.ModEntityTypes;
 import mod.azure.doomweapon.util.registry.ModSoundEvents;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.IRendersAsItem;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.DamagingProjectileEntity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
 import net.minecraft.util.ActionResultType;
@@ -22,7 +20,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class PainShootEntity extends DamagingProjectileEntity implements IRendersAsItem {
+public class PainShootEntity extends DamagingProjectileEntity {
 
 	private final Item referenceItem;
 	public int explosionPower = 1;
@@ -124,11 +122,6 @@ public class PainShootEntity extends DamagingProjectileEntity implements IRender
 	protected void explode() {
 		this.world.createExplosion(this, this.getPosX(), this.getPosYHeight(0.0625D), this.getPosZ(), 1.0F,
 				Explosion.Mode.NONE);
-	}
-
-	@Override
-	public ItemStack getItem() {
-		return new ItemStack(this.referenceItem);
 	}
 
 }
