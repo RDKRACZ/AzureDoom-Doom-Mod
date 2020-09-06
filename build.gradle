@@ -18,7 +18,7 @@ apply plugin: "com.wynprice.cursemaven"
 import groovy.json.JsonSlurper
 import groovy.json.JsonOutput
 
-version = "2.4.1"
+version = "2.5.2"
 group = "mod.azure.doomweapon"
 archivesBaseName = "AzureDooms-Doom-Mod-1.15.2"
 
@@ -76,10 +76,10 @@ dependencies {
     minecraft 'net.minecraftforge:forge:1.15.2-31.2.30'
     compile fg.deobf("top.theillusivec4.curios:curios:FORGE-1.15.2-2.0-beta2")
 	compile fg.deobf("curse.maven:JEI:2866141")
-	compile fg.deobf("curse.maven:NE:3010591")
-	compile fg.deobf("curse.maven:NEX:3017503")
-	compile fg.deobf("curse.maven:NEXLib:3017501")
-	compile fg.deobf("curse.maven:AC:2980113")
+	compileOnly fg.deobf("curse.maven:NE:3010591")
+	compileOnly fg.deobf("curse.maven:NEX:3017503")
+	compileOnly fg.deobf("curse.maven:NEXLib:3017501")
+	compileOnly fg.deobf("curse.maven:AC:2980113")
 	compile fg.deobf("curse.maven:WZ:2956297")
 	compile fg.deobf("curse.maven:PMMO:3017947")
 	compile fg.deobf("curse.maven:Model1:2985799")
@@ -89,7 +89,7 @@ dependencies {
 jar {
     manifest {
         attributes([
-            "Specification-Title": "dotHack Weapons",
+            "Specification-Title": "Doom",
             "Specification-Vendor": "AzureDoomC",
             "Specification-Version": "1", // We are version 1 of ourselves
             "Implementation-Title": project.name,

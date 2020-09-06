@@ -17,7 +17,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class ArgentAxe extends AxeItem {
 
 	public ArgentAxe() {
-		super(DoomTier.DOOM, 8, -2.4F, new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1));
+		super(DoomTier.DOOM, 8, -2.4F, new Item.Properties().group(DoomMod.DoomWeaponItemGroup).maxStackSize(1));
 	}
 
 	@Override

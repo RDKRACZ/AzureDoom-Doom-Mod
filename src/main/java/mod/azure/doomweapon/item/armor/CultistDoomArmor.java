@@ -22,7 +22,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class CultistDoomArmor extends SkinArmor {
 
 	public CultistDoomArmor(IArmorMaterial materialIn, EquipmentSlotType slot) {
-		super(materialIn, slot, new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1));
+		super(materialIn, slot, new Item.Properties().group(DoomMod.DoomArmorItemGroup).maxStackSize(1));
 		
 	}
 
@@ -40,7 +40,7 @@ public class CultistDoomArmor extends SkinArmor {
 		stack.addEnchantment(Enchantments.BLAST_PROTECTION, 4);
 		stack.addEnchantment(Enchantments.FEATHER_FALLING, 1);
 		stack.addEnchantment(Enchantments.FIRE_PROTECTION, 4);
-		if (group == DoomMod.DoomItemGroup) {
+		if (group == DoomMod.DoomArmorItemGroup) {
 			items.add(stack);
 		}
 	}

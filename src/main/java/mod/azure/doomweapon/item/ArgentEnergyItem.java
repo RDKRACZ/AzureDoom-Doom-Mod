@@ -17,7 +17,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class ArgentEnergyItem extends Item {
 
 	public ArgentEnergyItem() {
-		super(new Item.Properties().group(DoomMod.DoomItemGroup));
+		super(new Item.Properties().group(DoomMod.DoomPowerUPItemGroup));
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class ArgentEnergyItem extends Item {
 	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
 		ItemStack stack = new ItemStack(this);
 		stack.hasTag();
-		if (group == DoomMod.DoomItemGroup) {
+		if (group == DoomMod.DoomPowerUPItemGroup) {
 			items.add(stack);
 		}
 	}

@@ -3,6 +3,7 @@ package mod.azure.doomweapon.client;
 import mod.azure.doomweapon.DoomMod;
 import mod.azure.doomweapon.client.render.ArchvileRender;
 import mod.azure.doomweapon.client.render.BaronRender;
+import mod.azure.doomweapon.client.render.BarrelRender;
 import mod.azure.doomweapon.client.render.CacodemonRender;
 import mod.azure.doomweapon.client.render.ChaingunnerRender;
 import mod.azure.doomweapon.client.render.Cyberdemon2016Render;
@@ -11,7 +12,6 @@ import mod.azure.doomweapon.client.render.HellknightRender;
 import mod.azure.doomweapon.client.render.IconofsinRender;
 import mod.azure.doomweapon.client.render.Imp2016Render;
 import mod.azure.doomweapon.client.render.ImpRender;
-import mod.azure.doomweapon.client.render.LostSoulRender;
 import mod.azure.doomweapon.client.render.MancubusRender;
 import mod.azure.doomweapon.client.render.MarauderRender;
 import mod.azure.doomweapon.client.render.PainRender;
@@ -25,11 +25,14 @@ import mod.azure.doomweapon.client.render.UnwillingRender;
 import mod.azure.doomweapon.client.render.ZombiemanRender;
 import mod.azure.doomweapon.client.render.projectiles.ArgentBoltRender;
 import mod.azure.doomweapon.client.render.projectiles.BFGCellRender;
+import mod.azure.doomweapon.client.render.projectiles.BarenBlastRender;
 import mod.azure.doomweapon.client.render.projectiles.BulletsRender;
 import mod.azure.doomweapon.client.render.projectiles.ChaingunBulletRender;
 import mod.azure.doomweapon.client.render.projectiles.EnergyCellRender;
+import mod.azure.doomweapon.client.render.projectiles.LostSoulShootRender;
 import mod.azure.doomweapon.client.render.projectiles.RocketRender;
 import mod.azure.doomweapon.client.render.projectiles.ShotgunShellRender;
+import mod.azure.doomweapon.client.render.projectiles.UnmaykrBulletRender;
 import mod.azure.doomweapon.util.registry.ModEntityTypes;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -42,17 +45,21 @@ public class ClientModEventSubscriber {
 
 	@SubscribeEvent
 	public static void onClientSetup(final FMLClientSetupEvent event) {
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BARREL.get(), BarrelRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.SHOTGUN_SHELL.get(), ShotgunShellRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ARGENT_BOLT.get(), ArgentBoltRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.UNMAYKR.get(), UnmaykrBulletRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ENERGY_CELL.get(), EnergyCellRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BULLETS.get(), BulletsRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BFG_CELL.get(), BFGCellRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ROCKET.get(), RocketRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.CHAINGUN_BULLET.get(),
 				ChaingunBulletRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BARENBLAST.get(), BarenBlastRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.LOST_SOUL_SHOOT.get(),
+				LostSoulShootRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.IMP.get(), ImpRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.PINKY.get(), PinkyRender::new);
-		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.LOST_SOUL.get(), LostSoulRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.CACODEMON.get(), CacodemonRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ARCHVILE.get(), ArchvileRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BARON.get(), BaronRender::new);

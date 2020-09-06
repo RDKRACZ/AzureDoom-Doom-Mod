@@ -18,7 +18,7 @@ public class ArgentSword extends SwordItem {
 
 	public ArgentSword() {
 		super(DoomTier.DOOM, 6, -2.4F,
-				new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1).maxDamage(9000));
+				new Item.Properties().group(DoomMod.DoomWeaponItemGroup).maxStackSize(1).maxDamage(9000));
 	}
 
 	@Override

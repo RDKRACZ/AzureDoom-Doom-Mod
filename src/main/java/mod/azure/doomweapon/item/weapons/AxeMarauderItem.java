@@ -23,7 +23,7 @@ public class AxeMarauderItem extends AxeItem {
 
 	public AxeMarauderItem() {
 		super(DoomTier.DOOM, 12, -2.4F,
-				new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1).maxDamage(9000));
+				new Item.Properties().group(DoomMod.DoomWeaponItemGroup).maxStackSize(1).maxDamage(9000));
 		this.addPropertyOverride(new ResourceLocation("broken"), (p_210312_0_, p_210312_1_, p_210312_2_) -> {
 			return isUsable(p_210312_0_) ? 0.0F : 1.0F;
 		});
@@ -55,7 +55,7 @@ public class AxeMarauderItem extends AxeItem {
 		stack.addEnchantment(Enchantments.LOOTING, 10);
 		stack.addEnchantment(Enchantments.SHARPNESS, 10);
 		stack.addEnchantment(Enchantments.SWEEPING, 10);
-		if (group == DoomMod.DoomItemGroup) {
+		if (group == DoomMod.DoomWeaponItemGroup) {
 			items.add(stack);
 		}
 	}

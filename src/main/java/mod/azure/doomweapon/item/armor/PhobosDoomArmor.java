@@ -22,7 +22,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class PhobosDoomArmor extends SkinArmor {
 
 	public PhobosDoomArmor(IArmorMaterial materialIn, EquipmentSlotType slot) {
-		super(materialIn, slot, new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1));
+		super(materialIn, slot, new Item.Properties().group(DoomMod.DoomArmorItemGroup).maxStackSize(1));
 		
 	}
 
@@ -42,7 +42,7 @@ public class PhobosDoomArmor extends SkinArmor {
 		stack.addEnchantment(Enchantments.FEATHER_FALLING, 5);
 		stack.addEnchantment(Enchantments.FIRE_PROTECTION, 5);
 		stack.addEnchantment(Enchantments.THORNS, 5);
-		if (group == DoomMod.DoomItemGroup) {
+		if (group == DoomMod.DoomArmorItemGroup) {
 			items.add(stack);
 		}
 	}

@@ -1,7 +1,9 @@
 {
+	"item.doomweapon.daisy": "Daisy",
 	"item.doomweapon.argent_energy": "Argent Energy",
 	"item.doomweapon.shotgun_shells": "Shotgun Shells",
 	"item.doomweapon.argent_bolt": "Argent Bolt",
+	"item.doomweapon.unmaykr_bolt": "Unmaykr Bolt",
 	"item.doomweapon.bullets": "Bullets",
 	"item.doomweapon.bfg_cell": "BFG Cell",
 	"item.doomweapon.rocket": "Rocket",
@@ -18,10 +20,12 @@
 	"item.doomweapon.chainsaw": "Chainsaw",
 	"item.doomweapon.ballista": "Ballista",
 	"item.doomweapon.bfg9000": "BFG 9000",
+	"item.doomweapon.bfg_eternal": "BFG Eternal",
 	"item.doomweapon.chaingun": "Chaingun",
 	"item.doomweapon.pistol": "Pistol",
 	"item.doomweapon.plasmagun": "Plasma Gun",
 	"item.doomweapon.rocketlauncher": "Rocket Launcher",
+	"item.doomweapon.unmaykr": "Unmaykr",
 	"item.doomweapon.argent_hoe": "Argent Hoe",
 	"item.doomweapon.argent_axe": "Argent Axe",
 	"item.doomweapon.argent_pickaxe": "Argent Pickaxe",
@@ -132,6 +136,9 @@
 	"item.doomweapon.redneck_doom1_boots": "Mullet Slayer Boots (US Flag)",
 	"item.doomweapon.redneck_doom2_boots": "Mullet Slayer Boots (Green)",
 	"item.doomweapon.redneck_doom3_boots": "Mullet Slayer Boots (White)",
+	"block.doomweapon.barrel": "Barrel",
+	"block.doomweapon.argent_block": "Argent Block",
+	"block.doomweapon.argent_lamp_block": "Argent Lamp",
 	"entity.doomweapon.imp": "Imp",
 	"entity.doomweapon.iconofsin": "Icon of Sin",
 	"entity.doomweapon.painelemental": "Pain Elemental",
@@ -187,5 +194,9 @@
 	"item.doomweapon.uniques.axe.axe_crucible.desc": "You were never one of us. You were nothing but a usurper, a false idol. My eyes have been opened.",
 	"doomweapon.affix.of_doom": "of Doom",
 	"enchantment.level.20": "XX",
-	"itemGroup.doomweapon": "Doom Items"
+	"itemGroup.doomweapons": "Doom Weapons",
+	"itemGroup.doomarmor": "Doom Armor",
+	"itemGroup.doomeggs": "Doom Eggs",
+	"itemGroup.doomblocks": "Doom Blocks",
+	"itemGroup.doompowerup": "Doom Powerups"
 }

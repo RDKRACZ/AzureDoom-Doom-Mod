@@ -23,7 +23,7 @@ import net.minecraftforge.fml.ModList;
 public class PowerSphereItem extends Item {
 
 	public PowerSphereItem() {
-		super(new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1));
+		super(new Item.Properties().group(DoomMod.DoomPowerUPItemGroup).maxStackSize(1));
 	}
 
 	@Override

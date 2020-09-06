@@ -1,0 +1,16 @@
+{
+	"result": {
+		"item": "doomweapon:argent_block"
+	},
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"$$$",
+		"$$$",
+		"$$$"
+	],
+	"key": {
+		"$": {
+			"item": "doomweapon:argent_energy"
+		}
+	}
+}

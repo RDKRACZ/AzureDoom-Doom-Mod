@@ -6,6 +6,6 @@ import net.minecraft.item.Item;
 public class SoulCubeItem extends Item {
 
 	public SoulCubeItem() {
-		super(new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1).maxDamage(5));
+		super(new Item.Properties().group(DoomMod.DoomPowerUPItemGroup).maxStackSize(1).maxDamage(5));
 	}
 }

@@ -15,7 +15,7 @@ public class BaronRender extends MobRenderer<BaronEntity, BaronModel<BaronEntity
 			"textures/entity/barron-of-hell_new.png");
 
 	public BaronRender(EntityRendererManager renderManagerIn) {
-		super(renderManagerIn, new BaronModel<BaronEntity>(0.5f, false), 0.5f);
+		super(renderManagerIn, new BaronModel<>(), 0.5f);
 	}
 
 	@Override

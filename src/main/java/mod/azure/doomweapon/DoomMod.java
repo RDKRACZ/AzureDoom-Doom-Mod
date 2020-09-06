@@ -3,6 +3,7 @@ package mod.azure.doomweapon;
 import mod.azure.doomweapon.util.Config;
 import mod.azure.doomweapon.util.LootHandler;
 import mod.azure.doomweapon.util.SoulCubeHandler;
+import mod.azure.doomweapon.util.registry.DoomBlocks;
 import mod.azure.doomweapon.util.registry.DoomItems;
 import mod.azure.doomweapon.util.registry.ModEntityTypes;
 import mod.azure.doomweapon.util.registry.ModSoundEvents;
@@ -42,6 +43,7 @@ public class DoomMod {
 		ModSoundEvents.MOD_SOUNDS.register(modEventBus);
 		ModEntityTypes.ENTITY_TYPES.register(modEventBus);
 		DoomItems.ITEMS.register(modEventBus);
+		DoomBlocks.BLOCKS.register(modEventBus);
 	}
 
 	private void setup(final FMLCommonSetupEvent event) {
@@ -50,16 +52,41 @@ public class DoomMod {
 
 	private void enqueueIMC(InterModEnqueueEvent event) {
 		InterModComms.sendTo("curios", CuriosAPI.IMC.REGISTER_TYPE, () -> new CurioIMCMessage("charm"));
+		InterModComms.sendTo("curios", CuriosAPI.IMC.REGISTER_TYPE, () -> new CurioIMCMessage("belt"));
 	}
 
-	public static final ItemGroup DoomItemGroup = (new ItemGroup("doomweapon") {
+	public static final ItemGroup DoomWeaponItemGroup = (new ItemGroup("doomweapons") {
 		@OnlyIn(Dist.CLIENT)
 		public ItemStack createIcon() {
 			return new ItemStack(DoomItems.CRUCIBLESWORD.get());
 		}
+	});
 
-		public boolean hasSearchBar() {
-			return true;
+	public static final ItemGroup DoomArmorItemGroup = (new ItemGroup("doomarmor") {
+		@OnlyIn(Dist.CLIENT)
+		public ItemStack createIcon() {
+			return new ItemStack(DoomItems.DOOM_HELMET.get());
 		}
-	}).setBackgroundImageName("item_search.png");
+	});
+
+	public static final ItemGroup DoomBlockItemGroup = (new ItemGroup("doomblocks") {
+		@OnlyIn(Dist.CLIENT)
+		public ItemStack createIcon() {
+			return new ItemStack(DoomBlocks.BARREL_BLOCK.get());
+		}
+	});
+
+	public static final ItemGroup DoomEggItemGroup = (new ItemGroup("doomeggs") {
+		@OnlyIn(Dist.CLIENT)
+		public ItemStack createIcon() {
+			return new ItemStack(DoomItems.IMP_SPAWN_EGG.get());
+		}
+	});
+
+	public static final ItemGroup DoomPowerUPItemGroup = (new ItemGroup("doompowerup") {
+		@OnlyIn(Dist.CLIENT)
+		public ItemStack createIcon() {
+			return new ItemStack(DoomItems.INMORTAL.get());
+		}
+	});
 }

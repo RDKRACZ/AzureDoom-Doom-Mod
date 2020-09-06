@@ -22,7 +22,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class MaykrDoomArmor extends SkinArmor {
 
 	public MaykrDoomArmor(IArmorMaterial materialIn, EquipmentSlotType slot) {
-		super(materialIn, slot, new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1));
+		super(materialIn, slot, new Item.Properties().group(DoomMod.DoomArmorItemGroup).maxStackSize(1));
 		
 	}
 
@@ -39,7 +39,7 @@ public class MaykrDoomArmor extends SkinArmor {
 		stack.hasTag();
 		stack.addEnchantment(Enchantments.BLAST_PROTECTION, 4);
 		stack.addEnchantment(Enchantments.FEATHER_FALLING, 4);
-		if (group == DoomMod.DoomItemGroup) {
+		if (group == DoomMod.DoomArmorItemGroup) {
 			items.add(stack);
 		}
 	}

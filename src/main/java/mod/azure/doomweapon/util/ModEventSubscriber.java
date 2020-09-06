@@ -8,6 +8,8 @@ import mod.azure.doomweapon.item.ammo.ClipAmmo;
 import mod.azure.doomweapon.item.ammo.EnergyCell;
 import mod.azure.doomweapon.item.ammo.Rocket;
 import mod.azure.doomweapon.item.ammo.ShellAmmo;
+import mod.azure.doomweapon.item.ammo.UnmaykrBolt;
+import mod.azure.doomweapon.item.entityweapons.BarenBlastItem;
 import mod.azure.doomweapon.util.registry.DoomItems;
 import mod.azure.doomweapon.util.registry.ExtraModSpawns;
 import mod.azure.doomweapon.util.registry.ModEntitySpawn;
@@ -42,20 +44,23 @@ public class ModEventSubscriber {
 		((ClipAmmo) (DoomItems.BULLETS.get())).setItemReference(DoomItems.BULLETS);
 		((BFGCell) (DoomItems.BFG_CELL.get())).setItemReference(DoomItems.BFG_CELL);
 		((Rocket) (DoomItems.ROCKET.get())).setItemReference(DoomItems.ROCKET);
+		((UnmaykrBolt) (DoomItems.UNMAKRY_BOLT.get())).setItemReference(DoomItems.UNMAKRY_BOLT);
+		((BarenBlastItem) (DoomItems.BARENBLAST.get())).setItemReference(DoomItems.BARENBLAST);
 	}
 
 	@SubscribeEvent
 	public static void registerEntities(final RegistryEvent.Register<EntityType<?>> event) {
 		event.getRegistry().registerAll(ModEntityTypes.IMP.get(), ModEntityTypes.ARCHVILE.get(),
-				ModEntityTypes.BARON.get(), ModEntityTypes.CACODEMON.get(), ModEntityTypes.LOST_SOUL.get(),
-				ModEntityTypes.MANCUBUS.get(), ModEntityTypes.PINKY.get(), ModEntityTypes.CYBERDEMON.get(),
-				ModEntityTypes.CYBERDEMON2016.get(), ModEntityTypes.UNWILLING.get(), ModEntityTypes.IMP2016.get(),
-				ModEntityTypes.CHAINGUNNER.get(), ModEntityTypes.SHOTGUNGUY.get(), ModEntityTypes.MARAUDER.get(),
-				ModEntityTypes.REVENANT.get(), ModEntityTypes.SPIDERDEMON.get(), ModEntityTypes.HELLKNIGHT.get(),
-				ModEntityTypes.ICONOFSIN.get(), ModEntityTypes.POSSESSEDSOLDIER.get(), ModEntityTypes.BULLETS.get(),
+				ModEntityTypes.BARON.get(), ModEntityTypes.CACODEMON.get(), ModEntityTypes.MANCUBUS.get(),
+				ModEntityTypes.PINKY.get(), ModEntityTypes.CYBERDEMON.get(), ModEntityTypes.CYBERDEMON2016.get(),
+				ModEntityTypes.UNWILLING.get(), ModEntityTypes.IMP2016.get(), ModEntityTypes.CHAINGUNNER.get(),
+				ModEntityTypes.SHOTGUNGUY.get(), ModEntityTypes.MARAUDER.get(), ModEntityTypes.REVENANT.get(),
+				ModEntityTypes.SPIDERDEMON.get(), ModEntityTypes.HELLKNIGHT.get(), ModEntityTypes.ICONOFSIN.get(),
+				ModEntityTypes.POSSESSEDSOLDIER.get(), ModEntityTypes.BULLETS.get(),
 				ModEntityTypes.CHAINGUN_BULLET.get(), ModEntityTypes.ENERGY_CELL.get(),
 				ModEntityTypes.SHOTGUN_SHELL.get(), ModEntityTypes.ARGENT_BOLT.get(),
-				ModEntityTypes.POSSESSEDSCIENTIST.get(), ModEntityTypes.ZOMBIEMAN.get());
+				ModEntityTypes.POSSESSEDSCIENTIST.get(), ModEntityTypes.ZOMBIEMAN.get(),
+				ModEntityTypes.LOST_SOUL_SHOOT.get(), ModEntityTypes.BARENBLAST.get());
 		ModEntitySpawn.registerEntityWorldSpawns();
 		ModEntitySpawn.EntitySpawnPlacementRegistry();
 		if (ModList.get().isLoaded("extendednether")) {

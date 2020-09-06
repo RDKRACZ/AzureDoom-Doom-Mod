@@ -11,7 +11,6 @@ import mod.azure.doomweapon.entity.HellknightEntity;
 import mod.azure.doomweapon.entity.IconofsinEntity;
 import mod.azure.doomweapon.entity.Imp2016Entity;
 import mod.azure.doomweapon.entity.ImpEntity;
-import mod.azure.doomweapon.entity.LostSoulEntity;
 import mod.azure.doomweapon.entity.MancubusEntity;
 import mod.azure.doomweapon.entity.MarauderEntity;
 import mod.azure.doomweapon.entity.PainEntity;
@@ -26,12 +25,14 @@ import mod.azure.doomweapon.entity.ZombiemanEntity;
 import mod.azure.doomweapon.entity.projectiles.ArgentBoltEntity;
 import mod.azure.doomweapon.entity.projectiles.BFGEntity;
 import mod.azure.doomweapon.entity.projectiles.BarenBlastEntity;
+import mod.azure.doomweapon.entity.projectiles.BarrelEntity;
 import mod.azure.doomweapon.entity.projectiles.BulletEntity;
 import mod.azure.doomweapon.entity.projectiles.ChaingunBulletEntity;
 import mod.azure.doomweapon.entity.projectiles.EnergyCellEntity;
 import mod.azure.doomweapon.entity.projectiles.PainShootEntity;
 import mod.azure.doomweapon.entity.projectiles.RocketEntity;
 import mod.azure.doomweapon.entity.projectiles.ShotgunShellEntity;
+import mod.azure.doomweapon.entity.projectiles.UnmaykrBoltEntity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.ResourceLocation;
@@ -44,6 +45,10 @@ public class ModEntityTypes {
 	public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITIES,
 			DoomMod.MODID);
 
+	public static final RegistryObject<EntityType<BarrelEntity>> BARREL = ENTITY_TYPES.register("barrel",
+			() -> EntityType.Builder.<BarrelEntity>create(BarrelEntity::new, EntityClassification.MISC)
+					.size(0.98F, 0.98F).build(new ResourceLocation(DoomMod.MODID, "barrel").toString()));
+
 	public static final RegistryObject<EntityType<ShotgunShellEntity>> SHOTGUN_SHELL = ENTITY_TYPES
 			.register("shotgun_shell",
 					() -> EntityType.Builder
@@ -53,6 +58,10 @@ public class ModEntityTypes {
 	public static final RegistryObject<EntityType<ArgentBoltEntity>> ARGENT_BOLT = ENTITY_TYPES.register("argent_bolt",
 			() -> EntityType.Builder.<ArgentBoltEntity>create(ArgentBoltEntity::new, EntityClassification.MISC)
 					.size(0.5F, 0.5F).build(new ResourceLocation(DoomMod.MODID, "argent_bolt").toString()));
+
+	public static final RegistryObject<EntityType<UnmaykrBoltEntity>> UNMAYKR = ENTITY_TYPES.register("unmaykr_bolt",
+			() -> EntityType.Builder.<UnmaykrBoltEntity>create(UnmaykrBoltEntity::new, EntityClassification.MISC)
+					.size(0.5F, 0.5F).build(new ResourceLocation(DoomMod.MODID, "unmaykr_bolt").toString()));
 
 	public static final RegistryObject<EntityType<EnergyCellEntity>> ENERGY_CELL = ENTITY_TYPES.register("energy_cell",
 			() -> EntityType.Builder.<EnergyCellEntity>create(EnergyCellEntity::new, EntityClassification.MISC)
@@ -92,11 +101,6 @@ public class ModEntityTypes {
 	public static final RegistryObject<EntityType<PinkyEntity>> PINKY = ENTITY_TYPES.register("pinky",
 			() -> EntityType.Builder.<PinkyEntity>create(PinkyEntity::new, EntityClassification.MONSTER)
 					.size(0.6f, 1.95F).immuneToFire().build(new ResourceLocation(DoomMod.MODID, "pinky").toString()));
-
-	public static final RegistryObject<EntityType<LostSoulEntity>> LOST_SOUL = ENTITY_TYPES.register("lost_soul",
-			() -> EntityType.Builder.<LostSoulEntity>create(LostSoulEntity::new, EntityClassification.MONSTER)
-					.size(1.0F, 1.0F).immuneToFire()
-					.build(new ResourceLocation(DoomMod.MODID, "lost_soul").toString()));
 
 	public static final RegistryObject<EntityType<CacodemonEntity>> CACODEMON = ENTITY_TYPES.register("cacodemon",
 			() -> EntityType.Builder.<CacodemonEntity>create(CacodemonEntity::new, EntityClassification.MONSTER)

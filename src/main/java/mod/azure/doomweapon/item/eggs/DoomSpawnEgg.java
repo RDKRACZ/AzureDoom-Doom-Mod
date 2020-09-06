@@ -15,7 +15,7 @@ public class DoomSpawnEgg extends SpawnEggItem {
 
 	public DoomSpawnEgg(Supplier<? extends EntityType<?>> typeIn, int primaryColorIn, int secondaryColorIn) {
 		super(null, primaryColorIn, secondaryColorIn,
-				new Item.Properties().maxStackSize(1).group(DoomMod.DoomItemGroup));
+				new Item.Properties().maxStackSize(1).group(DoomMod.DoomEggItemGroup));
 		typeGetter = typeIn;
 	}
 

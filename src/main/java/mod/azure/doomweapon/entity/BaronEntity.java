@@ -26,7 +26,7 @@ import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileHelper;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -59,7 +59,7 @@ public class BaronEntity extends DemonEntity implements IRangedAttackMob {
 			BaronEntity.this.setAggroed(true);
 		}
 	};
-	
+
 	public BaronEntity(EntityType<BaronEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
 		this.setCombatTask();
@@ -83,6 +83,7 @@ public class BaronEntity extends DemonEntity implements IRangedAttackMob {
 	protected void registerGoals() {
 		this.goalSelector.addGoal(6, new LookAtGoal(this, PlayerEntity.class, 8.0F));
 		this.goalSelector.addGoal(6, new LookRandomlyGoal(this));
+		this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
 		this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 	}
@@ -213,16 +214,6 @@ public class BaronEntity extends DemonEntity implements IRangedAttackMob {
 		return false;
 	}
 
-	protected void dropSpecialItems(DamageSource source, int looting, boolean recentlyHitIn) {
-		super.dropSpecialItems(source, looting, recentlyHitIn);
-		ItemEntity itementity = this.entityDropItem(DoomItems.ENERGY_CELLS.get());
-		if (itementity != null) {
-			itementity.isImmuneToFire();
-			itementity.setNoDespawn();
-			itementity.setGlowing(true);
-		}
-	}
-
 	@Override
 	protected SoundEvent getAmbientSound() {
 		return ModSoundEvents.BARON_AMBIENT.get();
@@ -256,7 +247,7 @@ public class BaronEntity extends DemonEntity implements IRangedAttackMob {
 	public int getMaxSpawnedInChunk() {
 		return 1;
 	}
-	
+
 	@Override
 	public void attackEntityWithRangedAttack(LivingEntity target, float distanceFactor) {
 		ItemStack itemstack = this

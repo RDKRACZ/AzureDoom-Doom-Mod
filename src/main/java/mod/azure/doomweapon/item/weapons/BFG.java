@@ -28,7 +28,7 @@ import net.minecraft.world.World;
 public class BFG extends ShootableItem {
 
 	public BFG() {
-		super(new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1).maxDamage(9000));
+		super(new Item.Properties().group(DoomMod.DoomWeaponItemGroup).maxStackSize(1).maxDamage(9000));
 	}
 
 	@Override
@@ -37,7 +37,7 @@ public class BFG extends ShootableItem {
 		stack.hasTag();
 		stack.addEnchantment(Enchantments.PUNCH, 2);
 		stack.addEnchantment(Enchantments.POWER, 3);
-		if (group == DoomMod.DoomItemGroup) {
+		if (group == DoomMod.DoomWeaponItemGroup) {
 			items.add(stack);
 		}
 	}

@@ -4,7 +4,6 @@ import java.util.EnumSet;
 import java.util.Random;
 
 import mod.azure.doomweapon.entity.ai.goal.DemonAttackGoal;
-import mod.azure.doomweapon.util.registry.DoomItems;
 import mod.azure.doomweapon.util.registry.ModEntityTypes;
 import mod.azure.doomweapon.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
@@ -17,7 +16,7 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -67,19 +66,10 @@ public class ArchvileEntity extends DemonEntity {
 		return false;
 	}
 
-	protected void dropSpecialItems(DamageSource source, int looting, boolean recentlyHitIn) {
-		super.dropSpecialItems(source, looting, recentlyHitIn);
-		ItemEntity itementity = this.entityDropItem(DoomItems.ARGENT_ENERGY.get());
-		if (itementity != null) {
-			itementity.isImmuneToFire();
-			itementity.setNoDespawn();
-			itementity.setGlowing(true);
-		}
-	}
-
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(2, new DemonAttackGoal(this, 1.0D, false));
+		this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, false));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
@@ -173,6 +163,7 @@ public class ArchvileEntity extends DemonEntity {
 	protected SoundEvent getDeathSound() {
 		return ModSoundEvents.ARCHVILE_DEATH.get();
 	}
+
 	static class FindPlayerGoal extends NearestAttackableTargetGoal<PlayerEntity> {
 		private final ArchvileEntity enderman;
 		/** The player */

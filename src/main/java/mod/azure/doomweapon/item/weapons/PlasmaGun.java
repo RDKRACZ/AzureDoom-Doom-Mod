@@ -29,7 +29,7 @@ import net.minecraftforge.common.extensions.IForgeItem;
 public class PlasmaGun extends ShootableItem implements IForgeItem {
 
 	public PlasmaGun() {
-		super(new Item.Properties().group(DoomMod.DoomItemGroup).maxStackSize(1).maxDamage(9000));
+		super(new Item.Properties().group(DoomMod.DoomWeaponItemGroup).maxStackSize(1).maxDamage(9000));
 		this.addPropertyOverride(new ResourceLocation("pull"), (p_210310_0_, p_210310_1_, p_210310_2_) -> {
 			if (p_210310_2_ == null) {
 				return 0.0F;
@@ -49,7 +49,7 @@ public class PlasmaGun extends ShootableItem implements IForgeItem {
 	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
 		ItemStack stack = new ItemStack(this);
 		stack.hasTag();
-		if (group == DoomMod.DoomItemGroup) {
+		if (group == DoomMod.DoomWeaponItemGroup) {
 			items.add(stack);
 		}
 	}
