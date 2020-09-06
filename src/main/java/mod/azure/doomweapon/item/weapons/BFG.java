@@ -72,7 +72,9 @@ public class BFG extends ShootableItem {
 				boolean flag1 = playerentity.abilities.isCreativeMode || (itemstack.getItem() instanceof BFGCell
 						&& ((BFGCell) itemstack.getItem()).isInfinite(itemstack, stack, playerentity));
 				if (!worldIn.isRemote) {
-					entityLiving.addPotionEffect(new EffectInstance(Effects.RESISTANCE, 10, 4));
+					if (!playerentity.isPotionActive(Effects.RESISTANCE)) {
+						entityLiving.addPotionEffect(new EffectInstance(Effects.RESISTANCE, 10, 4));
+					}
 					BFGCell arrowitem = (BFGCell) (itemstack.getItem() instanceof BFGCell ? itemstack.getItem()
 							: DoomItems.BFG_CELL.get());
 					BFGEntity abstractarrowentity = arrowitem.createArrow(worldIn, itemstack, playerentity);
