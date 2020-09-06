@@ -19,6 +19,8 @@ import net.minecraft.item.ShootableItem;
 import net.minecraft.item.UseAction;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
@@ -70,6 +72,7 @@ public class BFG extends ShootableItem {
 				boolean flag1 = playerentity.abilities.isCreativeMode || (itemstack.getItem() instanceof BFGCell
 						&& ((BFGCell) itemstack.getItem()).isInfinite(itemstack, stack, playerentity));
 				if (!worldIn.isRemote) {
+					entityLiving.addPotionEffect(new EffectInstance(Effects.RESISTANCE, 10, 4));
 					BFGCell arrowitem = (BFGCell) (itemstack.getItem() instanceof BFGCell ? itemstack.getItem()
 							: DoomItems.BFG_CELL.get());
 					BFGEntity abstractarrowentity = arrowitem.createArrow(worldIn, itemstack, playerentity);

@@ -242,9 +242,9 @@ public class BFGEntity extends AbstractArrowEntity {
 			this.explode();
 			this.remove();
 		}
-		this.playSound(ModSoundEvents.ROCKET_HIT.get(), 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
+		this.playSound(ModSoundEvents.BFG_HIT.get(), 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 	}
-	
+
 	@Override
 	protected void onEntityHit(EntityRayTraceResult p_213868_1_) {
 		super.onEntityHit(p_213868_1_);
@@ -275,7 +275,7 @@ public class BFGEntity extends AbstractArrowEntity {
 			this.explode();
 			this.remove();
 		}
-		this.playSound(ModSoundEvents.ROCKET_HIT.get(), 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
+		this.playSound(ModSoundEvents.BFG_HIT.get(), 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 	}
 
 	protected void explode() {
