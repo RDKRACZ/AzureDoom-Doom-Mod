@@ -90,7 +90,7 @@ public class BaronEntity extends DemonEntity implements IRangedAttackMob {
 
 	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
 		return MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 50.0D)
-				.createMutableAttribute(Attributes.MAX_HEALTH, 40.0D)
+				.createMutableAttribute(Attributes.MAX_HEALTH, 180.0D)
 				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D)
 				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 15.0D);
 	}
