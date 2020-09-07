@@ -1,6 +1,7 @@
 package mod.azure.doomweapon.util;
 
 import mod.azure.doomweapon.DoomMod;
+import mod.azure.doomweapon.entity.ArachnotronEntity;
 import mod.azure.doomweapon.entity.ArchvileEntity;
 import mod.azure.doomweapon.entity.BaronEntity;
 import mod.azure.doomweapon.entity.CacodemonEntity;
@@ -13,6 +14,7 @@ import mod.azure.doomweapon.entity.Imp2016Entity;
 import mod.azure.doomweapon.entity.ImpEntity;
 import mod.azure.doomweapon.entity.MancubusEntity;
 import mod.azure.doomweapon.entity.MarauderEntity;
+import mod.azure.doomweapon.entity.NightmareImpEntity;
 import mod.azure.doomweapon.entity.PainEntity;
 import mod.azure.doomweapon.entity.PinkyEntity;
 import mod.azure.doomweapon.entity.PossessedScientistEntity;
@@ -72,12 +74,13 @@ public class ModEventSubscriber {
 	public static void registerEntities(final RegistryEvent.Register<EntityType<?>> event) {
 		event.getRegistry().registerAll(ModEntityTypes.IMP.get(), ModEntityTypes.ARCHVILE.get(),
 				ModEntityTypes.LOST_SOUL_SHOOT.get(), ModEntityTypes.BARENBLAST.get(), ModEntityTypes.BARON.get(),
-				ModEntityTypes.CACODEMON.get(), ModEntityTypes.MANCUBUS.get(), ModEntityTypes.PINKY.get(),
-				ModEntityTypes.CYBERDEMON.get(), ModEntityTypes.CYBERDEMON2016.get(), ModEntityTypes.UNWILLING.get(),
-				ModEntityTypes.IMP2016.get(), ModEntityTypes.CHAINGUNNER.get(), ModEntityTypes.SHOTGUNGUY.get(),
-				ModEntityTypes.MARAUDER.get(), ModEntityTypes.REVENANT.get(), ModEntityTypes.SPIDERDEMON.get(),
-				ModEntityTypes.HELLKNIGHT.get(), ModEntityTypes.ICONOFSIN.get(), ModEntityTypes.POSSESSEDSOLDIER.get(),
-				ModEntityTypes.BULLETS.get(), ModEntityTypes.CHAINGUN_BULLET.get(), ModEntityTypes.ENERGY_CELL.get(),
+				ModEntityTypes.CACODEMON.get(), ModEntityTypes.MANCUBUS.get(), ModEntityTypes.ARACHNOTRON.get(),
+				ModEntityTypes.PINKY.get(), ModEntityTypes.CYBERDEMON.get(), ModEntityTypes.CYBERDEMON2016.get(),
+				ModEntityTypes.UNWILLING.get(), ModEntityTypes.IMP2016.get(), ModEntityTypes.NIGHTMARE_IMP.get(),
+				ModEntityTypes.CHAINGUNNER.get(), ModEntityTypes.SHOTGUNGUY.get(), ModEntityTypes.MARAUDER.get(),
+				ModEntityTypes.REVENANT.get(), ModEntityTypes.SPIDERDEMON.get(), ModEntityTypes.HELLKNIGHT.get(),
+				ModEntityTypes.ICONOFSIN.get(), ModEntityTypes.POSSESSEDSOLDIER.get(), ModEntityTypes.BULLETS.get(),
+				ModEntityTypes.CHAINGUN_BULLET.get(), ModEntityTypes.ENERGY_CELL.get(),
 				ModEntityTypes.SHOTGUN_SHELL.get(), ModEntityTypes.ARGENT_BOLT.get(),
 				ModEntityTypes.POSSESSEDSCIENTIST.get(), ModEntityTypes.ZOMBIEMAN.get());
 		ModEntitySpawn.addSpawnEntries();
@@ -95,6 +98,8 @@ public class ModEventSubscriber {
 		GlobalEntityTypeAttributes.put(ModEntityTypes.HELLKNIGHT.get(), HellknightEntity.func_234200_m_().create());
 		GlobalEntityTypeAttributes.put(ModEntityTypes.ICONOFSIN.get(), IconofsinEntity.func_234200_m_().create());
 		GlobalEntityTypeAttributes.put(ModEntityTypes.IMP2016.get(), Imp2016Entity.func_234200_m_().create());
+		GlobalEntityTypeAttributes.put(ModEntityTypes.NIGHTMARE_IMP.get(),
+				NightmareImpEntity.func_234200_m_().create());
 		GlobalEntityTypeAttributes.put(ModEntityTypes.IMP.get(), ImpEntity.func_234200_m_().create());
 		GlobalEntityTypeAttributes.put(ModEntityTypes.MANCUBUS.get(), MancubusEntity.func_234200_m_().create());
 		GlobalEntityTypeAttributes.put(ModEntityTypes.MARAUDER.get(), MarauderEntity.func_234200_m_().create());
@@ -105,6 +110,7 @@ public class ModEventSubscriber {
 				PossessedSoldierEntity.func_234200_m_().create());
 		GlobalEntityTypeAttributes.put(ModEntityTypes.REVENANT.get(), RevenantEntity.func_234200_m_().create());
 		GlobalEntityTypeAttributes.put(ModEntityTypes.SHOTGUNGUY.get(), ShotgunguyEntity.func_234200_m_().create());
+		GlobalEntityTypeAttributes.put(ModEntityTypes.ARACHNOTRON.get(), ArachnotronEntity.func_234200_m_().create());
 		GlobalEntityTypeAttributes.put(ModEntityTypes.SPIDERDEMON.get(), SpiderdemonEntity.func_234200_m_().create());
 		GlobalEntityTypeAttributes.put(ModEntityTypes.UNWILLING.get(), UnwillingEntity.func_234200_m_().create());
 		GlobalEntityTypeAttributes.put(ModEntityTypes.ZOMBIEMAN.get(), ZombiemanEntity.func_234200_m_().create());

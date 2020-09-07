@@ -62,6 +62,8 @@ public class DoomMod {
 				() -> SlotTypePreset.CHARM.getMessageBuilder().build());
 		InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE,
 				() -> SlotTypePreset.BELT.getMessageBuilder().build());
+		InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE,
+				() -> SlotTypePreset.BRACELET.getMessageBuilder().build());
 	}
 
 	public static final ItemGroup DoomWeaponItemGroup = (new ItemGroup("doomweapons") {

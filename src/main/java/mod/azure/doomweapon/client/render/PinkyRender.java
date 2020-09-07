@@ -10,7 +10,7 @@ import net.minecraft.util.ResourceLocation;
 public class PinkyRender extends MobRenderer<PinkyEntity, PinkyModel<PinkyEntity>> {
 
 	protected static final ResourceLocation TEXTURE = new ResourceLocation(DoomMod.MODID,
-			"textures/entity/new_pinky.png");
+			"textures/entity/pinky-texturemap.png");
 
 	public PinkyRender(EntityRendererManager renderManagerIn) {
 		super(renderManagerIn, new PinkyModel<>(), 0.7F);

@@ -33,6 +33,7 @@ import mod.azure.doomweapon.item.armor.PurplePonyDoomArmor;
 import mod.azure.doomweapon.item.armor.SentinelDoomArmor;
 import mod.azure.doomweapon.item.armor.ZombieDoomArmor;
 import mod.azure.doomweapon.item.eggs.DoomSpawnEgg;
+import mod.azure.doomweapon.item.entityweapons.ArchnotronAttackItem;
 import mod.azure.doomweapon.item.entityweapons.BarenBlastItem;
 import mod.azure.doomweapon.item.entityweapons.CyberdemonAttackItem;
 import mod.azure.doomweapon.item.entityweapons.SpiderdemonAttackItem;
@@ -87,7 +88,8 @@ public class DoomItems {
 			() -> new ShellAmmo(new Item.Properties().group(DoomMod.DoomWeaponItemGroup), 2.0F));
 	public static final RegistryObject<Item> ARGENT_BOLT = ITEMS.register("argent_bolt",
 			() -> new ArgentBolt(new Item.Properties().group(DoomMod.DoomWeaponItemGroup), 2.7F));
-	public static final RegistryObject<Item> UNMAKRY_BOLT = ITEMS.register("unmaykr_bolt", () -> new UnmaykrBolt(10.7F));
+	public static final RegistryObject<Item> UNMAKRY_BOLT = ITEMS.register("unmaykr_bolt",
+			() -> new UnmaykrBolt(10.7F));
 	public static final RegistryObject<Item> ENERGY_CELLS = ITEMS.register("energy_cells",
 			() -> new EnergyCell(new Item.Properties().group(DoomMod.DoomWeaponItemGroup), 10.0F));
 	public static final RegistryObject<Item> CHAINGUN_BULLETS = ITEMS.register("chaingunbullets",
@@ -113,6 +115,10 @@ public class DoomItems {
 	public static final RegistryObject<Item> SOULCUBE = ITEMS.register("soulcube", () -> new SoulCubeItem());
 	public static final RegistryObject<Item> IMP_SPAWN_EGG = ITEMS.register("imp_spawn_egg",
 			() -> new DoomSpawnEgg(ModEntityTypes.IMP, 11022961, 11035249));
+	public static final RegistryObject<Item> ARACHNOTRON_SPAWN_EGG = ITEMS.register("arachnotron_spawn_egg",
+			() -> new DoomSpawnEgg(ModEntityTypes.ARACHNOTRON, 11022961, 11035249));
+	public static final RegistryObject<Item> NIGHTMARE_IMP_SPAWN_EGG = ITEMS.register("nightmare_imp_spawn_egg",
+			() -> new DoomSpawnEgg(ModEntityTypes.NIGHTMARE_IMP, 11022961, 11035249));
 	public static final RegistryObject<Item> PINKY_SPAWN_EGG = ITEMS.register("pinky_spawn_egg",
 			() -> new DoomSpawnEgg(ModEntityTypes.PINKY, 11022961, 11035249));
 	public static final RegistryObject<Item> ARCHVILE_SPAWN_EGG = ITEMS.register("archvile_spawn_egg",
@@ -185,6 +191,8 @@ public class DoomItems {
 	public static final RegistryObject<Item> CHAINGUN = ITEMS.register("chaingun", () -> new Chaingun());
 	public static final RegistryObject<Item> PISTOL = ITEMS.register("pistol", () -> new PistolItem());
 	// MOB WEAPONS
+	public static final RegistryObject<Item> ARACHNOTRONATTACK = ITEMS.register("arachnotronblast",
+			() -> new ArchnotronAttackItem());
 	public static final RegistryObject<Item> CYBERDEMONATTACK = ITEMS.register("cyberdemonattack",
 			() -> new CyberdemonAttackItem());
 	public static final RegistryObject<Item> SPIDERDEMONATTACK = ITEMS.register("spiderdemonattack",

@@ -1,6 +1,7 @@
 package mod.azure.doomweapon.client;
 
 import mod.azure.doomweapon.DoomMod;
+import mod.azure.doomweapon.client.render.ArachnotronRender;
 import mod.azure.doomweapon.client.render.ArchvileRender;
 import mod.azure.doomweapon.client.render.BaronRender;
 import mod.azure.doomweapon.client.render.BarrelRender;
@@ -14,6 +15,7 @@ import mod.azure.doomweapon.client.render.Imp2016Render;
 import mod.azure.doomweapon.client.render.ImpRender;
 import mod.azure.doomweapon.client.render.MancubusRender;
 import mod.azure.doomweapon.client.render.MarauderRender;
+import mod.azure.doomweapon.client.render.NightmareImpRender;
 import mod.azure.doomweapon.client.render.PainRender;
 import mod.azure.doomweapon.client.render.PinkyRender;
 import mod.azure.doomweapon.client.render.PossessedScientistRender;
@@ -59,6 +61,8 @@ public class ClientModEventSubscriber {
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.LOST_SOUL_SHOOT.get(),
 				LostSoulShootRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.IMP.get(), ImpRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ARACHNOTRON.get(), ArachnotronRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.NIGHTMARE_IMP.get(), NightmareImpRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.PINKY.get(), PinkyRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.CACODEMON.get(), CacodemonRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ARCHVILE.get(), ArchvileRender::new);

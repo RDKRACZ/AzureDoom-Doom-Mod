@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.google.common.collect.ImmutableMap;
 
+import mod.azure.doomweapon.entity.ArachnotronEntity;
 import mod.azure.doomweapon.entity.ArchvileEntity;
 import mod.azure.doomweapon.entity.BaronEntity;
 import mod.azure.doomweapon.entity.CacodemonEntity;
@@ -19,6 +20,7 @@ import mod.azure.doomweapon.entity.Imp2016Entity;
 import mod.azure.doomweapon.entity.ImpEntity;
 import mod.azure.doomweapon.entity.MancubusEntity;
 import mod.azure.doomweapon.entity.MarauderEntity;
+import mod.azure.doomweapon.entity.NightmareImpEntity;
 import mod.azure.doomweapon.entity.PainEntity;
 import mod.azure.doomweapon.entity.PinkyEntity;
 import mod.azure.doomweapon.entity.PossessedScientistEntity;
@@ -52,7 +54,9 @@ public class ModEntitySpawn {
 						new MobSpawnInfo.Spawners(ModEntityTypes.REVENANT.get(), 10, 1, 1),
 						new MobSpawnInfo.Spawners(ModEntityTypes.SPIDERDEMON.get(), 10, 1, 1),
 						new MobSpawnInfo.Spawners(ModEntityTypes.ZOMBIEMAN.get(), 30, 1, 4),
+						new MobSpawnInfo.Spawners(ModEntityTypes.NIGHTMARE_IMP.get(), 30, 1, 4),
 						new MobSpawnInfo.Spawners(ModEntityTypes.IMP2016.get(), 30, 1, 4),
+						new MobSpawnInfo.Spawners(ModEntityTypes.ARACHNOTRON.get(), 30, 1, 4),
 						new MobSpawnInfo.Spawners(ModEntityTypes.CHAINGUNNER.get(), 30, 1, 4),
 						new MobSpawnInfo.Spawners(ModEntityTypes.SHOTGUNGUY.get(), 30, 1, 4),
 						new MobSpawnInfo.Spawners(ModEntityTypes.MARAUDER.get(), 15, 1, 1),
@@ -93,6 +97,9 @@ public class ModEntitySpawn {
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.SPIDERDEMON.get(),
 				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
 				SpiderdemonEntity::spawning);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.ARACHNOTRON.get(),
+				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+				ArachnotronEntity::spawning);
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.MANCUBUS.get(),
 				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
 				MancubusEntity::spawning);
@@ -105,6 +112,9 @@ public class ModEntitySpawn {
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.IMP.get(),
 				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
 				ImpEntity::spawning);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.NIGHTMARE_IMP.get(),
+				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+				NightmareImpEntity::spawning);
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.PINKY.get(),
 				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
 				PinkyEntity::spawning);

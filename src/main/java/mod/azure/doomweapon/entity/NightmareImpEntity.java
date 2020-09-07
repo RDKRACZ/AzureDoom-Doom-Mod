@@ -22,8 +22,6 @@ import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
-import net.minecraft.entity.monster.IFlinging;
-import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -41,9 +39,9 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class PinkyEntity extends DemonEntity implements IMob, IFlinging {
+public class NightmareImpEntity extends DemonEntity {
 
-	public PinkyEntity(EntityType<PinkyEntity> entityType, World worldIn) {
+	public NightmareImpEntity(EntityType<NightmareImpEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
 	}
 
@@ -52,7 +50,7 @@ public class PinkyEntity extends DemonEntity implements IMob, IFlinging {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
-	public static boolean spawning(EntityType<PinkyEntity> p_223337_0_, IWorld p_223337_1_, SpawnReason reason,
+	public static boolean spawning(EntityType<NightmareImpEntity> p_223337_0_, IWorld p_223337_1_, SpawnReason reason,
 			BlockPos p_223337_3_, Random p_223337_4_) {
 		return p_223337_1_.getDifficulty() != Difficulty.PEACEFUL;
 	}
@@ -69,14 +67,20 @@ public class PinkyEntity extends DemonEntity implements IMob, IFlinging {
 		this.goalSelector.addGoal(2, new DemonAttackGoal(this, 1.0D, false));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, false));
+		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, ShotgunguyEntity.class, true));
+		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, UnwillingEntity.class, true));
+		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, ChaingunnerEntity.class, true));
+		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, ZombiemanEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
+		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, PossessedScientistEntity.class, true));
+		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, PossessedSoldierEntity.class, true));
 	}
 
 	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
 		return MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 25.0D)
-				.createMutableAttribute(Attributes.MAX_HEALTH, 75.0D)
+				.createMutableAttribute(Attributes.MAX_HEALTH, 30.0D)
 				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D)
-				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 6.0D);
+				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 4.0D);
 	}
 
 	@Nullable
@@ -87,7 +91,7 @@ public class PinkyEntity extends DemonEntity implements IMob, IFlinging {
 		float f = difficultyIn.getClampedAdditionalDifficulty();
 		this.setCanPickUpLoot(this.rand.nextFloat() < 0.55F * f);
 		if (spawnDataIn == null) {
-			spawnDataIn = new PinkyEntity.GroupData(worldIn.getRandom()
+			spawnDataIn = new NightmareImpEntity.GroupData(worldIn.getRandom()
 					.nextFloat() < net.minecraftforge.common.ForgeConfig.SERVER.zombieBabyChance.get());
 		}
 
@@ -128,23 +132,31 @@ public class PinkyEntity extends DemonEntity implements IMob, IFlinging {
 		return false;
 	}
 
+	protected boolean shouldDrown() {
+		return false;
+	}
+
+	protected boolean shouldBurnInDay() {
+		return false;
+	}
+
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return ModSoundEvents.PINKY_AMBIENT.get();
+		return ModSoundEvents.IMP_AMBIENT.get();
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-		return ModSoundEvents.PINKY_HURT.get();
+		return ModSoundEvents.IMP_HURT.get();
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return ModSoundEvents.PINKY_DEATH.get();
+		return ModSoundEvents.IMP_DEATH.get();
 	}
 
 	protected SoundEvent getStepSound() {
-		return ModSoundEvents.PINKY_STEP.get();
+		return ModSoundEvents.IMP_STEP.get();
 	}
 
 	@Override
@@ -160,11 +172,6 @@ public class PinkyEntity extends DemonEntity implements IMob, IFlinging {
 	@Override
 	public int getMaxSpawnedInChunk() {
 		return 7;
-	}
-
-	@Override
-	public int func_230290_eL_() {
-		return 10;
 	}
 
 }

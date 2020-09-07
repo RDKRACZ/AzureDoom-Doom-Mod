@@ -34,6 +34,12 @@ public class SkinArmor extends ArmorItem implements IForgeItem {
 	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
 		return false;
 	}
+	
+	@Override
+	public boolean hasEffect(ItemStack stack) {
+		return false;
+	}
+
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@OnlyIn(Dist.CLIENT)
