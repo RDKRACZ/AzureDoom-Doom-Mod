@@ -1,7 +1,5 @@
 package mod.azure.doomweapon.client.render;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-
 import mod.azure.doomweapon.DoomMod;
 import mod.azure.doomweapon.client.models.SpiderdemonModel;
 import mod.azure.doomweapon.entity.SpiderdemonEntity;
@@ -21,11 +19,6 @@ public class SpiderdemonRender extends MobRenderer<SpiderdemonEntity, Spiderdemo
 	@Override
 	public ResourceLocation getEntityTexture(SpiderdemonEntity entity) {
 		return TEXTURE;
-	}
-
-	protected void preRenderCallback(SpiderdemonEntity entitylivingbaseIn, MatrixStack matrixStackIn,
-			float partialTickTime) {
-		matrixStackIn.scale(4.0F, 4.0F, 3.0F);
 	}
 
 }

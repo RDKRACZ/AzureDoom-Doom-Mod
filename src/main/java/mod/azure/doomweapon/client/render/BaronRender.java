@@ -1,7 +1,5 @@
 package mod.azure.doomweapon.client.render;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-
 import mod.azure.doomweapon.DoomMod;
 import mod.azure.doomweapon.client.models.BaronModel;
 import mod.azure.doomweapon.entity.BaronEntity;
@@ -21,10 +19,6 @@ public class BaronRender extends MobRenderer<BaronEntity, BaronModel<BaronEntity
 	@Override
 	public ResourceLocation getEntityTexture(BaronEntity entity) {
 		return TEXTURE;
-	}
-
-	protected void preRenderCallback(BaronEntity entitylivingbaseIn, MatrixStack matrixStackIn, float partialTickTime) {
-		matrixStackIn.scale(2.0F, 2.0F, 2.0F);
 	}
 
 }
