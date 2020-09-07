@@ -1,5 +1,6 @@
 package mod.azure.doomweapon.util.registry;
 
+import mod.azure.doomweapon.entity.ArachnotronEntity;
 import mod.azure.doomweapon.entity.ArchvileEntity;
 import mod.azure.doomweapon.entity.BaronEntity;
 import mod.azure.doomweapon.entity.CacodemonEntity;
@@ -11,6 +12,7 @@ import mod.azure.doomweapon.entity.Imp2016Entity;
 import mod.azure.doomweapon.entity.ImpEntity;
 import mod.azure.doomweapon.entity.MancubusEntity;
 import mod.azure.doomweapon.entity.MarauderEntity;
+import mod.azure.doomweapon.entity.NightmareImpEntity;
 import mod.azure.doomweapon.entity.PainEntity;
 import mod.azure.doomweapon.entity.PinkyEntity;
 import mod.azure.doomweapon.entity.PossessedScientistEntity;
@@ -40,6 +42,8 @@ public class ModEntitySpawn {
 		registerEntityWorldSpawn(ModEntityTypes.SPIDERDEMON.get(), 10, 1, 1, Biomes.NETHER);
 		registerEntityWorldSpawn(ModEntityTypes.ZOMBIEMAN.get(), 30, 1, 4, Biomes.NETHER);
 		registerEntityWorldSpawn(ModEntityTypes.IMP2016.get(), 30, 1, 4, Biomes.NETHER);
+		registerEntityWorldSpawn(ModEntityTypes.ARACHNOTRON.get(), 30, 1, 4, Biomes.NETHER);
+		registerEntityWorldSpawn(ModEntityTypes.NIGHTMARE_IMP.get(), 30, 1, 4, Biomes.NETHER);
 		registerEntityWorldSpawn(ModEntityTypes.CHAINGUNNER.get(), 30, 1, 4, Biomes.NETHER);
 		registerEntityWorldSpawn(ModEntityTypes.SHOTGUNGUY.get(), 30, 1, 4, Biomes.NETHER);
 		registerEntityWorldSpawn(ModEntityTypes.MARAUDER.get(), 15, 1, 1, Biomes.NETHER);
@@ -57,6 +61,9 @@ public class ModEntitySpawn {
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.ARCHVILE.get(),
 				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
 				ArchvileEntity::spawning);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.ARACHNOTRON.get(),
+				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+				ArachnotronEntity::spawning);
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.ZOMBIEMAN.get(),
 				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
 				ZombiemanEntity::spawning);
@@ -75,6 +82,9 @@ public class ModEntitySpawn {
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.IMP.get(),
 				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
 				ImpEntity::spawning);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.NIGHTMARE_IMP.get(),
+				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+				NightmareImpEntity::spawning);
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.PINKY.get(),
 				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
 				PinkyEntity::spawning);

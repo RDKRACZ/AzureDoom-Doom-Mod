@@ -9,7 +9,8 @@ import net.minecraft.util.ResourceLocation;
 
 public class ImpRender extends MobRenderer<ImpEntity, ImpModel<ImpEntity>> {
 
-	protected static final ResourceLocation TEXTURE = new ResourceLocation(DoomMod.MODID, "textures/entity/imp.png");
+	protected static final ResourceLocation TEXTURE = new ResourceLocation(DoomMod.MODID,
+			"textures/entity/imp-texturemap.png");
 
 	public ImpRender(EntityRendererManager renderManagerIn) {
 		super(renderManagerIn, new ImpModel<ImpEntity>(0.5f, false), 0.5f);

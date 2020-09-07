@@ -1,6 +1,7 @@
 package mod.azure.doomweapon.util.registry;
 
 import mod.azure.doomweapon.DoomMod;
+import mod.azure.doomweapon.entity.ArachnotronEntity;
 import mod.azure.doomweapon.entity.ArchvileEntity;
 import mod.azure.doomweapon.entity.BaronEntity;
 import mod.azure.doomweapon.entity.CacodemonEntity;
@@ -13,6 +14,7 @@ import mod.azure.doomweapon.entity.Imp2016Entity;
 import mod.azure.doomweapon.entity.ImpEntity;
 import mod.azure.doomweapon.entity.MancubusEntity;
 import mod.azure.doomweapon.entity.MarauderEntity;
+import mod.azure.doomweapon.entity.NightmareImpEntity;
 import mod.azure.doomweapon.entity.PainEntity;
 import mod.azure.doomweapon.entity.PinkyEntity;
 import mod.azure.doomweapon.entity.PossessedScientistEntity;
@@ -98,6 +100,12 @@ public class ModEntityTypes {
 			() -> EntityType.Builder.<ImpEntity>create(ImpEntity::new, EntityClassification.MONSTER).size(0.6f, 1.95F)
 					.immuneToFire().build(new ResourceLocation(DoomMod.MODID, "imp").toString()));
 
+	public static final RegistryObject<EntityType<NightmareImpEntity>> NIGHTMARE_IMP = ENTITY_TYPES.register(
+			"nightmare_imp",
+			() -> EntityType.Builder.<NightmareImpEntity>create(NightmareImpEntity::new, EntityClassification.MONSTER)
+					.size(0.6f, 1.95F).immuneToFire()
+					.build(new ResourceLocation(DoomMod.MODID, "nightmare_imp").toString()));
+
 	public static final RegistryObject<EntityType<PinkyEntity>> PINKY = ENTITY_TYPES.register("pinky",
 			() -> EntityType.Builder.<PinkyEntity>create(PinkyEntity::new, EntityClassification.MONSTER)
 					.size(0.6f, 1.95F).immuneToFire().build(new ResourceLocation(DoomMod.MODID, "pinky").toString()));
@@ -118,6 +126,11 @@ public class ModEntityTypes {
 	public static final RegistryObject<EntityType<MancubusEntity>> MANCUBUS = ENTITY_TYPES.register("mancubus",
 			() -> EntityType.Builder.<MancubusEntity>create(MancubusEntity::new, EntityClassification.MONSTER)
 					.size(1.9F, 5.4F).immuneToFire().build(new ResourceLocation(DoomMod.MODID, "mancubus").toString()));
+
+	public static final RegistryObject<EntityType<ArachnotronEntity>> ARACHNOTRON = ENTITY_TYPES.register("arachnotron",
+			() -> EntityType.Builder.<ArachnotronEntity>create(ArachnotronEntity::new, EntityClassification.MONSTER)
+					.size(3.0F, 3.5F).immuneToFire()
+					.build(new ResourceLocation(DoomMod.MODID, "arachnotron").toString()));
 
 	public static final RegistryObject<EntityType<SpiderdemonEntity>> SPIDERDEMON = ENTITY_TYPES.register("spiderdemon",
 			() -> EntityType.Builder.<SpiderdemonEntity>create(SpiderdemonEntity::new, EntityClassification.MONSTER)

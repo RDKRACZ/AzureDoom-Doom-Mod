@@ -36,6 +36,12 @@ public class ExtraModSpawns {
 		registerEntityWorldSpawn(ModEntityTypes.ZOMBIEMAN.get(), 30, 1, 4, NetherBiomes.BASALT_DELTAS.get(),
 				NetherBiomes.CRIMSON_FOREST.get(), NetherBiomes.SOUL_SAND_VALLEY.get(),
 				NetherBiomes.WARPED_FOREST.get());
+		registerEntityWorldSpawn(ModEntityTypes.ARACHNOTRON.get(), 30, 1, 4, NetherBiomes.BASALT_DELTAS.get(),
+				NetherBiomes.CRIMSON_FOREST.get(), NetherBiomes.SOUL_SAND_VALLEY.get(),
+				NetherBiomes.WARPED_FOREST.get());
+		registerEntityWorldSpawn(ModEntityTypes.NIGHTMARE_IMP.get(), 30, 1, 4, NetherBiomes.BASALT_DELTAS.get(),
+				NetherBiomes.CRIMSON_FOREST.get(), NetherBiomes.SOUL_SAND_VALLEY.get(),
+				NetherBiomes.WARPED_FOREST.get());
 		registerEntityWorldSpawn(ModEntityTypes.IMP2016.get(), 30, 1, 4, NetherBiomes.BASALT_DELTAS.get(),
 				NetherBiomes.CRIMSON_FOREST.get(), NetherBiomes.SOUL_SAND_VALLEY.get(),
 				NetherBiomes.WARPED_FOREST.get());

@@ -36,14 +36,14 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class ImpEntity extends DemonEntity {
+public class NightmareImpEntity extends DemonEntity {
 
-	public ImpEntity(EntityType<ImpEntity> entityType, World worldIn) {
+	public NightmareImpEntity(EntityType<NightmareImpEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
 	}
 
-	public ImpEntity(World worldIn) {
-		this(ModEntityTypes.IMP.get(), worldIn);
+	public NightmareImpEntity(World worldIn) {
+		this(ModEntityTypes.NIGHTMARE_IMP.get(), worldIn);
 	}
 
 	@Override
@@ -51,7 +51,7 @@ public class ImpEntity extends DemonEntity {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
-	public static boolean spawning(EntityType<ImpEntity> p_223337_0_, IWorld p_223337_1_, SpawnReason reason,
+	public static boolean spawning(EntityType<NightmareImpEntity> p_223337_0_, IWorld p_223337_1_, SpawnReason reason,
 			BlockPos p_223337_3_, Random p_223337_4_) {
 		return p_223337_1_.getDifficulty() != Difficulty.PEACEFUL;
 	}
@@ -95,7 +95,7 @@ public class ImpEntity extends DemonEntity {
 		float f = difficultyIn.getClampedAdditionalDifficulty();
 		this.setCanPickUpLoot(this.rand.nextFloat() < 0.55F * f);
 		if (spawnDataIn == null) {
-			spawnDataIn = new ImpEntity.GroupData(worldIn.getRandom()
+			spawnDataIn = new NightmareImpEntity.GroupData(worldIn.getRandom()
 					.nextFloat() < net.minecraftforge.common.ForgeConfig.SERVER.zombieBabyChance.get());
 		}
 

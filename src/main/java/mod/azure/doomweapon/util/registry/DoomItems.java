@@ -33,6 +33,7 @@ import mod.azure.doomweapon.item.armor.PurplePonyDoomArmor;
 import mod.azure.doomweapon.item.armor.SentinelDoomArmor;
 import mod.azure.doomweapon.item.armor.ZombieDoomArmor;
 import mod.azure.doomweapon.item.eggs.DoomSpawnEgg;
+import mod.azure.doomweapon.item.entityweapons.ArchnotronAttackItem;
 import mod.azure.doomweapon.item.entityweapons.BarenBlastItem;
 import mod.azure.doomweapon.item.entityweapons.CyberdemonAttackItem;
 import mod.azure.doomweapon.item.entityweapons.SpiderdemonAttackItem;
@@ -115,6 +116,10 @@ public class DoomItems {
 	public static final RegistryObject<Item> SOULCUBE = ITEMS.register("soulcube", () -> new SoulCubeItem());
 	public static final RegistryObject<Item> IMP_SPAWN_EGG = ITEMS.register("imp_spawn_egg",
 			() -> new DoomSpawnEgg(ModEntityTypes.IMP, 11022961, 11035249));
+	public static final RegistryObject<Item> ARACHNOTRON_SPAWN_EGG = ITEMS.register("arachnotron_spawn_egg",
+			() -> new DoomSpawnEgg(ModEntityTypes.ARACHNOTRON, 11022961, 11035249));
+	public static final RegistryObject<Item> NIGHTMAREIMP_SPAWN_EGG = ITEMS.register("nightmare_imp_spawn_egg",
+			() -> new DoomSpawnEgg(ModEntityTypes.NIGHTMARE_IMP, 11022961, 11035249));
 	public static final RegistryObject<Item> PINKY_SPAWN_EGG = ITEMS.register("pinky_spawn_egg",
 			() -> new DoomSpawnEgg(ModEntityTypes.PINKY, 11022961, 11035249));
 	public static final RegistryObject<Item> ARCHVILE_SPAWN_EGG = ITEMS.register("archvile_spawn_egg",
@@ -185,6 +190,8 @@ public class DoomItems {
 	public static final RegistryObject<Item> CHAINGUN = ITEMS.register("chaingun", () -> new Chaingun());
 	public static final RegistryObject<Item> PISTOL = ITEMS.register("pistol", () -> new PistolItem());
 	// MOB WEAPONS
+	public static final RegistryObject<Item> ARACHNOTRONATTACK = ITEMS.register("arachnotronblast",
+			() -> new ArchnotronAttackItem());
 	public static final RegistryObject<Item> CYBERDEMONATTACK = ITEMS.register("cyberdemonattack",
 			() -> new CyberdemonAttackItem());
 	public static final RegistryObject<Item> SPIDERDEMONATTACK = ITEMS.register("spiderdemonattack",
