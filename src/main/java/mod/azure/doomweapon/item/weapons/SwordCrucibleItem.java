@@ -25,8 +25,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class SwordCrucibleItem extends SwordItem {
 
 	public SwordCrucibleItem() {
-		super(DoomTier.DOOM, 12, -2.4F,
-				new Item.Properties().group(DoomMod.DoomWeaponItemGroup).maxStackSize(1).maxDamage(9000));
+		super(DoomTier.DOOM_HIGHTEIR, 12, -2.4F,
+				new Item.Properties().group(DoomMod.DoomWeaponItemGroup).maxStackSize(1).maxDamage(5));
 	}
 
 	@Override
