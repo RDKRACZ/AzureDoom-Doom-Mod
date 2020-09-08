@@ -30,7 +30,6 @@ import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
-import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -232,16 +231,6 @@ public class SpiderdemonEntity extends DemonEntity implements IRangedAttackMob {
 
 	protected boolean shouldBurnInDay() {
 		return false;
-	}
-
-	protected void dropSpecialItems(DamageSource source, int looting, boolean recentlyHitIn) {
-		super.dropSpecialItems(source, looting, recentlyHitIn);
-		ItemEntity itementity = this.entityDropItem(DoomItems.BALLISTA.get());
-		if (itementity != null) {
-			itementity.isImmuneToFire();
-			itementity.setNoDespawn();
-			itementity.setGlowing(true);
-		}
 	}
 
 	@Override

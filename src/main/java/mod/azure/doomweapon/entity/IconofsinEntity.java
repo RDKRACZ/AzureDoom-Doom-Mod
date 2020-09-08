@@ -81,6 +81,7 @@ public class IconofsinEntity extends DemonEntity {
 		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double) 0.23F);
 		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(3.0D);
 		this.getAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(2.0D);
+		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(1000.0D);
 	}
 
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
