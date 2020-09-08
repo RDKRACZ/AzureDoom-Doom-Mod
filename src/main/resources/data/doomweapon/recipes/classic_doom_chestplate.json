@@ -4,16 +4,16 @@
   },
   "type": "minecraft:crafting_shaped",
    "pattern": [
-        "@ @",
+        "@#@",
         "@@@",
-        " # "
+        "@@@"
     ],
     "key": {
         "#": {
             "item": "doomweapon:argent_energy"
         },
 		"@": {
-			"item": "minecraft:leather"
+			"item": "doomweapon:argent_plate"
 		}
     }
 }

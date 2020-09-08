@@ -13,7 +13,7 @@
             "item": "doomweapon:argent_energy"
         },
 		"@": {
-			"item": "minecraft:leather"
+			"item": "doomweapon:argent_plate"
 		}
     }
 }

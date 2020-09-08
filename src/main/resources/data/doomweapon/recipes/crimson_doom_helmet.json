@@ -4,16 +4,15 @@
   },
   "type": "minecraft:crafting_shaped",
    "pattern": [
-        "   ",
-        "@@@",
-        "@#@"
+        "@",
+        "#"
     ],
     "key": {
         "#": {
-            "item": "doomweapon:argent_energy"
+            "item": "minecraft:red_dye"
         },
 		"@": {
-			"item": "minecraft:redstone"
+			"item": "doomweapon:doom_helmet"
 		}
     }
 }

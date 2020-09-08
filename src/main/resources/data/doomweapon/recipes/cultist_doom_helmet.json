@@ -4,16 +4,15 @@
   },
   "type": "minecraft:crafting_shaped",
    "pattern": [
-        "   ",
-        "@@@",
-        "@#@"
+        "@",
+        "#"
     ],
     "key": {
         "#": {
-            "item": "doomweapon:argent_energy"
+            "item": "minecraft:lime_dye"
         },
 		"@": {
-			"item": "minecraft:quartz"
+			"item": "doomweapon:doom_helmet"
 		}
     }
 }

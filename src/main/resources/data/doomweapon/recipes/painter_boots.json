@@ -4,19 +4,15 @@
   },
   "type": "minecraft:crafting_shaped",
    "pattern": [
-        "   ",
-        "#$#",
-        "#&#"
+        "@",
+        "#"
     ],
     "key": {
         "#": {
-            "item": "minecraft:black_dye"
+            "item": "minecraft:brown_dye"
         },
-        "$": {
-            "item": "doomweapon:argent_energy"
-        },
-        "&": {
-            "item": "minecraft:painting"
-        }
+		"@": {
+			"item": "doomweapon:doom_boots"
+		}
     }
 }

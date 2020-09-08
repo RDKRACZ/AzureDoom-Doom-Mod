@@ -3,17 +3,16 @@
     "item": "doomweapon:doomicorn_doom_boots"
   },
   "type": "minecraft:crafting_shaped",
-   "pattern": [
-        "   ",
-        "@#@",
-        "@#@"
+   ""pattern": [
+        "@",
+        "#"
     ],
     "key": {
         "#": {
-            "item": "doomweapon:argent_energy"
+            "item": "minecraft:shulker_shell"
         },
 		"@": {
-			"item": "minecraft:leather"
+			"item": "doomweapon:doom_boots"
 		}
     }
 }
