@@ -109,7 +109,7 @@ public class ArachnotronEntity extends DemonEntity implements IRangedAttackMob {
 
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
-		return 1.74F;
+		return 1.0F;
 	}
 
 	public void setCombatTask() {
