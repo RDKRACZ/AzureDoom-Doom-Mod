@@ -5,14 +5,10 @@ import java.util.List;
 import mod.azure.doomweapon.DoomMod;
 import mod.azure.doomweapon.item.armor.skin.SkinArmor;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
@@ -23,7 +19,7 @@ public class GoldDoomArmor extends SkinArmor {
 
 	public GoldDoomArmor(IArmorMaterial materialIn, EquipmentSlotType slot) {
 		super(materialIn, slot, new Item.Properties().group(DoomMod.DoomArmorItemGroup).maxStackSize(1));
-		
+
 	}
 
 	@Override
@@ -33,25 +29,4 @@ public class GoldDoomArmor extends SkinArmor {
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 
-	@Override
-	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
-		ItemStack stack = new ItemStack(this);
-		stack.hasTag();
-		stack.addEnchantment(Enchantments.PROTECTION, 5);
-		stack.addEnchantment(Enchantments.MENDING, 1);
-		stack.addEnchantment(Enchantments.BINDING_CURSE, 1);
-		stack.addEnchantment(Enchantments.BLAST_PROTECTION, 5);
-		if (group == DoomMod.DoomArmorItemGroup) {
-			items.add(stack);
-		}
-	}
-
-	@Override
-	public void onCreated(ItemStack stack, World worldIn, PlayerEntity playerIn) {
-		stack.hasTag();
-		stack.addEnchantment(Enchantments.PROTECTION, 5);
-		stack.addEnchantment(Enchantments.MENDING, 1);
-		stack.addEnchantment(Enchantments.BINDING_CURSE, 1);
-		stack.addEnchantment(Enchantments.BLAST_PROTECTION, 5);
-	}
 }

@@ -4,16 +4,15 @@
   },
   "type": "minecraft:crafting_shaped",
    "pattern": [
-        "@ @",
-        "@@@",
-        " # "
+        "@",
+        "#"
     ],
     "key": {
         "#": {
-            "item": "doomweapon:argent_energy"
+            "item": "minecraft:fire_charge"
         },
 		"@": {
-			"item": "minecraft:blaze_powder"
+			"item": "doomweapon:doom_chestplate"
 		}
     }
 }
