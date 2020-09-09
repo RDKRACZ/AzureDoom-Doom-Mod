@@ -3,7 +3,7 @@
     "item": "doomweapon:doomicorn_doom_boots"
   },
   "type": "minecraft:crafting_shaped",
-   ""pattern": [
+   "pattern": [
         "@",
         "#"
     ],
