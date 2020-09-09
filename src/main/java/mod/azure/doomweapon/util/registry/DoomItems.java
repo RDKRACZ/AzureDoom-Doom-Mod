@@ -173,7 +173,6 @@ public class DoomItems {
 			() -> new ArgentPickaxe());
 	public static final RegistryObject<Item> ARGENT_SHOVEL = ITEMS.register("argent_shovel", () -> new ArgentShovel());
 	public static final RegistryObject<Item> ARGENT_SWORD = ITEMS.register("argent_sword", () -> new ArgentSword());
-
 	public static final RegistryObject<Item> DOOM_BLADE = ITEMS.register("doomblade", () -> new DoomBlade());
 	// public static final RegistryObject<Item> ARGENT_SHIELD =
 	// ITEMS.register("argent_shield", () -> new ArgentShield());
