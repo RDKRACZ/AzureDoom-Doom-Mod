@@ -75,12 +75,13 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.2-33.0.32'
+    minecraft 'net.minecraftforge:forge:1.16.2-33.0.58'
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.2-4.0.0.1")
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.2-4.0.0.1:api")
-	//compile fg.deobf("curse.maven:JEI:3046220")
+	compile fg.deobf("curse.maven:JEI:3046220")
+	compile fg.deobf("curse.maven:SD:3049708")
 	//compile fg.deobf("curse.maven:WZ:3009586")
-	//compileOnly fg.deobf("curse.maven:PMMO:3047383")
+	//compileOnly fg.deobf("curse.maven:PMMO:3052871")
 	//compile fg.deobf("curse.maven:Model1:3017687")
 	//compile fg.deobf("curse.maven:Model2:3016191")
 	//compile fg.deobf("curse.maven:NPF:2993052")

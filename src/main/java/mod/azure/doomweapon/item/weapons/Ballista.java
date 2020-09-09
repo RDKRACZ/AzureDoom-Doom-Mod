@@ -21,7 +21,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.entity.projectile.FireworkRocketEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -247,16 +246,10 @@ public class Ballista extends ShootableItem implements IVanishable {
 			ItemStack projectile, float soundPitch, boolean isCreativeMode, float velocity, float inaccuracy,
 			float projectileAngle) {
 		if (!worldIn.isRemote) {
-			boolean flag = projectile.getItem() == Items.FIREWORK_ROCKET;
 			ProjectileEntity iprojectile;
-			if (flag) {
-				iprojectile = new FireworkRocketEntity(worldIn, projectile, shooter.getPosX(),
-						shooter.getPosYEye() - (double) 0.15F, shooter.getPosZ(), true);
-			} else {
-				iprojectile = createArrow(worldIn, shooter, crossbow, projectile);
-				if (isCreativeMode || projectileAngle != 0.0F) {
-					((AbstractArrowEntity) iprojectile).pickupStatus = AbstractArrowEntity.PickupStatus.DISALLOWED;
-				}
+			iprojectile = createArrow(worldIn, shooter, crossbow, projectile);
+			if (isCreativeMode || projectileAngle != 0.0F) {
+				((AbstractArrowEntity) iprojectile).pickupStatus = AbstractArrowEntity.PickupStatus.DISALLOWED;
 			}
 
 			if (shooter instanceof ICrossbowUser) {
@@ -272,7 +265,7 @@ public class Ballista extends ShootableItem implements IVanishable {
 						velocity, inaccuracy);
 			}
 
-			crossbow.damageItem(flag ? 3 : 1, shooter, (p_220017_1_) -> {
+			crossbow.damageItem(1, shooter, (p_220017_1_) -> {
 				p_220017_1_.sendBreakAnimation(handIn);
 			});
 			worldIn.addEntity((Entity) iprojectile);
