@@ -27,6 +27,15 @@ public class UnmaykrBoltEntity extends AbstractArrowEntity {
 		this.referenceItem = referenceItemIn;
 	}
 
+	@Override
+	public boolean hasNoGravity() {
+		if (this.isInWater()) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
 	protected void func_225516_i_() {
 		this.remove();
 	}

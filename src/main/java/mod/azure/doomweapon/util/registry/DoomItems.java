@@ -105,8 +105,7 @@ public class DoomItems {
 	// MISC
 	public static final RegistryObject<Item> ARGENT_ENERGY = ITEMS.register("argent_energy",
 			() -> new ArgentEnergyItem());
-	public static final RegistryObject<Item> ARGENT_PLATE = ITEMS.register("argent_plate",
-			() -> new ArgentPlateItem());
+	public static final RegistryObject<Item> ARGENT_PLATE = ITEMS.register("argent_plate", () -> new ArgentPlateItem());
 	public static final RegistryObject<Item> DAISY = ITEMS.register("daisy", () -> new DaisyItem());
 	public static final RegistryObject<Item> E1M1_MUSIC_DISC = ITEMS.register("e1m1_music_disc",
 			() -> new E1M1MusicDisc());

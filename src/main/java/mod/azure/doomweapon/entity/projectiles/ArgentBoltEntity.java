@@ -35,6 +35,15 @@ public class ArgentBoltEntity extends AbstractArrowEntity {
 	}
 
 	@Override
+	public boolean hasNoGravity() {
+		if (this.isInWater()) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	@Override
 	public IPacket<?> createSpawnPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}

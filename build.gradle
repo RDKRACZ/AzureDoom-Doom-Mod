@@ -81,7 +81,7 @@ dependencies {
 	compileOnly fg.deobf("curse.maven:NEXLib:3017501")
 	compileOnly fg.deobf("curse.maven:AC:2980113")
 	compile fg.deobf("curse.maven:WZ:2956297")
-	compile fg.deobf("curse.maven:PMMO:3017947")
+	compile fg.deobf("curse.maven:PMMO:3052870")
 	compile fg.deobf("curse.maven:Model1:2985799")
 	compile fg.deobf("curse.maven:Model2:2995535")
 }

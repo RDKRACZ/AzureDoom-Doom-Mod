@@ -30,6 +30,15 @@ public class ChaingunBulletEntity extends AbstractArrowEntity {
 	}
 
 	@Override
+	public boolean hasNoGravity() {
+		if (this.isInWater()) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	@Override
 	public ItemStack getArrowStack() {
 		return new ItemStack(this.referenceItem);
 	}
