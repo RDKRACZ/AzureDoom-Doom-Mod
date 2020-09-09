@@ -54,6 +54,7 @@ import mod.azure.doomweapon.item.weapons.BFG;
 import mod.azure.doomweapon.item.weapons.Ballista;
 import mod.azure.doomweapon.item.weapons.Chaingun;
 import mod.azure.doomweapon.item.weapons.Chainsaw;
+import mod.azure.doomweapon.item.weapons.DoomBlade;
 import mod.azure.doomweapon.item.weapons.PistolItem;
 import mod.azure.doomweapon.item.weapons.PlasmaGun;
 import mod.azure.doomweapon.item.weapons.RocketLauncher;
@@ -173,6 +174,7 @@ public class DoomItems {
 			() -> new ArgentPickaxe());
 	public static final RegistryObject<Item> ARGENT_SHOVEL = ITEMS.register("argent_shovel", () -> new ArgentShovel());
 	public static final RegistryObject<Item> ARGENT_SWORD = ITEMS.register("argent_sword", () -> new ArgentSword());
+	public static final RegistryObject<Item> DOOM_BLADE = ITEMS.register("doomblade", () -> new DoomBlade());
 	public static final RegistryObject<Item> CHAINSAW = ITEMS.register("chainsaw", () -> new Chainsaw());
 	public static final RegistryObject<Item> SWORD_CLOSED = ITEMS.register("cruciblesword_closed",
 			() -> new UnopenedItem());
