@@ -7,9 +7,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
 
-import mod.azure.doomweapon.DoomMod;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 
 public class Config {
 
@@ -23,12 +21,9 @@ public class Config {
 	}
 
 	public static class ServerConfig {
-		public final BooleanValue DARTH_ZOMBIE;
 
 		ServerConfig(ForgeConfigSpec.Builder builder) {
 			builder.push("extra");
-			DARTH_ZOMBIE = builder.comment("Setting for Darth for Zombie Armor")
-					.translation(DoomMod.MODID + ".config.darth_zombie").define("DARTH_ZOMBIE", false);
 			builder.pop();
 		}
 	}
