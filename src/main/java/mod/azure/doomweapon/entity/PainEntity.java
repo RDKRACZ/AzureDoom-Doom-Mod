@@ -16,6 +16,7 @@ import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.controller.MovementController;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
+import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.IPacket;
@@ -49,6 +50,10 @@ public class PainEntity extends FlyingEntity implements IMob {
 		this.goalSelector.addGoal(5, new PainEntity.RandomFlyGoal(this));
 		this.goalSelector.addGoal(7, new PainEntity.LookAroundGoal(this));
 		this.goalSelector.addGoal(7, new PainEntity.FireballAttackGoal(this));
+		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, 10, true,
+				false, (p_213812_1_) -> {
+					return Math.abs(p_213812_1_.getPosY() - this.getPosY()) <= 4.0D;
+				}));
 		this.targetSelector.addGoal(1,
 				new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 10, true, false, (p_213812_1_) -> {
 					return Math.abs(p_213812_1_.getPosY() - this.getPosY()) <= 4.0D;
@@ -93,7 +98,7 @@ public class PainEntity extends FlyingEntity implements IMob {
 				World world = this.parentEntity.world;
 				++this.attackTimer;
 				if (this.attackTimer == 10) {
-					world.playEvent((PlayerEntity) null, 1015, new BlockPos(this.parentEntity), 0);
+					//world.playEvent((PlayerEntity) null, 1015, new BlockPos(this.parentEntity), 0);
 				}
 
 				if (this.attackTimer == 20) {
