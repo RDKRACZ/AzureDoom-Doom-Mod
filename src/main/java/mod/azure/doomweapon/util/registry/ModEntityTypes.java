@@ -128,7 +128,7 @@ public class ModEntityTypes {
 
 	public static final RegistryObject<EntityType<BaronEntity>> BARON = ENTITY_TYPES.register("baron",
 			() -> EntityType.Builder.create(BaronEntity::new, EntityClassification.MONSTER).func_233606_a_(9)
-					.size(1.0f, 3.9F).immuneToFire().func_233606_a_(9)
+					.size(1.3f, 3.9F).immuneToFire().func_233606_a_(9)
 					.build(new ResourceLocation(DoomMod.MODID, "baron").toString()));
 
 	public static final RegistryObject<EntityType<MancubusEntity>> MANCUBUS = ENTITY_TYPES.register("mancubus",
@@ -137,7 +137,7 @@ public class ModEntityTypes {
 					.build(new ResourceLocation(DoomMod.MODID, "mancubus").toString()));
 
 	public static final RegistryObject<EntityType<SpiderdemonEntity>> SPIDERDEMON = ENTITY_TYPES.register("spiderdemon",
-			() -> EntityType.Builder.create(SpiderdemonEntity::new, EntityClassification.MONSTER).size(3.0F, 3.5F)
+			() -> EntityType.Builder.create(SpiderdemonEntity::new, EntityClassification.MONSTER).size(6.0F, 4.0F)
 					.immuneToFire().func_233606_a_(9)
 					.build(new ResourceLocation(DoomMod.MODID, "spiderdemon").toString()));
 
@@ -181,7 +181,7 @@ public class ModEntityTypes {
 					.build(new ResourceLocation(DoomMod.MODID, "painelemental").toString()));
 
 	public static final RegistryObject<EntityType<HellknightEntity>> HELLKNIGHT = ENTITY_TYPES.register("hellknight",
-			() -> EntityType.Builder.create(HellknightEntity::new, EntityClassification.MONSTER).size(1.4F, 2.7F)
+			() -> EntityType.Builder.create(HellknightEntity::new, EntityClassification.MONSTER).size(1.4F, 3.5F)
 					.immuneToFire().func_233606_a_(9)
 					.build(new ResourceLocation(DoomMod.MODID, "hellknight").toString()));
 
