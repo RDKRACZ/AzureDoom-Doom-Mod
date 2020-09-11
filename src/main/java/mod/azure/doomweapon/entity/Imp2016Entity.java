@@ -22,7 +22,6 @@ import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
-import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -88,23 +87,8 @@ public class Imp2016Entity extends DemonEntity {
 	public ILivingEntityData onInitialSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
 			@Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
 		spawnDataIn = super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
-		float f = difficultyIn.getClampedAdditionalDifficulty();
-		this.setCanPickUpLoot(this.rand.nextFloat() < 0.55F * f);
-		if (spawnDataIn == null) {
-			spawnDataIn = new Imp2016Entity.GroupData(worldIn.getRandom()
-					.nextFloat() < net.minecraftforge.common.ForgeConfig.SERVER.zombieBabyChance.get());
-		}
-
-		if (spawnDataIn instanceof ZombieEntity.GroupData) {
-			ZombieEntity.GroupData zombieentity$groupdata = (ZombieEntity.GroupData) spawnDataIn;
-			if (zombieentity$groupdata.isChild) {
-				this.setChild(true);
-			}
-
-			this.setEquipmentBasedOnDifficulty(difficultyIn);
-			this.setEnchantmentBasedOnDifficulty(difficultyIn);
-		}
-
+		this.setEnchantmentBasedOnDifficulty(difficultyIn);
+		this.setCanPickUpLoot(this.rand.nextFloat() < 0.55F * difficultyIn.getClampedAdditionalDifficulty());
 		if (this.getItemStackFromSlot(EquipmentSlotType.HEAD).isEmpty()) {
 			LocalDate localdate = LocalDate.now();
 			int i = localdate.get(ChronoField.DAY_OF_MONTH);
@@ -115,16 +99,7 @@ public class Imp2016Entity extends DemonEntity {
 				this.inventoryArmorDropChances[EquipmentSlotType.HEAD.getIndex()] = 0.0F;
 			}
 		}
-
 		return spawnDataIn;
-	}
-
-	public class GroupData implements ILivingEntityData {
-		public final boolean isChild;
-
-		private GroupData(boolean isChildIn) {
-			this.isChild = isChildIn;
-		}
 	}
 
 	@Override
