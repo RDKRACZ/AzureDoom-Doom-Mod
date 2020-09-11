@@ -53,8 +53,10 @@ public class PainEntity extends FlyingEntity implements IMob {
 		this.goalSelector.addGoal(5, new PainEntity.RandomFlyGoal(this));
 		this.goalSelector.addGoal(7, new PainEntity.LookAroundGoal(this));
 		this.goalSelector.addGoal(7, new PainEntity.FireballAttackGoal(this));
-		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
-		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, CyberdemonEntity.class, true));
+		this.targetSelector.addGoal(1,
+				new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 10, true, false, (p_213812_1_) -> {
+					return Math.abs(p_213812_1_.getPosY() - this.getPosY()) <= 4.0D;
+				}));
 	}
 
 	public static boolean spawning(EntityType<PainEntity> p_223368_0_, IWorld p_223368_1_, SpawnReason reason,
@@ -94,9 +96,6 @@ public class PainEntity extends FlyingEntity implements IMob {
 					&& this.parentEntity.canEntityBeSeen(livingentity)) {
 				World world = this.parentEntity.world;
 				++this.attackTimer;
-				if (this.attackTimer == 10 && !this.parentEntity.isSilent()) {
-					world.playEvent((PlayerEntity) null, 1015, this.parentEntity.getPosition(), 0);
-				}
 
 				if (this.attackTimer == 20) {
 					Vector3d vector3d = this.parentEntity.getLook(1.0F);

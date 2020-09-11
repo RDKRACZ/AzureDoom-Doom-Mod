@@ -101,9 +101,6 @@ public class CacodemonEntity extends FlyingEntity implements IMob {
 					&& this.parentEntity.canEntityBeSeen(livingentity)) {
 				World world = this.parentEntity.world;
 				++this.attackTimer;
-				if (this.attackTimer == 10 && !this.parentEntity.isSilent()) {
-					world.playEvent((PlayerEntity) null, 1015, this.parentEntity.getPosition(), 0);
-				}
 
 				if (this.attackTimer == 20) {
 					Vector3d vector3d = this.parentEntity.getLook(1.0F);
