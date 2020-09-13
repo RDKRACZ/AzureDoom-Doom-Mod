@@ -7,7 +7,9 @@ import org.apache.commons.lang3.tuple.Pair;
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
 
+import mod.azure.doomweapon.DoomMod;
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 
 public class Config {
 
@@ -22,8 +24,12 @@ public class Config {
 
 	public static class ServerConfig {
 
+		public final BooleanValue IN_FIGHTING;
+
 		ServerConfig(ForgeConfigSpec.Builder builder) {
 			builder.push("extra");
+			IN_FIGHTING = builder.comment("Do you want to In-fighting of the mobs?")
+					.translation(DoomMod.MODID + ".config.in_fighting").define("IN_FIGHTING", true);
 			builder.pop();
 		}
 	}
