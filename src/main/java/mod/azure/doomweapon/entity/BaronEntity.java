@@ -9,6 +9,7 @@ import javax.annotation.Nullable;
 import mod.azure.doomweapon.entity.ai.goal.RangedBarenBlastAttackGoal;
 import mod.azure.doomweapon.entity.projectiles.BarenBlastEntity;
 import mod.azure.doomweapon.item.entityweapons.BarenBlastItem;
+import mod.azure.doomweapon.util.Config;
 import mod.azure.doomweapon.util.registry.DoomItems;
 import mod.azure.doomweapon.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
@@ -85,7 +86,9 @@ public class BaronEntity extends DemonEntity implements IRangedAttackMob {
 		this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
 		this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
-		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Cyberdemon2016Entity.class, true));
+		if (Config.SERVER.IN_FIGHTING.get()) {
+			this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Cyberdemon2016Entity.class, true));
+		}
 	}
 
 	public static AttributeModifierMap.MutableAttribute func_234200_m_() {

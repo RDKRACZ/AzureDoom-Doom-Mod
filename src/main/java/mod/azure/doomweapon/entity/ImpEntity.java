@@ -7,6 +7,7 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import mod.azure.doomweapon.entity.ai.goal.DemonAttackGoal;
+import mod.azure.doomweapon.util.Config;
 import mod.azure.doomweapon.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -66,13 +67,16 @@ public class ImpEntity extends DemonEntity {
 		this.goalSelector.addGoal(2, new DemonAttackGoal(this, 1.0D, false));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, false));
-		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, ShotgunguyEntity.class, true));
-		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, UnwillingEntity.class, true));
-		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, ChaingunnerEntity.class, true));
-		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, ZombiemanEntity.class, true));
-		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
-		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, PossessedScientistEntity.class, true));
-		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, PossessedSoldierEntity.class, true));
+		if (Config.SERVER.IN_FIGHTING.get()) {
+			this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, ShotgunguyEntity.class, true));
+			this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, UnwillingEntity.class, true));
+			this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, ChaingunnerEntity.class, true));
+			this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, ZombiemanEntity.class, true));
+			this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
+			this.targetSelector.addGoal(3,
+					new NearestAttackableTargetGoal<>(this, PossessedScientistEntity.class, true));
+			this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, PossessedSoldierEntity.class, true));
+		}
 	}
 
 	public static AttributeModifierMap.MutableAttribute func_234200_m_() {

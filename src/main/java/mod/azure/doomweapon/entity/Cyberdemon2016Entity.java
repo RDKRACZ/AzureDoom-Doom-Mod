@@ -10,6 +10,7 @@ import mod.azure.doomweapon.entity.ai.goal.RangedCyberdemonAttackGoal;
 import mod.azure.doomweapon.entity.projectiles.RocketEntity;
 import mod.azure.doomweapon.item.ammo.Rocket;
 import mod.azure.doomweapon.item.entityweapons.CyberdemonAttackItem;
+import mod.azure.doomweapon.util.Config;
 import mod.azure.doomweapon.util.registry.DoomItems;
 import mod.azure.doomweapon.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
@@ -88,7 +89,9 @@ public class Cyberdemon2016Entity extends MonsterEntity implements IRangedAttack
 		this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
 		this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
-		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, CyberdemonEntity.class, true));
+		if (Config.SERVER.IN_FIGHTING.get()) {
+			this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, CyberdemonEntity.class, true));
+		}
 	}
 
 	public static AttributeModifierMap.MutableAttribute func_234200_m_() {

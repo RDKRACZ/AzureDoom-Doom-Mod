@@ -9,6 +9,7 @@ import javax.annotation.Nullable;
 import mod.azure.doomweapon.entity.ai.goal.DemonAttackGoal;
 import mod.azure.doomweapon.entity.projectiles.ShotgunShellEntity;
 import mod.azure.doomweapon.item.weapons.Shotgun;
+import mod.azure.doomweapon.util.Config;
 import mod.azure.doomweapon.util.registry.DoomItems;
 import mod.azure.doomweapon.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
@@ -85,8 +86,10 @@ public class RevenantEntity extends DemonEntity implements IRangedAttackMob {
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, false));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, PinkyEntity.class, true));
-		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, ImpEntity.class, true));
-		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
+		if (Config.SERVER.IN_FIGHTING.get()) {
+			this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, ImpEntity.class, true));
+			this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
+		}
 	}
 
 	public static AttributeModifierMap.MutableAttribute func_234342_eQ_() {

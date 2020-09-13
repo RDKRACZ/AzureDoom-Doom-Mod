@@ -10,6 +10,7 @@ import mod.azure.doomweapon.entity.ai.goal.RangedChaingunAttackGoal;
 import mod.azure.doomweapon.entity.projectiles.ChaingunBulletEntity;
 import mod.azure.doomweapon.item.ammo.ChaingunAmmo;
 import mod.azure.doomweapon.item.weapons.Chaingun;
+import mod.azure.doomweapon.util.Config;
 import mod.azure.doomweapon.util.registry.DoomItems;
 import mod.azure.doomweapon.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
@@ -91,14 +92,17 @@ public class ChaingunnerEntity extends MonsterEntity implements IRangedAttackMob
 		this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, false));
-		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Imp2016Entity.class, true));
-		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, UnwillingEntity.class, true));
-		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, ImpEntity.class, true));
-		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, ZombiemanEntity.class, true));
-		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, ShotgunguyEntity.class, true));
-		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, PossessedScientistEntity.class, true));
-		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, PossessedSoldierEntity.class, true));
-		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
+		if (Config.SERVER.IN_FIGHTING.get()) {
+			this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Imp2016Entity.class, true));
+			this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, UnwillingEntity.class, true));
+			this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, ImpEntity.class, true));
+			this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, ZombiemanEntity.class, true));
+			this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, ShotgunguyEntity.class, true));
+			this.targetSelector.addGoal(3,
+					new NearestAttackableTargetGoal<>(this, PossessedScientistEntity.class, true));
+			this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, PossessedSoldierEntity.class, true));
+			this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
+		}
 	}
 
 	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
