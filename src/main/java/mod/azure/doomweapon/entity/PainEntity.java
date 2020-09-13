@@ -22,6 +22,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.IPacket;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -34,6 +35,7 @@ public class PainEntity extends FlyingEntity implements IMob {
 
 	public PainEntity(EntityType<? extends PainEntity> type, World worldIn) {
 		super(type, worldIn);
+		this.moveController = new PainEntity.MoveHelperController(this);
 	}
 
 	public PainEntity(World worldIn) {
@@ -98,7 +100,8 @@ public class PainEntity extends FlyingEntity implements IMob {
 				World world = this.parentEntity.world;
 				++this.attackTimer;
 				if (this.attackTimer == 10) {
-					//world.playEvent((PlayerEntity) null, 1015, new BlockPos(this.parentEntity), 0);
+					// world.playEvent((PlayerEntity) null, 1015, new BlockPos(this.parentEntity),
+					// 0);
 				}
 
 				if (this.attackTimer == 20) {
@@ -117,6 +120,47 @@ public class PainEntity extends FlyingEntity implements IMob {
 			} else if (this.attackTimer > 0) {
 				--this.attackTimer;
 			}
+		}
+	}
+
+	static class MoveHelperController extends MovementController {
+		private final PainEntity parentEntity;
+		private int courseChangeCooldown;
+
+		public MoveHelperController(PainEntity ghast) {
+			super(ghast);
+			this.parentEntity = ghast;
+		}
+
+		public void tick() {
+			if (this.action == MovementController.Action.MOVE_TO) {
+				if (this.courseChangeCooldown-- <= 0) {
+					this.courseChangeCooldown += this.parentEntity.getRNG().nextInt(5) + 2;
+					Vec3d vec3d = new Vec3d(this.posX - this.parentEntity.getPosX(),
+							this.posY - this.parentEntity.getPosY(), this.posZ - this.parentEntity.getPosZ());
+					double d0 = vec3d.length();
+					vec3d = vec3d.normalize();
+					if (this.func_220673_a(vec3d, MathHelper.ceil(d0))) {
+						this.parentEntity.setMotion(this.parentEntity.getMotion().add(vec3d.scale(0.1D)));
+					} else {
+						this.action = MovementController.Action.WAIT;
+					}
+				}
+
+			}
+		}
+
+		private boolean func_220673_a(Vec3d p_220673_1_, int p_220673_2_) {
+			AxisAlignedBB axisalignedbb = this.parentEntity.getBoundingBox();
+
+			for (int i = 1; i < p_220673_2_; ++i) {
+				axisalignedbb = axisalignedbb.offset(p_220673_1_);
+				if (!this.parentEntity.world.hasNoCollisions(this.parentEntity, axisalignedbb)) {
+					return false;
+				}
+			}
+
+			return true;
 		}
 	}
 
