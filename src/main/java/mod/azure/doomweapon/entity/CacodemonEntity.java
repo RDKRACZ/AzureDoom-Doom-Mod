@@ -23,6 +23,7 @@ import net.minecraft.entity.projectile.FireballEntity;
 import net.minecraft.network.IPacket;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
@@ -35,6 +36,7 @@ public class CacodemonEntity extends FlyingEntity implements IMob {
 
 	public CacodemonEntity(EntityType<? extends CacodemonEntity> type, World worldIn) {
 		super(type, worldIn);
+		this.moveController = new CacodemonEntity.MoveHelperController(this);
 	}
 
 	@Override
@@ -152,6 +154,47 @@ public class CacodemonEntity extends FlyingEntity implements IMob {
 				}
 			}
 
+		}
+	}
+
+	static class MoveHelperController extends MovementController {
+		private final CacodemonEntity parentEntity;
+		private int courseChangeCooldown;
+
+		public MoveHelperController(CacodemonEntity ghast) {
+			super(ghast);
+			this.parentEntity = ghast;
+		}
+
+		public void tick() {
+			if (this.action == MovementController.Action.MOVE_TO) {
+				if (this.courseChangeCooldown-- <= 0) {
+					this.courseChangeCooldown += this.parentEntity.getRNG().nextInt(5) + 2;
+					Vector3d vector3d = new Vector3d(this.posX - this.parentEntity.getPosX(),
+							this.posY - this.parentEntity.getPosY(), this.posZ - this.parentEntity.getPosZ());
+					double d0 = vector3d.length();
+					vector3d = vector3d.normalize();
+					if (this.func_220673_a(vector3d, MathHelper.ceil(d0))) {
+						this.parentEntity.setMotion(this.parentEntity.getMotion().add(vector3d.scale(0.1D)));
+					} else {
+						this.action = MovementController.Action.WAIT;
+					}
+				}
+
+			}
+		}
+
+		private boolean func_220673_a(Vector3d p_220673_1_, int p_220673_2_) {
+			AxisAlignedBB axisalignedbb = this.parentEntity.getBoundingBox();
+
+			for (int i = 1; i < p_220673_2_; ++i) {
+				axisalignedbb = axisalignedbb.offset(p_220673_1_);
+				if (!this.parentEntity.world.hasNoCollisions(this.parentEntity, axisalignedbb)) {
+					return false;
+				}
+			}
+
+			return true;
 		}
 	}
 
