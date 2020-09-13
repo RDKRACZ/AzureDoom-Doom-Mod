@@ -40,6 +40,7 @@ public class BarenBlastEntity extends AbstractArrowEntity {
 		this.referenceItem = referenceItemIn;
 	}
 
+	@Override
 	protected void func_225516_i_() {
 		++this.ticksInAir;
 		if (this.ticksExisted >= 40) {
@@ -63,6 +64,7 @@ public class BarenBlastEntity extends AbstractArrowEntity {
 		this.ticksInAir = compound.getShort("life");
 	}
 
+	@Override
 	public void tick() {
 		super.tick();
 		boolean flag = this.getNoClip();
@@ -94,7 +96,7 @@ public class BarenBlastEntity extends AbstractArrowEntity {
 				vec3d3 = raytraceresult.getHitVec();
 			}
 
-			while (!this.isAlive()) {
+			while (this.isAlive()) {
 				EntityRayTraceResult entityraytraceresult = this.rayTraceEntities(vec3d2, vec3d3);
 				if (entityraytraceresult != null) {
 					raytraceresult = entityraytraceresult;

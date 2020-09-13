@@ -6,7 +6,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.DamagingProjectileEntity;
-import net.minecraft.item.Item;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
 import net.minecraft.util.ActionResultType;
@@ -22,7 +21,6 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 public class PainShootEntity extends DamagingProjectileEntity {
 
-	private final Item referenceItem;
 	public int explosionPower = 1;
 	protected int timeInAir;
 	protected boolean inAir;
@@ -31,23 +29,15 @@ public class PainShootEntity extends DamagingProjectileEntity {
 	@SuppressWarnings("unchecked")
 	public PainShootEntity(EntityType<?> type, World world) {
 		super((EntityType<? extends DamagingProjectileEntity>) type, world);
-		this.referenceItem = null;
-	}
-
-	public PainShootEntity(LivingEntity shooter, World world, Item referenceItemIn) {
-		super(ModEntityTypes.LOST_SOUL_SHOOT.get(), world);
-		this.referenceItem = referenceItemIn;
 	}
 
 	@OnlyIn(Dist.CLIENT)
 	public PainShootEntity(World worldIn, double x, double y, double z, double accelX, double accelY, double accelZ) {
 		super(ModEntityTypes.LOST_SOUL_SHOOT.get(), x, y, z, accelX, accelY, accelZ, worldIn);
-		this.referenceItem = null;
 	}
 
 	public PainShootEntity(World worldIn, LivingEntity shooter, double accelX, double accelY, double accelZ) {
 		super(ModEntityTypes.LOST_SOUL_SHOOT.get(), shooter, accelX, accelY, accelZ, worldIn);
-		this.referenceItem = null;
 	}
 
 	protected void func_225516_i_() {

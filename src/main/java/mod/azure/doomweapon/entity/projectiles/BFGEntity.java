@@ -69,6 +69,7 @@ public class BFGEntity extends AbstractArrowEntity {
 		this.ticksInAir = compound.getShort("life");
 	}
 
+	@Override
 	public void tick() {
 		super.tick();
 		boolean flag = this.getNoClip();
@@ -100,7 +101,7 @@ public class BFGEntity extends AbstractArrowEntity {
 				vec3d3 = raytraceresult.getHitVec();
 			}
 
-			while (!this.isAlive()) {
+			while (this.isAlive()) {
 				EntityRayTraceResult entityraytraceresult = this.rayTraceEntities(vec3d2, vec3d3);
 				if (entityraytraceresult != null) {
 					raytraceresult = entityraytraceresult;
