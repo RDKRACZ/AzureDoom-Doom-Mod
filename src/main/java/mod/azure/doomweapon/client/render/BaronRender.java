@@ -10,7 +10,7 @@ import net.minecraft.util.ResourceLocation;
 public class BaronRender extends MobRenderer<BaronEntity, BaronModel<BaronEntity>> {
 
 	protected static final ResourceLocation TEXTURE = new ResourceLocation(DoomMod.MODID,
-			"textures/entity/barron-of-hell_new.png");
+			"textures/entity/baronofhell-texturemap.png");
 
 	public BaronRender(EntityRendererManager renderManagerIn) {
 		super(renderManagerIn, new BaronModel<>(), 0.5f);
