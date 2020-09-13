@@ -36,6 +36,7 @@ public class ArgentBoltEntity extends AbstractArrowEntity {
 		this.referenceItem = referenceItemIn;
 	}
 
+	@Override
 	protected void func_225516_i_() {
 		++this.ticksInAir;
 		if (this.ticksExisted >= 40) {
@@ -49,17 +50,19 @@ public class ArgentBoltEntity extends AbstractArrowEntity {
 		this.ticksInAir = 0;
 	}
 
+	@Override
 	public void writeAdditional(CompoundNBT compound) {
 		super.writeAdditional(compound);
 		compound.putShort("life", (short) this.ticksInAir);
 	}
 
+	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
 		this.ticksInAir = compound.getShort("life");
 	}
 
-	@SuppressWarnings("deprecation")
+	@Override
 	public void tick() {
 		super.tick();
 		boolean flag = this.getNoClip();
@@ -89,7 +92,7 @@ public class ArgentBoltEntity extends AbstractArrowEntity {
 			if (raytraceresult.getType() != RayTraceResult.Type.MISS) {
 				vector3d3 = raytraceresult.getHitVec();
 			}
-			while (!this.removed) {
+			while (this.isAlive()) {
 				EntityRayTraceResult entityraytraceresult = this.rayTraceEntities(vector3d2, vector3d3);
 				if (entityraytraceresult != null) {
 					raytraceresult = entityraytraceresult;

@@ -24,7 +24,8 @@ public class BarrelEntity extends Entity {
 	}
 
 	protected void explode() {
-		this.world.createExplosion(this, this.getPosX(), this.getPosY(), this.getPosZ(), 2.0F, true, Explosion.Mode.NONE);
+		this.world.createExplosion(this, this.getPosX(), this.getPosY(), this.getPosZ(), 2.0F, true,
+				Explosion.Mode.NONE);
 	}
 
 	public BarrelEntity(World worldIn, double x, double y, double z, @Nullable LivingEntity igniter) {
@@ -47,6 +48,7 @@ public class BarrelEntity extends Entity {
 	protected void registerData() {
 	}
 
+	@Override
 	public void tick() {
 		if (!this.hasNoGravity()) {
 			this.setMotion(this.getMotion().add(0.0D, -0.04D, 0.0D));

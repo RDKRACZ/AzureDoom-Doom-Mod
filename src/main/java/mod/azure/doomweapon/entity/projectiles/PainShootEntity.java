@@ -2,18 +2,13 @@ package mod.azure.doomweapon.entity.projectiles;
 
 import mod.azure.doomweapon.util.registry.ModEntityTypes;
 import mod.azure.doomweapon.util.registry.ModSoundEvents;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.DamagingProjectileEntity;
-import net.minecraft.entity.projectile.ProjectileHelper;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -64,54 +59,9 @@ public class PainShootEntity extends DamagingProjectileEntity {
 		this.ticksInAir = compound.getShort("life");
 	}
 
-	@SuppressWarnings("deprecation")
-	@Override
-	public void tick() {
-		Entity entity = this.func_234616_v_();
-		if (this.world.isRemote
-				|| (entity == null || !entity.removed) && this.world.isBlockLoaded(this.getPosition())) {
-			super.tick();
-			if (this.isFireballFiery()) {
-				this.setFire(0);
-			}
-
-			RayTraceResult raytraceresult = ProjectileHelper.func_234618_a_(this, this::func_230298_a_);
-			if (raytraceresult.getType() != RayTraceResult.Type.MISS
-					&& !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, raytraceresult)) {
-				this.onImpact(raytraceresult);
-			}
-
-			Vector3d vector3d = this.getMotion();
-			double d0 = this.getPosX() + vector3d.x;
-			double d1 = this.getPosY() + vector3d.y;
-			double d2 = this.getPosZ() + vector3d.z;
-			ProjectileHelper.rotateTowardsMovement(this, 0.2F);
-			float f = this.getMotionFactor();
-			if (this.isInWater()) {
-				for (int i = 0; i < 4; ++i) {
-					this.world.addParticle(ParticleTypes.BUBBLE, d0 - vector3d.x * 0.25D, d1 - vector3d.y * 0.25D,
-							d2 - vector3d.z * 0.25D, vector3d.x, vector3d.y, vector3d.z);
-				}
-
-				f = 0.8F;
-			}
-
-			this.setMotion(vector3d.add(this.accelerationX, this.accelerationY, this.accelerationZ).scale((double) f));
-			this.world.addParticle(this.getParticle(), d0, d1 + 0.5D, d2, 0.0D, 0.0D, 0.0D);
-			this.setPosition(d0, d1, d2);
-		} else {
-			this.remove();
-		}
-	}
-
 	@Override
 	protected boolean isFireballFiery() {
 		return false;
-	}
-
-	@Override
-	protected IParticleData getParticle() {
-		return ParticleTypes.CRIT;
 	}
 
 	@Override
