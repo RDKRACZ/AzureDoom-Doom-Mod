@@ -10,7 +10,7 @@ import net.minecraft.util.ResourceLocation;
 public class HellknightRender extends MobRenderer<HellknightEntity, HellknightModel<HellknightEntity>> {
 
 	protected static final ResourceLocation TEXTURE = new ResourceLocation(DoomMod.MODID,
-			"textures/entity/hellknight.png");
+			"textures/entity/hellknight-texturemap.png");
 
 	public HellknightRender(EntityRendererManager renderManagerIn) {
 		super(renderManagerIn, new HellknightModel<>(), 0.7F);
