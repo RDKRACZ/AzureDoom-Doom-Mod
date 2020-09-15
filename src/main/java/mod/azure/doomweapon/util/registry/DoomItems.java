@@ -120,6 +120,8 @@ public class DoomItems {
 			() -> new DoomSpawnEgg(ModEntityTypes.IMP, 11022961, 11035249));
 	public static final RegistryObject<Item> ARACHNOTRON_SPAWN_EGG = ITEMS.register("arachnotron_spawn_egg",
 			() -> new DoomSpawnEgg(ModEntityTypes.ARACHNOTRON, 11022961, 11035249));
+	public static final RegistryObject<Item> LOST_SOUL_SPAWN_EGG = ITEMS.register("lost_soul_spawn_egg",
+			() -> new DoomSpawnEgg(ModEntityTypes.LOST_SOUL, 11022961, 11035249));
 	public static final RegistryObject<Item> NIGHTMARE_IMP_SPAWN_EGG = ITEMS.register("nightmare_imp_spawn_egg",
 			() -> new DoomSpawnEgg(ModEntityTypes.NIGHTMARE_IMP, 11022961, 11035249));
 	public static final RegistryObject<Item> PINKY_SPAWN_EGG = ITEMS.register("pinky_spawn_egg",

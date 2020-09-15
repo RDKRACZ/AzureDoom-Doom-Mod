@@ -30,6 +30,7 @@ import mod.azure.doomweapon.entity.ShotgunguyEntity;
 import mod.azure.doomweapon.entity.SpiderdemonEntity;
 import mod.azure.doomweapon.entity.UnwillingEntity;
 import mod.azure.doomweapon.entity.ZombiemanEntity;
+import mod.azure.doomweapon.entity.projectiles.LostSoulEntity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.util.registry.WorldGenRegistries;
@@ -47,6 +48,8 @@ public class ModEntitySpawn {
 				addMobSpawnToBiome(biome, EntityClassification.MONSTER,
 						new MobSpawnInfo.Spawners(ModEntityTypes.IMP.get(), 30, 1, 4),
 						new MobSpawnInfo.Spawners(ModEntityTypes.PINKY.get(), 12, 2, 4),
+						new MobSpawnInfo.Spawners(ModEntityTypes.LOST_SOUL.get(), 12, 2, 4),
+						new MobSpawnInfo.Spawners(ModEntityTypes.LOST_SOUL.get(), 12, 2, 4),
 						new MobSpawnInfo.Spawners(ModEntityTypes.CACODEMON.get(), 8, 1, 2),
 						new MobSpawnInfo.Spawners(ModEntityTypes.ARCHVILE.get(), 4, 1, 2),
 						new MobSpawnInfo.Spawners(ModEntityTypes.BARON.get(), 10, 1, 1),
@@ -91,6 +94,9 @@ public class ModEntitySpawn {
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.ARCHVILE.get(),
 				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
 				ArchvileEntity::spawning);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.LOST_SOUL.get(),
+				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+				LostSoulEntity::spawning);
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.ZOMBIEMAN.get(),
 				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
 				ZombiemanEntity::spawning);

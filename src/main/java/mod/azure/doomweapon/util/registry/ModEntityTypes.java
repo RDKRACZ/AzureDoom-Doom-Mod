@@ -31,7 +31,7 @@ import mod.azure.doomweapon.entity.projectiles.BarrelEntity;
 import mod.azure.doomweapon.entity.projectiles.BulletEntity;
 import mod.azure.doomweapon.entity.projectiles.ChaingunBulletEntity;
 import mod.azure.doomweapon.entity.projectiles.EnergyCellEntity;
-import mod.azure.doomweapon.entity.projectiles.PainShootEntity;
+import mod.azure.doomweapon.entity.projectiles.LostSoulEntity;
 import mod.azure.doomweapon.entity.projectiles.RocketEntity;
 import mod.azure.doomweapon.entity.projectiles.ShotgunShellEntity;
 import mod.azure.doomweapon.entity.projectiles.UnmaykrBoltEntity;
@@ -81,11 +81,11 @@ public class ModEntityTypes {
 			() -> EntityType.Builder.<RocketEntity>create(RocketEntity::new, EntityClassification.MISC).size(0.5F, 0.5F)
 					.func_233606_a_(9).build(new ResourceLocation(DoomMod.MODID, "rocket").toString()));
 
-	public static final RegistryObject<EntityType<PainShootEntity>> LOST_SOUL_SHOOT = ENTITY_TYPES.register(
-			"lost_soul_shot",
-			() -> EntityType.Builder.<PainShootEntity>create(PainShootEntity::new, EntityClassification.MISC)
+	public static final RegistryObject<EntityType<LostSoulEntity>> LOST_SOUL = ENTITY_TYPES.register(
+			"lost_soul",
+			() -> EntityType.Builder.<LostSoulEntity>create(LostSoulEntity::new, EntityClassification.MISC)
 					.size(1.0F, 1.0F).func_233606_a_(9)
-					.build(new ResourceLocation(DoomMod.MODID, "lost_soul_shot").toString()));
+					.build(new ResourceLocation(DoomMod.MODID, "lost_soul").toString()));
 
 	public static final RegistryObject<EntityType<BarenBlastEntity>> BARENBLAST = ENTITY_TYPES.register("barenblast",
 			() -> EntityType.Builder.<BarenBlastEntity>create(BarenBlastEntity::new, EntityClassification.MISC)

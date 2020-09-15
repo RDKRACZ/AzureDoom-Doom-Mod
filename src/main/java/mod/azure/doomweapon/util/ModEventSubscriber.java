@@ -24,6 +24,7 @@ import mod.azure.doomweapon.entity.ShotgunguyEntity;
 import mod.azure.doomweapon.entity.SpiderdemonEntity;
 import mod.azure.doomweapon.entity.UnwillingEntity;
 import mod.azure.doomweapon.entity.ZombiemanEntity;
+import mod.azure.doomweapon.entity.projectiles.LostSoulEntity;
 import mod.azure.doomweapon.item.ammo.ArgentBolt;
 import mod.azure.doomweapon.item.ammo.BFGCell;
 import mod.azure.doomweapon.item.ammo.ChaingunAmmo;
@@ -73,7 +74,7 @@ public class ModEventSubscriber {
 	@SubscribeEvent
 	public static void registerEntities(final RegistryEvent.Register<EntityType<?>> event) {
 		event.getRegistry().registerAll(ModEntityTypes.IMP.get(), ModEntityTypes.ARCHVILE.get(),
-				ModEntityTypes.LOST_SOUL_SHOOT.get(), ModEntityTypes.BARENBLAST.get(), ModEntityTypes.BARON.get(),
+				ModEntityTypes.LOST_SOUL.get(), ModEntityTypes.BARENBLAST.get(), ModEntityTypes.BARON.get(),
 				ModEntityTypes.CACODEMON.get(), ModEntityTypes.MANCUBUS.get(), ModEntityTypes.ARACHNOTRON.get(),
 				ModEntityTypes.PINKY.get(), ModEntityTypes.CYBERDEMON.get(), ModEntityTypes.CYBERDEMON2016.get(),
 				ModEntityTypes.UNWILLING.get(), ModEntityTypes.IMP2016.get(), ModEntityTypes.NIGHTMARE_IMP.get(),
@@ -104,6 +105,7 @@ public class ModEventSubscriber {
 		GlobalEntityTypeAttributes.put(ModEntityTypes.MANCUBUS.get(), MancubusEntity.func_234200_m_().create());
 		GlobalEntityTypeAttributes.put(ModEntityTypes.MARAUDER.get(), MarauderEntity.func_234200_m_().create());
 		GlobalEntityTypeAttributes.put(ModEntityTypes.PINKY.get(), PinkyEntity.func_234200_m_().create());
+		GlobalEntityTypeAttributes.put(ModEntityTypes.LOST_SOUL.get(), LostSoulEntity.func_234200_m_().create());
 		GlobalEntityTypeAttributes.put(ModEntityTypes.POSSESSEDSCIENTIST.get(),
 				PossessedScientistEntity.func_234200_m_().create());
 		GlobalEntityTypeAttributes.put(ModEntityTypes.POSSESSEDSOLDIER.get(),
