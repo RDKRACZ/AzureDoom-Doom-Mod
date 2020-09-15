@@ -3,7 +3,8 @@ package mod.azure.doomweapon.entity;
 import java.util.EnumSet;
 import java.util.Random;
 
-import mod.azure.doomweapon.entity.projectiles.PainShootEntity;
+import mod.azure.doomweapon.entity.projectiles.LostSoulEntity;
+import mod.azure.doomweapon.util.Config;
 import mod.azure.doomweapon.util.registry.ModSoundEvents;
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.EntitySize;
@@ -19,6 +20,7 @@ import net.minecraft.entity.ai.controller.MovementController;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.monster.IMob;
+import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.IPacket;
 import net.minecraft.util.DamageSource;
@@ -59,6 +61,16 @@ public class PainEntity extends FlyingEntity implements IMob {
 				new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 10, true, false, (p_213812_1_) -> {
 					return Math.abs(p_213812_1_.getPosY() - this.getPosY()) <= 4.0D;
 				}));
+		if (Config.SERVER.IN_FIGHTING.get()) {
+			this.targetSelector.addGoal(3,
+					new NearestAttackableTargetGoal<>(this, MonsterEntity.class, 10, true, false, (p_213812_1_) -> {
+						return Math.abs(p_213812_1_.getPosY() - this.getPosY()) <= 4.0D;
+					}));
+			this.targetSelector.addGoal(3,
+					new NearestAttackableTargetGoal<>(this, MobEntity.class, 10, true, false, (p_213812_1_) -> {
+						return Math.abs(p_213812_1_.getPosY() - this.getPosY()) <= 4.0D;
+					}));
+		}
 	}
 
 	public static boolean spawning(EntityType<PainEntity> p_223368_0_, IWorld p_223368_1_, SpawnReason reason,
@@ -108,7 +120,7 @@ public class PainEntity extends FlyingEntity implements IMob {
 						world.playEvent((PlayerEntity) null, 1016, this.parentEntity.getPosition(), 0);
 					}
 
-					PainShootEntity fireballentity = new PainShootEntity(world, this.parentEntity, d2, d3, d4);
+					LostSoulEntity fireballentity = new LostSoulEntity(world, this.parentEntity, d2, d3, d4);
 					fireballentity.explosionPower = this.parentEntity.getFireballStrength();
 					fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 4.0D,
 							this.parentEntity.getPosYHeight(0.5D) + 0.5D, fireballentity.getPosZ() + vector3d.z * 4.0D);

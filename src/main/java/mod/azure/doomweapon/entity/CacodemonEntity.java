@@ -3,6 +3,7 @@ package mod.azure.doomweapon.entity;
 import java.util.EnumSet;
 import java.util.Random;
 
+import mod.azure.doomweapon.util.Config;
 import mod.azure.doomweapon.util.registry.ModSoundEvents;
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.EntitySize;
@@ -18,6 +19,7 @@ import net.minecraft.entity.ai.controller.MovementController;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.monster.IMob;
+import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.FireballEntity;
 import net.minecraft.network.IPacket;
@@ -59,6 +61,16 @@ public class CacodemonEntity extends FlyingEntity implements IMob {
 				new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 10, true, false, (p_213812_1_) -> {
 					return Math.abs(p_213812_1_.getPosY() - this.getPosY()) <= 4.0D;
 				}));
+		if (Config.SERVER.IN_FIGHTING.get()) {
+			this.targetSelector.addGoal(3,
+					new NearestAttackableTargetGoal<>(this, MonsterEntity.class, 10, true, false, (p_213812_1_) -> {
+						return Math.abs(p_213812_1_.getPosY() - this.getPosY()) <= 4.0D;
+					}));
+			this.targetSelector.addGoal(3,
+					new NearestAttackableTargetGoal<>(this, MobEntity.class, 10, true, false, (p_213812_1_) -> {
+						return Math.abs(p_213812_1_.getPosY() - this.getPosY()) <= 4.0D;
+					}));
+		}
 	}
 
 	public static boolean spawning(EntityType<CacodemonEntity> p_223368_0_, IWorld p_223368_1_, SpawnReason reason,
