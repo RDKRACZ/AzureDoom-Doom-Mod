@@ -58,7 +58,7 @@ public class ClientModEventSubscriber {
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.CHAINGUN_BULLET.get(),
 				ChaingunBulletRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BARENBLAST.get(), BarenBlastRender::new);
-		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.LOST_SOUL_SHOOT.get(),
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.LOST_SOUL.get(),
 				LostSoulShootRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.IMP.get(), ImpRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ARACHNOTRON.get(), ArachnotronRender::new);

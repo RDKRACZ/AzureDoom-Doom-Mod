@@ -15,6 +15,9 @@ public class ExtraModSpawns {
 		registerEntityWorldSpawn(ModEntityTypes.PINKY.get(), 12, 2, 4, NetherBiomes.BASALT_DELTAS.get(),
 				NetherBiomes.CRIMSON_FOREST.get(), NetherBiomes.SOUL_SAND_VALLEY.get(),
 				NetherBiomes.WARPED_FOREST.get());
+		registerEntityWorldSpawn(ModEntityTypes.LOST_SOUL.get(), 12, 2, 4, NetherBiomes.BASALT_DELTAS.get(),
+				NetherBiomes.CRIMSON_FOREST.get(), NetherBiomes.SOUL_SAND_VALLEY.get(),
+				NetherBiomes.WARPED_FOREST.get());
 		registerEntityWorldSpawn(ModEntityTypes.CACODEMON.get(), 8, 1, 2, NetherBiomes.BASALT_DELTAS.get(),
 				NetherBiomes.CRIMSON_FOREST.get(), NetherBiomes.SOUL_SAND_VALLEY.get(),
 				NetherBiomes.WARPED_FOREST.get());

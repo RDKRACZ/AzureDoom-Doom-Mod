@@ -41,6 +41,9 @@ public class NetherExSpawns {
 		registerEntityWorldSpawn(ModEntityTypes.IMP2016.get(), 30, 1, 4, NetherExBiomes.RUTHLESS_SANDS.get(),
 				NetherExBiomes.FUNGI_FOREST.get(), NetherExBiomes.TORRID_WASTELAND.get(),
 				NetherExBiomes.ARCTIC_ABYSS.get());
+		registerEntityWorldSpawn(ModEntityTypes.LOST_SOUL.get(), 30, 1, 4, NetherExBiomes.RUTHLESS_SANDS.get(),
+				NetherExBiomes.FUNGI_FOREST.get(), NetherExBiomes.TORRID_WASTELAND.get(),
+				NetherExBiomes.ARCTIC_ABYSS.get());
 		registerEntityWorldSpawn(ModEntityTypes.NIGHTMARE_IMP.get(), 30, 1, 4, NetherExBiomes.RUTHLESS_SANDS.get(),
 				NetherExBiomes.FUNGI_FOREST.get(), NetherExBiomes.TORRID_WASTELAND.get(),
 				NetherExBiomes.ARCTIC_ABYSS.get());

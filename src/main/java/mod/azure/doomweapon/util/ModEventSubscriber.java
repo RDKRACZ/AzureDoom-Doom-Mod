@@ -60,7 +60,7 @@ public class ModEventSubscriber {
 				ModEntityTypes.BULLETS.get(), ModEntityTypes.CHAINGUN_BULLET.get(), ModEntityTypes.ENERGY_CELL.get(),
 				ModEntityTypes.SHOTGUN_SHELL.get(), ModEntityTypes.ARGENT_BOLT.get(),
 				ModEntityTypes.POSSESSEDSCIENTIST.get(), ModEntityTypes.ZOMBIEMAN.get(),
-				ModEntityTypes.LOST_SOUL_SHOOT.get(), ModEntityTypes.BARENBLAST.get());
+				ModEntityTypes.LOST_SOUL.get(), ModEntityTypes.BARENBLAST.get());
 		ModEntitySpawn.registerEntityWorldSpawns();
 		ModEntitySpawn.EntitySpawnPlacementRegistry();
 		if (ModList.get().isLoaded("extendednether")) {
