@@ -24,8 +24,8 @@ public class LayerFlames extends LayerRenderer<LostSoulEntity, LostSoulModel<Los
 			new ResourceLocation(DoomMod.MODID, "textures/entity/lost_soul_fire_7.png"),
 			new ResourceLocation(DoomMod.MODID, "textures/entity/lost_soul_fire_8.png") };
 
-	public LayerFlames(IEntityRenderer<LostSoulEntity, LostSoulModel<LostSoulEntity>> entityRendererIn) {
-		super(entityRendererIn);
+	public LayerFlames(IEntityRenderer<LostSoulEntity, LostSoulModel<LostSoulEntity>> featureRendererContext) {
+		super(featureRendererContext);
 	}
 
 	@Override
