@@ -9,6 +9,7 @@ import javax.annotation.Nullable;
 import mod.azure.doomweapon.entity.ai.goal.RangedBarenBlastAttackGoal;
 import mod.azure.doomweapon.entity.projectiles.BarenBlastEntity;
 import mod.azure.doomweapon.item.entityweapons.BarenBlastItem;
+import mod.azure.doomweapon.util.Config;
 import mod.azure.doomweapon.util.registry.DoomItems;
 import mod.azure.doomweapon.util.registry.ModEntityTypes;
 import mod.azure.doomweapon.util.registry.ModSoundEvents;
@@ -19,6 +20,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.HurtByTargetGoal;
@@ -27,6 +29,7 @@ import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
+import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileHelper;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -86,6 +89,10 @@ public class BaronEntity extends DemonEntity implements IRangedAttackMob {
 		this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
 		this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
+		if (Config.SERVER.IN_FIGHTING.get()) {
+			this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, MonsterEntity.class, true));
+			this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, MobEntity.class, true));
+		}
 	}
 
 	@Override

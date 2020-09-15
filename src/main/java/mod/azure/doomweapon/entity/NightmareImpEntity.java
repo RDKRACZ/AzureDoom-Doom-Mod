@@ -15,6 +15,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.LookAtGoal;
@@ -22,6 +23,7 @@ import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
+import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -70,6 +72,8 @@ public class NightmareImpEntity extends DemonEntity {
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, false));
 		if (Config.SERVER.IN_FIGHTING.get()) {
+			this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, MonsterEntity.class, true));
+			this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, MobEntity.class, true));
 			this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, ShotgunguyEntity.class, true));
 			this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, UnwillingEntity.class, true));
 			this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, ChaingunnerEntity.class, true));
