@@ -55,6 +55,7 @@ public class PinkyModel<T extends Entity> extends EntityModel<T> {
         this.topTeeth.setRotationPoint(0.0F, 1.8F, -1.8F);
         this.topTeeth.addBox(-4.0F, 0.0F, 0.0F, 8.0F, 2.0F, 1.0F, 0.0F, 0.0F, 0.0F);
         this.lEye = new ModelRenderer(this, 21, 62);
+        this.lEye.mirror = true;
         this.lEye.setRotationPoint(1.8F, 1.0F, -3.7F);
         this.lEye.addBox(-2.0F, -2.0F, -3.0F, 4.0F, 4.0F, 3.0F, 0.0F, 0.0F, 0.0F);
         this.setRotateAngle(lEye, 0.13665927909957545F, -0.2275909337942703F, 0.0F);
