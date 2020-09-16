@@ -10,7 +10,7 @@ import net.minecraft.util.ResourceLocation;
 public class SpiderdemonRender extends MobRenderer<SpiderdemonEntity, SpiderdemonModel<SpiderdemonEntity>> {
 
 	protected static final ResourceLocation TEXTURE = new ResourceLocation(DoomMod.MODID,
-			"textures/entity/spiderdemon.png");
+			"textures/entity/spidermastermind-texturemap.png");
 
 	public SpiderdemonRender(EntityRendererManager renderManagerIn) {
 		super(renderManagerIn, new SpiderdemonModel<>(), 0.8F);
