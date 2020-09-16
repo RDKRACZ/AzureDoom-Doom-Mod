@@ -1,38 +1,19 @@
 {
-  "type": "minecraft:entity",
-  "pools": [
-    {
-      "rolls": 1,
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 0.0,
-                "max": 1.0,
-                "type": "minecraft:uniform"
-              }
-            }
-          ],
-          "name": "doomweapon:bfg9000"
-        },
+	"type": "minecraft:entity",
+	"pools": [
 		{
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 1.0,
-                "max": 1.0,
-                "type": "minecraft:uniform"
-              }
-            }
-          ],
-          "name": "doomweapon:bfg_eternal"
-        }
-      ]
-    }
-  ]
+			"rolls": 1,
+			"entries": [
+				{
+					"type": "minecraft:item",
+					"name": "doomweapon:bfg_eternal"
+				}
+			],
+			"conditions": [
+				{
+					"condition": "minecraft:killed_by_player"
+				}
+			]
+		}
+	]
 }
