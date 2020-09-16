@@ -1,6 +1,6 @@
 {
   "result": {
-    "item": "doomweapon:argent_bolt"
+    "item": "doomweapon:unmaykr_bolt"
   },
   "type": "minecraft:crafting_shaped",
    "pattern": [
@@ -13,7 +13,7 @@
             "item": "minecraft:stick"
         },
         "$": {
-            "item": "doomweapon:argent_plate"
+            "item": "doomweapon:argent_energy"
         },
         "&": {
             "item": "minecraft:iron_ingot"
