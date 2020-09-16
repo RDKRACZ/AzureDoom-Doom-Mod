@@ -113,12 +113,7 @@ public class BaronEntity extends DemonEntity implements IRangedAttackMob {
 			this.goalSelector.removeGoal(this.aiArrowAttack);
 			ItemStack itemstack = this.getHeldItem(ProjectileHelper.getHandWith(this, DoomItems.BARENBLAST.get()));
 			if (itemstack.getItem() instanceof BarenBlastItem) {
-				int i = 20;
-				if (this.world.getDifficulty() != Difficulty.HARD) {
-					i = 40;
-				}
-
-				this.aiArrowAttack.setAttackCooldown(i);
+				this.aiArrowAttack.setAttackCooldown(90);
 				this.goalSelector.addGoal(4, this.aiArrowAttack);
 			} else {
 				this.goalSelector.addGoal(4, this.aiAttackOnCollide);

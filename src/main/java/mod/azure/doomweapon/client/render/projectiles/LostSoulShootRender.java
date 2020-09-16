@@ -18,10 +18,10 @@ public class LostSoulShootRender extends MobRenderer<LostSoulEntity, LostSoulMod
 		super(renderManagerIn, new LostSoulModel<>(), 0.8F);
 		this.addLayer(new LayerFlames(this));
 	}
-	
+
 	@Override
 	protected int getBlockLight(LostSoulEntity entityIn, BlockPos partialTicks) {
-		return 5;
+		return 10;
 	}
 
 	@Override
