@@ -20,7 +20,7 @@ public class LostSoulShootRender extends MobRenderer<LostSoulEntity, LostSoulMod
 
 	@Override
 	protected int getBlockLight(LostSoulEntity entityIn, float partialTicks) {
-		return 5;
+		return 10;
 	}
 
 	@Override

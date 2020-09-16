@@ -9,6 +9,9 @@ import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
+/**
+ * Baron of Hell - Batpixxler Created using Tabula 8.0.0
+ */
 public class BaronModel<T extends Entity> extends EntityModel<T> {
 	public ModelRenderer thighs;
     public ModelRenderer lLeg1_flat;
@@ -249,6 +252,8 @@ public class BaronModel<T extends Entity> extends EntityModel<T> {
 		this.rLeg1_flat.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount / 1.0F;
 		this.lLeg1_flat.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount
 				/ 1.0F;
+		this.lowJaw.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.0F * limbSwingAmount
+				/ 1.3F;
 	}
 
 	public void setRotateAngle(ModelRenderer modelRenderer, float x, float y, float z) {

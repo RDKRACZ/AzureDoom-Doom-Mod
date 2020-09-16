@@ -3,7 +3,6 @@ package mod.azure.doomweapon.entity;
 import java.util.EnumSet;
 import java.util.Random;
 
-import mod.azure.doomweapon.entity.projectiles.LostSoulEntity;
 import mod.azure.doomweapon.util.Config;
 import mod.azure.doomweapon.util.registry.ModEntityTypes;
 import mod.azure.doomweapon.util.registry.ModSoundEvents;
@@ -22,6 +21,7 @@ import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.SmallFireballEntity;
 import net.minecraft.network.IPacket;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
@@ -123,8 +123,8 @@ public class PainEntity extends FlyingEntity implements IMob {
 					double d3 = livingentity.getPosYHeight(0.5D) - (0.5D + this.parentEntity.getPosYHeight(0.5D));
 					double d4 = livingentity.getPosZ() - (this.parentEntity.getPosZ() + vec3d.z * 4.0D);
 					world.playEvent((PlayerEntity) null, 1016, new BlockPos(this.parentEntity), 0);
-					LostSoulEntity fireballentity = new LostSoulEntity(world, this.parentEntity, d2, d3, d4);
-					fireballentity.explosionPower = this.parentEntity.getFireballStrength();
+					SmallFireballEntity fireballentity = new SmallFireballEntity(world, this.parentEntity, d2, d3, d4);
+					// fireballentity.explosionPower = this.parentEntity.getFireballStrength();
 					fireballentity.setPosition(this.parentEntity.getPosX() + vec3d.x * 4.0D,
 							this.parentEntity.getPosYHeight(0.5D) + 0.5D, fireballentity.getPosZ() + vec3d.z * 4.0D);
 					world.addEntity(fireballentity);
