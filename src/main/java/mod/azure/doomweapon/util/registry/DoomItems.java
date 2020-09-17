@@ -34,10 +34,6 @@ import mod.azure.doomweapon.item.armor.PurplePonyDoomArmor;
 import mod.azure.doomweapon.item.armor.SentinelDoomArmor;
 import mod.azure.doomweapon.item.armor.ZombieDoomArmor;
 import mod.azure.doomweapon.item.eggs.DoomSpawnEgg;
-import mod.azure.doomweapon.item.entityweapons.ArchnotronAttackItem;
-import mod.azure.doomweapon.item.entityweapons.BarenBlastItem;
-import mod.azure.doomweapon.item.entityweapons.CyberdemonAttackItem;
-import mod.azure.doomweapon.item.entityweapons.SpiderdemonAttackItem;
 import mod.azure.doomweapon.item.powerup.InmortalSphereItem;
 import mod.azure.doomweapon.item.powerup.InvisibleSphereItem;
 import mod.azure.doomweapon.item.powerup.MegaSphereItem;
@@ -195,14 +191,6 @@ public class DoomItems {
 	public static final RegistryObject<Item> BALLISTA = ITEMS.register("ballista", () -> new Ballista());
 	public static final RegistryObject<Item> CHAINGUN = ITEMS.register("chaingun", () -> new Chaingun());
 	public static final RegistryObject<Item> PISTOL = ITEMS.register("pistol", () -> new PistolItem());
-	// MOB WEAPONS
-	public static final RegistryObject<Item> ARACHNOTRONATTACK = ITEMS.register("arachnotronblast",
-			() -> new ArchnotronAttackItem());
-	public static final RegistryObject<Item> CYBERDEMONATTACK = ITEMS.register("cyberdemonattack",
-			() -> new CyberdemonAttackItem());
-	public static final RegistryObject<Item> SPIDERDEMONATTACK = ITEMS.register("spiderdemonattack",
-			() -> new SpiderdemonAttackItem());
-	public static final RegistryObject<Item> BARENBLAST = ITEMS.register("barenblast", () -> new BarenBlastItem(2));
 	// ARMOR
 	public static final RegistryObject<Item> DOOM_HELMET = ITEMS.register("doom_helmet",
 			() -> new DoomArmor(DoomArmorMaterial.DOOM_ARMOR, EquipmentSlotType.HEAD));

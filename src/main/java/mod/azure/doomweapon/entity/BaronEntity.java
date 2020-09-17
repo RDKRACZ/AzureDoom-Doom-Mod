@@ -6,11 +6,8 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import mod.azure.doomweapon.entity.ai.goal.RangedBarenBlastAttackGoal;
-import mod.azure.doomweapon.entity.projectiles.BarenBlastEntity;
-import mod.azure.doomweapon.item.entityweapons.BarenBlastItem;
+import mod.azure.doomweapon.entity.projectiles.entity.BarenBlastEntity;
 import mod.azure.doomweapon.util.Config;
-import mod.azure.doomweapon.util.registry.DoomItems;
 import mod.azure.doomweapon.util.registry.ModEntityTypes;
 import mod.azure.doomweapon.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
@@ -18,20 +15,18 @@ import net.minecraft.block.Blocks;
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
-import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.HurtByTargetGoal;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.ProjectileHelper;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -40,32 +35,17 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class BaronEntity extends DemonEntity implements IRangedAttackMob {
-
-	private final RangedBarenBlastAttackGoal<BaronEntity> aiArrowAttack = new RangedBarenBlastAttackGoal<>(this, 1.0D,
-			20, 15.0F);
-	private final MeleeAttackGoal aiAttackOnCollide = new MeleeAttackGoal(this, 1.2D, false) {
-		public void resetTask() {
-			super.resetTask();
-			BaronEntity.this.setAggroed(false);
-		}
-
-		public void startExecuting() {
-			super.startExecuting();
-			BaronEntity.this.setAggroed(true);
-		}
-	};
+public class BaronEntity extends DemonEntity {
 
 	public BaronEntity(EntityType<BaronEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
-		this.setCombatTask();
 	}
 
 	public BaronEntity(World worldIn) {
@@ -87,11 +67,58 @@ public class BaronEntity extends DemonEntity implements IRangedAttackMob {
 		this.goalSelector.addGoal(6, new LookAtGoal(this, PlayerEntity.class, 8.0F));
 		this.goalSelector.addGoal(6, new LookRandomlyGoal(this));
 		this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
+		this.goalSelector.addGoal(7, new BaronEntity.FireballAttackGoal(this));
 		this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		if (Config.SERVER.IN_FIGHTING.get()) {
 			this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, MonsterEntity.class, true));
 			this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, MobEntity.class, true));
+		}
+	}
+
+	static class FireballAttackGoal extends Goal {
+		private final BaronEntity parentEntity;
+		public int attackTimer;
+
+		public FireballAttackGoal(BaronEntity ghast) {
+			this.parentEntity = ghast;
+		}
+
+		public boolean shouldExecute() {
+			return this.parentEntity.getAttackTarget() != null;
+		}
+
+		public void startExecuting() {
+			this.attackTimer = 0;
+		}
+
+		public void tick() {
+			LivingEntity livingentity = this.parentEntity.getAttackTarget();
+			if (livingentity.getDistanceSq(this.parentEntity) < 4096.0D
+					&& this.parentEntity.canEntityBeSeen(livingentity)) {
+				World world = this.parentEntity.world;
+				++this.attackTimer;
+				if (this.attackTimer == 10) {
+					// world.playEvent((PlayerEntity) null, 1015, new BlockPos(this.parentEntity),
+					// 0);
+				}
+
+				if (this.attackTimer == 20) {
+					Vec3d vec3d = this.parentEntity.getLook(1.0F);
+					double d2 = livingentity.getPosX() - (this.parentEntity.getPosX() + vec3d.x * 4.0D);
+					double d3 = livingentity.getPosYHeight(0.5D) - (0.5D + this.parentEntity.getPosYHeight(0.5D));
+					double d4 = livingentity.getPosZ() - (this.parentEntity.getPosZ() + vec3d.z * 4.0D);
+					world.playEvent((PlayerEntity) null, 1016, new BlockPos(this.parentEntity), 0);
+					BarenBlastEntity fireballentity = new BarenBlastEntity(world, this.parentEntity, d2, d3, d4);
+					// fireballentity.explosionPower = this.parentEntity.getFireballStrength();
+					fireballentity.setPosition(this.parentEntity.getPosX() + vec3d.x * 4.0D,
+							this.parentEntity.getPosYHeight(0.5D) + 0.5D, fireballentity.getPosZ() + vec3d.z * 4.0D);
+					world.addEntity(fireballentity);
+					this.attackTimer = -40;
+				}
+			} else if (this.attackTimer > 0) {
+				--this.attackTimer;
+			}
 		}
 	}
 
@@ -103,32 +130,6 @@ public class BaronEntity extends DemonEntity implements IRangedAttackMob {
 		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double) 0.23F);
 		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(3.0D);
 		this.getAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(2.0D);
-	}
-
-	@Override
-	protected void setEquipmentBasedOnDifficulty(DifficultyInstance difficulty) {
-		super.setEquipmentBasedOnDifficulty(difficulty);
-		this.setItemStackToSlot(EquipmentSlotType.MAINHAND, new ItemStack(DoomItems.BARENBLAST.get()));
-	}
-
-	public void setCombatTask() {
-		if (this.world != null && !this.world.isRemote) {
-			this.goalSelector.removeGoal(this.aiAttackOnCollide);
-			this.goalSelector.removeGoal(this.aiArrowAttack);
-			ItemStack itemstack = this.getHeldItem(ProjectileHelper.getHandWith(this, DoomItems.BARENBLAST.get()));
-			if (itemstack.getItem() instanceof BarenBlastItem) {
-				int i = 20;
-				if (this.world.getDifficulty() != Difficulty.HARD) {
-					i = 40;
-				}
-
-				this.aiArrowAttack.setAttackCooldown(i);
-				this.goalSelector.addGoal(4, this.aiArrowAttack);
-			} else {
-				this.goalSelector.addGoal(4, this.aiAttackOnCollide);
-			}
-
-		}
 	}
 
 	@Override
@@ -154,21 +155,11 @@ public class BaronEntity extends DemonEntity implements IRangedAttackMob {
 	@Override
 	public void writeAdditional(CompoundNBT compound) {
 		super.writeAdditional(compound);
-		this.setCombatTask();
 	}
 
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
-		this.setCombatTask();
-	}
-
-	@Override
-	public void setItemStackToSlot(EquipmentSlotType slotIn, ItemStack stack) {
-		super.setItemStackToSlot(slotIn, stack);
-		if (!this.world.isRemote) {
-			this.setCombatTask();
-		}
 	}
 
 	@Nullable
@@ -182,10 +173,7 @@ public class BaronEntity extends DemonEntity implements IRangedAttackMob {
 			spawnDataIn = new BaronEntity.GroupData(worldIn.getRandom()
 					.nextFloat() < net.minecraftforge.common.ForgeConfig.SERVER.zombieBabyChance.get());
 		}
-
-		this.setEquipmentBasedOnDifficulty(difficultyIn);
 		this.setEnchantmentBasedOnDifficulty(difficultyIn);
-		this.setCombatTask();
 
 		if (this.getItemStackFromSlot(EquipmentSlotType.HEAD).isEmpty()) {
 			LocalDate localdate = LocalDate.now();
@@ -253,37 +241,5 @@ public class BaronEntity extends DemonEntity implements IRangedAttackMob {
 	@Override
 	public int getMaxSpawnedInChunk() {
 		return 1;
-	}
-
-	@Override
-	public void attackEntityWithRangedAttack(LivingEntity target, float distanceFactor) {
-		ItemStack itemstack = this
-				.findAmmo(this.getHeldItem(ProjectileHelper.getHandWith(this, DoomItems.BARENBLAST.get())));
-		BarenBlastEntity abstractarrowentity = this.fireArrowa(itemstack, distanceFactor);
-		if (this.getHeldItemMainhand().getItem() instanceof BarenBlastItem)
-			abstractarrowentity = ((BarenBlastItem) this.getHeldItemMainhand().getItem())
-					.customeArrow(abstractarrowentity);
-		double d0 = target.getPosX() - this.getPosX();
-		double d1 = target.getPosYHeight(0.3333333333333333D) - abstractarrowentity.getPosY();
-		double d2 = target.getPosZ() - this.getPosZ();
-		double d3 = (double) MathHelper.sqrt(d0 * d0 + d2 * d2);
-		abstractarrowentity.shoot(d0, d1 + d3 * (double) 0.2F, d2, 1.6F,
-				(float) (14 - this.world.getDifficulty().getId() * 4));
-		this.playSound(ModSoundEvents.PLASMA_HIT.get(), 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
-		this.world.addEntity(abstractarrowentity);
-	}
-
-	protected BarenBlastEntity fireArrowa(ItemStack arrowStack, float distanceFactor) {
-		return BaronEntity.fireArrow(this, arrowStack, distanceFactor);
-	}
-
-	public static BarenBlastEntity fireArrow(LivingEntity shooter, ItemStack arrowStack, float distanceFactor) {
-		BarenBlastItem arrowitem = (BarenBlastItem) (arrowStack.getItem() instanceof BarenBlastItem
-				? arrowStack.getItem()
-				: DoomItems.BARENBLAST.get());
-		BarenBlastEntity abstractarrowentity = arrowitem.createArrow(shooter.world, arrowStack, shooter);
-		abstractarrowentity.setEnchantmentEffectsFromEntity(shooter, distanceFactor);
-
-		return abstractarrowentity;
 	}
 }
