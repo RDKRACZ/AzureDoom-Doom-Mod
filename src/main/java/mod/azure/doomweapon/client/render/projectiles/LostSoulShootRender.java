@@ -25,6 +25,11 @@ public class LostSoulShootRender extends MobRenderer<LostSoulEntity, LostSoulMod
 	}
 
 	@Override
+	protected float getDeathMaxRotation(LostSoulEntity entityLivingBaseIn) {
+		return 180.0F;
+	}
+
+	@Override
 	public ResourceLocation getEntityTexture(LostSoulEntity entity) {
 		return TEXTURE;
 	}
