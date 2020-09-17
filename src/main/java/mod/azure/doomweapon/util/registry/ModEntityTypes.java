@@ -26,7 +26,6 @@ import mod.azure.doomweapon.entity.UnwillingEntity;
 import mod.azure.doomweapon.entity.ZombiemanEntity;
 import mod.azure.doomweapon.entity.projectiles.ArgentBoltEntity;
 import mod.azure.doomweapon.entity.projectiles.BFGEntity;
-import mod.azure.doomweapon.entity.projectiles.BarenBlastEntity;
 import mod.azure.doomweapon.entity.projectiles.BarrelEntity;
 import mod.azure.doomweapon.entity.projectiles.BulletEntity;
 import mod.azure.doomweapon.entity.projectiles.ChaingunBulletEntity;
@@ -35,6 +34,12 @@ import mod.azure.doomweapon.entity.projectiles.LostSoulEntity;
 import mod.azure.doomweapon.entity.projectiles.RocketEntity;
 import mod.azure.doomweapon.entity.projectiles.ShotgunShellEntity;
 import mod.azure.doomweapon.entity.projectiles.UnmaykrBoltEntity;
+import mod.azure.doomweapon.entity.projectiles.entity.BarenBlastEntity;
+import mod.azure.doomweapon.entity.projectiles.entity.BulletMobEntity;
+import mod.azure.doomweapon.entity.projectiles.entity.ChaingunMobEntity;
+import mod.azure.doomweapon.entity.projectiles.entity.EnergyCellMobEntity;
+import mod.azure.doomweapon.entity.projectiles.entity.RocketMobEntity;
+import mod.azure.doomweapon.entity.projectiles.entity.ShotgunMobEntity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.ResourceLocation;
@@ -81,8 +86,7 @@ public class ModEntityTypes {
 			() -> EntityType.Builder.<RocketEntity>create(RocketEntity::new, EntityClassification.MISC).size(0.5F, 0.5F)
 					.func_233606_a_(9).build(new ResourceLocation(DoomMod.MODID, "rocket").toString()));
 
-	public static final RegistryObject<EntityType<LostSoulEntity>> LOST_SOUL = ENTITY_TYPES.register(
-			"lost_soul",
+	public static final RegistryObject<EntityType<LostSoulEntity>> LOST_SOUL = ENTITY_TYPES.register("lost_soul",
 			() -> EntityType.Builder.<LostSoulEntity>create(LostSoulEntity::new, EntityClassification.MISC)
 					.size(1.0F, 1.0F).func_233606_a_(9)
 					.build(new ResourceLocation(DoomMod.MODID, "lost_soul").toString()));
@@ -217,5 +221,33 @@ public class ModEntityTypes {
 			() -> EntityType.Builder.create(IconofsinEntity::new, EntityClassification.MONSTER).size(2.4f, 10.0F)
 					.func_233606_a_(9).immuneToFire()
 					.build(new ResourceLocation(DoomMod.MODID, "iconofsin").toString()));
+
+	public static final RegistryObject<EntityType<ShotgunMobEntity>> SHOTGUN_SHELL_MOB = ENTITY_TYPES.register(
+			"shotgun_shell_mob",
+			() -> EntityType.Builder.<ShotgunMobEntity>create(ShotgunMobEntity::new, EntityClassification.MISC)
+					.size(0.5F, 0.5F).func_233606_a_(9)
+					.build(new ResourceLocation(DoomMod.MODID, "shotgun_shell_mob").toString()));
+
+	public static final RegistryObject<EntityType<EnergyCellMobEntity>> ENERGY_CELL_MOB = ENTITY_TYPES.register(
+			"energy_cell_mob",
+			() -> EntityType.Builder.<EnergyCellMobEntity>create(EnergyCellMobEntity::new, EntityClassification.MISC)
+					.func_233606_a_(9).size(0.5F, 0.5F)
+					.build(new ResourceLocation(DoomMod.MODID, "energy_cell_mob").toString()));
+
+	public static final RegistryObject<EntityType<RocketMobEntity>> ROCKET_MOB = ENTITY_TYPES.register("rocket_mob",
+			() -> EntityType.Builder.<RocketMobEntity>create(RocketMobEntity::new, EntityClassification.MISC)
+					.size(0.5F, 0.5F).func_233606_a_(9)
+					.build(new ResourceLocation(DoomMod.MODID, "rocket_mob").toString()));
+
+	public static final RegistryObject<EntityType<BulletMobEntity>> BULLETS_MOB = ENTITY_TYPES.register("bullets_mob",
+			() -> EntityType.Builder.<BulletMobEntity>create(BulletMobEntity::new, EntityClassification.MISC)
+					.size(0.5F, 0.5F).func_233606_a_(9)
+					.build(new ResourceLocation(DoomMod.MODID, "bullets_mob").toString()));
+
+	public static final RegistryObject<EntityType<ChaingunMobEntity>> CHAINGUN_BULLET_MOB = ENTITY_TYPES.register(
+			"chaingunbullets_mob",
+			() -> EntityType.Builder.<ChaingunMobEntity>create(ChaingunMobEntity::new, EntityClassification.MISC)
+					.size(0.5F, 0.5F).func_233606_a_(9)
+					.build(new ResourceLocation(DoomMod.MODID, "chaingunbullets_mob").toString()));
 
 }

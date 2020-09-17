@@ -33,7 +33,6 @@ import mod.azure.doomweapon.item.ammo.EnergyCell;
 import mod.azure.doomweapon.item.ammo.Rocket;
 import mod.azure.doomweapon.item.ammo.ShellAmmo;
 import mod.azure.doomweapon.item.ammo.UnmaykrBolt;
-import mod.azure.doomweapon.item.entityweapons.BarenBlastItem;
 import mod.azure.doomweapon.util.registry.DoomItems;
 import mod.azure.doomweapon.util.registry.ModEntitySpawn;
 import mod.azure.doomweapon.util.registry.ModEntityTypes;
@@ -67,7 +66,6 @@ public class ModEventSubscriber {
 		((ClipAmmo) (DoomItems.BULLETS.get())).setItemReference(DoomItems.BULLETS);
 		((BFGCell) (DoomItems.BFG_CELL.get())).setItemReference(DoomItems.BFG_CELL);
 		((Rocket) (DoomItems.ROCKET.get())).setItemReference(DoomItems.ROCKET);
-		((BarenBlastItem) (DoomItems.BARENBLAST.get())).setItemReference(DoomItems.BARENBLAST);
 		((UnmaykrBolt) (DoomItems.UNMAKRY_BOLT.get())).setItemReference(DoomItems.UNMAKRY_BOLT);
 	}
 
@@ -83,7 +81,10 @@ public class ModEventSubscriber {
 				ModEntityTypes.ICONOFSIN.get(), ModEntityTypes.POSSESSEDSOLDIER.get(), ModEntityTypes.BULLETS.get(),
 				ModEntityTypes.CHAINGUN_BULLET.get(), ModEntityTypes.ENERGY_CELL.get(),
 				ModEntityTypes.SHOTGUN_SHELL.get(), ModEntityTypes.ARGENT_BOLT.get(),
-				ModEntityTypes.POSSESSEDSCIENTIST.get(), ModEntityTypes.ZOMBIEMAN.get());
+				ModEntityTypes.SHOTGUN_SHELL_MOB.get(), ModEntityTypes.BULLETS_MOB.get(),
+				ModEntityTypes.CHAINGUN_BULLET_MOB.get(), ModEntityTypes.ENERGY_CELL_MOB.get(),
+				ModEntityTypes.ROCKET_MOB.get(), ModEntityTypes.POSSESSEDSCIENTIST.get(),
+				ModEntityTypes.ZOMBIEMAN.get());
 		ModEntitySpawn.addSpawnEntries();
 		ModEntitySpawn.EntitySpawnPlacementRegistry();
 	}

@@ -35,6 +35,11 @@ import mod.azure.doomweapon.client.render.projectiles.LostSoulShootRender;
 import mod.azure.doomweapon.client.render.projectiles.RocketRender;
 import mod.azure.doomweapon.client.render.projectiles.ShotgunShellRender;
 import mod.azure.doomweapon.client.render.projectiles.UnmaykrBulletRender;
+import mod.azure.doomweapon.client.render.projectiles.entity.BulletsMobRender;
+import mod.azure.doomweapon.client.render.projectiles.entity.ChaingunBulletMobRender;
+import mod.azure.doomweapon.client.render.projectiles.entity.EnergyCellMobRender;
+import mod.azure.doomweapon.client.render.projectiles.entity.RocketMobRender;
+import mod.azure.doomweapon.client.render.projectiles.entity.ShotgunShellMobRender;
 import mod.azure.doomweapon.util.registry.ModEntityTypes;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -85,6 +90,14 @@ public class ClientModEventSubscriber {
 				PossessedScientistRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.POSSESSEDSOLDIER.get(),
 				PossessedSoldierRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.SHOTGUN_SHELL_MOB.get(),
+				ShotgunShellMobRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ENERGY_CELL_MOB.get(),
+				EnergyCellMobRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BULLETS_MOB.get(), BulletsMobRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ROCKET_MOB.get(), RocketMobRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.CHAINGUN_BULLET_MOB.get(),
+				ChaingunBulletMobRender::new);
 	}
 
 }
