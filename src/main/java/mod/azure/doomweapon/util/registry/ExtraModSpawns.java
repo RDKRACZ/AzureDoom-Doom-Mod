@@ -1,6 +1,6 @@
 package mod.azure.doomweapon.util.registry;
 
-import com.blackgear.nether.core.registry.world.NetherBiomes;
+import com.blackgear.nether.core.registries.common.NetherBiomes;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.world.biome.Biome;
