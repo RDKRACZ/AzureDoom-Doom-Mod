@@ -17,7 +17,8 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.Direction;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -37,8 +38,9 @@ public class DaisyItem extends Item {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new StringTextComponent("\u00A7o" + "\u00A7e" + "For Daisy. Rip and Tear."));
-		tooltip.add(new StringTextComponent("\u00A7o" + "Grants the Player unlimited Speed 3 when worn."));
+		tooltip.add(new TranslationTextComponent("doom.daisy1.text").mergeStyle(TextFormatting.YELLOW)
+				.mergeStyle(TextFormatting.ITALIC));
+		tooltip.add(new TranslationTextComponent("doom.daisy2.text").mergeStyle(TextFormatting.ITALIC));
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 

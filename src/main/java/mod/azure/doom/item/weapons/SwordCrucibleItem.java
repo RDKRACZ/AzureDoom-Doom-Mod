@@ -17,7 +17,8 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -32,7 +33,8 @@ public class SwordCrucibleItem extends SwordItem {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new StringTextComponent("\u00A7c" + "Rip and Tear. Until it is done."));
+		tooltip.add(new TranslationTextComponent("doom.crucible_sword.text").mergeStyle(TextFormatting.RED)
+				.mergeStyle(TextFormatting.ITALIC));
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 

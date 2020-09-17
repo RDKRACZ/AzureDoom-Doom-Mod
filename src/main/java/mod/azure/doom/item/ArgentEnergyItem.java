@@ -7,7 +7,8 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -21,9 +22,12 @@ public class ArgentEnergyItem extends Item {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new StringTextComponent("\u00A7c" + "\u00A7o" + "Created by combining the tortured"));
-		tooltip.add(new StringTextComponent("\u00A7c" + "\u00A7o" + "souls of the Nether and the power"));
-		tooltip.add(new StringTextComponent("\u00A7c" + "\u00A7o" + "of the Aether."));
+		tooltip.add(new TranslationTextComponent("doom.argent_engery1.text").mergeStyle(TextFormatting.RED)
+				.mergeStyle(TextFormatting.ITALIC));
+		tooltip.add(new TranslationTextComponent("doom.argent_engery2.text").mergeStyle(TextFormatting.RED)
+				.mergeStyle(TextFormatting.ITALIC));
+		tooltip.add(new TranslationTextComponent("doom.argent_engery3.text").mergeStyle(TextFormatting.RED)
+				.mergeStyle(TextFormatting.ITALIC));
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 

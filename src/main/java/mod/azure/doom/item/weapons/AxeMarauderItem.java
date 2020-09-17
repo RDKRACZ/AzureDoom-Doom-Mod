@@ -13,7 +13,8 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -28,9 +29,12 @@ public class AxeMarauderItem extends AxeItem {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new StringTextComponent("\u00A7o" + "\u00A7c" + "You were never one of us. You were"));
-		tooltip.add(new StringTextComponent("\u00A7o" + "\u00A7c" + "nothing but a usurper, a false"));
-		tooltip.add(new StringTextComponent("\u00A7o" + "\u00A7c" + "idol. My eyes have been opened."));
+		tooltip.add(new TranslationTextComponent("doom.marauder_axe1.text").mergeStyle(TextFormatting.RED)
+				.mergeStyle(TextFormatting.ITALIC));
+		tooltip.add(new TranslationTextComponent("doom.marauder_axe2.text").mergeStyle(TextFormatting.RED)
+				.mergeStyle(TextFormatting.ITALIC));
+		tooltip.add(new TranslationTextComponent("doom.marauder_axe3.text").mergeStyle(TextFormatting.RED)
+				.mergeStyle(TextFormatting.ITALIC));
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 
