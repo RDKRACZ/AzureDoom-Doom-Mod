@@ -38,7 +38,7 @@ public class LayerFlames extends LayerRenderer<LostSoulEntity, LostSoulModel<Los
 		matrixStackIn.translate(0.0D, 1.034D, 0.05D);
 		IVertexBuilder ivertexbuilder = bufferIn
 				.getBuffer(RenderType.getEntityCutoutNoCull(TEX[(entitylivingbaseIn.getFlameTimer())]));
-		this.getEntityModel().renderFlame(matrixStackIn, ivertexbuilder, 100, 1);
+		this.getEntityModel().renderFlame(matrixStackIn, ivertexbuilder, 100, 100);
 		matrixStackIn.pop();
 	}
 

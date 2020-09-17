@@ -60,7 +60,7 @@ public class LostSoulModel<T extends Entity> extends EntityModel<T> {
 		this.Jaw_flat = new ModelRenderer(this, 32, 0);
 		this.Jaw_flat.setRotationPoint(0.0F, 0.0F, 4.0F);
 		this.Jaw_flat.addBox(-3.5F, 0.0F, -8.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
-		this.lHorn1 = new ModelRenderer(this, 0, 14);
+		this.lHorn1 = new ModelRenderer(this, 0, 13);
 		this.lHorn1.mirror = true;
 		this.lHorn1.setRotationPoint(3.0F, -4.0F, 0.0F);
 		this.lHorn1.addBox(-1.5F, 0.0F, -1.5F, 3.0F, 4.0F, 3.0F, 0.0F, 0.0F, 0.0F);
@@ -102,7 +102,7 @@ public class LostSoulModel<T extends Entity> extends EntityModel<T> {
 		this.lHorn4.setRotationPoint(-0.1F, 4.0F, 0.0F);
 		this.lHorn4.addBox(-0.5F, 0.0F, -1.0F, 1.0F, 4.0F, 1.0F, 0.0F, 0.0F, 0.0F);
 		this.setRotateAngle(lHorn4, -0.7820820617871088F, 0.0F, 0.0F);
-		this.rHorn1 = new ModelRenderer(this, 0, 14);
+		this.rHorn1 = new ModelRenderer(this, 0, 13);
 		this.rHorn1.setRotationPoint(-2.0F, -4.0F, 0.0F);
 		this.rHorn1.addBox(-1.5F, 0.0F, -1.5F, 3.0F, 4.0F, 3.0F, 0.0F, 0.0F, 0.0F);
 		this.setRotateAngle(rHorn1, 0.3127630032889644F, 0.0F, 1.8767525233642137F);
