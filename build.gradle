@@ -132,3 +132,32 @@ processResources {
         println('Minified ' + jsonMinified + ' json files. Saved ' + jsonBytesSaved + ' bytes. Took ' + (System.currentTimeMillis() - jsonMinifyStart) + 'ms.')
     }
 }
+curseforge {
+
+    def curseProp = new Properties()
+    File secretPropsFile = file("key.properties")
+    curseProp.load(secretPropsFile.newInputStream())
+
+    project {
+        apiKey = curseProp.getProperty('curseKey')
+        id = "${curse_id}"
+        releaseType = "${curse_release}"
+        changelogType = 'text'
+        changelog = file('CHANGELOG.txt')
+        addGameVersion("1.15.2")
+        addGameVersion("Forge")
+        addGameVersion("Java 8")
+
+        relations {
+            requiredDependency 'curios'  
+            optionalDependency 'project-mmo' 
+            optionalDependency 'extended-nether-backport'    
+            optionalDependency 'netherex'         
+        }
+        mainArtifact(remapJar)
+
+        afterEvaluate {
+            uploadTask.dependsOn("remapJar")
+        }
+    }
+}
