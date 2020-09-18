@@ -80,34 +80,4 @@ public class ModEventSubscriber {
 		return entry;
 	}
 
-	@Mod.EventBusSubscriber(modid = DoomMod.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
-	public static class ItemEvents {
-		private static boolean noBreak(ItemStack stack) {
-			return stack.isDamageable()
-					&& (stack.getDamage() + 1) >= new ItemStack(DoomItems.CRUCIBLESWORD.get()).getMaxDamage()
-					|| stack.isDamageable()
-							&& (stack.getDamage() + 1) >= new ItemStack(DoomItems.AXE_OPEN.get()).getMaxDamage();
-		}
-
-		@SubscribeEvent
-		public static void itemAttackEvent(AttackEntityEvent event) {
-			if (event.getPlayer().isCreative())
-				return;
-			ItemStack stack = event.getPlayer().getHeldItemMainhand();
-			if (noBreak(stack)) {
-				event.setCanceled(true);
-			}
-		}
-
-		@SubscribeEvent
-		public static void itemBlockEvent(PlayerInteractEvent.LeftClickBlock event) {
-			if (event.getPlayer().isCreative())
-				return;
-			ItemStack stack = event.getItemStack();
-			if (noBreak(stack)) {
-				event.setUseItem(Event.Result.DENY);
-			}
-		}
-	}
-
 }

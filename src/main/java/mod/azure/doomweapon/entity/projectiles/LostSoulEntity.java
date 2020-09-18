@@ -3,14 +3,17 @@ package mod.azure.doomweapon.entity.projectiles;
 import java.util.EnumSet;
 import java.util.Random;
 
+import mod.azure.doomweapon.entity.DemonEntity;
+import mod.azure.doomweapon.entity.ai.goal.DemonAttackGoal;
 import mod.azure.doomweapon.util.Config;
 import mod.azure.doomweapon.util.registry.ModEntityTypes;
 import mod.azure.doomweapon.util.registry.ModSoundEvents;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.FlyingEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.MoverType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.controller.MovementController;
 import net.minecraft.entity.ai.goal.Goal;
@@ -33,7 +36,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class LostSoulEntity extends FlyingEntity implements IMob {
+public class LostSoulEntity extends DemonEntity implements IMob {
 
 	public int explosionPower = 1;
 	public int flameTimer;
@@ -41,6 +44,56 @@ public class LostSoulEntity extends FlyingEntity implements IMob {
 	public LostSoulEntity(EntityType<? extends LostSoulEntity> type, World world) {
 		super(type, world);
 		this.moveController = new LostSoulEntity.MoveHelperController(this);
+	}
+
+	public boolean onLivingFall(float distance, float damageMultiplier) {
+		return false;
+	}
+
+	protected void updateFallState(double y, boolean onGroundIn, BlockState state, BlockPos pos) {
+	}
+
+	public void travel(Vec3d positionIn) {
+		if (this.isInWater()) {
+			this.moveRelative(0.02F, positionIn);
+			this.move(MoverType.SELF, this.getMotion());
+			this.setMotion(this.getMotion().scale((double) 0.8F));
+		} else if (this.isInLava()) {
+			this.moveRelative(0.02F, positionIn);
+			this.move(MoverType.SELF, this.getMotion());
+			this.setMotion(this.getMotion().scale(0.5D));
+		} else {
+			BlockPos ground = new BlockPos(this.getPosX(), this.getPosY() - 1.0D, this.getPosZ());
+			float f = 0.91F;
+			if (this.onGround) {
+				f = this.world.getBlockState(ground).getSlipperiness(this.world, ground, this) * 0.91F;
+			}
+
+			float f1 = 0.16277137F / (f * f * f);
+			f = 0.91F;
+			if (this.onGround) {
+				f = this.world.getBlockState(ground).getSlipperiness(this.world, ground, this) * 0.91F;
+			}
+
+			this.moveRelative(this.onGround ? 0.1F * f1 : 0.02F, positionIn);
+			this.move(MoverType.SELF, this.getMotion());
+			this.setMotion(this.getMotion().scale((double) f));
+		}
+
+		this.prevLimbSwingAmount = this.limbSwingAmount;
+		double d1 = this.getPosX() - this.prevPosX;
+		double d0 = this.getPosZ() - this.prevPosZ;
+		float f2 = MathHelper.sqrt(d1 * d1 + d0 * d0) * 4.0F;
+		if (f2 > 1.0F) {
+			f2 = 1.0F;
+		}
+
+		this.limbSwingAmount += (f2 - this.limbSwingAmount) * 0.4F;
+		this.limbSwing += this.limbSwingAmount;
+	}
+
+	public boolean isOnLadder() {
+		return false;
 	}
 
 	@OnlyIn(Dist.CLIENT)
@@ -54,8 +107,9 @@ public class LostSoulEntity extends FlyingEntity implements IMob {
 
 	@Override
 	protected void registerGoals() {
-		this.goalSelector.addGoal(5, new LostSoulEntity.RandomFlyGoal(this));
-		this.goalSelector.addGoal(7, new LostSoulEntity.LookAroundGoal(this));
+		this.goalSelector.addGoal(2, new LostSoulEntity.RandomFlyGoal(this));
+		this.goalSelector.addGoal(2, new LostSoulEntity.LookAroundGoal(this));
+		this.goalSelector.addGoal(2, new DemonAttackGoal(this, 1.0D, false));
 		this.targetSelector.addGoal(9, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		if (Config.SERVER.IN_FIGHTING.get()) {
 			this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, MonsterEntity.class, true));
@@ -228,5 +282,5 @@ public class LostSoulEntity extends FlyingEntity implements IMob {
 	public int getFlameTimer() {
 		return flameTimer;
 	}
-	
+
 }
