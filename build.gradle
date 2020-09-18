@@ -132,6 +132,31 @@ processResources {
     }
 }
 
-//mixin {
-    //add sourceSets.main, "doom.refmap.json"
-//}
+curseforge {
+
+    def curseProp = new Properties()
+    File secretPropsFile = file("key.properties")
+    curseProp.load(secretPropsFile.newInputStream())
+
+    project {
+        apiKey = curseProp.getProperty('curseKey')
+        id = "${curse_id}"
+        releaseType = "${curse_release}"
+        changelogType = 'text'
+        changelog = file('CHANGELOG.txt')
+        addGameVersion("1.16.3")
+        addGameVersion("1.16.2")
+        addGameVersion("Forge")
+        addGameVersion("Java 8")
+
+        relations {
+            requiredDependency 'curios'  
+            optionalDependency 'project-mmo'      
+        }
+        mainArtifact(remapJar)
+
+        afterEvaluate {
+            uploadTask.dependsOn("remapJar")
+        }
+    }
+}
