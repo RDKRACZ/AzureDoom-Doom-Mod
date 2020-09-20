@@ -38,7 +38,6 @@ import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.Difficulty;
@@ -227,21 +226,21 @@ public class ArachnotronEntity extends DemonEntity {
 
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return ModSoundEvents.SPIDERDEMON_AMBIENT.get();
+		return ModSoundEvents.ARACHNOTRON_AMBIENT.get();
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-		return ModSoundEvents.SPIDERDEMON_HURT.get();
+		return ModSoundEvents.ARACHNOTRON_HURT.get();
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return ModSoundEvents.SPIDERDEMON_DEATH.get();
+		return ModSoundEvents.ARACHNOTRON_DEATH.get();
 	}
 
 	protected SoundEvent getStepSound() {
-		return SoundEvents.ENTITY_SPIDER_STEP;
+		return ModSoundEvents.ARACHNOTRON_AMBIENT.get();
 	}
 
 	@Override

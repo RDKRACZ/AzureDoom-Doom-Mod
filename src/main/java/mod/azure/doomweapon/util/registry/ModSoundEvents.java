@@ -29,10 +29,6 @@ public class ModSoundEvents {
 
 	public static final RegistryObject<SoundEvent> SHOOT1 = MOD_SOUNDS.register("doom.shoot1",
 			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.shoot1")));
-	public static final RegistryObject<SoundEvent> SHOOT2 = MOD_SOUNDS.register("doom.shoot2",
-			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.shoot2")));
-	public static final RegistryObject<SoundEvent> SHOOT3 = MOD_SOUNDS.register("doom.shoot3",
-			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.shoot3")));
 
 	public static final RegistryObject<SoundEvent> CHAINGUN_SHOOT = MOD_SOUNDS.register("doom.chaingun_fire",
 			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.chaingun_fire")));
@@ -43,39 +39,11 @@ public class ModSoundEvents {
 	public static final RegistryObject<SoundEvent> SHOTGUN_SHOOT = MOD_SOUNDS.register("doom.shotgun_fire",
 			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.shotgun_fire")));
 
-	public static final RegistryObject<SoundEvent> LOADING_START = MOD_SOUNDS.register("doom.loading_start",
-			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.loading_start")));
-	public static final RegistryObject<SoundEvent> LOADING_MIDDLE1 = MOD_SOUNDS.register("doom.loading_middle1",
-			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.loading_middle1")));
-	public static final RegistryObject<SoundEvent> LOADING_MIDDLE2 = MOD_SOUNDS.register("doom.loading_middle2",
-			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.loading_middle2")));
-	public static final RegistryObject<SoundEvent> LOADING_MIDDLE3 = MOD_SOUNDS.register("doom.loading_middle3",
-			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.loading_middle3")));
-	public static final RegistryObject<SoundEvent> LOADING_MIDDLE4 = MOD_SOUNDS.register("doom.loading_middle4",
-			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.loading_middle4")));
 	public static final RegistryObject<SoundEvent> LOADING_END = MOD_SOUNDS.register("doom.loading_end",
 			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.loading_end")));
 
 	public static final RegistryObject<SoundEvent> QUICK1_1 = MOD_SOUNDS.register("doom.quick1_1",
 			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.quick1_1")));
-	public static final RegistryObject<SoundEvent> QUICK1_2 = MOD_SOUNDS.register("doom.quick1_2",
-			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.quick1_2")));
-	public static final RegistryObject<SoundEvent> QUICK1_3 = MOD_SOUNDS.register("doom.quick1_3",
-			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.quick1_3")));
-
-	public static final RegistryObject<SoundEvent> QUICK2_1 = MOD_SOUNDS.register("doom.quick2_1",
-			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.quick2_1")));
-	public static final RegistryObject<SoundEvent> QUICK2_2 = MOD_SOUNDS.register("doom.quick2_2",
-			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.quick2_2")));
-	public static final RegistryObject<SoundEvent> QUICK2_3 = MOD_SOUNDS.register("doom.quick2_3",
-			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.quick2_3")));
-
-	public static final RegistryObject<SoundEvent> QUICK3_1 = MOD_SOUNDS.register("doom.quick3_1",
-			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.quick3_1")));
-	public static final RegistryObject<SoundEvent> QUICK3_2 = MOD_SOUNDS.register("doom.quick3_2",
-			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.quick3_2")));
-	public static final RegistryObject<SoundEvent> QUICK3_3 = MOD_SOUNDS.register("doom.quick3_3",
-			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.quick3_3")));
 
 	public static final RegistryObject<SoundEvent> E1M1 = MOD_SOUNDS.register("doom.e1m1",
 			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.e1m1")));
@@ -147,6 +115,13 @@ public class ModSoundEvents {
 			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.cacodemon_death")));
 	public static final RegistryObject<SoundEvent> SPIDERDEMON_HURT = MOD_SOUNDS.register("doom.spiderdemon_say",
 			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.spiderdemon_say")));
+	
+	public static final RegistryObject<SoundEvent> ARACHNOTRON_AMBIENT = MOD_SOUNDS.register("doom.arachnotron_idle",
+			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.arachnotron_idle")));
+	public static final RegistryObject<SoundEvent> ARACHNOTRON_DEATH = MOD_SOUNDS.register("doom.arachnotron_death",
+			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.arachnotron_death")));
+	public static final RegistryObject<SoundEvent> ARACHNOTRON_HURT = MOD_SOUNDS.register("doom.arachnotron_hurt",
+			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.arachnotron_hurt")));
 
 	public static final RegistryObject<SoundEvent> ZOMBIEMAN_AMBIENT = MOD_SOUNDS.register("doom.zombieman_idle",
 			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.zombieman_idle")));
@@ -179,6 +154,8 @@ public class ModSoundEvents {
 			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.revenant_death")));
 	public static final RegistryObject<SoundEvent> REVENANT_HURT = MOD_SOUNDS.register("doom.revenant_hit",
 			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.revenant_hit")));
+	public static final RegistryObject<SoundEvent> REVENANT_ATTACK = MOD_SOUNDS.register("doom.revenant_attack",
+			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.revenant_attack")));
 
 	public static final RegistryObject<SoundEvent> HELLKNIGHT_AMBIENT = MOD_SOUNDS.register("doom.hellknight_say",
 			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.hellknight_say")));

@@ -17,6 +17,18 @@
 	"doom.icon_ambient": {
 		"category": "music", "sounds": [{"name": "doomweapon:icon_ambient", "stream": true}]
 	},
+	"doom.arachnotron_idle": {
+		"category": "music", "sounds": [{"name": "doomweapon:arachnotron_idle", "stream": true}]
+	},
+	"doom.arachnotron_hurt": {
+		"category": "music", "sounds": [{"name": "doomweapon:arachnotron_hurt", "stream": true}]
+	},
+	"doom.arachnotron_death": {
+		"category": "music", "sounds": [{"name": "doomweapon:arachnotron_death", "stream": true}]
+	},
+	"doom.arachnotron_attack": {
+		"category": "music", "sounds": [{"name": "doomweapon:arachnotron_attack", "stream": true}]
+	},
 	"doom.shotgun_fire": {
 		"category": "music", "sounds": [{"name": "doomweapon:shotgun_fire", "stream": true}]
 	},
@@ -79,6 +91,9 @@
 	},
 	"doom.revenant_say": {
 		"category": "music", "sounds": [{"name": "doomweapon:revenant_say", "stream": true}]
+	},
+	"doom.revenant_attack": {
+		"category": "music", "sounds": [{"name": "doomweapon:revenant_attack", "stream": true}]
 	},
 	"doom.cacodemon_affectionate_scream": {
 		"category": "music", "sounds": [{"name": "doomweapon:cacodemon_affectionate_scream", "stream": true}]
@@ -170,56 +185,11 @@
 	"doom.mancubus_walk": {
 		"category": "music", "sounds": [{"name": "doomweapon:mancubus_walk", "stream": true}]
 	},
-	"doom.loading_middle1": {
-		"category": "music", "sounds": [{"name": "doomweapon:loading_middle1", "stream": true}]
-	},
-	"doom.loading_middle2": {
-		"category": "music", "sounds": [{"name": "doomweapon:loading_middle2", "stream": true}]
-	},
-	"doom.loading_middle3": {
-		"category": "music", "sounds": [{"name": "doomweapon:loading_middle3", "stream": true}]
-	},
-	"doom.loading_middle4": {
-		"category": "music", "sounds": [{"name": "doomweapon:loading_middle4", "stream": true}]
-	},
-	"doom.loading_start": {
-		"category": "music", "sounds": [{"name": "doomweapon:loading_start", "stream": true}]
-	},
 	"doom.shoot1": {
 		"category": "music", "sounds": [{"name": "doomweapon:shoot1", "stream": true}]
 	},
-	"doom.shoot2": {
-		"category": "music", "sounds": [{"name": "doomweapon:shoot2", "stream": true}]
-	},
-	"doom.shoot3": {
-		"category": "music", "sounds": [{"name": "doomweapon:shoot3", "stream": true}]
-	},
 	"doom.quick1_1": {
 		"category": "music", "sounds": [{"name": "doomweapon:quick1_1", "stream": true}]
-	},
-	"doom.quick1_2": {
-		"category": "music", "sounds": [{"name": "doomweapon:quick1_2", "stream": true}]
-	},
-	"doom.quick1_3": {
-		"category": "music", "sounds": [{"name": "doomweapon:quick1_3", "stream": true}]
-	},
-	"doom.quick2_1": {
-		"category": "music", "sounds": [{"name": "doomweapon:quick2_1", "stream": true}]
-	},
-	"doom.quick2_2": {
-		"category": "music", "sounds": [{"name": "doomweapon:quick2_2", "stream": true}]
-	},
-	"doom.quick2_3": {
-		"category": "music", "sounds": [{"name": "doomweapon:quick2_3", "stream": true}]
-	},
-	"doom.quick3_1": {
-		"category": "music", "sounds": [{"name": "doomweapon:quick3_1", "stream": true}]
-	},
-	"doom.quick3_2": {
-		"category": "music", "sounds": [{"name": "doomweapon:quick3_2", "stream": true}]
-	},
-	"doom.quick3_3": {
-		"category": "music", "sounds": [{"name": "doomweapon:quick3_3", "stream": true}]
 	},
 	"doom.bfg_hit": {
 		"category": "music", "sounds": [{"name": "doomweapon:bfg_hit", "stream": true}]
