@@ -19,18 +19,13 @@ public class LootHandler {
 		if (name.startsWith(prefix)) {
 			String file = name.substring(name.indexOf(prefix) + prefix.length());
 			switch (file) {
-			case "abandoned_mineshaft":
-			case "desert_pyramid":
-			case "jungle_temple":
-			case "simple_dungeon":
+			case "ruined_portal":
+			case "bastion_bridge":
+			case "bastion_hoglin_stable":
+			case "bastion_other":
+			case "bastion_treasure":
+			case "nether_bridge":
 			case "spawn_bonus_chest":
-			case "stronghold_corridor":
-			case "end_city_treasure":
-			case "stronghold_crossing":
-			case "underwater_ruin_small":
-			case "underwater_ruin_big":
-			case "buried_treasure":
-			case "shipwreck_treasure":
 				evt.getTable().addPool(getInjectPool(file));
 				break;
 			default:
