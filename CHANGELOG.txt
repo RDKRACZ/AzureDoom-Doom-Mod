@@ -1,6 +1,6 @@
-v.3.1.3
+v.3.1.4
 
-- Updated Astro, Crimson, Gold Armor textures
-- New Sounds Thanks to Also Yellow
-- New Music Discs Thanks to Also Yellow
-- Unmaykr Firing Sound Thanks to Also Yellow
+- Updated Shotgun
+- Updated Crimson, 25th, Classic Indigo, and Phobos armors - Thanks Silly
+- Added Demoncide Armor
+- Compressed Mod asssets
