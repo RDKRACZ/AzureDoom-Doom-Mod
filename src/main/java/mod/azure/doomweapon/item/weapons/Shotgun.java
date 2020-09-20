@@ -159,7 +159,7 @@ public class Shotgun extends ShootableItem {
 
 	@Override
 	public UseAction getUseAction(ItemStack stack) {
-		return UseAction.BOW;
+		return UseAction.CROSSBOW;
 	}
 
 	@Override
