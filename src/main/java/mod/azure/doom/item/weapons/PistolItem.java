@@ -109,7 +109,7 @@ public class PistolItem extends BowItem {
 						worldIn.addEntity(abstractarrowentity);
 					}
 					worldIn.playSound((PlayerEntity) null, playerentity.getPosX(), playerentity.getPosY(),
-							playerentity.getPosZ(), ModSoundEvents.SHOTGUN_SHOOT.get(), SoundCategory.PLAYERS, 1.0F,
+							playerentity.getPosZ(), ModSoundEvents.PISTOL_HIT.get(), SoundCategory.PLAYERS, 1.0F,
 							1.0F / (random.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
 					if (!flag1 && !playerentity.abilities.isCreativeMode) {
 						itemstack.shrink(1);
@@ -117,7 +117,6 @@ public class PistolItem extends BowItem {
 							playerentity.inventory.deleteStack(itemstack);
 						}
 					}
-					playerentity.addStat(Stats.ITEM_USED.get(this));
 				}
 			}
 		}

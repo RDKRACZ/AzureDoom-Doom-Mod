@@ -11,7 +11,6 @@ import mod.azure.doom.item.ammo.ShellAmmo;
 import mod.azure.doom.util.enums.DoomTier;
 import mod.azure.doom.util.registry.DoomItems;
 import mod.azure.doom.util.registry.ModSoundEvents;
-import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.enchantment.IVanishable;
@@ -19,7 +18,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.ICrossbowUser;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.entity.projectile.FireworkRocketEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
@@ -31,7 +29,6 @@ import net.minecraft.item.Items;
 import net.minecraft.item.UseAction;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
-import net.minecraft.stats.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
@@ -112,15 +109,6 @@ public class SuperShotgun extends CrossbowItem implements IVanishable {
 	}
 
 	private static void fireProjectilesAfter(World worldIn, LivingEntity shooter, ItemStack stack) {
-		if (shooter instanceof ServerPlayerEntity) {
-			ServerPlayerEntity serverplayerentity = (ServerPlayerEntity) shooter;
-			if (!worldIn.isRemote) {
-				CriteriaTriggers.SHOT_CROSSBOW.test(serverplayerentity, stack);
-			}
-
-			serverplayerentity.addStat(Stats.ITEM_USED.get(stack.getItem()));
-		}
-
 		clearProjectiles(stack);
 	}
 
@@ -158,7 +146,7 @@ public class SuperShotgun extends CrossbowItem implements IVanishable {
 		if (!worldIn.isRemote) {
 			int i = EnchantmentHelper.getEnchantmentLevel(Enchantments.QUICK_CHARGE, stack);
 			SoundEvent soundevent = this.getSoundEvent(i);
-			SoundEvent soundevent1 = i == 0 ? ModSoundEvents.LOADING_MIDDLE1.get() : null;
+			SoundEvent soundevent1 = i == 0 ? ModSoundEvents.LOADING_END.get() : null;
 			float f = (float) (stack.getUseDuration() - count) / (float) getChargeTime(stack);
 			if (f < 0.2F) {
 				this.isLoadingStart = false;
@@ -365,11 +353,11 @@ public class SuperShotgun extends CrossbowItem implements IVanishable {
 		case 1:
 			return ModSoundEvents.QUICK1_1.get();
 		case 2:
-			return ModSoundEvents.QUICK2_1.get();
+			return ModSoundEvents.QUICK1_1.get();
 		case 3:
-			return ModSoundEvents.QUICK3_1.get();
+			return ModSoundEvents.QUICK1_1.get();
 		default:
-			return ModSoundEvents.LOADING_START.get();
+			return ModSoundEvents.LOADING_END.get();
 		}
 	}
 

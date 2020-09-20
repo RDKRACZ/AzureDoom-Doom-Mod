@@ -141,7 +141,7 @@ public class Ballista extends ShootableItem implements IVanishable {
 		if (!worldIn.isRemote) {
 			int i = EnchantmentHelper.getEnchantmentLevel(Enchantments.QUICK_CHARGE, stack);
 			SoundEvent soundevent = this.getSoundEvent(i);
-			SoundEvent soundevent1 = i == 0 ? ModSoundEvents.LOADING_MIDDLE1.get() : null;
+			SoundEvent soundevent1 = i == 0 ? ModSoundEvents.LOADING_END.get() : null;
 			float f = (float) (stack.getUseDuration() - count) / (float) getChargeTime(stack);
 			if (f < 0.2F) {
 				this.isLoadingStart = false;
@@ -383,11 +383,11 @@ public class Ballista extends ShootableItem implements IVanishable {
 		case 1:
 			return ModSoundEvents.QUICK1_1.get();
 		case 2:
-			return ModSoundEvents.QUICK2_1.get();
+			return ModSoundEvents.QUICK1_1.get();
 		case 3:
-			return ModSoundEvents.QUICK3_1.get();
+			return ModSoundEvents.QUICK1_1.get();
 		default:
-			return ModSoundEvents.LOADING_START.get();
+			return ModSoundEvents.LOADING_END.get();
 		}
 	}
 
