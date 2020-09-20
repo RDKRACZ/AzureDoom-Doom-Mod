@@ -34,6 +34,9 @@
 	"doom.chaingun_fire": {
 		"category": "music", "sounds": [{"name": "doomweapon:chaingun_fire", "stream": true}]
 	},
+	"doom.unmakyr_fire": {
+		"category": "music", "sounds": [{"name": "doomweapon:unmakyr_fire", "stream": true}]
+	},
 	"doom.icon_death": {
 		"category": "music", "sounds": [{"name": "doomweapon:icon_death", "stream": true}]
 	},

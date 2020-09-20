@@ -38,6 +38,9 @@ public class ModSoundEvents {
 
 	public static final RegistryObject<SoundEvent> SHOTGUN_SHOOT = MOD_SOUNDS.register("doom.shotgun_fire",
 			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.shotgun_fire")));
+	
+	public static final RegistryObject<SoundEvent> UNMAKYR_FIRE = MOD_SOUNDS.register("doom.unmakyr_fire",
+			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.unmakyr_fire")));
 
 	public static final RegistryObject<SoundEvent> LOADING_END = MOD_SOUNDS.register("doom.loading_end",
 			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.loading_end")));

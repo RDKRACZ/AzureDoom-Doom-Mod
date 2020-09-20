@@ -109,7 +109,7 @@ public class Unmaykr extends ShootableItem implements IVanishable {
 					worldIn.addEntity(abstractarrowentity);
 				}
 				worldIn.playSound((PlayerEntity) null, playerentity.getPosX(), playerentity.getPosY(),
-						playerentity.getPosZ(), ModSoundEvents.ROCKET_FIRING.get(), SoundCategory.PLAYERS, 1.0F,
+						playerentity.getPosZ(), ModSoundEvents.UNMAKYR_FIRE.get(), SoundCategory.PLAYERS, 1.0F,
 						1.0F / (random.nextFloat() * 0.4F + 1.2F) + 1 * 0.5F);
 				if (!flag1 && !playerentity.abilities.isCreativeMode) {
 					itemstack.shrink(1);
