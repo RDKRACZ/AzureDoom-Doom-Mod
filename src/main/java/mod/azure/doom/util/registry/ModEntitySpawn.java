@@ -43,7 +43,7 @@ public class ModEntitySpawn {
 	/* Major fucking thanks to Corgi Taco for figuring this shit out */
 	@SuppressWarnings("deprecation")
 	public static void addSpawnEntries() {
-		for (Biome biome : WorldGenRegistries.field_243657_i) {
+		for (Biome biome : WorldGenRegistries.BIOME) {
 			if (biome.getCategory().equals(Biome.Category.NETHER)) {
 				addMobSpawnToBiome(biome, EntityClassification.MONSTER,
 						new MobSpawnInfo.Spawners(ModEntityTypes.IMP.get(), 30, 1, 4),
@@ -79,14 +79,14 @@ public class ModEntitySpawn {
 			MobSpawnInfo.Spawners... spawnInfos) {
 		convertImmutableSpawners(biome);
 		List<MobSpawnInfo.Spawners> spawnersList = new ArrayList<>(
-				biome.func_242433_b().field_242554_e.get(classification));
+				biome.getMobSpawnInfo().spawners.get(classification));
 		spawnersList.addAll(Arrays.asList(spawnInfos));
-		biome.func_242433_b().field_242554_e.put(classification, spawnersList);
+		biome.getMobSpawnInfo().spawners.put(classification, spawnersList);
 	}
 
 	private static void convertImmutableSpawners(Biome biome) {
-		if (biome.func_242433_b().field_242554_e instanceof ImmutableMap) {
-			biome.func_242433_b().field_242554_e = new HashMap<>(biome.func_242433_b().field_242554_e);
+		if (biome.getMobSpawnInfo().spawners instanceof ImmutableMap) {
+			biome.getMobSpawnInfo().spawners = new HashMap<>(biome.getMobSpawnInfo().spawners);
 		}
 	}
 
