@@ -33,6 +33,10 @@ public enum DoomArmorMaterial implements IArmorMaterial {
 			8.0F, () -> {
 				return Ingredient.fromItems(DoomItems.ARGENT_ENERGY.get());
 			}),
+	DEMONCIDE_DOOM_ARMOR("doomweapon:demoncide_armor", 50, new int[] { 5, 8, 10, 5 }, 30,
+			SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 8.0F, () -> {
+				return Ingredient.fromItems(DoomItems.ARGENT_ENERGY.get());
+			}),
 	DEMONIC_DOOM_ARMOR("doomweapon:demonic_armor", 50, new int[] { 5, 8, 10, 5 }, 30,
 			SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 8.0F, () -> {
 				return Ingredient.fromItems(DoomItems.ARGENT_ENERGY.get());
