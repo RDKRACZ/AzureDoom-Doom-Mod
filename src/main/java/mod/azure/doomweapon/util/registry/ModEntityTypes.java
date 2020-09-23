@@ -40,8 +40,10 @@ import mod.azure.doomweapon.entity.projectiles.entity.ChaingunMobEntity;
 import mod.azure.doomweapon.entity.projectiles.entity.EnergyCellMobEntity;
 import mod.azure.doomweapon.entity.projectiles.entity.RocketMobEntity;
 import mod.azure.doomweapon.entity.projectiles.entity.ShotgunMobEntity;
+import mod.azure.doomweapon.entity.tileentity.IconBlockEntity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -51,6 +53,13 @@ public class ModEntityTypes {
 
 	public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITIES,
 			DoomMod.MODID);
+
+	public static final DeferredRegister<TileEntityType<?>> TILE_TYPES = DeferredRegister
+			.create(ForgeRegistries.TILE_ENTITIES, DoomMod.MODID);
+
+	public static final RegistryObject<TileEntityType<IconBlockEntity>> ICON = TILE_TYPES.register("icon",
+			() -> TileEntityType.Builder.<IconBlockEntity>create(IconBlockEntity::new, DoomBlocks.DOOM_WALL1.get())
+					.build(null));
 
 	public static final RegistryObject<EntityType<BarrelEntity>> BARREL = ENTITY_TYPES.register("barrel",
 			() -> EntityType.Builder.<BarrelEntity>create(BarrelEntity::new, EntityClassification.MISC)
