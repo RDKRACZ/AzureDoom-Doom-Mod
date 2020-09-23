@@ -69,8 +69,7 @@ public class ModEntitySpawn {
 						new MobSpawnInfo.Spawners(ModEntityTypes.UNWILLING.get(), 30, 1, 4),
 						new MobSpawnInfo.Spawners(ModEntityTypes.POSSESSEDSCIENTIST.get(), 30, 1, 4),
 						new MobSpawnInfo.Spawners(ModEntityTypes.POSSESSEDSOLDIER.get(), 30, 1, 4),
-						new MobSpawnInfo.Spawners(ModEntityTypes.CYBERDEMON2016.get(), 10, 1, 1),
-						new MobSpawnInfo.Spawners(ModEntityTypes.ICONOFSIN.get(), 1, 1, 1));
+						new MobSpawnInfo.Spawners(ModEntityTypes.CYBERDEMON2016.get(), 10, 1, 1));
 			}
 		}
 	}

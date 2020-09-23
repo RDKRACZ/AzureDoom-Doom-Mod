@@ -1,0 +1,17 @@
+{
+	"result": {
+		"item": "doomweapon:icon_wall10"
+	},
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"$$#"
+	],
+	"key": {
+		"$": {
+			"item": "doomweapon:argent_block"
+		},
+		"#": {
+			"item": "doomweapon:icon_wall1"
+		}
+	}
+}
