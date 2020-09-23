@@ -312,5 +312,8 @@
 	"itemGroup.doomarmor": "Doom Armor",
 	"itemGroup.doomeggs": "Doom Eggs",
 	"itemGroup.doomblocks": "Doom Blocks",
-	"itemGroup.doompowerup": "Doom Powerups"
+	"itemGroup.doompowerup": "Doom Powerups",
+	"key.categories.doomweapon": "Doom",
+	"key.doomweapon.lock_on": "Lock On",
+	"key.doomweapon.tab": "Switch"
 }
