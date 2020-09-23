@@ -45,6 +45,7 @@ public class DoomMod {
 		Config.loadConfig(Config.SERVER_SPEC, FMLPaths.CONFIGDIR.get().resolve("doom-config.toml").toString());
 		ModSoundEvents.MOD_SOUNDS.register(modEventBus);
 		ModEntityTypes.ENTITY_TYPES.register(modEventBus);
+		ModEntityTypes.TILE_TYPES.register(modEventBus);
 		DoomItems.ITEMS.register(modEventBus);
 		DoomBlocks.BLOCKS.register(modEventBus);
 	}
