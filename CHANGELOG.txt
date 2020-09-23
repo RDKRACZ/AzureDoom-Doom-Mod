@@ -1,5 +1,4 @@
-v.3.1.4
+v.3.1.5
 
-- Updated Shotgun
-- Updated Crimson, 25th, Classic Indigo, and Phobos armors - Thanks Silly
-- Added Demoncide Armor
+- Added Icon of Wall blocks. Is the only way to spawn the Icon of Sin
+- Added the option of locking on mobs! Thanks to Itemstack for the code!
