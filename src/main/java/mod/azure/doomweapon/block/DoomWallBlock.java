@@ -16,6 +16,8 @@ import net.minecraft.block.pattern.BlockPatternBuilder;
 import net.minecraft.block.pattern.BlockStateMatcher;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.CachedBlockInfo;
 import net.minecraft.util.Direction;
@@ -66,6 +68,8 @@ public class DoomWallBlock extends ContainerBlock {
 							0.0F);
 					witherentity.renderYawOffset = blockpattern$patternhelper.getForwards()
 							.getAxis() == Direction.Axis.X ? 0.0F : 90.0F;
+					witherentity.addPotionEffect(new EffectInstance(Effects.SLOWNESS, 200, 4));
+					witherentity.addPotionEffect(new EffectInstance(Effects.RESISTANCE, 200, 4));
 					worldIn.addEntity(witherentity);
 
 					for (int k = 0; k < blockpattern.getPalmLength(); ++k) {
