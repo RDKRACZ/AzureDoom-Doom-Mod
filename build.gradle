@@ -90,6 +90,10 @@ dependencies {
 	compile fg.deobf("curse.maven:PMMO:3052870")
 	compile fg.deobf("curse.maven:Model1:2985799")
 	compile fg.deobf("curse.maven:Model2:2995535")
+	
+	
+	compile fg.deobf("curse.maven:BOP:2988999")
+	compile fg.deobf("curse.maven:BYG:3055112")
 }
 
 jar {
@@ -158,7 +162,9 @@ curseforge {
             requiredDependency 'curios'  
             optionalDependency 'project-mmo' 
             optionalDependency 'extended-nether-backport'    
-            optionalDependency 'netherex'         
+            optionalDependency 'netherex'   
+            optionalDependency 'oh-the-biomes-youll-go'    
+            optionalDependency 'biomes-o-plenty'               
         }
     }
 }
