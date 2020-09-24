@@ -9,6 +9,8 @@ import mod.azure.doomweapon.item.ammo.EnergyCell;
 import mod.azure.doomweapon.item.ammo.Rocket;
 import mod.azure.doomweapon.item.ammo.ShellAmmo;
 import mod.azure.doomweapon.item.ammo.UnmaykrBolt;
+import mod.azure.doomweapon.util.registry.BYGSpawns;
+import mod.azure.doomweapon.util.registry.BoPSpawns;
 import mod.azure.doomweapon.util.registry.DoomItems;
 import mod.azure.doomweapon.util.registry.ExtraModSpawns;
 import mod.azure.doomweapon.util.registry.ModEntitySpawn;
@@ -63,6 +65,12 @@ public class ModEventSubscriber {
 		}
 		if (ModList.get().isLoaded("netherex")) {
 			NetherExSpawns.registerEntityModWorldSpawns();
+		}
+		if (ModList.get().isLoaded("biomesoplenty")) {
+			BoPSpawns.registerEntityModWorldSpawns();
+		}
+		if (ModList.get().isLoaded("byg")) {
+			BYGSpawns.registerEntityModWorldSpawns();
 		}
 	}
 
