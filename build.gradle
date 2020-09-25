@@ -76,6 +76,7 @@ repositories {
         name = "CurseForge"
         url = "https://minecraft.curseforge.com/api/maven/"
     }
+    maven { url 'https://repo.repsy.io/mvn/gandiber/geckolib' }
 }
 
 dependencies {
@@ -90,8 +91,7 @@ dependencies {
 	compile fg.deobf("curse.maven:PMMO:3052870")
 	compile fg.deobf("curse.maven:Model1:2985799")
 	compile fg.deobf("curse.maven:Model2:2995535")
-	
-	
+	implementation fg.deobf('software.bernie.geckolib:forge-1.15.2-geckolib:2.0.0')
 	compile fg.deobf("curse.maven:BOP:2988999")
 	compile fg.deobf("curse.maven:BYG:3055112")
 }
@@ -159,7 +159,8 @@ curseforge {
         addGameVersion("Java 8")
 
         relations {
-            requiredDependency 'curios'  
+            requiredDependency 'curios'
+            requiredDependency 'geckolib'    
             optionalDependency 'project-mmo' 
             optionalDependency 'extended-nether-backport'    
             optionalDependency 'netherex'   
