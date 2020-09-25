@@ -54,6 +54,11 @@ public class IconofsinEntity extends DemonEntity {
 	}
 
 	@Override
+	public boolean onLivingFall(float distance, float damageMultiplier) {
+		return false;
+	}
+	
+	@Override
 	public IPacket<?> createSpawnPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
@@ -88,6 +93,7 @@ public class IconofsinEntity extends DemonEntity {
 		return MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 100.0D)
 				.createMutableAttribute(Attributes.MAX_HEALTH, 1000.0D)
 				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D)
+				.createMutableAttribute(Attributes.KNOCKBACK_RESISTANCE, 1000.0D)
 				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 30.0D);
 	}
 

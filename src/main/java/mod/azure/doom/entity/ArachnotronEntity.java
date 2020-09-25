@@ -12,6 +12,7 @@ import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.CreatureAttribute;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
@@ -47,11 +48,17 @@ import net.minecraft.world.IServerWorld;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
+import software.bernie.geckolib.animation.builder.AnimationBuilder;
+import software.bernie.geckolib.animation.controller.EntityAnimationController;
+import software.bernie.geckolib.entity.IAnimatedEntity;
+import software.bernie.geckolib.event.AnimationTestEvent;
+import software.bernie.geckolib.manager.EntityAnimationManager;
 
-public class ArachnotronEntity extends DemonEntity {
+public class ArachnotronEntity extends DemonEntity implements IAnimatedEntity {
 
 	public ArachnotronEntity(EntityType<ArachnotronEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
+		manager.addAnimationController(controller);
 	}
 
 	@Override
@@ -262,6 +269,21 @@ public class ArachnotronEntity extends DemonEntity {
 	@Override
 	public int getMaxSpawnedInChunk() {
 		return 2;
+	}
+
+	EntityAnimationManager manager = new EntityAnimationManager();
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	EntityAnimationController controller = new EntityAnimationController(this, "walkController", 5,
+			this::animationPredicate);
+
+	private <E extends Entity> boolean animationPredicate(AnimationTestEvent<E> event) {
+		controller.setAnimation(new AnimationBuilder().addAnimation("walking"));
+		return true;
+	}
+
+	@Override
+	public EntityAnimationManager getAnimationManager() {
+		return manager;
 	}
 
 }
