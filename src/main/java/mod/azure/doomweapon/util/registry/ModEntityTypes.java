@@ -93,7 +93,8 @@ public class ModEntityTypes {
 
 	public static final RegistryObject<EntityType<LostSoulEntity>> LOST_SOUL = ENTITY_TYPES.register("lost_soul",
 			() -> EntityType.Builder.<LostSoulEntity>create(LostSoulEntity::new, EntityClassification.MISC)
-					.size(1.0F, 1.0F).build(new ResourceLocation(DoomMod.MODID, "lost_soul").toString()));
+					.immuneToFire().size(1.0F, 1.0F)
+					.build(new ResourceLocation(DoomMod.MODID, "lost_soul").toString()));
 
 	public static final RegistryObject<EntityType<BarenBlastEntity>> BARENBLAST = ENTITY_TYPES.register("barenblast",
 			() -> EntityType.Builder.<BarenBlastEntity>create(BarenBlastEntity::new, EntityClassification.MISC)
