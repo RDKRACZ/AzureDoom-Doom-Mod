@@ -51,6 +51,11 @@ public class IconofsinEntity extends DemonEntity {
 	public IconofsinEntity(World worldIn) {
 		this(ModEntityTypes.ICONOFSIN.get(), worldIn);
 	}
+	
+	@Override
+	public boolean onLivingFall(float distance, float damageMultiplier) {
+		return false;
+	}
 
 	@Override
 	public IPacket<?> createSpawnPacket() {
@@ -89,6 +94,7 @@ public class IconofsinEntity extends DemonEntity {
 		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(3.0D);
 		this.getAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(2.0D);
 		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(1000.0D);
+		this.getAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1000.0D);
 	}
 
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
