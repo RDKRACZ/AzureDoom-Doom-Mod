@@ -41,6 +41,10 @@ public enum DoomArmorMaterial implements IArmorMaterial {
 			SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 8.0F, () -> {
 				return Ingredient.fromItems(DoomItems.ARGENT_ENERGY.get());
 			}),
+	HOTROD_DOOM_ARMOR("doomweapon:hotrod_armor", 50, new int[] { 5, 8, 10, 5 }, 30,
+			SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 8.0F, () -> {
+				return Ingredient.fromItems(DoomItems.ARGENT_ENERGY.get());
+			}),
 	SENTINEL_DOOM_ARMOR("doomweapon:sentinel_armor", 50, new int[] { 5, 8, 10, 5 }, 30,
 			SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 8.0F, () -> {
 				return Ingredient.fromItems(DoomItems.ARGENT_ENERGY.get());
