@@ -117,7 +117,7 @@ public class DoomItems {
 			() -> new BlockItem(DoomBlocks.DOOM_WALL15.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> DOOM_WALL16 = ITEMS.register("icon_wall16",
 			() -> new BlockItem(DoomBlocks.DOOM_WALL16.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
-	
+
 	// AMMO
 	public static final RegistryObject<Item> SHOTGUN_SHELLS = ITEMS.register("shotgun_shells",
 			() -> new ShellAmmo(new Item.Properties().group(DoomMod.DoomWeaponItemGroup), 2.0F));
@@ -485,4 +485,12 @@ public class DoomItems {
 			() -> new MulletDoomArmor(DoomArmorMaterial.REDNECK2_ARMOR, EquipmentSlotType.FEET));
 	public static final RegistryObject<Item> MULLET_DOOM_BOOTS3 = ITEMS.register("redneck_doom3_boots",
 			() -> new MulletDoomArmor(DoomArmorMaterial.REDNECK3_ARMOR, EquipmentSlotType.FEET));
+	public static final RegistryObject<Item> HOTROD_HELMET = ITEMS.register("hotrod_helmet",
+			() -> new DoomArmor(DoomArmorMaterial.HOTROD_DOOM_ARMOR, EquipmentSlotType.HEAD));
+	public static final RegistryObject<Item> HOTROD_CHESTPLATE = ITEMS.register("hotrod_chestplate",
+			() -> new DoomArmor(DoomArmorMaterial.HOTROD_DOOM_ARMOR, EquipmentSlotType.CHEST));
+	public static final RegistryObject<Item> HOTROD_LEGGINGS = ITEMS.register("hotrod_leggings",
+			() -> new DoomArmor(DoomArmorMaterial.HOTROD_DOOM_ARMOR, EquipmentSlotType.LEGS));
+	public static final RegistryObject<Item> HOTROD_BOOTS = ITEMS.register("hotrod_boots",
+			() -> new DoomArmor(DoomArmorMaterial.HOTROD_DOOM_ARMOR, EquipmentSlotType.FEET));
 }
