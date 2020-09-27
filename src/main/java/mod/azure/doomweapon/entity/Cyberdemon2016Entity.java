@@ -111,21 +111,15 @@ public class Cyberdemon2016Entity extends DemonEntity {
 					&& this.parentEntity.canEntityBeSeen(livingentity)) {
 				World world = this.parentEntity.world;
 				++this.attackTimer;
-				if (this.attackTimer == 10) {
-					// world.playEvent((PlayerEntity) null, 1015, new BlockPos(this.parentEntity),
-					// 0);
-				}
 
 				if (this.attackTimer == 20) {
 					Vec3d vec3d = this.parentEntity.getLook(1.0F);
 					double d2 = livingentity.getPosX() - (this.parentEntity.getPosX() + vec3d.x * 4.0D);
 					double d3 = livingentity.getPosYHeight(0.5D) - (0.5D + this.parentEntity.getPosYHeight(0.5D));
 					double d4 = livingentity.getPosZ() - (this.parentEntity.getPosZ() + vec3d.z * 4.0D);
-					world.playEvent((PlayerEntity) null, 1016, new BlockPos(this.parentEntity), 0);
 					RocketMobEntity fireballentity = new RocketMobEntity(world, this.parentEntity, d2, d3, d4);
-					// fireballentity.explosionPower = this.parentEntity.getFireballStrength();
-					fireballentity.setPosition(this.parentEntity.getPosX() + vec3d.x * 4.0D,
-							this.parentEntity.getPosYHeight(0.5D) + 0.5D, fireballentity.getPosZ() + vec3d.z * 4.0D);
+					fireballentity.setPosition(this.parentEntity.getPosX() + vec3d.x * 2.0D,
+							this.parentEntity.getPosYHeight(0.5D) + 0.00D, fireballentity.getPosZ() + vec3d.z * 1.0D);
 					world.addEntity(fireballentity);
 					this.attackTimer = -40;
 				}

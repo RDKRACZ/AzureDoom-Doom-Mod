@@ -54,10 +54,9 @@ public class ModEventSubscriber {
 				ModEntityTypes.HELLKNIGHT.get(), ModEntityTypes.ICONOFSIN.get(), ModEntityTypes.POSSESSEDSOLDIER.get(),
 				ModEntityTypes.BULLETS.get(), ModEntityTypes.CHAINGUN_BULLET.get(), ModEntityTypes.ENERGY_CELL.get(),
 				ModEntityTypes.SHOTGUN_SHELL.get(), ModEntityTypes.ARGENT_BOLT.get(),
-				ModEntityTypes.SHOTGUN_SHELL_MOB.get(), ModEntityTypes.BULLETS_MOB.get(),
-				ModEntityTypes.CHAINGUN_BULLET_MOB.get(), ModEntityTypes.ENERGY_CELL_MOB.get(),
-				ModEntityTypes.ROCKET_MOB.get(), ModEntityTypes.POSSESSEDSCIENTIST.get(),
-				ModEntityTypes.ZOMBIEMAN.get(), ModEntityTypes.LOST_SOUL.get(), ModEntityTypes.BARENBLAST.get());
+				ModEntityTypes.ENERGY_CELL_MOB.get(), ModEntityTypes.ROCKET_MOB.get(),
+				ModEntityTypes.POSSESSEDSCIENTIST.get(), ModEntityTypes.ZOMBIEMAN.get(), ModEntityTypes.LOST_SOUL.get(),
+				ModEntityTypes.BARENBLAST.get());
 		ModEntitySpawn.registerEntityWorldSpawns();
 		ModEntitySpawn.EntitySpawnPlacementRegistry();
 		if (ModList.get().isLoaded("extendednether")) {

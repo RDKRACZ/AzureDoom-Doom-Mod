@@ -35,11 +35,8 @@ import mod.azure.doomweapon.entity.projectiles.RocketEntity;
 import mod.azure.doomweapon.entity.projectiles.ShotgunShellEntity;
 import mod.azure.doomweapon.entity.projectiles.UnmaykrBoltEntity;
 import mod.azure.doomweapon.entity.projectiles.entity.BarenBlastEntity;
-import mod.azure.doomweapon.entity.projectiles.entity.BulletMobEntity;
-import mod.azure.doomweapon.entity.projectiles.entity.ChaingunMobEntity;
 import mod.azure.doomweapon.entity.projectiles.entity.EnergyCellMobEntity;
 import mod.azure.doomweapon.entity.projectiles.entity.RocketMobEntity;
-import mod.azure.doomweapon.entity.projectiles.entity.ShotgunMobEntity;
 import mod.azure.doomweapon.entity.tileentity.IconBlockEntity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
@@ -225,12 +222,6 @@ public class ModEntityTypes {
 					.size(2.4f, 10.0F).immuneToFire()
 					.build(new ResourceLocation(DoomMod.MODID, "iconofsin").toString()));
 
-	public static final RegistryObject<EntityType<ShotgunMobEntity>> SHOTGUN_SHELL_MOB = ENTITY_TYPES
-			.register("shotgun_shell_mob",
-					() -> EntityType.Builder.<ShotgunMobEntity>create(ShotgunMobEntity::new, EntityClassification.MISC)
-							.size(0.5F, 0.5F)
-							.build(new ResourceLocation(DoomMod.MODID, "shotgun_shell_mob").toString()));
-
 	public static final RegistryObject<EntityType<EnergyCellMobEntity>> ENERGY_CELL_MOB = ENTITY_TYPES
 			.register("energy_cell_mob",
 					() -> EntityType.Builder
@@ -240,14 +231,5 @@ public class ModEntityTypes {
 	public static final RegistryObject<EntityType<RocketMobEntity>> ROCKET_MOB = ENTITY_TYPES.register("rocket_mob",
 			() -> EntityType.Builder.<RocketMobEntity>create(RocketMobEntity::new, EntityClassification.MISC)
 					.size(0.5F, 0.5F).build(new ResourceLocation(DoomMod.MODID, "rocket_mob").toString()));
-
-	public static final RegistryObject<EntityType<BulletMobEntity>> BULLETS_MOB = ENTITY_TYPES.register("bullets_mob",
-			() -> EntityType.Builder.<BulletMobEntity>create(BulletMobEntity::new, EntityClassification.MISC)
-					.size(0.5F, 0.5F).build(new ResourceLocation(DoomMod.MODID, "bullets_mob").toString()));
-
-	public static final RegistryObject<EntityType<ChaingunMobEntity>> CHAINGUN_BULLET_MOB = ENTITY_TYPES.register(
-			"chaingunbullets_mob",
-			() -> EntityType.Builder.<ChaingunMobEntity>create(ChaingunMobEntity::new, EntityClassification.MISC)
-					.size(0.5F, 0.5F).build(new ResourceLocation(DoomMod.MODID, "chaingunbullets_mob").toString()));
 
 }
