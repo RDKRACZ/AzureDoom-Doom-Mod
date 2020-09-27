@@ -49,7 +49,6 @@ public class ModEntitySpawn {
 						new MobSpawnInfo.Spawners(ModEntityTypes.IMP.get(), 30, 1, 4),
 						new MobSpawnInfo.Spawners(ModEntityTypes.PINKY.get(), 12, 2, 4),
 						new MobSpawnInfo.Spawners(ModEntityTypes.LOST_SOUL.get(), 12, 2, 4),
-						new MobSpawnInfo.Spawners(ModEntityTypes.LOST_SOUL.get(), 12, 2, 4),
 						new MobSpawnInfo.Spawners(ModEntityTypes.CACODEMON.get(), 8, 1, 2),
 						new MobSpawnInfo.Spawners(ModEntityTypes.ARCHVILE.get(), 4, 1, 2),
 						new MobSpawnInfo.Spawners(ModEntityTypes.BARON.get(), 10, 1, 1),

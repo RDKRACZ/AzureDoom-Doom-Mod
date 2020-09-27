@@ -35,11 +35,8 @@ import mod.azure.doom.entity.projectiles.RocketEntity;
 import mod.azure.doom.entity.projectiles.ShotgunShellEntity;
 import mod.azure.doom.entity.projectiles.UnmaykrBoltEntity;
 import mod.azure.doom.entity.projectiles.entity.BarenBlastEntity;
-import mod.azure.doom.entity.projectiles.entity.BulletMobEntity;
-import mod.azure.doom.entity.projectiles.entity.ChaingunMobEntity;
 import mod.azure.doom.entity.projectiles.entity.EnergyCellMobEntity;
 import mod.azure.doom.entity.projectiles.entity.RocketMobEntity;
-import mod.azure.doom.entity.projectiles.entity.ShotgunMobEntity;
 import mod.azure.doom.entity.tileentity.IconBlockEntity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
@@ -53,7 +50,7 @@ public class ModEntityTypes {
 
 	public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITIES,
 			DoomMod.MODID);
-	
+
 	public static final DeferredRegister<TileEntityType<?>> TILE_TYPES = DeferredRegister
 			.create(ForgeRegistries.TILE_ENTITIES, DoomMod.MODID);
 
@@ -228,12 +225,6 @@ public class ModEntityTypes {
 					.trackingRange(9).immuneToFire()
 					.build(new ResourceLocation(DoomMod.MODID, "iconofsin").toString()));
 
-	public static final RegistryObject<EntityType<ShotgunMobEntity>> SHOTGUN_SHELL_MOB = ENTITY_TYPES.register(
-			"shotgun_shell_mob",
-			() -> EntityType.Builder.<ShotgunMobEntity>create(ShotgunMobEntity::new, EntityClassification.MISC)
-					.size(0.5F, 0.5F).trackingRange(9)
-					.build(new ResourceLocation(DoomMod.MODID, "shotgun_shell_mob").toString()));
-
 	public static final RegistryObject<EntityType<EnergyCellMobEntity>> ENERGY_CELL_MOB = ENTITY_TYPES.register(
 			"energy_cell_mob",
 			() -> EntityType.Builder.<EnergyCellMobEntity>create(EnergyCellMobEntity::new, EntityClassification.MISC)
@@ -244,16 +235,5 @@ public class ModEntityTypes {
 			() -> EntityType.Builder.<RocketMobEntity>create(RocketMobEntity::new, EntityClassification.MISC)
 					.size(0.5F, 0.5F).trackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "rocket_mob").toString()));
-
-	public static final RegistryObject<EntityType<BulletMobEntity>> BULLETS_MOB = ENTITY_TYPES.register("bullets_mob",
-			() -> EntityType.Builder.<BulletMobEntity>create(BulletMobEntity::new, EntityClassification.MISC)
-					.size(0.5F, 0.5F).trackingRange(9)
-					.build(new ResourceLocation(DoomMod.MODID, "bullets_mob").toString()));
-
-	public static final RegistryObject<EntityType<ChaingunMobEntity>> CHAINGUN_BULLET_MOB = ENTITY_TYPES.register(
-			"chaingunbullets_mob",
-			() -> EntityType.Builder.<ChaingunMobEntity>create(ChaingunMobEntity::new, EntityClassification.MISC)
-					.size(0.5F, 0.5F).trackingRange(9)
-					.build(new ResourceLocation(DoomMod.MODID, "chaingunbullets_mob").toString()));
 
 }

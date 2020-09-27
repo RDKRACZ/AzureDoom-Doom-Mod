@@ -102,14 +102,11 @@ public class Cyberdemon2016Entity extends DemonEntity {
 					double d2 = livingentity.getPosX() - (this.parentEntity.getPosX() + vector3d.x * 4.0D);
 					double d3 = livingentity.getPosYHeight(0.5D) - (0.5D + this.parentEntity.getPosYHeight(0.5D));
 					double d4 = livingentity.getPosZ() - (this.parentEntity.getPosZ() + vector3d.z * 4.0D);
-					if (!this.parentEntity.isSilent()) {
-						world.playEvent((PlayerEntity) null, 1016, this.parentEntity.getPosition(), 0);
-					}
 
 					RocketMobEntity fireballentity = new RocketMobEntity(world, this.parentEntity, d2, d3, d4);
-					// fireballentity.explosionPower = this.parentEntity.getFireballStrength();
-					fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 4.0D,
-							this.parentEntity.getPosYHeight(0.5D) + 0.5D, fireballentity.getPosZ() + vector3d.z * 4.0D);
+					fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 2.0D,
+							this.parentEntity.getPosYHeight(0.5D) + 0.00D, fireballentity.getPosZ() + vector3d.z * 1.0D);
+					world.addEntity(fireballentity);
 					world.addEntity(fireballentity);
 					this.attackTimer = -40;
 				}
