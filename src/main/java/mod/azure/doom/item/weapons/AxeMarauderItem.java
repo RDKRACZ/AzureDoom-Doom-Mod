@@ -22,7 +22,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class AxeMarauderItem extends AxeItem {
 
 	public AxeMarauderItem() {
-		super(DoomTier.DOOM_HIGHTEIR, 12, -2.4F,
+		super(DoomTier.DOOM_HIGHTEIR, 36, -2.4F,
 				new Item.Properties().group(DoomMod.DoomWeaponItemGroup).maxStackSize(1).maxDamage(5));
 	}
 
