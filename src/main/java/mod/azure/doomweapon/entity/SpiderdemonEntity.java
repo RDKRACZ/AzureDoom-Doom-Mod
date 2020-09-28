@@ -179,7 +179,7 @@ public class SpiderdemonEntity extends DemonEntity implements IRangedAttackMob {
 
 	public static ChaingunBulletEntity fireArrow(LivingEntity shooter, ItemStack arrowStack, float distanceFactor) {
 		ChaingunAmmo arrowitem = (ChaingunAmmo) (arrowStack.getItem() instanceof ChaingunAmmo ? arrowStack.getItem()
-				: DoomItems.SPIDERDEMONATTACK.get());
+				: DoomItems.CHAINGUN_BULLETS.get());
 		ChaingunBulletEntity abstractarrowentity = arrowitem.createArrow(shooter.world, arrowStack, shooter);
 		abstractarrowentity.setEnchantmentEffectsFromEntity(shooter, distanceFactor);
 
