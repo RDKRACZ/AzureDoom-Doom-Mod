@@ -1,4 +1,9 @@
-v.3.1.7
+v.3.1.8
 
 - Updated Textures for Icon Wall and added a 10 second slowness and resistance when first summoned
-- Added BoP and BYG support.
+- Icon of Sin doesn't take fall damage now.
+- Moved Arachnotron to using Geckolib
+- Added Hotrod Armor - Credit to Silly
+- Redid ranged attacks, a ton better now.
+- Updated Doom, Doomicorn, Purple Pony, and Night-mare - Credit to Silly
+- Buffed Crucible and Axe Damages
