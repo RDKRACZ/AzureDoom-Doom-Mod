@@ -5,7 +5,7 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import mod.azure.doomweapon.DoomMod;
 import mod.azure.doomweapon.client.models.LostSoulModel;
-import mod.azure.doomweapon.entity.projectiles.LostSoulEntity;
+import mod.azure.doomweapon.entity.LostSoulEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;

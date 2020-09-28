@@ -3,7 +3,7 @@ package mod.azure.doomweapon.client.render.projectiles;
 import mod.azure.doomweapon.DoomMod;
 import mod.azure.doomweapon.client.models.LostSoulModel;
 import mod.azure.doomweapon.client.render.layers.LayerFlames;
-import mod.azure.doomweapon.entity.projectiles.LostSoulEntity;
+import mod.azure.doomweapon.entity.LostSoulEntity;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.ResourceLocation;
