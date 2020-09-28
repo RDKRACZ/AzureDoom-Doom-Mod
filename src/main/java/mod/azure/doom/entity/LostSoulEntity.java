@@ -1,4 +1,4 @@
-package mod.azure.doom.entity.projectiles;
+package mod.azure.doom.entity;
 
 import java.util.EnumSet;
 import java.util.Random;
@@ -62,13 +62,14 @@ public class LostSoulEntity extends FlyingEntity implements IMob {
 	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
 		return MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 50.0D)
 				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D)
+				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 1.0D)
 				.createMutableAttribute(Attributes.MAX_HEALTH, 10.0D);
 	}
 
 	@Override
 	protected void registerGoals() {
-		this.goalSelector.addGoal(5, new LostSoulEntity.RandomFlyGoal(this));
-		this.goalSelector.addGoal(7, new LostSoulEntity.LookAroundGoal(this));
+		this.goalSelector.addGoal(8, new LostSoulEntity.LookAroundGoal(this));
+		this.goalSelector.addGoal(4, new LostSoulEntity.ChargeAttackGoal());
 		this.targetSelector.addGoal(9, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		if (Config.SERVER.IN_FIGHTING.get()) {
 			this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, MonsterEntity.class, true));
@@ -80,6 +81,61 @@ public class LostSoulEntity extends FlyingEntity implements IMob {
 			BlockPos p_223368_3_, Random p_223368_4_) {
 		return p_223368_1_.getDifficulty() != Difficulty.PEACEFUL && p_223368_4_.nextInt(20) == 0
 				&& canSpawnOn(p_223368_0_, p_223368_1_, reason, p_223368_3_, p_223368_4_);
+	}
+
+	public boolean isCharging() {
+		return true;
+	}
+
+	public void setCharging(boolean charging) {
+		return;
+	}
+
+	class ChargeAttackGoal extends Goal {
+		public ChargeAttackGoal() {
+			this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE));
+		}
+
+		public boolean shouldExecute() {
+			if (LostSoulEntity.this.getAttackTarget() != null && !LostSoulEntity.this.getMoveHelper().isUpdating()
+					&& LostSoulEntity.this.rand.nextInt(7) == 0) {
+				return LostSoulEntity.this.getDistanceSq(LostSoulEntity.this.getAttackTarget()) > 4.0D;
+			} else {
+				return false;
+			}
+		}
+
+		public boolean shouldContinueExecuting() {
+			return LostSoulEntity.this.getMoveHelper().isUpdating() && LostSoulEntity.this.isCharging()
+					&& LostSoulEntity.this.getAttackTarget() != null && LostSoulEntity.this.getAttackTarget().isAlive();
+		}
+
+		public void startExecuting() {
+			LivingEntity livingentity = LostSoulEntity.this.getAttackTarget();
+			Vector3d vec3d = livingentity.getEyePosition(1.0F);
+			LostSoulEntity.this.moveController.setMoveTo(vec3d.x, vec3d.y, vec3d.z, 1.0D);
+			LostSoulEntity.this.setCharging(true);
+			LostSoulEntity.this.playSound(ModSoundEvents.LOST_SOUL_AMBIENT.get(), 1.0F, 1.0F);
+		}
+
+		public void resetTask() {
+			LostSoulEntity.this.setCharging(false);
+		}
+
+		public void tick() {
+			LivingEntity livingentity = LostSoulEntity.this.getAttackTarget();
+			if (LostSoulEntity.this.getBoundingBox().intersects(livingentity.getBoundingBox())) {
+				LostSoulEntity.this.attackEntityAsMob(livingentity);
+				LostSoulEntity.this.setCharging(false);
+			} else {
+				double d0 = LostSoulEntity.this.getDistanceSq(livingentity);
+				if (d0 < 9.0D) {
+					Vector3d vec3d = livingentity.getEyePosition(1.0F);
+					LostSoulEntity.this.moveController.setMoveTo(vec3d.x, vec3d.y, vec3d.z, 1.0D);
+				}
+			}
+
+		}
 	}
 
 	@Override
@@ -162,40 +218,6 @@ public class LostSoulEntity extends FlyingEntity implements IMob {
 				}
 			}
 
-		}
-	}
-
-	static class RandomFlyGoal extends Goal {
-		private final LostSoulEntity parentEntity;
-
-		public RandomFlyGoal(LostSoulEntity ghast) {
-			this.parentEntity = ghast;
-			this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE));
-		}
-
-		public boolean shouldExecute() {
-			MovementController movementcontroller = this.parentEntity.getMoveHelper();
-			if (!movementcontroller.isUpdating()) {
-				return true;
-			} else {
-				double d0 = movementcontroller.getX() - this.parentEntity.getPosX();
-				double d1 = movementcontroller.getY() - this.parentEntity.getPosY();
-				double d2 = movementcontroller.getZ() - this.parentEntity.getPosZ();
-				double d3 = d0 * d0 + d1 * d1 + d2 * d2;
-				return d3 < 1.0D || d3 > 3600.0D;
-			}
-		}
-
-		public boolean shouldContinueExecuting() {
-			return false;
-		}
-
-		public void startExecuting() {
-			Random random = this.parentEntity.getRNG();
-			double d0 = this.parentEntity.getPosX() + (double) ((random.nextFloat() * 2.0F - 1.0F) * 16.0F);
-			double d1 = this.parentEntity.getPosY() + (double) ((random.nextFloat() * 2.0F - 1.0F) * 16.0F);
-			double d2 = this.parentEntity.getPosZ() + (double) ((random.nextFloat() * 2.0F - 1.0F) * 16.0F);
-			this.parentEntity.getMoveHelper().setMoveTo(d0, d1, d2, 1.0D);
 		}
 	}
 
