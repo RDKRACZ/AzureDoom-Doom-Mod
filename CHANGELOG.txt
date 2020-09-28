@@ -1,4 +1,9 @@
-v.3.1.5
+v.3.1.9
 
-- Added Icon of Wall blocks. Is the only way to spawn the Icon of Sin
-- Added the option of locking on mobs! Thanks to Itemstack for the code!
+- Updated Textures for Icon Wall and added a 10 second slowness and resistance when first summoned
+- Icon of Sin doesn't take fall damage now.
+- Moved Arachnotron to using Geckolib
+- Added Hotrod Armor - Credit to Silly
+- Redid ranged attacks, a ton better now.
+- Updated Doom, Doomicorn, Purple Pony, and Night-mare - Credit to Silly
+- Buffed Crucible and Axe Damages
