@@ -17,6 +17,7 @@ import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.CreatureAttribute;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
@@ -53,8 +54,17 @@ import net.minecraft.world.IServerWorld;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
+import software.bernie.geckolib.animation.builder.AnimationBuilder;
+import software.bernie.geckolib.animation.controller.EntityAnimationController;
+import software.bernie.geckolib.entity.IAnimatedEntity;
+import software.bernie.geckolib.event.AnimationTestEvent;
+import software.bernie.geckolib.manager.EntityAnimationManager;
 
-public class SpiderdemonEntity extends DemonEntity implements IRangedAttackMob {
+public class SpiderdemonEntity extends DemonEntity implements IRangedAttackMob, IAnimatedEntity {
+
+	EntityAnimationManager manager = new EntityAnimationManager();
+	EntityAnimationController<SpiderdemonEntity> controller = new EntityAnimationController<SpiderdemonEntity>(this,
+			"walkController", 0.09F, this::animationPredicate);
 
 	private final RangedSpiderDemonAttackGoal<SpiderdemonEntity> aiArrowAttack = new RangedSpiderDemonAttackGoal<>(this,
 			1.0D, 20, 15.0F);
@@ -73,6 +83,20 @@ public class SpiderdemonEntity extends DemonEntity implements IRangedAttackMob {
 	public SpiderdemonEntity(EntityType<SpiderdemonEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
 		this.setCombatTask();
+		manager.addAnimationController(controller);
+	}
+
+	private <E extends Entity> boolean animationPredicate(AnimationTestEvent<E> event) {
+		if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F)) {
+			controller.setAnimation(new AnimationBuilder().addAnimation("walking", true));
+			return true;
+		} 
+		return false;
+	}
+
+	@Override
+	public EntityAnimationManager getAnimationManager() {
+		return manager;
 	}
 
 	@Override

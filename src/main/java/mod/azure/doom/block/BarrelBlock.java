@@ -41,8 +41,6 @@ public class BarrelBlock extends Block {
 		this.setDefaultState(
 				this.stateContainer.getBaseState().with(direction, Direction.NORTH).with(light, Boolean.valueOf(true)));
 	}
-	
-	
 
 	@Override
 	public boolean canDropFromExplosion(Explosion explosionIn) {
@@ -156,10 +154,9 @@ public class BarrelBlock extends Block {
 	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
 		builder.add(direction, light);
 	}
-	
+
 	@Override
-	public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos,
-			ISelectionContext context) {
+	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
 		return VoxelShapes.create(0.06f, 0f, 0.06f, 0.94f, 1.0f, 0.94f);
 	}
 

@@ -12,6 +12,7 @@ import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.CreatureAttribute;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.MobEntity;
@@ -23,8 +24,6 @@ import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
-import net.minecraft.entity.monster.IFlinging;
-import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
@@ -42,11 +41,34 @@ import net.minecraft.world.IServerWorld;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
+import software.bernie.geckolib.animation.builder.AnimationBuilder;
+import software.bernie.geckolib.animation.controller.EntityAnimationController;
+import software.bernie.geckolib.entity.IAnimatedEntity;
+import software.bernie.geckolib.event.AnimationTestEvent;
+import software.bernie.geckolib.manager.EntityAnimationManager;
 
-public class PinkyEntity extends DemonEntity implements IMob, IFlinging {
+public class PinkyEntity extends DemonEntity implements IAnimatedEntity {
+
+	EntityAnimationManager manager = new EntityAnimationManager();
+	EntityAnimationController<PinkyEntity> controller = new EntityAnimationController<PinkyEntity>(this,
+			"walkController", 0.09F, this::animationPredicate);
 
 	public PinkyEntity(EntityType<PinkyEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
+		manager.addAnimationController(controller);
+	}
+
+	private <E extends Entity> boolean animationPredicate(AnimationTestEvent<E> event) {
+		if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F)) {
+			controller.setAnimation(new AnimationBuilder().addAnimation("walking", true));
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public EntityAnimationManager getAnimationManager() {
+		return manager;
 	}
 
 	@Override
@@ -167,10 +189,4 @@ public class PinkyEntity extends DemonEntity implements IMob, IFlinging {
 	public int getMaxSpawnedInChunk() {
 		return 7;
 	}
-
-	@Override
-	public int func_230290_eL_() {
-		return 10;
-	}
-
 }

@@ -4,6 +4,7 @@ import java.util.EnumSet;
 import java.util.Random;
 
 import mod.azure.doom.util.Config;
+import mod.azure.doom.util.registry.ModEntityTypes;
 import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.EntitySize;
@@ -21,7 +22,6 @@ import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.SmallFireballEntity;
 import net.minecraft.network.IPacket;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
@@ -110,21 +110,11 @@ public class PainEntity extends FlyingEntity implements IMob {
 					&& this.parentEntity.canEntityBeSeen(livingentity)) {
 				World world = this.parentEntity.world;
 				++this.attackTimer;
-
 				if (this.attackTimer == 20) {
-					Vector3d vector3d = this.parentEntity.getLook(1.0F);
-					double d2 = livingentity.getPosX() - (this.parentEntity.getPosX() + vector3d.x * 4.0D);
-					double d3 = livingentity.getPosYHeight(0.5D) - (0.5D + this.parentEntity.getPosYHeight(0.5D));
-					double d4 = livingentity.getPosZ() - (this.parentEntity.getPosZ() + vector3d.z * 4.0D);
-					if (!this.parentEntity.isSilent()) {
-						world.playEvent((PlayerEntity) null, 1016, this.parentEntity.getPosition(), 0);
-					}
-
-					SmallFireballEntity fireballentity = new SmallFireballEntity(world, this.parentEntity, d2, d3, d4);
-					// fireballentity.explosionPower = this.parentEntity.getFireballStrength();
-					fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 4.0D,
-							this.parentEntity.getPosYHeight(0.5D) + 0.5D, fireballentity.getPosZ() + vector3d.z * 4.0D);
-					world.addEntity(fireballentity);
+					LostSoulEntity lost_soul = ModEntityTypes.LOST_SOUL.get().create(world);
+					lost_soul.setLocationAndAngles(this.parentEntity.getPosX(), this.parentEntity.getPosY(),
+							this.parentEntity.getPosZ() + 3, 0, 0);
+					world.addEntity(lost_soul);
 					this.attackTimer = -40;
 				}
 			} else if (this.attackTimer > 0) {

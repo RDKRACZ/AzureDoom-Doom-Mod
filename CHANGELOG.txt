@@ -1,3 +1,5 @@
-v.3.1.10
+v.3.2.0
 
-- Fixes Chaingunner, Shotgunner and Spider Mastermind crash.
+- Updated Baron of Hell, Hell Knight, Cyberdemon, Pinky, Imp, Nightmare Imp and Spider Mastermind animations!
+- Fixed Arachnotrons animation!
+- Pain Elementals now spawn Lost Souls correctly.

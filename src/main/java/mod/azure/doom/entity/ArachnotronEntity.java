@@ -56,9 +56,26 @@ import software.bernie.geckolib.manager.EntityAnimationManager;
 
 public class ArachnotronEntity extends DemonEntity implements IAnimatedEntity {
 
+	EntityAnimationManager manager = new EntityAnimationManager();
+	EntityAnimationController<ArachnotronEntity> controller = new EntityAnimationController<ArachnotronEntity>(this,
+			"walkController", 0.09F, this::animationPredicate);
+
 	public ArachnotronEntity(EntityType<ArachnotronEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
 		manager.addAnimationController(controller);
+	}
+
+	private <E extends Entity> boolean animationPredicate(AnimationTestEvent<E> event) {
+		if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F)) {
+			controller.setAnimation(new AnimationBuilder().addAnimation("walking", true));
+			return true;
+		} 
+		return false;
+	}
+
+	@Override
+	public EntityAnimationManager getAnimationManager() {
+		return manager;
 	}
 
 	@Override
@@ -115,14 +132,9 @@ public class ArachnotronEntity extends DemonEntity implements IAnimatedEntity {
 					double d2 = livingentity.getPosX() - (this.parentEntity.getPosX() + vector3d.x * 4.0D);
 					double d3 = livingentity.getPosYHeight(0.5D) - (0.5D + this.parentEntity.getPosYHeight(0.5D));
 					double d4 = livingentity.getPosZ() - (this.parentEntity.getPosZ() + vector3d.z * 4.0D);
-					if (!this.parentEntity.isSilent()) {
-						world.playEvent((PlayerEntity) null, 1016, this.parentEntity.getPosition(), 0);
-					}
-
 					EnergyCellMobEntity fireballentity = new EnergyCellMobEntity(world, this.parentEntity, d2, d3, d4);
-					// fireballentity.explosionPower = this.parentEntity.getFireballStrength();
-					fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 4.0D,
-							this.parentEntity.getPosYHeight(0.5D) + 0.5D, fireballentity.getPosZ() + vector3d.z * 4.0D);
+					fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 2.0D,
+							this.parentEntity.getPosYHeight(0.5D) + 0.5D, fireballentity.getPosZ() + vector3d.z * 1.0D);
 					world.addEntity(fireballentity);
 					this.attackTimer = -40;
 				}
@@ -269,21 +281,6 @@ public class ArachnotronEntity extends DemonEntity implements IAnimatedEntity {
 	@Override
 	public int getMaxSpawnedInChunk() {
 		return 2;
-	}
-
-	EntityAnimationManager manager = new EntityAnimationManager();
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	EntityAnimationController controller = new EntityAnimationController(this, "walkController", 5,
-			this::animationPredicate);
-
-	private <E extends Entity> boolean animationPredicate(AnimationTestEvent<E> event) {
-		controller.setAnimation(new AnimationBuilder().addAnimation("walking"));
-		return true;
-	}
-
-	@Override
-	public EntityAnimationManager getAnimationManager() {
-		return manager;
 	}
 
 }

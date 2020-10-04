@@ -91,5 +91,4 @@ public class ClientModEventSubscriber {
 				EnergyCellMobRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ROCKET_MOB.get(), RocketMobRender::new);
 	}
-
 }
