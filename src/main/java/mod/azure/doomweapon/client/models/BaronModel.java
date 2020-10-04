@@ -1,264 +1,347 @@
 package mod.azure.doomweapon.client.models;
 
-import com.google.common.collect.ImmutableList;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import mod.azure.doomweapon.DoomMod;
+import mod.azure.doomweapon.entity.BaronEntity;
+import net.minecraft.util.ResourceLocation;
+import software.bernie.geckolib.animation.model.AnimatedEntityModel;
+import software.bernie.geckolib.animation.render.AnimatedModelRenderer;
 
-import net.minecraft.client.renderer.entity.model.EntityModel;
-import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.entity.Entity;
-import net.minecraft.util.math.MathHelper;
+public class BaronModel extends AnimatedEntityModel<BaronEntity> {
 
-/**
- * Baron of Hell - Batpixxler Created using Tabula 8.0.0
- */
-public class BaronModel<T extends Entity> extends EntityModel<T> {
-	public ModelRenderer thighs;
-    public ModelRenderer lLeg1_flat;
-    public ModelRenderer rLeg1_flat;
-    public ModelRenderer chest;
-    public ModelRenderer neck;
-    public ModelRenderer rightPec;
-    public ModelRenderer lShoulder;
-    public ModelRenderer rShoulder;
-    public ModelRenderer leftPec;
-    public ModelRenderer head;
-    public ModelRenderer topJaw;
-    public ModelRenderer lowJaw;
-    public ModelRenderer lHorn1;
-    public ModelRenderer rHorn1;
-    public ModelRenderer snout;
-    public ModelRenderer lMHorn1;
-    public ModelRenderer rMHorn1;
-    public ModelRenderer lMHorn2;
-    public ModelRenderer rMHorn2;
-    public ModelRenderer lHorn2;
-    public ModelRenderer lHorn3;
-    public ModelRenderer lHorn4;
-    public ModelRenderer rHorn2;
-    public ModelRenderer rHorn3;
-    public ModelRenderer rHorn4;
-    public ModelRenderer lArm1;
-    public ModelRenderer lArm2;
-    public ModelRenderer rArm1;
-    public ModelRenderer rArm2;
-    public ModelRenderer lLeg1;
-    public ModelRenderer lLeg2;
-    public ModelRenderer lLeg3;
-    public ModelRenderer lFoot;
-    public ModelRenderer rLeg1;
-    public ModelRenderer rLeg2;
-    public ModelRenderer rLeg3;
-    public ModelRenderer rFoot;
+	private final AnimatedModelRenderer thighs;
+	private final AnimatedModelRenderer chest;
+	private final AnimatedModelRenderer rShoulder;
+	private final AnimatedModelRenderer rArm1;
+	private final AnimatedModelRenderer rArm2;
+	private final AnimatedModelRenderer neck;
+	private final AnimatedModelRenderer head;
+	private final AnimatedModelRenderer lowJaw;
+	private final AnimatedModelRenderer rMHorn1;
+	private final AnimatedModelRenderer rMHorn2;
+	private final AnimatedModelRenderer lMHorn1;
+	private final AnimatedModelRenderer lMHorn2;
+	private final AnimatedModelRenderer lHorn1;
+	private final AnimatedModelRenderer lHorn2;
+	private final AnimatedModelRenderer lHorn3;
+	private final AnimatedModelRenderer lHorn4;
+	private final AnimatedModelRenderer topJaw;
+	private final AnimatedModelRenderer snout;
+	private final AnimatedModelRenderer rHorn1;
+	private final AnimatedModelRenderer rHorn2;
+	private final AnimatedModelRenderer rHorn3;
+	private final AnimatedModelRenderer rHorn4;
+	private final AnimatedModelRenderer rightPec;
+	private final AnimatedModelRenderer lShoulder;
+	private final AnimatedModelRenderer lArm1;
+	private final AnimatedModelRenderer lArm2;
+	private final AnimatedModelRenderer leftPec;
+	private final AnimatedModelRenderer lLeg1_flat;
+	private final AnimatedModelRenderer lLeg1;
+	private final AnimatedModelRenderer lLeg2;
+	private final AnimatedModelRenderer lLeg3;
+	private final AnimatedModelRenderer lFoot;
+	private final AnimatedModelRenderer rLeg1_flat;
+	private final AnimatedModelRenderer rLeg1;
+	private final AnimatedModelRenderer rLeg2;
+	private final AnimatedModelRenderer rLeg3;
+	private final AnimatedModelRenderer rFoot;
 
-    public BaronModel() {
-    	this.textureWidth = 60;
-        this.textureHeight = 180;
-        this.lFoot = new ModelRenderer(this, 18, 57);
-        this.lFoot.setRotationPoint(0.0F, 9.0F, -2.0F);
-        this.lFoot.addBox(-3.0F, 0.0F, -3.0F, 6.0F, 4.0F, 5.0F, 0.0F, 0.0F, 0.0F);
-        this.setRotateAngle(lFoot, 0.2275909337942703F, 0.0F, 0.0F);
-        this.rShoulder = new ModelRenderer(this, 0, 71);
-        this.rShoulder.mirror = true;
-        this.rShoulder.setRotationPoint(-7.5F, -7.5F, -4.0F);
-        this.rShoulder.addBox(-5.0F, -2.0F, -3.5F, 6.0F, 6.0F, 7.0F, 0.0F, 0.0F, 0.0F);
-        this.setRotateAngle(rShoulder, 0.0F, 0.0F, 0.0911061832922575F);
-        this.lowJaw = new ModelRenderer(this, 0, 144);
-        this.lowJaw.setRotationPoint(0.0F, -1.0F, -6.5F);
-        this.lowJaw.addBox(-3.0F, -1.0F, -5.0F, 6.0F, 2.0F, 5.0F, 0.0F, 0.0F, 0.0F);
-        this.lHorn1 = new ModelRenderer(this, 27, 142);
-        this.lHorn1.setRotationPoint(3.0F, -9.0F, -2.5F);
-        this.lHorn1.addBox(-2.5F, -3.0F, -2.5F, 5.0F, 3.0F, 5.0F, 0.0F, 0.0F, 0.0F);
-        this.setRotateAngle(lHorn1, 0.0F, 0.0F, 0.5462880425584197F);
-        this.lArm2 = new ModelRenderer(this, 0, 84);
-        this.lArm2.setRotationPoint(0.0F, 6.7F, 2.5F);
-        this.lArm2.addBox(-2.5F, 0.0F, -4.0F, 5.0F, 11.0F, 4.0F, 0.0F, 0.0F, 0.0F);
-        this.setRotateAngle(lArm2, -0.27314402127920984F, 0.0F, 0.0911061832922575F);
-        this.lLeg2 = new ModelRenderer(this, 28, 37);
-        this.lLeg2.setRotationPoint(0.0F, 12.5F, -3.0F);
-        this.lLeg2.addBox(-3.0F, 0.0F, -0.5F, 6.0F, 9.0F, 5.0F, 0.0F, 0.0F, 0.0F);
-        this.setRotateAngle(lLeg2, 1.092750655326294F, 0.0F, 0.04555309164612875F);
-        this.rLeg1 = new ModelRenderer(this, 0, 37);
-        this.rLeg1.setRotationPoint(0.0F, 0.0F, 0.0F);
-        this.rLeg1.addBox(-3.5F, 0.0F, -3.5F, 7.0F, 13.0F, 7.0F, 0.0F, 0.0F, 0.0F);
-        this.setRotateAngle(rLeg1, -0.4098033003787853F, 0.0F, 0.04555309164612875F);
-        this.topJaw = new ModelRenderer(this, 0, 135);
-        this.topJaw.setRotationPoint(0.0F, -4.0F, -6.8F);
-        this.topJaw.addBox(-3.5F, -2.0F, -5.0F, 7.0F, 4.0F, 5.0F, 0.0F, 0.0F, 0.0F);
-        this.lMHorn2 = new ModelRenderer(this, 40, 26);
-        this.lMHorn2.setRotationPoint(0.0F, 1.0F, -2.9F);
-        this.lMHorn2.addBox(-0.5F, -2.0F, -4.0F, 1.0F, 2.0F, 4.0F, 0.0F, 0.0F, 0.0F);
-        this.setRotateAngle(lMHorn2, -0.956091342937205F, 0.0F, 0.0F);
-        this.neck = new ModelRenderer(this, 0, 99);
-        this.neck.setRotationPoint(0.0F, -8.6F, -1.1F);
-        this.neck.addBox(-4.0F, -8.0F, -6.0F, 8.0F, 8.0F, 8.0F, 0.0F, 0.0F, 0.0F);
-        this.setRotateAngle(neck, -0.04555309164612875F, 0.0F, 0.0F);
-        this.thighs = new ModelRenderer(this, 0, 19);
-        this.thighs.setRotationPoint(0.0F, -9.0F, 5.0F);
-        this.thighs.addBox(-6.0F, 0.0F, -7.0F, 12.0F, 10.0F, 8.0F, 0.0F, 0.0F, 0.0F);
-        this.chest = new ModelRenderer(this, 0, 0);
-        this.chest.setRotationPoint(0.0F, 0.3F, 0.0F);
-        this.chest.addBox(-7.5F, -9.0F, -9.0F, 15.0F, 9.0F, 10.0F, 0.0F, 0.0F, 0.0F);
-        this.setRotateAngle(chest, 0.13665927909957545F, 0.0F, 0.0F);
-        this.rMHorn1 = new ModelRenderer(this, 32, 19);
-        this.rMHorn1.setRotationPoint(-1.5F, 0.1F, -4.0F);
-        this.rMHorn1.addBox(-1.0F, -1.0F, -3.0F, 2.0F, 2.0F, 3.0F, 0.0F, 0.0F, 0.0F);
-        this.setRotateAngle(rMHorn1, -0.3186971254089062F, 0.45535640450848164F, 0.0F);
-        this.rMHorn2 = new ModelRenderer(this, 40, 26);
-        this.rMHorn2.setRotationPoint(0.0F, 1.0F, -2.9F);
-        this.rMHorn2.addBox(-0.5F, -2.0F, -4.0F, 1.0F, 2.0F, 4.0F, 0.0F, 0.0F, 0.0F);
-        this.setRotateAngle(rMHorn2, -0.956091342937205F, 0.0F, 0.0F);
-        this.rHorn2 = new ModelRenderer(this, 0, 151);
-        this.rHorn2.setRotationPoint(0.0F, -2.0F, 2.0F);
-        this.rHorn2.addBox(-2.0F, -5.0F, -4.0F, 4.0F, 5.0F, 4.0F, 0.0F, 0.0F, 0.0F);
-        this.setRotateAngle(rHorn2, 0.6829473549475088F, 0.0F, -0.4098033003787853F);
-        this.head = new ModelRenderer(this, 0, 115);
-        this.head.setRotationPoint(0.0F, -3.8F, 0.5F);
-        this.head.addBox(-5.0F, -11.0F, -7.0F, 10.0F, 11.0F, 9.0F, 0.0F, 0.0F, 0.0F);
-        this.setRotateAngle(head, 0.0911061832922575F, 0.0F, 0.0F);
-        this.rightPec = new ModelRenderer(this, 18, 84);
-        this.rightPec.mirror = true;
-        this.rightPec.setRotationPoint(-4.4F, -4.9F, -6.5F);
-        this.rightPec.addBox(-4.0F, -4.0F, -3.0F, 8.0F, 8.0F, 3.0F, 0.0F, 0.0F, 0.0F);
-        this.setRotateAngle(rightPec, 0.0F, 0.0F, -0.08726646259971647F);
-        this.lShoulder = new ModelRenderer(this, 0, 71);
-        this.lShoulder.mirror = true;
-        this.lShoulder.setRotationPoint(7.5F, -7.5F, -4.0F);
-        this.lShoulder.addBox(-1.0F, -2.0F, -3.5F, 6.0F, 6.0F, 7.0F, 0.0F, 0.0F, 0.0F);
-        this.setRotateAngle(lShoulder, 0.0F, 0.0F, -0.0911061832922575F);
-        this.lHorn2 = new ModelRenderer(this, 0, 151);
-        this.lHorn2.setRotationPoint(0.0F, -2.0F, 2.0F);
-        this.lHorn2.addBox(-2.0F, -5.0F, -4.0F, 4.0F, 5.0F, 4.0F, 0.0F, 0.0F, 0.0F);
-        this.setRotateAngle(lHorn2, 0.6829473549475088F, 0.0F, 0.4098033003787853F);
-        this.rHorn1 = new ModelRenderer(this, 27, 142);
-        this.rHorn1.setRotationPoint(-3.0F, -9.0F, -2.5F);
-        this.rHorn1.addBox(-2.5F, -3.0F, -2.5F, 5.0F, 3.0F, 5.0F, 0.0F, 0.0F, 0.0F);
-        this.setRotateAngle(rHorn1, 0.0F, 0.0F, -0.5462880425584197F);
-        this.rFoot = new ModelRenderer(this, 18, 57);
-        this.rFoot.setRotationPoint(0.0F, 9.0F, -2.0F);
-        this.rFoot.addBox(-3.0F, 0.0F, -3.0F, 6.0F, 4.0F, 5.0F, 0.0F, 0.0F, 0.0F);
-        this.setRotateAngle(rFoot, 0.2275909337942703F, 0.0F, 0.0F);
-        this.leftPec = new ModelRenderer(this, 18, 84);
-        this.leftPec.setRotationPoint(4.3F, -4.9F, -6.5F);
-        this.leftPec.addBox(-4.0F, -4.0F, -3.0F, 8.0F, 8.0F, 3.0F, 0.0F, 0.0F, 0.0F);
-        this.setRotateAngle(leftPec, 0.0F, 0.0F, 0.08726646259971647F);
-        this.rHorn3 = new ModelRenderer(this, 16, 152);
-        this.rHorn3.setRotationPoint(0.0F, -5.0F, 0.0F);
-        this.rHorn3.addBox(-1.5F, -4.0F, -3.0F, 3.0F, 4.0F, 3.0F, 0.0F, 0.0F, 0.0F);
-        this.setRotateAngle(rHorn3, 0.500909508638178F, 0.0F, 0.0F);
-        this.rLeg3 = new ModelRenderer(this, 0, 57);
-        this.rLeg3.setRotationPoint(0.0F, 9.0F, 4.5F);
-        this.rLeg3.addBox(-2.5F, 0.0F, -4.0F, 5.0F, 10.0F, 4.0F, 0.0F, 0.0F, 0.0F);
-        this.setRotateAngle(rLeg3, -0.9105382388075086F, 0.0F, 0.0F);
-        this.lHorn3 = new ModelRenderer(this, 16, 152);
-        this.lHorn3.setRotationPoint(0.0F, -5.0F, 0.0F);
-        this.lHorn3.addBox(-1.5F, -4.0F, -3.0F, 3.0F, 4.0F, 3.0F, 0.0F, 0.0F, 0.0F);
-        this.setRotateAngle(lHorn3, 0.500909508638178F, 0.0F, 0.0F);
-        this.rHorn4 = new ModelRenderer(this, 28, 152);
-        this.rHorn4.setRotationPoint(0.0F, -4.0F, 0.0F);
-        this.rHorn4.addBox(-1.0F, -6.0F, -2.0F, 2.0F, 6.0F, 2.0F, 0.0F, 0.0F, 0.0F);
-        this.setRotateAngle(rHorn4, 0.6373942508178124F, 0.0F, 0.0F);
-        this.lArm1 = new ModelRenderer(this, 19, 66);
-        this.lArm1.mirror = true;
-        this.lArm1.setRotationPoint(2.0F, 4.0F, 0.0F);
-        this.lArm1.addBox(-2.5F, 0.0F, -2.5F, 5.0F, 7.0F, 5.0F, 0.0F, 0.0F, 0.0F);
-        this.rArm1 = new ModelRenderer(this, 19, 66);
-        this.rArm1.mirror = true;
-        this.rArm1.setRotationPoint(-2.0F, 4.0F, 0.0F);
-        this.rArm1.addBox(-2.5F, 0.0F, -2.5F, 5.0F, 7.0F, 5.0F, 0.0F, 0.0F, 0.0F);
-        this.snout = new ModelRenderer(this, 24, 135);
-        this.snout.setRotationPoint(0.0F, -2.0F, -5.0F);
-        this.snout.addBox(-3.0F, 0.0F, 0.0F, 6.0F, 2.0F, 5.0F, 0.0F, 0.0F, 0.0F);
-        this.setRotateAngle(snout, 0.27314402127920984F, 0.0F, 0.0F);
-        this.lLeg1 = new ModelRenderer(this, 0, 37);
-        this.lLeg1.setRotationPoint(0.0F, 0.0F, 0.0F);
-        this.lLeg1.addBox(-3.5F, 0.0F, -3.5F, 7.0F, 13.0F, 7.0F, 0.0F, 0.0F, 0.0F);
-        this.setRotateAngle(lLeg1, -0.4098033003787853F, 0.0F, -0.04555309164612875F);
-        this.lMHorn1 = new ModelRenderer(this, 32, 19);
-        this.lMHorn1.setRotationPoint(1.5F, 0.1F, -4.0F);
-        this.lMHorn1.addBox(-1.0F, -1.0F, -3.0F, 2.0F, 2.0F, 3.0F, 0.0F, 0.0F, 0.0F);
-        this.setRotateAngle(lMHorn1, -0.3186971254089062F, -0.45535640450848164F, 0.0F);
-        this.rLeg2 = new ModelRenderer(this, 28, 37);
-        this.rLeg2.setRotationPoint(0.0F, 12.5F, -3.0F);
-        this.rLeg2.addBox(-3.0F, 0.0F, -0.5F, 6.0F, 9.0F, 5.0F, 0.0F, 0.0F, 0.0F);
-        this.setRotateAngle(rLeg2, 1.092750655326294F, 0.0F, -0.04555309164612875F);
-        this.lHorn4 = new ModelRenderer(this, 28, 152);
-        this.lHorn4.setRotationPoint(0.0F, -4.0F, 0.0F);
-        this.lHorn4.addBox(-1.0F, -6.0F, -2.0F, 2.0F, 6.0F, 2.0F, 0.0F, 0.0F, 0.0F);
-        this.setRotateAngle(lHorn4, 0.6373942508178124F, 0.0F, 0.0F);
-        this.rArm2 = new ModelRenderer(this, 0, 84);
-        this.rArm2.setRotationPoint(0.0F, 6.7F, 2.5F);
-        this.rArm2.addBox(-2.5F, 0.0F, -4.0F, 5.0F, 11.0F, 4.0F, 0.0F, 0.0F, 0.0F);
-        this.setRotateAngle(rArm2, -0.27314402127920984F, 0.0F, -0.0911061832922575F);
-        this.lLeg3 = new ModelRenderer(this, 0, 57);
-        this.lLeg3.setRotationPoint(0.0F, 9.0F, 4.5F);
-        this.lLeg3.addBox(-2.5F, 0.0F, -4.0F, 5.0F, 10.0F, 4.0F, 0.0F, 0.0F, 0.0F);
-        this.setRotateAngle(lLeg3, -0.9105382388075086F, 0.0F, 0.0F);
-        this.rLeg1_flat = new ModelRenderer(this, 0, 37);
-        this.rLeg1_flat.setRotationPoint(-3.5F, -2.3F, 3.0F);
-        this.rLeg1_flat.addBox(-3.2F, 0.0F, -3.5F, 0.70000005F, 1.0F, 1.0F, 0.0F, 0.0F, 0.0F);
-        this.lLeg1_flat = new ModelRenderer(this, 0, 37);
-        this.lLeg1_flat.setRotationPoint(3.5F, -2.3F, 3.0F);
-        this.lLeg1_flat.addBox(-3.5F, 0.0F, -3.5F, 1.0F, 1.0F, 1.0F, 0.0F, 0.0F, 0.0F);
-        this.lLeg3.addChild(this.lFoot);
-        this.chest.addChild(this.rShoulder);
-        this.head.addChild(this.lowJaw);
-        this.head.addChild(this.lHorn1);
-        this.lArm1.addChild(this.lArm2);
-        this.lLeg1.addChild(this.lLeg2);
-        this.head.addChild(this.topJaw);
-        this.lMHorn1.addChild(this.lMHorn2);
-        this.chest.addChild(this.neck);
-        this.thighs.addChild(this.chest);
-        this.lowJaw.addChild(this.rMHorn1);
-        this.rMHorn1.addChild(this.rMHorn2);
-        this.rHorn1.addChild(this.rHorn2);
-        this.neck.addChild(this.head);
-        this.chest.addChild(this.rightPec);
-        this.chest.addChild(this.lShoulder);
-        this.lHorn1.addChild(this.lHorn2);
-        this.head.addChild(this.rHorn1);
-        this.rLeg3.addChild(this.rFoot);
-        this.chest.addChild(this.leftPec);
-        this.rHorn2.addChild(this.rHorn3);
-        this.rLeg2.addChild(this.rLeg3);
-        this.lHorn2.addChild(this.lHorn3);
-        this.rHorn3.addChild(this.rHorn4);
-        this.lShoulder.addChild(this.lArm1);
-        this.rShoulder.addChild(this.rArm1);
-        this.topJaw.addChild(this.snout);
-        this.lowJaw.addChild(this.lMHorn1);
-        this.rLeg1.addChild(this.rLeg2);
-        this.lHorn3.addChild(this.lHorn4);
-        this.rArm1.addChild(this.rArm2);
-        this.lLeg2.addChild(this.lLeg3);
-        this.rLeg1_flat.addChild(this.rLeg1);
-        this.lLeg1_flat.addChild(this.lLeg1);
-    }
+	public BaronModel() {
+		textureWidth = 60;
+		textureHeight = 180;
+		thighs = new AnimatedModelRenderer(this);
+		thighs.setRotationPoint(0.0F, -9.0F, 5.0F);
+		thighs.setTextureOffset(0, 19).addBox(-6.0F, 0.0F, -7.0F, 12.0F, 10.0F, 8.0F, 0.0F, false);
+		thighs.setModelRendererName("thighs");
+		this.registerModelRenderer(thighs);
 
-    @Override
-    public void render(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) { 
-        ImmutableList.of(this.lLeg1_flat, this.thighs, this.rLeg1_flat).forEach((modelRenderer) -> { 
-            modelRenderer.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
-        });
-    }
+		chest = new AnimatedModelRenderer(this);
+		chest.setRotationPoint(0.0F, 0.3F, 0.0F);
+		thighs.addChild(chest);
+		setRotationAngle(chest, 0.1367F, 0.0F, 0.0F);
+		chest.setTextureOffset(0, 0).addBox(-7.5F, -9.0F, -9.0F, 15.0F, 9.0F, 10.0F, 0.0F, false);
+		chest.setModelRendererName("chest");
+		this.registerModelRenderer(chest);
 
-	@Override
-	public void setRotationAngles(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks,
-			float netHeadYaw, float headPitch) {
-		this.rShoulder.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount / 1.0F;
-		this.lShoulder.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount
-				/ 1.0F;
-		this.rLeg1_flat.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount / 1.0F;
-		this.lLeg1_flat.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount
-				/ 1.0F;
-		this.lowJaw.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.0F * limbSwingAmount
-				/ 1.3F;
+		rShoulder = new AnimatedModelRenderer(this);
+		rShoulder.setRotationPoint(7.5F, -7.5F, -4.0F);
+		chest.addChild(rShoulder);
+		setRotationAngle(rShoulder, 0.0F, 0.0F, -0.0911F);
+		rShoulder.setTextureOffset(0, 71).addBox(-1.0F, -2.0F, -3.5F, 6.0F, 6.0F, 7.0F, 0.0F, false);
+		rShoulder.setModelRendererName("rShoulder");
+		this.registerModelRenderer(rShoulder);
+
+		rArm1 = new AnimatedModelRenderer(this);
+		rArm1.setRotationPoint(2.0F, 4.0F, 0.0F);
+		rShoulder.addChild(rArm1);
+		rArm1.setTextureOffset(19, 66).addBox(-2.5F, 0.0F, -2.5F, 5.0F, 7.0F, 5.0F, 0.0F, false);
+		rArm1.setModelRendererName("rArm1");
+		this.registerModelRenderer(rArm1);
+
+		rArm2 = new AnimatedModelRenderer(this);
+		rArm2.setRotationPoint(0.0F, 6.7F, 2.5F);
+		rArm1.addChild(rArm2);
+		setRotationAngle(rArm2, -0.2731F, 0.0F, 0.0911F);
+		rArm2.setTextureOffset(0, 84).addBox(-2.5F, 0.0F, -4.0F, 5.0F, 11.0F, 4.0F, 0.0F, false);
+		rArm2.setModelRendererName("rArm2");
+		this.registerModelRenderer(rArm2);
+
+		neck = new AnimatedModelRenderer(this);
+		neck.setRotationPoint(0.0F, -8.6F, -1.1F);
+		chest.addChild(neck);
+		setRotationAngle(neck, -0.0456F, 0.0F, 0.0F);
+		neck.setTextureOffset(0, 99).addBox(-4.0F, -8.0F, -6.0F, 8.0F, 8.0F, 8.0F, 0.0F, false);
+		neck.setModelRendererName("neck");
+		this.registerModelRenderer(neck);
+
+		head = new AnimatedModelRenderer(this);
+		head.setRotationPoint(0.0F, -3.8F, 0.5F);
+		neck.addChild(head);
+		setRotationAngle(head, 0.0911F, 0.0F, 0.0F);
+		head.setTextureOffset(0, 115).addBox(-5.0F, -11.0F, -7.0F, 10.0F, 11.0F, 9.0F, 0.0F, false);
+		head.setModelRendererName("head");
+		this.registerModelRenderer(head);
+
+		lowJaw = new AnimatedModelRenderer(this);
+		lowJaw.setRotationPoint(0.0F, -1.0F, -6.5F);
+		head.addChild(lowJaw);
+		lowJaw.setTextureOffset(0, 144).addBox(-3.0F, -1.0F, -5.0F, 6.0F, 2.0F, 5.0F, 0.0F, false);
+		lowJaw.setModelRendererName("lowJaw");
+		this.registerModelRenderer(lowJaw);
+
+		rMHorn1 = new AnimatedModelRenderer(this);
+		rMHorn1.setRotationPoint(1.5F, 0.1F, -4.0F);
+		lowJaw.addChild(rMHorn1);
+		setRotationAngle(rMHorn1, -0.3187F, -0.4554F, 0.0F);
+		rMHorn1.setTextureOffset(32, 19).addBox(-1.0F, -1.0F, -3.0F, 2.0F, 2.0F, 3.0F, 0.0F, false);
+		rMHorn1.setModelRendererName("rMHorn1");
+		this.registerModelRenderer(rMHorn1);
+
+		rMHorn2 = new AnimatedModelRenderer(this);
+		rMHorn2.setRotationPoint(0.0F, 1.0F, -2.9F);
+		rMHorn1.addChild(rMHorn2);
+		setRotationAngle(rMHorn2, -0.9561F, 0.0F, 0.0F);
+		rMHorn2.setTextureOffset(40, 26).addBox(-0.5F, -2.0F, -4.0F, 1.0F, 2.0F, 4.0F, 0.0F, false);
+		rMHorn2.setModelRendererName("rMHorn2");
+		this.registerModelRenderer(rMHorn2);
+
+		lMHorn1 = new AnimatedModelRenderer(this);
+		lMHorn1.setRotationPoint(-1.5F, 0.1F, -4.0F);
+		lowJaw.addChild(lMHorn1);
+		setRotationAngle(lMHorn1, -0.3187F, 0.4554F, 0.0F);
+		lMHorn1.setTextureOffset(32, 19).addBox(-1.0F, -1.0F, -3.0F, 2.0F, 2.0F, 3.0F, 0.0F, false);
+		lMHorn1.setModelRendererName("lMHorn1");
+		this.registerModelRenderer(lMHorn1);
+
+		lMHorn2 = new AnimatedModelRenderer(this);
+		lMHorn2.setRotationPoint(0.0F, 1.0F, -2.9F);
+		lMHorn1.addChild(lMHorn2);
+		setRotationAngle(lMHorn2, -0.9561F, 0.0F, 0.0F);
+		lMHorn2.setTextureOffset(40, 26).addBox(-0.5F, -2.0F, -4.0F, 1.0F, 2.0F, 4.0F, 0.0F, false);
+		lMHorn2.setModelRendererName("lMHorn2");
+		this.registerModelRenderer(lMHorn2);
+
+		lHorn1 = new AnimatedModelRenderer(this);
+		lHorn1.setRotationPoint(-3.0F, -9.0F, -2.5F);
+		head.addChild(lHorn1);
+		setRotationAngle(lHorn1, 0.0F, 0.0F, -0.5463F);
+		lHorn1.setTextureOffset(27, 142).addBox(-2.5F, -3.0F, -2.5F, 5.0F, 3.0F, 5.0F, 0.0F, false);
+		lHorn1.setModelRendererName("lHorn1");
+		this.registerModelRenderer(lHorn1);
+
+		lHorn2 = new AnimatedModelRenderer(this);
+		lHorn2.setRotationPoint(0.0F, -2.0F, 2.0F);
+		lHorn1.addChild(lHorn2);
+		setRotationAngle(lHorn2, 0.6829F, 0.0F, -0.4098F);
+		lHorn2.setTextureOffset(0, 151).addBox(-2.0F, -5.0F, -4.0F, 4.0F, 5.0F, 4.0F, 0.0F, false);
+		lHorn2.setModelRendererName("lHorn2");
+		this.registerModelRenderer(lHorn2);
+
+		lHorn3 = new AnimatedModelRenderer(this);
+		lHorn3.setRotationPoint(0.0F, -5.0F, 0.0F);
+		lHorn2.addChild(lHorn3);
+		setRotationAngle(lHorn3, 0.5009F, 0.0F, 0.0F);
+		lHorn3.setTextureOffset(16, 152).addBox(-1.5F, -4.0F, -3.0F, 3.0F, 4.0F, 3.0F, 0.0F, false);
+		lHorn3.setModelRendererName("lHorn3");
+		this.registerModelRenderer(lHorn3);
+
+		lHorn4 = new AnimatedModelRenderer(this);
+		lHorn4.setRotationPoint(0.0F, -4.0F, 0.0F);
+		lHorn3.addChild(lHorn4);
+		setRotationAngle(lHorn4, 0.6374F, 0.0F, 0.0F);
+		lHorn4.setTextureOffset(28, 152).addBox(-1.0F, -6.0F, -2.0F, 2.0F, 6.0F, 2.0F, 0.0F, false);
+		lHorn4.setModelRendererName("lHorn4");
+		this.registerModelRenderer(lHorn4);
+
+		topJaw = new AnimatedModelRenderer(this);
+		topJaw.setRotationPoint(0.0F, -4.0F, -6.8F);
+		head.addChild(topJaw);
+		topJaw.setTextureOffset(0, 135).addBox(-3.5F, -2.0F, -5.0F, 7.0F, 4.0F, 5.0F, 0.0F, false);
+		topJaw.setModelRendererName("topJaw");
+		this.registerModelRenderer(topJaw);
+
+		snout = new AnimatedModelRenderer(this);
+		snout.setRotationPoint(0.0F, -2.0F, -5.0F);
+		topJaw.addChild(snout);
+		setRotationAngle(snout, 0.2731F, 0.0F, 0.0F);
+		snout.setTextureOffset(24, 135).addBox(-3.0F, 0.0F, 0.0F, 6.0F, 2.0F, 5.0F, 0.0F, false);
+		snout.setModelRendererName("snout");
+		this.registerModelRenderer(snout);
+
+		rHorn1 = new AnimatedModelRenderer(this);
+		rHorn1.setRotationPoint(3.0F, -9.0F, -2.5F);
+		head.addChild(rHorn1);
+		setRotationAngle(rHorn1, 0.0F, 0.0F, 0.5463F);
+		rHorn1.setTextureOffset(27, 142).addBox(-2.5F, -3.0F, -2.5F, 5.0F, 3.0F, 5.0F, 0.0F, false);
+		rHorn1.setModelRendererName("rHorn1");
+		this.registerModelRenderer(rHorn1);
+
+		rHorn2 = new AnimatedModelRenderer(this);
+		rHorn2.setRotationPoint(0.0F, -2.0F, 2.0F);
+		rHorn1.addChild(rHorn2);
+		setRotationAngle(rHorn2, 0.6829F, 0.0F, 0.4098F);
+		rHorn2.setTextureOffset(0, 151).addBox(-2.0F, -5.0F, -4.0F, 4.0F, 5.0F, 4.0F, 0.0F, false);
+		rHorn2.setModelRendererName("rHorn2");
+		this.registerModelRenderer(rHorn2);
+
+		rHorn3 = new AnimatedModelRenderer(this);
+		rHorn3.setRotationPoint(0.0F, -5.0F, 0.0F);
+		rHorn2.addChild(rHorn3);
+		setRotationAngle(rHorn3, 0.5009F, 0.0F, 0.0F);
+		rHorn3.setTextureOffset(16, 152).addBox(-1.5F, -4.0F, -3.0F, 3.0F, 4.0F, 3.0F, 0.0F, false);
+		rHorn3.setModelRendererName("rHorn3");
+		this.registerModelRenderer(rHorn3);
+
+		rHorn4 = new AnimatedModelRenderer(this);
+		rHorn4.setRotationPoint(0.0F, -4.0F, 0.0F);
+		rHorn3.addChild(rHorn4);
+		setRotationAngle(rHorn4, 0.6374F, 0.0F, 0.0F);
+		rHorn4.setTextureOffset(28, 152).addBox(-1.0F, -6.0F, -2.0F, 2.0F, 6.0F, 2.0F, 0.0F, false);
+		rHorn4.setModelRendererName("rHorn4");
+		this.registerModelRenderer(rHorn4);
+
+		rightPec = new AnimatedModelRenderer(this);
+		rightPec.setRotationPoint(4.4F, -4.9F, -6.5F);
+		chest.addChild(rightPec);
+		setRotationAngle(rightPec, 0.0F, 0.0F, 0.0873F);
+		rightPec.setTextureOffset(18, 84).addBox(-4.0F, -4.0F, -3.0F, 8.0F, 8.0F, 3.0F, 0.0F, false);
+		rightPec.setModelRendererName("rightPec");
+		this.registerModelRenderer(rightPec);
+
+		lShoulder = new AnimatedModelRenderer(this);
+		lShoulder.setRotationPoint(-7.5F, -7.5F, -4.0F);
+		chest.addChild(lShoulder);
+		setRotationAngle(lShoulder, 0.0F, 0.0F, 0.0911F);
+		lShoulder.setTextureOffset(0, 71).addBox(-5.0F, -2.0F, -3.5F, 6.0F, 6.0F, 7.0F, 0.0F, false);
+		lShoulder.setModelRendererName("lShoulder");
+		this.registerModelRenderer(lShoulder);
+
+		lArm1 = new AnimatedModelRenderer(this);
+		lArm1.setRotationPoint(-2.0F, 4.0F, 0.0F);
+		lShoulder.addChild(lArm1);
+		lArm1.setTextureOffset(19, 66).addBox(-2.5F, 0.0F, -2.5F, 5.0F, 7.0F, 5.0F, 0.0F, false);
+		lArm1.setModelRendererName("lArm1");
+		this.registerModelRenderer(lArm1);
+
+		lArm2 = new AnimatedModelRenderer(this);
+		lArm2.setRotationPoint(0.0F, 6.7F, 2.5F);
+		lArm1.addChild(lArm2);
+		setRotationAngle(lArm2, -0.2731F, 0.0F, -0.0911F);
+		lArm2.setTextureOffset(0, 84).addBox(-2.5F, 0.0F, -4.0F, 5.0F, 11.0F, 4.0F, 0.0F, false);
+		lArm2.setModelRendererName("lArm2");
+		this.registerModelRenderer(lArm2);
+
+		leftPec = new AnimatedModelRenderer(this);
+		leftPec.setRotationPoint(-4.3F, -4.9F, -6.5F);
+		chest.addChild(leftPec);
+		setRotationAngle(leftPec, 0.0F, 0.0F, -0.0873F);
+		leftPec.setTextureOffset(18, 84).addBox(-4.0F, -4.0F, -3.0F, 8.0F, 8.0F, 3.0F, 0.0F, false);
+		leftPec.setModelRendererName("leftPec");
+		this.registerModelRenderer(leftPec);
+
+		lLeg1_flat = new AnimatedModelRenderer(this);
+		lLeg1_flat.setRotationPoint(-3.5F, -2.3F, 3.0F);
+		lLeg1_flat.setTextureOffset(0, 37).addBox(2.5F, 0.0F, -3.5F, 1.0F, 1.0F, 1.0F, 0.0F, false);
+		lLeg1_flat.setModelRendererName("lLeg1_flat");
+		this.registerModelRenderer(lLeg1_flat);
+
+		lLeg1 = new AnimatedModelRenderer(this);
+		lLeg1.setRotationPoint(0.0F, 0.0F, 0.0F);
+		lLeg1_flat.addChild(lLeg1);
+		setRotationAngle(lLeg1, -0.4098F, 0.0F, 0.0456F);
+		lLeg1.setTextureOffset(0, 37).addBox(-3.5F, 0.0F, -3.5F, 7.0F, 13.0F, 7.0F, 0.0F, false);
+		lLeg1.setModelRendererName("lLeg1");
+		this.registerModelRenderer(lLeg1);
+
+		lLeg2 = new AnimatedModelRenderer(this);
+		lLeg2.setRotationPoint(0.0F, 12.5F, -3.0F);
+		lLeg1.addChild(lLeg2);
+		setRotationAngle(lLeg2, 1.0928F, 0.0F, -0.0456F);
+		lLeg2.setTextureOffset(28, 37).addBox(-3.0F, 0.0F, -0.5F, 6.0F, 9.0F, 5.0F, 0.0F, false);
+		lLeg2.setModelRendererName("lLeg2");
+		this.registerModelRenderer(lLeg2);
+
+		lLeg3 = new AnimatedModelRenderer(this);
+		lLeg3.setRotationPoint(0.0F, 9.0F, 4.5F);
+		lLeg2.addChild(lLeg3);
+		setRotationAngle(lLeg3, -0.9105F, 0.0F, 0.0F);
+		lLeg3.setTextureOffset(0, 57).addBox(-2.5F, 0.0F, -4.0F, 5.0F, 10.0F, 4.0F, 0.0F, false);
+		lLeg3.setModelRendererName("lLeg3");
+		this.registerModelRenderer(lLeg3);
+
+		lFoot = new AnimatedModelRenderer(this);
+		lFoot.setRotationPoint(0.0F, 9.0F, -2.0F);
+		lLeg3.addChild(lFoot);
+		setRotationAngle(lFoot, 0.2276F, 0.0F, 0.0F);
+		lFoot.setTextureOffset(18, 57).addBox(-3.0F, 0.0F, -3.0F, 6.0F, 4.0F, 5.0F, 0.0F, false);
+		lFoot.setModelRendererName("lFoot");
+		this.registerModelRenderer(lFoot);
+
+		rLeg1_flat = new AnimatedModelRenderer(this);
+		rLeg1_flat.setRotationPoint(3.5F, -2.3F, 3.0F);
+		rLeg1_flat.setTextureOffset(0, 37).addBox(2.5F, 0.0F, -3.5F, 0.0F, 1.0F, 1.0F, 0.0F, false);
+		rLeg1_flat.setModelRendererName("rLeg1_flat");
+		this.registerModelRenderer(rLeg1_flat);
+
+		rLeg1 = new AnimatedModelRenderer(this);
+		rLeg1.setRotationPoint(0.0F, 0.0F, 0.0F);
+		rLeg1_flat.addChild(rLeg1);
+		setRotationAngle(rLeg1, -0.4098F, 0.0F, -0.0456F);
+		rLeg1.setTextureOffset(0, 37).addBox(-3.5F, 0.0F, -3.5F, 7.0F, 13.0F, 7.0F, 0.0F, false);
+		rLeg1.setModelRendererName("rLeg1");
+		this.registerModelRenderer(rLeg1);
+
+		rLeg2 = new AnimatedModelRenderer(this);
+		rLeg2.setRotationPoint(0.0F, 12.5F, -3.0F);
+		rLeg1.addChild(rLeg2);
+		setRotationAngle(rLeg2, 1.0928F, 0.0F, 0.0456F);
+		rLeg2.setTextureOffset(28, 37).addBox(-3.0F, 0.0F, -0.5F, 6.0F, 9.0F, 5.0F, 0.0F, false);
+		rLeg2.setModelRendererName("rLeg2");
+		this.registerModelRenderer(rLeg2);
+
+		rLeg3 = new AnimatedModelRenderer(this);
+		rLeg3.setRotationPoint(0.0F, 9.0F, 4.5F);
+		rLeg2.addChild(rLeg3);
+		setRotationAngle(rLeg3, -0.9105F, 0.0F, 0.0F);
+		rLeg3.setTextureOffset(0, 57).addBox(-2.5F, 0.0F, -4.0F, 5.0F, 10.0F, 4.0F, 0.0F, false);
+		rLeg3.setModelRendererName("rLeg3");
+		this.registerModelRenderer(rLeg3);
+
+		rFoot = new AnimatedModelRenderer(this);
+		rFoot.setRotationPoint(0.0F, 9.0F, -2.0F);
+		rLeg3.addChild(rFoot);
+		setRotationAngle(rFoot, 0.2276F, 0.0F, 0.0F);
+		rFoot.setTextureOffset(18, 57).addBox(-3.0F, 0.0F, -3.0F, 6.0F, 4.0F, 5.0F, 0.0F, false);
+		rFoot.setModelRendererName("rFoot");
+		this.registerModelRenderer(rFoot);
+
+		this.rootBones.add(thighs);
+		this.rootBones.add(lLeg1_flat);
+		this.rootBones.add(rLeg1_flat);
 	}
 
-	public void setRotateAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-		modelRenderer.rotateAngleX = x;
-		modelRenderer.rotateAngleY = y;
-		modelRenderer.rotateAngleZ = z;
+	@Override
+	public ResourceLocation getAnimationFileLocation() {
+		return new ResourceLocation(DoomMod.MODID, "animations/baron_hell_animation.json");
 	}
 }

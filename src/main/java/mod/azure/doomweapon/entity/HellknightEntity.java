@@ -8,11 +8,11 @@ import javax.annotation.Nullable;
 
 import mod.azure.doomweapon.entity.ai.goal.DemonAttackGoal;
 import mod.azure.doomweapon.util.Config;
-import mod.azure.doomweapon.util.registry.ModEntityTypes;
 import mod.azure.doomweapon.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.CreatureAttribute;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
@@ -40,20 +40,35 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
+import software.bernie.geckolib.animation.builder.AnimationBuilder;
+import software.bernie.geckolib.animation.controller.EntityAnimationController;
+import software.bernie.geckolib.entity.IAnimatedEntity;
+import software.bernie.geckolib.event.AnimationTestEvent;
+import software.bernie.geckolib.manager.EntityAnimationManager;
 
-public class HellknightEntity extends DemonEntity {
+public class HellknightEntity extends DemonEntity implements IAnimatedEntity {
 
-	private int attackTimer;
+	EntityAnimationManager manager = new EntityAnimationManager();
+	EntityAnimationController<HellknightEntity> controller = new EntityAnimationController<HellknightEntity>(this,
+			"walkController", 0.09F, this::animationPredicate);
 
-	public HellknightEntity(EntityType<HellknightEntity> entityType, World worldIn) {
+	public HellknightEntity(EntityType<? extends HellknightEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
+		manager.addAnimationController(controller);
 	}
 
-	public HellknightEntity(World worldIn) {
-		this(ModEntityTypes.HELLKNIGHT.get(), worldIn);
+	private <E extends Entity> boolean animationPredicate(AnimationTestEvent<E> event) {
+		if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F)) {
+			controller.setAnimation(new AnimationBuilder().addAnimation("walking", true));
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public EntityAnimationManager getAnimationManager() {
+		return manager;
 	}
 
 	@Override
@@ -147,11 +162,6 @@ public class HellknightEntity extends DemonEntity {
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
 		return 3.0F;
-	}
-
-	@OnlyIn(Dist.CLIENT)
-	public int getAttackTimer() {
-		return this.attackTimer;
 	}
 
 	@Override

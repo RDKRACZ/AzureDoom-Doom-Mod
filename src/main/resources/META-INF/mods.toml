@@ -5,7 +5,7 @@ logoFile="doomlogo.png"
 [[mods]] 
 modId="doomweapon"
 version="${file.jarVersion}" 
-displayName="Doom Items Mod"
+displayName="Azuredooms Doom Mod"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/doom-items-mod" 
 authors="AzureDoomC" 
 credits="Thanks to Narial/ulnight for the awesome Sword/Axe and textures! Also Credit to C-Legend for the tools and armor textures! Credit to Marctron for the new armor textures!"

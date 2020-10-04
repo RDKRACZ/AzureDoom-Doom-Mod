@@ -8,11 +8,11 @@ import javax.annotation.Nullable;
 
 import mod.azure.doomweapon.entity.projectiles.entity.BarenBlastEntity;
 import mod.azure.doomweapon.util.Config;
-import mod.azure.doomweapon.util.registry.ModEntityTypes;
 import mod.azure.doomweapon.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.CreatureAttribute;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.LivingEntity;
@@ -41,15 +41,34 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
+import software.bernie.geckolib.animation.builder.AnimationBuilder;
+import software.bernie.geckolib.animation.controller.EntityAnimationController;
+import software.bernie.geckolib.entity.IAnimatedEntity;
+import software.bernie.geckolib.event.AnimationTestEvent;
+import software.bernie.geckolib.manager.EntityAnimationManager;
 
-public class BaronEntity extends DemonEntity {
+public class BaronEntity extends DemonEntity implements IAnimatedEntity {
 
-	public BaronEntity(EntityType<BaronEntity> entityType, World worldIn) {
+	EntityAnimationManager manager = new EntityAnimationManager();
+	EntityAnimationController<BaronEntity> controller = new EntityAnimationController<BaronEntity>(this,
+			"walkController", 0.09F, this::animationPredicate);
+
+	public BaronEntity(EntityType<? extends BaronEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
+		manager.addAnimationController(controller);
 	}
 
-	public BaronEntity(World worldIn) {
-		this(ModEntityTypes.BARON.get(), worldIn);
+	private <E extends Entity> boolean animationPredicate(AnimationTestEvent<E> event) {
+		if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F)) {
+			controller.setAnimation(new AnimationBuilder().addAnimation("walking", true));
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public EntityAnimationManager getAnimationManager() {
+		return manager;
 	}
 
 	@Override
@@ -98,19 +117,12 @@ public class BaronEntity extends DemonEntity {
 					&& this.parentEntity.canEntityBeSeen(livingentity)) {
 				World world = this.parentEntity.world;
 				++this.attackTimer;
-				if (this.attackTimer == 10) {
-					// world.playEvent((PlayerEntity) null, 1015, new BlockPos(this.parentEntity),
-					// 0);
-				}
-
 				if (this.attackTimer == 20) {
 					Vec3d vec3d = this.parentEntity.getLook(1.0F);
 					double d2 = livingentity.getPosX() - (this.parentEntity.getPosX() + vec3d.x * 4.0D);
 					double d3 = livingentity.getPosYHeight(0.5D) - (0.5D + this.parentEntity.getPosYHeight(0.5D));
 					double d4 = livingentity.getPosZ() - (this.parentEntity.getPosZ() + vec3d.z * 4.0D);
-					world.playEvent((PlayerEntity) null, 1016, new BlockPos(this.parentEntity), 0);
 					BarenBlastEntity fireballentity = new BarenBlastEntity(world, this.parentEntity, d2, d3, d4);
-					// fireballentity.explosionPower = this.parentEntity.getFireballStrength();
 					fireballentity.setPosition(this.parentEntity.getPosX() + vec3d.x * 4.0D,
 							this.parentEntity.getPosYHeight(0.5D) + 0.5D, fireballentity.getPosZ() + vec3d.z * 4.0D);
 					world.addEntity(fireballentity);

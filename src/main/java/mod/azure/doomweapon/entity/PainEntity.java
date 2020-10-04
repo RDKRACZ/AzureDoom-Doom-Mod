@@ -21,8 +21,10 @@ import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.SmallFireballEntity;
 import net.minecraft.network.IPacket;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -32,9 +34,14 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 public class PainEntity extends FlyingEntity implements IMob {
+
+	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(PainEntity.class,
+			DataSerializers.BOOLEAN);
 
 	public PainEntity(EntityType<? extends PainEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -90,6 +97,21 @@ public class PainEntity extends FlyingEntity implements IMob {
 		return true;
 	}
 
+	@Override
+	protected void registerData() {
+		super.registerData();
+		this.dataManager.register(ATTACKING, false);
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	public boolean isAttacking() {
+		return this.dataManager.get(ATTACKING);
+	}
+
+	public void setAttacking(boolean attacking) {
+		this.dataManager.set(ATTACKING, attacking);
+	}
+
 	static class FireballAttackGoal extends Goal {
 		private final PainEntity parentEntity;
 		public int attackTimer;
@@ -106,33 +128,27 @@ public class PainEntity extends FlyingEntity implements IMob {
 			this.attackTimer = 0;
 		}
 
+		public void resetTask() {
+			this.parentEntity.setAttacking(false);
+		}
+
 		public void tick() {
 			LivingEntity livingentity = this.parentEntity.getAttackTarget();
 			if (livingentity.getDistanceSq(this.parentEntity) < 4096.0D
 					&& this.parentEntity.canEntityBeSeen(livingentity)) {
 				World world = this.parentEntity.world;
 				++this.attackTimer;
-				if (this.attackTimer == 10) {
-					// world.playEvent((PlayerEntity) null, 1015, new BlockPos(this.parentEntity),
-					// 0);
-				}
-
 				if (this.attackTimer == 20) {
-					Vec3d vec3d = this.parentEntity.getLook(1.0F);
-					double d2 = livingentity.getPosX() - (this.parentEntity.getPosX() + vec3d.x * 4.0D);
-					double d3 = livingentity.getPosYHeight(0.5D) - (0.5D + this.parentEntity.getPosYHeight(0.5D));
-					double d4 = livingentity.getPosZ() - (this.parentEntity.getPosZ() + vec3d.z * 4.0D);
-					world.playEvent((PlayerEntity) null, 1016, new BlockPos(this.parentEntity), 0);
-					SmallFireballEntity fireballentity = new SmallFireballEntity(world, this.parentEntity, d2, d3, d4);
-					// fireballentity.explosionPower = this.parentEntity.getFireballStrength();
-					fireballentity.setPosition(this.parentEntity.getPosX() + vec3d.x * 4.0D,
-							this.parentEntity.getPosYHeight(0.5D) + 0.5D, fireballentity.getPosZ() + vec3d.z * 4.0D);
-					world.addEntity(fireballentity);
+					LostSoulEntity lost_soul = ModEntityTypes.LOST_SOUL.get().create(world);
+					lost_soul.setLocationAndAngles(this.parentEntity.getPosX(), this.parentEntity.getPosY(),
+							this.parentEntity.getPosZ() + 3, 0, 0);
+					world.addEntity(lost_soul);
 					this.attackTimer = -40;
 				}
 			} else if (this.attackTimer > 0) {
 				--this.attackTimer;
 			}
+			this.parentEntity.setAttacking(this.attackTimer > 10);
 		}
 	}
 

@@ -8,11 +8,11 @@ import javax.annotation.Nullable;
 
 import mod.azure.doomweapon.entity.projectiles.entity.RocketMobEntity;
 import mod.azure.doomweapon.util.Config;
-import mod.azure.doomweapon.util.registry.ModEntityTypes;
 import mod.azure.doomweapon.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.CreatureAttribute;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
@@ -43,15 +43,34 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
+import software.bernie.geckolib.animation.builder.AnimationBuilder;
+import software.bernie.geckolib.animation.controller.EntityAnimationController;
+import software.bernie.geckolib.entity.IAnimatedEntity;
+import software.bernie.geckolib.event.AnimationTestEvent;
+import software.bernie.geckolib.manager.EntityAnimationManager;
 
-public class CyberdemonEntity extends DemonEntity {
+public class CyberdemonEntity extends DemonEntity implements IAnimatedEntity {
 
-	public CyberdemonEntity(EntityType<CyberdemonEntity> entityType, World worldIn) {
+	EntityAnimationManager manager = new EntityAnimationManager();
+	EntityAnimationController<CyberdemonEntity> controller = new EntityAnimationController<CyberdemonEntity>(this,
+			"walkController", 0.09F, this::animationPredicate);
+
+	public CyberdemonEntity(EntityType<? extends CyberdemonEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
+		manager.addAnimationController(controller);
 	}
 
-	public CyberdemonEntity(World worldIn) {
-		this(ModEntityTypes.CYBERDEMON.get(), worldIn);
+	private <E extends Entity> boolean animationPredicate(AnimationTestEvent<E> event) {
+		if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F)) {
+			controller.setAnimation(new AnimationBuilder().addAnimation("walking", true));
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public EntityAnimationManager getAnimationManager() {
+		return manager;
 	}
 
 	@Override

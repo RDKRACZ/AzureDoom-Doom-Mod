@@ -13,11 +13,11 @@ import mod.azure.doomweapon.item.ammo.ChaingunAmmo;
 import mod.azure.doomweapon.item.weapons.Shotgun;
 import mod.azure.doomweapon.util.Config;
 import mod.azure.doomweapon.util.registry.DoomItems;
-import mod.azure.doomweapon.util.registry.ModEntityTypes;
 import mod.azure.doomweapon.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.CreatureAttribute;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
@@ -52,11 +52,20 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
+import software.bernie.geckolib.animation.builder.AnimationBuilder;
+import software.bernie.geckolib.animation.controller.EntityAnimationController;
+import software.bernie.geckolib.entity.IAnimatedEntity;
+import software.bernie.geckolib.event.AnimationTestEvent;
+import software.bernie.geckolib.manager.EntityAnimationManager;
 
-public class SpiderdemonEntity extends DemonEntity implements IRangedAttackMob {
+public class SpiderdemonEntity extends DemonEntity implements IRangedAttackMob, IAnimatedEntity {
 
-	private final RangedSpiderDemonAttackGoal<SpiderdemonEntity> aiArrowAttack = new RangedSpiderDemonAttackGoal<>(this, 1.0D,
-			20, 15.0F);
+	EntityAnimationManager manager = new EntityAnimationManager();
+	EntityAnimationController<SpiderdemonEntity> controller = new EntityAnimationController<SpiderdemonEntity>(this,
+			"walkController", 0.09F, this::animationPredicate);
+
+	private final RangedSpiderDemonAttackGoal<SpiderdemonEntity> aiArrowAttack = new RangedSpiderDemonAttackGoal<>(this,
+			1.0D, 20, 15.0F);
 	private final MeleeAttackGoal aiAttackOnCollide = new MeleeAttackGoal(this, 1.2D, false) {
 		public void resetTask() {
 			super.resetTask();
@@ -68,15 +77,24 @@ public class SpiderdemonEntity extends DemonEntity implements IRangedAttackMob {
 			SpiderdemonEntity.this.setAggroed(true);
 		}
 	};
-	
+
 	public SpiderdemonEntity(EntityType<SpiderdemonEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
 		this.setCombatTask();
+		manager.addAnimationController(controller);
 	}
 
-	public SpiderdemonEntity(World worldIn) {
-		this(ModEntityTypes.SPIDERDEMON.get(), worldIn);
-		this.setCombatTask();
+	private <E extends Entity> boolean animationPredicate(AnimationTestEvent<E> event) {
+		if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F)) {
+			controller.setAnimation(new AnimationBuilder().addAnimation("walking", true));
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public EntityAnimationManager getAnimationManager() {
+		return manager;
 	}
 
 	@Override
@@ -143,7 +161,8 @@ public class SpiderdemonEntity extends DemonEntity implements IRangedAttackMob {
 		if (this.world != null && !this.world.isRemote) {
 			this.goalSelector.removeGoal(this.aiAttackOnCollide);
 			this.goalSelector.removeGoal(this.aiArrowAttack);
-			ItemStack itemstack = this.getHeldItem(ProjectileHelper.getHandWith(this, DoomItems.SPIDERDEMONATTACK.get()));
+			ItemStack itemstack = this
+					.getHeldItem(ProjectileHelper.getHandWith(this, DoomItems.SPIDERDEMONATTACK.get()));
 			if (itemstack.getItem() instanceof Shotgun) {
 				int i = 20;
 				if (this.world.getDifficulty() != Difficulty.HARD) {
@@ -163,7 +182,8 @@ public class SpiderdemonEntity extends DemonEntity implements IRangedAttackMob {
 				.findAmmo(this.getHeldItem(ProjectileHelper.getHandWith(this, DoomItems.SPIDERDEMONATTACK.get())));
 		ChaingunBulletEntity abstractarrowentity = this.fireArrowa(itemstack, distanceFactor);
 		if (this.getHeldItemMainhand().getItem() instanceof SpiderdemonAttackItem)
-			abstractarrowentity = ((SpiderdemonAttackItem) this.getHeldItemMainhand().getItem()).customeArrow(abstractarrowentity);
+			abstractarrowentity = ((SpiderdemonAttackItem) this.getHeldItemMainhand().getItem())
+					.customeArrow(abstractarrowentity);
 		double d0 = target.getPosX() - this.getPosX();
 		double d1 = target.getPosYHeight(0.3333333333333333D) - abstractarrowentity.getPosY();
 		double d2 = target.getPosZ() - this.getPosZ();
