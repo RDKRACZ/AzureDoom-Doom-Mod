@@ -55,7 +55,6 @@ import software.bernie.geckolib.event.AnimationTestEvent;
 import software.bernie.geckolib.manager.EntityAnimationManager;
 
 public class ArachnotronEntity extends DemonEntity implements IAnimatedEntity {
-
 	EntityAnimationManager manager = new EntityAnimationManager();
 	EntityAnimationController<ArachnotronEntity> controller = new EntityAnimationController<ArachnotronEntity>(this,
 			"walkController", 0.09F, this::animationPredicate);
@@ -69,7 +68,7 @@ public class ArachnotronEntity extends DemonEntity implements IAnimatedEntity {
 		if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F)) {
 			controller.setAnimation(new AnimationBuilder().addAnimation("walking", true));
 			return true;
-		} 
+		}
 		return false;
 	}
 
