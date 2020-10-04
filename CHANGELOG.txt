@@ -1,3 +1,3 @@
-v.3.2.1
+v.3.2.2
 
-- Added Lost Soul idle animation.
+- Removed E1M2 to E3M9 due to legal reasons.
