@@ -8,13 +8,13 @@ import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.ResourceLocation;
 
-public class LostSoulShootRender extends MobRenderer<LostSoulEntity, LostSoulModel<LostSoulEntity>> {
+public class LostSoulShootRender extends MobRenderer<LostSoulEntity, LostSoulModel> {
 
 	protected static final ResourceLocation TEXTURE = new ResourceLocation(DoomMod.MODID,
 			"textures/entity/lost_soul.png");
 
 	public LostSoulShootRender(EntityRendererManager renderManagerIn) {
-		super(renderManagerIn, new LostSoulModel<>(), 0.8F);
+		super(renderManagerIn, new LostSoulModel(), 0.8F);
 		this.addLayer(new LayerFlames(this));
 	}
 
