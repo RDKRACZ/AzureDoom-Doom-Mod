@@ -1,7 +1,8 @@
-package mod.azure.doomweapon.util.registry;
+package mod.azure.doomweapon.util.compat;
 
 import com.blackgear.nether.core.registries.common.NetherBiomes;
 
+import mod.azure.doomweapon.util.registry.ModEntityTypes;
 import net.minecraft.entity.EntityType;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.SpawnListEntry;
