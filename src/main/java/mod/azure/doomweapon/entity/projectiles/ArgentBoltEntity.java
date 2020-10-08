@@ -40,7 +40,7 @@ public class ArgentBoltEntity extends AbstractArrowEntity {
 	@Override
 	protected void func_225516_i_() {
 		++this.ticksInAir;
-		if (this.ticksExisted >= 600) {
+		if (this.ticksExisted >= 40) {
 			this.remove();
 		}
 	}
@@ -196,6 +196,14 @@ public class ArgentBoltEntity extends AbstractArrowEntity {
 	@Override
 	public IPacket<?> createSpawnPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
+	}
+
+	@Override
+	protected void onHit(RayTraceResult raytraceResultIn) {
+		super.onHit(raytraceResultIn);
+		if (!this.world.isRemote) {
+			this.remove();
+		}
 	}
 
 }
