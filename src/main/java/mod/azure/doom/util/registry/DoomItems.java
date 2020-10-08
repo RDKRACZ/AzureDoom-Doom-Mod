@@ -82,9 +82,12 @@ public class DoomItems {
 	public static final RegistryObject<Item> ARGENT_LAMP_BLOCK = ITEMS.register("argent_lamp_block",
 			() -> new BlockItem(DoomBlocks.ARGENT_LAMP_BLOCK.get(),
 					new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
-	
+
 	public static final RegistryObject<Item> SPIDERDEMONATTACK = ITEMS.register("spiderdemonattack",
 			() -> new SpiderdemonAttackItem());
+
+	public static final RegistryObject<Item> DOOM_SAND = ITEMS.register("doom_sand",
+			() -> new BlockItem(DoomBlocks.DOOM_SAND.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
 
 	public static final RegistryObject<Item> DOOM_WALL1 = ITEMS.register("icon_wall1",
 			() -> new BlockItem(DoomBlocks.DOOM_WALL1.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));

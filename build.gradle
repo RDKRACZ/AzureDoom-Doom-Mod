@@ -86,13 +86,8 @@ dependencies {
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.2-4.0.0.1")
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.2-4.0.0.1:api")
 	compile fg.deobf("curse.maven:JEI:3046220")
-	//compile fg.deobf("curse.maven:SD:3049708")
-	//compile fg.deobf("curse.maven:WZ:3009586")
 	compileOnly fg.deobf("curse.maven:PMMO:3059809")
 	implementation fg.deobf('software.bernie.geckolib:forge-1.16.3-geckolib:2.1.1')
-	//compile fg.deobf("curse.maven:Model1:3017687")
-	//compile fg.deobf("curse.maven:Model2:3016191")
-	//compile fg.deobf("curse.maven:NPF:2993052")
 }
 
 jar {
