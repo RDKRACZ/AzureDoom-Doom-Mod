@@ -13,7 +13,7 @@ import net.minecraft.client.renderer.entity.IEntityRenderer;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.util.ResourceLocation;
 
-public class LayerFlames extends LayerRenderer<LostSoulEntity, LostSoulModel<LostSoulEntity>> {
+public class LayerFlames extends LayerRenderer<LostSoulEntity, LostSoulModel> {
 	private static final ResourceLocation[] TEX = {
 			new ResourceLocation(DoomMod.MODID, "textures/entity/lost_soul_fire_1.png"),
 			new ResourceLocation(DoomMod.MODID, "textures/entity/lost_soul_fire_2.png"),
@@ -24,7 +24,7 @@ public class LayerFlames extends LayerRenderer<LostSoulEntity, LostSoulModel<Los
 			new ResourceLocation(DoomMod.MODID, "textures/entity/lost_soul_fire_7.png"),
 			new ResourceLocation(DoomMod.MODID, "textures/entity/lost_soul_fire_8.png") };
 
-	public LayerFlames(IEntityRenderer<LostSoulEntity, LostSoulModel<LostSoulEntity>> featureRendererContext) {
+	public LayerFlames(IEntityRenderer<LostSoulEntity, LostSoulModel> featureRendererContext) {
 		super(featureRendererContext);
 	}
 

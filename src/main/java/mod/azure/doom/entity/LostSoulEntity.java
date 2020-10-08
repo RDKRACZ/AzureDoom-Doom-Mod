@@ -3,11 +3,10 @@ package mod.azure.doom.entity;
 import java.util.EnumSet;
 import java.util.Random;
 
-import javax.annotation.Nullable;
-
 import mod.azure.doom.util.registry.ModEntityTypes;
 import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.entity.CreatureAttribute;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.FlyingEntity;
 import net.minecraft.entity.LivingEntity;
@@ -34,17 +33,38 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
+import software.bernie.geckolib.animation.builder.AnimationBuilder;
+import software.bernie.geckolib.animation.controller.EntityAnimationController;
+import software.bernie.geckolib.entity.IAnimatedEntity;
+import software.bernie.geckolib.event.AnimationTestEvent;
+import software.bernie.geckolib.manager.EntityAnimationManager;
 
-public class LostSoulEntity extends FlyingEntity implements IMob {
+public class LostSoulEntity extends FlyingEntity implements IMob, IAnimatedEntity {
+
+	EntityAnimationManager manager = new EntityAnimationManager();
+	EntityAnimationController<LostSoulEntity> controller = new EntityAnimationController<LostSoulEntity>(this,
+			"walkController", 0.09F, this::animationPredicate);
 
 	public int explosionPower = 1;
 	public int flameTimer;
-	@Nullable
-	private BlockPos boundOrigin;
 
 	public LostSoulEntity(EntityType<? extends LostSoulEntity> type, World world) {
 		super(type, world);
 		this.moveController = new LostSoulEntity.MoveHelperController(this);
+		manager.addAnimationController(controller);
+	}
+
+	private <E extends Entity> boolean animationPredicate(AnimationTestEvent<E> event) {
+		if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F)) {
+			controller.setAnimation(new AnimationBuilder().addAnimation("walking", true));
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public EntityAnimationManager getAnimationManager() {
+		return manager;
 	}
 
 	@OnlyIn(Dist.CLIENT)
@@ -71,7 +91,6 @@ public class LostSoulEntity extends FlyingEntity implements IMob {
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(8, new LostSoulEntity.LookAroundGoal(this));
-		this.goalSelector.addGoal(8, new LostSoulEntity.MoveRandomGoal());
 		this.goalSelector.addGoal(4, new LostSoulEntity.ChargeAttackGoal());
 		this.targetSelector.addGoal(9, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 	}
@@ -88,46 +107,6 @@ public class LostSoulEntity extends FlyingEntity implements IMob {
 
 	public void setCharging(boolean charging) {
 		return;
-	}
-
-	@Nullable
-	public BlockPos getBoundOrigin() {
-		return this.boundOrigin;
-	}
-
-	class MoveRandomGoal extends Goal {
-		public MoveRandomGoal() {
-			this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE));
-		}
-
-		public boolean shouldExecute() {
-			return !LostSoulEntity.this.getMoveHelper().isUpdating() && LostSoulEntity.this.rand.nextInt(7) == 0;
-		}
-
-		public boolean shouldContinueExecuting() {
-			return false;
-		}
-
-		public void tick() {
-			BlockPos blockpos = LostSoulEntity.this.getBoundOrigin();
-			if (blockpos == null) {
-				blockpos = LostSoulEntity.this.getPosition();
-			}
-			for (int i = 0; i < 3; ++i) {
-				BlockPos blockpos1 = blockpos.add(LostSoulEntity.this.rand.nextInt(15) - 7,
-						LostSoulEntity.this.rand.nextInt(11) - 5, LostSoulEntity.this.rand.nextInt(15) - 7);
-				if (LostSoulEntity.this.world.isAirBlock(blockpos1)) {
-					LostSoulEntity.this.moveController.setMoveTo((double) blockpos1.getX() + 0.5D,
-							(double) blockpos1.getY() + 0.5D, (double) blockpos1.getZ() + 0.5D, 0.25D);
-					if (LostSoulEntity.this.getAttackTarget() == null) {
-						LostSoulEntity.this.getLookController().setLookPosition((double) blockpos1.getX() + 0.5D,
-								(double) blockpos1.getY() + 0.5D, (double) blockpos1.getZ() + 0.5D, 180.0F, 20.0F);
-					}
-					break;
-				}
-			}
-
-		}
 	}
 
 	class ChargeAttackGoal extends Goal {

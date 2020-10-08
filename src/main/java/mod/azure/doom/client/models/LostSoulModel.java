@@ -1,146 +1,189 @@
 package mod.azure.doom.client.models;
 
-import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
-import net.minecraft.client.renderer.entity.model.EntityModel;
-import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.entity.Entity;
-import net.minecraft.util.math.MathHelper;
+import mod.azure.doom.DoomMod;
+import mod.azure.doom.entity.LostSoulEntity;
+import net.minecraft.util.ResourceLocation;
+import software.bernie.geckolib.animation.model.AnimatedEntityModel;
+import software.bernie.geckolib.animation.render.AnimatedModelRenderer;
 
-/**
- * Lost Soul - Batpixxler Created using Tabula 8.0.0
- */
+public class LostSoulModel extends AnimatedEntityModel<LostSoulEntity> {
 
-public class LostSoulModel<T extends Entity> extends EntityModel<T> {
-	public ModelRenderer head;
-	public ModelRenderer smallFlame02;
-	public ModelRenderer smallFlame04;
-	public ModelRenderer flame01;
-	public ModelRenderer flame02;
-	public ModelRenderer smallFlame03;
-	public ModelRenderer Jaw_flat;
-	public ModelRenderer smallFlame05;
-	public ModelRenderer smallFlame01;
-	public ModelRenderer flame03;
-	public ModelRenderer lHorn1;
-	public ModelRenderer rHorn1;
-	public ModelRenderer Jaw;
-	public ModelRenderer lHorn2;
-	public ModelRenderer lHorn3;
-	public ModelRenderer lHorn4;
-	public ModelRenderer rHorn2;
-	public ModelRenderer rHorn3;
-	public ModelRenderer rHorn4;
+	private final AnimatedModelRenderer head;
+	private final AnimatedModelRenderer Jaw_flat;
+	private final AnimatedModelRenderer Jaw;
+	private final AnimatedModelRenderer lHorn1;
+	private final AnimatedModelRenderer lHorn2;
+	private final AnimatedModelRenderer lHorn3;
+	private final AnimatedModelRenderer lHorn4;
+	private final AnimatedModelRenderer rHorn1;
+	private final AnimatedModelRenderer rHorn2;
+	private final AnimatedModelRenderer rHorn3;
+	private final AnimatedModelRenderer rHorn4;
+	private final AnimatedModelRenderer flame01;
+	private final AnimatedModelRenderer flame02;
+	private final AnimatedModelRenderer flame03;
+	private final AnimatedModelRenderer smallFlame01;
+	private final AnimatedModelRenderer smallFlame02;
+	private final AnimatedModelRenderer smallFlame03;
+	private final AnimatedModelRenderer smallFlame04;
+	private final AnimatedModelRenderer smallFlame05;
 
 	public LostSoulModel() {
-		this.textureWidth = 64;
-		this.textureHeight = 64;
-		this.smallFlame04 = new ModelRenderer(this, 21, 40);
-		this.smallFlame04.setRotationPoint(1.8F, -1.4F, 0.3F);
-		this.smallFlame04.addBox(-4.0F, 0.0F, 0.0F, 8.0F, 0.0F, 13.0F, 0.0F, 0.0F, 0.0F);
-		this.setRotateAngle(smallFlame04, 1.0471975511965976F, 0.0F, 0.6283185307179586F);
-		this.lHorn3 = new ModelRenderer(this, 20, 14);
-		this.lHorn3.mirror = true;
-		this.lHorn3.setRotationPoint(0.0F, 4.0F, 0.0F);
-		this.lHorn3.addBox(-0.5F, 0.0F, -2.0F, 1.0F, 4.0F, 2.0F, 0.0F, 0.0F, 0.0F);
-		this.setRotateAngle(lHorn3, -0.7428121536172364F, 0.0F, 0.0F);
-		this.rHorn3 = new ModelRenderer(this, 20, 14);
-		this.rHorn3.setRotationPoint(0.0F, 4.0F, 0.0F);
-		this.rHorn3.addBox(-0.5F, 0.0F, -2.0F, 1.0F, 4.0F, 2.0F, 0.0F, 0.0F, 0.0F);
-		this.setRotateAngle(rHorn3, -0.7428121536172364F, 0.0F, 0.0F);
-		this.flame01 = new ModelRenderer(this, -16, 22);
-		this.flame01.setRotationPoint(0.0F, 1.4F, 0.9F);
-		this.flame01.addBox(-5.0F, 0.0F, 0.0F, 10.0F, 0.0F, 16.0F, 0.0F, 0.0F, 0.0F);
-		this.setRotateAngle(flame01, 1.3962634015954636F, -0.2617993877991494F, 0.15707963267948966F);
-		this.smallFlame03 = new ModelRenderer(this, 21, 40);
-		this.smallFlame03.setRotationPoint(-0.7F, 1.5F, 3.1F);
-		this.smallFlame03.addBox(-4.0F, 0.0F, 0.0F, 8.0F, 0.0F, 13.0F, 0.0F, 0.0F, 0.0F);
-		this.setRotateAngle(smallFlame03, 1.1616911075168483F, 0.0F, 0.0F);
-		this.Jaw_flat = new ModelRenderer(this, 32, 0);
-		this.Jaw_flat.setRotationPoint(0.0F, 0.0F, 4.0F);
-		this.Jaw_flat.addBox(-3.5F, 0.0F, -8.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
-		this.lHorn1 = new ModelRenderer(this, 0, 13);
-		this.lHorn1.mirror = true;
-		this.lHorn1.setRotationPoint(3.0F, -4.0F, 0.0F);
-		this.lHorn1.addBox(-1.5F, 0.0F, -1.5F, 3.0F, 4.0F, 3.0F, 0.0F, 0.0F, 0.0F);
-		this.setRotateAngle(lHorn1, 0.3127630032889644F, 0.0F, -1.8769270935736684F);
-		this.Jaw = new ModelRenderer(this, 32, 0);
-		this.Jaw.setRotationPoint(0.0F, 0.0F, 0.0F);
-		this.Jaw.addBox(-3.5F, 0.0F, -8.0F, 7.0F, 2.0F, 8.0F, 0.0F, 0.0F, 0.0F);
-		this.setRotateAngle(Jaw, 0.3909537457888271F, 0.0F, 0.0F);
-		this.head = new ModelRenderer(this, 0, 0);
-		this.head.setRotationPoint(0.0F, 18.0F, 0.0F);
-		this.head.addBox(-4.0F, -6.0F, -4.0F, 8.0F, 6.0F, 8.0F, 0.0F, 0.0F, 0.0F);
-		this.flame02 = new ModelRenderer(this, 6, 22);
-		this.flame02.setRotationPoint(0.0F, 1.4F, 0.9F);
-		this.flame02.addBox(-5.0F, 0.0F, 0.0F, 10.0F, 0.0F, 16.0F, 0.0F, 0.0F, 0.0F);
-		this.setRotateAngle(flame02, 1.3962634015954636F, 0.2617993877991494F, -0.15707963267948966F);
-		this.smallFlame01 = new ModelRenderer(this, -13, 40);
-		this.smallFlame01.setRotationPoint(-0.7F, -0.6F, -1.6F);
-		this.smallFlame01.addBox(-4.0F, 0.0F, 0.0F, 8.0F, 0.0F, 13.0F, 0.0F, 0.0F, 0.0F);
-		this.setRotateAngle(smallFlame01, 1.3962634015954636F, -0.19198621771937624F, -0.15707963267948966F);
-		this.flame03 = new ModelRenderer(this, 27, 22);
-		this.flame03.setRotationPoint(0.0F, -3.4F, 2.1F);
-		this.flame03.addBox(-5.0F, 0.0F, 0.0F, 10.0F, 0.0F, 16.0F, 0.0F, 0.0F, 0.0F);
-		this.setRotateAngle(flame03, 1.1519173063162573F, 0.0F, 0.0F);
-		this.rHorn4 = new ModelRenderer(this, 26, 14);
-		this.rHorn4.setRotationPoint(0.1F, 4.0F, 0.0F);
-		this.rHorn4.addBox(-0.5F, 0.0F, -1.0F, 1.0F, 4.0F, 1.0F, 0.0F, 0.0F, 0.0F);
-		this.setRotateAngle(rHorn4, -0.7819074915776542F, 0.0F, 0.0F);
-		this.smallFlame05 = new ModelRenderer(this, -13, 40);
-		this.smallFlame05.setRotationPoint(-1.8F, -1.4F, 0.3F);
-		this.smallFlame05.addBox(-4.0F, 0.0F, 0.0F, 8.0F, 0.0F, 13.0F, 0.0F, 0.0F, 0.0F);
-		this.setRotateAngle(smallFlame05, 1.0471975511965976F, 0.0F, -0.6283185307179586F);
-		this.lHorn2 = new ModelRenderer(this, 12, 14);
-		this.lHorn2.mirror = true;
-		this.lHorn2.setRotationPoint(0.0F, 4.0F, 1.5F);
-		this.lHorn2.addBox(-1.0F, 0.0F, -2.0F, 2.0F, 4.0F, 2.0F, 0.0F, 0.0F, 0.0F);
-		this.setRotateAngle(lHorn2, -0.7037167490777915F, 0.0F, 0.0F);
-		this.lHorn4 = new ModelRenderer(this, 26, 14);
-		this.lHorn4.mirror = true;
-		this.lHorn4.setRotationPoint(-0.1F, 4.0F, 0.0F);
-		this.lHorn4.addBox(-0.5F, 0.0F, -1.0F, 1.0F, 4.0F, 1.0F, 0.0F, 0.0F, 0.0F);
-		this.setRotateAngle(lHorn4, -0.7820820617871088F, 0.0F, 0.0F);
-		this.rHorn1 = new ModelRenderer(this, 0, 13);
-		this.rHorn1.setRotationPoint(-2.0F, -4.0F, 0.0F);
-		this.rHorn1.addBox(-1.5F, 0.0F, -1.5F, 3.0F, 4.0F, 3.0F, 0.0F, 0.0F, 0.0F);
-		this.setRotateAngle(rHorn1, 0.3127630032889644F, 0.0F, 1.8767525233642137F);
-		this.smallFlame02 = new ModelRenderer(this, 4, 40);
-		this.smallFlame02.setRotationPoint(-0.7F, -0.6F, -1.6F);
-		this.smallFlame02.addBox(-4.0F, 0.0F, 0.0F, 8.0F, 0.0F, 13.0F, 0.0F, 0.0F, 0.0F);
-		this.setRotateAngle(smallFlame02, 1.3962634015954636F, 0.19198621771937624F, 0.15707963267948966F);
-		this.rHorn2 = new ModelRenderer(this, 12, 14);
-		this.rHorn2.setRotationPoint(0.0F, 4.0F, 1.5F);
-		this.rHorn2.addBox(-1.0F, 0.0F, -2.0F, 2.0F, 4.0F, 2.0F, 0.0F, 0.0F, 0.0F);
-		this.setRotateAngle(rHorn2, -0.7037167490777915F, 0.0F, 0.0F);
-		this.head.addChild(this.smallFlame04);
-		this.lHorn2.addChild(this.lHorn3);
-		this.rHorn2.addChild(this.rHorn3);
-		this.head.addChild(this.flame01);
-		this.head.addChild(this.smallFlame03);
-		this.head.addChild(this.Jaw_flat);
-		this.head.addChild(this.lHorn1);
-		this.Jaw_flat.addChild(this.Jaw);
-		this.head.addChild(this.flame02);
-		this.head.addChild(this.smallFlame01);
-		this.head.addChild(this.flame03);
-		this.rHorn3.addChild(this.rHorn4);
-		this.head.addChild(this.smallFlame05);
-		this.lHorn1.addChild(this.lHorn2);
-		this.lHorn3.addChild(this.lHorn4);
-		this.head.addChild(this.rHorn1);
-		this.head.addChild(this.smallFlame02);
-		this.rHorn1.addChild(this.rHorn2);
-	}
+		textureWidth = 64;
+		textureHeight = 64;
+		head = new AnimatedModelRenderer(this);
+		head.setRotationPoint(0.0F, 18.0F, 0.0F);
+		head.setTextureOffset(0, 0).addBox(-4.0F, -5.0F, -5.0F, 8.0F, 6.0F, 8.0F, 0.0F, false);
+		head.setModelRendererName("head");
+		this.registerModelRenderer(head);
 
-	@Override
-	public void render(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn,
-			float red, float green, float blue, float alpha) {
-		ImmutableList.of(this.head).forEach((modelRenderer) -> {
-			modelRenderer.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
-		});
+		Jaw_flat = new AnimatedModelRenderer(this);
+		Jaw_flat.setRotationPoint(0.0F, 0.0F, 4.0F);
+		head.addChild(Jaw_flat);
+		Jaw_flat.setTextureOffset(32, 0).addBox(3.5F, 0.0F, -8.0F, 0.0F, 0.0F, 0.0F, 0.0F, false);
+		Jaw_flat.setModelRendererName("Jaw_flat");
+		this.registerModelRenderer(Jaw_flat);
+
+		Jaw = new AnimatedModelRenderer(this);
+		Jaw.setRotationPoint(0.0F, 0.0F, 0.0F);
+		Jaw_flat.addChild(Jaw);
+		setRotationAngle(Jaw, 0.391F, 0.0F, 0.0F);
+		Jaw.setTextureOffset(32, 0).addBox(-3.5F, 0.5435F, -9.3056F, 7.0F, 2.0F, 8.0F, 0.0F, false);
+		Jaw.setModelRendererName("Jaw");
+		this.registerModelRenderer(Jaw);
+
+		lHorn1 = new AnimatedModelRenderer(this);
+		lHorn1.setRotationPoint(-3.0F, -4.0F, 0.0F);
+		head.addChild(lHorn1);
+		setRotationAngle(lHorn1, 0.3128F, 0.0F, 1.8769F);
+		lHorn1.setTextureOffset(0, 13).addBox(-1.5F, 0.0F, -1.5F, 3.0F, 4.0F, 3.0F, 0.0F, true);
+		lHorn1.setModelRendererName("lHorn1");
+		this.registerModelRenderer(lHorn1);
+
+		lHorn2 = new AnimatedModelRenderer(this);
+		lHorn2.setRotationPoint(0.0F, 4.0F, 1.5F);
+		lHorn1.addChild(lHorn2);
+		setRotationAngle(lHorn2, -0.7037F, 0.0F, 0.0F);
+		lHorn2.setTextureOffset(12, 14).addBox(-1.0F, 0.0F, -2.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		lHorn2.setModelRendererName("lHorn2");
+		this.registerModelRenderer(lHorn2);
+
+		lHorn3 = new AnimatedModelRenderer(this);
+		lHorn3.setRotationPoint(0.0F, 4.0F, 0.0F);
+		lHorn2.addChild(lHorn3);
+		setRotationAngle(lHorn3, -0.7428F, 0.0F, 0.0F);
+		lHorn3.setTextureOffset(20, 14).addBox(-0.5F, 0.0F, -2.0F, 1.0F, 4.0F, 2.0F, 0.0F, false);
+		lHorn3.setModelRendererName("lHorn3");
+		this.registerModelRenderer(lHorn3);
+
+		lHorn4 = new AnimatedModelRenderer(this);
+		lHorn4.setRotationPoint(0.1F, 4.0F, 0.0F);
+		lHorn3.addChild(lHorn4);
+		setRotationAngle(lHorn4, -0.7821F, 0.0F, 0.0F);
+		lHorn4.setTextureOffset(26, 14).addBox(-0.5F, 0.0F, -1.0F, 1.0F, 4.0F, 1.0F, 0.0F, false);
+		lHorn4.setModelRendererName("lHorn4");
+		this.registerModelRenderer(lHorn4);
+
+		rHorn1 = new AnimatedModelRenderer(this);
+		rHorn1.setRotationPoint(2.0F, -4.0F, 0.0F);
+		head.addChild(rHorn1);
+		setRotationAngle(rHorn1, 0.3128F, 0.0F, -1.8768F);
+		rHorn1.setTextureOffset(0, 13).addBox(-1.5F, 0.0F, -1.5F, 3.0F, 4.0F, 3.0F, 0.0F, false);
+		rHorn1.setModelRendererName("rHorn1");
+		this.registerModelRenderer(rHorn1);
+
+		rHorn2 = new AnimatedModelRenderer(this);
+		rHorn2.setRotationPoint(0.0F, 4.0F, 1.5F);
+		rHorn1.addChild(rHorn2);
+		setRotationAngle(rHorn2, -0.7037F, 0.0F, 0.0F);
+		rHorn2.setTextureOffset(12, 14).addBox(-1.0F, 0.0F, -2.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+		rHorn2.setModelRendererName("rHorn2");
+		this.registerModelRenderer(rHorn2);
+
+		rHorn3 = new AnimatedModelRenderer(this);
+		rHorn3.setRotationPoint(0.0F, 4.0F, 0.0F);
+		rHorn2.addChild(rHorn3);
+		setRotationAngle(rHorn3, -0.7428F, 0.0F, 0.0F);
+		rHorn3.setTextureOffset(20, 14).addBox(-0.5F, 0.0F, -2.0F, 1.0F, 4.0F, 2.0F, 0.0F, false);
+		rHorn3.setModelRendererName("rHorn3");
+		this.registerModelRenderer(rHorn3);
+
+		rHorn4 = new AnimatedModelRenderer(this);
+		rHorn4.setRotationPoint(-0.1F, 4.0F, 0.0F);
+		rHorn3.addChild(rHorn4);
+		setRotationAngle(rHorn4, -0.7819F, 0.0F, 0.0F);
+		rHorn4.setTextureOffset(26, 14).addBox(-0.5F, 0.0F, -1.0F, 1.0F, 4.0F, 1.0F, 0.0F, false);
+		rHorn4.setModelRendererName("rHorn4");
+		this.registerModelRenderer(rHorn4);
+
+		flame01 = new AnimatedModelRenderer(this);
+		flame01.setRotationPoint(0.0F, -3.6F, 0.9F);
+		head.addChild(flame01);
+		setRotationAngle(flame01, 1.3963F, 0.2618F, -0.1571F);
+		flame01.setTextureOffset(-16, 22).addBox(-5.0F, 0.0F, 0.0F, 10.0F, 0.0F, 16.0F, 0.0F, false);
+		flame01.setModelRendererName("flame01");
+		this.registerModelRenderer(flame01);
+
+		flame02 = new AnimatedModelRenderer(this);
+		flame02.setRotationPoint(0.0F, 1.4F, 0.9F);
+		head.addChild(flame02);
+		setRotationAngle(flame02, 1.3963F, -0.2618F, 0.1571F);
+		flame02.setTextureOffset(6, 22).addBox(-5.7555F, -0.6582F, 4.8986F, 10.0F, 0.0F, 16.0F, 0.0F, false);
+		flame02.setModelRendererName("flame02");
+		this.registerModelRenderer(flame02);
+
+		flame03 = new AnimatedModelRenderer(this);
+		flame03.setRotationPoint(0.0F, -3.4F, 2.1F);
+		head.addChild(flame03);
+		setRotationAngle(flame03, 1.1519F, 0.0F, 0.0F);
+		flame03.setTextureOffset(27, 22).addBox(-5.0F, 0.5068F, 1.3203F, 10.0F, 0.0F, 16.0F, 0.0F, false);
+		flame03.setModelRendererName("flame03");
+		this.registerModelRenderer(flame03);
+
+		smallFlame01 = new AnimatedModelRenderer(this);
+		smallFlame01.setRotationPoint(0.7F, -0.6F, -1.6F);
+		head.addChild(smallFlame01);
+		setRotationAngle(smallFlame01, 1.3963F, 0.192F, 0.1571F);
+		smallFlame01.setTextureOffset(-13, 40).addBox(-4.4607F, -0.6027F, 2.9025F, 8.0F, 0.0F, 13.0F, 0.0F, false);
+		smallFlame01.setModelRendererName("smallFlame01");
+		this.registerModelRenderer(smallFlame01);
+
+		smallFlame02 = new AnimatedModelRenderer(this);
+		smallFlame02.setRotationPoint(0.7F, -0.6F, -1.6F);
+		head.addChild(smallFlame02);
+		setRotationAngle(smallFlame02, 1.3963F, -0.192F, -0.1571F);
+		smallFlame02.setTextureOffset(4, 40).addBox(-4.5089F, -0.4443F, 3.0893F, 8.0F, 0.0F, 13.0F, 0.0F, false);
+		smallFlame02.setModelRendererName("smallFlame02");
+		this.registerModelRenderer(smallFlame02);
+
+		smallFlame03 = new AnimatedModelRenderer(this);
+		smallFlame03.setRotationPoint(0.7F, 1.5F, 3.1F);
+		head.addChild(smallFlame03);
+		setRotationAngle(smallFlame03, 1.1617F, 0.0F, 0.0F);
+		smallFlame03.setTextureOffset(21, 40).addBox(-4.6F, -0.3F, 0.4F, 8.0F, 0.0F, 13.0F, 0.0F, false);
+		smallFlame03.setModelRendererName("smallFlame03");
+		this.registerModelRenderer(smallFlame03);
+
+		smallFlame04 = new AnimatedModelRenderer(this);
+		smallFlame04.setRotationPoint(-1.8F, -1.4F, 0.3F);
+		head.addChild(smallFlame04);
+		setRotationAngle(smallFlame04, 1.0472F, 0.0F, -0.6283F);
+		smallFlame04.setTextureOffset(21, 40).addBox(-4.0F, 0.0F, 0.0F, 8.0F, 0.0F, 13.0F, 0.0F, false);
+		smallFlame04.setModelRendererName("smallFlame04");
+		this.registerModelRenderer(smallFlame04);
+
+		smallFlame05 = new AnimatedModelRenderer(this);
+		smallFlame05.setRotationPoint(1.8F, -1.4F, 0.3F);
+		head.addChild(smallFlame05);
+		setRotationAngle(smallFlame05, 1.0472F, 0.0F, 0.6283F);
+		smallFlame05.setTextureOffset(-13, 40).addBox(-4.0F, 0.0F, 0.0F, 8.0F, 0.0F, 13.0F, 0.0F, false);
+		smallFlame05.setModelRendererName("smallFlame05");
+		this.registerModelRenderer(smallFlame05);
+
+		this.rootBones.add(head);
 	}
 
 	public void renderFlame(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn,
@@ -153,15 +196,7 @@ public class LostSoulModel<T extends Entity> extends EntityModel<T> {
 	}
 
 	@Override
-	public void setRotationAngles(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks,
-			float netHeadYaw, float headPitch) {
-		this.Jaw_flat.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 0.4F * limbSwingAmount
-				/ 1.0F;
-	}
-
-	public void setRotateAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-		modelRenderer.rotateAngleX = x;
-		modelRenderer.rotateAngleY = y;
-		modelRenderer.rotateAngleZ = z;
+	public ResourceLocation getAnimationFileLocation() {
+		return new ResourceLocation(DoomMod.MODID, "animations/lostsoul_animation.json");
 	}
 }
