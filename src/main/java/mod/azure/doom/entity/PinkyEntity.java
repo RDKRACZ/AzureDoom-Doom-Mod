@@ -103,7 +103,7 @@ public class PinkyEntity extends DemonEntity implements IAnimatedEntity {
 	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
 		return MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 25.0D)
 				.createMutableAttribute(Attributes.MAX_HEALTH, 75.0D)
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.5F)
+				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D)
 				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 6.0D);
 	}
 
