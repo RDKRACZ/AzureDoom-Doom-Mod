@@ -39,11 +39,29 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class PossessedScientistEntity extends DemonEntity {
+public class PossessedScientistEntity extends DemonEntity { // implements IAnimatedEntity {
 
 	public PossessedScientistEntity(EntityType<PossessedScientistEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
+//		manager.addAnimationController(controller);
 	}
+
+//	EntityAnimationManager manager = new EntityAnimationManager();
+//	EntityAnimationController<PossessedScientistEntity> controller = new EntityAnimationController<PossessedScientistEntity>(
+//			this, "walkController", 0.09F, this::animationPredicate);
+//
+//	private <E extends Entity> boolean animationPredicate(AnimationTestEvent<E> event) {
+//		if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F)) {
+//			controller.setAnimation(new AnimationBuilder().addAnimation("walking", true));
+//			return true;
+//		}
+//		return false;
+//	}
+//
+//	@Override
+//	public EntityAnimationManager getAnimationManager() {
+//		return manager;
+//	}
 
 	public PossessedScientistEntity(World worldIn) {
 		this(ModEntityTypes.POSSESSEDSCIENTIST.get(), worldIn);

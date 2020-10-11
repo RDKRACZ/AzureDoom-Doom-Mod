@@ -1,6 +1,3 @@
 v.3.2.3
 
-- Fixed Pinky Speed and animation.
-- Lost Soul now uses Geckolib animation.
-- Added Base Fire Protection to armors
-- Fixed Projectiles getting stuck and freaking out.
+- Getting more Entities ready for Geckolib models.
