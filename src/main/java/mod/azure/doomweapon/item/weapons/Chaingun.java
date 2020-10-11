@@ -17,7 +17,6 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ShootableItem;
 import net.minecraft.item.UseAction;
-import net.minecraft.stats.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
@@ -108,7 +107,6 @@ public class Chaingun extends ShootableItem {
 						playerentity.inventory.deleteStack(itemstack);
 					}
 				}
-				playerentity.addStat(Stats.ITEM_USED.get(this));
 			}
 		}
 	}
@@ -119,7 +117,6 @@ public class Chaingun extends ShootableItem {
 		if (f > 1.0F) {
 			f = 1.0F;
 		}
-
 		return f;
 	}
 

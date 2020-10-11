@@ -17,7 +17,6 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ShootableItem;
 import net.minecraft.item.UseAction;
-import net.minecraft.stats.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
@@ -108,7 +107,6 @@ public class PlasmaGun extends ShootableItem implements IForgeItem {
 						playerentity.inventory.deleteStack(itemstack);
 					}
 				}
-				playerentity.addStat(Stats.ITEM_USED.get(this));
 			}
 		}
 	}

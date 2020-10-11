@@ -10,7 +10,6 @@ import mod.azure.doomweapon.DoomMod;
 import mod.azure.doomweapon.item.ammo.ShellAmmo;
 import mod.azure.doomweapon.util.registry.DoomItems;
 import mod.azure.doomweapon.util.registry.ModSoundEvents;
-import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.client.renderer.Quaternion;
 import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -21,7 +20,6 @@ import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.FireworkRocketEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.CrossbowItem;
 import net.minecraft.item.Item;
@@ -31,7 +29,6 @@ import net.minecraft.item.Items;
 import net.minecraft.item.UseAction;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
-import net.minecraft.stats.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
@@ -131,15 +128,6 @@ public class SuperShotgun extends CrossbowItem {
 	}
 
 	private static void fireProjectilesAfter(World worldIn, LivingEntity shooter, ItemStack stack) {
-		if (shooter instanceof ServerPlayerEntity) {
-			ServerPlayerEntity serverplayerentity = (ServerPlayerEntity) shooter;
-			if (!worldIn.isRemote) {
-				CriteriaTriggers.SHOT_CROSSBOW.func_215111_a(serverplayerentity, stack);
-			}
-
-			serverplayerentity.addStat(Stats.ITEM_USED.get(stack.getItem()));
-		}
-
 		clearProjectiles(stack);
 	}
 
