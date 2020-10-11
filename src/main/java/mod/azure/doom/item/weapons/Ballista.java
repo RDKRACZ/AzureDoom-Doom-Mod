@@ -11,7 +11,6 @@ import mod.azure.doom.item.ammo.ArgentBolt;
 import mod.azure.doom.util.enums.DoomTier;
 import mod.azure.doom.util.registry.DoomItems;
 import mod.azure.doom.util.registry.ModSoundEvents;
-import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.enchantment.IVanishable;
@@ -19,7 +18,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.ICrossbowUser;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.Item;
@@ -30,7 +28,6 @@ import net.minecraft.item.ShootableItem;
 import net.minecraft.item.UseAction;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
-import net.minecraft.stats.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
@@ -164,15 +161,6 @@ public class Ballista extends ShootableItem implements IVanishable {
 	}
 
 	private static void fireProjectilesAfter(World worldIn, LivingEntity shooter, ItemStack stack) {
-		if (shooter instanceof ServerPlayerEntity) {
-			ServerPlayerEntity serverplayerentity = (ServerPlayerEntity) shooter;
-			if (!worldIn.isRemote) {
-				CriteriaTriggers.SHOT_CROSSBOW.test(serverplayerentity, stack);
-			}
-
-			serverplayerentity.addStat(Stats.ITEM_USED.get(stack.getItem()));
-		}
-
 		clearProjectiles(stack);
 	}
 
