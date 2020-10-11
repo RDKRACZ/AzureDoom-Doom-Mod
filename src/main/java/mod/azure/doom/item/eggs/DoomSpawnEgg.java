@@ -13,9 +13,8 @@ import net.minecraft.nbt.CompoundNBT;
 public class DoomSpawnEgg extends SpawnEggItem {
 	private Supplier<? extends EntityType<?>> typeGetter;
 
-	public DoomSpawnEgg(Supplier<? extends EntityType<?>> typeIn, int primaryColorIn, int secondaryColorIn) {
-		super(null, primaryColorIn, secondaryColorIn,
-				new Item.Properties().maxStackSize(1).group(DoomMod.DoomEggItemGroup));
+	public DoomSpawnEgg(Supplier<? extends EntityType<?>> typeIn) {
+		super(null, 11022961, 11035249, new Item.Properties().maxStackSize(1).group(DoomMod.DoomEggItemGroup));
 		typeGetter = typeIn;
 	}
 

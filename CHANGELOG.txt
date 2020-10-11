@@ -1,3 +1,4 @@
 v.3.2.3
 
 - Getting more Entities ready for Geckolib models.
+- Make all Eggs 1 color.

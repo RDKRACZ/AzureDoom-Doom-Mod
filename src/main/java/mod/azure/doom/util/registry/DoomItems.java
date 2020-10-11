@@ -206,54 +206,53 @@ public class DoomItems {
 	public static final RegistryObject<Item> POWER = ITEMS.register("powersphere", () -> new PowerSphereItem());
 	public static final RegistryObject<Item> SOULCUBE = ITEMS.register("soulcube", () -> new SoulCubeItem());
 	public static final RegistryObject<Item> IMP_SPAWN_EGG = ITEMS.register("imp_spawn_egg",
-			() -> new DoomSpawnEgg(ModEntityTypes.IMP, 11022961, 11035249));
+			() -> new DoomSpawnEgg(ModEntityTypes.IMP));
 	public static final RegistryObject<Item> ARACHNOTRON_SPAWN_EGG = ITEMS.register("arachnotron_spawn_egg",
-			() -> new DoomSpawnEgg(ModEntityTypes.ARACHNOTRON, 11022961, 11035249));
+			() -> new DoomSpawnEgg(ModEntityTypes.ARACHNOTRON));
 	public static final RegistryObject<Item> LOST_SOUL_SPAWN_EGG = ITEMS.register("lost_soul_spawn_egg",
-			() -> new DoomSpawnEgg(ModEntityTypes.LOST_SOUL, 11022961, 11035249));
+			() -> new DoomSpawnEgg(ModEntityTypes.LOST_SOUL));
 	public static final RegistryObject<Item> NIGHTMARE_IMP_SPAWN_EGG = ITEMS.register("nightmare_imp_spawn_egg",
-			() -> new DoomSpawnEgg(ModEntityTypes.NIGHTMARE_IMP, 11022961, 11035249));
+			() -> new DoomSpawnEgg(ModEntityTypes.NIGHTMARE_IMP));
 	public static final RegistryObject<Item> PINKY_SPAWN_EGG = ITEMS.register("pinky_spawn_egg",
-			() -> new DoomSpawnEgg(ModEntityTypes.PINKY, 11022961, 11035249));
+			() -> new DoomSpawnEgg(ModEntityTypes.PINKY));
 	public static final RegistryObject<Item> ARCHVILE_SPAWN_EGG = ITEMS.register("archvile_spawn_egg",
-			() -> new DoomSpawnEgg(ModEntityTypes.ARCHVILE, 11022961, 11035249));
+			() -> new DoomSpawnEgg(ModEntityTypes.ARCHVILE));
 	public static final RegistryObject<Item> BARON_SPAWN_EGG = ITEMS.register("baron_spawn_egg",
-			() -> new DoomSpawnEgg(ModEntityTypes.BARON, 11022961, 11035249));
+			() -> new DoomSpawnEgg(ModEntityTypes.BARON));
 	public static final RegistryObject<Item> CACODEMON_SPAWN_EGG = ITEMS.register("cacodemon_spawn_egg",
-			() -> new DoomSpawnEgg(ModEntityTypes.CACODEMON, 11022961, 11035249));
+			() -> new DoomSpawnEgg(ModEntityTypes.CACODEMON));
 	public static final RegistryObject<Item> MANCUBUS_SPAWN_EGG = ITEMS.register("mancubus_spawn_egg",
-			() -> new DoomSpawnEgg(ModEntityTypes.MANCUBUS, 11022961, 11035249));
+			() -> new DoomSpawnEgg(ModEntityTypes.MANCUBUS));
 	public static final RegistryObject<Item> SPIDERDEMON_SPAWN_EGG = ITEMS.register("spiderdemon_spawn_egg",
-			() -> new DoomSpawnEgg(ModEntityTypes.SPIDERDEMON, 11022961, 11035249));
+			() -> new DoomSpawnEgg(ModEntityTypes.SPIDERDEMON));
 	public static final RegistryObject<Item> ZOMBIEMAN_SPAWN_EGG = ITEMS.register("zombieman_spawn_egg",
-			() -> new DoomSpawnEgg(ModEntityTypes.ZOMBIEMAN, 11022961, 11035249));
+			() -> new DoomSpawnEgg(ModEntityTypes.ZOMBIEMAN));
 	public static final RegistryObject<Item> CHAINGUNNER_SPAWN_EGG = ITEMS.register("chaingunner_spawn_egg",
-			() -> new DoomSpawnEgg(ModEntityTypes.CHAINGUNNER, 11022961, 11035249));
+			() -> new DoomSpawnEgg(ModEntityTypes.CHAINGUNNER));
 	public static final RegistryObject<Item> HELLKNIGHT_SPAWN_EGG = ITEMS.register("hellknight_spawn_egg",
-			() -> new DoomSpawnEgg(ModEntityTypes.HELLKNIGHT, 11022961, 11035249));
+			() -> new DoomSpawnEgg(ModEntityTypes.HELLKNIGHT));
 	public static final RegistryObject<Item> IMP2016_SPAWN_EGG = ITEMS.register("imp2016_spawn_egg",
-			() -> new DoomSpawnEgg(ModEntityTypes.IMP2016, 11022961, 11035249));
+			() -> new DoomSpawnEgg(ModEntityTypes.IMP2016));
 	public static final RegistryObject<Item> MARAUDER_SPAWN_EGG = ITEMS.register("marauder_spawn_egg",
-			() -> new DoomSpawnEgg(ModEntityTypes.MARAUDER, 11022961, 11035249));
+			() -> new DoomSpawnEgg(ModEntityTypes.MARAUDER));
 	public static final RegistryObject<Item> PAIN_SPAWN_EGG = ITEMS.register("pain_spawn_egg",
-			() -> new DoomSpawnEgg(ModEntityTypes.PAIN, 11022961, 11035249));
+			() -> new DoomSpawnEgg(ModEntityTypes.PAIN));
 	public static final RegistryObject<Item> REVENANT_SPAWN_EGG = ITEMS.register("revenant_spawn_egg",
-			() -> new DoomSpawnEgg(ModEntityTypes.REVENANT, 11022961, 11035249));
+			() -> new DoomSpawnEgg(ModEntityTypes.REVENANT));
 	public static final RegistryObject<Item> SHOTGUNGUY_SPAWN_EGG = ITEMS.register("shotgunguy_spawn_egg",
-			() -> new DoomSpawnEgg(ModEntityTypes.SHOTGUNGUY, 11022961, 11035249));
+			() -> new DoomSpawnEgg(ModEntityTypes.SHOTGUNGUY));
 	public static final RegistryObject<Item> CYBERDEMON_SPAWN_EGG = ITEMS.register("cyberdemon_spawn_egg",
-			() -> new DoomSpawnEgg(ModEntityTypes.CYBERDEMON, 11022961, 11035249));
+			() -> new DoomSpawnEgg(ModEntityTypes.CYBERDEMON));
 	public static final RegistryObject<Item> CYBERDEMON2016_SPAWN_EGG = ITEMS.register("cyberdemon2016_spawn_egg",
-			() -> new DoomSpawnEgg(ModEntityTypes.CYBERDEMON2016, 11022961, 11035249));
+			() -> new DoomSpawnEgg(ModEntityTypes.CYBERDEMON2016));
 	public static final RegistryObject<Item> ICON_SPAWN_EGG = ITEMS.register("icon_of_sin_spawn_egg",
-			() -> new DoomSpawnEgg(ModEntityTypes.ICONOFSIN, 11022961, 11035249));
+			() -> new DoomSpawnEgg(ModEntityTypes.ICONOFSIN));
 	public static final RegistryObject<Item> UNWILLING_SPAWN_EGG = ITEMS.register("unwilling_spawn_egg",
-			() -> new DoomSpawnEgg(ModEntityTypes.UNWILLING, 11022961, 11035249));
-	public static final RegistryObject<Item> POSSESSED_SCIENTIST_SPAWN_EGG = ITEMS.register(
-			"possessed_scientist_spawn_egg",
-			() -> new DoomSpawnEgg(ModEntityTypes.POSSESSEDSCIENTIST, 11022961, 11035249));
+			() -> new DoomSpawnEgg(ModEntityTypes.UNWILLING));
+	public static final RegistryObject<Item> POSSESSED_SCIENTIST_SPAWN_EGG = ITEMS
+			.register("possessed_scientist_spawn_egg", () -> new DoomSpawnEgg(ModEntityTypes.POSSESSEDSCIENTIST));
 	public static final RegistryObject<Item> POSSESSED_SOLDIER_SPAWN_EGG = ITEMS.register("possessed_soldier_spawn_egg",
-			() -> new DoomSpawnEgg(ModEntityTypes.POSSESSEDSOLDIER, 11022961, 11035249));
+			() -> new DoomSpawnEgg(ModEntityTypes.POSSESSEDSOLDIER));
 	// WEAPONS AND TOOLS
 	public static final RegistryObject<Item> CRUCIBLESWORD = ITEMS.register("cruciblesword",
 			() -> new SwordCrucibleItem());
