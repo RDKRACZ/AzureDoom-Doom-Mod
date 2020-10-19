@@ -55,6 +55,8 @@ public class BoPSpawns {
 				BOPBiomes.undergarden.get(), BOPBiomes.visceral_heap.get());
 		registerEntityWorldSpawn(ModEntityTypes.CYBERDEMON2016.get(), 10, 1, 1, BOPBiomes.ashen_inferno.get(),
 				BOPBiomes.undergarden.get(), BOPBiomes.visceral_heap.get());
+		registerEntityWorldSpawn(ModEntityTypes.GORE_NEST.get(), 30, 1, 1, BOPBiomes.ashen_inferno.get(),
+				BOPBiomes.undergarden.get(), BOPBiomes.visceral_heap.get());
 	}
 
 	public static void registerEntityWorldSpawn(EntityType<?> entity, int weight, int minGroup, int maxGroup,

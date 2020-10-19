@@ -79,6 +79,9 @@ public class ExtraModSpawns {
 		registerEntityWorldSpawn(ModEntityTypes.CYBERDEMON2016.get(), 10, 1, 1, NetherBiomes.BASALT_DELTAS.get(),
 				NetherBiomes.CRIMSON_FOREST.get(), NetherBiomes.SOUL_SAND_VALLEY.get(),
 				NetherBiomes.WARPED_FOREST.get());
+		registerEntityWorldSpawn(ModEntityTypes.GORE_NEST.get(), 30, 1, 1, NetherBiomes.BASALT_DELTAS.get(),
+				NetherBiomes.CRIMSON_FOREST.get(), NetherBiomes.SOUL_SAND_VALLEY.get(),
+				NetherBiomes.WARPED_FOREST.get());
 	}
 
 	public static void registerEntityWorldSpawn(EntityType<?> entity, int weight, int minGroup, int maxGroup,

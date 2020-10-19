@@ -55,6 +55,8 @@ public class BYGSpawns {
 				BYGBiomeList.GLOWSTONEGARDENS, BYGBiomeList.SYTHIANTORRIDS, BYGBiomeList.WARPEDDESERT);
 		registerEntityWorldSpawn(ModEntityTypes.CYBERDEMON2016.get(), 10, 1, 1, BYGBiomeList.EMBURBOG,
 				BYGBiomeList.GLOWSTONEGARDENS, BYGBiomeList.SYTHIANTORRIDS, BYGBiomeList.WARPEDDESERT);
+		registerEntityWorldSpawn(ModEntityTypes.GORE_NEST.get(), 30, 1, 1, BYGBiomeList.EMBURBOG,
+				BYGBiomeList.GLOWSTONEGARDENS, BYGBiomeList.SYTHIANTORRIDS, BYGBiomeList.WARPEDDESERT);
 	}
 
 	public static void registerEntityWorldSpawn(EntityType<?> entity, int weight, int minGroup, int maxGroup,

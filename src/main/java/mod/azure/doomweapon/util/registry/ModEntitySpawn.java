@@ -7,6 +7,7 @@ import mod.azure.doomweapon.entity.CacodemonEntity;
 import mod.azure.doomweapon.entity.ChaingunnerEntity;
 import mod.azure.doomweapon.entity.Cyberdemon2016Entity;
 import mod.azure.doomweapon.entity.CyberdemonEntity;
+import mod.azure.doomweapon.entity.GoreNestEntity;
 import mod.azure.doomweapon.entity.HellknightEntity;
 import mod.azure.doomweapon.entity.Imp2016Entity;
 import mod.azure.doomweapon.entity.ImpEntity;
@@ -54,6 +55,7 @@ public class ModEntitySpawn {
 		registerEntityWorldSpawn(ModEntityTypes.POSSESSEDSCIENTIST.get(), 30, 1, 4, Biomes.NETHER);
 		registerEntityWorldSpawn(ModEntityTypes.POSSESSEDSOLDIER.get(), 30, 1, 4, Biomes.NETHER);
 		registerEntityWorldSpawn(ModEntityTypes.CYBERDEMON2016.get(), 10, 1, 1, Biomes.NETHER);
+		registerEntityWorldSpawn(ModEntityTypes.GORE_NEST.get(), 30, 1, 1, Biomes.NETHER);
 	}
 
 	public static void EntitySpawnPlacementRegistry() {
@@ -123,6 +125,9 @@ public class ModEntitySpawn {
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.POSSESSEDSOLDIER.get(),
 				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
 				PossessedSoldierEntity::spawning);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.GORE_NEST.get(),
+				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+				GoreNestEntity::spawning);
 	}
 
 	public static void registerEntityWorldSpawn(EntityType<?> entity, int weight, int minGroup, int maxGroup,
