@@ -8,6 +8,7 @@ import mod.azure.doom.entity.CacodemonEntity;
 import mod.azure.doom.entity.ChaingunnerEntity;
 import mod.azure.doom.entity.Cyberdemon2016Entity;
 import mod.azure.doom.entity.CyberdemonEntity;
+import mod.azure.doom.entity.GoreNestEntity;
 import mod.azure.doom.entity.HellknightEntity;
 import mod.azure.doom.entity.IconofsinEntity;
 import mod.azure.doom.entity.Imp2016Entity;
@@ -68,13 +69,13 @@ public class ModEventSubscriber {
 	public static void registerEntities(final RegistryEvent.Register<EntityType<?>> event) {
 		event.getRegistry().registerAll(ModEntityTypes.IMP.get(), ModEntityTypes.ARCHVILE.get(),
 				ModEntityTypes.LOST_SOUL.get(), ModEntityTypes.BARENBLAST.get(), ModEntityTypes.BARON.get(),
-				ModEntityTypes.CACODEMON.get(), ModEntityTypes.MANCUBUS.get(), ModEntityTypes.ARACHNOTRON.get(),
-				ModEntityTypes.PINKY.get(), ModEntityTypes.CYBERDEMON.get(), ModEntityTypes.CYBERDEMON2016.get(),
-				ModEntityTypes.UNWILLING.get(), ModEntityTypes.IMP2016.get(), ModEntityTypes.NIGHTMARE_IMP.get(),
-				ModEntityTypes.CHAINGUNNER.get(), ModEntityTypes.SHOTGUNGUY.get(), ModEntityTypes.MARAUDER.get(),
-				ModEntityTypes.REVENANT.get(), ModEntityTypes.SPIDERDEMON.get(), ModEntityTypes.HELLKNIGHT.get(),
-				ModEntityTypes.ICONOFSIN.get(), ModEntityTypes.POSSESSEDSOLDIER.get(), ModEntityTypes.BULLETS.get(),
-				ModEntityTypes.CHAINGUN_BULLET.get(), ModEntityTypes.ENERGY_CELL.get(),
+				ModEntityTypes.GORE_NEST.get(), ModEntityTypes.CACODEMON.get(), ModEntityTypes.MANCUBUS.get(),
+				ModEntityTypes.ARACHNOTRON.get(), ModEntityTypes.PINKY.get(), ModEntityTypes.CYBERDEMON.get(),
+				ModEntityTypes.CYBERDEMON2016.get(), ModEntityTypes.UNWILLING.get(), ModEntityTypes.IMP2016.get(),
+				ModEntityTypes.NIGHTMARE_IMP.get(), ModEntityTypes.CHAINGUNNER.get(), ModEntityTypes.SHOTGUNGUY.get(),
+				ModEntityTypes.MARAUDER.get(), ModEntityTypes.REVENANT.get(), ModEntityTypes.SPIDERDEMON.get(),
+				ModEntityTypes.HELLKNIGHT.get(), ModEntityTypes.ICONOFSIN.get(), ModEntityTypes.POSSESSEDSOLDIER.get(),
+				ModEntityTypes.BULLETS.get(), ModEntityTypes.CHAINGUN_BULLET.get(), ModEntityTypes.ENERGY_CELL.get(),
 				ModEntityTypes.SHOTGUN_SHELL.get(), ModEntityTypes.ARGENT_BOLT.get(),
 				ModEntityTypes.ENERGY_CELL_MOB.get(), ModEntityTypes.ROCKET_MOB.get(),
 				ModEntityTypes.POSSESSEDSCIENTIST.get(), ModEntityTypes.ZOMBIEMAN.get());
@@ -112,6 +113,7 @@ public class ModEventSubscriber {
 		GlobalEntityTypeAttributes.put(ModEntityTypes.ZOMBIEMAN.get(), ZombiemanEntity.func_234200_m_().create());
 		GlobalEntityTypeAttributes.put(ModEntityTypes.CACODEMON.get(), CacodemonEntity.func_234200_m_().create());
 		GlobalEntityTypeAttributes.put(ModEntityTypes.PAIN.get(), PainEntity.func_234200_m_().create());
+		GlobalEntityTypeAttributes.put(ModEntityTypes.GORE_NEST.get(), GoreNestEntity.func_234200_m_().create());
 	}
 
 	public static <T extends IForgeRegistryEntry<T>> T setup(final T entry, final String name) {

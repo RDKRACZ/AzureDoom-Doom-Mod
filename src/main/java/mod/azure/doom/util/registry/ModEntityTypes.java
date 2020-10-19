@@ -8,6 +8,7 @@ import mod.azure.doom.entity.CacodemonEntity;
 import mod.azure.doom.entity.ChaingunnerEntity;
 import mod.azure.doom.entity.Cyberdemon2016Entity;
 import mod.azure.doom.entity.CyberdemonEntity;
+import mod.azure.doom.entity.GoreNestEntity;
 import mod.azure.doom.entity.HellknightEntity;
 import mod.azure.doom.entity.IconofsinEntity;
 import mod.azure.doom.entity.Imp2016Entity;
@@ -213,6 +214,11 @@ public class ModEntityTypes {
 			() -> EntityType.Builder.create(PossessedSoldierEntity::new, EntityClassification.MONSTER).size(0.6f, 1.95F)
 					.immuneToFire().trackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "possessed_soldier").toString()));
+
+	public static final RegistryObject<EntityType<GoreNestEntity>> GORE_NEST = ENTITY_TYPES.register("gore_nest",
+			() -> EntityType.Builder.create(GoreNestEntity::new, EntityClassification.MONSTER).size(0.6f, 1.95F)
+					.immuneToFire().trackingRange(9)
+					.build(new ResourceLocation(DoomMod.MODID, "gore_nest").toString()));
 
 	public static final RegistryObject<EntityType<PossessedScientistEntity>> POSSESSEDSCIENTIST = ENTITY_TYPES.register(
 			"possessed_scientist",

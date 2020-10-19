@@ -4,3 +4,4 @@ v.3.2.3
 - Make all Eggs 1 color.
 - New Possessed Scientist model, thanks to Silly
 - Possessed Scientist idle, walking and death animation.
+- Added Gore Nest.

@@ -14,6 +14,7 @@ import mod.azure.doom.entity.CacodemonEntity;
 import mod.azure.doom.entity.ChaingunnerEntity;
 import mod.azure.doom.entity.Cyberdemon2016Entity;
 import mod.azure.doom.entity.CyberdemonEntity;
+import mod.azure.doom.entity.GoreNestEntity;
 import mod.azure.doom.entity.HellknightEntity;
 import mod.azure.doom.entity.IconofsinEntity;
 import mod.azure.doom.entity.Imp2016Entity;
@@ -68,6 +69,7 @@ public class ModEntitySpawn {
 						new MobSpawnInfo.Spawners(ModEntityTypes.UNWILLING.get(), 30, 1, 4),
 						new MobSpawnInfo.Spawners(ModEntityTypes.POSSESSEDSCIENTIST.get(), 30, 1, 4),
 						new MobSpawnInfo.Spawners(ModEntityTypes.POSSESSEDSOLDIER.get(), 30, 1, 4),
+						new MobSpawnInfo.Spawners(ModEntityTypes.GORE_NEST.get(), 30, 1, 1),
 						new MobSpawnInfo.Spawners(ModEntityTypes.CYBERDEMON2016.get(), 10, 1, 1));
 			}
 		}
@@ -161,5 +163,8 @@ public class ModEntitySpawn {
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.ICONOFSIN.get(),
 				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
 				IconofsinEntity::spawning);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.GORE_NEST.get(),
+				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+				GoreNestEntity::spawning);
 	}
 }

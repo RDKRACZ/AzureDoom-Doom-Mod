@@ -12,6 +12,7 @@ import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.CreatureAttribute;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.MobEntity;
@@ -40,30 +41,53 @@ import net.minecraft.world.IServerWorld;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
+import software.bernie.geckolib.animation.builder.AnimationBuilder;
+import software.bernie.geckolib.animation.controller.EntityAnimationController;
+import software.bernie.geckolib.entity.IAnimatedEntity;
+import software.bernie.geckolib.event.AnimationTestEvent;
+import software.bernie.geckolib.manager.EntityAnimationManager;
 
-public class PossessedScientistEntity extends DemonEntity { // implements IAnimatedEntity {
+public class PossessedScientistEntity extends DemonEntity implements IAnimatedEntity {
 
 	public PossessedScientistEntity(EntityType<PossessedScientistEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
-//		manager.addAnimationController(controller);
+		manager.addAnimationController(controller);
 	}
 
-//	EntityAnimationManager manager = new EntityAnimationManager();
-//	EntityAnimationController<PossessedScientistEntity> controller = new EntityAnimationController<PossessedScientistEntity>(
-//			this, "walkController", 0.09F, this::animationPredicate);
-//
-//	private <E extends Entity> boolean animationPredicate(AnimationTestEvent<E> event) {
-//		if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F)) {
-//			controller.setAnimation(new AnimationBuilder().addAnimation("walking", true));
-//			return true;
-//		}
-//		return false;
-//	}
-//
-//	@Override
-//	public EntityAnimationManager getAnimationManager() {
-//		return manager;
-//	}
+	EntityAnimationManager manager = new EntityAnimationManager();
+	EntityAnimationController<PossessedScientistEntity> controller = new EntityAnimationController<PossessedScientistEntity>(
+			this, "walkController", 0.09F, this::animationPredicate);
+
+	private <E extends Entity> boolean animationPredicate(AnimationTestEvent<E> event) {
+		if (!(limbSwingAmount > -0.05F && limbSwingAmount < 0.05F)) {
+			controller.setAnimation(new AnimationBuilder().addAnimation("walking", true));
+			return true;
+		} else if (this.dead) {
+			controller.setAnimation(new AnimationBuilder().addAnimation("death", false));
+			return true;
+		} else {
+			controller.setAnimation(new AnimationBuilder().addAnimation("idle", true));
+			return true;
+		}
+	}
+
+	@Override
+	protected void onDeathUpdate() {
+		++this.deathTime;
+		if (this.deathTime == 80) {
+			this.remove();
+			for (int i = 0; i < 20; ++i) {
+				controller.setAnimation(new AnimationBuilder().addAnimation("death", false));
+			}
+		}
+
+	}
+
+	@Override
+	public EntityAnimationManager getAnimationManager() {
+		return manager;
+	}
+
 	@Override
 	public IPacket<?> createSpawnPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
@@ -100,7 +124,7 @@ public class PossessedScientistEntity extends DemonEntity { // implements IAnima
 	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
 		return MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 25.0D)
 				.createMutableAttribute(Attributes.MAX_HEALTH, 15.0D)
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D)
+				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.15D)
 				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 4.0D);
 	}
 

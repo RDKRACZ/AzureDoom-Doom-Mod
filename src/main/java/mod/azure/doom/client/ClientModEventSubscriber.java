@@ -9,6 +9,7 @@ import mod.azure.doom.client.render.CacodemonRender;
 import mod.azure.doom.client.render.ChaingunnerRender;
 import mod.azure.doom.client.render.Cyberdemon2016Render;
 import mod.azure.doom.client.render.CyberdemonRender;
+import mod.azure.doom.client.render.GoreNestRender;
 import mod.azure.doom.client.render.HellknightRender;
 import mod.azure.doom.client.render.IconofsinRender;
 import mod.azure.doom.client.render.Imp2016Render;
@@ -90,5 +91,6 @@ public class ClientModEventSubscriber {
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ENERGY_CELL_MOB.get(),
 				EnergyCellMobRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ROCKET_MOB.get(), RocketMobRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.GORE_NEST.get(), GoreNestRender::new);
 	}
 }
