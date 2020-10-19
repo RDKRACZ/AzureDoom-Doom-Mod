@@ -49,7 +49,6 @@ public class SkinArmor extends ArmorItem {
 		stack.addEnchantment(Enchantments.FIRE_PROTECTION, 1);
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@OnlyIn(Dist.CLIENT)
 	@Override
 	public final BipedModel getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlotType armorSlot,
