@@ -38,6 +38,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -47,6 +49,8 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
 import software.bernie.geckolib.animation.builder.AnimationBuilder;
 import software.bernie.geckolib.animation.controller.EntityAnimationController;
@@ -55,6 +59,8 @@ import software.bernie.geckolib.event.AnimationTestEvent;
 import software.bernie.geckolib.manager.EntityAnimationManager;
 
 public class ArachnotronEntity extends DemonEntity implements IAnimatedEntity {
+	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(ArachnotronEntity.class,
+			DataSerializers.BOOLEAN);
 	EntityAnimationManager manager = new EntityAnimationManager();
 	EntityAnimationController<ArachnotronEntity> controller = new EntityAnimationController<ArachnotronEntity>(this,
 			"walkController", 0.09F, this::animationPredicate);
@@ -69,12 +75,31 @@ public class ArachnotronEntity extends DemonEntity implements IAnimatedEntity {
 			controller.setAnimation(new AnimationBuilder().addAnimation("walking", true));
 			return true;
 		}
+		if (this.dataManager.get(ATTACKING)) {
+			controller.setAnimation(new AnimationBuilder().addAnimation("attacking", true));
+			return true;
+		}
 		return false;
 	}
 
 	@Override
 	public EntityAnimationManager getAnimationManager() {
 		return manager;
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	public boolean isAttacking() {
+		return this.dataManager.get(ATTACKING);
+	}
+
+	public void setAttacking(boolean attacking) {
+		this.dataManager.set(ATTACKING, attacking);
+	}
+
+	@Override
+	protected void registerData() {
+		super.registerData();
+		this.dataManager.register(ATTACKING, false);
 	}
 
 	@Override
@@ -126,7 +151,7 @@ public class ArachnotronEntity extends DemonEntity implements IAnimatedEntity {
 				World world = this.parentEntity.world;
 				++this.attackTimer;
 
-				if (this.attackTimer == 20) {
+				if (this.attackTimer == 50) {
 					Vector3d vector3d = this.parentEntity.getLook(1.0F);
 					double d2 = livingentity.getPosX() - (this.parentEntity.getPosX() + vector3d.x * 4.0D);
 					double d3 = livingentity.getPosYHeight(0.5D) - (0.5D + this.parentEntity.getPosYHeight(0.5D));
@@ -135,11 +160,13 @@ public class ArachnotronEntity extends DemonEntity implements IAnimatedEntity {
 					fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 2.0D,
 							this.parentEntity.getPosYHeight(0.5D) + 0.5D, fireballentity.getPosZ() + vector3d.z * 1.0D);
 					world.addEntity(fireballentity);
-					this.attackTimer = -40;
+					this.attackTimer = -100;
 				}
 			} else if (this.attackTimer > 0) {
 				--this.attackTimer;
 			}
+
+			this.parentEntity.setAttacking(this.attackTimer > 10);
 		}
 	}
 
@@ -153,11 +180,6 @@ public class ArachnotronEntity extends DemonEntity implements IAnimatedEntity {
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
 		return 1.0F;
-	}
-
-	@Override
-	protected void registerData() {
-		super.registerData();
 	}
 
 	@Override

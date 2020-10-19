@@ -20,6 +20,9 @@ import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.IPacket;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -40,7 +43,8 @@ import software.bernie.geckolib.event.AnimationTestEvent;
 import software.bernie.geckolib.manager.EntityAnimationManager;
 
 public class LostSoulEntity extends FlyingEntity implements IMob, IAnimatedEntity {
-
+	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(LostSoulEntity.class,
+			DataSerializers.BOOLEAN);
 	EntityAnimationManager manager = new EntityAnimationManager();
 	EntityAnimationController<LostSoulEntity> controller = new EntityAnimationController<LostSoulEntity>(this,
 			"walkController", 0.09F, this::animationPredicate);
@@ -59,12 +63,31 @@ public class LostSoulEntity extends FlyingEntity implements IMob, IAnimatedEntit
 			controller.setAnimation(new AnimationBuilder().addAnimation("walking", true));
 			return true;
 		}
+		if (this.dataManager.get(ATTACKING)) {
+			controller.setAnimation(new AnimationBuilder().addAnimation("attacking", true));
+			return true;
+		}
 		return false;
 	}
 
 	@Override
 	public EntityAnimationManager getAnimationManager() {
 		return manager;
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	public boolean isAttacking() {
+		return this.dataManager.get(ATTACKING);
+	}
+
+	public void setAttacking(boolean attacking) {
+		this.dataManager.set(ATTACKING, attacking);
+	}
+
+	@Override
+	protected void registerData() {
+		super.registerData();
+		this.dataManager.register(ATTACKING, false);
 	}
 
 	@OnlyIn(Dist.CLIENT)
@@ -110,6 +133,8 @@ public class LostSoulEntity extends FlyingEntity implements IMob, IAnimatedEntit
 	}
 
 	class ChargeAttackGoal extends Goal {
+		public int attackTimer;
+
 		public ChargeAttackGoal() {
 			this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE));
 		}
@@ -134,25 +159,31 @@ public class LostSoulEntity extends FlyingEntity implements IMob, IAnimatedEntit
 			LostSoulEntity.this.moveController.setMoveTo(vec3d.x, vec3d.y, vec3d.z, 1.0D);
 			LostSoulEntity.this.setCharging(true);
 			LostSoulEntity.this.playSound(ModSoundEvents.LOST_SOUL_AMBIENT.get(), 1.0F, 1.0F);
+			this.attackTimer = 0;
 		}
 
 		public void resetTask() {
 			LostSoulEntity.this.setCharging(false);
+			LostSoulEntity.this.setAttacking(false);
 		}
 
 		public void tick() {
 			LivingEntity livingentity = LostSoulEntity.this.getAttackTarget();
+			++this.attackTimer;
 			if (LostSoulEntity.this.getBoundingBox().intersects(livingentity.getBoundingBox())) {
 				LostSoulEntity.this.attackEntityAsMob(livingentity);
 				LostSoulEntity.this.setCharging(false);
+				--this.attackTimer;
 			} else {
 				double d0 = LostSoulEntity.this.getDistanceSq(livingentity);
-				if (d0 < 9.0D) {
+				if (d0 < 30.0D) {
 					Vector3d vec3d = livingentity.getEyePosition(1.0F);
 					LostSoulEntity.this.moveController.setMoveTo(vec3d.x, vec3d.y, vec3d.z, 1.0D);
+					this.attackTimer = -40;
 				}
 			}
 
+			LostSoulEntity.this.setAttacking(this.attackTimer > 10);
 		}
 	}
 
