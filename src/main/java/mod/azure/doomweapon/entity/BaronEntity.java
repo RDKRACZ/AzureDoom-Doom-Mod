@@ -32,6 +32,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -40,6 +42,8 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
 import software.bernie.geckolib.animation.builder.AnimationBuilder;
 import software.bernie.geckolib.animation.controller.EntityAnimationController;
@@ -48,6 +52,8 @@ import software.bernie.geckolib.event.AnimationTestEvent;
 import software.bernie.geckolib.manager.EntityAnimationManager;
 
 public class BaronEntity extends DemonEntity implements IAnimatedEntity {
+	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(BaronEntity.class,
+			DataSerializers.BOOLEAN);
 
 	EntityAnimationManager manager = new EntityAnimationManager();
 	EntityAnimationController<BaronEntity> controller = new EntityAnimationController<BaronEntity>(this,
@@ -63,12 +69,31 @@ public class BaronEntity extends DemonEntity implements IAnimatedEntity {
 			controller.setAnimation(new AnimationBuilder().addAnimation("walking", true));
 			return true;
 		}
+		if (this.dataManager.get(ATTACKING)) {
+			controller.setAnimation(new AnimationBuilder().addAnimation("attacking", true));
+			return true;
+		}
 		return false;
 	}
 
 	@Override
 	public EntityAnimationManager getAnimationManager() {
 		return manager;
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	public boolean isAttacking() {
+		return this.dataManager.get(ATTACKING);
+	}
+
+	public void setAttacking(boolean attacking) {
+		this.dataManager.set(ATTACKING, attacking);
+	}
+
+	@Override
+	protected void registerData() {
+		super.registerData();
+		this.dataManager.register(ATTACKING, false);
 	}
 
 	@Override
@@ -111,6 +136,10 @@ public class BaronEntity extends DemonEntity implements IAnimatedEntity {
 			this.attackTimer = 0;
 		}
 
+		public void resetTask() {
+			this.parentEntity.setAttacking(false);
+		}
+
 		public void tick() {
 			LivingEntity livingentity = this.parentEntity.getAttackTarget();
 			if (livingentity.getDistanceSq(this.parentEntity) < 4096.0D
@@ -142,11 +171,6 @@ public class BaronEntity extends DemonEntity implements IAnimatedEntity {
 		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double) 0.23F);
 		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(3.0D);
 		this.getAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(2.0D);
-	}
-
-	@Override
-	protected void registerData() {
-		super.registerData();
 	}
 
 	@Override

@@ -18,6 +18,9 @@ import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.IPacket;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -38,7 +41,8 @@ import software.bernie.geckolib.event.AnimationTestEvent;
 import software.bernie.geckolib.manager.EntityAnimationManager;
 
 public class LostSoulEntity extends DemonEntity implements IMob, IAnimatedEntity {
-
+	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(ArachnotronEntity.class,
+			DataSerializers.BOOLEAN);
 	EntityAnimationManager manager = new EntityAnimationManager();
 	EntityAnimationController<LostSoulEntity> controller = new EntityAnimationController<LostSoulEntity>(this,
 			"walkController", 0.09F, this::animationPredicate);
@@ -57,6 +61,10 @@ public class LostSoulEntity extends DemonEntity implements IMob, IAnimatedEntity
 			controller.setAnimation(new AnimationBuilder().addAnimation("walking", true));
 			return true;
 		}
+		if (this.dataManager.get(ATTACKING)) {
+			controller.setAnimation(new AnimationBuilder().addAnimation("attacking", true));
+			return true;
+		}
 		return false;
 	}
 
@@ -64,7 +72,22 @@ public class LostSoulEntity extends DemonEntity implements IMob, IAnimatedEntity
 	public EntityAnimationManager getAnimationManager() {
 		return manager;
 	}
-	
+
+	@OnlyIn(Dist.CLIENT)
+	public boolean isAttacking() {
+		return this.dataManager.get(ATTACKING);
+	}
+
+	public void setAttacking(boolean attacking) {
+		this.dataManager.set(ATTACKING, attacking);
+	}
+
+	@Override
+	protected void registerData() {
+		super.registerData();
+		this.dataManager.register(ATTACKING, false);
+	}
+
 	public boolean onLivingFall(float distance, float damageMultiplier) {
 		return false;
 	}
