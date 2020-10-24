@@ -22,6 +22,7 @@ import mod.azure.doom.entity.ImpEntity;
 import mod.azure.doom.entity.LostSoulEntity;
 import mod.azure.doom.entity.MancubusEntity;
 import mod.azure.doom.entity.MarauderEntity;
+import mod.azure.doom.entity.MechaZombieEntity;
 import mod.azure.doom.entity.NightmareImpEntity;
 import mod.azure.doom.entity.PainEntity;
 import mod.azure.doom.entity.PinkyEntity;
@@ -59,6 +60,7 @@ public class ModEntitySpawn {
 						new MobSpawnInfo.Spawners(ModEntityTypes.ZOMBIEMAN.get(), 30, 1, 4),
 						new MobSpawnInfo.Spawners(ModEntityTypes.NIGHTMARE_IMP.get(), 30, 1, 4),
 						new MobSpawnInfo.Spawners(ModEntityTypes.IMP2016.get(), 30, 1, 4),
+						//new MobSpawnInfo.Spawners(ModEntityTypes.MECHAZOMBIE.get(), 30, 1, 4),
 						new MobSpawnInfo.Spawners(ModEntityTypes.ARACHNOTRON.get(), 30, 1, 4),
 						new MobSpawnInfo.Spawners(ModEntityTypes.CHAINGUNNER.get(), 30, 1, 4),
 						new MobSpawnInfo.Spawners(ModEntityTypes.SHOTGUNGUY.get(), 30, 1, 4),
@@ -166,5 +168,8 @@ public class ModEntitySpawn {
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.GORE_NEST.get(),
 				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
 				GoreNestEntity::spawning);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.MECHAZOMBIE.get(),
+				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+				MechaZombieEntity::spawning);
 	}
 }

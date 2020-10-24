@@ -63,7 +63,20 @@ public class PinkyEntity extends DemonEntity implements IAnimatedEntity {
 			controller.setAnimation(new AnimationBuilder().addAnimation("walking", true));
 			return true;
 		}
+		if (this.dead) {
+			controller.setAnimation(new AnimationBuilder().addAnimation("death"));
+			return true;
+		}
 		return false;
+	}
+
+	@Override
+	protected void onDeathUpdate() {
+		++this.deathTime;
+		if (this.deathTime == 80) {
+			this.remove();
+			controller.setAnimation(new AnimationBuilder().addAnimation("death", false));
+		}
 	}
 
 	@Override

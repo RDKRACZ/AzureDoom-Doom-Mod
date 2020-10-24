@@ -16,6 +16,7 @@ import mod.azure.doom.entity.ImpEntity;
 import mod.azure.doom.entity.LostSoulEntity;
 import mod.azure.doom.entity.MancubusEntity;
 import mod.azure.doom.entity.MarauderEntity;
+import mod.azure.doom.entity.MechaZombieEntity;
 import mod.azure.doom.entity.NightmareImpEntity;
 import mod.azure.doom.entity.PainEntity;
 import mod.azure.doom.entity.PinkyEntity;
@@ -77,7 +78,7 @@ public class ModEventSubscriber {
 				ModEntityTypes.HELLKNIGHT.get(), ModEntityTypes.ICONOFSIN.get(), ModEntityTypes.POSSESSEDSOLDIER.get(),
 				ModEntityTypes.BULLETS.get(), ModEntityTypes.CHAINGUN_BULLET.get(), ModEntityTypes.ENERGY_CELL.get(),
 				ModEntityTypes.SHOTGUN_SHELL.get(), ModEntityTypes.ARGENT_BOLT.get(),
-				ModEntityTypes.ENERGY_CELL_MOB.get(), ModEntityTypes.ROCKET_MOB.get(),
+				ModEntityTypes.ENERGY_CELL_MOB.get(), ModEntityTypes.ROCKET_MOB.get(), ModEntityTypes.MECHAZOMBIE.get(),
 				ModEntityTypes.POSSESSEDSCIENTIST.get(), ModEntityTypes.ZOMBIEMAN.get());
 		ModEntitySpawn.addSpawnEntries();
 		ModEntitySpawn.EntitySpawnPlacementRegistry();
@@ -114,6 +115,7 @@ public class ModEventSubscriber {
 		GlobalEntityTypeAttributes.put(ModEntityTypes.CACODEMON.get(), CacodemonEntity.func_234200_m_().create());
 		GlobalEntityTypeAttributes.put(ModEntityTypes.PAIN.get(), PainEntity.func_234200_m_().create());
 		GlobalEntityTypeAttributes.put(ModEntityTypes.GORE_NEST.get(), GoreNestEntity.func_234200_m_().create());
+		GlobalEntityTypeAttributes.put(ModEntityTypes.MECHAZOMBIE.get(), MechaZombieEntity.func_234200_m_().create());
 	}
 
 	public static <T extends IForgeRegistryEntry<T>> T setup(final T entry, final String name) {

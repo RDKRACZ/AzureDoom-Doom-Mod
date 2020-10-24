@@ -23,7 +23,6 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
@@ -51,6 +50,12 @@ public class GoreNestEntity extends DemonEntity implements IAnimatedEntity {
 	}
 
 	private <E extends Entity> boolean animationPredicate(AnimationTestEvent<E> event) {
+		if (this.getShouldBeDead()) {
+			if (world.isRemote) {
+				controller.setAnimation(new AnimationBuilder().addAnimation("death", false));
+				return true;
+			}
+		}
 		controller.setAnimation(new AnimationBuilder().addAnimation("idle", true));
 		return true;
 	}
@@ -78,30 +83,31 @@ public class GoreNestEntity extends DemonEntity implements IAnimatedEntity {
 	@Override
 	protected void onDeathUpdate() {
 		++this.deathTime;
-		Vector3d vector3d = this.parentEntity.getLook(1.0F);
 		if (this.deathTime == 80) {
 			this.remove();
 			for (int i = 0; i < 20; ++i) {
-				controller.setAnimation(new AnimationBuilder().addAnimation("death", false));
+				if (world.isRemote) {
+					controller.setAnimation(new AnimationBuilder().addAnimation("death", false));
+				}
 			}
 			HellknightEntity fireballentity = ModEntityTypes.HELLKNIGHT.get().create(world);
-			fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 4.0D,
-					this.parentEntity.getPosYHeight(0.5D) + 0.5D, fireballentity.getPosZ() + vector3d.z * 4.0D);
+			fireballentity.setPosition(this.parentEntity.getPosX() + 2.0D, this.parentEntity.getPosY() + 0.5D,
+					this.parentEntity.getPosZ() + 2.0D);
 			world.addEntity(fireballentity);
 
 			PossessedScientistEntity fireballentity1 = ModEntityTypes.POSSESSEDSCIENTIST.get().create(world);
-			fireballentity1.setPosition(this.parentEntity.getPosX() + vector3d.x * -8.0D,
-					this.parentEntity.getPosYHeight(0.5D) + 0.5D, fireballentity1.getPosZ() + vector3d.z * -8.0D);
+			fireballentity1.setPosition(this.parentEntity.getPosX() + -2.0D, this.parentEntity.getPosY() + 0.5D,
+					this.parentEntity.getPosZ() + -2.0D);
 			world.addEntity(fireballentity1);
 
 			ImpEntity fireballentity11 = ModEntityTypes.IMP.get().create(world);
-			fireballentity11.setPosition(this.parentEntity.getPosX() + vector3d.x * 8.0D,
-					this.parentEntity.getPosYHeight(0.5D) + 0.5D, fireballentity11.getPosZ() + vector3d.z * 8.0D);
+			fireballentity11.setPosition(this.parentEntity.getPosX() + 1.0D, this.parentEntity.getPosY() + 0.5D,
+					this.parentEntity.getPosZ() + 1.0D);
 			world.addEntity(fireballentity11);
 
 			NightmareImpEntity fireballentity111 = ModEntityTypes.NIGHTMARE_IMP.get().create(world);
-			fireballentity111.setPosition(this.parentEntity.getPosX() + vector3d.x * -4.0D,
-					this.parentEntity.getPosYHeight(0.5D) + 0.5D, fireballentity11.getPosZ() + vector3d.z * -4.0D);
+			fireballentity111.setPosition(this.parentEntity.getPosX() + -1.0D, this.parentEntity.getPosY() + 0.5D,
+					this.parentEntity.getPosZ() + -1.0D);
 			world.addEntity(fireballentity111);
 		}
 

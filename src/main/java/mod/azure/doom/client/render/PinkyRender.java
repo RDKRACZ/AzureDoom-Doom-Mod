@@ -17,6 +17,11 @@ public class PinkyRender extends MobRenderer<PinkyEntity, PinkyModel> {
 	}
 
 	@Override
+	protected float getDeathMaxRotation(PinkyEntity entityLivingBaseIn) {
+		return 0.0F;
+	}
+
+	@Override
 	public ResourceLocation getEntityTexture(PinkyEntity entity) {
 		return TEXTURE;
 	}
