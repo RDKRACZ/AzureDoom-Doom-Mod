@@ -17,6 +17,11 @@ public class ImpRender extends MobRenderer<ImpEntity, ImpModel> {
 	}
 
 	@Override
+	protected float getDeathMaxRotation(ImpEntity entityLivingBaseIn) {
+		return 0.0F;
+	}
+
+	@Override
 	public ResourceLocation getEntityTexture(ImpEntity entity) {
 		return TEXTURE;
 	}

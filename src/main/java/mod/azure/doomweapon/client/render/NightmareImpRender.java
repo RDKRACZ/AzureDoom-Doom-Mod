@@ -17,6 +17,11 @@ public class NightmareImpRender extends MobRenderer<NightmareImpEntity, ImpNight
 	}
 
 	@Override
+	protected float getDeathMaxRotation(NightmareImpEntity entityLivingBaseIn) {
+		return 0.0F;
+	}
+
+	@Override
 	public ResourceLocation getEntityTexture(NightmareImpEntity entity) {
 		return TEXTURE;
 	}

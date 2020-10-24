@@ -201,6 +201,8 @@ public class DoomItems {
 			.register("possessed_scientist_spawn_egg", () -> new DoomSpawnEgg(ModEntityTypes.POSSESSEDSCIENTIST));
 	public static final RegistryObject<Item> POSSESSED_SOLDIER_SPAWN_EGG = ITEMS.register("possessed_soldier_spawn_egg",
 			() -> new DoomSpawnEgg(ModEntityTypes.POSSESSEDSOLDIER));
+	public static final RegistryObject<Item> GORENEST_SPAWN_EGG = ITEMS.register("gorenest_spawn_egg",
+			() -> new DoomSpawnEgg(ModEntityTypes.GORE_NEST));
 	// WEAPONS AND TOOLS
 	public static final RegistryObject<Item> CRUCIBLESWORD = ITEMS.register("cruciblesword",
 			() -> new SwordCrucibleItem());

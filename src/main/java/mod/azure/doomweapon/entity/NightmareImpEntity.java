@@ -60,7 +60,28 @@ public class NightmareImpEntity extends DemonEntity implements IAnimatedEntity {
 			controller.setAnimation(new AnimationBuilder().addAnimation("walking", true));
 			return true;
 		}
+		if (this.isAggressive()) {
+			controller.setAnimation(new AnimationBuilder().addAnimation("attack"));
+			return true;
+		}
+		if (this.dead) {
+			if (world.isRemote) {
+				controller.setAnimation(new AnimationBuilder().addAnimation("death", false));
+				return true;
+			}
+		}
 		return false;
+	}
+
+	@Override
+	protected void onDeathUpdate() {
+		++this.deathTime;
+		if (this.deathTime == 80) {
+			this.remove();
+			if (world.isRemote) {
+				controller.setAnimation(new AnimationBuilder().addAnimation("death", false));
+			}
+		}
 	}
 
 	@Override
