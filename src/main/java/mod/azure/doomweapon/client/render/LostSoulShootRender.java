@@ -1,4 +1,4 @@
-package mod.azure.doomweapon.client.render.projectiles;
+package mod.azure.doomweapon.client.render;
 
 import mod.azure.doomweapon.DoomMod;
 import mod.azure.doomweapon.client.models.LostSoulModel;

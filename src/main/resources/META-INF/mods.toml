@@ -12,3 +12,15 @@ credits="Thanks to Narial/ulnight for the awesome Sword/Axe and textures! Also C
 description='''
 Adds Doom into Minecraft
 '''
+[[dependencies.doomweapon]]
+    modId="curios"
+    mandatory=true
+   	versionRange="[FORGE-1.15.2-2.0.2.6,)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.doomweapon]]
+    modId="geckolib"
+    mandatory=true
+   	versionRange="[, 2.5)"
+    ordering="NONE"
+    side="BOTH"
