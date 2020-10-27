@@ -80,7 +80,6 @@ public class ModEventSubscriber {
 				ModEntityTypes.SHOTGUN_SHELL.get(), ModEntityTypes.ARGENT_BOLT.get(),
 				ModEntityTypes.ENERGY_CELL_MOB.get(), ModEntityTypes.ROCKET_MOB.get(), ModEntityTypes.MECHAZOMBIE.get(),
 				ModEntityTypes.POSSESSEDSCIENTIST.get(), ModEntityTypes.ZOMBIEMAN.get());
-		ModEntitySpawn.addSpawnEntries();
 		ModEntitySpawn.EntitySpawnPlacementRegistry();
 	}
 

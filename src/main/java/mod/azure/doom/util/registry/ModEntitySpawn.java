@@ -1,12 +1,9 @@
 package mod.azure.doom.util.registry;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
-import com.google.common.collect.ImmutableMap;
-
+import mod.azure.doom.DoomMod;
 import mod.azure.doom.entity.ArachnotronEntity;
 import mod.azure.doom.entity.ArchvileEntity;
 import mod.azure.doom.entity.BaronEntity;
@@ -35,60 +32,51 @@ import mod.azure.doom.entity.UnwillingEntity;
 import mod.azure.doom.entity.ZombiemanEntity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
-import net.minecraft.util.registry.WorldGenRegistries;
+import net.minecraft.util.RegistryKey;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.MobSpawnInfo;
+import net.minecraft.world.biome.MobSpawnInfo.Spawners;
 import net.minecraft.world.gen.Heightmap;
+import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.event.world.BiomeLoadingEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
+@Mod.EventBusSubscriber(modid = DoomMod.MODID)
 public class ModEntitySpawn {
 
-	/* Major fucking thanks to Corgi Taco for figuring this shit out */
-	@SuppressWarnings("deprecation")
-	public static void addSpawnEntries() {
-		for (Biome biome : WorldGenRegistries.BIOME) {
-			if (biome.getCategory().equals(Biome.Category.NETHER)) {
-				addMobSpawnToBiome(biome, EntityClassification.MONSTER,
-						new MobSpawnInfo.Spawners(ModEntityTypes.IMP.get(), 30, 1, 4),
-						new MobSpawnInfo.Spawners(ModEntityTypes.PINKY.get(), 12, 2, 4),
-						new MobSpawnInfo.Spawners(ModEntityTypes.LOST_SOUL.get(), 12, 2, 4),
-						new MobSpawnInfo.Spawners(ModEntityTypes.CACODEMON.get(), 8, 1, 2),
-						new MobSpawnInfo.Spawners(ModEntityTypes.ARCHVILE.get(), 4, 1, 2),
-						new MobSpawnInfo.Spawners(ModEntityTypes.BARON.get(), 10, 1, 1),
-						new MobSpawnInfo.Spawners(ModEntityTypes.MANCUBUS.get(), 10, 1, 1),
-						new MobSpawnInfo.Spawners(ModEntityTypes.REVENANT.get(), 10, 1, 1),
-						new MobSpawnInfo.Spawners(ModEntityTypes.SPIDERDEMON.get(), 10, 1, 1),
-						new MobSpawnInfo.Spawners(ModEntityTypes.ZOMBIEMAN.get(), 30, 1, 4),
-						new MobSpawnInfo.Spawners(ModEntityTypes.NIGHTMARE_IMP.get(), 30, 1, 4),
-						new MobSpawnInfo.Spawners(ModEntityTypes.IMP2016.get(), 30, 1, 4),
-						//new MobSpawnInfo.Spawners(ModEntityTypes.MECHAZOMBIE.get(), 30, 1, 4),
-						new MobSpawnInfo.Spawners(ModEntityTypes.ARACHNOTRON.get(), 30, 1, 4),
-						new MobSpawnInfo.Spawners(ModEntityTypes.CHAINGUNNER.get(), 30, 1, 4),
-						new MobSpawnInfo.Spawners(ModEntityTypes.SHOTGUNGUY.get(), 30, 1, 4),
-						new MobSpawnInfo.Spawners(ModEntityTypes.MARAUDER.get(), 15, 1, 1),
-						new MobSpawnInfo.Spawners(ModEntityTypes.PAIN.get(), 8, 1, 2),
-						new MobSpawnInfo.Spawners(ModEntityTypes.HELLKNIGHT.get(), 10, 1, 1),
-						new MobSpawnInfo.Spawners(ModEntityTypes.CYBERDEMON.get(), 10, 1, 1),
-						new MobSpawnInfo.Spawners(ModEntityTypes.UNWILLING.get(), 30, 1, 4),
-						new MobSpawnInfo.Spawners(ModEntityTypes.POSSESSEDSCIENTIST.get(), 30, 1, 4),
-						new MobSpawnInfo.Spawners(ModEntityTypes.POSSESSEDSOLDIER.get(), 30, 1, 4),
-						new MobSpawnInfo.Spawners(ModEntityTypes.GORE_NEST.get(), 30, 1, 1),
-						new MobSpawnInfo.Spawners(ModEntityTypes.CYBERDEMON2016.get(), 10, 1, 1));
-			}
-		}
-	}
-
-	public static void addMobSpawnToBiome(Biome biome, EntityClassification classification,
-			MobSpawnInfo.Spawners... spawnInfos) {
-		convertImmutableSpawners(biome);
-		List<MobSpawnInfo.Spawners> spawnersList = new ArrayList<>(
-				biome.getMobSpawnInfo().spawners.get(classification));
-		spawnersList.addAll(Arrays.asList(spawnInfos));
-		biome.getMobSpawnInfo().spawners.put(classification, spawnersList);
-	}
-
-	private static void convertImmutableSpawners(Biome biome) {
-		if (biome.getMobSpawnInfo().spawners instanceof ImmutableMap) {
-			biome.getMobSpawnInfo().spawners = new HashMap<>(biome.getMobSpawnInfo().spawners);
+	@SubscribeEvent
+	public static void onBiomeLoad(BiomeLoadingEvent event) {
+		RegistryKey<Biome> key = RegistryKey.getOrCreateKey(Registry.BIOME_KEY, event.getName());
+		Set<BiomeDictionary.Type> types = BiomeDictionary.getTypes(key);
+		List<Spawners> base = event.getSpawns().getSpawner(EntityClassification.MONSTER);
+		if (types.contains(BiomeDictionary.Type.NETHER)) {
+			base.add(new Spawners(ModEntityTypes.IMP.get(), 30, 1, 4));
+			base.add(new Spawners(ModEntityTypes.IMP.get(), 30, 1, 4));
+			base.add(new Spawners(ModEntityTypes.PINKY.get(), 12, 2, 4));
+			base.add(new Spawners(ModEntityTypes.LOST_SOUL.get(), 12, 2, 4));
+			base.add(new Spawners(ModEntityTypes.CACODEMON.get(), 8, 1, 2));
+			base.add(new Spawners(ModEntityTypes.ARCHVILE.get(), 4, 1, 2));
+			base.add(new Spawners(ModEntityTypes.BARON.get(), 10, 1, 1));
+			base.add(new Spawners(ModEntityTypes.MANCUBUS.get(), 10, 1, 1));
+			base.add(new Spawners(ModEntityTypes.REVENANT.get(), 10, 1, 1));
+			base.add(new Spawners(ModEntityTypes.SPIDERDEMON.get(), 10, 1, 1));
+			base.add(new Spawners(ModEntityTypes.ZOMBIEMAN.get(), 30, 1, 4));
+			base.add(new Spawners(ModEntityTypes.NIGHTMARE_IMP.get(), 30, 1, 4));
+			base.add(new Spawners(ModEntityTypes.IMP2016.get(), 30, 1, 4));
+			// base.add(new Spawners(ModEntityTypes.MECHAZOMBIE.get(), 30, 1, 4));
+			base.add(new Spawners(ModEntityTypes.ARACHNOTRON.get(), 30, 1, 4));
+			base.add(new Spawners(ModEntityTypes.CHAINGUNNER.get(), 30, 1, 4));
+			base.add(new Spawners(ModEntityTypes.SHOTGUNGUY.get(), 30, 1, 4));
+			base.add(new Spawners(ModEntityTypes.MARAUDER.get(), 15, 1, 1));
+			base.add(new Spawners(ModEntityTypes.PAIN.get(), 8, 1, 2));
+			base.add(new Spawners(ModEntityTypes.HELLKNIGHT.get(), 10, 1, 1));
+			base.add(new Spawners(ModEntityTypes.CYBERDEMON.get(), 10, 1, 1));
+			base.add(new Spawners(ModEntityTypes.UNWILLING.get(), 30, 1, 4));
+			base.add(new Spawners(ModEntityTypes.POSSESSEDSCIENTIST.get(), 30, 1, 4));
+			base.add(new Spawners(ModEntityTypes.POSSESSEDSOLDIER.get(), 30, 1, 4));
+			base.add(new Spawners(ModEntityTypes.GORE_NEST.get(), 30, 1, 1));
+			base.add(new Spawners(ModEntityTypes.CYBERDEMON2016.get(), 10, 1, 1));
 		}
 	}
 

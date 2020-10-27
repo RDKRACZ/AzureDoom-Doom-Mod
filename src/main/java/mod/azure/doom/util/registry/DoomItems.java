@@ -71,24 +71,18 @@ public class DoomItems {
 
 	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, DoomMod.MODID);
 
+	// BLOCKS
 	public static final RegistryObject<Item> ITEM = ITEMS.register("barrel",
 			() -> new BlockItem(DoomBlocks.BARREL_BLOCK.get(),
 					new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
-
 	public static final RegistryObject<Item> ARGENT_BLOCK = ITEMS.register("argent_block",
 			() -> new BlockItem(DoomBlocks.ARGENT_BLOCK.get(),
 					new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
-
 	public static final RegistryObject<Item> ARGENT_LAMP_BLOCK = ITEMS.register("argent_lamp_block",
 			() -> new BlockItem(DoomBlocks.ARGENT_LAMP_BLOCK.get(),
 					new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
-
-	public static final RegistryObject<Item> SPIDERDEMONATTACK = ITEMS.register("spiderdemonattack",
-			() -> new SpiderdemonAttackItem());
-
 	public static final RegistryObject<Item> DOOM_SAND = ITEMS.register("doom_sand",
 			() -> new BlockItem(DoomBlocks.DOOM_SAND.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
-
 	public static final RegistryObject<Item> DOOM_WALL1 = ITEMS.register("icon_wall1",
 			() -> new BlockItem(DoomBlocks.DOOM_WALL1.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> DOOM_WALL2 = ITEMS.register("icon_wall2",
@@ -139,6 +133,7 @@ public class DoomItems {
 			() -> new BFGCell(new Item.Properties().group(DoomMod.DoomWeaponItemGroup), 1.2F));
 	public static final RegistryObject<Item> ROCKET = ITEMS.register("rocket",
 			() -> new Rocket(new Item.Properties().group(DoomMod.DoomWeaponItemGroup), 1.2F));
+	
 	// MISC
 	public static final RegistryObject<Item> ARGENT_ENERGY = ITEMS.register("argent_energy",
 			() -> new ArgentEnergyItem());
@@ -146,58 +141,6 @@ public class DoomItems {
 	public static final RegistryObject<Item> DAISY = ITEMS.register("daisy", () -> new DaisyItem());
 	public static final RegistryObject<Item> E1M1_MUSIC_DISC = ITEMS.register("e1m1_music_disc",
 			() -> new E1M1MusicDisc(ModSoundEvents.E1M1));
-	public static final RegistryObject<Item> E1M2_MUSIC_DISC = ITEMS.register("e1m2_music_disc",
-			() -> new E1M1MusicDisc(ModSoundEvents.E1M2));
-	public static final RegistryObject<Item> E1M3_MUSIC_DISC = ITEMS.register("e1m3_music_disc",
-			() -> new E1M1MusicDisc(ModSoundEvents.E1M3));
-	public static final RegistryObject<Item> E1M4_MUSIC_DISC = ITEMS.register("e1m4_music_disc",
-			() -> new E1M1MusicDisc(ModSoundEvents.E1M4));
-	public static final RegistryObject<Item> E1M5_MUSIC_DISC = ITEMS.register("e1m5_music_disc",
-			() -> new E1M1MusicDisc(ModSoundEvents.E1M5));
-	public static final RegistryObject<Item> E1M6_MUSIC_DISC = ITEMS.register("e1m6_music_disc",
-			() -> new E1M1MusicDisc(ModSoundEvents.E1M6));
-	public static final RegistryObject<Item> E1M7_MUSIC_DISC = ITEMS.register("e1m7_music_disc",
-			() -> new E1M1MusicDisc(ModSoundEvents.E1M7));
-	public static final RegistryObject<Item> E1M8_MUSIC_DISC = ITEMS.register("e1m8_music_disc",
-			() -> new E1M1MusicDisc(ModSoundEvents.E1M8));
-	public static final RegistryObject<Item> E1M9_MUSIC_DISC = ITEMS.register("e1m9_music_disc",
-			() -> new E1M1MusicDisc(ModSoundEvents.E1M9));
-	public static final RegistryObject<Item> E2M1_MUSIC_DISC = ITEMS.register("e2m1_music_disc",
-			() -> new E1M1MusicDisc(ModSoundEvents.E2M1));
-	public static final RegistryObject<Item> E2M2_MUSIC_DISC = ITEMS.register("e2m2_music_disc",
-			() -> new E1M1MusicDisc(ModSoundEvents.E2M2));
-	public static final RegistryObject<Item> E2M3_MUSIC_DISC = ITEMS.register("e2m3_music_disc",
-			() -> new E1M1MusicDisc(ModSoundEvents.E2M3));
-	public static final RegistryObject<Item> E2M4_MUSIC_DISC = ITEMS.register("e2m4_music_disc",
-			() -> new E1M1MusicDisc(ModSoundEvents.E2M4));
-	public static final RegistryObject<Item> E2M5_MUSIC_DISC = ITEMS.register("e2m5_music_disc",
-			() -> new E1M1MusicDisc(ModSoundEvents.E2M5));
-	public static final RegistryObject<Item> E2M6_MUSIC_DISC = ITEMS.register("e2m6_music_disc",
-			() -> new E1M1MusicDisc(ModSoundEvents.E2M6));
-	public static final RegistryObject<Item> E2M7_MUSIC_DISC = ITEMS.register("e2m7_music_disc",
-			() -> new E1M1MusicDisc(ModSoundEvents.E2M7));
-	public static final RegistryObject<Item> E2M8_MUSIC_DISC = ITEMS.register("e2m8_music_disc",
-			() -> new E1M1MusicDisc(ModSoundEvents.E2M8));
-	public static final RegistryObject<Item> E2M9_MUSIC_DISC = ITEMS.register("e2m9_music_disc",
-			() -> new E1M1MusicDisc(ModSoundEvents.E2M9));
-	public static final RegistryObject<Item> E3M1_MUSIC_DISC = ITEMS.register("e3m1_music_disc",
-			() -> new E1M1MusicDisc(ModSoundEvents.E3M1));
-	public static final RegistryObject<Item> E3M2_MUSIC_DISC = ITEMS.register("e3m2_music_disc",
-			() -> new E1M1MusicDisc(ModSoundEvents.E3M2));
-	public static final RegistryObject<Item> E3M3_MUSIC_DISC = ITEMS.register("e3m3_music_disc",
-			() -> new E1M1MusicDisc(ModSoundEvents.E3M3));
-	public static final RegistryObject<Item> E3M4_MUSIC_DISC = ITEMS.register("e3m4_music_disc",
-			() -> new E1M1MusicDisc(ModSoundEvents.E3M4));
-	public static final RegistryObject<Item> E3M5_MUSIC_DISC = ITEMS.register("e3m5_music_disc",
-			() -> new E1M1MusicDisc(ModSoundEvents.E3M5));
-	public static final RegistryObject<Item> E3M6_MUSIC_DISC = ITEMS.register("e3m6_music_disc",
-			() -> new E1M1MusicDisc(ModSoundEvents.E3M6));
-	public static final RegistryObject<Item> E3M7_MUSIC_DISC = ITEMS.register("e3m7_music_disc",
-			() -> new E1M1MusicDisc(ModSoundEvents.E3M7));
-	public static final RegistryObject<Item> E3M8_MUSIC_DISC = ITEMS.register("e3m8_music_disc",
-			() -> new E1M1MusicDisc(ModSoundEvents.E3M8));
-	public static final RegistryObject<Item> E3M9_MUSIC_DISC = ITEMS.register("e3m9_music_disc",
-			() -> new E1M1MusicDisc(ModSoundEvents.E3M9));
 	public static final RegistryObject<Item> INMORTAL = ITEMS.register("inmortalsphere",
 			() -> new InmortalSphereItem());
 	public static final RegistryObject<Item> INVISIBLE = ITEMS.register("invisiblesphere",
@@ -257,6 +200,7 @@ public class DoomItems {
 			.register("possessed_scientist_spawn_egg", () -> new DoomSpawnEgg(ModEntityTypes.POSSESSEDSCIENTIST));
 	public static final RegistryObject<Item> POSSESSED_SOLDIER_SPAWN_EGG = ITEMS.register("possessed_soldier_spawn_egg",
 			() -> new DoomSpawnEgg(ModEntityTypes.POSSESSEDSOLDIER));
+	
 	// WEAPONS AND TOOLS
 	public static final RegistryObject<Item> CRUCIBLESWORD = ITEMS.register("cruciblesword",
 			() -> new SwordCrucibleItem());
@@ -268,8 +212,6 @@ public class DoomItems {
 	public static final RegistryObject<Item> ARGENT_SHOVEL = ITEMS.register("argent_shovel", () -> new ArgentShovel());
 	public static final RegistryObject<Item> ARGENT_SWORD = ITEMS.register("argent_sword", () -> new ArgentSword());
 	public static final RegistryObject<Item> DOOM_BLADE = ITEMS.register("doomblade", () -> new DoomBlade());
-	// public static final RegistryObject<Item> ARGENT_SHIELD =
-	// ITEMS.register("argent_shield", () -> new ArgentShield());
 	public static final RegistryObject<Item> CHAINSAW = ITEMS.register("chainsaw", () -> new Chainsaw());
 	public static final RegistryObject<Item> SWORD_CLOSED = ITEMS.register("cruciblesword_closed",
 			() -> new UnopenedItem());
@@ -288,6 +230,9 @@ public class DoomItems {
 	public static final RegistryObject<Item> BALLISTA = ITEMS.register("ballista", () -> new Ballista());
 	public static final RegistryObject<Item> CHAINGUN = ITEMS.register("chaingun", () -> new Chaingun());
 	public static final RegistryObject<Item> PISTOL = ITEMS.register("pistol", () -> new PistolItem());
+	public static final RegistryObject<Item> SPIDERDEMONATTACK = ITEMS.register("spiderdemonattack",
+			() -> new SpiderdemonAttackItem());
+	
 	// ARMOR
 	public static final RegistryObject<Item> DOOM_HELMET = ITEMS.register("doom_helmet",
 			() -> new DoomArmor(DoomArmorMaterial.DOOM_ARMOR, EquipmentSlotType.HEAD));

@@ -1,5 +1,4 @@
-v.3.3.1
+v.3.3.2
 
-- Fixes Server crash with death animations.
-- Added Config for max Crucible/Maruader Axe item damage.
-- Fixed Gore Nests.
+- Sets a max version for Geckolib, currently will not work with the new Geckolib 3.0.0.
+- Changes mob spawning to hopefully support modded biomes added to the Nether. Requires more testing.
