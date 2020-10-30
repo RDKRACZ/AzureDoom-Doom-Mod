@@ -12,7 +12,6 @@ import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.CreatureAttribute;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.MobEntity;
@@ -40,39 +39,48 @@ import net.minecraft.world.IServerWorld;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
-import software.bernie.geckolib.animation.builder.AnimationBuilder;
-import software.bernie.geckolib.animation.controller.EntityAnimationController;
-import software.bernie.geckolib.entity.IAnimatedEntity;
-import software.bernie.geckolib.event.AnimationTestEvent;
-import software.bernie.geckolib.manager.EntityAnimationManager;
+import software.bernie.geckolib.core.IAnimatable;
+import software.bernie.geckolib.core.PlayState;
+import software.bernie.geckolib.core.builder.AnimationBuilder;
+import software.bernie.geckolib.core.controller.AnimationController;
+import software.bernie.geckolib.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib.core.manager.AnimationData;
+import software.bernie.geckolib.core.manager.AnimationFactory;
 
-public class ImpEntity extends DemonEntity implements IAnimatedEntity {
+public class ImpEntity extends DemonEntity implements IAnimatable {
 
-	EntityAnimationManager manager = new EntityAnimationManager();
-	EntityAnimationController<ImpEntity> controller = new EntityAnimationController<ImpEntity>(this, "walkController",
-			0.09F, this::animationPredicate);
+	private AnimationFactory factory = new AnimationFactory(this);
+
+	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+		if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F)) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("walking", true));
+			return PlayState.CONTINUE;
+		}
+		if (this.isAggressive()) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("attacking"));
+			return PlayState.CONTINUE;
+		}
+		if (this.dead) {
+			if (world.isRemote) {
+				event.getController().setAnimation(new AnimationBuilder().addAnimation("death", false));
+				return PlayState.CONTINUE;
+			}
+		}
+		return PlayState.STOP;
+	}
+
+	@Override
+	public void registerControllers(AnimationData data) {
+		data.addAnimationController(new AnimationController<ImpEntity>(this, "controller", 0, this::predicate));
+	}
+
+	@Override
+	public AnimationFactory getFactory() {
+		return this.factory;
+	}
 
 	public ImpEntity(EntityType<ImpEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
-		manager.addAnimationController(controller);
-	}
-
-	private <E extends Entity> boolean animationPredicate(AnimationTestEvent<E> event) {
-		if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F)) {
-			controller.setAnimation(new AnimationBuilder().addAnimation("walking", true));
-			return true;
-		}
-		if (this.isAggressive()) {
-			controller.setAnimation(new AnimationBuilder().addAnimation("attack"));
-			return true;
-		}
-		if (this.getShouldBeDead()) {
-			if (world.isRemote) {
-				controller.setAnimation(new AnimationBuilder().addAnimation("death", false));
-				return true;
-			}
-		}
-		return false;
 	}
 
 	@Override
@@ -81,14 +89,8 @@ public class ImpEntity extends DemonEntity implements IAnimatedEntity {
 		if (this.deathTime == 80) {
 			this.remove();
 			if (world.isRemote) {
-				controller.setAnimation(new AnimationBuilder().addAnimation("death", false));
 			}
 		}
-	}
-
-	@Override
-	public EntityAnimationManager getAnimationManager() {
-		return manager;
 	}
 
 	@Override

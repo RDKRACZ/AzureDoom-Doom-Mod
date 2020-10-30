@@ -9,7 +9,6 @@ import javax.annotation.Nullable;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.CreatureAttribute;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.MobEntity;
@@ -29,45 +28,49 @@ import net.minecraft.world.IServerWorld;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
-import software.bernie.geckolib.animation.builder.AnimationBuilder;
-import software.bernie.geckolib.animation.controller.EntityAnimationController;
-import software.bernie.geckolib.entity.IAnimatedEntity;
-import software.bernie.geckolib.event.AnimationTestEvent;
-import software.bernie.geckolib.manager.EntityAnimationManager;
+import software.bernie.geckolib.core.IAnimatable;
+import software.bernie.geckolib.core.PlayState;
+import software.bernie.geckolib.core.builder.AnimationBuilder;
+import software.bernie.geckolib.core.controller.AnimationController;
+import software.bernie.geckolib.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib.core.manager.AnimationData;
+import software.bernie.geckolib.core.manager.AnimationFactory;
 
-public class GoreNestEntity extends DemonEntity implements IAnimatedEntity {
+public class GoreNestEntity extends DemonEntity implements IAnimatable {
 
 	private final GoreNestEntity parentEntity;
 
-	EntityAnimationManager manager = new EntityAnimationManager();
-	EntityAnimationController<GoreNestEntity> controller = new EntityAnimationController<GoreNestEntity>(this,
-			"walkController", 0.09F, this::animationPredicate);
+	private AnimationFactory factory = new AnimationFactory(this);
+
+	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+		if (this.dead) {
+			if (world.isRemote) {
+				event.getController().setAnimation(new AnimationBuilder().addAnimation("death", false));
+				return PlayState.CONTINUE;
+			}
+		}
+		event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
+		return PlayState.CONTINUE;
+	}
+
+	@Override
+	public void registerControllers(AnimationData data) {
+		data.addAnimationController(new AnimationController<GoreNestEntity>(this, "controller", 0, this::predicate));
+	}
+
+	@Override
+	public AnimationFactory getFactory() {
+		return this.factory;
+	}
 
 	public GoreNestEntity(EntityType<? extends GoreNestEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
-		manager.addAnimationController(controller);
 		this.parentEntity = GoreNestEntity.this;
-	}
-
-	private <E extends Entity> boolean animationPredicate(AnimationTestEvent<E> event) {
-		if (this.getShouldBeDead()) {
-			if (world.isRemote) {
-				controller.setAnimation(new AnimationBuilder().addAnimation("death", false));
-				return true;
-			}
-		}
-		controller.setAnimation(new AnimationBuilder().addAnimation("idle", true));
-		return true;
 	}
 
 	@Override
 	protected void registerData() {
 		super.registerData();
-	}
-
-	@Override
-	public EntityAnimationManager getAnimationManager() {
-		return manager;
 	}
 
 	@Override
@@ -87,7 +90,6 @@ public class GoreNestEntity extends DemonEntity implements IAnimatedEntity {
 			this.remove();
 			for (int i = 0; i < 20; ++i) {
 				if (world.isRemote) {
-					controller.setAnimation(new AnimationBuilder().addAnimation("death", false));
 				}
 			}
 			HellknightEntity fireballentity = ModEntityTypes.HELLKNIGHT.get().create(world);

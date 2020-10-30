@@ -156,8 +156,8 @@ public class ModEntitySpawn {
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.GORE_NEST.get(),
 				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
 				GoreNestEntity::spawning);
-		EntitySpawnPlacementRegistry.register(ModEntityTypes.MECHAZOMBIE.get(),
-				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
-				MechaZombieEntity::spawning);
+//		EntitySpawnPlacementRegistry.register(ModEntityTypes.MECHAZOMBIE.get(),
+//				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+//				MechaZombieEntity::spawning);
 	}
 }

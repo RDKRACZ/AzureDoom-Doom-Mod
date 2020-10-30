@@ -1,24 +1,27 @@
 package mod.azure.doom.client.render;
 
-import mod.azure.doom.DoomMod;
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
+
 import mod.azure.doom.client.models.ArachnotronModel;
 import mod.azure.doom.entity.ArachnotronEntity;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.ResourceLocation;
+import software.bernie.geckolib.renderers.geo.GeoEntityRenderer;
 
-public class ArachnotronRender extends MobRenderer<ArachnotronEntity, ArachnotronModel> {
-
-	protected static final ResourceLocation TEXTURE = new ResourceLocation(DoomMod.MODID,
-			"textures/entity/arachnotron-texturemap.png");
+public class ArachnotronRender extends GeoEntityRenderer<ArachnotronEntity> {
 
 	public ArachnotronRender(EntityRendererManager renderManagerIn) {
-		super(renderManagerIn, new ArachnotronModel(), 0.8F);
+		super(renderManagerIn, new ArachnotronModel());
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(ArachnotronEntity entity) {
-		return TEXTURE;
+	public RenderType getRenderType(ArachnotronEntity animatable, float partialTicks, MatrixStack stack,
+			IRenderTypeBuffer renderTypeBuffer, IVertexBuilder vertexBuilder, int packedLightIn,
+			ResourceLocation textureLocation) {
+		return RenderType.getEntityTranslucent(getTextureLocation(animatable));
 	}
 
 }

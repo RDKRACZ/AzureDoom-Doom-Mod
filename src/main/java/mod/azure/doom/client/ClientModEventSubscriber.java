@@ -14,9 +14,9 @@ import mod.azure.doom.client.render.HellknightRender;
 import mod.azure.doom.client.render.IconofsinRender;
 import mod.azure.doom.client.render.Imp2016Render;
 import mod.azure.doom.client.render.ImpRender;
+import mod.azure.doom.client.render.LostSoulRender;
 import mod.azure.doom.client.render.MancubusRender;
 import mod.azure.doom.client.render.MarauderRender;
-import mod.azure.doom.client.render.MechaZombieRender;
 import mod.azure.doom.client.render.NightmareImpRender;
 import mod.azure.doom.client.render.PainRender;
 import mod.azure.doom.client.render.PinkyRender;
@@ -33,7 +33,6 @@ import mod.azure.doom.client.render.projectiles.BarenBlastRender;
 import mod.azure.doom.client.render.projectiles.BulletsRender;
 import mod.azure.doom.client.render.projectiles.ChaingunBulletRender;
 import mod.azure.doom.client.render.projectiles.EnergyCellRender;
-import mod.azure.doom.client.render.projectiles.LostSoulShootRender;
 import mod.azure.doom.client.render.projectiles.RocketRender;
 import mod.azure.doom.client.render.projectiles.ShotgunShellRender;
 import mod.azure.doom.client.render.projectiles.UnmaykrBulletRender;
@@ -62,7 +61,7 @@ public class ClientModEventSubscriber {
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.CHAINGUN_BULLET.get(),
 				ChaingunBulletRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BARENBLAST.get(), BarenBlastRender::new);
-		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.LOST_SOUL.get(), LostSoulShootRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.LOST_SOUL.get(), LostSoulRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.IMP.get(), ImpRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ARACHNOTRON.get(), ArachnotronRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.NIGHTMARE_IMP.get(), NightmareImpRender::new);
@@ -93,6 +92,5 @@ public class ClientModEventSubscriber {
 				EnergyCellMobRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ROCKET_MOB.get(), RocketMobRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.GORE_NEST.get(), GoreNestRender::new);
-		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.MECHAZOMBIE.get(), MechaZombieRender::new);
 	}
 }

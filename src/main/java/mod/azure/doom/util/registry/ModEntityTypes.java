@@ -227,10 +227,10 @@ public class ModEntityTypes {
 					.size(0.6f, 1.95F).trackingRange(9).immuneToFire()
 					.build(new ResourceLocation(DoomMod.MODID, "possessed_scientist").toString()));
 
-	public static final RegistryObject<EntityType<MechaZombieEntity>> MECHAZOMBIE = ENTITY_TYPES.register("mechazombie",
-			() -> EntityType.Builder.create(MechaZombieEntity::new, EntityClassification.MONSTER).size(0.6f, 1.95F)
-					.trackingRange(9).immuneToFire()
-					.build(new ResourceLocation(DoomMod.MODID, "mechazombie").toString()));
+//	public static final RegistryObject<EntityType<MechaZombieEntity>> MECHAZOMBIE = ENTITY_TYPES.register("mechazombie",
+//			() -> EntityType.Builder.create(MechaZombieEntity::new, EntityClassification.MONSTER).size(0.6f, 1.95F)
+//					.trackingRange(9).immuneToFire()
+//					.build(new ResourceLocation(DoomMod.MODID, "mechazombie").toString()));
 
 	public static final RegistryObject<EntityType<IconofsinEntity>> ICONOFSIN = ENTITY_TYPES.register("iconofsin",
 			() -> EntityType.Builder.create(IconofsinEntity::new, EntityClassification.MONSTER).size(2.4f, 10.0F)
