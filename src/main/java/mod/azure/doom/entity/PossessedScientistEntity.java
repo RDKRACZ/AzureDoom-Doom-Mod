@@ -57,8 +57,8 @@ public class PossessedScientistEntity extends DemonEntity implements IAnimatable
 	private AnimationFactory factory = new AnimationFactory(this);
 
 	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-		if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F)) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("walking", true));
+		if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F) && !this.isAggressive()) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("walk", true));
 			return PlayState.CONTINUE;
 		}
 		if (this.dead) {
@@ -66,6 +66,10 @@ public class PossessedScientistEntity extends DemonEntity implements IAnimatable
 				event.getController().setAnimation(new AnimationBuilder().addAnimation("death", false));
 				return PlayState.CONTINUE;
 			}
+		}
+		if (this.isAggressive()) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("attack", true));
+			return PlayState.CONTINUE;
 		}
 		event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
 		return PlayState.CONTINUE;

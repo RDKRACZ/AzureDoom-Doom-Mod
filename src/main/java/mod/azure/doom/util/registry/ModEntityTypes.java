@@ -16,7 +16,6 @@ import mod.azure.doom.entity.ImpEntity;
 import mod.azure.doom.entity.LostSoulEntity;
 import mod.azure.doom.entity.MancubusEntity;
 import mod.azure.doom.entity.MarauderEntity;
-import mod.azure.doom.entity.MechaZombieEntity;
 import mod.azure.doom.entity.NightmareImpEntity;
 import mod.azure.doom.entity.PainEntity;
 import mod.azure.doom.entity.PinkyEntity;
@@ -144,7 +143,7 @@ public class ModEntityTypes {
 
 	public static final RegistryObject<EntityType<MancubusEntity>> MANCUBUS = ENTITY_TYPES.register("mancubus",
 			() -> EntityType.Builder.create(MancubusEntity::new, EntityClassification.MONSTER).trackingRange(9)
-					.size(1.9F, 5.4F).immuneToFire().trackingRange(9)
+					.size(2.3F, 3.0F).immuneToFire().trackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "mancubus").toString()));
 
 	public static final RegistryObject<EntityType<SpiderdemonEntity>> SPIDERDEMON = ENTITY_TYPES.register("spiderdemon",

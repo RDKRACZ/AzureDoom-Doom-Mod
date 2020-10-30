@@ -34,6 +34,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -43,6 +45,8 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
 import software.bernie.geckolib.core.IAnimatable;
 import software.bernie.geckolib.core.PlayState;
@@ -53,6 +57,8 @@ import software.bernie.geckolib.core.manager.AnimationData;
 import software.bernie.geckolib.core.manager.AnimationFactory;
 
 public class CyberdemonEntity extends DemonEntity implements IAnimatable {
+	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(CyberdemonEntity.class,
+			DataSerializers.BOOLEAN);
 
 	public CyberdemonEntity(EntityType<? extends CyberdemonEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
@@ -76,6 +82,21 @@ public class CyberdemonEntity extends DemonEntity implements IAnimatable {
 	@Override
 	public AnimationFactory getFactory() {
 		return this.factory;
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	public boolean isAttacking() {
+		return this.dataManager.get(ATTACKING);
+	}
+
+	public void setAttacking(boolean attacking) {
+		this.dataManager.set(ATTACKING, attacking);
+	}
+
+	@Override
+	protected void registerData() {
+		super.registerData();
+		this.dataManager.register(ATTACKING, false);
 	}
 
 	@Override
@@ -142,6 +163,8 @@ public class CyberdemonEntity extends DemonEntity implements IAnimatable {
 			} else if (this.attackTimer > 0) {
 				--this.attackTimer;
 			}
+
+			this.parentEntity.setAttacking(this.attackTimer > 10);
 		}
 	}
 
@@ -150,11 +173,6 @@ public class CyberdemonEntity extends DemonEntity implements IAnimatable {
 				.createMutableAttribute(Attributes.MAX_HEALTH, 300.0D)
 				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D)
 				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 15.0D);
-	}
-
-	@Override
-	protected void registerData() {
-		super.registerData();
 	}
 
 	@Override

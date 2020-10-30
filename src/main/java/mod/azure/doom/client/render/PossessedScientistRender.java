@@ -24,14 +24,19 @@ public class PossessedScientistRender extends GeoEntityRenderer<PossessedScienti
 		return RenderType.getEntityTranslucent(getTextureLocation(animatable));
 	}
 
-	protected void preRenderCallback(PossessedScientistEntity entitylivingbaseIn, MatrixStack matrixStackIn,
-			float partialTickTime) {
-		matrixStackIn.scale(0.625F, 0.6F, 0.625F);
-	}
-
 	@Override
 	protected float getDeathMaxRotation(PossessedScientistEntity entityLivingBaseIn) {
 		return 0.0F;
+	}
+
+	@Override
+	public void renderEarly(PossessedScientistEntity animatable, MatrixStack stackIn, float ticks,
+			IRenderTypeBuffer renderTypeBuffer, IVertexBuilder vertexBuilder, int packedLightIn, int packedOverlayIn,
+			float red, float green, float blue, float partialTicks) {
+		super.renderEarly(animatable, stackIn, ticks, renderTypeBuffer, vertexBuilder, packedLightIn, packedOverlayIn,
+				red, green, blue, partialTicks);
+
+		stackIn.scale(0.725F, 0.6F, 0.725F);
 	}
 
 }
