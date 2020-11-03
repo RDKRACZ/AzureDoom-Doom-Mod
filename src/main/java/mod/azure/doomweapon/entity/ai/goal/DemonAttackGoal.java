@@ -1,6 +1,7 @@
 package mod.azure.doomweapon.entity.ai.goal;
 
 import mod.azure.doomweapon.entity.DemonEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 
 public class DemonAttackGoal extends MeleeAttackGoal {
@@ -22,6 +23,9 @@ public class DemonAttackGoal extends MeleeAttackGoal {
 
 	public void tick() {
 		super.tick();
-		this.zombie.setAggroed(true);
+		LivingEntity livingentity = this.zombie.getAttackTarget();
+		if (livingentity.getDistanceSq(this.zombie) < 8.0D) {
+			this.zombie.setAggroed(true);
+		}
 	}
 }

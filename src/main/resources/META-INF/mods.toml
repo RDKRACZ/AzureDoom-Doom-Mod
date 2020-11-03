@@ -18,9 +18,3 @@ Adds Doom into Minecraft
    	versionRange="[FORGE-1.15.2-2.0.2.6,)"
     ordering="NONE"
     side="BOTH"
-[[dependencies.doomweapon]]
-    modId="geckolib"
-    mandatory=true
-   	versionRange="[, 2.5)"
-    ordering="NONE"
-    side="BOTH"

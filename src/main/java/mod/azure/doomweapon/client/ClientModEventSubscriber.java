@@ -14,7 +14,7 @@ import mod.azure.doomweapon.client.render.HellknightRender;
 import mod.azure.doomweapon.client.render.IconofsinRender;
 import mod.azure.doomweapon.client.render.Imp2016Render;
 import mod.azure.doomweapon.client.render.ImpRender;
-import mod.azure.doomweapon.client.render.LostSoulShootRender;
+import mod.azure.doomweapon.client.render.LostSoulRender;
 import mod.azure.doomweapon.client.render.MancubusRender;
 import mod.azure.doomweapon.client.render.MarauderRender;
 import mod.azure.doomweapon.client.render.NightmareImpRender;
@@ -61,7 +61,7 @@ public class ClientModEventSubscriber {
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.CHAINGUN_BULLET.get(),
 				ChaingunBulletRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BARENBLAST.get(), BarenBlastRender::new);
-		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.LOST_SOUL.get(), LostSoulShootRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.LOST_SOUL.get(), LostSoulRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.IMP.get(), ImpRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ARACHNOTRON.get(), ArachnotronRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.NIGHTMARE_IMP.get(), NightmareImpRender::new);

@@ -129,7 +129,7 @@
 			}
 		},
 		"death": {
-			"animation_length": 1.04,
+			"animation_length": 5.04,
 			"bones": {
 				"top": {
 					"rotation": {

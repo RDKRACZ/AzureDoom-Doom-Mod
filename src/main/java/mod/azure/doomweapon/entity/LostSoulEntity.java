@@ -7,7 +7,6 @@ import mod.azure.doomweapon.util.registry.ModEntityTypes;
 import mod.azure.doomweapon.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.CreatureAttribute;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MoverType;
@@ -34,18 +33,17 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
-import software.bernie.geckolib.animation.builder.AnimationBuilder;
-import software.bernie.geckolib.animation.controller.EntityAnimationController;
-import software.bernie.geckolib.entity.IAnimatedEntity;
-import software.bernie.geckolib.event.AnimationTestEvent;
-import software.bernie.geckolib.manager.EntityAnimationManager;
+import software.bernie.geckolib.core.IAnimatable;
+import software.bernie.geckolib.core.PlayState;
+import software.bernie.geckolib.core.builder.AnimationBuilder;
+import software.bernie.geckolib.core.controller.AnimationController;
+import software.bernie.geckolib.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib.core.manager.AnimationData;
+import software.bernie.geckolib.core.manager.AnimationFactory;
 
-public class LostSoulEntity extends DemonEntity implements IMob, IAnimatedEntity {
+public class LostSoulEntity extends DemonEntity implements IMob, IAnimatable {
 	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(ArachnotronEntity.class,
 			DataSerializers.BOOLEAN);
-	EntityAnimationManager manager = new EntityAnimationManager();
-	EntityAnimationController<LostSoulEntity> controller = new EntityAnimationController<LostSoulEntity>(this,
-			"walkController", 0.09F, this::animationPredicate);
 
 	public int explosionPower = 1;
 	public int flameTimer;
@@ -53,24 +51,27 @@ public class LostSoulEntity extends DemonEntity implements IMob, IAnimatedEntity
 	public LostSoulEntity(EntityType<? extends LostSoulEntity> type, World world) {
 		super(type, world);
 		this.moveController = new LostSoulEntity.MoveHelperController(this);
-		manager.addAnimationController(controller);
 	}
 
-	private <E extends Entity> boolean animationPredicate(AnimationTestEvent<E> event) {
+	private AnimationFactory factory = new AnimationFactory(this);
+
+	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
 		if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F)) {
-			controller.setAnimation(new AnimationBuilder().addAnimation("walking", true));
-			return true;
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("walking", true));
+			return PlayState.CONTINUE;
 		}
-		if (this.dataManager.get(ATTACKING)) {
-			controller.setAnimation(new AnimationBuilder().addAnimation("attacking", true));
-			return true;
-		}
-		return false;
+		event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
+		return PlayState.CONTINUE;
 	}
 
 	@Override
-	public EntityAnimationManager getAnimationManager() {
-		return manager;
+	public void registerControllers(AnimationData data) {
+		data.addAnimationController(new AnimationController<LostSoulEntity>(this, "controller", 0.1F, this::predicate));
+	}
+
+	@Override
+	public AnimationFactory getFactory() {
+		return this.factory;
 	}
 
 	@OnlyIn(Dist.CLIENT)

@@ -24,6 +24,7 @@ import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.fml.loading.FMLPaths;
+import software.bernie.geckolib.GeckoLib;
 import top.theillusivec4.curios.api.CuriosAPI;
 import top.theillusivec4.curios.api.imc.CurioIMCMessage;
 
@@ -52,6 +53,7 @@ public class DoomMod {
 			if (FMLEnvironment.dist == Dist.CLIENT)
 				modEventBus.addListener(LockOnHandler::client);
 		}
+		GeckoLib.initialize();
 	}
 
 	private void setup(final FMLCommonSetupEvent event) {

@@ -3,15 +3,17 @@ package mod.azure.doomweapon.entity;
 import java.util.EnumSet;
 import java.util.Random;
 
+import mod.azure.doomweapon.entity.ai.goal.DemonAttackGoal;
 import mod.azure.doomweapon.util.Config;
 import mod.azure.doomweapon.util.registry.ModEntityTypes;
 import mod.azure.doomweapon.util.registry.ModSoundEvents;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.FlyingEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.MoverType;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.controller.MovementController;
@@ -38,7 +40,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class PainEntity extends FlyingEntity implements IMob {
+public class PainEntity extends DemonEntity implements IMob {
 
 	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(PainEntity.class,
 			DataSerializers.BOOLEAN);
@@ -62,6 +64,7 @@ public class PainEntity extends FlyingEntity implements IMob {
 		this.goalSelector.addGoal(5, new PainEntity.RandomFlyGoal(this));
 		this.goalSelector.addGoal(7, new PainEntity.LookAroundGoal(this));
 		this.goalSelector.addGoal(7, new PainEntity.FireballAttackGoal(this));
+		this.goalSelector.addGoal(7, new DemonAttackGoal(this, 1.0D, false));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, 10, true,
 				false, (p_213812_1_) -> {
 					return Math.abs(p_213812_1_.getPosY() - this.getPosY()) <= 4.0D;
@@ -80,6 +83,56 @@ public class PainEntity extends FlyingEntity implements IMob {
 						return Math.abs(p_213812_1_.getPosY() - this.getPosY()) <= 4.0D;
 					}));
 		}
+	}
+
+	public boolean onLivingFall(float distance, float damageMultiplier) {
+		return false;
+	}
+
+	protected void updateFallState(double y, boolean onGroundIn, BlockState state, BlockPos pos) {
+	}
+
+	public void travel(Vec3d positionIn) {
+		if (this.isInWater()) {
+			this.moveRelative(0.02F, positionIn);
+			this.move(MoverType.SELF, this.getMotion());
+			this.setMotion(this.getMotion().scale((double) 0.8F));
+		} else if (this.isInLava()) {
+			this.moveRelative(0.02F, positionIn);
+			this.move(MoverType.SELF, this.getMotion());
+			this.setMotion(this.getMotion().scale(0.5D));
+		} else {
+			BlockPos ground = new BlockPos(this.getPosX(), this.getPosY() - 1.0D, this.getPosZ());
+			float f = 0.91F;
+			if (this.onGround) {
+				f = this.world.getBlockState(ground).getSlipperiness(this.world, ground, this) * 0.91F;
+			}
+
+			float f1 = 0.16277137F / (f * f * f);
+			f = 0.91F;
+			if (this.onGround) {
+				f = this.world.getBlockState(ground).getSlipperiness(this.world, ground, this) * 0.91F;
+			}
+
+			this.moveRelative(this.onGround ? 0.1F * f1 : 0.02F, positionIn);
+			this.move(MoverType.SELF, this.getMotion());
+			this.setMotion(this.getMotion().scale((double) f));
+		}
+
+		this.prevLimbSwingAmount = this.limbSwingAmount;
+		double d1 = this.getPosX() - this.prevPosX;
+		double d0 = this.getPosZ() - this.prevPosZ;
+		float f2 = MathHelper.sqrt(d1 * d1 + d0 * d0) * 4.0F;
+		if (f2 > 1.0F) {
+			f2 = 1.0F;
+		}
+
+		this.limbSwingAmount += (f2 - this.limbSwingAmount) * 0.4F;
+		this.limbSwing += this.limbSwingAmount;
+	}
+
+	public boolean isOnLadder() {
+		return false;
 	}
 
 	public static boolean spawning(EntityType<PainEntity> p_223368_0_, IWorld p_223368_1_, SpawnReason reason,

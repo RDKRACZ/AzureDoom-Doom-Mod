@@ -137,7 +137,7 @@ public class ModEntityTypes {
 
 	public static final RegistryObject<EntityType<MancubusEntity>> MANCUBUS = ENTITY_TYPES.register("mancubus",
 			() -> EntityType.Builder.<MancubusEntity>create(MancubusEntity::new, EntityClassification.MONSTER)
-					.size(1.9F, 5.4F).immuneToFire().build(new ResourceLocation(DoomMod.MODID, "mancubus").toString()));
+					.size(2.3F, 3.0F).immuneToFire().build(new ResourceLocation(DoomMod.MODID, "mancubus").toString()));
 
 	public static final RegistryObject<EntityType<ArachnotronEntity>> ARACHNOTRON = ENTITY_TYPES.register("arachnotron",
 			() -> EntityType.Builder.<ArachnotronEntity>create(ArachnotronEntity::new, EntityClassification.MONSTER)
@@ -219,7 +219,7 @@ public class ModEntityTypes {
 			"possessed_scientist",
 			() -> EntityType.Builder
 					.<PossessedScientistEntity>create(PossessedScientistEntity::new, EntityClassification.MONSTER)
-					.size(0.6f, 1.95F).immuneToFire()
+					.size(1.5f, 1.95F).immuneToFire()
 					.build(new ResourceLocation(DoomMod.MODID, "possessed_scientist").toString()));
 
 	public static final RegistryObject<EntityType<IconofsinEntity>> ICONOFSIN = ENTITY_TYPES.register("iconofsin",
