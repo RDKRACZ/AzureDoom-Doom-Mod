@@ -16,6 +16,7 @@ import mod.azure.doom.entity.ImpEntity;
 import mod.azure.doom.entity.LostSoulEntity;
 import mod.azure.doom.entity.MancubusEntity;
 import mod.azure.doom.entity.MarauderEntity;
+import mod.azure.doom.entity.MechaZombieEntity;
 import mod.azure.doom.entity.NightmareImpEntity;
 import mod.azure.doom.entity.PainEntity;
 import mod.azure.doom.entity.PinkyEntity;
@@ -223,13 +224,13 @@ public class ModEntityTypes {
 	public static final RegistryObject<EntityType<PossessedScientistEntity>> POSSESSEDSCIENTIST = ENTITY_TYPES.register(
 			"possessed_scientist",
 			() -> EntityType.Builder.create(PossessedScientistEntity::new, EntityClassification.MONSTER)
-					.size(0.6f, 1.95F).trackingRange(9).immuneToFire()
+					.size(1.5f, 1.95F).trackingRange(9).immuneToFire()
 					.build(new ResourceLocation(DoomMod.MODID, "possessed_scientist").toString()));
 
-//	public static final RegistryObject<EntityType<MechaZombieEntity>> MECHAZOMBIE = ENTITY_TYPES.register("mechazombie",
-//			() -> EntityType.Builder.create(MechaZombieEntity::new, EntityClassification.MONSTER).size(0.6f, 1.95F)
-//					.trackingRange(9).immuneToFire()
-//					.build(new ResourceLocation(DoomMod.MODID, "mechazombie").toString()));
+	public static final RegistryObject<EntityType<MechaZombieEntity>> MECHAZOMBIE = ENTITY_TYPES.register("mechazombie",
+			() -> EntityType.Builder.create(MechaZombieEntity::new, EntityClassification.MONSTER).size(0.6f, 1.95F)
+					.trackingRange(9).immuneToFire()
+					.build(new ResourceLocation(DoomMod.MODID, "mechazombie").toString()));
 
 	public static final RegistryObject<EntityType<IconofsinEntity>> ICONOFSIN = ENTITY_TYPES.register("iconofsin",
 			() -> EntityType.Builder.create(IconofsinEntity::new, EntityClassification.MONSTER).size(2.4f, 10.0F)

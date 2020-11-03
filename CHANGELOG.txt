@@ -1,4 +1,7 @@
-v.3.3.2
+v.3.4.0
 
-- Sets a max version for Geckolib, currently will not work with the new Geckolib 3.0.0.
-- Changes mob spawning to hopefully support modded biomes added to the Nether. Requires more testing.
+- Built against Geckolib 3.0, 2.0 is not longer supported.
+- Updated Mancubus model with Geckolib animations as well.
+- New Possessed Scienetist Scientist animations thanks to Son!
+- Imps now throw small fireballs as well!
+- All demons now have a melee and ranged attack!

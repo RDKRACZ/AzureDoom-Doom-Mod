@@ -6,6 +6,7 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
+import mod.azure.doom.entity.ai.goal.DemonAttackGoal;
 import mod.azure.doom.entity.projectiles.entity.RocketMobEntity;
 import mod.azure.doom.util.Config;
 import mod.azure.doom.util.registry.ModSoundEvents;
@@ -116,6 +117,7 @@ public class CyberdemonEntity extends DemonEntity implements IAnimatable {
 		this.goalSelector.addGoal(6, new LookRandomlyGoal(this));
 		this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
 		this.goalSelector.addGoal(7, new CyberdemonEntity.FireballAttackGoal(this));
+		this.goalSelector.addGoal(7, new DemonAttackGoal(this, 1.0D, false));
 		this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		if (Config.SERVER.IN_FIGHTING.get()) {

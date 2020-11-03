@@ -6,6 +6,7 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
+import mod.azure.doom.entity.ai.goal.DemonAttackGoal;
 import mod.azure.doom.entity.projectiles.entity.EnergyCellMobEntity;
 import mod.azure.doom.util.Config;
 import mod.azure.doom.util.registry.ModSoundEvents;
@@ -70,7 +71,7 @@ public class ArachnotronEntity extends DemonEntity implements IAnimatable {
 	private AnimationFactory factory = new AnimationFactory(this);
 
 	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-		if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F)) {
+		if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F) && !this.dataManager.get(ATTACKING)) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("walking", true));
 			return PlayState.CONTINUE;
 		}
@@ -122,6 +123,7 @@ public class ArachnotronEntity extends DemonEntity implements IAnimatable {
 		this.goalSelector.addGoal(6, new LookRandomlyGoal(this));
 		this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
 		this.goalSelector.addGoal(7, new ArachnotronEntity.FireballAttackGoal(this));
+		this.goalSelector.addGoal(7, new DemonAttackGoal(this, 1.0D, false));
 		this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, false));

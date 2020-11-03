@@ -3,14 +3,16 @@ package mod.azure.doom.entity;
 import java.util.EnumSet;
 import java.util.Random;
 
+import mod.azure.doom.entity.ai.goal.DemonAttackGoal;
 import mod.azure.doom.util.Config;
 import mod.azure.doom.util.registry.ModSoundEvents;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.FlyingEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.MoverType;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
@@ -34,7 +36,7 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class CacodemonEntity extends FlyingEntity implements IMob {
+public class CacodemonEntity extends DemonEntity implements IMob {
 
 	public CacodemonEntity(EntityType<? extends CacodemonEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -57,6 +59,7 @@ public class CacodemonEntity extends FlyingEntity implements IMob {
 		this.goalSelector.addGoal(5, new CacodemonEntity.RandomFlyGoal(this));
 		this.goalSelector.addGoal(7, new CacodemonEntity.LookAroundGoal(this));
 		this.goalSelector.addGoal(7, new CacodemonEntity.FireballAttackGoal(this));
+		this.goalSelector.addGoal(7, new DemonAttackGoal(this, 1.0D, false));
 		this.targetSelector.addGoal(1,
 				new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 10, true, false, (p_213812_1_) -> {
 					return Math.abs(p_213812_1_.getPosY() - this.getPosY()) <= 4.0D;
@@ -91,6 +94,51 @@ public class CacodemonEntity extends FlyingEntity implements IMob {
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
 		return 1.0F;
+	}
+
+	public boolean onLivingFall(float distance, float damageMultiplier) {
+		return false;
+	}
+
+	protected void updateFallState(double y, boolean onGroundIn, BlockState state, BlockPos pos) {
+	}
+
+	public void travel(Vector3d travelVector) {
+		if (this.isInWater()) {
+			this.moveRelative(0.02F, travelVector);
+			this.move(MoverType.SELF, this.getMotion());
+			this.setMotion(this.getMotion().scale((double) 0.8F));
+		} else if (this.isInLava()) {
+			this.moveRelative(0.02F, travelVector);
+			this.move(MoverType.SELF, this.getMotion());
+			this.setMotion(this.getMotion().scale(0.5D));
+		} else {
+			BlockPos ground = new BlockPos(this.getPosX(), this.getPosY() - 1.0D, this.getPosZ());
+			float f = 0.91F;
+			if (this.onGround) {
+				f = this.world.getBlockState(ground).getSlipperiness(this.world, ground, this) * 0.91F;
+			}
+
+			float f1 = 0.16277137F / (f * f * f);
+			f = 0.91F;
+			if (this.onGround) {
+				f = this.world.getBlockState(ground).getSlipperiness(this.world, ground, this) * 0.91F;
+			}
+
+			this.moveRelative(this.onGround ? 0.1F * f1 : 0.02F, travelVector);
+			this.move(MoverType.SELF, this.getMotion());
+			this.setMotion(this.getMotion().scale((double) f));
+		}
+
+		this.func_233629_a_(this, false);
+	}
+
+	/**
+	 * Returns true if this entity should move as if it were on a ladder (either
+	 * because it's actually on a ladder, or for AI reasons)
+	 */
+	public boolean isOnLadder() {
+		return false;
 	}
 
 	static class FireballAttackGoal extends Goal {

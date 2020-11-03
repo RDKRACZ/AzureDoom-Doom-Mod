@@ -14,10 +14,12 @@ import net.minecraft.block.Blocks;
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
@@ -26,18 +28,25 @@ import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.SmallFireballEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
 import software.bernie.geckolib.core.IAnimatable;
 import software.bernie.geckolib.core.PlayState;
@@ -49,14 +58,17 @@ import software.bernie.geckolib.core.manager.AnimationFactory;
 
 public class ImpEntity extends DemonEntity implements IAnimatable {
 
+	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(ImpEntity.class,
+			DataSerializers.BOOLEAN);
+
 	private AnimationFactory factory = new AnimationFactory(this);
 
 	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-		if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F)) {
+		if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F) && !this.dataManager.get(ATTACKING)) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("walking", true));
 			return PlayState.CONTINUE;
 		}
-		if (this.isAggressive()) {
+		if (this.dataManager.get(ATTACKING)) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("attacking"));
 			return PlayState.CONTINUE;
 		}
@@ -93,6 +105,21 @@ public class ImpEntity extends DemonEntity implements IAnimatable {
 		}
 	}
 
+	@OnlyIn(Dist.CLIENT)
+	public boolean isAttacking() {
+		return this.dataManager.get(ATTACKING);
+	}
+
+	public void setAttacking(boolean attacking) {
+		this.dataManager.set(ATTACKING, attacking);
+	}
+
+	@Override
+	protected void registerData() {
+		super.registerData();
+		this.dataManager.register(ATTACKING, false);
+	}
+
 	@Override
 	public IPacket<?> createSpawnPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
@@ -112,7 +139,8 @@ public class ImpEntity extends DemonEntity implements IAnimatable {
 	}
 
 	protected void applyEntityAI() {
-		this.goalSelector.addGoal(2, new DemonAttackGoal(this, 1.0D, false));
+		this.goalSelector.addGoal(7, new ImpEntity.FireballAttackGoal(this));
+		this.goalSelector.addGoal(7, new DemonAttackGoal(this, 1.0D, false));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, false));
 		if (Config.SERVER.IN_FIGHTING.get()) {
@@ -126,6 +154,48 @@ public class ImpEntity extends DemonEntity implements IAnimatable {
 			this.targetSelector.addGoal(3,
 					new NearestAttackableTargetGoal<>(this, PossessedScientistEntity.class, true));
 			this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, PossessedSoldierEntity.class, true));
+		}
+	}
+
+	static class FireballAttackGoal extends Goal {
+		private final ImpEntity parentEntity;
+		public int attackTimer;
+
+		public FireballAttackGoal(ImpEntity ghast) {
+			this.parentEntity = ghast;
+		}
+
+		public boolean shouldExecute() {
+			return this.parentEntity.getAttackTarget() != null;
+		}
+
+		public void startExecuting() {
+			this.attackTimer = 0;
+		}
+
+		public void tick() {
+			LivingEntity livingentity = this.parentEntity.getAttackTarget();
+			if (livingentity.getDistanceSq(this.parentEntity) < 4096.0D
+					&& this.parentEntity.canEntityBeSeen(livingentity)) {
+				World world = this.parentEntity.world;
+				++this.attackTimer;
+
+				if (this.attackTimer == 50) {
+					Vector3d vector3d = this.parentEntity.getLook(1.0F);
+					double d2 = livingentity.getPosX() - (this.parentEntity.getPosX() + vector3d.x * 4.0D);
+					double d3 = livingentity.getPosYHeight(0.5D) - (0.5D + this.parentEntity.getPosYHeight(0.5D));
+					double d4 = livingentity.getPosZ() - (this.parentEntity.getPosZ() + vector3d.z * 4.0D);
+					SmallFireballEntity fireballentity = new SmallFireballEntity(world, this.parentEntity, d2, d3, d4);
+					fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 2.0D,
+							this.parentEntity.getPosYHeight(0.5D) + 0.5D, fireballentity.getPosZ() + vector3d.z * 1.0D);
+					world.addEntity(fireballentity);
+					this.attackTimer = -100;
+				}
+			} else if (this.attackTimer > 0) {
+				--this.attackTimer;
+			}
+
+			this.parentEntity.setAttacking(this.attackTimer > 10);
 		}
 	}
 

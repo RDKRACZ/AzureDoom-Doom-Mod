@@ -6,6 +6,7 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
+import mod.azure.doom.entity.ai.goal.DemonAttackGoal;
 import mod.azure.doom.entity.projectiles.entity.BarenBlastEntity;
 import mod.azure.doom.util.Config;
 import mod.azure.doom.util.registry.ModSoundEvents;
@@ -67,7 +68,7 @@ public class MechaZombieEntity extends DemonEntity implements IAnimatable {
 			return PlayState.CONTINUE;
 		}
 		if (this.dataManager.get(ATTACKING)) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("attacking", true));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("attack", true));
 			return PlayState.CONTINUE;
 		}
 		if (this.dead) {
@@ -137,7 +138,8 @@ public class MechaZombieEntity extends DemonEntity implements IAnimatable {
 		this.goalSelector.addGoal(6, new LookRandomlyGoal(this));
 		this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
 		this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
-		this.goalSelector.addGoal(2, new MechaZombieEntity.FireballAttackGoal(this));
+		this.goalSelector.addGoal(7, new MechaZombieEntity.FireballAttackGoal(this));
+		this.goalSelector.addGoal(7, new DemonAttackGoal(this, 1.0D, false));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		if (Config.SERVER.IN_FIGHTING.get()) {
 			this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, MonsterEntity.class, true));
@@ -147,7 +149,7 @@ public class MechaZombieEntity extends DemonEntity implements IAnimatable {
 
 	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
 		return MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 50.0D)
-				.createMutableAttribute(Attributes.MAX_HEALTH, 180.0D)
+				.createMutableAttribute(Attributes.MAX_HEALTH, 25.0D)
 				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D)
 				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 15.0D);
 	}

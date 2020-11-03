@@ -6,6 +6,7 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
+import mod.azure.doom.entity.ai.goal.DemonAttackGoal;
 import mod.azure.doom.entity.projectiles.entity.BarenBlastEntity;
 import mod.azure.doom.util.Config;
 import mod.azure.doom.util.registry.ModSoundEvents;
@@ -118,7 +119,8 @@ public class BaronEntity extends DemonEntity implements IAnimatable {
 		this.goalSelector.addGoal(6, new LookRandomlyGoal(this));
 		this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
 		this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
-		this.goalSelector.addGoal(2, new BaronEntity.FireballAttackGoal(this));
+		this.goalSelector.addGoal(7, new BaronEntity.FireballAttackGoal(this));
+		this.goalSelector.addGoal(7, new DemonAttackGoal(this, 1.0D, false));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		if (Config.SERVER.IN_FIGHTING.get()) {
 			this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, MonsterEntity.class, true));

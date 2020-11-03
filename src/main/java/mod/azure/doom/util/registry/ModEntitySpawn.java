@@ -64,7 +64,7 @@ public class ModEntitySpawn {
 			base.add(new Spawners(ModEntityTypes.ZOMBIEMAN.get(), 30, 1, 4));
 			base.add(new Spawners(ModEntityTypes.NIGHTMARE_IMP.get(), 30, 1, 4));
 			base.add(new Spawners(ModEntityTypes.IMP2016.get(), 30, 1, 4));
-			// base.add(new Spawners(ModEntityTypes.MECHAZOMBIE.get(), 30, 1, 4));
+			base.add(new Spawners(ModEntityTypes.MECHAZOMBIE.get(), 30, 1, 4));
 			base.add(new Spawners(ModEntityTypes.ARACHNOTRON.get(), 30, 1, 4));
 			base.add(new Spawners(ModEntityTypes.CHAINGUNNER.get(), 30, 1, 4));
 			base.add(new Spawners(ModEntityTypes.SHOTGUNGUY.get(), 30, 1, 4));
@@ -156,8 +156,8 @@ public class ModEntitySpawn {
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.GORE_NEST.get(),
 				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
 				GoreNestEntity::spawning);
-//		EntitySpawnPlacementRegistry.register(ModEntityTypes.MECHAZOMBIE.get(),
-//				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
-//				MechaZombieEntity::spawning);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.MECHAZOMBIE.get(),
+				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+				MechaZombieEntity::spawning);
 	}
 }

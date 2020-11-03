@@ -192,8 +192,8 @@ public class DoomItems {
 			() -> new DoomSpawnEgg(ModEntityTypes.ICONOFSIN));
 	public static final RegistryObject<Item> UNWILLING_SPAWN_EGG = ITEMS.register("unwilling_spawn_egg",
 			() -> new DoomSpawnEgg(ModEntityTypes.UNWILLING));
-//	public static final RegistryObject<Item> MECHAZOMBIE_SPAWN_EGG = ITEMS.register("mechazombie_spawn_egg",
-//			() -> new DoomSpawnEgg(ModEntityTypes.MECHAZOMBIE));
+	public static final RegistryObject<Item> MECHAZOMBIE_SPAWN_EGG = ITEMS.register("mechazombie_spawn_egg",
+			() -> new DoomSpawnEgg(ModEntityTypes.MECHAZOMBIE));
 	public static final RegistryObject<Item> GORENEST_SPAWN_EGG = ITEMS.register("gorenest_spawn_egg",
 			() -> new DoomSpawnEgg(ModEntityTypes.GORE_NEST));
 	public static final RegistryObject<Item> POSSESSED_SCIENTIST_SPAWN_EGG = ITEMS

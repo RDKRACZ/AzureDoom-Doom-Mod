@@ -6,6 +6,7 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
+import mod.azure.doom.entity.ai.goal.DemonAttackGoal;
 import mod.azure.doom.entity.projectiles.entity.RocketMobEntity;
 import mod.azure.doom.util.Config;
 import mod.azure.doom.util.registry.ModSoundEvents;
@@ -67,6 +68,7 @@ public class Cyberdemon2016Entity extends DemonEntity {
 		this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
 		this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
 		this.goalSelector.addGoal(7, new Cyberdemon2016Entity.FireballAttackGoal(this));
+		this.goalSelector.addGoal(7, new DemonAttackGoal(this, 1.0D, false));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		if (Config.SERVER.IN_FIGHTING.get()) {
 			this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, MonsterEntity.class, true));
@@ -105,7 +107,8 @@ public class Cyberdemon2016Entity extends DemonEntity {
 
 					RocketMobEntity fireballentity = new RocketMobEntity(world, this.parentEntity, d2, d3, d4);
 					fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 2.0D,
-							this.parentEntity.getPosYHeight(0.5D) + 0.00D, fireballentity.getPosZ() + vector3d.z * 1.0D);
+							this.parentEntity.getPosYHeight(0.5D) + 0.00D,
+							fireballentity.getPosZ() + vector3d.z * 1.0D);
 					world.addEntity(fireballentity);
 					world.addEntity(fireballentity);
 					this.attackTimer = -40;
