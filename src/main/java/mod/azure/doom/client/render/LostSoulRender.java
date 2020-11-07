@@ -9,7 +9,8 @@ import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.util.ResourceLocation;
-import software.bernie.geckolib.renderers.geo.GeoEntityRenderer;
+import net.minecraft.util.math.BlockPos;
+import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 
 public class LostSoulRender extends GeoEntityRenderer<LostSoulEntity> {
 
@@ -22,5 +23,10 @@ public class LostSoulRender extends GeoEntityRenderer<LostSoulEntity> {
 			IRenderTypeBuffer renderTypeBuffer, IVertexBuilder vertexBuilder, int packedLightIn,
 			ResourceLocation textureLocation) {
 		return RenderType.getEntityTranslucent(getTextureLocation(animatable));
+	}
+
+	@Override
+	protected int getBlockLight(LostSoulEntity entityIn, BlockPos partialTicks) {
+		return 15;
 	}
 }

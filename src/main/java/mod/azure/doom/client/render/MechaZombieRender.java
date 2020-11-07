@@ -9,7 +9,7 @@ import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.util.ResourceLocation;
-import software.bernie.geckolib.renderers.geo.GeoEntityRenderer;
+import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 
 public class MechaZombieRender extends GeoEntityRenderer<MechaZombieEntity> {
 
@@ -27,6 +27,15 @@ public class MechaZombieRender extends GeoEntityRenderer<MechaZombieEntity> {
 	@Override
 	protected float getDeathMaxRotation(MechaZombieEntity entityLivingBaseIn) {
 		return 0.0F;
+	}
+
+	@Override
+	public void renderEarly(MechaZombieEntity animatable, MatrixStack stackIn, float ticks,
+			IRenderTypeBuffer renderTypeBuffer, IVertexBuilder vertexBuilder, int packedLightIn, int packedOverlayIn,
+			float red, float green, float blue, float partialTicks) {
+		super.renderEarly(animatable, stackIn, ticks, renderTypeBuffer, vertexBuilder, packedLightIn, packedOverlayIn,
+				red, green, blue, partialTicks);
+		stackIn.scale(0.725F, 0.6F, 0.725F);
 	}
 
 }

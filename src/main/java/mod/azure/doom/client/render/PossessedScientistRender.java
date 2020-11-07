@@ -9,7 +9,7 @@ import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.util.ResourceLocation;
-import software.bernie.geckolib.renderers.geo.GeoEntityRenderer;
+import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 
 public class PossessedScientistRender extends GeoEntityRenderer<PossessedScientistEntity> {
 
@@ -35,7 +35,6 @@ public class PossessedScientistRender extends GeoEntityRenderer<PossessedScienti
 			float red, float green, float blue, float partialTicks) {
 		super.renderEarly(animatable, stackIn, ticks, renderTypeBuffer, vertexBuilder, packedLightIn, packedOverlayIn,
 				red, green, blue, partialTicks);
-
 		stackIn.scale(0.725F, 0.6F, 0.725F);
 	}
 

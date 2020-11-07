@@ -217,7 +217,7 @@ public class ModEntityTypes {
 					.build(new ResourceLocation(DoomMod.MODID, "possessed_soldier").toString()));
 
 	public static final RegistryObject<EntityType<GoreNestEntity>> GORE_NEST = ENTITY_TYPES.register("gore_nest",
-			() -> EntityType.Builder.create(GoreNestEntity::new, EntityClassification.MONSTER).size(0.6f, 1.95F)
+			() -> EntityType.Builder.create(GoreNestEntity::new, EntityClassification.MONSTER).size(3.0f, 4.0F)
 					.immuneToFire().trackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "gore_nest").toString()));
 
