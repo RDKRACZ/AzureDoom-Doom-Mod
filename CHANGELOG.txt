@@ -5,3 +5,5 @@ v.3.4.0
 - New Possessed Scienetist Scientist animations thanks to Son!
 - Imps now throw small fireballs as well!
 - All demons now have a melee and ranged attack!
+- Added Mecha Zombie (thanks to Silly for the model!)
+- Fixes Pinky crash on servers.
