@@ -7,9 +7,7 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import mod.azure.doom.entity.ai.goal.DemonAttackGoal;
-import mod.azure.doom.entity.projectiles.entity.BarenBlastEntity;
 import mod.azure.doom.util.Config;
-import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.CreatureAttribute;
@@ -29,6 +27,7 @@ import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.SmallFireballEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -38,6 +37,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.Difficulty;
@@ -90,7 +90,7 @@ public class MechaZombieEntity extends DemonEntity implements IAnimatable {
 	public AnimationFactory getFactory() {
 		return this.factory;
 	}
-	
+
 	public MechaZombieEntity(EntityType<? extends MechaZombieEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
 	}
@@ -176,7 +176,7 @@ public class MechaZombieEntity extends DemonEntity implements IAnimatable {
 
 		public void tick() {
 			LivingEntity livingentity = this.parentEntity.getAttackTarget();
-			if (livingentity.getDistanceSq(this.parentEntity) < 4096.0D
+			if (livingentity.getDistanceSq(this.parentEntity) > 9.0D
 					&& this.parentEntity.canEntityBeSeen(livingentity)) {
 				World world = this.parentEntity.world;
 				++this.attackTimer;
@@ -187,9 +187,9 @@ public class MechaZombieEntity extends DemonEntity implements IAnimatable {
 					double d3 = livingentity.getPosYHeight(0.5D) - (0.5D + this.parentEntity.getPosYHeight(0.5D));
 					double d4 = livingentity.getPosZ() - (this.parentEntity.getPosZ() + vector3d.z * 4.0D);
 
-					BarenBlastEntity fireballentity = new BarenBlastEntity(world, this.parentEntity, d2, d3, d4);
-					fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 4.0D,
-							this.parentEntity.getPosYHeight(0.5D) + 0.5D, fireballentity.getPosZ() + vector3d.z * 4.0D);
+					SmallFireballEntity fireballentity = new SmallFireballEntity(world, this.parentEntity, d2, d3, d4);
+					fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 1.0D,
+							this.parentEntity.getPosYHeight(0.5D), fireballentity.getPosZ() + vector3d.z * 1.0D);
 					world.addEntity(fireballentity);
 					this.attackTimer = -40;
 				}
@@ -286,21 +286,21 @@ public class MechaZombieEntity extends DemonEntity implements IAnimatable {
 
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return ModSoundEvents.BARON_AMBIENT.get();
+		return SoundEvents.ENTITY_ZOMBIE_AMBIENT;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-		return ModSoundEvents.BARON_HURT.get();
+		return SoundEvents.ENTITY_ZOMBIE_HURT;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return ModSoundEvents.BARON_DEATH.get();
+		return SoundEvents.ENTITY_ZOMBIE_DEATH;
 	}
 
 	protected SoundEvent getStepSound() {
-		return ModSoundEvents.BARON_STEP.get();
+		return SoundEvents.ENTITY_ZOMBIE_STEP;
 	}
 
 	@Override

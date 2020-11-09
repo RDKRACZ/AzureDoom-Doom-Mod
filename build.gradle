@@ -87,7 +87,7 @@ dependencies {
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.3-4.0.2.0:api")
 	//compile fg.deobf("curse.maven:JEI:3078092")
 	compile fg.deobf("curse.maven:projectmmo:3100529")
-	implementation fg.deobf('software.bernie.geckolib:forge-1.16.3-geckolib:3.0.0-beta.3')
+	implementation fg.deobf('software.bernie.geckolib:forge-1.16.3-geckolib:3.0.0-beta.8')
 }
 
 jar {
