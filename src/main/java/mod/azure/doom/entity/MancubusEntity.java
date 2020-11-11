@@ -6,7 +6,7 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import mod.azure.doom.entity.ai.goal.DemonAttackGoal;
+import mod.azure.doom.entity.projectiles.entity.BarenBlastEntity;
 import mod.azure.doom.util.Config;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import mod.azure.doom.util.registry.ModSoundEvents;
@@ -30,7 +30,6 @@ import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.FireballEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -83,10 +82,6 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 		}
 		if (this.dataManager.get(ATTACKING)) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("attacking", true));
-			return PlayState.CONTINUE;
-		}
-		if (this.isAggressive()) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("attack", true));
 			return PlayState.CONTINUE;
 		}
 		event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
@@ -151,7 +146,7 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 
 	protected void applyEntityAI() {
 		this.goalSelector.addGoal(7, new MancubusEntity.FireballAttackGoal(this));
-		this.goalSelector.addGoal(7, new DemonAttackGoal(this, 1.0D, false));
+		// this.goalSelector.addGoal(7, new DemonAttackGoal(this, 1.0D, false));
 		this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, false));
@@ -182,17 +177,28 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 			LivingEntity livingentity = this.parentEntity.getAttackTarget();
 			if (livingentity.getDistanceSq(this.parentEntity) < 4096.0D
 					&& this.parentEntity.canEntityBeSeen(livingentity)) {
+				this.parentEntity.getLookController().setLookPositionWithEntity(livingentity, 90.0F, 30.0F);
 				World world = this.parentEntity.world;
 				++this.attackTimer;
 
-				if (this.attackTimer == 50) {
+				if (this.attackTimer == 15) {
 					Vec3d vector3d = this.parentEntity.getLook(1.0F);
-					double d2 = livingentity.getPosX() - (this.parentEntity.getPosX() + vector3d.x * 4.0D);
+					double d2 = livingentity.getPosX() - (this.parentEntity.getPosX() + vector3d.x * 2.0D);
 					double d3 = livingentity.getPosYHeight(0.5D) - (0.5D + this.parentEntity.getPosYHeight(0.5D));
 					double d4 = livingentity.getPosZ() - (this.parentEntity.getPosZ() + vector3d.z * 4.0D);
-					FireballEntity fireballentity = new FireballEntity(world, this.parentEntity, d2, d3, d4);
-					fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 2.0D,
-							this.parentEntity.getPosYHeight(0.5D) + 0.5D, fireballentity.getPosZ() + vector3d.z * 1.0D);
+					BarenBlastEntity fireballentity = new BarenBlastEntity(world, this.parentEntity, d2, d3, d4);
+					fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 1.0D,
+							this.parentEntity.getPosYHeight(0.5D), fireballentity.getPosZ() + 1.0D);
+					world.addEntity(fireballentity);
+				}
+				if (this.attackTimer == 20) {
+					Vec3d vector3d = this.parentEntity.getLook(1.0F);
+					double d2 = livingentity.getPosX() - (this.parentEntity.getPosX() + vector3d.x * 2.0D);
+					double d3 = livingentity.getPosYHeight(0.5D) - (0.5D + this.parentEntity.getPosYHeight(0.5D));
+					double d4 = livingentity.getPosZ() - (this.parentEntity.getPosZ() + vector3d.z * 4.0D);
+					BarenBlastEntity fireballentity = new BarenBlastEntity(world, this.parentEntity, d2, d3, d4);
+					fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 1.0D,
+							this.parentEntity.getPosYHeight(0.5D), fireballentity.getPosZ() - 1.0D);
 					world.addEntity(fireballentity);
 					this.attackTimer = -100;
 				}

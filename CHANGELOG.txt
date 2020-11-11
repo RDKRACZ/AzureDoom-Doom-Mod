@@ -1,9 +1,9 @@
-v.3.4.0
+v.3.4.1
 
-- Built against Geckolib 3.0, 2.0 is not longer supported.
-- Updated Mancubus model with Geckolib animations as well.
-- New Possessed Scienetist Scientist animations thanks to Son!
-- Imps now throw small fireballs as well!
-- All demons now have a melee and ranged attack!
-- Added Mecha Zombie (thanks to Silly for the model!)
-- Fixes Pinky crash on servers.
+- Fixes Pinky crash on servers.- Started work on Arch-vile! He now attacks the player by setting fire to the player and the players area around him. 
+- Fixed a few broken sounds.
+- Increased Mecha Zombie height a bit. 
+- 2016/Eternal Imps now throw fire balls!
+- New Cacodemon model! - Thanks to Bat!
+- New Mancubus animations by SilverC!
+- Cacodemons and Pain Elementals now stay closer to the ground.

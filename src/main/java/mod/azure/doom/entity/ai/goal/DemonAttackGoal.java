@@ -24,6 +24,7 @@ public class DemonAttackGoal extends MeleeAttackGoal {
 	public void tick() {
 		super.tick();
 		LivingEntity livingentity = this.zombie.getAttackTarget();
+		this.zombie.getLookController().setLookPositionWithEntity(livingentity, 90.0F, 30.0F);
 		if (livingentity.getDistanceSq(this.zombie) < 8.0D) {
 			this.zombie.setAggroed(true);
 		}

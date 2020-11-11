@@ -159,21 +159,46 @@ public class ArachnotronEntity extends DemonEntity implements IAnimatable {
 			if (livingentity.getDistanceSq(this.parentEntity) < 4096.0D
 					&& this.parentEntity.canEntityBeSeen(livingentity)) {
 				World world = this.parentEntity.world;
+				this.parentEntity.getLookController().setLookPositionWithEntity(livingentity, 90.0F, 30.0F);
 				++this.attackTimer;
-				if (this.attackTimer == 20) {
-					Vec3d vec3d = this.parentEntity.getLook(1.0F);
-					double d2 = livingentity.getPosX() - (this.parentEntity.getPosX() + vec3d.x * 4.0D);
-					double d3 = livingentity.getPosYHeight(0.5D) - (0.5D + this.parentEntity.getPosYHeight(0.5D));
-					double d4 = livingentity.getPosZ() - (this.parentEntity.getPosZ() + vec3d.z * 4.0D);
-					EnergyCellMobEntity fireballentity = new EnergyCellMobEntity(world, this.parentEntity, d2, d3, d4);
-					fireballentity.setPosition(this.parentEntity.getPosX() + vec3d.x * 2.0D,
-							this.parentEntity.getPosYHeight(0.5D) + 0.5D, fireballentity.getPosZ() + vec3d.z * 1.0D);
+				Vec3d vector3d = this.parentEntity.getLook(1.0F);
+				double d2 = livingentity.getPosX() - (this.parentEntity.getPosX() + vector3d.x * 4.0D);
+				double d3 = livingentity.getPosYHeight(0.5D) - (0.5D + this.parentEntity.getPosYHeight(0.5D));
+				double d4 = livingentity.getPosZ() - (this.parentEntity.getPosZ() + vector3d.z * 4.0D);
+				EnergyCellMobEntity fireballentity = new EnergyCellMobEntity(world, this.parentEntity, d2, d3, d4);
+
+				if (this.attackTimer == 10) {
+					fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 2.0D,
+							this.parentEntity.getPosYHeight(0.5D) + 0.5D, fireballentity.getPosZ() + vector3d.z * 1.0D);
 					world.addEntity(fireballentity);
-					this.attackTimer = -40;
+				}
+				if (this.attackTimer == 20) {
+					fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 2.0D,
+							this.parentEntity.getPosYHeight(0.5D) + 0.5D, fireballentity.getPosZ() + vector3d.z * 1.0D);
+					world.addEntity(fireballentity);
+				}
+				if (this.attackTimer == 30) {
+					fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 2.0D,
+							this.parentEntity.getPosYHeight(0.5D) + 0.5D, fireballentity.getPosZ() + vector3d.z * 1.0D);
+					world.addEntity(fireballentity);
+				}
+				if (this.attackTimer == 40) {
+					fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 2.0D,
+							this.parentEntity.getPosYHeight(0.5D) + 0.5D, fireballentity.getPosZ() + vector3d.z * 1.0D);
+					world.addEntity(fireballentity);
+				}
+				if (this.attackTimer == 50) {
+					fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 2.0D,
+							this.parentEntity.getPosYHeight(0.5D) + 0.5D, fireballentity.getPosZ() + vector3d.z * 1.0D);
+					world.addEntity(fireballentity);
+					this.attackTimer = -100;
 				}
 			} else if (this.attackTimer > 0) {
+				this.parentEntity.getLookController().setLookPositionWithEntity(livingentity, 90.0F, 30.0F);
 				--this.attackTimer;
 			}
+
+			this.parentEntity.setAttacking(this.attackTimer > 10);
 		}
 	}
 
