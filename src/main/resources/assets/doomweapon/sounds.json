@@ -116,6 +116,9 @@
 	"doom.cacodemon_scream": {
 		"category": "music", "sounds": [{"name": "doomweapon:cacodemon_scream", "stream": true}]
 	},
+	"doom.cacodemon_hit": {
+		"category": "music", "sounds": [{"name": "doomweapon:cacodemon_hit", "stream": true}]
+	},
 	"doom.cyberdemon_death": {
 		"category": "music", "sounds": [{"name": "doomweapon:cyberdemon_death", "stream": true}]
 	},

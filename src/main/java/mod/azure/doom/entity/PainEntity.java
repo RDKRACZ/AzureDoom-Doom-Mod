@@ -156,12 +156,14 @@ public class PainEntity extends DemonEntity implements IMob {
 			LivingEntity livingentity = this.parentEntity.getAttackTarget();
 			if (livingentity.getDistanceSq(this.parentEntity) < 4096.0D
 					&& this.parentEntity.canEntityBeSeen(livingentity)) {
+				this.parentEntity.getLookController().setLookPositionWithEntity(livingentity, 90.0F, 30.0F);
 				World world = this.parentEntity.world;
 				++this.attackTimer;
 				if (this.attackTimer == 20) {
 					LostSoulEntity lost_soul = ModEntityTypes.LOST_SOUL.get().create(world);
 					lost_soul.setLocationAndAngles(this.parentEntity.getPosX(), this.parentEntity.getPosY(),
 							this.parentEntity.getPosZ() + 3, 0, 0);
+					lost_soul.addVelocity(1.0D, 0.0D, 1.0D);
 					world.addEntity(lost_soul);
 					this.attackTimer = -40;
 				}
@@ -260,7 +262,7 @@ public class PainEntity extends DemonEntity implements IMob {
 				double d1 = movementcontroller.getY() - this.parentEntity.getPosY();
 				double d2 = movementcontroller.getZ() - this.parentEntity.getPosZ();
 				double d3 = d0 * d0 + d1 * d1 + d2 * d2;
-				return d3 < 1.0D || d3 > 3600.0D;
+				return d3 < 1.0D || d3 > 10.0D;
 			}
 		}
 
@@ -270,9 +272,9 @@ public class PainEntity extends DemonEntity implements IMob {
 
 		public void startExecuting() {
 			Random random = this.parentEntity.getRNG();
-			double d0 = this.parentEntity.getPosX() + (double) ((random.nextFloat() * 2.0F - 1.0F) * 16.0F);
-			double d1 = this.parentEntity.getPosY() + (double) ((random.nextFloat() * 2.0F - 1.0F) * 16.0F);
-			double d2 = this.parentEntity.getPosZ() + (double) ((random.nextFloat() * 2.0F - 1.0F) * 16.0F);
+			double d0 = this.parentEntity.getPosX() + (double) ((random.nextFloat() * 2.0F - 1.0F) * 2.0F);
+			double d1 = this.parentEntity.getPosY() + (double) ((random.nextFloat() * 2.0F - 1.0F) * 2.0F);
+			double d2 = this.parentEntity.getPosZ() + (double) ((random.nextFloat() * 2.0F - 1.0F) * 2.0F);
 			this.parentEntity.getMoveHelper().setMoveTo(d0, d1, d2, 1.0D);
 		}
 	}

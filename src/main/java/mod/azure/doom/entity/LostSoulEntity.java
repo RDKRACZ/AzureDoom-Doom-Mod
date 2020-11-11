@@ -308,4 +308,9 @@ public class LostSoulEntity extends FlyingEntity implements IMob, IAnimatable {
 		return flameTimer;
 	}
 
+	@Override
+	public int getMaxSpawnedInChunk() {
+		return 7;
+	}
+
 }

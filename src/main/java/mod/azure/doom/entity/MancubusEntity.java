@@ -1,10 +1,10 @@
 package mod.azure.doom.entity;
 
+import java.util.EnumSet;
 import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import mod.azure.doom.entity.ai.goal.DemonAttackGoal;
 import mod.azure.doom.entity.projectiles.entity.BarenBlastEntity;
 import mod.azure.doom.util.Config;
 import mod.azure.doom.util.registry.ModSoundEvents;
@@ -21,7 +21,7 @@ import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.LookAtGoal;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
+import net.minecraft.entity.ai.goal.MoveTowardsTargetGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
@@ -81,10 +81,6 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("attacking", true));
 			return PlayState.CONTINUE;
 		}
-		if (this.isAggressive()) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("attack"));
-			return PlayState.CONTINUE;
-		}
 		event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
 		return PlayState.CONTINUE;
 	}
@@ -136,15 +132,14 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 
 	@Override
 	protected void registerGoals() {
-		this.goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8.0F));
-		this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
+		this.goalSelector.addGoal(8, new LookAtGoal(this, MobEntity.class, 8.0F));
 		this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
+		this.goalSelector.addGoal(2, new MoveTowardsTargetGoal(this, 0.9D, 32.0F));
 		this.applyEntityAI();
 	}
 
 	protected void applyEntityAI() {
 		this.goalSelector.addGoal(7, new MancubusEntity.FireballAttackGoal(this));
-		this.goalSelector.addGoal(7, new DemonAttackGoal(this, 1.0D, false));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, false));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
@@ -154,12 +149,20 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 		}
 	}
 
+	@Override
+	protected void updateMovementGoalFlags() {
+		boolean flag = this.getAttackTarget() != null && this.canEntityBeSeen(this.getAttackTarget());
+		this.goalSelector.setFlag(Goal.Flag.LOOK, flag);
+		super.updateMovementGoalFlags();
+	}
+
 	static class FireballAttackGoal extends Goal {
 		private final MancubusEntity parentEntity;
 		public int attackTimer;
 
 		public FireballAttackGoal(MancubusEntity ghast) {
 			this.parentEntity = ghast;
+			this.setMutexFlags(EnumSet.of(Goal.Flag.TARGET));
 		}
 
 		public boolean shouldExecute() {
@@ -172,21 +175,32 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 
 		public void tick() {
 			LivingEntity livingentity = this.parentEntity.getAttackTarget();
-			if (livingentity.getDistanceSq(this.parentEntity) < 4096.0D
+			if (livingentity.getDistanceSq(this.parentEntity) > 4.0D
 					&& this.parentEntity.canEntityBeSeen(livingentity)) {
+				this.parentEntity.getLookController().setLookPositionWithEntity(livingentity, 90.0F, 30.0F);
 				World world = this.parentEntity.world;
 				++this.attackTimer;
 
-				if (this.attackTimer == 50) {
+				if (this.attackTimer == 15) {
 					Vector3d vector3d = this.parentEntity.getLook(1.0F);
 					double d2 = livingentity.getPosX() - (this.parentEntity.getPosX() + vector3d.x * 2.0D);
 					double d3 = livingentity.getPosYHeight(0.5D) - (0.5D + this.parentEntity.getPosYHeight(0.5D));
 					double d4 = livingentity.getPosZ() - (this.parentEntity.getPosZ() + vector3d.z * 4.0D);
 					BarenBlastEntity fireballentity = new BarenBlastEntity(world, this.parentEntity, d2, d3, d4);
 					fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 1.0D,
-							this.parentEntity.getPosYHeight(0.5D) + 0.5D, fireballentity.getPosZ() + vector3d.z * 1.0D);
+							this.parentEntity.getPosYHeight(0.5D), fireballentity.getPosZ() + 1.0D);
 					world.addEntity(fireballentity);
-					this.attackTimer = -100;
+				}
+				if (this.attackTimer == 20) {
+					Vector3d vector3d = this.parentEntity.getLook(1.0F);
+					double d2 = livingentity.getPosX() - (this.parentEntity.getPosX() + vector3d.x * 2.0D);
+					double d3 = livingentity.getPosYHeight(0.5D) - (0.5D + this.parentEntity.getPosYHeight(0.5D));
+					double d4 = livingentity.getPosZ() - (this.parentEntity.getPosZ() + vector3d.z * 4.0D);
+					BarenBlastEntity fireballentity = new BarenBlastEntity(world, this.parentEntity, d2, d3, d4);
+					fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 1.0D,
+							this.parentEntity.getPosYHeight(0.5D), fireballentity.getPosZ() - 1.0D);
+					world.addEntity(fireballentity);
+					this.attackTimer = -50;
 				}
 			} else if (this.attackTimer > 0) {
 				--this.attackTimer;

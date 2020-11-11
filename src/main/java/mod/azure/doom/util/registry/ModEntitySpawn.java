@@ -54,8 +54,8 @@ public class ModEntitySpawn {
 			base.add(new Spawners(ModEntityTypes.IMP.get(), 30, 1, 4));
 			base.add(new Spawners(ModEntityTypes.IMP.get(), 30, 1, 4));
 			base.add(new Spawners(ModEntityTypes.PINKY.get(), 12, 2, 4));
-			base.add(new Spawners(ModEntityTypes.LOST_SOUL.get(), 12, 2, 4));
-			base.add(new Spawners(ModEntityTypes.CACODEMON.get(), 8, 1, 2));
+			base.add(new Spawners(ModEntityTypes.LOST_SOUL.get(), 30, 2, 4));
+			base.add(new Spawners(ModEntityTypes.CACODEMON.get(), 30, 1, 2));
 			base.add(new Spawners(ModEntityTypes.ARCHVILE.get(), 4, 1, 2));
 			base.add(new Spawners(ModEntityTypes.BARON.get(), 10, 1, 1));
 			base.add(new Spawners(ModEntityTypes.MANCUBUS.get(), 10, 1, 1));
@@ -69,7 +69,7 @@ public class ModEntitySpawn {
 			base.add(new Spawners(ModEntityTypes.CHAINGUNNER.get(), 30, 1, 4));
 			base.add(new Spawners(ModEntityTypes.SHOTGUNGUY.get(), 30, 1, 4));
 			base.add(new Spawners(ModEntityTypes.MARAUDER.get(), 15, 1, 1));
-			base.add(new Spawners(ModEntityTypes.PAIN.get(), 8, 1, 2));
+			base.add(new Spawners(ModEntityTypes.PAIN.get(), 30, 1, 2));
 			base.add(new Spawners(ModEntityTypes.HELLKNIGHT.get(), 10, 1, 1));
 			base.add(new Spawners(ModEntityTypes.CYBERDEMON.get(), 10, 1, 1));
 			base.add(new Spawners(ModEntityTypes.UNWILLING.get(), 30, 1, 4));

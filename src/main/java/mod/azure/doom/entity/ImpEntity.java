@@ -177,6 +177,7 @@ public class ImpEntity extends DemonEntity implements IAnimatable {
 			LivingEntity livingentity = this.parentEntity.getAttackTarget();
 			if (livingentity.getDistanceSq(this.parentEntity) < 4096.0D
 					&& this.parentEntity.canEntityBeSeen(livingentity)) {
+				this.parentEntity.getLookController().setLookPositionWithEntity(livingentity, 90.0F, 30.0F);
 				World world = this.parentEntity.world;
 				++this.attackTimer;
 

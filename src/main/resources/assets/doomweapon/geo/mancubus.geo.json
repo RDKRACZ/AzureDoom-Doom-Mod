@@ -19,9 +19,14 @@
 					"name": "head",
 					"parent": "main",
 					"pivot": [0, 40, -10],
-					"mirror": true,
+					"mirror": true
+				},
+				{
+					"name": "mainHead",
+					"parent": "head",
+					"pivot": [0, 40, -10],
 					"cubes": [
-						{"origin": [-4, 37, -14], "size": [8, 11, 8], "uv": [0, 109]}
+						{"origin": [-4, 37, -14], "size": [8, 11, 8], "uv": [0, 109], "mirror": true}
 					]
 				},
 				{

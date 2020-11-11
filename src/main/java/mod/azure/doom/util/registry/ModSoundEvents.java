@@ -69,7 +69,7 @@ public class ModSoundEvents {
 	public static final RegistryObject<SoundEvent> ARCHVILE_PORTAL = MOD_SOUNDS.register("doom.arch_vile_portal",
 			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.arch_vile_portal")));
 	public static final RegistryObject<SoundEvent> ARCHVILE_SCREAM = MOD_SOUNDS.register("doom.arch_vile_scream",
-			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.arch_vilevscream")));
+			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.arch_vile_scream")));
 	public static final RegistryObject<SoundEvent> ARCHVILE_STARE = MOD_SOUNDS.register("doom.arch_vile_stare",
 			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.arch_vile_stare")));
 
@@ -136,7 +136,7 @@ public class ModSoundEvents {
 			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.cyberdemon_walk")));
 
 	public static final RegistryObject<SoundEvent> MANCUBUS_AMBIENT = MOD_SOUNDS.register("doom.mancubus_say",
-			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.mancubus_throw")));
+			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.mancubus_say")));
 	public static final RegistryObject<SoundEvent> MANCUBUS_DEATH = MOD_SOUNDS.register("doom.mancubus_death",
 			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.mancubus_death")));
 	public static final RegistryObject<SoundEvent> MANCUBUS_HURT = MOD_SOUNDS.register("doom.mancubus_hit",
@@ -144,12 +144,12 @@ public class ModSoundEvents {
 	public static final RegistryObject<SoundEvent> MANCUBUS_STEP = MOD_SOUNDS.register("doom.mancubus_walk",
 			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.mancubus_walk")));
 
-	public static final RegistryObject<SoundEvent> REVENANT_AMBIENT = MOD_SOUNDS.register("doom.revenants_say",
-			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.revenants_say")));
+	public static final RegistryObject<SoundEvent> REVENANT_AMBIENT = MOD_SOUNDS.register("doom.revenant_say",
+			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.revenant_say")));
 	public static final RegistryObject<SoundEvent> REVENANT_DEATH = MOD_SOUNDS.register("doom.revenant_death",
 			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.revenant_death")));
-	public static final RegistryObject<SoundEvent> REVENANT_HURT = MOD_SOUNDS.register("doom.revenant_hit",
-			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.revenant_hit")));
+	public static final RegistryObject<SoundEvent> REVENANT_HURT = MOD_SOUNDS.register("doom.revenant_hurt",
+			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.revenant_hurt")));
 	public static final RegistryObject<SoundEvent> REVENANT_ATTACK = MOD_SOUNDS.register("doom.revenant_attack",
 			() -> new SoundEvent(new ResourceLocation("doomweapon", "doom.revenant_attack")));
 

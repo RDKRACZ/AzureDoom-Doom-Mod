@@ -25,6 +25,9 @@ import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.FireballEntity;
 import net.minecraft.network.IPacket;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -34,13 +37,84 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-public class CacodemonEntity extends DemonEntity implements IMob {
+public class CacodemonEntity extends DemonEntity implements IMob, IAnimatable {
+	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(CacodemonEntity.class,
+			DataSerializers.BOOLEAN);
 
 	public CacodemonEntity(EntityType<? extends CacodemonEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.moveController = new CacodemonEntity.MoveHelperController(this);
+	}
+
+	private AnimationFactory factory = new AnimationFactory(this);
+
+	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+		if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F) && !this.dataManager.get(ATTACKING)) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("walking", true));
+			return PlayState.CONTINUE;
+		}
+		if (this.dead) {
+			if (world.isRemote) {
+				event.getController().setAnimation(new AnimationBuilder().addAnimation("death", false));
+				return PlayState.CONTINUE;
+			}
+		}
+		if (this.dataManager.get(ATTACKING)) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("attacking", true));
+			return PlayState.CONTINUE;
+		}
+		if (this.isAggressive()) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("attacking"));
+			return PlayState.CONTINUE;
+		}
+		event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
+		return PlayState.CONTINUE;
+	}
+
+	@Override
+	public void registerControllers(AnimationData data) {
+		data.addAnimationController(new AnimationController<CacodemonEntity>(this, "controller", 0, this::predicate));
+	}
+
+	@Override
+	public AnimationFactory getFactory() {
+		return this.factory;
+	}
+
+	@Override
+	protected void onDeathUpdate() {
+		++this.deathTime;
+		if (this.deathTime == 60) {
+			this.remove();
+			if (world.isRemote) {
+			}
+		}
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	public boolean isAttacking() {
+		return this.dataManager.get(ATTACKING);
+	}
+
+	public void setAttacking(boolean attacking) {
+		this.dataManager.set(ATTACKING, attacking);
+	}
+
+	@Override
+	protected void registerData() {
+		super.registerData();
+		this.dataManager.register(ATTACKING, false);
 	}
 
 	@Override
@@ -51,7 +125,7 @@ public class CacodemonEntity extends DemonEntity implements IMob {
 	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
 		return MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 50.0D)
 				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D)
-				.createMutableAttribute(Attributes.MAX_HEALTH, 19.0D);
+				.createMutableAttribute(Attributes.MAX_HEALTH, 80.0D);
 	}
 
 	@Override
@@ -157,10 +231,15 @@ public class CacodemonEntity extends DemonEntity implements IMob {
 			this.attackTimer = 0;
 		}
 
+		public void resetTask() {
+			this.parentEntity.setAttacking(false);
+		}
+
 		public void tick() {
 			LivingEntity livingentity = this.parentEntity.getAttackTarget();
 			if (livingentity.getDistanceSq(this.parentEntity) < 4096.0D
 					&& this.parentEntity.canEntityBeSeen(livingentity)) {
+				this.parentEntity.getLookController().setLookPositionWithEntity(livingentity, 90.0F, 30.0F);
 				World world = this.parentEntity.world;
 				++this.attackTimer;
 
@@ -183,6 +262,8 @@ public class CacodemonEntity extends DemonEntity implements IMob {
 			} else if (this.attackTimer > 0) {
 				--this.attackTimer;
 			}
+
+			this.parentEntity.setAttacking(this.attackTimer > 10);
 		}
 	}
 
@@ -275,7 +356,7 @@ public class CacodemonEntity extends DemonEntity implements IMob {
 				double d1 = movementcontroller.getY() - this.parentEntity.getPosY();
 				double d2 = movementcontroller.getZ() - this.parentEntity.getPosZ();
 				double d3 = d0 * d0 + d1 * d1 + d2 * d2;
-				return d3 < 1.0D || d3 > 3600.0D;
+				return d3 < 1.0D || d3 > 10.0D;
 			}
 		}
 
@@ -285,9 +366,9 @@ public class CacodemonEntity extends DemonEntity implements IMob {
 
 		public void startExecuting() {
 			Random random = this.parentEntity.getRNG();
-			double d0 = this.parentEntity.getPosX() + (double) ((random.nextFloat() * 2.0F - 1.0F) * 16.0F);
-			double d1 = this.parentEntity.getPosY() + (double) ((random.nextFloat() * 2.0F - 1.0F) * 16.0F);
-			double d2 = this.parentEntity.getPosZ() + (double) ((random.nextFloat() * 2.0F - 1.0F) * 16.0F);
+			double d0 = this.parentEntity.getPosX() + (double) ((random.nextFloat() * 2.0F - 1.0F) * 2.0F);
+			double d1 = this.parentEntity.getPosY() + (double) ((random.nextFloat() * 2.0F - 1.0F) * 2.0F);
+			double d2 = this.parentEntity.getPosZ() + (double) ((random.nextFloat() * 2.0F - 1.0F) * 2.0F);
 			this.parentEntity.getMoveHelper().setMoveTo(d0, d1, d2, 1.0D);
 		}
 	}
