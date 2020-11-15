@@ -99,7 +99,7 @@ public class PainEntity extends DemonEntity implements IMob, IAnimatable {
 	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
 		return MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 50.0D)
 				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D)
-				.createMutableAttribute(Attributes.MAX_HEALTH, 19.0D);
+				.createMutableAttribute(Attributes.MAX_HEALTH, 80.0D);
 	}
 
 	@Override
