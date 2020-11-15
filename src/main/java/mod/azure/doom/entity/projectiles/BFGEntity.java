@@ -2,6 +2,8 @@ package mod.azure.doom.entity.projectiles;
 
 import java.util.List;
 
+import mod.azure.doom.util.MyExplosions;
+import mod.azure.doom.util.registry.DoomItems;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.entity.AreaEffectCloudEntity;
@@ -16,8 +18,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceContext;
@@ -29,7 +30,6 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 public class BFGEntity extends AbstractArrowEntity {
 
-	private final Item referenceItem;
 	protected int timeInAir;
 	protected boolean inAir;
 	private int ticksInAir;
@@ -37,12 +37,10 @@ public class BFGEntity extends AbstractArrowEntity {
 	@SuppressWarnings("unchecked")
 	public BFGEntity(EntityType<?> type, World world) {
 		super((EntityType<? extends AbstractArrowEntity>) type, world);
-		this.referenceItem = null;
 	}
 
 	public BFGEntity(LivingEntity shooter, World world, Item referenceItemIn) {
 		super(ModEntityTypes.BFG_CELL.get(), shooter, world);
-		this.referenceItem = referenceItemIn;
 	}
 
 	@Override
@@ -51,6 +49,10 @@ public class BFGEntity extends AbstractArrowEntity {
 		if (this.ticksExisted >= 40) {
 			this.remove();
 		}
+	}
+
+	public DamageSource getDamageSource() {
+		return DamageSource.causeArrowDamage(this, this);
 	}
 
 	@Override
@@ -153,11 +155,6 @@ public class BFGEntity extends AbstractArrowEntity {
 	}
 
 	@Override
-	public ItemStack getArrowStack() {
-		return new ItemStack(this.referenceItem);
-	}
-
-	@Override
 	public IPacket<?> createSpawnPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
@@ -191,16 +188,11 @@ public class BFGEntity extends AbstractArrowEntity {
 						this.getBoundingBox().grow(4.0D, 2.0D, 4.0D));
 				AreaEffectCloudEntity areaeffectcloudentity = new AreaEffectCloudEntity(this.world, this.getPosX(),
 						this.getPosY(), this.getPosZ());
-				if (entity instanceof LivingEntity) {
-					areaeffectcloudentity.setOwner((LivingEntity) entity);
-				}
-
-				areaeffectcloudentity.setParticleData(this.getParticle());
-				areaeffectcloudentity.setRadius(1.0F);
+				areaeffectcloudentity.setParticleData(ParticleTypes.TOTEM_OF_UNDYING);
+				areaeffectcloudentity.setRadius(3.0F);
 				areaeffectcloudentity.setDuration(10);
 				areaeffectcloudentity.setRadiusPerTick(
 						(7.0F - areaeffectcloudentity.getRadius()) / (float) areaeffectcloudentity.getDuration());
-				areaeffectcloudentity.addEffect(new EffectInstance(Effects.INSTANT_DAMAGE, 1, 1));
 				if (!list.isEmpty()) {
 					for (LivingEntity livingentity : list) {
 						double d0 = this.getDistanceSq(livingentity);
@@ -217,9 +209,9 @@ public class BFGEntity extends AbstractArrowEntity {
 				this.explode();
 				this.remove();
 			}
+			this.playSound(ModSoundEvents.BFG_HIT.get(), 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 
 		}
-		this.playSound(ModSoundEvents.BFG_HIT.get(), 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 	}
 
 	protected void onImpact(RayTraceResult result) {
@@ -232,16 +224,11 @@ public class BFGEntity extends AbstractArrowEntity {
 						this.getBoundingBox().grow(4.0D, 2.0D, 4.0D));
 				AreaEffectCloudEntity areaeffectcloudentity = new AreaEffectCloudEntity(this.world, this.getPosX(),
 						this.getPosY(), this.getPosZ());
-				if (entity instanceof LivingEntity) {
-					areaeffectcloudentity.setOwner((LivingEntity) entity);
-				}
-
-				areaeffectcloudentity.setParticleData(this.getParticle());
-				areaeffectcloudentity.setRadius(1.0F);
+				areaeffectcloudentity.setParticleData(ParticleTypes.TOTEM_OF_UNDYING);
+				areaeffectcloudentity.setRadius(3.0F);
 				areaeffectcloudentity.setDuration(10);
 				areaeffectcloudentity.setRadiusPerTick(
 						(7.0F - areaeffectcloudentity.getRadius()) / (float) areaeffectcloudentity.getDuration());
-				areaeffectcloudentity.addEffect(new EffectInstance(Effects.INSTANT_DAMAGE, 1, 1));
 				if (!list.isEmpty()) {
 					for (LivingEntity livingentity : list) {
 						double d0 = this.getDistanceSq(livingentity);
@@ -263,7 +250,19 @@ public class BFGEntity extends AbstractArrowEntity {
 	}
 
 	protected void explode() {
-		this.world.createExplosion(this, this.getPosX(), this.getPosY(), this.getPosZ(), 12.0F, false,
-				Explosion.Mode.NONE);
+		this.createExplosion(12.0F);
+	}
+
+	public Explosion createExplosion(float size) {
+		MyExplosions explosion = new MyExplosions(this.world, this, this.getPosX(), getPosY(), getPosZ(), size);
+		if (net.minecraftforge.event.ForgeEventFactory.onExplosionStart(this.world, explosion))
+			return explosion;
+		explosion.doExplosionA();
+		return explosion;
+	}
+
+	@Override
+	protected ItemStack getArrowStack() {
+		return new ItemStack(DoomItems.BFG_CELL.get());
 	}
 }

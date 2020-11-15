@@ -5,11 +5,12 @@ import java.util.Random;
 
 import mod.azure.doom.util.registry.ModEntityTypes;
 import mod.azure.doom.util.registry.ModSoundEvents;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.FlyingEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.MoverType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -29,7 +30,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.Difficulty;
-import net.minecraft.world.Explosion;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -43,7 +43,7 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-public class LostSoulEntity extends FlyingEntity implements IMob, IAnimatable {
+public class LostSoulEntity extends DemonEntity implements IMob, IAnimatable {
 	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(LostSoulEntity.class,
 			DataSerializers.BOOLEAN);
 	public int explosionPower = 1;
@@ -130,6 +130,47 @@ public class LostSoulEntity extends FlyingEntity implements IMob, IAnimatable {
 
 	public void setCharging(boolean charging) {
 		return;
+	}
+
+	public boolean onLivingFall(float distance, float damageMultiplier) {
+		return false;
+	}
+
+	protected void updateFallState(double y, boolean onGroundIn, BlockState state, BlockPos pos) {
+	}
+
+	public void travel(Vector3d travelVector) {
+		if (this.isInWater()) {
+			this.moveRelative(0.02F, travelVector);
+			this.move(MoverType.SELF, this.getMotion());
+			this.setMotion(this.getMotion().scale((double) 0.8F));
+		} else if (this.isInLava()) {
+			this.moveRelative(0.02F, travelVector);
+			this.move(MoverType.SELF, this.getMotion());
+			this.setMotion(this.getMotion().scale(0.5D));
+		} else {
+			BlockPos ground = new BlockPos(this.getPosX(), this.getPosY() - 1.0D, this.getPosZ());
+			float f = 0.91F;
+			if (this.onGround) {
+				f = this.world.getBlockState(ground).getSlipperiness(this.world, ground, this) * 0.91F;
+			}
+
+			float f1 = 0.16277137F / (f * f * f);
+			f = 0.91F;
+			if (this.onGround) {
+				f = this.world.getBlockState(ground).getSlipperiness(this.world, ground, this) * 0.91F;
+			}
+
+			this.moveRelative(this.onGround ? 0.1F * f1 : 0.02F, travelVector);
+			this.move(MoverType.SELF, this.getMotion());
+			this.setMotion(this.getMotion().scale((double) f));
+		}
+
+		this.func_233629_a_(this, false);
+	}
+
+	public boolean isOnLadder() {
+		return false;
 	}
 
 	class ChargeAttackGoal extends Goal {
@@ -276,17 +317,17 @@ public class LostSoulEntity extends FlyingEntity implements IMob, IAnimatable {
 
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return ModSoundEvents.PAIN_AMBIENT.get();
+		return ModSoundEvents.LOST_SOUL_AMBIENT.get();
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-		return ModSoundEvents.PAIN_HURT.get();
+		return ModSoundEvents.LOST_SOUL_DEATH.get();
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return ModSoundEvents.PAIN_DEATH.get();
+		return ModSoundEvents.LOST_SOUL_DEATH.get();
 	}
 
 	@Override
@@ -297,11 +338,6 @@ public class LostSoulEntity extends FlyingEntity implements IMob, IAnimatable {
 	@Override
 	protected float getSoundVolume() {
 		return 1.0F;
-	}
-
-	protected void explode() {
-		this.world.createExplosion(this, this.getPosX(), this.getPosYHeight(0.0625D), this.getPosZ(), 1.0F,
-				Explosion.Mode.NONE);
 	}
 
 	public int getFlameTimer() {

@@ -1,9 +1,6 @@
-v.3.4.1
+v.3.4.2
 
-- Started work on Arch-vile! He now attacks the player by setting fire to the player and the players area around him. 
-- Fixed a few broken sounds.
-- Increased Mecha Zombie height a bit. 
-- 2016/Eternal Imps now throw fire balls!
-- New Cacodemon model! - Thanks to Bat!
-- New Mancubus animations by SilverC!
-- Cacodemons and Pain Elementals now stay closer to the ground.
+- BFG has gotten a tweak, it will now no longer harm players but will do equal damage to all mobs in it's radius. 
+- Pain Elementals throw Lost Souls forward now.
+- Fixed Server crash with Arch-viles.
+- New Pain Elemental model!

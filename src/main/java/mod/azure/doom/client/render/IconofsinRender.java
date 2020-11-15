@@ -25,6 +25,7 @@ public class IconofsinRender extends MobRenderer<IconofsinEntity, IconofsinModel
 		return TEXTURE;
 	}
 
+	@Override
 	protected void preRenderCallback(IconofsinEntity entitylivingbaseIn, MatrixStack matrixStackIn,
 			float partialTickTime) {
 		matrixStackIn.scale(5.0F, 5.0F, 5.0F);

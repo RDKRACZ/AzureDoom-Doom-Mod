@@ -26,6 +26,7 @@ import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -47,7 +48,7 @@ import net.minecraftforge.fml.network.NetworkHooks;
 public class IconofsinEntity extends DemonEntity {
 
 	private final ServerBossInfo bossInfo = (ServerBossInfo) (new ServerBossInfo(this.getDisplayName(),
-			BossInfo.Color.PURPLE, BossInfo.Overlay.PROGRESS)).setDarkenSky(true);
+			BossInfo.Color.PURPLE, BossInfo.Overlay.PROGRESS)).setDarkenSky(false).setCreateFog(true);
 
 	public IconofsinEntity(EntityType<IconofsinEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
@@ -57,7 +58,7 @@ public class IconofsinEntity extends DemonEntity {
 	public boolean onLivingFall(float distance, float damageMultiplier) {
 		return false;
 	}
-	
+
 	@Override
 	public IPacket<?> createSpawnPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
@@ -214,6 +215,18 @@ public class IconofsinEntity extends DemonEntity {
 	@Override
 	public boolean isNonBoss() {
 		return false;
+	}
+
+	@Override
+	public void addTrackingPlayer(ServerPlayerEntity player) {
+		super.addTrackingPlayer(player);
+		this.bossInfo.addPlayer(player);
+	}
+
+	@Override
+	public void removeTrackingPlayer(ServerPlayerEntity player) {
+		super.removeTrackingPlayer(player);
+		this.bossInfo.removePlayer(player);
 	}
 
 	@Override
