@@ -24,4 +24,13 @@ public class PainRender extends GeoEntityRenderer<PainEntity> {
 		return RenderType.getEntityTranslucent(getTextureLocation(animatable));
 	}
 
+	@Override
+	protected int getBlockLight(PainEntity entityIn, float partialTicks) {
+		if (entityIn.isAttacking()) {
+			return 15;
+		} else {
+			return 0;
+		}
+	}
+
 }
