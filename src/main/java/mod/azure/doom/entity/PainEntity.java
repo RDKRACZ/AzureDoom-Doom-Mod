@@ -39,8 +39,15 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-public class PainEntity extends DemonEntity implements IMob {
+public class PainEntity extends DemonEntity implements IMob, IAnimatable {
 
 	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(PainEntity.class,
 			DataSerializers.BOOLEAN);
@@ -48,6 +55,50 @@ public class PainEntity extends DemonEntity implements IMob {
 	public PainEntity(EntityType<? extends PainEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.moveController = new PainEntity.MoveHelperController(this);
+	}
+
+	private AnimationFactory factory = new AnimationFactory(this);
+
+	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+		if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F) && !this.dataManager.get(ATTACKING)) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("walking", true));
+			return PlayState.CONTINUE;
+		}
+		if (this.dead) {
+			if (world.isRemote) {
+				event.getController().setAnimation(new AnimationBuilder().addAnimation("death", false));
+				return PlayState.CONTINUE;
+			}
+		}
+		if (this.dataManager.get(ATTACKING)) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("attacking", false));
+			return PlayState.CONTINUE;
+		}
+		if ((limbSwingAmount > -0.15F && limbSwingAmount < 0.15F) && !this.dataManager.get(ATTACKING)) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
+			return PlayState.CONTINUE;
+		}
+		return PlayState.STOP;
+	}
+
+	@Override
+	public void registerControllers(AnimationData data) {
+		data.addAnimationController(new AnimationController<PainEntity>(this, "controller", 0, this::predicate));
+	}
+
+	@Override
+	public AnimationFactory getFactory() {
+		return this.factory;
+	}
+
+	@Override
+	protected void onDeathUpdate() {
+		++this.deathTime;
+		if (this.deathTime == 60) {
+			this.remove();
+			if (world.isRemote) {
+			}
+		}
 	}
 
 	public PainEntity(World worldIn) {
@@ -195,8 +246,8 @@ public class PainEntity extends DemonEntity implements IMob {
 				if (this.attackTimer == 20) {
 					LostSoulEntity lost_soul = ModEntityTypes.LOST_SOUL.get().create(world);
 					lost_soul.setLocationAndAngles(this.parentEntity.getPosX(), this.parentEntity.getPosY(),
-							this.parentEntity.getPosZ() + 3, 0, 0);
-					lost_soul.addVelocity(1.0D, 0.0D, 1.0D);
+							this.parentEntity.getPosZ(), 0, 0);
+					lost_soul.addVelocity(1.0D, 0.0D, 0.0D);
 					world.addEntity(lost_soul);
 					this.attackTimer = -40;
 				}

@@ -77,8 +77,11 @@ public class CacodemonEntity extends DemonEntity implements IMob, IAnimatable {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("attacking"));
 			return PlayState.CONTINUE;
 		}
-		event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
-		return PlayState.CONTINUE;
+		if ((limbSwingAmount > -0.15F && limbSwingAmount < 0.15F) && !this.dataManager.get(ATTACKING)) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
+			return PlayState.CONTINUE;
+		}
+		return PlayState.STOP;
 	}
 
 	@Override
@@ -252,14 +255,13 @@ public class CacodemonEntity extends DemonEntity implements IMob, IAnimatable {
 					double d2 = livingentity.getPosX() - (this.parentEntity.getPosX() + vector3d.x * 4.0D);
 					double d3 = livingentity.getPosYHeight(0.5D) - (0.5D + this.parentEntity.getPosYHeight(0.5D));
 					double d4 = livingentity.getPosZ() - (this.parentEntity.getPosZ() + vector3d.z * 4.0D);
-					if (!this.parentEntity.isSilent()) {
-						world.playEvent((PlayerEntity) null, 1016, this.parentEntity.getPosition(), 0);
-					}
 
 					FireballEntity fireballentity = new FireballEntity(world, this.parentEntity, d2, d3, d4);
 					fireballentity.explosionPower = this.parentEntity.getFireballStrength();
-					fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 4.0D,
-							this.parentEntity.getPosYHeight(0.5D) + 0.5D, fireballentity.getPosZ() + vector3d.z * 4.0D);
+					fireballentity.setPosition(this.parentEntity.getPosX(), this.parentEntity.getPosYHeight(0.15D),
+							fireballentity.getPosZ());
+					this.parentEntity.playSound(ModSoundEvents.CACODEMON_FIREBALL.get(), 1.0F,
+							1.2F / (this.parentEntity.rand.nextFloat() * 0.2F + 0.9F));
 					world.addEntity(fireballentity);
 					this.attackTimer = -40;
 				}

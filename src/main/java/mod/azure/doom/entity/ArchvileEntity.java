@@ -134,8 +134,10 @@ public class ArchvileEntity extends DemonEntity {
 								this.parentEntity.getAttackTarget().getPosYEye(),
 								this.parentEntity.getAttackTarget().getPosZ(), 1.0F, true, Explosion.Mode.NONE);
 					}
-					this.parentEntity.playSound(ModSoundEvents.ARCHVILE_SCREAM.get(), 1.0F,
-							1.2F / (this.parentEntity.rand.nextFloat() * 0.2F + 0.9F));
+					if (!(this.parentEntity.world.isRemote)) {
+						this.parentEntity.playSound(ModSoundEvents.ARCHVILE_SCREAM.get(), 1.0F,
+								1.2F / (this.parentEntity.rand.nextFloat() * 0.2F + 0.9F));
+					}
 					this.attackTimer = -80;
 				}
 			} else if (this.attackTimer > 0) {

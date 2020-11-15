@@ -2,6 +2,7 @@ package mod.azure.doom.entity.projectiles;
 
 import java.util.List;
 
+import mod.azure.doom.util.MyExplosions;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.entity.AreaEffectCloudEntity;
@@ -280,7 +281,14 @@ public class BFGEntity extends AbstractArrowEntity {
 	}
 
 	protected void explode() {
-		this.world.createExplosion(this, this.getPosX(), this.getPosYHeight(0.0625D), this.getPosZ(), 12.0F,
-				Explosion.Mode.NONE);
+		this.createExplosion(12.0F);
+	}
+
+	public Explosion createExplosion(float size) {
+		MyExplosions explosion = new MyExplosions(this.world, this, this.getPosX(), getPosY(), getPosZ(), size);
+		if (net.minecraftforge.event.ForgeEventFactory.onExplosionStart(this.world, explosion))
+			return explosion;
+		explosion.doExplosionA();
+		return explosion;
 	}
 }
