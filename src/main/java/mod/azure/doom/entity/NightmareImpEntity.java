@@ -75,7 +75,7 @@ public class NightmareImpEntity extends DemonEntity implements IAnimatable {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("attacking", true));
 			return PlayState.CONTINUE;
 		}
-		if (this.dead) {
+		if ((this.dead || this.getHealth() < 0.01 || this.getShouldBeDead())) {
 			if (world.isRemote) {
 				event.getController().setAnimation(new AnimationBuilder().addAnimation("death", false));
 				return PlayState.CONTINUE;
@@ -98,7 +98,7 @@ public class NightmareImpEntity extends DemonEntity implements IAnimatable {
 	@Override
 	protected void onDeathUpdate() {
 		++this.deathTime;
-		if (this.deathTime == 80) {
+		if (this.deathTime == 60) {
 			this.remove();
 			if (world.isRemote) {
 			}

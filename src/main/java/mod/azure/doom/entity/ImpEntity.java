@@ -68,15 +68,13 @@ public class ImpEntity extends DemonEntity implements IAnimatable {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("walking", true));
 			return PlayState.CONTINUE;
 		}
-		if (this.dataManager.get(ATTACKING)) {
+		if (this.dataManager.get(ATTACKING) && !(this.dead || this.getHealth() < 0.01 || this.getShouldBeDead())) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("attacking"));
 			return PlayState.CONTINUE;
 		}
-		if (this.dead) {
-			if (world.isRemote) {
-				event.getController().setAnimation(new AnimationBuilder().addAnimation("death", false));
-				return PlayState.CONTINUE;
-			}
+		if ((this.dead || this.getHealth() < 0.01 || this.getShouldBeDead())) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("death", false));
+			return PlayState.CONTINUE;
 		}
 		return PlayState.STOP;
 	}
@@ -98,7 +96,7 @@ public class ImpEntity extends DemonEntity implements IAnimatable {
 	@Override
 	protected void onDeathUpdate() {
 		++this.deathTime;
-		if (this.deathTime == 80) {
+		if (this.deathTime == 60) {
 			this.remove();
 			if (world.isRemote) {
 			}

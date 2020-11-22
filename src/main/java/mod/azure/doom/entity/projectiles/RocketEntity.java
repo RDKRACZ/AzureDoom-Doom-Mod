@@ -1,5 +1,8 @@
 package mod.azure.doom.entity.projectiles;
 
+import java.util.List;
+
+import mod.azure.doom.util.registry.DoomItems;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.entity.Entity;
@@ -11,31 +14,28 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 public class RocketEntity extends AbstractArrowEntity {
 
-	private final Item referenceItem;
 	protected int timeInAir;
 	protected boolean inAir;
 	private int ticksInAir;
 
-	@SuppressWarnings("unchecked")
-	public RocketEntity(EntityType<?> type, World world) {
+	public RocketEntity(EntityType<? extends AbstractArrowEntity> type, World world) {
 		super((EntityType<? extends AbstractArrowEntity>) type, world);
-		this.referenceItem = null;
 	}
 
 	public RocketEntity(LivingEntity shooter, World world, Item referenceItemIn) {
 		super(ModEntityTypes.ROCKET.get(), shooter, world);
-		this.referenceItem = referenceItemIn;
 	}
 
 	@Override
@@ -146,8 +146,8 @@ public class RocketEntity extends AbstractArrowEntity {
 	}
 
 	@Override
-	public ItemStack getArrowStack() {
-		return new ItemStack(this.referenceItem);
+	protected ItemStack getArrowStack() {
+		return new ItemStack(DoomItems.ROCKET.get());
 	}
 
 	@Override
@@ -173,7 +173,7 @@ public class RocketEntity extends AbstractArrowEntity {
 	protected void onEntityHit(EntityRayTraceResult p_213868_1_) {
 		super.onEntityHit(p_213868_1_);
 		if (!this.world.isRemote) {
-			this.explode();
+			this.doDamage();
 			this.remove();
 		}
 		this.playSound(ModSoundEvents.ROCKET_HIT.get(), 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
@@ -182,15 +182,29 @@ public class RocketEntity extends AbstractArrowEntity {
 	protected void onImpact(RayTraceResult result) {
 		super.onImpact(result);
 		if (!this.world.isRemote) {
-			this.explode();
+			this.doDamage();
 			this.remove();
 		}
 		this.playSound(ModSoundEvents.ROCKET_HIT.get(), 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 	}
 
-	protected void explode() {
-		this.world.createExplosion(this, this.getPosX(), this.getPosYHeight(0.0625D), this.getPosZ(), 2.0F,
-				Explosion.Mode.NONE);
+	public void doDamage() {
+		float f2 = 4.0F;
+		int k1 = MathHelper.floor(this.getPosX() - (double) f2 - 1.0D);
+		int l1 = MathHelper.floor(this.getPosX() + (double) f2 + 1.0D);
+		int i2 = MathHelper.floor(this.getPosY() - (double) f2 - 1.0D);
+		int i1 = MathHelper.floor(this.getPosY() + (double) f2 + 1.0D);
+		int j2 = MathHelper.floor(this.getPosZ() - (double) f2 - 1.0D);
+		int j1 = MathHelper.floor(this.getPosZ() + (double) f2 + 1.0D);
+		List<Entity> list = this.world.getEntitiesWithinAABBExcludingEntity(this,
+				new AxisAlignedBB((double) k1, (double) i2, (double) j2, (double) l1, (double) i1, (double) j1));
+		Vector3d vector3d = new Vector3d(this.getPosX(), this.getPosY(), this.getPosZ());
+		for (int k2 = 0; k2 < list.size(); ++k2) {
+			Entity entity = list.get(k2);
+			double d12 = (double) (MathHelper.sqrt(entity.getDistanceSq(vector3d)) / f2);
+			if (d12 <= 1.0D) {
+				entity.attackEntityFrom(DamageSource.func_233546_a_(), 40);
+			}
+		}
 	}
-
 }

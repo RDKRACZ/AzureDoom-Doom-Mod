@@ -171,6 +171,7 @@
 	"entity.doomweapon.painelemental": "Pain Elemental",
 	"entity.doomweapon.shotgunguy": "Shotgun Guy",
 	"entity.doomweapon.hellknight": "Hell Knight",
+	"entity.doomweapon.hellknight2016": "Hell Knight 2016",
 	"entity.doomweapon.chaingunner": "Chaingunner",
 	"entity.doomweapon.marauder": "Marauder",
 	"entity.doomweapon.imp2016": "Imp 2016",
@@ -204,6 +205,7 @@
 	"item.doomweapon.zombieman_spawn_egg": "Zombieman Spawn Egg",
 	"item.doomweapon.chaingunner_spawn_egg": "Chaingunner Spawn Egg",
 	"item.doomweapon.hellknight_spawn_egg": "Hell Knight Spawn Egg",
+	"item.doomweapon.hellknight2016_spawn_egg": "Hell Knight 2016 Spawn Egg",
 	"item.doomweapon.imp2016_spawn_egg": "Imp 2016 Spawn Egg",
 	"item.doomweapon.marauder_spawn_egg": "Marauder Spawn Egg",
 	"item.doomweapon.pain_spawn_egg": "Pain Elemental Spawn Egg",
@@ -259,5 +261,8 @@
 	"itemGroup.doompowerup": "Doom Powerups",
 	"key.categories.doomweapon": "Doom",
 	"key.doomweapon.lock_on": "Lock On",
-	"key.doomweapon.tab": "Switch"
+	"key.doomweapon.tab": "Switch",
+	"enchantment.doomweapon.leaping_doom": "Doom Leaping",
+	"enchantment.doomweapon.leaping_doom.desc": "Allows the player to perform mid-air jump, similar to that of Doom 2016/Eternal",
+	"gateways.small_imp_gate": "Small Imp Gate"
 }

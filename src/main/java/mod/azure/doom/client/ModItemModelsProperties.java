@@ -25,7 +25,7 @@ public class ModItemModelsProperties {
 		ItemModelsProperties.registerProperty(DoomItems.SSG.get(), new ResourceLocation("pulling"),
 				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
 					return p_239426_2_ != null && p_239426_2_.isHandActive()
-							&& p_239426_2_.getActiveItemStack() == p_239426_0_ && !SuperShotgun.isCharged(p_239426_0_)
+							&& p_239426_2_.getActiveItemStack() == p_239426_0_ 
 									? 1.0F
 									: 0.0F;
 				});
@@ -39,7 +39,7 @@ public class ModItemModelsProperties {
 					if (livingEntity == null) {
 						return 0.0F;
 					} else {
-						return SuperShotgun.isCharged(itemStack) ? 0.0F
+						return Ballista.isCharged(itemStack) ? 0.0F
 								: (float) (itemStack.getUseDuration() - livingEntity.getItemInUseMaxCount())
 										/ (float) Ballista.getChargeTime(itemStack);
 					}

@@ -68,8 +68,6 @@ public class PistolItem extends BowItem {
 					itemstack = new ItemStack(DoomItems.BULLETS.get());
 				}
 
-				float f = getArrowVelocity(i);
-				if (!((double) f < 0.1D)) {
 					boolean flag1 = playerentity.abilities.isCreativeMode || (itemstack.getItem() instanceof ClipAmmo
 							&& ((ClipAmmo) itemstack.getItem()).isInfinite(itemstack, stack, playerentity));
 					if (!worldIn.isRemote) {
@@ -78,11 +76,8 @@ public class PistolItem extends BowItem {
 						BulletEntity abstractarrowentity = arrowitem.createArrow(worldIn, itemstack, playerentity);
 						abstractarrowentity = customeArrow(abstractarrowentity);
 						abstractarrowentity.func_234612_a_(playerentity, playerentity.rotationPitch,
-								playerentity.rotationYaw, 0.0F, f * 3.0F, 1.0F);
-						if (f == 1.0F) {
-							abstractarrowentity.setIsCritical(true);
-						}
-
+								playerentity.rotationYaw, 0.0F, 1.0F * 3.0F, 1.0F);
+						
 						int j = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, stack);
 						if (j > 0) {
 							abstractarrowentity.setDamage(abstractarrowentity.getDamage() + (double) j * 0.5D + 0.5D);
@@ -106,10 +101,10 @@ public class PistolItem extends BowItem {
 							abstractarrowentity.pickupStatus = AbstractArrowEntity.PickupStatus.DISALLOWED;
 						}
 						worldIn.addEntity(abstractarrowentity);
-					}
+					
 					worldIn.playSound((PlayerEntity) null, playerentity.getPosX(), playerentity.getPosY(),
 							playerentity.getPosZ(), ModSoundEvents.PISTOL_HIT.get(), SoundCategory.PLAYERS, 1.0F,
-							1.0F / (random.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
+							1.0F / (random.nextFloat() * 0.4F + 1.2F) + 0.25F * 0.5F);
 					if (!flag1 && !playerentity.abilities.isCreativeMode) {
 						itemstack.shrink(1);
 						if (itemstack.isEmpty()) {

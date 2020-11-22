@@ -1,4 +1,5 @@
-v.3.4.3
+v.3.4.7
 
-- Fixed Pain Elementals Health
-- Fixed Pain Elementals not lighting up when firing. 
+- Fixed Icon of Sin Boss Bar not updating.
+- Start work on Icon of Sin phases. 
+- Added Hell Knight 2016, thanks to Son for the model and animations!

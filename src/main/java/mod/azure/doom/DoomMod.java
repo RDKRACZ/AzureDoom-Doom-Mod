@@ -2,13 +2,43 @@ package mod.azure.doom;
 
 import mod.azure.doom.client.LockOnHandler;
 import mod.azure.doom.client.ModItemModelsProperties;
+import mod.azure.doom.entity.ArachnotronEntity;
+import mod.azure.doom.entity.ArchvileEntity;
+import mod.azure.doom.entity.BaronEntity;
+import mod.azure.doom.entity.CacodemonEntity;
+import mod.azure.doom.entity.ChaingunnerEntity;
+import mod.azure.doom.entity.Cyberdemon2016Entity;
+import mod.azure.doom.entity.CyberdemonEntity;
+import mod.azure.doom.entity.GoreNestEntity;
+import mod.azure.doom.entity.Hellknight2016Entity;
+import mod.azure.doom.entity.HellknightEntity;
+import mod.azure.doom.entity.IconofsinEntity;
+import mod.azure.doom.entity.Imp2016Entity;
+import mod.azure.doom.entity.ImpEntity;
+import mod.azure.doom.entity.LostSoulEntity;
+import mod.azure.doom.entity.MancubusEntity;
+import mod.azure.doom.entity.MarauderEntity;
+import mod.azure.doom.entity.MechaZombieEntity;
+import mod.azure.doom.entity.NightmareImpEntity;
+import mod.azure.doom.entity.PainEntity;
+import mod.azure.doom.entity.PinkyEntity;
+import mod.azure.doom.entity.PossessedScientistEntity;
+import mod.azure.doom.entity.PossessedSoldierEntity;
+import mod.azure.doom.entity.RevenantEntity;
+import mod.azure.doom.entity.ShotgunguyEntity;
+import mod.azure.doom.entity.SpiderdemonEntity;
+import mod.azure.doom.entity.UnwillingEntity;
+import mod.azure.doom.entity.ZombiemanEntity;
 import mod.azure.doom.util.Config;
+import mod.azure.doom.util.DoomLeapEntityEvents;
 import mod.azure.doom.util.LootHandler;
 import mod.azure.doom.util.SoulCubeHandler;
 import mod.azure.doom.util.registry.DoomBlocks;
+import mod.azure.doom.util.registry.DoomEnchantments;
 import mod.azure.doom.util.registry.DoomItems;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import mod.azure.doom.util.registry.ModSoundEvents;
+import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
@@ -48,6 +78,7 @@ public class DoomMod {
 		modLoadingContext.registerConfig(ModConfig.Type.SERVER, Config.SERVER_SPEC, "doom-config.toml");
 		Config.loadConfig(Config.SERVER_SPEC, FMLPaths.CONFIGDIR.get().resolve("doom-config.toml").toString());
 		ModSoundEvents.MOD_SOUNDS.register(modEventBus);
+		DoomEnchantments.ENCHANTMENTS.register(modEventBus);
 		ModEntityTypes.ENTITY_TYPES.register(modEventBus);
 		ModEntityTypes.TILE_TYPES.register(modEventBus);
 		DoomItems.ITEMS.register(modEventBus);
@@ -55,6 +86,9 @@ public class DoomMod {
 		if (!ModList.get().isLoaded("lockon")) {
 			if (FMLEnvironment.dist == Dist.CLIENT)
 				modEventBus.addListener(LockOnHandler::client);
+		}
+		if (!ModList.get().isLoaded("leap")) {
+			MinecraftForge.EVENT_BUS.register(new DoomLeapEntityEvents());
 		}
 		GeckoLib.initialize();
 	}
@@ -65,6 +99,44 @@ public class DoomMod {
 
 	private void setup(final FMLCommonSetupEvent event) {
 		MinecraftForge.EVENT_BUS.register(new LootHandler());
+		event.enqueueWork(() -> {
+			GlobalEntityTypeAttributes.put(ModEntityTypes.CYBERDEMON.get(), CyberdemonEntity.func_234200_m_().create());
+			GlobalEntityTypeAttributes.put(ModEntityTypes.ARCHVILE.get(), ArchvileEntity.func_234200_m_().create());
+			GlobalEntityTypeAttributes.put(ModEntityTypes.BARON.get(), BaronEntity.func_234200_m_().create());
+			GlobalEntityTypeAttributes.put(ModEntityTypes.CHAINGUNNER.get(),
+					ChaingunnerEntity.func_234200_m_().create());
+			GlobalEntityTypeAttributes.put(ModEntityTypes.CYBERDEMON2016.get(),
+					Cyberdemon2016Entity.func_234200_m_().create());
+			GlobalEntityTypeAttributes.put(ModEntityTypes.HELLKNIGHT.get(), HellknightEntity.func_234200_m_().create());
+			GlobalEntityTypeAttributes.put(ModEntityTypes.HELLKNIGHT2016.get(),
+					Hellknight2016Entity.func_234200_m_().create());
+			GlobalEntityTypeAttributes.put(ModEntityTypes.ICONOFSIN.get(), IconofsinEntity.func_234200_m_().create());
+			GlobalEntityTypeAttributes.put(ModEntityTypes.IMP2016.get(), Imp2016Entity.func_234200_m_().create());
+			GlobalEntityTypeAttributes.put(ModEntityTypes.NIGHTMARE_IMP.get(),
+					NightmareImpEntity.func_234200_m_().create());
+			GlobalEntityTypeAttributes.put(ModEntityTypes.IMP.get(), ImpEntity.func_234200_m_().create());
+			GlobalEntityTypeAttributes.put(ModEntityTypes.MANCUBUS.get(), MancubusEntity.func_234200_m_().create());
+			GlobalEntityTypeAttributes.put(ModEntityTypes.MARAUDER.get(), MarauderEntity.func_234200_m_().create());
+			GlobalEntityTypeAttributes.put(ModEntityTypes.PINKY.get(), PinkyEntity.func_234200_m_().create());
+			GlobalEntityTypeAttributes.put(ModEntityTypes.LOST_SOUL.get(), LostSoulEntity.func_234200_m_().create());
+			GlobalEntityTypeAttributes.put(ModEntityTypes.POSSESSEDSCIENTIST.get(),
+					PossessedScientistEntity.func_234200_m_().create());
+			GlobalEntityTypeAttributes.put(ModEntityTypes.POSSESSEDSOLDIER.get(),
+					PossessedSoldierEntity.func_234200_m_().create());
+			GlobalEntityTypeAttributes.put(ModEntityTypes.REVENANT.get(), RevenantEntity.func_234200_m_().create());
+			GlobalEntityTypeAttributes.put(ModEntityTypes.SHOTGUNGUY.get(), ShotgunguyEntity.func_234200_m_().create());
+			GlobalEntityTypeAttributes.put(ModEntityTypes.ARACHNOTRON.get(),
+					ArachnotronEntity.func_234200_m_().create());
+			GlobalEntityTypeAttributes.put(ModEntityTypes.SPIDERDEMON.get(),
+					SpiderdemonEntity.func_234200_m_().create());
+			GlobalEntityTypeAttributes.put(ModEntityTypes.UNWILLING.get(), UnwillingEntity.func_234200_m_().create());
+			GlobalEntityTypeAttributes.put(ModEntityTypes.ZOMBIEMAN.get(), ZombiemanEntity.func_234200_m_().create());
+			GlobalEntityTypeAttributes.put(ModEntityTypes.CACODEMON.get(), CacodemonEntity.func_234200_m_().create());
+			GlobalEntityTypeAttributes.put(ModEntityTypes.PAIN.get(), PainEntity.func_234200_m_().create());
+			GlobalEntityTypeAttributes.put(ModEntityTypes.GORE_NEST.get(), GoreNestEntity.func_234200_m_().create());
+			GlobalEntityTypeAttributes.put(ModEntityTypes.MECHAZOMBIE.get(),
+					MechaZombieEntity.func_234200_m_().create());
+		});
 	}
 
 	private void enqueueIMC(InterModEnqueueEvent event) {
