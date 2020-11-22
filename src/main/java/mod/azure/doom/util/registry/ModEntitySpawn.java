@@ -8,6 +8,7 @@ import mod.azure.doom.entity.ChaingunnerEntity;
 import mod.azure.doom.entity.Cyberdemon2016Entity;
 import mod.azure.doom.entity.CyberdemonEntity;
 import mod.azure.doom.entity.GoreNestEntity;
+import mod.azure.doom.entity.Hellknight2016Entity;
 import mod.azure.doom.entity.HellknightEntity;
 import mod.azure.doom.entity.Imp2016Entity;
 import mod.azure.doom.entity.ImpEntity;
@@ -51,6 +52,7 @@ public class ModEntitySpawn {
 		registerEntityWorldSpawn(ModEntityTypes.MARAUDER.get(), 15, 1, 1, Biomes.NETHER);
 		registerEntityWorldSpawn(ModEntityTypes.PAIN.get(), 8, 1, 2, Biomes.NETHER);
 		registerEntityWorldSpawn(ModEntityTypes.HELLKNIGHT.get(), 10, 1, 1, Biomes.NETHER);
+		registerEntityWorldSpawn(ModEntityTypes.HELLKNIGHT2016.get(), 10, 1, 1, Biomes.NETHER);
 		registerEntityWorldSpawn(ModEntityTypes.CYBERDEMON.get(), 10, 1, 1, Biomes.NETHER);
 		registerEntityWorldSpawn(ModEntityTypes.UNWILLING.get(), 30, 1, 4, Biomes.NETHER);
 		registerEntityWorldSpawn(ModEntityTypes.POSSESSEDSCIENTIST.get(), 30, 1, 4, Biomes.NETHER);
@@ -112,6 +114,9 @@ public class ModEntitySpawn {
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.HELLKNIGHT.get(),
 				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
 				HellknightEntity::spawning);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.HELLKNIGHT2016.get(),
+				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+				Hellknight2016Entity::spawning);
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.CYBERDEMON.get(),
 				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
 				CyberdemonEntity::spawning);

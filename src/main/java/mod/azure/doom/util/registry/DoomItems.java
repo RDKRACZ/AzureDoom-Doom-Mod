@@ -205,6 +205,8 @@ public class DoomItems {
 			() -> new DoomSpawnEgg(ModEntityTypes.MECHAZOMBIE));
 	public static final RegistryObject<Item> GORENEST_SPAWN_EGG = ITEMS.register("gorenest_spawn_egg",
 			() -> new DoomSpawnEgg(ModEntityTypes.GORE_NEST));
+	public static final RegistryObject<Item> HELLKNIGHT2016_SPAWN_EGG = ITEMS.register("hellknight2016_spawn_egg",
+			() -> new DoomSpawnEgg(ModEntityTypes.HELLKNIGHT2016));
 	// WEAPONS AND TOOLS
 	public static final RegistryObject<Item> CRUCIBLESWORD = ITEMS.register("cruciblesword",
 			() -> new SwordCrucibleItem());

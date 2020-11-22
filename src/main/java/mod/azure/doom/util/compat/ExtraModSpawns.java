@@ -64,6 +64,9 @@ public class ExtraModSpawns {
 		registerEntityWorldSpawn(ModEntityTypes.HELLKNIGHT.get(), 10, 1, 1, NetherBiomes.BASALT_DELTAS.get(),
 				NetherBiomes.CRIMSON_FOREST.get(), NetherBiomes.SOUL_SAND_VALLEY.get(),
 				NetherBiomes.WARPED_FOREST.get());
+		registerEntityWorldSpawn(ModEntityTypes.HELLKNIGHT2016.get(), 10, 1, 1, NetherBiomes.BASALT_DELTAS.get(),
+				NetherBiomes.CRIMSON_FOREST.get(), NetherBiomes.SOUL_SAND_VALLEY.get(),
+				NetherBiomes.WARPED_FOREST.get());
 		registerEntityWorldSpawn(ModEntityTypes.CYBERDEMON.get(), 10, 1, 1, NetherBiomes.BASALT_DELTAS.get(),
 				NetherBiomes.CRIMSON_FOREST.get(), NetherBiomes.SOUL_SAND_VALLEY.get(),
 				NetherBiomes.WARPED_FOREST.get());

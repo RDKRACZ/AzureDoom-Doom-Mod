@@ -2,9 +2,11 @@ package mod.azure.doom;
 
 import mod.azure.doom.client.LockOnHandler;
 import mod.azure.doom.util.Config;
+import mod.azure.doom.util.DoomLeapEntityEvents;
 import mod.azure.doom.util.LootHandler;
 import mod.azure.doom.util.SoulCubeHandler;
 import mod.azure.doom.util.registry.DoomBlocks;
+import mod.azure.doom.util.registry.DoomEnchantments;
 import mod.azure.doom.util.registry.DoomItems;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import mod.azure.doom.util.registry.ModSoundEvents;
@@ -45,6 +47,7 @@ public class DoomMod {
 		MinecraftForge.EVENT_BUS.register(this);
 		MinecraftForge.EVENT_BUS.register(new SoulCubeHandler());
 		ModSoundEvents.MOD_SOUNDS.register(modEventBus);
+		DoomEnchantments.ENCHANTMENTS.register(modEventBus);
 		ModEntityTypes.ENTITY_TYPES.register(modEventBus);
 		ModEntityTypes.TILE_TYPES.register(modEventBus);
 		DoomItems.ITEMS.register(modEventBus);
@@ -52,6 +55,9 @@ public class DoomMod {
 		if (!ModList.get().isLoaded("lockon")) {
 			if (FMLEnvironment.dist == Dist.CLIENT)
 				modEventBus.addListener(LockOnHandler::client);
+		}
+		if (!ModList.get().isLoaded("leap")) {
+			MinecraftForge.EVENT_BUS.register(new DoomLeapEntityEvents());
 		}
 		GeckoLib.initialize();
 	}

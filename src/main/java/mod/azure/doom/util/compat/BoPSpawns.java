@@ -45,6 +45,8 @@ public class BoPSpawns {
 				BOPBiomes.undergarden.get(), BOPBiomes.visceral_heap.get());
 		registerEntityWorldSpawn(ModEntityTypes.HELLKNIGHT.get(), 10, 1, 1, BOPBiomes.ashen_inferno.get(),
 				BOPBiomes.undergarden.get(), BOPBiomes.visceral_heap.get());
+		registerEntityWorldSpawn(ModEntityTypes.HELLKNIGHT2016.get(), 10, 1, 1, BOPBiomes.ashen_inferno.get(),
+				BOPBiomes.undergarden.get(), BOPBiomes.visceral_heap.get());
 		registerEntityWorldSpawn(ModEntityTypes.CYBERDEMON.get(), 10, 1, 1, BOPBiomes.ashen_inferno.get(),
 				BOPBiomes.undergarden.get(), BOPBiomes.visceral_heap.get());
 		registerEntityWorldSpawn(ModEntityTypes.UNWILLING.get(), 30, 1, 4, BOPBiomes.ashen_inferno.get(),

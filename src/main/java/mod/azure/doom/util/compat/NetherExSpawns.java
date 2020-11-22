@@ -62,6 +62,9 @@ public class NetherExSpawns {
 		registerEntityWorldSpawn(ModEntityTypes.HELLKNIGHT.get(), 10, 1, 1, NetherExBiomes.RUTHLESS_SANDS.get(),
 				NetherExBiomes.FUNGI_FOREST.get(), NetherExBiomes.TORRID_WASTELAND.get(),
 				NetherExBiomes.ARCTIC_ABYSS.get());
+		registerEntityWorldSpawn(ModEntityTypes.HELLKNIGHT2016.get(), 10, 1, 1, NetherExBiomes.RUTHLESS_SANDS.get(),
+				NetherExBiomes.FUNGI_FOREST.get(), NetherExBiomes.TORRID_WASTELAND.get(),
+				NetherExBiomes.ARCTIC_ABYSS.get());
 		registerEntityWorldSpawn(ModEntityTypes.CYBERDEMON.get(), 10, 1, 1, NetherExBiomes.RUTHLESS_SANDS.get(),
 				NetherExBiomes.FUNGI_FOREST.get(), NetherExBiomes.TORRID_WASTELAND.get(),
 				NetherExBiomes.ARCTIC_ABYSS.get());

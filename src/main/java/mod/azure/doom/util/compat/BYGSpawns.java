@@ -45,6 +45,8 @@ public class BYGSpawns {
 				BYGBiomeList.GLOWSTONEGARDENS, BYGBiomeList.SYTHIANTORRIDS, BYGBiomeList.WARPEDDESERT);
 		registerEntityWorldSpawn(ModEntityTypes.HELLKNIGHT.get(), 10, 1, 1, BYGBiomeList.EMBURBOG,
 				BYGBiomeList.GLOWSTONEGARDENS, BYGBiomeList.SYTHIANTORRIDS, BYGBiomeList.WARPEDDESERT);
+		registerEntityWorldSpawn(ModEntityTypes.HELLKNIGHT2016.get(), 10, 1, 1, BYGBiomeList.EMBURBOG,
+				BYGBiomeList.GLOWSTONEGARDENS, BYGBiomeList.SYTHIANTORRIDS, BYGBiomeList.WARPEDDESERT);
 		registerEntityWorldSpawn(ModEntityTypes.CYBERDEMON.get(), 10, 1, 1, BYGBiomeList.EMBURBOG,
 				BYGBiomeList.GLOWSTONEGARDENS, BYGBiomeList.SYTHIANTORRIDS, BYGBiomeList.WARPEDDESERT);
 		registerEntityWorldSpawn(ModEntityTypes.UNWILLING.get(), 30, 1, 4, BYGBiomeList.EMBURBOG,

@@ -1,5 +1,8 @@
 package mod.azure.doom.entity.projectiles;
 
+import java.util.List;
+
+import mod.azure.doom.util.registry.DoomItems;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.entity.Entity;
@@ -12,32 +15,29 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 public class EnergyCellEntity extends AbstractArrowEntity {
 
-	private final Item referenceItem;
 	protected int timeInAir;
 	protected boolean inAir;
 	private int ticksInAir;
 	public LivingEntity shootingEntity;
 
-	@SuppressWarnings("unchecked")
-	public EnergyCellEntity(EntityType<?> type, World world) {
-		super((EntityType<? extends EnergyCellEntity>) type, world);
-		this.referenceItem = null;
+	public EnergyCellEntity(EntityType<? extends AbstractArrowEntity> type, World world) {
+		super(type, world);
 	}
 
 	public EnergyCellEntity(LivingEntity shooter, World world, Item referenceItemIn) {
 		super(ModEntityTypes.ENERGY_CELL.get(), shooter, world);
-		this.referenceItem = referenceItemIn;
 	}
 
 	@Override
@@ -183,8 +183,8 @@ public class EnergyCellEntity extends AbstractArrowEntity {
 	}
 
 	@Override
-	public ItemStack getArrowStack() {
-		return new ItemStack(this.referenceItem);
+	protected ItemStack getArrowStack() {
+		return new ItemStack(DoomItems.ENERGY_CELLS.get());
 	}
 
 	@Override
@@ -210,14 +210,29 @@ public class EnergyCellEntity extends AbstractArrowEntity {
 	protected void onHit(RayTraceResult result) {
 		super.onHit(result);
 		if (!this.world.isRemote) {
-			this.explode();
+			this.doDamage();
 			this.remove();
 		}
 		this.playSound(ModSoundEvents.PLASMA_HIT.get(), 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 	}
 
-	public void explode() {
-		this.world.createExplosion(this, this.getPosX(), this.getPosYHeight(0.0625D), this.getPosZ(), 0.01F,
-				Explosion.Mode.NONE);
+	public void doDamage() {
+		float f2 = 2.0F;
+		int k1 = MathHelper.floor(this.getPosX() - (double) f2 - 1.0D);
+		int l1 = MathHelper.floor(this.getPosX() + (double) f2 + 1.0D);
+		int i2 = MathHelper.floor(this.getPosY() - (double) f2 - 1.0D);
+		int i1 = MathHelper.floor(this.getPosY() + (double) f2 + 1.0D);
+		int j2 = MathHelper.floor(this.getPosZ() - (double) f2 - 1.0D);
+		int j1 = MathHelper.floor(this.getPosZ() + (double) f2 + 1.0D);
+		List<Entity> list = this.world.getEntitiesWithinAABBExcludingEntity(this,
+				new AxisAlignedBB((double) k1, (double) i2, (double) j2, (double) l1, (double) i1, (double) j1));
+		Vec3d vector3d = new Vec3d(this.getPosX(), this.getPosY(), this.getPosZ());
+		for (int k2 = 0; k2 < list.size(); ++k2) {
+			Entity entity = list.get(k2);
+			double d12 = (double) (MathHelper.sqrt(entity.getDistanceSq(vector3d)) / f2);
+			if (d12 <= 1.0D) {
+				entity.attackEntityFrom(DamageSource.netherBedExplosion(), 20);
+			}
+		}
 	}
 }

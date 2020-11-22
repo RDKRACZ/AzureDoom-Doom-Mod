@@ -2,49 +2,47 @@ package mod.azure.doom.entity.projectiles;
 
 import java.util.List;
 
-import mod.azure.doom.util.MyExplosions;
+import mod.azure.doom.util.registry.DoomItems;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.entity.AreaEffectCloudEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.entity.monster.PhantomEntity;
+import net.minecraft.entity.monster.ShulkerEntity;
+import net.minecraft.entity.monster.SlimeEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
-import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 public class BFGEntity extends AbstractArrowEntity {
 
-	private final Item referenceItem;
 	protected int timeInAir;
 	protected boolean inAir;
 	private int ticksInAir;
 
-	@SuppressWarnings("unchecked")
-	public BFGEntity(EntityType<?> type, World world) {
-		super((EntityType<? extends AbstractArrowEntity>) type, world);
-		this.referenceItem = null;
+	public BFGEntity(EntityType<? extends AbstractArrowEntity> type, World world) {
+		super(type, world);
 	}
 
 	public BFGEntity(LivingEntity shooter, World world, Item referenceItemIn) {
 		super(ModEntityTypes.BFG_CELL.get(), shooter, world);
-		this.referenceItem = referenceItemIn;
 	}
 
 	protected void func_225516_i_() {
@@ -187,8 +185,8 @@ public class BFGEntity extends AbstractArrowEntity {
 	}
 
 	@Override
-	public ItemStack getArrowStack() {
-		return new ItemStack(this.referenceItem);
+	protected ItemStack getArrowStack() {
+		return new ItemStack(DoomItems.BFG_CELL.get());
 	}
 
 	@Override
@@ -210,38 +208,11 @@ public class BFGEntity extends AbstractArrowEntity {
 		return false;
 	}
 
-	protected IParticleData getParticle() {
-		return ParticleTypes.TOTEM_OF_UNDYING;
-	}
-
 	@Override
 	protected void onHit(RayTraceResult result) {
 		super.onHit(result);
 		if (!this.world.isRemote) {
-			List<LivingEntity> list = this.world.getEntitiesWithinAABB(LivingEntity.class,
-					this.getBoundingBox().grow(4.0D, 2.0D, 4.0D));
-			AreaEffectCloudEntity areaeffectcloudentity = new AreaEffectCloudEntity(this.world, this.getPosX(),
-					this.getPosY(), this.getPosZ());
-			areaeffectcloudentity.setParticleData(ParticleTypes.TOTEM_OF_UNDYING);
-			areaeffectcloudentity.setRadius(3.0F);
-			areaeffectcloudentity.setDuration(10);
-			areaeffectcloudentity.setRadiusPerTick(
-					(7.0F - areaeffectcloudentity.getRadius()) / (float) areaeffectcloudentity.getDuration());
-			areaeffectcloudentity.addEffect(new EffectInstance(Effects.INSTANT_DAMAGE, 1, 1));
-			if (!list.isEmpty()) {
-				for (LivingEntity livingentity : list) {
-					double d0 = this.getDistanceSq(livingentity);
-					if (d0 < 16.0D) {
-						areaeffectcloudentity.setPosition(livingentity.getPosX(), livingentity.getPosY(),
-								livingentity.getPosZ());
-						break;
-					}
-				}
-			}
-
-			this.world.playEvent(2006, new BlockPos(this), 0);
-			this.world.addEntity(areaeffectcloudentity);
-			this.explode();
+			this.doDamage();
 			this.remove();
 		}
 		this.playSound(ModSoundEvents.BFG_HIT.get(), 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
@@ -251,44 +222,55 @@ public class BFGEntity extends AbstractArrowEntity {
 	protected void onEntityHit(EntityRayTraceResult p_213868_1_) {
 		super.onEntityHit(p_213868_1_);
 		if (!this.world.isRemote) {
-			List<LivingEntity> list = this.world.getEntitiesWithinAABB(LivingEntity.class,
-					this.getBoundingBox().grow(4.0D, 2.0D, 4.0D));
-			AreaEffectCloudEntity areaeffectcloudentity = new AreaEffectCloudEntity(this.world, this.getPosX(),
-					this.getPosY(), this.getPosZ());
-			areaeffectcloudentity.setParticleData(ParticleTypes.TOTEM_OF_UNDYING);
-			areaeffectcloudentity.setRadius(3.0F);
-			areaeffectcloudentity.setDuration(10);
-			areaeffectcloudentity.setRadiusPerTick(
-					(7.0F - areaeffectcloudentity.getRadius()) / (float) areaeffectcloudentity.getDuration());
-			areaeffectcloudentity.addEffect(new EffectInstance(Effects.INSTANT_DAMAGE, 1, 1));
-			if (!list.isEmpty()) {
-				for (LivingEntity livingentity : list) {
-					double d0 = this.getDistanceSq(livingentity);
-					if (d0 < 16.0D) {
-						areaeffectcloudentity.setPosition(livingentity.getPosX(), livingentity.getPosY(),
-								livingentity.getPosZ());
-						break;
-					}
-				}
-			}
-
-			this.world.playEvent(2006, new BlockPos(this), 0);
-			this.world.addEntity(areaeffectcloudentity);
-			this.explode();
+			this.doDamage();
 			this.remove();
 		}
 		this.playSound(ModSoundEvents.BFG_HIT.get(), 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 	}
 
-	protected void explode() {
-		this.createExplosion(12.0F);
-	}
+	public void doDamage() {
+		float f2 = 24.0F;
+		int k1 = MathHelper.floor(this.getPosX() - (double) f2 - 1.0D);
+		int l1 = MathHelper.floor(this.getPosX() + (double) f2 + 1.0D);
+		int i2 = MathHelper.floor(this.getPosY() - (double) f2 - 1.0D);
+		int i1 = MathHelper.floor(this.getPosY() + (double) f2 + 1.0D);
+		int j2 = MathHelper.floor(this.getPosZ() - (double) f2 - 1.0D);
+		int j1 = MathHelper.floor(this.getPosZ() + (double) f2 + 1.0D);
+		List<Entity> list = this.world.getEntitiesWithinAABBExcludingEntity(this,
+				new AxisAlignedBB((double) k1, (double) i2, (double) j2, (double) l1, (double) i1, (double) j1));
+		Vec3d vector3d = new Vec3d(this.getPosX(), this.getPosY(), this.getPosZ());
 
-	public Explosion createExplosion(float size) {
-		MyExplosions explosion = new MyExplosions(this.world, this, this.getPosX(), getPosY(), getPosZ(), size);
-		if (net.minecraftforge.event.ForgeEventFactory.onExplosionStart(this.world, explosion))
-			return explosion;
-		explosion.doExplosionA();
-		return explosion;
+		for (int k2 = 0; k2 < list.size(); ++k2) {
+			Entity entity = list.get(k2);
+			if (!(entity instanceof ServerPlayerEntity) && (entity instanceof MonsterEntity)
+					|| (entity instanceof SlimeEntity) || (entity instanceof PhantomEntity)
+					|| (entity instanceof ShulkerEntity)) {
+				double d12 = (double) (MathHelper.sqrt(entity.getDistanceSq(vector3d)) / f2);
+				if (d12 <= 1.0D) {
+					entity.attackEntityFrom(DamageSource.netherBedExplosion(), 100);
+					if (!this.world.isRemote) {
+						List<LivingEntity> list1 = this.world.getEntitiesWithinAABB(LivingEntity.class,
+								this.getBoundingBox().grow(4.0D, 2.0D, 4.0D));
+						AreaEffectCloudEntity areaeffectcloudentity = new AreaEffectCloudEntity(entity.world,
+								entity.getPosX(), entity.getPosY(), entity.getPosZ());
+						areaeffectcloudentity.setParticleData(ParticleTypes.TOTEM_OF_UNDYING);
+						areaeffectcloudentity.setRadius(3.0F);
+						areaeffectcloudentity.setDuration(10);
+						if (!list1.isEmpty()) {
+							for (LivingEntity livingentity : list1) {
+								double d0 = this.getDistanceSq(livingentity);
+								if (d0 < 16.0D) {
+									areaeffectcloudentity.setPosition(entity.getPosX(), entity.getPosYEye(),
+											entity.getPosZ());
+									break;
+								}
+							}
+						}
+						entity.world.addEntity(areaeffectcloudentity);
+					}
+				}
+			}
+		}
+
 	}
 }

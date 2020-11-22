@@ -6,15 +6,18 @@ import javax.annotation.Nullable;
 
 import mod.azure.doom.util.registry.ModEntityTypes;
 import net.minecraft.entity.CreatureAttribute;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.particles.RedstoneParticleData;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
@@ -52,6 +55,11 @@ public class GoreNestEntity extends DemonEntity implements IAnimatable {
 	}
 
 	@Override
+	public void knockBack(Entity entityIn, float strength, double xRatio, double zRatio) {
+		super.knockBack(entityIn, 0, 0, 0);
+	}
+
+	@Override
 	public void registerControllers(AnimationData data) {
 		data.addAnimationController(new AnimationController<GoreNestEntity>(this, "controller", 0, this::predicate));
 	}
@@ -81,25 +89,6 @@ public class GoreNestEntity extends DemonEntity implements IAnimatable {
 		++this.deathTime;
 		if (this.deathTime == 80) {
 			this.remove();
-			HellknightEntity fireballentity = ModEntityTypes.HELLKNIGHT.get().create(world);
-			fireballentity.setPosition(this.parentEntity.getPosX() + 2.0D, this.parentEntity.getPosY() + 0.5D,
-					this.parentEntity.getPosZ() + 2.0D);
-			world.addEntity(fireballentity);
-
-			PossessedScientistEntity fireballentity1 = ModEntityTypes.POSSESSEDSCIENTIST.get().create(world);
-			fireballentity1.setPosition(this.parentEntity.getPosX() + -2.0D, this.parentEntity.getPosY() + 0.5D,
-					this.parentEntity.getPosZ() + -2.0D);
-			world.addEntity(fireballentity1);
-
-			ImpEntity fireballentity11 = ModEntityTypes.IMP.get().create(world);
-			fireballentity11.setPosition(this.parentEntity.getPosX() + 1.0D, this.parentEntity.getPosY() + 0.5D,
-					this.parentEntity.getPosZ() + 1.0D);
-			world.addEntity(fireballentity11);
-
-			NightmareImpEntity fireballentity111 = ModEntityTypes.NIGHTMARE_IMP.get().create(world);
-			fireballentity111.setPosition(this.parentEntity.getPosX() + -1.0D, this.parentEntity.getPosY() + 0.5D,
-					this.parentEntity.getPosZ() + -1.0D);
-			world.addEntity(fireballentity111);
 		}
 
 	}
@@ -125,6 +114,15 @@ public class GoreNestEntity extends DemonEntity implements IAnimatable {
 	}
 
 	@Override
+	protected void damageEntity(DamageSource damageSrc, float damageAmount) {
+		if (!(damageSrc.getTrueSource() instanceof PlayerEntity)) {
+			this.setHealth(5.0F);
+		} else {
+			this.remove();
+		}
+	}
+
+	@Override
 	public void livingTick() {
 		if (this.world.isRemote) {
 			this.world.addParticle(RedstoneParticleData.REDSTONE_DUST, this.getPosXRandom(0.5D), this.getPosYRandom(),
@@ -133,7 +131,35 @@ public class GoreNestEntity extends DemonEntity implements IAnimatable {
 			this.world.addParticle(ParticleTypes.ENCHANT, this.getPosXRandom(0.2D), this.getPosYRandom(),
 					this.getPosZRandom(0.5D), 0.0D, 0D, 0D);
 		}
+		++this.ticksExisted;
+		if (!world.isRemote) {
+			if (this.ticksExisted % 800 == 0) {
+				this.spawnWave();
+			}
+		}
 		super.livingTick();
+	}
+
+	public void spawnWave() {
+		HellknightEntity fireballentity = ModEntityTypes.HELLKNIGHT.get().create(world);
+		fireballentity.setPosition(this.parentEntity.getPosX() + 2.0D, this.parentEntity.getPosY() + 0.5D,
+				this.parentEntity.getPosZ() + 2.0D);
+		world.addEntity(fireballentity);
+
+		PossessedScientistEntity fireballentity1 = ModEntityTypes.POSSESSEDSCIENTIST.get().create(world);
+		fireballentity1.setPosition(this.parentEntity.getPosX() + -2.0D, this.parentEntity.getPosY() + 0.5D,
+				this.parentEntity.getPosZ() + -2.0D);
+		world.addEntity(fireballentity1);
+
+		ImpEntity fireballentity11 = ModEntityTypes.IMP.get().create(world);
+		fireballentity11.setPosition(this.parentEntity.getPosX() + 1.0D, this.parentEntity.getPosY() + 0.5D,
+				this.parentEntity.getPosZ() + 1.0D);
+		world.addEntity(fireballentity11);
+
+		NightmareImpEntity fireballentity111 = ModEntityTypes.NIGHTMARE_IMP.get().create(world);
+		fireballentity111.setPosition(this.parentEntity.getPosX() + -1.0D, this.parentEntity.getPosY() + 0.5D,
+				this.parentEntity.getPosZ() + -1.0D);
+		world.addEntity(fireballentity111);
 	}
 
 	@Override

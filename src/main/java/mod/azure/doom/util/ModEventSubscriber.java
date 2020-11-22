@@ -55,7 +55,8 @@ public class ModEventSubscriber {
 				ModEntityTypes.POSSESSEDSOLDIER.get(), ModEntityTypes.BULLETS.get(),
 				ModEntityTypes.CHAINGUN_BULLET.get(), ModEntityTypes.ENERGY_CELL.get(),
 				ModEntityTypes.SHOTGUN_SHELL.get(), ModEntityTypes.ARGENT_BOLT.get(),
-				ModEntityTypes.ENERGY_CELL_MOB.get(), ModEntityTypes.ROCKET_MOB.get(), ModEntityTypes.MECHAZOMBIE.get(),
+				ModEntityTypes.HELLKNIGHT2016.get(), ModEntityTypes.ENERGY_CELL_MOB.get(),
+				ModEntityTypes.ROCKET_MOB.get(), ModEntityTypes.MECHAZOMBIE.get(),
 				ModEntityTypes.POSSESSEDSCIENTIST.get(), ModEntityTypes.ZOMBIEMAN.get(), ModEntityTypes.LOST_SOUL.get(),
 				ModEntityTypes.BARENBLAST.get());
 		ModEntitySpawn.registerEntityWorldSpawns();
