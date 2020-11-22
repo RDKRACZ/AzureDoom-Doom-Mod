@@ -24,41 +24,63 @@ import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
+import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
 import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.entity.monster.ZombieEntity;
+import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.BossInfo;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.minecraft.world.server.ServerBossInfo;
 import net.minecraftforge.fml.network.NetworkHooks;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-public class IconofsinEntity extends DemonEntity {
+public class Hellknight2016Entity extends DemonEntity implements IAnimatable {
 
-	private final ServerBossInfo bossInfo = (ServerBossInfo) (new ServerBossInfo(this.getDisplayName(),
-			BossInfo.Color.PURPLE, BossInfo.Overlay.PROGRESS)).setDarkenSky(true).setCreateFog(true);
+	private AnimationFactory factory = new AnimationFactory(this);
 
-	public IconofsinEntity(EntityType<IconofsinEntity> entityType, World worldIn) {
-		super(entityType, worldIn);
+	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+		if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F) && !this.isAggressive()) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("walking", true));
+			return PlayState.CONTINUE;
+		}
+		if (this.isAggressive()) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("run", true));
+			return PlayState.CONTINUE;
+		}
+		event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
+		return PlayState.CONTINUE;
 	}
 
 	@Override
-	public boolean onLivingFall(float distance, float damageMultiplier) {
-		return false;
+	public void registerControllers(AnimationData data) {
+		data.addAnimationController(
+				new AnimationController<Hellknight2016Entity>(this, "controller", 0, this::predicate));
+	}
+
+	@Override
+	public AnimationFactory getFactory() {
+		return this.factory;
+	}
+
+	public Hellknight2016Entity(EntityType<? extends Hellknight2016Entity> entityType, World worldIn) {
+		super(entityType, worldIn);
 	}
 
 	@Override
@@ -66,26 +88,24 @@ public class IconofsinEntity extends DemonEntity {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
-	public static boolean spawning(EntityType<IconofsinEntity> p_223337_0_, IWorld p_223337_1_, SpawnReason reason,
+	public static boolean spawning(EntityType<Hellknight2016Entity> p_223337_0_, IWorld p_223337_1_, SpawnReason reason,
 			BlockPos p_223337_3_, Random p_223337_4_) {
 		return p_223337_1_.getDifficulty() != Difficulty.PEACEFUL;
-	}
-
-	public ServerBossInfo getBossInfo() {
-		return bossInfo;
 	}
 
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8.0F));
 		this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
-		this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
 		this.applyEntityAI();
 	}
 
 	protected void applyEntityAI() {
 		this.goalSelector.addGoal(2, new DemonAttackGoal(this, 1.0D, false));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
+		this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
+		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, false));
+		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
 		if (Config.SERVER.IN_FIGHTING.get()) {
 			this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, MonsterEntity.class, true));
 			this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, MobEntity.class, true));
@@ -93,15 +113,10 @@ public class IconofsinEntity extends DemonEntity {
 	}
 
 	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
-		return MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 100.0D)
-				.createMutableAttribute(Attributes.MAX_HEALTH, 1000.0D)
+		return MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 50.0D)
+				.createMutableAttribute(Attributes.MAX_HEALTH, 90.0D)
 				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D)
-				.createMutableAttribute(Attributes.KNOCKBACK_RESISTANCE, 1000.0D)
-				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 30.0D);
-	}
-
-	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
-		return 4.70F;
+				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 8.0D);
 	}
 
 	@Nullable
@@ -112,12 +127,12 @@ public class IconofsinEntity extends DemonEntity {
 		float f = difficultyIn.getClampedAdditionalDifficulty();
 		this.setCanPickUpLoot(this.rand.nextFloat() < 0.55F * f);
 		if (spawnDataIn == null) {
-			spawnDataIn = new IconofsinEntity.GroupData(worldIn.getRandom()
+			spawnDataIn = new Hellknight2016Entity.GroupData(worldIn.getRandom()
 					.nextFloat() < net.minecraftforge.common.ForgeConfig.SERVER.zombieBabyChance.get());
 		}
 
-		if (spawnDataIn instanceof IconofsinEntity.GroupData) {
-			IconofsinEntity.GroupData zombieentity$groupdata = (IconofsinEntity.GroupData) spawnDataIn;
+		if (spawnDataIn instanceof ZombieEntity.GroupData) {
+			ZombieEntity.GroupData zombieentity$groupdata = (ZombieEntity.GroupData) spawnDataIn;
 			if (zombieentity$groupdata.isChild) {
 				this.setChild(true);
 			}
@@ -161,27 +176,28 @@ public class IconofsinEntity extends DemonEntity {
 		return false;
 	}
 
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	@Override
+	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+		return 2.75F;
 	}
 
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return ModSoundEvents.ICON_AMBIENT.get();
+		return ModSoundEvents.HELLKNIGHT_AMBIENT.get();
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-		return ModSoundEvents.ICON_HURT.get();
+		return ModSoundEvents.HELLKNIGHT_HURT.get();
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return ModSoundEvents.ICON_DEATH.get();
+		return ModSoundEvents.HELLKNIGHT_DEATH.get();
 	}
 
 	protected SoundEvent getStepSound() {
-		return SoundEvents.ENTITY_SKELETON_STEP;
+		return SoundEvents.ENTITY_ZOMBIE_STEP;
 	}
 
 	@Override
@@ -192,64 +208,5 @@ public class IconofsinEntity extends DemonEntity {
 	@Override
 	public CreatureAttribute getCreatureAttribute() {
 		return CreatureAttribute.UNDEAD;
-	}
-
-	@Override
-	public boolean isNonBoss() {
-		return false;
-	}
-
-	@Override
-	public void addTrackingPlayer(ServerPlayerEntity player) {
-		super.addTrackingPlayer(player);
-		this.bossInfo.addPlayer(player);
-	}
-
-	@Override
-	public void removeTrackingPlayer(ServerPlayerEntity player) {
-		super.removeTrackingPlayer(player);
-		this.bossInfo.removePlayer(player);
-	}
-
-	@Override
-	public int getMaxSpawnedInChunk() {
-		return 1;
-	}
-
-	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
-		if (this.hasCustomName()) {
-			this.bossInfo.setName(this.getDisplayName());
-		}
-	}
-
-	@Override
-	public void setCustomName(ITextComponent name) {
-		super.setCustomName(name);
-		this.bossInfo.setName(this.getDisplayName());
-	}
-
-	@Override
-	protected void updateAITasks() {
-		super.updateAITasks();
-		this.bossInfo.setPercent(this.getHealth() / this.getMaxHealth());
-	}
-
-	@Override
-	public void livingTick() {
-		super.livingTick();
-		if (this.getHealth() > 500.0D) {
-			if (!this.world.isRemote) {
-				this.addPotionEffect(new EffectInstance(Effects.STRENGTH, 1000000, 1));
-			}
-		}
-		if (this.getHealth() < 500.0D) {
-			if (!this.world.isRemote) {
-				this.removePotionEffect(Effects.STRENGTH);
-				this.addPotionEffect(new EffectInstance(Effects.SPEED, 10000000, 2));
-				this.addPotionEffect(new EffectInstance(Effects.WEAKNESS, 10000000, 1));
-			}
-		}
 	}
 }

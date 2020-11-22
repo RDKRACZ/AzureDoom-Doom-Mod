@@ -9,6 +9,7 @@ import mod.azure.doom.entity.ChaingunnerEntity;
 import mod.azure.doom.entity.Cyberdemon2016Entity;
 import mod.azure.doom.entity.CyberdemonEntity;
 import mod.azure.doom.entity.GoreNestEntity;
+import mod.azure.doom.entity.Hellknight2016Entity;
 import mod.azure.doom.entity.HellknightEntity;
 import mod.azure.doom.entity.IconofsinEntity;
 import mod.azure.doom.entity.Imp2016Entity;
@@ -193,6 +194,13 @@ public class ModEntityTypes {
 			() -> EntityType.Builder.create(HellknightEntity::new, EntityClassification.MONSTER).size(1.4F, 3.5F)
 					.immuneToFire().trackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "hellknight").toString()));
+
+	public static final RegistryObject<EntityType<Hellknight2016Entity>> HELLKNIGHT2016 = ENTITY_TYPES.register(
+			"hellknight2016",
+			() -> EntityType.Builder
+					.<Hellknight2016Entity>create(Hellknight2016Entity::new, EntityClassification.MONSTER)
+					.size(1.8F, 3.0F).trackingRange(9).immuneToFire()
+					.build(new ResourceLocation(DoomMod.MODID, "hellknight2016").toString()));
 
 	public static final RegistryObject<EntityType<CyberdemonEntity>> CYBERDEMON = ENTITY_TYPES.register("cyberdemon",
 			() -> EntityType.Builder.create(CyberdemonEntity::new, EntityClassification.MONSTER).size(1.6f, 4.75F)

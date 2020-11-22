@@ -12,6 +12,7 @@ import mod.azure.doom.entity.ChaingunnerEntity;
 import mod.azure.doom.entity.Cyberdemon2016Entity;
 import mod.azure.doom.entity.CyberdemonEntity;
 import mod.azure.doom.entity.GoreNestEntity;
+import mod.azure.doom.entity.Hellknight2016Entity;
 import mod.azure.doom.entity.HellknightEntity;
 import mod.azure.doom.entity.IconofsinEntity;
 import mod.azure.doom.entity.Imp2016Entity;
@@ -71,6 +72,7 @@ public class ModEntitySpawn {
 			base.add(new Spawners(ModEntityTypes.MARAUDER.get(), 15, 1, 1));
 			base.add(new Spawners(ModEntityTypes.PAIN.get(), 30, 1, 2));
 			base.add(new Spawners(ModEntityTypes.HELLKNIGHT.get(), 10, 1, 1));
+			base.add(new Spawners(ModEntityTypes.HELLKNIGHT2016.get(), 10, 1, 1));
 			base.add(new Spawners(ModEntityTypes.CYBERDEMON.get(), 10, 1, 1));
 			base.add(new Spawners(ModEntityTypes.UNWILLING.get(), 30, 1, 4));
 			base.add(new Spawners(ModEntityTypes.POSSESSEDSCIENTIST.get(), 30, 1, 4));
@@ -135,6 +137,9 @@ public class ModEntitySpawn {
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.HELLKNIGHT.get(),
 				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
 				HellknightEntity::spawning);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.HELLKNIGHT2016.get(),
+				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+				Hellknight2016Entity::spawning);
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.CYBERDEMON.get(),
 				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
 				CyberdemonEntity::func_223368_b);
