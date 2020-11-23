@@ -2,6 +2,9 @@ package mod.azure.doom.entity.projectiles;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
+import mod.azure.doom.entity.GoreNestEntity;
 import mod.azure.doom.util.registry.DoomItems;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import mod.azure.doom.util.registry.ModSoundEvents;
@@ -21,8 +24,12 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.MathHelper;
@@ -37,6 +44,9 @@ public class BFGEntity extends AbstractArrowEntity {
 	protected int timeInAir;
 	protected boolean inAir;
 	private int ticksInAir;
+	private static final DataParameter<Integer> TARGET_ENTITY = EntityDataManager.createKey(BFGEntity.class,
+			DataSerializers.VARINT);
+	private LivingEntity targetedEntity;
 
 	public BFGEntity(EntityType<? extends AbstractArrowEntity> type, World world) {
 		super(type, world);
@@ -57,7 +67,7 @@ public class BFGEntity extends AbstractArrowEntity {
 	public DamageSource getDamageSource() {
 		return DamageSource.causeArrowDamage(this, this);
 	}
-	
+
 	@Override
 	public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
 		super.shoot(x, y, z, velocity, inaccuracy);
@@ -89,7 +99,7 @@ public class BFGEntity extends AbstractArrowEntity {
 			this.prevRotationPitch = this.rotationPitch;
 		}
 
-		if (this.ticksExisted >= 600) {
+		if (this.ticksExisted >= 100 ) {
 			this.remove();
 		}
 
@@ -155,6 +165,31 @@ public class BFGEntity extends AbstractArrowEntity {
 			this.setPosition(d5, d1, d2);
 			this.doBlockCollisions();
 		}
+		float f2 = 24.0F;
+		int k1 = MathHelper.floor(this.getPosX() - (double) f2 - 1.0D);
+		int l1 = MathHelper.floor(this.getPosX() + (double) f2 + 1.0D);
+		int i2 = MathHelper.floor(this.getPosY() - (double) f2 - 1.0D);
+		int i1 = MathHelper.floor(this.getPosY() + (double) f2 + 1.0D);
+		int j2 = MathHelper.floor(this.getPosZ() - (double) f2 - 1.0D);
+		int j1 = MathHelper.floor(this.getPosZ() + (double) f2 + 1.0D);
+		List<Entity> list = this.world.getEntitiesWithinAABBExcludingEntity(this,
+				new AxisAlignedBB((double) k1, (double) i2, (double) j2, (double) l1, (double) i1, (double) j1));
+		Vector3d vector3d1 = new Vector3d(this.getPosX(), this.getPosY(), this.getPosZ());
+		for (int k2 = 0; k2 < list.size(); ++k2) {
+			Entity entity = list.get(k2);
+			if (!(entity instanceof ServerPlayerEntity) && (entity instanceof MonsterEntity)
+					|| (entity instanceof SlimeEntity) || (entity instanceof PhantomEntity)
+					|| (entity instanceof GoreNestEntity) || (entity instanceof ShulkerEntity)
+					|| (entity instanceof HoglinEntity)) {
+				double d12 = (double) (MathHelper.sqrt(entity.getDistanceSq(vector3d1)) / f2);
+				if (d12 <= 1.0D) {
+					if (entity.isAlive()) {
+						entity.attackEntityFrom(DamageSource.causeArrowDamage(this, this), 10);
+						setTargetedEntity(entity.getEntityId());
+					}
+				}
+			}
+		}
 	}
 
 	@Override
@@ -185,6 +220,13 @@ public class BFGEntity extends AbstractArrowEntity {
 			if (!this.world.isRemote) {
 				this.doDamage();
 				this.remove();
+				AreaEffectCloudEntity areaeffectcloudentity = new AreaEffectCloudEntity(entity.world, entity.getPosX(),
+						entity.getPosY(), entity.getPosZ());
+				areaeffectcloudentity.setParticleData(ParticleTypes.EXPLOSION);
+				areaeffectcloudentity.setRadius(3.0F);
+				areaeffectcloudentity.setDuration(2);
+				areaeffectcloudentity.setPosition(this.getPosX(), this.getPosYEye(), this.getPosZ());
+				entity.world.addEntity(areaeffectcloudentity);
 			}
 			this.playSound(ModSoundEvents.BFG_HIT.get(), 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 
@@ -199,9 +241,21 @@ public class BFGEntity extends AbstractArrowEntity {
 			if (!this.world.isRemote) {
 				this.doDamage();
 				this.remove();
+				AreaEffectCloudEntity areaeffectcloudentity = new AreaEffectCloudEntity(entity.world, entity.getPosX(),
+						entity.getPosY(), entity.getPosZ());
+				areaeffectcloudentity.setParticleData(ParticleTypes.EXPLOSION);
+				areaeffectcloudentity.setRadius(3.0F);
+				areaeffectcloudentity.setDuration(2);
+				areaeffectcloudentity.setPosition(this.getPosX(), this.getPosYEye(), this.getPosZ());
+				entity.world.addEntity(areaeffectcloudentity);
 			}
 			this.playSound(ModSoundEvents.BFG_HIT.get(), 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 		}
+	}
+
+	@Override
+	public void setHitSound(SoundEvent soundIn) {
+		super.setHitSound(ModSoundEvents.BFG_HIT.get());
 	}
 
 	public void doDamage() {
@@ -219,10 +273,12 @@ public class BFGEntity extends AbstractArrowEntity {
 			Entity entity = list.get(k2);
 			if (!(entity instanceof ServerPlayerEntity) && (entity instanceof MonsterEntity)
 					|| (entity instanceof SlimeEntity) || (entity instanceof PhantomEntity)
-					|| (entity instanceof ShulkerEntity) || (entity instanceof HoglinEntity)) {
+					|| (entity instanceof GoreNestEntity) || (entity instanceof ShulkerEntity)
+					|| (entity instanceof HoglinEntity)) {
 				double d12 = (double) (MathHelper.sqrt(entity.getDistanceSq(vector3d)) / f2);
 				if (d12 <= 1.0D) {
-					entity.attackEntityFrom(DamageSource.func_233546_a_(), 100);
+					entity.attackEntityFrom(DamageSource.causeArrowDamage(this, this), 100);
+					setTargetedEntity(entity.getEntityId());
 					if (!this.world.isRemote) {
 						List<LivingEntity> list1 = this.world.getEntitiesWithinAABB(LivingEntity.class,
 								this.getBoundingBox().grow(4.0D, 2.0D, 4.0D));
@@ -237,7 +293,6 @@ public class BFGEntity extends AbstractArrowEntity {
 								if (d0 < 16.0D) {
 									areaeffectcloudentity.setPosition(entity.getPosX(), entity.getPosYEye(),
 											entity.getPosZ());
-									break;
 								}
 							}
 						}
@@ -253,4 +308,54 @@ public class BFGEntity extends AbstractArrowEntity {
 	protected ItemStack getArrowStack() {
 		return new ItemStack(DoomItems.BFG_CELL.get());
 	}
+
+	@Override
+	protected void registerData() {
+		super.registerData();
+		this.dataManager.register(TARGET_ENTITY, 0);
+	}
+
+	private void setTargetedEntity(int entityId) {
+		this.dataManager.set(TARGET_ENTITY, entityId);
+	}
+
+	public boolean hasTargetedEntity() {
+		return this.dataManager.get(TARGET_ENTITY) != 0;
+	}
+
+	@Nullable
+	public LivingEntity getTargetedEntity() {
+		if (!this.hasTargetedEntity()) {
+			return null;
+		} else if (this.world.isRemote) {
+			if (this.targetedEntity != null) {
+				return this.targetedEntity;
+			} else {
+				Entity entity = this.world.getEntityByID(this.dataManager.get(TARGET_ENTITY));
+				if (!(entity instanceof ServerPlayerEntity) && entity instanceof LivingEntity) {
+					this.targetedEntity = (LivingEntity) entity;
+					return this.targetedEntity;
+				} else {
+					return null;
+				}
+			}
+		} else {
+			return this.getAttackTarget();
+		}
+	}
+
+	@Override
+	public void notifyDataManagerChange(DataParameter<?> key) {
+		super.notifyDataManagerChange(key);
+		if (TARGET_ENTITY.equals(key)) {
+			this.targetedEntity = null;
+		}
+
+	}
+
+	@Nullable
+	public LivingEntity getAttackTarget() {
+		return this.targetedEntity;
+	}
+
 }
