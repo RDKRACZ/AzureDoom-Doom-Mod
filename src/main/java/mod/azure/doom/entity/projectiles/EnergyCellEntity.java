@@ -79,7 +79,7 @@ public class EnergyCellEntity extends AbstractArrowEntity {
 			this.prevRotationPitch = this.rotationPitch;
 		}
 
-		if (this.ticksExisted >= 600) {
+		if (this.ticksExisted >= 100) {
 			this.remove();
 		}
 

@@ -1,5 +1,4 @@
-v.3.4.7
+v.3.4.8
 
-- Fixed Icon of Sin Boss Bar not updating.
-- Start work on Icon of Sin phases. 
-- Added Hell Knight 2016, thanks to Son for the model and animations!
+- BFG now has an AOE effect when fired and usually attaches a tendril to entities.
+- BFG, Rockets, and Plasma Blasts now have shorter life span. 
