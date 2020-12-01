@@ -84,8 +84,10 @@ public class DoomMod {
 		DoomItems.ITEMS.register(modEventBus);
 		DoomBlocks.BLOCKS.register(modEventBus);
 		if (!ModList.get().isLoaded("lockon")) {
-			if (FMLEnvironment.dist == Dist.CLIENT)
-				modEventBus.addListener(LockOnHandler::client);
+			if (Config.SERVER.ENABLE_LOCKON.get()) {
+				if (FMLEnvironment.dist == Dist.CLIENT)
+					modEventBus.addListener(LockOnHandler::client);
+			}
 		}
 		if (!ModList.get().isLoaded("leap")) {
 			MinecraftForge.EVENT_BUS.register(new DoomLeapEntityEvents());

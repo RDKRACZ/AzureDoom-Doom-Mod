@@ -27,6 +27,7 @@ public class Config {
 
 		public final BooleanValue IN_FIGHTING;
 		public ConfigValue<Integer> CRUCIBLE_MARUADER_MAXDAMAGE;
+		public final BooleanValue ENABLE_LOCKON;
 
 		ServerConfig(ForgeConfigSpec.Builder builder) {
 			builder.push("gear");
@@ -37,6 +38,8 @@ public class Config {
 			builder.push("extra");
 			IN_FIGHTING = builder.comment("Do you want to allow In-fighting of the mobs?")
 					.translation(DoomMod.MODID + ".config.in_fighting").define("IN_FIGHTING", true);
+			ENABLE_LOCKON = builder.comment("You can disable disable the lockon feature here.")
+					.translation(DoomMod.MODID + ".config.enable_lockon").define("ENABLE_LOCKON", true);
 			builder.pop();
 		}
 	}
