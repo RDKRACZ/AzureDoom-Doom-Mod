@@ -1,4 +1,6 @@
-v.3.4.8
+v.3.5.0
 
-- BFG now has an AOE effect when fired and usually attaches a tendril to entities.
-- BFG, Rockets, and Plasma Blasts now have shorter life span. 
+- Updated all armors to using 3D Geckolib Armors with animations.* 
+- Added config to disable Lock on Feature.
+
+*Warning: putting all the armors in the same chunk to view WILL lag your game, you have been worked.
