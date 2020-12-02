@@ -41,7 +41,6 @@ public class Config {
 			ENABLE_LOCKON = builder.comment("You can disable disable the lockon feature here.")
 					.translation(DoomMod.MODID + ".config.enable_lockon").define("ENABLE_LOCKON", true);
 			builder.pop();
-			builder.pop();
 		}
 	}
 

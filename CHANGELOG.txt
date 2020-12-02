@@ -1,6 +1,3 @@
-v.3.5.0
+v.3.5.1
 
-- Updated all armors to using 3D Geckolib Armors with animations.* 
-- Added config to disable Lock on Feature.
-
-*Warning: putting all the armors in the same chunk to view WILL lag your game, you have been worked.
+- Fixed broken config, was popping it twice.
