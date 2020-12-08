@@ -1,6 +1,9 @@
-v.3.5.0
+v.3.6.0
 
-- Updated all armors to using 3D Geckolib Armors with animations.* 
-- Added config to disable Lock on Feature.
-
-*Warning: putting all the armors in the same chunk to view WILL lag your game, you have been worked.
+- Added new Santa Slayer Helmet.
+- BFG Eternal and BFG 9000 moved to Geckolib, with Eternal only having the animations for now.
+- Gore Nests are no unmoveable and can only be killed by Players. 
+- Updated Chainsaw and Crucible Sword/Axe models.
+- Added Chainsaw from Doom64.
+- Chainsaws now deal damage at whatever entity they are facing until reaching 1 durabilty.
+- Demoncide recipe added.

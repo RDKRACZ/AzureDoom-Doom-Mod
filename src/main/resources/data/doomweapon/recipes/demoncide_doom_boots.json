@@ -1,0 +1,18 @@
+{
+  "result": {
+    "item": "doomweapon:demoncide_doom_boots"
+  },
+  "type": "minecraft:crafting_shaped",
+   "pattern": [
+        "@",
+        "#"
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:emerald"
+        },
+		"@": {
+			"item": "doomweapon:doom_boots"
+		}
+    }
+}

@@ -99,7 +99,7 @@ public class BFGEntity extends AbstractArrowEntity {
 			this.prevRotationPitch = this.rotationPitch;
 		}
 
-		if (this.ticksExisted >= 100 ) {
+		if (this.ticksExisted >= 100) {
 			this.remove();
 		}
 
@@ -177,15 +177,15 @@ public class BFGEntity extends AbstractArrowEntity {
 		Vector3d vector3d1 = new Vector3d(this.getPosX(), this.getPosY(), this.getPosZ());
 		for (int k2 = 0; k2 < list.size(); ++k2) {
 			Entity entity = list.get(k2);
-			if (!(entity instanceof ServerPlayerEntity) && (entity instanceof MonsterEntity)
-					|| (entity instanceof SlimeEntity) || (entity instanceof PhantomEntity)
-					|| (entity instanceof GoreNestEntity) || (entity instanceof ShulkerEntity)
+			if (!(entity instanceof ServerPlayerEntity) && !(entity instanceof GoreNestEntity)
+					&& (entity instanceof MonsterEntity) || (entity instanceof SlimeEntity)
+					|| (entity instanceof PhantomEntity) || (entity instanceof ShulkerEntity)
 					|| (entity instanceof HoglinEntity)) {
 				double d12 = (double) (MathHelper.sqrt(entity.getDistanceSq(vector3d1)) / f2);
 				if (d12 <= 1.0D) {
-					if (entity.isAlive()) {
+					if (entity.isAlive() || entity.isLiving()) {
 						entity.attackEntityFrom(DamageSource.causeArrowDamage(this, this), 10);
-						setTargetedEntity(entity.getEntityId());
+						this.setTargetedEntity(entity.getEntityId());
 					}
 				}
 			}
@@ -220,13 +220,6 @@ public class BFGEntity extends AbstractArrowEntity {
 			if (!this.world.isRemote) {
 				this.doDamage();
 				this.remove();
-				AreaEffectCloudEntity areaeffectcloudentity = new AreaEffectCloudEntity(entity.world, entity.getPosX(),
-						entity.getPosY(), entity.getPosZ());
-				areaeffectcloudentity.setParticleData(ParticleTypes.EXPLOSION);
-				areaeffectcloudentity.setRadius(3.0F);
-				areaeffectcloudentity.setDuration(2);
-				areaeffectcloudentity.setPosition(this.getPosX(), this.getPosYEye(), this.getPosZ());
-				entity.world.addEntity(areaeffectcloudentity);
 			}
 			this.playSound(ModSoundEvents.BFG_HIT.get(), 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 
@@ -241,13 +234,6 @@ public class BFGEntity extends AbstractArrowEntity {
 			if (!this.world.isRemote) {
 				this.doDamage();
 				this.remove();
-				AreaEffectCloudEntity areaeffectcloudentity = new AreaEffectCloudEntity(entity.world, entity.getPosX(),
-						entity.getPosY(), entity.getPosZ());
-				areaeffectcloudentity.setParticleData(ParticleTypes.EXPLOSION);
-				areaeffectcloudentity.setRadius(3.0F);
-				areaeffectcloudentity.setDuration(2);
-				areaeffectcloudentity.setPosition(this.getPosX(), this.getPosYEye(), this.getPosZ());
-				entity.world.addEntity(areaeffectcloudentity);
 			}
 			this.playSound(ModSoundEvents.BFG_HIT.get(), 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 		}
@@ -271,9 +257,9 @@ public class BFGEntity extends AbstractArrowEntity {
 		Vector3d vector3d = new Vector3d(this.getPosX(), this.getPosY(), this.getPosZ());
 		for (int k2 = 0; k2 < list.size(); ++k2) {
 			Entity entity = list.get(k2);
-			if (!(entity instanceof ServerPlayerEntity) && (entity instanceof MonsterEntity)
-					|| (entity instanceof SlimeEntity) || (entity instanceof PhantomEntity)
-					|| (entity instanceof GoreNestEntity) || (entity instanceof ShulkerEntity)
+			if (!(entity instanceof ServerPlayerEntity) && !(entity instanceof GoreNestEntity)
+					&& (entity instanceof MonsterEntity) || (entity instanceof SlimeEntity)
+					|| (entity instanceof PhantomEntity) || (entity instanceof ShulkerEntity)
 					|| (entity instanceof HoglinEntity)) {
 				double d12 = (double) (MathHelper.sqrt(entity.getDistanceSq(vector3d)) / f2);
 				if (d12 <= 1.0D) {

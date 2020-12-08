@@ -3,6 +3,7 @@ package mod.azure.doom.item.weapons;
 import java.util.function.Predicate;
 
 import mod.azure.doom.DoomMod;
+import mod.azure.doom.client.render.weapons.BFGRender;
 import mod.azure.doom.entity.projectiles.BFGEntity;
 import mod.azure.doom.item.ammo.BFGCell;
 import mod.azure.doom.util.enums.DoomTier;
@@ -14,31 +15,50 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUseContext;
 import net.minecraft.item.ShootableItem;
 import net.minecraft.item.UseAction;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
+import software.bernie.geckolib3.core.AnimationState;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
 
-public class BFG extends ShootableItem {
+public class BFG extends ShootableItem implements IAnimatable {
 
-	public BFG() {
-		super(new Item.Properties().group(DoomMod.DoomWeaponItemGroup).maxStackSize(1).maxDamage(9000));
+	public AnimationFactory factory = new AnimationFactory(this);
+	private String controllerName = "controller";
+
+	private <P extends ShootableItem & IAnimatable> PlayState predicate(AnimationEvent<P> event) {
+		return PlayState.CONTINUE;
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Override
+	public void registerControllers(AnimationData data) {
+		data.addAnimationController(new AnimationController(this, controllerName, 1, this::predicate));
 	}
 
 	@Override
-	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
-		ItemStack stack = new ItemStack(this);
-		stack.hasTag();
-		if (group == DoomMod.DoomWeaponItemGroup) {
-			items.add(stack);
-		}
+	public AnimationFactory getFactory() {
+		return this.factory;
+	}
+
+	public BFG() {
+		super(new Item.Properties().group(DoomMod.DoomWeaponItemGroup).maxStackSize(1).maxDamage(9000)
+				.setISTER(() -> BFGRender::new));
 	}
 
 	@Override
@@ -99,6 +119,16 @@ public class BFG extends ShootableItem {
 					if (itemstack.isEmpty()) {
 						playerentity.inventory.deleteStack(itemstack);
 					}
+				}
+
+				AnimationController controller = GeckoLibUtil.getControllerForStack(this.factory, stack,
+						controllerName);
+
+				if (controller.getAnimationState() == AnimationState.Stopped) {
+					// playerIn.sendStatusMessage(new StringTextComponent("Opening the jack in the
+					// box!"), true);
+					controller.markNeedsReload();
+					controller.setAnimation(new AnimationBuilder().addAnimation("firing", false));
 				}
 			}
 		}
@@ -181,14 +211,24 @@ public class BFG extends ShootableItem {
 
 	@Override
 	public UseAction getUseAction(ItemStack stack) {
-		return UseAction.NONE;
+		return UseAction.BLOCK;
+	}
+
+	@Override
+	public ActionResultType onItemUse(ItemUseContext context) {
+		World world = context.getWorld();
+		return ActionResultType.func_233537_a_(world.isRemote);
+	}
+
+	@Override
+	public boolean onEntitySwing(ItemStack stack, LivingEntity entity) {
+		return false;
 	}
 
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
 		ItemStack itemstack = playerIn.getHeldItem(handIn);
 		boolean flag = !playerIn.findAmmo(itemstack).isEmpty();
-
 		ActionResult<ItemStack> ret = net.minecraftforge.event.ForgeEventFactory.onArrowNock(itemstack, worldIn,
 				playerIn, handIn, flag);
 		if (ret != null)

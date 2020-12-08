@@ -6,6 +6,7 @@ import mod.azure.doom.DoomMod;
 import mod.azure.doom.util.enums.DoomTier;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantments;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -41,11 +42,6 @@ public class SwordCrucibleItem extends SwordItem {
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
 		ItemStack itemstack = playerIn.getHeldItem(handIn);
-		// double posX = playerIn.getPosX();
-		// double posY = playerIn.getPosY();
-		// double posZ = playerIn.getPosZ();
-		// worldIn.playSound(null, posX, posY, posZ, ModSoundEvents.WEAPON_THEME,
-		// SoundCategory.BLOCKS, 1F, 1F);
 		UseAction offhandItemAction = playerIn.getHeldItemOffhand().getUseAction();
 
 		if (offhandItemAction != UseAction.BOW && offhandItemAction != UseAction.SPEAR) {
@@ -66,6 +62,11 @@ public class SwordCrucibleItem extends SwordItem {
 		if (group == DoomMod.DoomWeaponItemGroup) {
 			items.add(stack);
 		}
+	}
+
+	@Override
+	public boolean hasEffect(ItemStack stack) {
+		return false;
 	}
 
 	@Override

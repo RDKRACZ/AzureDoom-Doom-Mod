@@ -40,6 +40,7 @@ import mod.azure.doom.item.armor.PainterDoomArmor;
 import mod.azure.doom.item.armor.PhobosDoomArmor;
 import mod.azure.doom.item.armor.PraetorDoomArmor;
 import mod.azure.doom.item.armor.PurplePonyDoomArmor;
+import mod.azure.doom.item.armor.SantaDoomArmor;
 import mod.azure.doom.item.armor.SentinelDoomArmor;
 import mod.azure.doom.item.armor.TwentyFiveDoomArmor;
 import mod.azure.doom.item.armor.ZombieDoomArmor;
@@ -57,6 +58,7 @@ import mod.azure.doom.item.tools.ArgentShovel;
 import mod.azure.doom.item.weapons.ArgentSword;
 import mod.azure.doom.item.weapons.AxeMarauderItem;
 import mod.azure.doom.item.weapons.BFG;
+import mod.azure.doom.item.weapons.BFG9000;
 import mod.azure.doom.item.weapons.Ballista;
 import mod.azure.doom.item.weapons.Chaingun;
 import mod.azure.doom.item.weapons.Chainsaw;
@@ -224,6 +226,7 @@ public class DoomItems {
 	public static final RegistryObject<Item> ARGENT_SWORD = ITEMS.register("argent_sword", () -> new ArgentSword());
 	public static final RegistryObject<Item> DOOM_BLADE = ITEMS.register("doomblade", () -> new DoomBlade());
 	public static final RegistryObject<Item> CHAINSAW = ITEMS.register("chainsaw", () -> new Chainsaw());
+	public static final RegistryObject<Item> CHAINSAW64 = ITEMS.register("chainsaw64", () -> new Chainsaw());
 	public static final RegistryObject<Item> SWORD_CLOSED = ITEMS.register("cruciblesword_closed",
 			() -> new UnopenedItem());
 	public static final RegistryObject<Item> AXE_OPEN = ITEMS.register("axe_marauder_open",
@@ -232,7 +235,7 @@ public class DoomItems {
 			() -> new UnopenedItem());
 	public static final RegistryObject<Item> SSG = ITEMS.register("supershotgun", () -> new SuperShotgun());
 	public static final RegistryObject<Item> SG = ITEMS.register("shotgun", () -> new Shotgun());
-	public static final RegistryObject<Item> BFG = ITEMS.register("bfg9000", () -> new BFG());
+	public static final RegistryObject<Item> BFG = ITEMS.register("bfg9000", () -> new BFG9000());
 	public static final RegistryObject<Item> BFG_ETERNAL = ITEMS.register("bfg_eternal", () -> new BFG());
 	public static final RegistryObject<Item> PLASMAGUN = ITEMS.register("plasmagun", () -> new PlasmaGun());
 	public static final RegistryObject<Item> ROCKETLAUNCHER = ITEMS.register("rocketlauncher",
@@ -442,4 +445,6 @@ public class DoomItems {
 			() -> new HotrodDoomArmor(DoomArmorMaterial.HOTROD_DOOM_ARMOR, EquipmentSlotType.LEGS));
 	public static final RegistryObject<Item> HOTROD_BOOTS = ITEMS.register("hotrod_boots",
 			() -> new HotrodDoomArmor(DoomArmorMaterial.HOTROD_DOOM_ARMOR, EquipmentSlotType.FEET));
+	public static final RegistryObject<Item> SANTA_HELMET = ITEMS.register("santa_helmet",
+			() -> new SantaDoomArmor(DoomArmorMaterial.DOOM_ARMOR, EquipmentSlotType.HEAD));
 }

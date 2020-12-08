@@ -3,6 +3,7 @@ package mod.azure.doom.item.weapons;
 import java.util.function.Predicate;
 
 import mod.azure.doom.DoomMod;
+import mod.azure.doom.client.render.weapons.SGRender;
 import mod.azure.doom.entity.projectiles.ShotgunShellEntity;
 import mod.azure.doom.item.ammo.ShellAmmo;
 import mod.azure.doom.util.enums.DoomTier;
@@ -10,7 +11,6 @@ import mod.azure.doom.util.registry.DoomItems;
 import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
-import net.minecraft.enchantment.IVanishable;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
@@ -19,17 +19,44 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ShootableItem;
 import net.minecraft.item.UseAction;
-import net.minecraft.stats.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
+import software.bernie.geckolib3.core.AnimationState;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
 
-public class Shotgun extends ShootableItem implements IVanishable {
+public class Shotgun extends ShootableItem implements IAnimatable {
+
+	public AnimationFactory factory = new AnimationFactory(this);
+	private String controllerName = "controller";
+
+	private <P extends ShootableItem & IAnimatable> PlayState predicate(AnimationEvent<P> event) {
+		return PlayState.CONTINUE;
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Override
+	public void registerControllers(AnimationData data) {
+		data.addAnimationController(new AnimationController(this, controllerName, 1, this::predicate));
+	}
+
+	@Override
+	public AnimationFactory getFactory() {
+		return this.factory;
+	}
 
 	public Shotgun() {
-		super(new Item.Properties().group(DoomMod.DoomWeaponItemGroup).maxStackSize(1).maxDamage(9000));
+		super(new Item.Properties().group(DoomMod.DoomWeaponItemGroup).maxStackSize(1).maxDamage(9000)
+				.setISTER(() -> SGRender::new));
 	}
 
 	@Override
@@ -86,7 +113,7 @@ public class Shotgun extends ShootableItem implements IVanishable {
 								playerentity);
 						abstractarrowentity = customeArrow(abstractarrowentity);
 						abstractarrowentity.func_234612_a_(playerentity, playerentity.rotationPitch,
-								playerentity.rotationYaw, 0.0F, f * 3.0F, 1.0F);
+								playerentity.rotationYaw, 0.0F, 1.0F * 3.0F, 1.0F);
 						if (f == 1.0F) {
 							abstractarrowentity.setIsCritical(true);
 						}
@@ -124,7 +151,12 @@ public class Shotgun extends ShootableItem implements IVanishable {
 							playerentity.inventory.deleteStack(itemstack);
 						}
 					}
-					playerentity.addStat(Stats.ITEM_USED.get(this));
+					AnimationController controller = GeckoLibUtil.getControllerForStack(this.factory, stack,
+							controllerName);
+					if (controller.getAnimationState() == AnimationState.Stopped) {
+						controller.markNeedsReload();
+						controller.setAnimation(new AnimationBuilder().addAnimation("firing", false));
+					}
 				}
 			}
 		}
@@ -147,7 +179,7 @@ public class Shotgun extends ShootableItem implements IVanishable {
 
 	@Override
 	public UseAction getUseAction(ItemStack stack) {
-		return UseAction.CROSSBOW;
+		return UseAction.BLOCK;
 	}
 
 	@Override

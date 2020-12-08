@@ -1,0 +1,18 @@
+{
+	"result": {
+		"item": "doomweapon:santa_helmet"
+	},
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+        "@",
+        "#"
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:snowball"
+        },
+		"@": {
+			"item": "doomweapon:doom_boots"
+		}
+    }
+}
