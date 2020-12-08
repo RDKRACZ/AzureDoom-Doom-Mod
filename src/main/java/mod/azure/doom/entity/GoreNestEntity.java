@@ -55,6 +55,15 @@ public class GoreNestEntity extends DemonEntity implements IAnimatable {
 	}
 
 	@Override
+	public boolean canBePushed() {
+		return false;
+	}
+
+	@Override
+	protected void collideWithNearbyEntities() {
+	}
+
+	@Override
 	public void knockBack(Entity entityIn, float strength, double xRatio, double zRatio) {
 		super.knockBack(entityIn, 0, 0, 0);
 	}

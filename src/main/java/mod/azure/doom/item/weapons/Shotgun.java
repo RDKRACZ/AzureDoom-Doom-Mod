@@ -3,6 +3,7 @@ package mod.azure.doom.item.weapons;
 import java.util.function.Predicate;
 
 import mod.azure.doom.DoomMod;
+import mod.azure.doom.client.render.weapons.SGRender;
 import mod.azure.doom.entity.projectiles.ShotgunShellEntity;
 import mod.azure.doom.item.ammo.ShellAmmo;
 import mod.azure.doom.util.registry.DoomItems;
@@ -20,27 +21,41 @@ import net.minecraft.item.UseAction;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
+import software.bernie.geckolib3.core.AnimationState;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
 
-public class Shotgun extends ShootableItem {
+public class Shotgun extends ShootableItem implements IAnimatable {
+
+	public AnimationFactory factory = new AnimationFactory(this);
+	private String controllerName = "controller";
+
+	private <P extends ShootableItem & IAnimatable> PlayState predicate(AnimationEvent<P> event) {
+		return PlayState.CONTINUE;
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Override
+	public void registerControllers(AnimationData data) {
+		data.addAnimationController(new AnimationController(this, controllerName, 1, this::predicate));
+	}
+
+	@Override
+	public AnimationFactory getFactory() {
+		return this.factory;
+	}
 
 	public Shotgun() {
-		super(new Item.Properties().group(DoomMod.DoomWeaponItemGroup).maxStackSize(1).maxDamage(9000));
-		this.addPropertyOverride(new ResourceLocation("pull"), (p_210310_0_, p_210310_1_, p_210310_2_) -> {
-			if (p_210310_2_ == null) {
-				return 0.0F;
-			} else {
-				return !(p_210310_2_.getActiveItemStack().getItem() instanceof Shotgun) ? 0.0F
-						: (float) (p_210310_0_.getUseDuration() - p_210310_2_.getItemInUseCount()) / 20.0F;
-			}
-		});
-		this.addPropertyOverride(new ResourceLocation("pulling"), (p_210309_0_, p_210309_1_, p_210309_2_) -> {
-			return p_210309_2_ != null && p_210309_2_.isHandActive() && p_210309_2_.getActiveItemStack() == p_210309_0_
-					? 1.0F
-					: 0.0F;
-		});
+		super(new Item.Properties().group(DoomMod.DoomWeaponItemGroup).maxStackSize(1).maxDamage(9000)
+				.setISTER(() -> SGRender::new));
 	}
 
 	@Override
@@ -97,7 +112,7 @@ public class Shotgun extends ShootableItem {
 								playerentity);
 						abstractarrowentity = customeArrow(abstractarrowentity);
 						abstractarrowentity.shoot(playerentity, playerentity.rotationPitch, playerentity.rotationYaw,
-								0.0F, f * 3.0F, 1.0F);
+								0.0F, 1.0F * 3.0F, 1.0F);
 						if (f == 1.0F) {
 							abstractarrowentity.setIsCritical(true);
 						}
@@ -135,6 +150,12 @@ public class Shotgun extends ShootableItem {
 							playerentity.inventory.deleteStack(itemstack);
 						}
 					}
+					AnimationController controller = GeckoLibUtil.getControllerForStack(this.factory, stack,
+							controllerName);
+					if (controller.getAnimationState() == AnimationState.Stopped) {
+						controller.markNeedsReload();
+						controller.setAnimation(new AnimationBuilder().addAnimation("firing", false));
+					}
 				}
 			}
 		}
@@ -157,7 +178,7 @@ public class Shotgun extends ShootableItem {
 
 	@Override
 	public UseAction getUseAction(ItemStack stack) {
-		return UseAction.CROSSBOW;
+		return UseAction.BLOCK;
 	}
 
 	@Override

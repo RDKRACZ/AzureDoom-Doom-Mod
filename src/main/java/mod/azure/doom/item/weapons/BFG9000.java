@@ -3,7 +3,7 @@ package mod.azure.doom.item.weapons;
 import java.util.function.Predicate;
 
 import mod.azure.doom.DoomMod;
-import mod.azure.doom.client.render.weapons.BFGRender;
+import mod.azure.doom.client.render.weapons.BFG9000Render;
 import mod.azure.doom.entity.projectiles.BFGEntity;
 import mod.azure.doom.item.ammo.BFGCell;
 import mod.azure.doom.util.registry.DoomItems;
@@ -35,7 +35,7 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
-public class BFG extends ShootableItem implements IAnimatable {
+public class BFG9000 extends ShootableItem implements IAnimatable {
 
 	public AnimationFactory factory = new AnimationFactory(this);
 	private String controllerName = "controller";
@@ -55,9 +55,9 @@ public class BFG extends ShootableItem implements IAnimatable {
 		return this.factory;
 	}
 
-	public BFG() {
+	public BFG9000() {
 		super(new Item.Properties().group(DoomMod.DoomWeaponItemGroup).maxStackSize(1).maxDamage(9000)
-				.setISTER(() -> BFGRender::new));
+				.setISTER(() -> BFG9000Render::new));
 	}
 
 	@Override

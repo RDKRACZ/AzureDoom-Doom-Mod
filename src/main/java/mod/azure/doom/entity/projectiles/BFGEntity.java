@@ -206,10 +206,10 @@ public class BFGEntity extends AbstractArrowEntity {
 		Vec3d vector3d1 = new Vec3d(this.getPosX(), this.getPosY(), this.getPosZ());
 		for (int k2 = 0; k2 < list.size(); ++k2) {
 			Entity entity = list.get(k2);
-			if (!(entity instanceof ServerPlayerEntity) && (entity instanceof MonsterEntity)
-					|| (entity instanceof SlimeEntity) || (entity instanceof PhantomEntity)
-					|| (entity instanceof GoreNestEntity) || (entity instanceof GoreNestEntity)
-					|| (entity instanceof ShulkerEntity) || (entity instanceof HoglinEntity)) {
+			if (!(entity instanceof ServerPlayerEntity) && !(entity instanceof GoreNestEntity)
+					&& (entity instanceof MonsterEntity) || (entity instanceof SlimeEntity)
+					|| (entity instanceof PhantomEntity) || (entity instanceof ShulkerEntity)
+					|| (entity instanceof HoglinEntity)) {
 				double d12 = (double) (MathHelper.sqrt(entity.getDistanceSq(vector3d1)) / f2);
 				if (d12 <= 1.0D) {
 					if (entity.isAlive()) {
@@ -294,9 +294,9 @@ public class BFGEntity extends AbstractArrowEntity {
 
 		for (int k2 = 0; k2 < list.size(); ++k2) {
 			Entity entity = list.get(k2);
-			if (!(entity instanceof ServerPlayerEntity) && (entity instanceof MonsterEntity)
-					|| (entity instanceof SlimeEntity) || (entity instanceof PhantomEntity)
-					|| (entity instanceof GoreNestEntity) || (entity instanceof ShulkerEntity)) {
+			if (!(entity instanceof ServerPlayerEntity) && !(entity instanceof GoreNestEntity)
+					&& (entity instanceof MonsterEntity) || (entity instanceof SlimeEntity)
+					|| (entity instanceof PhantomEntity) || (entity instanceof ShulkerEntity)) {
 				double d12 = (double) (MathHelper.sqrt(entity.getDistanceSq(vector3d)) / f2);
 				if (d12 <= 1.0D) {
 					entity.attackEntityFrom(DamageSource.causeArrowDamage(this, this), 100);
