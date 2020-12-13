@@ -1,7 +1,5 @@
 package mod.azure.doom.entity;
 
-import java.time.LocalDate;
-import java.time.temporal.ChronoField;
 import java.util.Random;
 
 import javax.annotation.Nullable;
@@ -10,7 +8,6 @@ import mod.azure.doom.entity.ai.goal.DemonAttackGoal;
 import mod.azure.doom.util.Config;
 import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
@@ -27,8 +24,6 @@ import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
 import net.minecraft.potion.EffectInstance;
@@ -100,6 +95,7 @@ public class IconofsinEntity extends DemonEntity {
 				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 30.0D);
 	}
 
+	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
 		return 4.70F;
 	}
@@ -111,46 +107,7 @@ public class IconofsinEntity extends DemonEntity {
 		spawnDataIn = super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 		float f = difficultyIn.getClampedAdditionalDifficulty();
 		this.setCanPickUpLoot(this.rand.nextFloat() < 0.55F * f);
-		if (spawnDataIn == null) {
-			spawnDataIn = new IconofsinEntity.GroupData(worldIn.getRandom()
-					.nextFloat() < net.minecraftforge.common.ForgeConfig.SERVER.zombieBabyChance.get());
-		}
-
-		if (spawnDataIn instanceof IconofsinEntity.GroupData) {
-			IconofsinEntity.GroupData zombieentity$groupdata = (IconofsinEntity.GroupData) spawnDataIn;
-			if (zombieentity$groupdata.isChild) {
-				this.setChild(true);
-			}
-
-			this.setEquipmentBasedOnDifficulty(difficultyIn);
-			this.setEnchantmentBasedOnDifficulty(difficultyIn);
-		}
-
-		if (this.getItemStackFromSlot(EquipmentSlotType.HEAD).isEmpty()) {
-			LocalDate localdate = LocalDate.now();
-			int i = localdate.get(ChronoField.DAY_OF_MONTH);
-			int j = localdate.get(ChronoField.MONTH_OF_YEAR);
-			if (j == 10 && i == 31 && this.rand.nextFloat() < 0.25F) {
-				this.setItemStackToSlot(EquipmentSlotType.HEAD,
-						new ItemStack(this.rand.nextFloat() < 0.1F ? Blocks.JACK_O_LANTERN : Blocks.CARVED_PUMPKIN));
-				this.inventoryArmorDropChances[EquipmentSlotType.HEAD.getIndex()] = 0.0F;
-			}
-		}
-
 		return spawnDataIn;
-	}
-
-	public class GroupData implements ILivingEntityData {
-		public final boolean isChild;
-
-		private GroupData(boolean isChildIn) {
-			this.isChild = isChildIn;
-		}
-	}
-
-	@Override
-	public boolean isChild() {
-		return false;
 	}
 
 	protected boolean shouldDrown() {

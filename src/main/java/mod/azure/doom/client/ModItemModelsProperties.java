@@ -1,7 +1,6 @@
 package mod.azure.doom.client;
 
 import mod.azure.doom.item.weapons.Ballista;
-import mod.azure.doom.item.weapons.SuperShotgun;
 import mod.azure.doom.util.registry.DoomItems;
 import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.item.ItemStack;
@@ -11,28 +10,6 @@ import net.minecraft.util.ResourceLocation;
 public class ModItemModelsProperties {
 
 	public ModItemModelsProperties() {
-		// SuperShotGun
-		ItemModelsProperties.registerProperty(DoomItems.SSG.get(), new ResourceLocation("pull"),
-				(p_239427_0_, p_239427_1_, p_239427_2_) -> {
-					if (p_239427_2_ == null) {
-						return 0.0F;
-					} else {
-						return SuperShotgun.isCharged(p_239427_0_) ? 0.0F
-								: (float) (p_239427_0_.getUseDuration() - p_239427_2_.getItemInUseCount())
-										/ (float) SuperShotgun.getChargeTime(p_239427_0_);
-					}
-				});
-		ItemModelsProperties.registerProperty(DoomItems.SSG.get(), new ResourceLocation("pulling"),
-				(p_239426_0_, p_239426_1_, p_239426_2_) -> {
-					return p_239426_2_ != null && p_239426_2_.isHandActive()
-							&& p_239426_2_.getActiveItemStack() == p_239426_0_ 
-									? 1.0F
-									: 0.0F;
-				});
-		ItemModelsProperties.registerProperty(DoomItems.SSG.get(), new ResourceLocation("charged"),
-				(p_239425_0_, p_239425_1_, p_239425_2_) -> {
-					return p_239425_2_ != null && SuperShotgun.isCharged(p_239425_0_) ? 1.0F : 0.0F;
-				});
 		// Ballista
 		ItemModelsProperties.registerProperty(DoomItems.BALLISTA.get(), new ResourceLocation("pull"),
 				(itemStack, clientWorld, livingEntity) -> {
@@ -47,8 +24,7 @@ public class ModItemModelsProperties {
 		ItemModelsProperties.registerProperty(DoomItems.BALLISTA.get(), new ResourceLocation("pulling"),
 				(itemStack, clientWorld, livingEntity) -> {
 					return livingEntity != null && livingEntity.isHandActive()
-							&& livingEntity.getActiveItemStack() == itemStack && !Ballista.isCharged(itemStack)
-									? 1.0F
+							&& livingEntity.getActiveItemStack() == itemStack && !Ballista.isCharged(itemStack) ? 1.0F
 									: 0.0F;
 				});
 		ItemModelsProperties.registerProperty(DoomItems.BALLISTA.get(), new ResourceLocation("charged"),

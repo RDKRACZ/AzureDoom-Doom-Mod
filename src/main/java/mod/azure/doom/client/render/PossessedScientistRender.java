@@ -29,13 +29,4 @@ public class PossessedScientistRender extends GeoEntityRenderer<PossessedScienti
 		return 0.0F;
 	}
 
-	@Override
-	public void renderEarly(PossessedScientistEntity animatable, MatrixStack stackIn, float ticks,
-			IRenderTypeBuffer renderTypeBuffer, IVertexBuilder vertexBuilder, int packedLightIn, int packedOverlayIn,
-			float red, float green, float blue, float partialTicks) {
-		super.renderEarly(animatable, stackIn, ticks, renderTypeBuffer, vertexBuilder, packedLightIn, packedOverlayIn,
-				red, green, blue, partialTicks);
-		stackIn.scale(0.725F, 0.6F, 0.725F);
-	}
-
 }

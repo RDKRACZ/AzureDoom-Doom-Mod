@@ -26,7 +26,6 @@ import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
 import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -56,14 +55,18 @@ public class Hellknight2016Entity extends DemonEntity implements IAnimatable {
 	private AnimationFactory factory = new AnimationFactory(this);
 
 	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-		if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F) && !this.isAggressive()) {
+		if (event.isMoving() && !this.isAggressive()) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("walking", true));
 			return PlayState.CONTINUE;
 		}
-		if (this.isAggressive()) {
+		if (this.isAggressive() && limbSwingAmount > 0.35F) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("run", true));
 			return PlayState.CONTINUE;
 		}
+//		if (this.attackEntityAsMob(this)) {
+//			event.getController().setAnimation(new AnimationBuilder().addAnimation("jumpattack", false));
+//			return PlayState.CONTINUE;
+//		}
 		event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
 		return PlayState.CONTINUE;
 	}
@@ -101,7 +104,8 @@ public class Hellknight2016Entity extends DemonEntity implements IAnimatable {
 	}
 
 	protected void applyEntityAI() {
-		this.goalSelector.addGoal(2, new DemonAttackGoal(this, 1.5D, false));
+		this.goalSelector.addGoal(7, new DemonAttackGoal(this, 1.5D, false));
+		// this.goalSelector.addGoal(6, new LeapAtTargetGoal(this, 0.9F));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, false));
@@ -126,20 +130,6 @@ public class Hellknight2016Entity extends DemonEntity implements IAnimatable {
 		spawnDataIn = super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 		float f = difficultyIn.getClampedAdditionalDifficulty();
 		this.setCanPickUpLoot(this.rand.nextFloat() < 0.55F * f);
-		if (spawnDataIn == null) {
-			spawnDataIn = new Hellknight2016Entity.GroupData(worldIn.getRandom()
-					.nextFloat() < net.minecraftforge.common.ForgeConfig.SERVER.zombieBabyChance.get());
-		}
-
-		if (spawnDataIn instanceof ZombieEntity.GroupData) {
-			ZombieEntity.GroupData zombieentity$groupdata = (ZombieEntity.GroupData) spawnDataIn;
-			if (zombieentity$groupdata.isChild) {
-				this.setChild(true);
-			}
-
-			this.setEquipmentBasedOnDifficulty(difficultyIn);
-			this.setEnchantmentBasedOnDifficulty(difficultyIn);
-		}
 
 		if (this.getItemStackFromSlot(EquipmentSlotType.HEAD).isEmpty()) {
 			LocalDate localdate = LocalDate.now();
@@ -153,19 +143,6 @@ public class Hellknight2016Entity extends DemonEntity implements IAnimatable {
 		}
 
 		return spawnDataIn;
-	}
-
-	public class GroupData implements ILivingEntityData {
-		public final boolean isChild;
-
-		private GroupData(boolean isChildIn) {
-			this.isChild = isChildIn;
-		}
-	}
-
-	@Override
-	public boolean isChild() {
-		return false;
 	}
 
 	protected boolean shouldDrown() {

@@ -6,7 +6,6 @@ import mod.azure.doom.DoomMod;
 import mod.azure.doom.util.enums.DoomTier;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;

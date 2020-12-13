@@ -41,8 +41,8 @@ public class Chainsaw extends SwordItem {
 					.offset(facing.scale(1D));
 			entityIn.getEntityWorld().getEntitiesWithinAABBExcludingEntity(user, aabb).forEach(e -> doDamage(user, e));
 			entityIn.getEntityWorld().getEntitiesWithinAABBExcludingEntity(user, aabb)
-					.forEach(e -> e.world.addParticle(RedstoneParticleData.REDSTONE_DUST, user.getPosXRandom(0.5D),
-							user.getPosYRandom(), user.getPosZRandom(0.5D), 0.0D, 0D, 0D));
+					.forEach(e -> e.world.addParticle(RedstoneParticleData.REDSTONE_DUST, e.getPosXRandom(0.5D),
+							e.getPosYRandom(), e.getPosZRandom(0.5D), 0.0D, 0D, 0D));
 			if (!player.abilities.isCreativeMode) {
 				stack.setDamage(stack.getDamage() + 1);
 			}

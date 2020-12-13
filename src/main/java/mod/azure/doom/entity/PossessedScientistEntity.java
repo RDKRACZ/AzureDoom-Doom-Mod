@@ -6,6 +6,7 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
+import mod.azure.doom.entity.ai.goal.DemonAttackGoal;
 import mod.azure.doom.util.Config;
 import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
@@ -13,14 +14,12 @@ import net.minecraft.block.Blocks;
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
@@ -32,9 +31,6 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -43,8 +39,6 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -55,8 +49,6 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 public class PossessedScientistEntity extends DemonEntity implements IAnimatable {
-	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(PossessedScientistEntity.class,
-			DataSerializers.BOOLEAN);
 
 	public PossessedScientistEntity(EntityType<PossessedScientistEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
@@ -65,7 +57,7 @@ public class PossessedScientistEntity extends DemonEntity implements IAnimatable
 	private AnimationFactory factory = new AnimationFactory(this);
 
 	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-		if (limbSwingAmount > 0.10F) {
+		if (!(limbSwingAmount > -0.10F && limbSwingAmount < 0.10F) && !this.isAggressive()) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("walk", true));
 			return PlayState.CONTINUE;
 		}
@@ -75,7 +67,7 @@ public class PossessedScientistEntity extends DemonEntity implements IAnimatable
 				return PlayState.CONTINUE;
 			}
 		}
-		if (this.isAttacking()) {
+		if (this.isAggressive()) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("attack", true));
 			return PlayState.CONTINUE;
 		}
@@ -97,24 +89,9 @@ public class PossessedScientistEntity extends DemonEntity implements IAnimatable
 	@Override
 	protected void onDeathUpdate() {
 		++this.deathTime;
-		if (this.deathTime == 70) {
+		if (this.deathTime == 60) {
 			this.remove();
 		}
-	}
-
-	@OnlyIn(Dist.CLIENT)
-	public boolean isAttacking() {
-		return this.dataManager.get(ATTACKING);
-	}
-
-	public void setAttacking(boolean attacking) {
-		this.dataManager.set(ATTACKING, attacking);
-	}
-
-	@Override
-	protected void registerData() {
-		super.registerData();
-		this.dataManager.register(ATTACKING, false);
 	}
 
 	@Override
@@ -136,7 +113,7 @@ public class PossessedScientistEntity extends DemonEntity implements IAnimatable
 	}
 
 	protected void applyEntityAI() {
-		this.goalSelector.addGoal(2, new PossessedScientistEntity.DemonAttackGoal(this, 1.0D, false));
+		this.goalSelector.addGoal(2, new DemonAttackGoal(this, 1.0D, false));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, false));
 		if (Config.SERVER.IN_FIGHTING.get()) {
@@ -148,42 +125,6 @@ public class PossessedScientistEntity extends DemonEntity implements IAnimatable
 			this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, ZombiemanEntity.class, true));
 		}
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
-	}
-
-	public class DemonAttackGoal extends MeleeAttackGoal {
-		private final PossessedScientistEntity zombie;
-		private int raiseArmTicks;
-
-		public DemonAttackGoal(PossessedScientistEntity zombieIn, double speedIn, boolean longMemoryIn) {
-			super(zombieIn, speedIn, longMemoryIn);
-			this.zombie = zombieIn;
-		}
-
-		public void startExecuting() {
-			super.startExecuting();
-			this.raiseArmTicks = 0;
-		}
-
-		public void resetTask() {
-			super.resetTask();
-			this.zombie.setAggroed(false);
-			this.zombie.setAttacking(false);
-		}
-
-		public void tick() {
-			super.tick();
-			++this.raiseArmTicks;
-			LivingEntity livingentity = this.zombie.getAttackTarget();
-			this.zombie.getLookController().setLookPositionWithEntity(livingentity, 90.0F, 30.0F);
-			if (livingentity.getDistanceSq(this.zombie) < 8.0D) {
-				if (this.raiseArmTicks >= 5 && this.func_234041_j_() < this.func_234042_k_() / 2) {
-					this.zombie.setAggroed(true);
-				} else {
-					this.zombie.setAggroed(false);
-				}
-			}
-			this.zombie.setAttacking(true);
-		}
 	}
 
 	public static AttributeModifierMap.MutableAttribute func_234200_m_() {

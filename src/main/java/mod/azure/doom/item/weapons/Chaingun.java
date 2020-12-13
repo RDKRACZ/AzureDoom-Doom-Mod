@@ -3,6 +3,7 @@ package mod.azure.doom.item.weapons;
 import java.util.function.Predicate;
 
 import mod.azure.doom.DoomMod;
+import mod.azure.doom.client.render.weapons.ChaingunRender;
 import mod.azure.doom.entity.projectiles.ChaingunBulletEntity;
 import mod.azure.doom.item.ammo.ChaingunAmmo;
 import mod.azure.doom.util.enums.DoomTier;
@@ -14,37 +15,46 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ShootableItem;
 import net.minecraft.item.UseAction;
-import net.minecraft.stats.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
+import software.bernie.geckolib3.core.AnimationState;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
 
-public class Chaingun extends ShootableItem {
+public class Chaingun extends ShootableItem implements IAnimatable {
+
+	public AnimationFactory factory = new AnimationFactory(this);
+	private String controllerName = "controller";
+
+	private <P extends ShootableItem & IAnimatable> PlayState predicate(AnimationEvent<P> event) {
+		return PlayState.CONTINUE;
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Override
+	public void registerControllers(AnimationData data) {
+		data.addAnimationController(new AnimationController(this, controllerName, 1, this::predicate));
+	}
+
+	@Override
+	public AnimationFactory getFactory() {
+		return this.factory;
+	}
 
 	public Chaingun() {
-		super(new Item.Properties().group(DoomMod.DoomWeaponItemGroup).maxStackSize(1).maxDamage(9000));
-	}
-
-	@Override
-	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
-		ItemStack stack = new ItemStack(this);
-		stack.hasTag();
-		stack.addEnchantment(Enchantments.PUNCH, 2);
-		if (group == DoomMod.DoomWeaponItemGroup) {
-			items.add(stack);
-		}
-	}
-
-	@Override
-	public void onCreated(ItemStack stack, World worldIn, PlayerEntity playerIn) {
-		stack.hasTag();
-		stack.addEnchantment(Enchantments.PUNCH, 2);
+		super(new Item.Properties().group(DoomMod.DoomWeaponItemGroup).maxStackSize(1).maxDamage(9000)
+				.setISTER(() -> ChaingunRender::new));
 	}
 
 	@Override
@@ -74,22 +84,8 @@ public class Chaingun extends ShootableItem {
 					ChaingunBulletEntity abstractarrowentity = arrowitem.createArrow(worldIn, itemstack, playerentity);
 					abstractarrowentity = customeArrow(abstractarrowentity);
 					abstractarrowentity.func_234612_a_(playerentity, playerentity.rotationPitch,
-							playerentity.rotationYaw, 0.0F, 0.15F * 3.0F, 1.0F);
-
-					int j = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, stack);
-					if (j > 0) {
-						abstractarrowentity.setDamage(abstractarrowentity.getDamage() + (double) j * 0.5D + 0.5D);
-					}
-
-					int k = EnchantmentHelper.getEnchantmentLevel(Enchantments.PUNCH, stack);
-					if (k > 0) {
-						abstractarrowentity.setKnockbackStrength(k);
-					}
-
-					if (EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAME, stack) > 0) {
-						abstractarrowentity.setFire(100);
-					}
-
+							playerentity.rotationYaw, 0.0F, 1.0F * 3.0F, 1.0F);
+					abstractarrowentity.setDamage(3);
 					stack.damageItem(1, playerentity, (p_220009_1_) -> {
 						p_220009_1_.sendBreakAnimation(playerentity.getActiveHand());
 					});
@@ -109,7 +105,12 @@ public class Chaingun extends ShootableItem {
 						playerentity.inventory.deleteStack(itemstack);
 					}
 				}
-				playerentity.addStat(Stats.ITEM_USED.get(this));
+				AnimationController<?> controller = GeckoLibUtil.getControllerForStack(this.factory, stack,
+						controllerName);
+				if (controller.getAnimationState() == AnimationState.Stopped) {
+					controller.markNeedsReload();
+					controller.setAnimation(new AnimationBuilder().addAnimation("firing", false));
+				}
 			}
 		}
 	}
@@ -126,7 +127,7 @@ public class Chaingun extends ShootableItem {
 
 	@Override
 	public UseAction getUseAction(ItemStack stack) {
-		return UseAction.NONE;
+		return UseAction.BLOCK;
 	}
 
 	@Override

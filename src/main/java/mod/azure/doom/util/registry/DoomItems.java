@@ -62,7 +62,6 @@ import mod.azure.doom.item.weapons.BFG9000;
 import mod.azure.doom.item.weapons.Ballista;
 import mod.azure.doom.item.weapons.Chaingun;
 import mod.azure.doom.item.weapons.Chainsaw;
-import mod.azure.doom.item.weapons.DoomBlade;
 import mod.azure.doom.item.weapons.PistolItem;
 import mod.azure.doom.item.weapons.PlasmaGun;
 import mod.azure.doom.item.weapons.RocketLauncher;
@@ -126,6 +125,24 @@ public class DoomItems {
 			() -> new BlockItem(DoomBlocks.DOOM_WALL15.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> DOOM_WALL16 = ITEMS.register("icon_wall16",
 			() -> new BlockItem(DoomBlocks.DOOM_WALL16.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+
+	public static final RegistryObject<Item> E1M1_1 = ITEMS.register("e1m1_block1",
+			() -> new BlockItem(DoomBlocks.E1M1_1.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+
+	public static final RegistryObject<Item> E1M1_2 = ITEMS.register("e1m1_block2",
+			() -> new BlockItem(DoomBlocks.E1M1_2.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+
+	public static final RegistryObject<Item> E1M1_3 = ITEMS.register("e1m1_block3",
+			() -> new BlockItem(DoomBlocks.E1M1_3.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+
+	public static final RegistryObject<Item> E1M1_4 = ITEMS.register("e1m1_block4",
+			() -> new BlockItem(DoomBlocks.E1M1_4.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+
+	public static final RegistryObject<Item> E1M1_5 = ITEMS.register("e1m1_block5",
+			() -> new BlockItem(DoomBlocks.E1M1_5.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+
+	public static final RegistryObject<Item> E1M1_6 = ITEMS.register("e1m1_block6",
+			() -> new BlockItem(DoomBlocks.E1M1_6.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
 
 	// AMMO
 	public static final RegistryObject<Item> SHOTGUN_SHELLS = ITEMS.register("shotgun_shells",
@@ -224,7 +241,6 @@ public class DoomItems {
 			() -> new ArgentPickaxe());
 	public static final RegistryObject<Item> ARGENT_SHOVEL = ITEMS.register("argent_shovel", () -> new ArgentShovel());
 	public static final RegistryObject<Item> ARGENT_SWORD = ITEMS.register("argent_sword", () -> new ArgentSword());
-	public static final RegistryObject<Item> DOOM_BLADE = ITEMS.register("doomblade", () -> new DoomBlade());
 	public static final RegistryObject<Item> CHAINSAW = ITEMS.register("chainsaw", () -> new Chainsaw());
 	public static final RegistryObject<Item> CHAINSAW64 = ITEMS.register("chainsaw64", () -> new Chainsaw());
 	public static final RegistryObject<Item> SWORD_CLOSED = ITEMS.register("cruciblesword_closed",

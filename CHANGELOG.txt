@@ -1,9 +1,15 @@
-v.3.6.0
+v.3.6.1
 
-- Added new Santa Slayer Helmet.
-- BFG Eternal and BFG 9000 moved to Geckolib, with Eternal only having the animations for now.
-- Gore Nests are no unmoveable and can only be killed by Players. 
-- Updated Chainsaw and Crucible Sword/Axe models.
-- Added Chainsaw from Doom64.
-- Chainsaws now deal damage at whatever entity they are facing until reaching 1 durabilty.
-- Demoncide recipe added.
+- Fixed textures needed mirrored on mobs. 
+- New Gore Nest model thanks to Bat.
+- New Imp 2016 model thanks to Silly.
+- Updated Crucible Sword to support displays, like Sword Displays.
+- New Revenant model thanks to UnnamedMarine.
+- Complete rewrite of the Revenant attacks.
+- New Chaingun model and fixed the speed it fires bullets. 
+- Updated Super Shotgun model and animations.
+- Updated to full Gecko release, beta no longer supported.
+- Add Optifine emissive texture support for mobs, items, and blocks.
+- Removed Doomblade as it's part of the armor now.
+- Added 6 blocks with textures based on E1M1 thanks to Unnamed Marine.
+- Updated model and animations of Possessed Scientist thanks to Silly.

@@ -20,7 +20,7 @@ apply plugin: 'com.matthewprenger.cursegradle'
 import groovy.json.JsonSlurper
 import groovy.json.JsonOutput
 
-version = "3.6.0"
+version = "3.6.1"
 group = "mod.azure.doomweapon"
 archivesBaseName = "MCDoom-Mod-1.16.4"
 
@@ -79,12 +79,12 @@ dependencies {
     minecraft 'net.minecraftforge:forge:1.16.4-35.0.12'
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.3-4.0.2.0")
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.3-4.0.2.0:api")
-	compile fg.deobf("curse.maven:SD:3069533")
-	compile fg.deobf("curse.maven:JEI:3108050")
-	compile fg.deobf("curse.maven:GTE:3114274")
-	compile fg.deobf("curse.maven:GTEP:3092113")
-	compile fg.deobf("curse.maven:projectmmo:3100529")
-	implementation fg.deobf('software.bernie.geckolib:forge-1.16.4-geckolib:3.0.0-beta.10')
+	compile fg.deobf("curse.maven:SD-392762:3069533")
+	compile fg.deobf("curse.maven:JEI-238222:3108050")
+	//compile fg.deobf("curse.maven:GTE-417802:3114274")
+	//compile fg.deobf("curse.maven:GTEP-283644:3092113")
+	compile fg.deobf("curse.maven:projectmmo-353935:3100529")
+	implementation fg.deobf('software.bernie.geckolib:forge-1.16.4-geckolib:3.0.0')
 }
 
 jar {
