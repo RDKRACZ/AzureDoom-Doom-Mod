@@ -150,7 +150,7 @@ public class Shotgun extends ShootableItem implements IAnimatable {
 							playerentity.inventory.deleteStack(itemstack);
 						}
 					}
-					AnimationController controller = GeckoLibUtil.getControllerForStack(this.factory, stack,
+					AnimationController<?> controller = GeckoLibUtil.getControllerForStack(this.factory, stack,
 							controllerName);
 					if (controller.getAnimationState() == AnimationState.Stopped) {
 						controller.markNeedsReload();

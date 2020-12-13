@@ -23,16 +23,7 @@ public class GoreNestRender extends GeoEntityRenderer<GoreNestEntity> {
 			ResourceLocation textureLocation) {
 		return RenderType.getEntityTranslucent(getTextureLocation(animatable));
 	}
-
-	@Override
-	public void renderEarly(GoreNestEntity animatable, MatrixStack stackIn, float ticks,
-			IRenderTypeBuffer renderTypeBuffer, IVertexBuilder vertexBuilder, int packedLightIn, int packedOverlayIn,
-			float red, float green, float blue, float partialTicks) {
-		super.renderEarly(animatable, stackIn, ticks, renderTypeBuffer, vertexBuilder, packedLightIn, packedOverlayIn,
-				red, green, blue, partialTicks);
-		stackIn.scale(1.5F, 1.5F, 1.5F);
-	}
-
+	
 	@Override
 	protected float getDeathMaxRotation(GoreNestEntity entityLivingBaseIn) {
 		return 0.0F;

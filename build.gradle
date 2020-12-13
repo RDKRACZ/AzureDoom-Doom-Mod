@@ -77,23 +77,27 @@ repositories {
         url = "https://minecraft.curseforge.com/api/maven/"
     }
     maven { url 'https://repo.repsy.io/mvn/gandiber/geckolib' }
+	flatDir {
+		dirs 'deps'
+	}
 }
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.15.2-31.2.30'
     compile fg.deobf("top.theillusivec4.curios:curios:FORGE-1.15.2-2.0.2.6")
-	compile fg.deobf("curse.maven:JEI:2866141")
-	compileOnly fg.deobf("curse.maven:NE:3058472")
-	compileOnly fg.deobf("curse.maven:NEX:3017503")
-	compileOnly fg.deobf("curse.maven:NEXLib:3017501")
-	compileOnly fg.deobf("curse.maven:AC:2980113")
-	compile fg.deobf("curse.maven:WZ:2956297")
-	compile fg.deobf("curse.maven:PMMO:3052870")
-	compile fg.deobf("curse.maven:Model1:2985799")
-	compile fg.deobf("curse.maven:Model2:2995535")
-	compile fg.deobf('software.bernie.geckolib:forge-1.15.2-geckolib:3.0.0-beta.8')
-	compile fg.deobf("curse.maven:BOP:2988999")
-	compile fg.deobf("curse.maven:BYG:3055112")
+	compile fg.deobf("curse.maven:JEI-238222:2866141")
+	compileOnly fg.deobf("curse.maven:NE-390566:3121949")
+	implementation fg.deobf("ignored:NetherEx-1.15.2:4.0.1")
+	//compileOnly fg.deobf("curse.maven:netherex-248039:3095887")
+	compileOnly fg.deobf("curse.maven:NEXLib-298965:3095886")
+	compileOnly fg.deobf("curse.maven:AC-382216:2980113")
+	compile fg.deobf("curse.maven:WZ-383277:2956297")
+	compile fg.deobf("curse.maven:PMMO-353935:3052870")
+	//compile fg.deobf("curse.maven:Model1-:2985799")
+	//compile fg.deobf("curse.maven:Model2:2995535")
+	compile fg.deobf('software.bernie.geckolib:forge-1.15.2-geckolib:3.0.0')
+	compile fg.deobf("curse.maven:BOP-220318:2988999")
+	compile fg.deobf("curse.maven:BYG-247560:3055112")
 }
 
 jar {

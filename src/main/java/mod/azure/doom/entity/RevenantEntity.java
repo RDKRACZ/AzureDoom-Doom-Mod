@@ -2,15 +2,14 @@ package mod.azure.doom.entity;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoField;
+import java.util.EnumSet;
 import java.util.Random;
 
 import javax.annotation.Nullable;
 
 import mod.azure.doom.entity.ai.goal.DemonAttackGoal;
-import mod.azure.doom.entity.projectiles.ShotgunShellEntity;
-import mod.azure.doom.item.weapons.Shotgun;
+import mod.azure.doom.entity.projectiles.entity.RocketMobEntity;
 import mod.azure.doom.util.Config;
-import mod.azure.doom.util.registry.DoomItems;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
@@ -18,30 +17,31 @@ import net.minecraft.block.Blocks;
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
-import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
-import net.minecraft.entity.monster.AbstractIllagerEntity;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.ProjectileHelper;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IWorld;
@@ -49,8 +49,35 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-public class RevenantEntity extends DemonEntity implements IRangedAttackMob {
+public class RevenantEntity extends DemonEntity implements IAnimatable {
+
+	private AnimationFactory factory = new AnimationFactory(this);
+
+	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+		if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F)) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("walking", true));
+			return PlayState.CONTINUE;
+		}
+		return PlayState.STOP;
+	}
+
+	@Override
+	public void registerControllers(AnimationData data) {
+		data.addAnimationController(new AnimationController<RevenantEntity>(this, "controller", 0, this::predicate));
+	}
+
+	@Override
+	public AnimationFactory getFactory() {
+		return this.factory;
+	}
 
 	public RevenantEntity(EntityType<RevenantEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
@@ -79,6 +106,7 @@ public class RevenantEntity extends DemonEntity implements IRangedAttackMob {
 
 	protected void applyEntityAI() {
 		this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
+		this.goalSelector.addGoal(7, new RevenantEntity.FireballAttackGoal(this));
 		this.goalSelector.addGoal(2, new DemonAttackGoal(this, 1.0D, false));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, false));
@@ -95,9 +123,80 @@ public class RevenantEntity extends DemonEntity implements IRangedAttackMob {
 	protected void registerAttributes() {
 		super.registerAttributes();
 		this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(35.0D);
-		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double) 0.23F);
+		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
 		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(3.0D);
 		this.getAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(2.0D);
+	}
+
+	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(RevenantEntity.class,
+			DataSerializers.BOOLEAN);
+
+	@OnlyIn(Dist.CLIENT)
+	public boolean isAttacking() {
+		return this.dataManager.get(ATTACKING);
+	}
+
+	public void setAttacking(boolean attacking) {
+		this.dataManager.set(ATTACKING, attacking);
+	}
+
+	@Override
+	protected void registerData() {
+		super.registerData();
+		this.dataManager.register(ATTACKING, false);
+	}
+
+	static class FireballAttackGoal extends Goal {
+		private final RevenantEntity parentEntity;
+		public int attackTimer;
+
+		public FireballAttackGoal(RevenantEntity ghast) {
+			this.parentEntity = ghast;
+			this.setMutexFlags(EnumSet.of(Goal.Flag.TARGET));
+		}
+
+		public boolean shouldExecute() {
+			return this.parentEntity.getAttackTarget() != null;
+		}
+
+		public void startExecuting() {
+			this.attackTimer = 0;
+		}
+
+		public void tick() {
+			LivingEntity livingentity = this.parentEntity.getAttackTarget();
+			if (livingentity.getDistanceSq(this.parentEntity) > 4.0D
+					&& this.parentEntity.canEntityBeSeen(livingentity)) {
+				this.parentEntity.getLookController().setLookPositionWithEntity(livingentity, 90.0F, 30.0F);
+				World world = this.parentEntity.world;
+				++this.attackTimer;
+
+				if (this.attackTimer == 15) {
+					Vec3d vector3d = this.parentEntity.getLook(1.0F);
+					double d2 = livingentity.getPosX() - (this.parentEntity.getPosX() + vector3d.x * 2.0D);
+					double d3 = livingentity.getPosYHeight(0.5D) - (0.5D + this.parentEntity.getPosYHeight(0.5D));
+					double d4 = livingentity.getPosZ() - (this.parentEntity.getPosZ() + vector3d.z * 4.0D);
+					RocketMobEntity fireballentity = new RocketMobEntity(world, this.parentEntity, d2, d3, d4);
+					fireballentity.setPosition(this.parentEntity.getPosX() + 0.3D + vector3d.x * 1.0D,
+							this.parentEntity.getPosYHeight(0.8D), fireballentity.getPosZ() + 1.0D);
+					world.addEntity(fireballentity);
+				}
+				if (this.attackTimer == 20) {
+					Vec3d vector3d = this.parentEntity.getLook(1.0F);
+					double d2 = livingentity.getPosX() - (this.parentEntity.getPosX() + vector3d.x * 2.0D);
+					double d3 = livingentity.getPosYHeight(0.5D) - (0.5D + this.parentEntity.getPosYHeight(0.5D));
+					double d4 = livingentity.getPosZ() - (this.parentEntity.getPosZ() + vector3d.z * 4.0D);
+					RocketMobEntity fireballentity = new RocketMobEntity(world, this.parentEntity, d2, d3, d4);
+					fireballentity.setPosition(this.parentEntity.getPosX() - 0.3D + vector3d.x * 1.0D,
+							this.parentEntity.getPosYHeight(0.8D), fireballentity.getPosZ() - 1.0D);
+					world.addEntity(fireballentity);
+					this.attackTimer = -50;
+				}
+			} else if (this.attackTimer > 0) {
+				--this.attackTimer;
+			}
+			this.parentEntity.setAttacking(this.attackTimer > 10);
+		}
 	}
 
 	@Nullable
@@ -107,10 +206,6 @@ public class RevenantEntity extends DemonEntity implements IRangedAttackMob {
 		spawnDataIn = super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 		float f = difficultyIn.getClampedAdditionalDifficulty();
 		this.setCanPickUpLoot(this.rand.nextFloat() < 0.55F * f);
-		if (spawnDataIn == null) {
-			spawnDataIn = new RevenantEntity.GroupData(worldIn.getRandom()
-					.nextFloat() < net.minecraftforge.common.ForgeConfig.SERVER.zombieBabyChance.get());
-		}
 
 		this.setEquipmentBasedOnDifficulty(difficultyIn);
 		this.setEnchantmentBasedOnDifficulty(difficultyIn);
@@ -126,19 +221,6 @@ public class RevenantEntity extends DemonEntity implements IRangedAttackMob {
 			}
 		}
 		return spawnDataIn;
-	}
-
-	public class GroupData implements ILivingEntityData {
-		public final boolean isChild;
-
-		private GroupData(boolean isChildIn) {
-			this.isChild = isChildIn;
-		}
-	}
-
-	@Override
-	public boolean isChild() {
-		return false;
 	}
 
 	protected boolean shouldDrown() {
@@ -176,31 +258,6 @@ public class RevenantEntity extends DemonEntity implements IRangedAttackMob {
 	@Override
 	public CreatureAttribute getCreatureAttribute() {
 		return CreatureAttribute.UNDEAD;
-	}
-
-	@OnlyIn(Dist.CLIENT)
-	public AbstractIllagerEntity.ArmPose getArmPose() {
-		return AbstractIllagerEntity.ArmPose.CROSSED;
-	}
-
-	@Override
-	public void attackEntityWithRangedAttack(LivingEntity target, float distanceFactor) {
-		ItemStack itemstack = this.findAmmo(this.getHeldItem(ProjectileHelper.getHandWith(this, DoomItems.SG.get())));
-		ShotgunShellEntity abstractarrowentity = this.fireArrow(itemstack, distanceFactor);
-		if (this.getHeldItemMainhand().getItem() instanceof Shotgun)
-			abstractarrowentity = ((Shotgun) this.getHeldItemMainhand().getItem()).customeArrow(abstractarrowentity);
-		double d0 = target.getPosX() - this.getPosX();
-		double d1 = target.getPosYHeight(0.3333333333333333D) - abstractarrowentity.getPosY();
-		double d2 = target.getPosZ() - this.getPosZ();
-		double d3 = (double) MathHelper.sqrt(d0 * d0 + d2 * d2);
-		abstractarrowentity.shoot(d0, d1 + d3 * (double) 0.2F, d2, 1.6F,
-				(float) (14 - this.world.getDifficulty().getId() * 4));
-		this.playSound(ModSoundEvents.SHOOT1.get(), 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
-		this.world.addEntity(abstractarrowentity);
-	}
-
-	protected ShotgunShellEntity fireArrow(ItemStack arrowStack, float distanceFactor) {
-		return (ShotgunShellEntity) ProjectileHelper.fireArrow(this, arrowStack, distanceFactor);
 	}
 
 	@Override

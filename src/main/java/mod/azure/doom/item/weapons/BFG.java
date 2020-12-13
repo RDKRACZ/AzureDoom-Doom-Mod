@@ -124,7 +124,7 @@ public class BFG extends ShootableItem implements IAnimatable {
 					}
 				}
 
-				AnimationController controller = GeckoLibUtil.getControllerForStack(this.factory, stack,
+				AnimationController<?> controller = GeckoLibUtil.getControllerForStack(this.factory, stack,
 						controllerName);
 
 				if (controller.getAnimationState() == AnimationState.Stopped) {

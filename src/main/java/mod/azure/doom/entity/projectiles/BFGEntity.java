@@ -4,8 +4,6 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import com.blackgear.nether.common.entity.HoglinEntity;
-
 import mod.azure.doom.entity.GoreNestEntity;
 import mod.azure.doom.util.registry.DoomItems;
 import mod.azure.doom.util.registry.ModEntityTypes;
@@ -208,8 +206,7 @@ public class BFGEntity extends AbstractArrowEntity {
 			Entity entity = list.get(k2);
 			if (!(entity instanceof ServerPlayerEntity) && !(entity instanceof GoreNestEntity)
 					&& (entity instanceof MonsterEntity) || (entity instanceof SlimeEntity)
-					|| (entity instanceof PhantomEntity) || (entity instanceof ShulkerEntity)
-					|| (entity instanceof HoglinEntity)) {
+					|| (entity instanceof PhantomEntity) || (entity instanceof ShulkerEntity)) {
 				double d12 = (double) (MathHelper.sqrt(entity.getDistanceSq(vector3d1)) / f2);
 				if (d12 <= 1.0D) {
 					if (entity.isAlive()) {

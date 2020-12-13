@@ -71,7 +71,6 @@ public class DoomMod {
 	private void enqueueIMC(InterModEnqueueEvent event) {
 		InterModComms.sendTo("curios", CuriosAPI.IMC.REGISTER_TYPE, () -> new CurioIMCMessage("charm"));
 		InterModComms.sendTo("curios", CuriosAPI.IMC.REGISTER_TYPE, () -> new CurioIMCMessage("belt"));
-		InterModComms.sendTo("curios", CuriosAPI.IMC.REGISTER_TYPE, () -> new CurioIMCMessage("bracelet"));
 	}
 
 	public static final ItemGroup DoomWeaponItemGroup = (new ItemGroup("doomweapons") {

@@ -66,7 +66,7 @@ public class PossessedScientistEntity extends DemonEntity implements IAnimatable
 			}
 		}
 		if (this.isAggressive()) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("attack", true));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("attack", false));
 			return PlayState.CONTINUE;
 		}
 		if ((limbSwingAmount < 0.10D) && !this.isAggressive()) {

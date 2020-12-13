@@ -77,4 +77,22 @@ public class DoomBlocks {
 	public static final RegistryObject<Block> ARGENT_LAMP_BLOCK = BLOCKS.register("argent_lamp_block",
 			() -> new ArgentLampBlock(
 					(Block.Properties.create(Material.ANVIL).hardnessAndResistance(4.0F).sound(SoundType.STONE))));
+
+	public static final RegistryObject<Block> E1M1_1 = BLOCKS.register("e1m1_block1",
+			() -> new ArgentBlock((Block.Properties.create(Material.ANVIL).hardnessAndResistance(4.0F))));
+
+	public static final RegistryObject<Block> E1M1_2 = BLOCKS.register("e1m1_block2",
+			() -> new ArgentBlock((Block.Properties.create(Material.ANVIL).hardnessAndResistance(4.0F))));
+
+	public static final RegistryObject<Block> E1M1_3 = BLOCKS.register("e1m1_block3",
+			() -> new ArgentBlock((Block.Properties.create(Material.ANVIL).hardnessAndResistance(4.0F))));
+
+	public static final RegistryObject<Block> E1M1_4 = BLOCKS.register("e1m1_block4",
+			() -> new ArgentBlock((Block.Properties.create(Material.ANVIL).hardnessAndResistance(4.0F))));
+
+	public static final RegistryObject<Block> E1M1_5 = BLOCKS.register("e1m1_block5",
+			() -> new ArgentBlock((Block.Properties.create(Material.ANVIL).hardnessAndResistance(4.0F))));
+
+	public static final RegistryObject<Block> E1M1_6 = BLOCKS.register("e1m1_block6",
+			() -> new ArgentBlock((Block.Properties.create(Material.ANVIL).hardnessAndResistance(4.0F))));
 }

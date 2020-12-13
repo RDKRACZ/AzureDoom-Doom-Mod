@@ -1,0 +1,19 @@
+{
+	"result": {
+		"item": "doomweapon:e1m1_block4"
+	},
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		" $ ",
+		"$c$",
+		" $ "
+	],
+	"key": {
+		"$": {
+			"item": "doomweapon:argent_energy"
+		},
+		"c": {
+			"item": "minecraft:dirt"
+		}
+	}
+}

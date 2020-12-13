@@ -46,8 +46,15 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-public class Imp2016Entity extends DemonEntity {
+public class Imp2016Entity extends DemonEntity implements IAnimatable {
 
 	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(Imp2016Entity.class,
 			DataSerializers.BOOLEAN);
@@ -56,10 +63,41 @@ public class Imp2016Entity extends DemonEntity {
 		super(entityType, worldIn);
 	}
 
+	private AnimationFactory factory = new AnimationFactory(this);
+
+	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+		if (event.isMoving() && !this.dataManager.get(ATTACKING)) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("walking", true));
+			return PlayState.CONTINUE;
+		}
+		if (this.dataManager.get(ATTACKING) && !(this.dead || this.getHealth() < 0.01)) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("attack", false));
+			return PlayState.CONTINUE;
+		}
+		if ((this.dead || this.getHealth() < 0.01)) {
+			if (world.isRemote) {
+				event.getController().setAnimation(new AnimationBuilder().addAnimation("death", false));
+				return PlayState.CONTINUE;
+			}
+		}
+		event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
+		return PlayState.CONTINUE;
+	}
+
+	@Override
+	public void registerControllers(AnimationData data) {
+		data.addAnimationController(new AnimationController<Imp2016Entity>(this, "controller", 0, this::predicate));
+	}
+
+	@Override
+	public AnimationFactory getFactory() {
+		return this.factory;
+	}
+
 	@Override
 	protected void onDeathUpdate() {
 		++this.deathTime;
-		if (this.deathTime == 80) {
+		if (this.deathTime == 50) {
 			this.remove();
 			if (world.isRemote) {
 			}
@@ -142,7 +180,7 @@ public class Imp2016Entity extends DemonEntity {
 				World world = this.parentEntity.world;
 				++this.attackTimer;
 
-				if (this.attackTimer == 50) {
+				if (this.attackTimer == 20) {
 					Vec3d vector3d = this.parentEntity.getLook(1.0F);
 					double d2 = livingentity.getPosX() - (this.parentEntity.getPosX() + vector3d.x * 4.0D);
 					double d3 = livingentity.getPosYHeight(0.5D) - (0.5D + this.parentEntity.getPosYHeight(0.5D));
@@ -151,7 +189,7 @@ public class Imp2016Entity extends DemonEntity {
 					fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 2.0D,
 							this.parentEntity.getPosYHeight(0.5D) + 0.5D, fireballentity.getPosZ() + vector3d.z * 1.0D);
 					world.addEntity(fireballentity);
-					this.attackTimer = -100;
+					this.attackTimer = -40;
 				}
 			} else if (this.attackTimer > 0) {
 				--this.attackTimer;
