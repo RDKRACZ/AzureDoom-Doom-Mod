@@ -8,6 +8,7 @@ import mod.azure.doom.entity.CacodemonEntity;
 import mod.azure.doom.entity.ChaingunnerEntity;
 import mod.azure.doom.entity.Cyberdemon2016Entity;
 import mod.azure.doom.entity.CyberdemonEntity;
+import mod.azure.doom.entity.GargoyleEntity;
 import mod.azure.doom.entity.GoreNestEntity;
 import mod.azure.doom.entity.Hellknight2016Entity;
 import mod.azure.doom.entity.HellknightEntity;
@@ -37,9 +38,12 @@ import mod.azure.doom.entity.projectiles.EnergyCellEntity;
 import mod.azure.doom.entity.projectiles.RocketEntity;
 import mod.azure.doom.entity.projectiles.ShotgunShellEntity;
 import mod.azure.doom.entity.projectiles.UnmaykrBoltEntity;
+import mod.azure.doom.entity.projectiles.entity.ArchvileFiring;
 import mod.azure.doom.entity.projectiles.entity.BarenBlastEntity;
+import mod.azure.doom.entity.projectiles.entity.ChaingunMobEntity;
 import mod.azure.doom.entity.projectiles.entity.EnergyCellMobEntity;
 import mod.azure.doom.entity.projectiles.entity.RocketMobEntity;
+import mod.azure.doom.entity.tileentity.E1M1Door4Entity;
 import mod.azure.doom.entity.tileentity.IconBlockEntity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
@@ -60,6 +64,15 @@ public class ModEntityTypes {
 	public static final RegistryObject<TileEntityType<IconBlockEntity>> ICON = TILE_TYPES.register("icon",
 			() -> TileEntityType.Builder.<IconBlockEntity>create(IconBlockEntity::new, DoomBlocks.DOOM_WALL1.get())
 					.build(null));
+
+	public static final RegistryObject<TileEntityType<E1M1Door4Entity>> E1M1DOOR4 = TILE_TYPES.register("e1m1door4",
+			() -> TileEntityType.Builder.<E1M1Door4Entity>create(E1M1Door4Entity::new, DoomBlocks.E1M1DOOR4.get())
+					.build(null));
+
+	public static final RegistryObject<EntityType<ArchvileFiring>> FIRING = ENTITY_TYPES.register("archvile_firing",
+			() -> EntityType.Builder.<ArchvileFiring>create(ArchvileFiring::new, EntityClassification.MISC)
+					.size(0.5F, 0.8F).trackingRange(10)
+					.build(new ResourceLocation(DoomMod.MODID, "archvile_firing").toString()));
 
 	public static final RegistryObject<EntityType<BarrelEntity>> BARREL = ENTITY_TYPES.register("barrel",
 			() -> EntityType.Builder.<BarrelEntity>create(BarrelEntity::new, EntityClassification.MISC)
@@ -255,5 +268,15 @@ public class ModEntityTypes {
 			() -> EntityType.Builder.<RocketMobEntity>create(RocketMobEntity::new, EntityClassification.MISC)
 					.size(0.5F, 0.5F).trackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "rocket_mob").toString()));
+
+	public static final RegistryObject<EntityType<ChaingunMobEntity>> CHAINGUN_MOB = ENTITY_TYPES.register(
+			"chaingun_mob",
+			() -> EntityType.Builder.<ChaingunMobEntity>create(ChaingunMobEntity::new, EntityClassification.MISC)
+					.size(0.5F, 0.5F).trackingRange(9)
+					.build(new ResourceLocation(DoomMod.MODID, "chaingun_mob").toString()));
+
+	public static final RegistryObject<EntityType<GargoyleEntity>> GARGOYLE = ENTITY_TYPES.register("gargoyle",
+			() -> EntityType.Builder.create(GargoyleEntity::new, EntityClassification.MONSTER).size(1.3f, 2.25F)
+					.immuneToFire().trackingRange(9).build(new ResourceLocation(DoomMod.MODID, "gargoyle").toString()));
 
 }

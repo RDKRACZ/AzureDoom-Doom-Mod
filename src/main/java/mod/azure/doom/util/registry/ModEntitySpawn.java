@@ -11,6 +11,7 @@ import mod.azure.doom.entity.CacodemonEntity;
 import mod.azure.doom.entity.ChaingunnerEntity;
 import mod.azure.doom.entity.Cyberdemon2016Entity;
 import mod.azure.doom.entity.CyberdemonEntity;
+import mod.azure.doom.entity.GargoyleEntity;
 import mod.azure.doom.entity.GoreNestEntity;
 import mod.azure.doom.entity.Hellknight2016Entity;
 import mod.azure.doom.entity.HellknightEntity;
@@ -31,6 +32,7 @@ import mod.azure.doom.entity.ShotgunguyEntity;
 import mod.azure.doom.entity.SpiderdemonEntity;
 import mod.azure.doom.entity.UnwillingEntity;
 import mod.azure.doom.entity.ZombiemanEntity;
+import mod.azure.doom.util.Config;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.util.RegistryKey;
@@ -52,33 +54,34 @@ public class ModEntitySpawn {
 		Set<BiomeDictionary.Type> types = BiomeDictionary.getTypes(key);
 		List<Spawners> base = event.getSpawns().getSpawner(EntityClassification.MONSTER);
 		if (types.contains(BiomeDictionary.Type.NETHER)) {
-			base.add(new Spawners(ModEntityTypes.IMP.get(), 30, 1, 4));
-			base.add(new Spawners(ModEntityTypes.IMP.get(), 30, 1, 4));
-			base.add(new Spawners(ModEntityTypes.PINKY.get(), 12, 2, 4));
-			base.add(new Spawners(ModEntityTypes.LOST_SOUL.get(), 30, 2, 4));
-			base.add(new Spawners(ModEntityTypes.CACODEMON.get(), 30, 1, 2));
-			base.add(new Spawners(ModEntityTypes.ARCHVILE.get(), 4, 1, 2));
-			base.add(new Spawners(ModEntityTypes.BARON.get(), 10, 1, 1));
-			base.add(new Spawners(ModEntityTypes.MANCUBUS.get(), 10, 1, 1));
-			base.add(new Spawners(ModEntityTypes.REVENANT.get(), 10, 1, 1));
-			base.add(new Spawners(ModEntityTypes.SPIDERDEMON.get(), 10, 1, 1));
-			base.add(new Spawners(ModEntityTypes.ZOMBIEMAN.get(), 30, 1, 4));
-			base.add(new Spawners(ModEntityTypes.NIGHTMARE_IMP.get(), 30, 1, 4));
-			base.add(new Spawners(ModEntityTypes.IMP2016.get(), 30, 1, 4));
-			base.add(new Spawners(ModEntityTypes.MECHAZOMBIE.get(), 30, 1, 4));
-			base.add(new Spawners(ModEntityTypes.ARACHNOTRON.get(), 30, 1, 4));
-			base.add(new Spawners(ModEntityTypes.CHAINGUNNER.get(), 30, 1, 4));
-			base.add(new Spawners(ModEntityTypes.SHOTGUNGUY.get(), 30, 1, 4));
-			base.add(new Spawners(ModEntityTypes.MARAUDER.get(), 15, 1, 1));
-			base.add(new Spawners(ModEntityTypes.PAIN.get(), 30, 1, 2));
-			base.add(new Spawners(ModEntityTypes.HELLKNIGHT.get(), 10, 1, 1));
-			base.add(new Spawners(ModEntityTypes.HELLKNIGHT2016.get(), 10, 1, 1));
-			base.add(new Spawners(ModEntityTypes.CYBERDEMON.get(), 10, 1, 1));
-			base.add(new Spawners(ModEntityTypes.UNWILLING.get(), 30, 1, 4));
-			base.add(new Spawners(ModEntityTypes.POSSESSEDSCIENTIST.get(), 30, 1, 4));
-			base.add(new Spawners(ModEntityTypes.POSSESSEDSOLDIER.get(), 30, 1, 4));
-			base.add(new Spawners(ModEntityTypes.GORE_NEST.get(), 30, 1, 1));
-			base.add(new Spawners(ModEntityTypes.CYBERDEMON2016.get(), 10, 1, 1));
+			base.add(new Spawners(ModEntityTypes.IMP.get(), Config.SERVER.COMMON_DEMON_SPAWN_WEIGHT.get(), 1, 4));
+			base.add(new Spawners(ModEntityTypes.PINKY.get(), Config.SERVER.COMMON_DEMON_SPAWN_WEIGHT.get(), 1, 4));
+			base.add(new Spawners(ModEntityTypes.LOST_SOUL.get(), Config.SERVER.COMMON_DEMON_SPAWN_WEIGHT.get(), 1, 4));
+			base.add(new Spawners(ModEntityTypes.CACODEMON.get(), Config.SERVER.COMMON_DEMON_SPAWN_WEIGHT.get(), 1, 2));
+			base.add(new Spawners(ModEntityTypes.ARCHVILE.get(), Config.SERVER.HEAVY_DEMON_SPAWN_WEIGHT.get(), 1, 2));
+			base.add(new Spawners(ModEntityTypes.BARON.get(), Config.SERVER.HEAVY_DEMON_SPAWN_WEIGHT.get(), 1, 1));
+			base.add(new Spawners(ModEntityTypes.MANCUBUS.get(), Config.SERVER.HEAVY_DEMON_SPAWN_WEIGHT.get(), 1, 1));
+			base.add(new Spawners(ModEntityTypes.REVENANT.get(), Config.SERVER.HEAVY_DEMON_SPAWN_WEIGHT.get(), 1, 1));
+			base.add(new Spawners(ModEntityTypes.SPIDERDEMON.get(), Config.SERVER.HEAVY_DEMON_SPAWN_WEIGHT.get(), 1, 1));
+			base.add(new Spawners(ModEntityTypes.ZOMBIEMAN.get(), Config.SERVER.COMMON_DEMON_SPAWN_WEIGHT.get(), 1, 4));
+			base.add(new Spawners(ModEntityTypes.NIGHTMARE_IMP.get(), Config.SERVER.COMMON_DEMON_SPAWN_WEIGHT.get(), 1, 4));
+			base.add(new Spawners(ModEntityTypes.GARGOYLE.get(), Config.SERVER.COMMON_DEMON_SPAWN_WEIGHT.get(), 1, 4));
+			base.add(new Spawners(ModEntityTypes.IMP2016.get(), Config.SERVER.COMMON_DEMON_SPAWN_WEIGHT.get(), 1, 4));
+			base.add(new Spawners(ModEntityTypes.MECHAZOMBIE.get(), Config.SERVER.COMMON_DEMON_SPAWN_WEIGHT.get(), 1, 4));
+			base.add(new Spawners(ModEntityTypes.ARACHNOTRON.get(), Config.SERVER.COMMON_DEMON_SPAWN_WEIGHT.get(), 1, 4));
+			base.add(new Spawners(ModEntityTypes.CHAINGUNNER.get(), Config.SERVER.COMMON_DEMON_SPAWN_WEIGHT.get(), 1, 4));
+			base.add(new Spawners(ModEntityTypes.SHOTGUNGUY.get(), Config.SERVER.COMMON_DEMON_SPAWN_WEIGHT.get(), 1, 4));
+			base.add(new Spawners(ModEntityTypes.MARAUDER.get(), Config.SERVER.HEAVY_DEMON_SPAWN_WEIGHT.get(), 1, 1));
+			base.add(new Spawners(ModEntityTypes.PAIN.get(), Config.SERVER.COMMON_DEMON_SPAWN_WEIGHT.get(), 1, 2));
+			base.add(new Spawners(ModEntityTypes.HELLKNIGHT.get(), Config.SERVER.HEAVY_DEMON_SPAWN_WEIGHT.get(), 1, 1));
+			base.add(new Spawners(ModEntityTypes.HELLKNIGHT2016.get(), Config.SERVER.HEAVY_DEMON_SPAWN_WEIGHT.get(), 1, 1));
+			base.add(new Spawners(ModEntityTypes.CYBERDEMON.get(), Config.SERVER.HEAVY_DEMON_SPAWN_WEIGHT.get(), 1, 1));
+			base.add(new Spawners(ModEntityTypes.UNWILLING.get(), Config.SERVER.COMMON_DEMON_SPAWN_WEIGHT.get(), 1, 4));
+			base.add(new Spawners(ModEntityTypes.POSSESSEDSCIENTIST.get(),
+					Config.SERVER.COMMON_DEMON_SPAWN_WEIGHT.get(), 1, 4));
+			base.add(new Spawners(ModEntityTypes.POSSESSEDSOLDIER.get(), Config.SERVER.COMMON_DEMON_SPAWN_WEIGHT.get(), 1, 4));
+			base.add(new Spawners(ModEntityTypes.GORE_NEST.get(), Config.SERVER.HEAVY_DEMON_SPAWN_WEIGHT.get(), 1, 1));
+			base.add(new Spawners(ModEntityTypes.CYBERDEMON2016.get(), Config.SERVER.HEAVY_DEMON_SPAWN_WEIGHT.get(), 1, 1));
 		}
 	}
 
@@ -164,5 +167,8 @@ public class ModEntitySpawn {
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.MECHAZOMBIE.get(),
 				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
 				MechaZombieEntity::spawning);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.GARGOYLE.get(),
+				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+				GargoyleEntity::spawning);
 	}
 }

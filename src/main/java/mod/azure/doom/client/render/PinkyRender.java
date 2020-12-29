@@ -28,5 +28,4 @@ public class PinkyRender extends GeoEntityRenderer<PinkyEntity> {
 	protected float getDeathMaxRotation(PinkyEntity entityLivingBaseIn) {
 		return 0.0F;
 	}
-
 }

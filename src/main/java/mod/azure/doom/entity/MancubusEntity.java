@@ -5,8 +5,8 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
+import mod.azure.doom.entity.projectiles.entity.ArchvileFiring;
 import mod.azure.doom.entity.projectiles.entity.BarenBlastEntity;
-import mod.azure.doom.util.Config;
 import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.CreatureAttribute;
@@ -20,12 +20,12 @@ import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.ai.goal.HurtByTargetGoal;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.MoveTowardsTargetGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -34,8 +34,11 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.Direction;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
@@ -143,10 +146,7 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, false));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
-		if (Config.SERVER.IN_FIGHTING.get()) {
-			this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, MonsterEntity.class, true));
-			this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, MobEntity.class, true));
-		}
+		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)));
 	}
 
 	@Override
@@ -175,38 +175,94 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 
 		public void tick() {
 			LivingEntity livingentity = this.parentEntity.getAttackTarget();
-			if (livingentity.getDistanceSq(this.parentEntity) > 4.0D
-					&& this.parentEntity.canEntityBeSeen(livingentity)) {
+			if (this.parentEntity.canEntityBeSeen(livingentity)) {
 				this.parentEntity.getLookController().setLookPositionWithEntity(livingentity, 90.0F, 30.0F);
 				World world = this.parentEntity.world;
 				++this.attackTimer;
 
 				if (this.attackTimer == 15) {
-					Vector3d vector3d = this.parentEntity.getLook(1.0F);
-					double d2 = livingentity.getPosX() - (this.parentEntity.getPosX() + vector3d.x * 2.0D);
-					double d3 = livingentity.getPosYHeight(0.5D) - (0.5D + this.parentEntity.getPosYHeight(0.5D));
-					double d4 = livingentity.getPosZ() - (this.parentEntity.getPosZ() + vector3d.z * 4.0D);
-					BarenBlastEntity fireballentity = new BarenBlastEntity(world, this.parentEntity, d2, d3, d4);
-					fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 1.0D,
-							this.parentEntity.getPosYHeight(0.5D), fireballentity.getPosZ() + 1.0D);
-					world.addEntity(fireballentity);
+					if (parentEntity.getDistance(livingentity) < 13.0D) {
+						double d0 = Math.min(livingentity.getPosY(), livingentity.getPosY());
+						double d1 = Math.max(livingentity.getPosY(), livingentity.getPosY()) + 1.0D;
+						float f = (float) MathHelper.atan2(livingentity.getPosZ() - parentEntity.getPosZ(),
+								livingentity.getPosX() - parentEntity.getPosX());
+						for (int l = 0; l < 16; ++l) {
+							double d2 = 1.25D * (double) (l + 1);
+							int j = 1 * l;
+							parentEntity.spawnFangs(parentEntity.getPosX() + (double) MathHelper.cos(f) * d2,
+									parentEntity.getPosZ() + (double) MathHelper.sin(f) * d2, d0, d1, f, j);
+						}
+					} else {
+						Vector3d vector3d = this.parentEntity.getLook(1.0F);
+						double d2 = livingentity.getPosX() - (this.parentEntity.getPosX() + vector3d.x * 2.0D);
+						double d3 = livingentity.getPosYHeight(0.5D) - (0.5D + this.parentEntity.getPosYHeight(0.5D));
+						double d4 = livingentity.getPosZ() - (this.parentEntity.getPosZ() + vector3d.z * 4.0D);
+						BarenBlastEntity fireballentity = new BarenBlastEntity(world, this.parentEntity, d2, d3, d4);
+						fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 1.0D,
+								this.parentEntity.getPosYHeight(0.5D), fireballentity.getPosZ() + 1.0D);
+						world.addEntity(fireballentity);
+					}
 				}
 				if (this.attackTimer == 20) {
-					Vector3d vector3d = this.parentEntity.getLook(1.0F);
-					double d2 = livingentity.getPosX() - (this.parentEntity.getPosX() + vector3d.x * 2.0D);
-					double d3 = livingentity.getPosYHeight(0.5D) - (0.5D + this.parentEntity.getPosYHeight(0.5D));
-					double d4 = livingentity.getPosZ() - (this.parentEntity.getPosZ() + vector3d.z * 4.0D);
-					BarenBlastEntity fireballentity = new BarenBlastEntity(world, this.parentEntity, d2, d3, d4);
-					fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 1.0D,
-							this.parentEntity.getPosYHeight(0.5D), fireballentity.getPosZ() - 1.0D);
-					world.addEntity(fireballentity);
+					if (parentEntity.getDistance(livingentity) < 13.0D) {
+						double d0 = Math.min(livingentity.getPosY(), livingentity.getPosY());
+						double d1 = Math.max(livingentity.getPosY(), livingentity.getPosY()) + 1.0D;
+						float f = (float) MathHelper.atan2(livingentity.getPosZ() - parentEntity.getPosZ(),
+								livingentity.getPosX() - parentEntity.getPosX());
+						for (int l = 0; l < 16; ++l) {
+							double d2 = 1.25D * (double) (l - 1);
+							int j = 1 * l;
+							parentEntity.spawnFangs(parentEntity.getPosX() + (double) MathHelper.cos(f) * d2,
+									parentEntity.getPosZ() + (double) MathHelper.sin(f) * d2, d0, d1, f, j);
+						}
+					} else {
+						Vector3d vector3d = this.parentEntity.getLook(1.0F);
+						double d2 = livingentity.getPosX() - (this.parentEntity.getPosX() + vector3d.x * 2.0D);
+						double d3 = livingentity.getPosYHeight(0.5D) - (0.5D + this.parentEntity.getPosYHeight(0.5D));
+						double d4 = livingentity.getPosZ() - (this.parentEntity.getPosZ() + vector3d.z * 4.0D);
+						BarenBlastEntity fireballentity = new BarenBlastEntity(world, this.parentEntity, d2, d3, d4);
+						fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 1.0D,
+								this.parentEntity.getPosYHeight(0.5D), fireballentity.getPosZ() - 1.0D);
+						world.addEntity(fireballentity);
+					}
 					this.attackTimer = -50;
 				}
 			} else if (this.attackTimer > 0) {
 				--this.attackTimer;
 			}
-			this.parentEntity.faceEntity(this.parentEntity.getAttackTarget(), 10.0F, 10.0F);
+			this.parentEntity.getLookController().setLookPositionWithEntity(livingentity, 30.0F, 30.0F);
 			this.parentEntity.setAttacking(this.attackTimer > 10);
+		}
+	}
+
+	public void spawnFangs(double p_190876_1_, double p_190876_3_, double p_190876_5_, double p_190876_7_,
+			float p_190876_9_, int p_190876_10_) {
+		BlockPos blockpos = new BlockPos(p_190876_1_, p_190876_7_, p_190876_3_);
+		boolean flag = false;
+		double d0 = 0.0D;
+		do {
+			BlockPos blockpos1 = blockpos.down();
+			BlockState blockstate = this.world.getBlockState(blockpos1);
+			if (blockstate.isSolidSide(this.world, blockpos1, Direction.UP)) {
+				if (!this.world.isAirBlock(blockpos)) {
+					BlockState blockstate1 = this.world.getBlockState(blockpos);
+					VoxelShape voxelshape = blockstate1.getCollisionShape(this.world, blockpos);
+					if (!voxelshape.isEmpty()) {
+						d0 = voxelshape.getEnd(Direction.Axis.Y);
+					}
+				}
+				flag = true;
+				break;
+			}
+			blockpos = blockpos.down();
+		} while (blockpos.getY() >= MathHelper.floor(p_190876_5_) - 1);
+
+		if (flag) {
+			ArchvileFiring fang = new ArchvileFiring(this.world, p_190876_1_, (double) blockpos.getY() + d0,
+					p_190876_3_, p_190876_9_, 1, this);
+			fang.setFire(ticksExisted);
+			fang.setInvisible(false);
+			this.world.addEntity(fang);
 		}
 	}
 

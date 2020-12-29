@@ -9,6 +9,7 @@ import mod.azure.doom.client.render.CacodemonRender;
 import mod.azure.doom.client.render.ChaingunnerRender;
 import mod.azure.doom.client.render.Cyberdemon2016Render;
 import mod.azure.doom.client.render.CyberdemonRender;
+import mod.azure.doom.client.render.GargoyleRender;
 import mod.azure.doom.client.render.GoreNestRender;
 import mod.azure.doom.client.render.Hellknight2016Render;
 import mod.azure.doom.client.render.HellknightRender;
@@ -58,6 +59,7 @@ import mod.azure.doom.client.render.armors.SantaRender;
 import mod.azure.doom.client.render.armors.SentinelRender;
 import mod.azure.doom.client.render.armors.TwentyFiveRender;
 import mod.azure.doom.client.render.armors.ZombieRender;
+import mod.azure.doom.client.render.blocks.E1M1Door4Render;
 import mod.azure.doom.client.render.projectiles.ArgentBoltRender;
 import mod.azure.doom.client.render.projectiles.BFGCellRender;
 import mod.azure.doom.client.render.projectiles.BarenBlastRender;
@@ -67,6 +69,8 @@ import mod.azure.doom.client.render.projectiles.EnergyCellRender;
 import mod.azure.doom.client.render.projectiles.RocketRender;
 import mod.azure.doom.client.render.projectiles.ShotgunShellRender;
 import mod.azure.doom.client.render.projectiles.UnmaykrBulletRender;
+import mod.azure.doom.client.render.projectiles.entity.ArchvileFiringRender;
+import mod.azure.doom.client.render.projectiles.entity.ChaingunMobRender;
 import mod.azure.doom.client.render.projectiles.entity.EnergyCellMobRender;
 import mod.azure.doom.client.render.projectiles.entity.RocketMobRender;
 import mod.azure.doom.item.armor.AstroDoomArmor;
@@ -101,6 +105,7 @@ import mod.azure.doom.item.armor.ZombieDoomArmor;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -152,10 +157,13 @@ public class ClientModEventSubscriber {
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ENERGY_CELL_MOB.get(),
 				EnergyCellMobRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ROCKET_MOB.get(), RocketMobRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.CHAINGUN_MOB.get(), ChaingunMobRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.GORE_NEST.get(), GoreNestRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.MECHAZOMBIE.get(), MechaZombieRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.GARGOYLE.get(), GargoyleRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.HELLKNIGHT2016.get(),
 				Hellknight2016Render::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.FIRING.get(), ArchvileFiringRender::new);
 
 		GeoArmorRenderer.registerArmorRenderer(DoomicornDoomArmor.class, new DoomicornRender());
 		GeoArmorRenderer.registerArmorRenderer(NightmareDoomArmor.class, new NightmareRender());
@@ -186,5 +194,7 @@ public class ClientModEventSubscriber {
 		GeoArmorRenderer.registerArmorRenderer(SentinelDoomArmor.class, new SentinelRender());
 		GeoArmorRenderer.registerArmorRenderer(ZombieDoomArmor.class, new ZombieRender());
 		GeoArmorRenderer.registerArmorRenderer(SantaDoomArmor.class, new SantaRender());
+
+		ClientRegistry.bindTileEntityRenderer(ModEntityTypes.E1M1DOOR4.get(), E1M1Door4Render::new);
 	}
 }

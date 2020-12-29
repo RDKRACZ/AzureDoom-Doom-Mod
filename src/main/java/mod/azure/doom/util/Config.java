@@ -25,19 +25,26 @@ public class Config {
 
 	public static class ServerConfig {
 
-		public final BooleanValue IN_FIGHTING;
 		public ConfigValue<Integer> CRUCIBLE_MARUADER_MAXDAMAGE;
 		public final BooleanValue ENABLE_LOCKON;
+		public ConfigValue<Integer> COMMON_DEMON_SPAWN_WEIGHT;
+		public ConfigValue<Integer> HEAVY_DEMON_SPAWN_WEIGHT;
 
 		ServerConfig(ForgeConfigSpec.Builder builder) {
+			builder.push("spawn_weight");
+			COMMON_DEMON_SPAWN_WEIGHT = builder.comment("Spawn weight of Common Demons.")
+					.translation(DoomMod.MODID + ".config.common_demon_spawn_weight")
+					.define("COMMON_DEMON_SPAWN_WEIGHT", 30);
+			HEAVY_DEMON_SPAWN_WEIGHT = builder.comment("Spawn weight of Heavy Demons.")
+					.translation(DoomMod.MODID + ".config.heavy_demon_spawn_weight")
+					.define("HEAVY_DEMON_SPAWN_WEIGHT", 10);
+			builder.pop();
 			builder.push("gear");
 			CRUCIBLE_MARUADER_MAXDAMAGE = builder.comment("Crucible Sword/Maruader Axe Max Damage")
 					.translation(DoomMod.MODID + ".config.crucible_maruader_maxdamage")
 					.define("CRUCIBLE_MARUADER_MAXDAMAGE", 5);
 			builder.pop();
 			builder.push("extra");
-			IN_FIGHTING = builder.comment("Do you want to allow In-fighting of the mobs?")
-					.translation(DoomMod.MODID + ".config.in_fighting").define("IN_FIGHTING", true);
 			ENABLE_LOCKON = builder.comment("You can disable disable the lockon feature here.")
 					.translation(DoomMod.MODID + ".config.enable_lockon").define("ENABLE_LOCKON", true);
 			builder.pop();

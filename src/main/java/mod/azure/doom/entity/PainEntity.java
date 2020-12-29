@@ -4,7 +4,6 @@ import java.util.EnumSet;
 import java.util.Random;
 
 import mod.azure.doom.entity.ai.goal.DemonAttackGoal;
-import mod.azure.doom.util.Config;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
@@ -20,9 +19,9 @@ import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.controller.MovementController;
 import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.ai.goal.HurtByTargetGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.monster.IMob;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
@@ -112,16 +111,7 @@ public class PainEntity extends DemonEntity implements IMob, IAnimatable {
 				new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 10, true, false, (p_213812_1_) -> {
 					return Math.abs(p_213812_1_.getPosY() - this.getPosY()) <= 4.0D;
 				}));
-		if (Config.SERVER.IN_FIGHTING.get()) {
-			this.targetSelector.addGoal(3,
-					new NearestAttackableTargetGoal<>(this, MonsterEntity.class, 10, true, false, (p_213812_1_) -> {
-						return Math.abs(p_213812_1_.getPosY() - this.getPosY()) <= 4.0D;
-					}));
-			this.targetSelector.addGoal(3,
-					new NearestAttackableTargetGoal<>(this, MobEntity.class, 10, true, false, (p_213812_1_) -> {
-						return Math.abs(p_213812_1_.getPosY() - this.getPosY()) <= 4.0D;
-					}));
-		}
+		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)));
 	}
 
 	@Override

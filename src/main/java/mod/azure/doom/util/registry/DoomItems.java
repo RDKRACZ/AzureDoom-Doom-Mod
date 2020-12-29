@@ -5,7 +5,6 @@ import mod.azure.doom.item.ArgentEnergyItem;
 import mod.azure.doom.item.ArgentPlateItem;
 import mod.azure.doom.item.DaisyItem;
 import mod.azure.doom.item.E1M1MusicDisc;
-import mod.azure.doom.item.SpiderdemonAttackItem;
 import mod.azure.doom.item.UnopenedItem;
 import mod.azure.doom.item.ammo.ArgentBolt;
 import mod.azure.doom.item.ammo.BFGCell;
@@ -144,6 +143,30 @@ public class DoomItems {
 	public static final RegistryObject<Item> E1M1_6 = ITEMS.register("e1m1_block6",
 			() -> new BlockItem(DoomBlocks.E1M1_6.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
 
+	public static final RegistryObject<Item> E1M1_7 = ITEMS.register("e1m1_block7",
+			() -> new BlockItem(DoomBlocks.E1M1_7.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+
+	public static final RegistryObject<Item> E1M1_8 = ITEMS.register("e1m1_block8",
+			() -> new BlockItem(DoomBlocks.E1M1_8.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+
+	public static final RegistryObject<Item> E1M1_9 = ITEMS.register("e1m1_block9",
+			() -> new BlockItem(DoomBlocks.E1M1_9.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+
+	public static final RegistryObject<Item> E1M1_10 = ITEMS.register("e1m1_block10",
+			() -> new BlockItem(DoomBlocks.E1M1_10.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+
+	public static final RegistryObject<Item> E1M1_11 = ITEMS.register("e1m1_block11",
+			() -> new BlockItem(DoomBlocks.E1M1_11.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+
+	public static final RegistryObject<Item> E1M1_12 = ITEMS.register("e1m1_block12",
+			() -> new BlockItem(DoomBlocks.E1M1_12.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+
+	public static final RegistryObject<Item> E1M1_13 = ITEMS.register("e1m1_block13",
+			() -> new BlockItem(DoomBlocks.E1M1_13.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+
+	public static final RegistryObject<Item> E1M1DOOR4 = ITEMS.register("e1m1door4",
+			() -> new BlockItem(DoomBlocks.E1M1DOOR4.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+
 	// AMMO
 	public static final RegistryObject<Item> SHOTGUN_SHELLS = ITEMS.register("shotgun_shells",
 			() -> new ShellAmmo(new Item.Properties().group(DoomMod.DoomWeaponItemGroup), 2.0F));
@@ -230,6 +253,8 @@ public class DoomItems {
 			() -> new DoomSpawnEgg(ModEntityTypes.POSSESSEDSOLDIER));
 	public static final RegistryObject<Item> HELLKNIGHT2016_SPAWN_EGG = ITEMS.register("hellknight2016_spawn_egg",
 			() -> new DoomSpawnEgg(ModEntityTypes.HELLKNIGHT2016));
+	public static final RegistryObject<Item> GARGOYLE_SPAWN_EGG = ITEMS.register("gargoyle_spawn_egg",
+			() -> new DoomSpawnEgg(ModEntityTypes.GARGOYLE));
 
 	// WEAPONS AND TOOLS
 	public static final RegistryObject<Item> CRUCIBLESWORD = ITEMS.register("cruciblesword",
@@ -260,8 +285,6 @@ public class DoomItems {
 	public static final RegistryObject<Item> BALLISTA = ITEMS.register("ballista", () -> new Ballista());
 	public static final RegistryObject<Item> CHAINGUN = ITEMS.register("chaingun", () -> new Chaingun());
 	public static final RegistryObject<Item> PISTOL = ITEMS.register("pistol", () -> new PistolItem());
-	public static final RegistryObject<Item> SPIDERDEMONATTACK = ITEMS.register("spiderdemonattack",
-			() -> new SpiderdemonAttackItem());
 
 	// ARMOR
 	public static final RegistryObject<Item> DOOM_HELMET = ITEMS.register("doom_helmet",

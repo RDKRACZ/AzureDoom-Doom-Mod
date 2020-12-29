@@ -9,6 +9,7 @@ import mod.azure.doom.entity.CacodemonEntity;
 import mod.azure.doom.entity.ChaingunnerEntity;
 import mod.azure.doom.entity.Cyberdemon2016Entity;
 import mod.azure.doom.entity.CyberdemonEntity;
+import mod.azure.doom.entity.GargoyleEntity;
 import mod.azure.doom.entity.GoreNestEntity;
 import mod.azure.doom.entity.Hellknight2016Entity;
 import mod.azure.doom.entity.HellknightEntity;
@@ -138,6 +139,7 @@ public class DoomMod {
 			GlobalEntityTypeAttributes.put(ModEntityTypes.GORE_NEST.get(), GoreNestEntity.func_234200_m_().create());
 			GlobalEntityTypeAttributes.put(ModEntityTypes.MECHAZOMBIE.get(),
 					MechaZombieEntity.func_234200_m_().create());
+			GlobalEntityTypeAttributes.put(ModEntityTypes.GARGOYLE.get(), GargoyleEntity.func_234200_m_().create());
 		});
 	}
 

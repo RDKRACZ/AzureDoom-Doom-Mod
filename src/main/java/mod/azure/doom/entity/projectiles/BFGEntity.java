@@ -183,7 +183,7 @@ public class BFGEntity extends AbstractArrowEntity {
 					|| (entity instanceof HoglinEntity)) {
 				double d12 = (double) (MathHelper.sqrt(entity.getDistanceSq(vector3d1)) / f2);
 				if (d12 <= 1.0D) {
-					if (entity.isAlive() || entity.isLiving()) {
+					if (entity.isAlive()) {
 						entity.attackEntityFrom(DamageSource.causeArrowDamage(this, this), 10);
 						this.setTargetedEntity(entity.getEntityId());
 					}

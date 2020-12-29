@@ -4,7 +4,6 @@ import java.util.EnumSet;
 import java.util.Random;
 
 import mod.azure.doom.entity.ai.goal.DemonAttackGoal;
-import mod.azure.doom.util.Config;
 import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.CreatureAttribute;
@@ -19,9 +18,9 @@ import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.controller.MovementController;
 import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.ai.goal.HurtByTargetGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.monster.IMob;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.FireballEntity;
 import net.minecraft.network.IPacket;
@@ -64,7 +63,7 @@ public class CacodemonEntity extends DemonEntity implements IMob, IAnimatable {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("walking", true));
 			return PlayState.CONTINUE;
 		}
-		if ((this.dead || this.getHealth() < 0.01 || this.getShouldBeDead()))  {
+		if ((this.dead || this.getHealth() < 0.01 || this.getShouldBeDead())) {
 			if (world.isRemote) {
 				event.getController().setAnimation(new AnimationBuilder().addAnimation("death", false));
 				return PlayState.CONTINUE;
@@ -135,16 +134,7 @@ public class CacodemonEntity extends DemonEntity implements IMob, IAnimatable {
 				new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 10, true, false, (p_213812_1_) -> {
 					return Math.abs(p_213812_1_.getPosY() - this.getPosY()) <= 4.0D;
 				}));
-		if (Config.SERVER.IN_FIGHTING.get()) {
-			this.targetSelector.addGoal(3,
-					new NearestAttackableTargetGoal<>(this, MonsterEntity.class, 10, true, false, (p_213812_1_) -> {
-						return Math.abs(p_213812_1_.getPosY() - this.getPosY()) <= 4.0D;
-					}));
-			this.targetSelector.addGoal(3,
-					new NearestAttackableTargetGoal<>(this, MobEntity.class, 10, true, false, (p_213812_1_) -> {
-						return Math.abs(p_213812_1_.getPosY() - this.getPosY()) <= 4.0D;
-					}));
-		}
+		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)));
 	}
 
 	public static boolean spawning(EntityType<CacodemonEntity> p_223368_0_, IWorld p_223368_1_, SpawnReason reason,

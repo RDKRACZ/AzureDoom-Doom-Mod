@@ -1,41 +1,13 @@
 package mod.azure.doom.client;
 
-import mod.azure.doom.item.weapons.Ballista;
 import mod.azure.doom.util.registry.DoomItems;
 import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.util.ResourceLocation;
 
 public class ModItemModelsProperties {
 
 	public ModItemModelsProperties() {
-		// Ballista
-		ItemModelsProperties.registerProperty(DoomItems.BALLISTA.get(), new ResourceLocation("pull"),
-				(itemStack, clientWorld, livingEntity) -> {
-					if (livingEntity == null) {
-						return 0.0F;
-					} else {
-						return Ballista.isCharged(itemStack) ? 0.0F
-								: (float) (itemStack.getUseDuration() - livingEntity.getItemInUseMaxCount())
-										/ (float) Ballista.getChargeTime(itemStack);
-					}
-				});
-		ItemModelsProperties.registerProperty(DoomItems.BALLISTA.get(), new ResourceLocation("pulling"),
-				(itemStack, clientWorld, livingEntity) -> {
-					return livingEntity != null && livingEntity.isHandActive()
-							&& livingEntity.getActiveItemStack() == itemStack && !Ballista.isCharged(itemStack) ? 1.0F
-									: 0.0F;
-				});
-		ItemModelsProperties.registerProperty(DoomItems.BALLISTA.get(), new ResourceLocation("charged"),
-				(itemStack, clientWorld, livingEntity) -> {
-					return livingEntity != null && Ballista.isCharged(itemStack) ? 1.0F : 0.0F;
-				});
-		ItemModelsProperties.registerProperty(DoomItems.BALLISTA.get(), new ResourceLocation("firework"),
-				(itemStack, clientWorld, livingEntity) -> {
-					return livingEntity != null && Ballista.isCharged(itemStack)
-							&& Ballista.hasChargedProjectile(itemStack, Items.FIREWORK_ROCKET) ? 1.0F : 0.0F;
-				});
 		// Crucible
 		ItemModelsProperties.registerProperty(DoomItems.CRUCIBLESWORD.get(), new ResourceLocation("broken"),
 				(p_210312_0_, p_210312_1_, p_210312_2_) -> {

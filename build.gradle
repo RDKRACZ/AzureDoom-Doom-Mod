@@ -20,7 +20,7 @@ apply plugin: 'com.matthewprenger.cursegradle'
 import groovy.json.JsonSlurper
 import groovy.json.JsonOutput
 
-version = "3.6.1"
+version = "3.6.2"
 group = "mod.azure.doomweapon"
 archivesBaseName = "MCDoom-Mod-1.16.4"
 
@@ -76,7 +76,7 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.4-35.0.12'
+    minecraft 'net.minecraftforge:forge:1.16.4-35.1.13'
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.3-4.0.2.0")
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.3-4.0.2.0:api")
 	compile fg.deobf("curse.maven:SD-392762:3069533")
@@ -84,6 +84,7 @@ dependencies {
 	//compile fg.deobf("curse.maven:GTE-417802:3114274")
 	//compile fg.deobf("curse.maven:GTEP-283644:3092113")
 	compile fg.deobf("curse.maven:projectmmo-353935:3100529")
+	compile fg.deobf("curse.maven:worldedit-225608:3135187")
 	implementation fg.deobf('software.bernie.geckolib:forge-1.16.4-geckolib:3.0.0')
 }
 

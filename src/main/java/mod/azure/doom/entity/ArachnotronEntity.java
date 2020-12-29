@@ -8,7 +8,6 @@ import javax.annotation.Nullable;
 
 import mod.azure.doom.entity.ai.goal.DemonAttackGoal;
 import mod.azure.doom.entity.projectiles.entity.EnergyCellMobEntity;
-import mod.azure.doom.util.Config;
 import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -29,7 +28,6 @@ import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -128,10 +126,7 @@ public class ArachnotronEntity extends DemonEntity implements IAnimatable {
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, false));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
-		if (Config.SERVER.IN_FIGHTING.get()) {
-			this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, MonsterEntity.class, true));
-			this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, MobEntity.class, true));
-		}
+		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)));
 	}
 
 	static class FireballAttackGoal extends Goal {
@@ -162,32 +157,11 @@ public class ArachnotronEntity extends DemonEntity implements IAnimatable {
 				double d3 = livingentity.getPosYHeight(0.5D) - (0.5D + this.parentEntity.getPosYHeight(0.5D));
 				double d4 = livingentity.getPosZ() - (this.parentEntity.getPosZ() + vector3d.z * 4.0D);
 				EnergyCellMobEntity fireballentity = new EnergyCellMobEntity(world, this.parentEntity, d2, d3, d4);
-
 				if (this.attackTimer == 10) {
 					fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 2.0D,
 							this.parentEntity.getPosYHeight(0.5D) + 0.5D, fireballentity.getPosZ() + vector3d.z * 1.0D);
 					world.addEntity(fireballentity);
-				}
-				if (this.attackTimer == 20) {
-					fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 2.0D,
-							this.parentEntity.getPosYHeight(0.5D) + 0.5D, fireballentity.getPosZ() + vector3d.z * 1.0D);
-					world.addEntity(fireballentity);
-				}
-				if (this.attackTimer == 30) {
-					fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 2.0D,
-							this.parentEntity.getPosYHeight(0.5D) + 0.5D, fireballentity.getPosZ() + vector3d.z * 1.0D);
-					world.addEntity(fireballentity);
-				}
-				if (this.attackTimer == 40) {
-					fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 2.0D,
-							this.parentEntity.getPosYHeight(0.5D) + 0.5D, fireballentity.getPosZ() + vector3d.z * 1.0D);
-					world.addEntity(fireballentity);
-				}
-				if (this.attackTimer == 50) {
-					fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 2.0D,
-							this.parentEntity.getPosYHeight(0.5D) + 0.5D, fireballentity.getPosZ() + vector3d.z * 1.0D);
-					world.addEntity(fireballentity);
-					this.attackTimer = -100;
+					this.attackTimer = -10;
 				}
 			} else if (this.attackTimer > 0) {
 				this.parentEntity.getLookController().setLookPositionWithEntity(livingentity, 90.0F, 30.0F);
