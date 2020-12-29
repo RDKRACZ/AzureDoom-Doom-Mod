@@ -41,6 +41,9 @@ public class NetherExSpawns {
 		registerEntityWorldSpawn(ModEntityTypes.IMP2016.get(), 30, 1, 4, NetherExBiomes.RUTHLESS_SANDS.get(),
 				NetherExBiomes.FUNGI_FOREST.get(), NetherExBiomes.TORRID_WASTELAND.get(),
 				NetherExBiomes.ARCTIC_ABYSS.get());
+		registerEntityWorldSpawn(ModEntityTypes.GARGOYLE.get(), 30, 1, 4, NetherExBiomes.RUTHLESS_SANDS.get(),
+				NetherExBiomes.FUNGI_FOREST.get(), NetherExBiomes.TORRID_WASTELAND.get(),
+				NetherExBiomes.ARCTIC_ABYSS.get());
 		registerEntityWorldSpawn(ModEntityTypes.LOST_SOUL.get(), 30, 1, 4, NetherExBiomes.RUTHLESS_SANDS.get(),
 				NetherExBiomes.FUNGI_FOREST.get(), NetherExBiomes.TORRID_WASTELAND.get(),
 				NetherExBiomes.ARCTIC_ABYSS.get());
@@ -80,7 +83,7 @@ public class NetherExSpawns {
 		registerEntityWorldSpawn(ModEntityTypes.CYBERDEMON2016.get(), 10, 1, 1, NetherExBiomes.RUTHLESS_SANDS.get(),
 				NetherExBiomes.FUNGI_FOREST.get(), NetherExBiomes.TORRID_WASTELAND.get(),
 				NetherExBiomes.ARCTIC_ABYSS.get());
-		registerEntityWorldSpawn(ModEntityTypes.GORE_NEST.get(), 30, 1, 1, NetherExBiomes.RUTHLESS_SANDS.get(),
+		registerEntityWorldSpawn(ModEntityTypes.GORE_NEST.get(), 10, 1, 1, NetherExBiomes.RUTHLESS_SANDS.get(),
 				NetherExBiomes.FUNGI_FOREST.get(), NetherExBiomes.TORRID_WASTELAND.get(),
 				NetherExBiomes.ARCTIC_ABYSS.get());
 		registerEntityWorldSpawn(ModEntityTypes.MECHAZOMBIE.get(), 30, 1, 4, NetherExBiomes.RUTHLESS_SANDS.get(),

@@ -35,6 +35,8 @@ public class BoPSpawns {
 				BOPBiomes.undergarden.get(), BOPBiomes.visceral_heap.get());
 		registerEntityWorldSpawn(ModEntityTypes.NIGHTMARE_IMP.get(), 30, 1, 4, BOPBiomes.ashen_inferno.get(),
 				BOPBiomes.undergarden.get(), BOPBiomes.visceral_heap.get());
+		registerEntityWorldSpawn(ModEntityTypes.GARGOYLE.get(), 30, 1, 4, BOPBiomes.ashen_inferno.get(),
+				BOPBiomes.undergarden.get(), BOPBiomes.visceral_heap.get());
 		registerEntityWorldSpawn(ModEntityTypes.CHAINGUNNER.get(), 30, 1, 4, BOPBiomes.ashen_inferno.get(),
 				BOPBiomes.undergarden.get(), BOPBiomes.visceral_heap.get());
 		registerEntityWorldSpawn(ModEntityTypes.SHOTGUNGUY.get(), 30, 1, 4, BOPBiomes.ashen_inferno.get(),
@@ -57,7 +59,7 @@ public class BoPSpawns {
 				BOPBiomes.undergarden.get(), BOPBiomes.visceral_heap.get());
 		registerEntityWorldSpawn(ModEntityTypes.CYBERDEMON2016.get(), 10, 1, 1, BOPBiomes.ashen_inferno.get(),
 				BOPBiomes.undergarden.get(), BOPBiomes.visceral_heap.get());
-		registerEntityWorldSpawn(ModEntityTypes.GORE_NEST.get(), 30, 1, 1, BOPBiomes.ashen_inferno.get(),
+		registerEntityWorldSpawn(ModEntityTypes.GORE_NEST.get(), 10, 1, 1, BOPBiomes.ashen_inferno.get(),
 				BOPBiomes.undergarden.get(), BOPBiomes.visceral_heap.get());
 		registerEntityWorldSpawn(ModEntityTypes.MECHAZOMBIE.get(), 30, 1, 4, BOPBiomes.ashen_inferno.get(),
 				BOPBiomes.undergarden.get(), BOPBiomes.visceral_heap.get());

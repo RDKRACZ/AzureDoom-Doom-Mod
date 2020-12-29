@@ -6,8 +6,9 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
+import mod.azure.doom.entity.ai.goal.HurtByAggressorGoal;
+import mod.azure.doom.entity.ai.goal.TargetAggressorGoal;
 import mod.azure.doom.entity.projectiles.entity.RocketMobEntity;
-import mod.azure.doom.util.Config;
 import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -16,7 +17,6 @@ import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
@@ -26,7 +26,6 @@ import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
@@ -115,11 +114,8 @@ public class CyberdemonEntity extends DemonEntity implements IAnimatable {
 		this.goalSelector.addGoal(7, new CyberdemonEntity.FireballAttackGoal(this));
 		this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
-		if (Config.SERVER.IN_FIGHTING.get()) {
-			this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, MonsterEntity.class, true));
-			this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, MobEntity.class, true));
-			this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Cyberdemon2016Entity.class, true));
-		}
+		this.targetSelector.addGoal(1, new HurtByAggressorGoal(this));
+		this.targetSelector.addGoal(2, new TargetAggressorGoal(this));
 	}
 
 	static class FireballAttackGoal extends Goal {

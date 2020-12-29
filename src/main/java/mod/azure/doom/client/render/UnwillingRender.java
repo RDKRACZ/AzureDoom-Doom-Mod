@@ -1,24 +1,27 @@
 package mod.azure.doom.client.render;
 
-import mod.azure.doom.DoomMod;
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
+
 import mod.azure.doom.client.models.UnwillingModel;
 import mod.azure.doom.entity.UnwillingEntity;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.ResourceLocation;
+import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 
-public class UnwillingRender extends MobRenderer<UnwillingEntity, UnwillingModel<UnwillingEntity>> {
-
-	protected static final ResourceLocation TEXTURE = new ResourceLocation(DoomMod.MODID,
-			"textures/entity/unwilling.png");
+public class UnwillingRender extends GeoEntityRenderer<UnwillingEntity> {
 
 	public UnwillingRender(EntityRendererManager renderManagerIn) {
-		super(renderManagerIn, new UnwillingModel<UnwillingEntity>(0.5f, false), 0.5f);
+		super(renderManagerIn, new UnwillingModel());
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(UnwillingEntity entity) {
-		return TEXTURE;
+	public RenderType getRenderType(UnwillingEntity animatable, float partialTicks, MatrixStack stack,
+			IRenderTypeBuffer renderTypeBuffer, IVertexBuilder vertexBuilder, int packedLightIn,
+			ResourceLocation textureLocation) {
+		return RenderType.getEntityTranslucent(getTextureLocation(animatable));
 	}
 
 }

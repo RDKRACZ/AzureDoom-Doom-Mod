@@ -18,7 +18,7 @@ import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class EnergyCellMobEntity extends DamagingProjectileEntity {
+public class EnergyCellMobEntity extends DamagingProjectileEntity  {
 
 	public int explosionPower = 1;
 	protected int timeInAir;

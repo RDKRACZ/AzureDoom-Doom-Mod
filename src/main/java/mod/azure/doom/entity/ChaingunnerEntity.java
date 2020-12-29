@@ -6,11 +6,12 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
+import mod.azure.doom.entity.ai.goal.HurtByAggressorGoal;
 import mod.azure.doom.entity.ai.goal.RangedChaingunAttackGoal;
+import mod.azure.doom.entity.ai.goal.TargetAggressorGoal;
 import mod.azure.doom.entity.projectiles.ChaingunBulletEntity;
 import mod.azure.doom.item.ammo.ChaingunAmmo;
 import mod.azure.doom.item.weapons.Chaingun;
-import mod.azure.doom.util.Config;
 import mod.azure.doom.util.registry.DoomItems;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import mod.azure.doom.util.registry.ModSoundEvents;
@@ -22,7 +23,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
@@ -33,7 +33,6 @@ import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileHelper;
@@ -51,8 +50,15 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-public class ChaingunnerEntity extends DemonEntity implements IRangedAttackMob {
+public class ChaingunnerEntity extends DemonEntity implements IRangedAttackMob, IAnimatable {
 
 	private final RangedChaingunAttackGoal<ChaingunnerEntity> aiArrowAttack = new RangedChaingunAttackGoal<>(this, 1.0D,
 			20, 15.0F);
@@ -71,6 +77,33 @@ public class ChaingunnerEntity extends DemonEntity implements IRangedAttackMob {
 	public ChaingunnerEntity(EntityType<ChaingunnerEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
 		this.setCombatTask();
+	}
+
+	private AnimationFactory factory = new AnimationFactory(this);
+
+	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+		if (event.isMoving()) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("walking", true));
+			return PlayState.CONTINUE;
+		}
+		if ((this.dead || this.getHealth() < 0.01)) {
+			if (world.isRemote) {
+				event.getController().setAnimation(new AnimationBuilder().addAnimation("death", false));
+				return PlayState.CONTINUE;
+			}
+		}
+		event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
+		return PlayState.CONTINUE;
+	}
+
+	@Override
+	public void registerControllers(AnimationData data) {
+		data.addAnimationController(new AnimationController<ChaingunnerEntity>(this, "controller", 0, this::predicate));
+	}
+
+	@Override
+	public AnimationFactory getFactory() {
+		return this.factory;
 	}
 
 	public ChaingunnerEntity(World worldIn) {
@@ -96,10 +129,8 @@ public class ChaingunnerEntity extends DemonEntity implements IRangedAttackMob {
 		this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, false));
-		if (Config.SERVER.IN_FIGHTING.get()) {
-			this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, MonsterEntity.class, true));
-			this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, MobEntity.class, true));
-		}
+		this.targetSelector.addGoal(1, new HurtByAggressorGoal(this));
+		this.targetSelector.addGoal(2, new TargetAggressorGoal(this));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
 	}
 

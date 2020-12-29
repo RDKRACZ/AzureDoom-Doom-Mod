@@ -5,7 +5,6 @@ import mod.azure.doom.item.ArgentEnergyItem;
 import mod.azure.doom.item.ArgentPlateItem;
 import mod.azure.doom.item.DaisyItem;
 import mod.azure.doom.item.E1M1MusicDisc;
-import mod.azure.doom.item.SpiderdemonAttackItem;
 import mod.azure.doom.item.UnopenedItem;
 import mod.azure.doom.item.ammo.ArgentBolt;
 import mod.azure.doom.item.ammo.BFGCell;
@@ -95,10 +94,6 @@ public class DoomItems {
 	public static final RegistryObject<Item> ARGENT_LAMP_BLOCK = ITEMS.register("argent_lamp_block",
 			() -> new BlockItem(DoomBlocks.ARGENT_LAMP_BLOCK.get(),
 					new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
-
-	public static final RegistryObject<Item> SPIDERDEMONATTACK = ITEMS.register("spiderdemonattack",
-			() -> new SpiderdemonAttackItem());
-
 	public static final RegistryObject<Item> DOOM_WALL1 = ITEMS.register("icon_wall1",
 			() -> new BlockItem(DoomBlocks.DOOM_WALL1.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> DOOM_WALL2 = ITEMS.register("icon_wall2",
@@ -235,6 +230,8 @@ public class DoomItems {
 			() -> new DoomSpawnEgg(ModEntityTypes.GORE_NEST));
 	public static final RegistryObject<Item> HELLKNIGHT2016_SPAWN_EGG = ITEMS.register("hellknight2016_spawn_egg",
 			() -> new DoomSpawnEgg(ModEntityTypes.HELLKNIGHT2016));
+	public static final RegistryObject<Item> GARGOYLE_SPAWN_EGG = ITEMS.register("gargoyle_spawn_egg",
+			() -> new DoomSpawnEgg(ModEntityTypes.GARGOYLE));
 	// WEAPONS AND TOOLS
 	public static final RegistryObject<Item> CRUCIBLESWORD = ITEMS.register("cruciblesword",
 			() -> new SwordCrucibleItem());

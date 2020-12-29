@@ -3,6 +3,8 @@ package mod.azure.doom.entity;
 import java.util.EnumSet;
 import java.util.Random;
 
+import mod.azure.doom.entity.ai.goal.HurtByAggressorGoal;
+import mod.azure.doom.entity.ai.goal.TargetAggressorGoal;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
@@ -153,6 +155,8 @@ public class LostSoulEntity extends DemonEntity implements IMob, IAnimatable {
 		this.goalSelector.addGoal(8, new LostSoulEntity.LookAroundGoal(this));
 		this.goalSelector.addGoal(4, new LostSoulEntity.ChargeAttackGoal());
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
+		this.targetSelector.addGoal(1, new HurtByAggressorGoal(this));
+		this.targetSelector.addGoal(2, new TargetAggressorGoal(this));
 	}
 
 	public static boolean spawning(EntityType<LostSoulEntity> p_223368_0_, IWorld p_223368_1_, SpawnReason reason,

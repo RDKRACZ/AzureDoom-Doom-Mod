@@ -31,6 +31,8 @@ public class BYGSpawns {
 				BYGBiomeList.GLOWSTONEGARDENS, BYGBiomeList.SYTHIANTORRIDS, BYGBiomeList.WARPEDDESERT);
 		registerEntityWorldSpawn(ModEntityTypes.IMP2016.get(), 30, 1, 4, BYGBiomeList.EMBURBOG,
 				BYGBiomeList.GLOWSTONEGARDENS, BYGBiomeList.SYTHIANTORRIDS, BYGBiomeList.WARPEDDESERT);
+		registerEntityWorldSpawn(ModEntityTypes.GARGOYLE.get(), 30, 1, 4, BYGBiomeList.EMBURBOG,
+				BYGBiomeList.GLOWSTONEGARDENS, BYGBiomeList.SYTHIANTORRIDS, BYGBiomeList.WARPEDDESERT);
 		registerEntityWorldSpawn(ModEntityTypes.LOST_SOUL.get(), 30, 1, 4, BYGBiomeList.EMBURBOG,
 				BYGBiomeList.GLOWSTONEGARDENS, BYGBiomeList.SYTHIANTORRIDS, BYGBiomeList.WARPEDDESERT);
 		registerEntityWorldSpawn(ModEntityTypes.NIGHTMARE_IMP.get(), 30, 1, 4, BYGBiomeList.EMBURBOG,
@@ -57,7 +59,7 @@ public class BYGSpawns {
 				BYGBiomeList.GLOWSTONEGARDENS, BYGBiomeList.SYTHIANTORRIDS, BYGBiomeList.WARPEDDESERT);
 		registerEntityWorldSpawn(ModEntityTypes.CYBERDEMON2016.get(), 10, 1, 1, BYGBiomeList.EMBURBOG,
 				BYGBiomeList.GLOWSTONEGARDENS, BYGBiomeList.SYTHIANTORRIDS, BYGBiomeList.WARPEDDESERT);
-		registerEntityWorldSpawn(ModEntityTypes.GORE_NEST.get(), 30, 1, 1, BYGBiomeList.EMBURBOG,
+		registerEntityWorldSpawn(ModEntityTypes.GORE_NEST.get(), 10, 1, 1, BYGBiomeList.EMBURBOG,
 				BYGBiomeList.GLOWSTONEGARDENS, BYGBiomeList.SYTHIANTORRIDS, BYGBiomeList.WARPEDDESERT);
 		registerEntityWorldSpawn(ModEntityTypes.MECHAZOMBIE.get(), 30, 1, 4, BYGBiomeList.EMBURBOG,
 				BYGBiomeList.GLOWSTONEGARDENS, BYGBiomeList.SYTHIANTORRIDS, BYGBiomeList.WARPEDDESERT);

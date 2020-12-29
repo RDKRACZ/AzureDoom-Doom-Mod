@@ -46,6 +46,9 @@ public class ExtraModSpawns {
 		registerEntityWorldSpawn(ModEntityTypes.NIGHTMARE_IMP.get(), 30, 1, 4, NetherBiomes.BASALT_DELTAS.get(),
 				NetherBiomes.CRIMSON_FOREST.get(), NetherBiomes.SOUL_SAND_VALLEY.get(),
 				NetherBiomes.WARPED_FOREST.get());
+		registerEntityWorldSpawn(ModEntityTypes.GARGOYLE.get(), 30, 1, 4, NetherBiomes.BASALT_DELTAS.get(),
+				NetherBiomes.CRIMSON_FOREST.get(), NetherBiomes.SOUL_SAND_VALLEY.get(),
+				NetherBiomes.WARPED_FOREST.get());
 		registerEntityWorldSpawn(ModEntityTypes.IMP2016.get(), 30, 1, 4, NetherBiomes.BASALT_DELTAS.get(),
 				NetherBiomes.CRIMSON_FOREST.get(), NetherBiomes.SOUL_SAND_VALLEY.get(),
 				NetherBiomes.WARPED_FOREST.get());
@@ -82,7 +85,7 @@ public class ExtraModSpawns {
 		registerEntityWorldSpawn(ModEntityTypes.CYBERDEMON2016.get(), 10, 1, 1, NetherBiomes.BASALT_DELTAS.get(),
 				NetherBiomes.CRIMSON_FOREST.get(), NetherBiomes.SOUL_SAND_VALLEY.get(),
 				NetherBiomes.WARPED_FOREST.get());
-		registerEntityWorldSpawn(ModEntityTypes.GORE_NEST.get(), 30, 1, 1, NetherBiomes.BASALT_DELTAS.get(),
+		registerEntityWorldSpawn(ModEntityTypes.GORE_NEST.get(), 10, 1, 1, NetherBiomes.BASALT_DELTAS.get(),
 				NetherBiomes.CRIMSON_FOREST.get(), NetherBiomes.SOUL_SAND_VALLEY.get(),
 				NetherBiomes.WARPED_FOREST.get());
 		registerEntityWorldSpawn(ModEntityTypes.MECHAZOMBIE.get(), 30, 1, 4, NetherBiomes.BASALT_DELTAS.get(),

@@ -9,6 +9,7 @@ import mod.azure.doom.client.render.CacodemonRender;
 import mod.azure.doom.client.render.ChaingunnerRender;
 import mod.azure.doom.client.render.Cyberdemon2016Render;
 import mod.azure.doom.client.render.CyberdemonRender;
+import mod.azure.doom.client.render.GargoyleRender;
 import mod.azure.doom.client.render.GoreNestRender;
 import mod.azure.doom.client.render.Hellknight2016Render;
 import mod.azure.doom.client.render.HellknightRender;
@@ -67,6 +68,8 @@ import mod.azure.doom.client.render.projectiles.EnergyCellRender;
 import mod.azure.doom.client.render.projectiles.RocketRender;
 import mod.azure.doom.client.render.projectiles.ShotgunShellRender;
 import mod.azure.doom.client.render.projectiles.UnmaykrBulletRender;
+import mod.azure.doom.client.render.projectiles.entity.ArchvileFiringRender;
+import mod.azure.doom.client.render.projectiles.entity.ChaingunMobRender;
 import mod.azure.doom.client.render.projectiles.entity.EnergyCellMobRender;
 import mod.azure.doom.client.render.projectiles.entity.RocketMobRender;
 import mod.azure.doom.item.armor.AstroDoomArmor;
@@ -152,10 +155,13 @@ public class ClientModEventSubscriber {
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ENERGY_CELL_MOB.get(),
 				EnergyCellMobRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ROCKET_MOB.get(), RocketMobRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.CHAINGUN_MOB.get(), ChaingunMobRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.GORE_NEST.get(), GoreNestRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.MECHAZOMBIE.get(), MechaZombieRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.GARGOYLE.get(), GargoyleRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.HELLKNIGHT2016.get(),
 				Hellknight2016Render::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.FIRING.get(), ArchvileFiringRender::new);
 
 		GeoArmorRenderer.registerArmorRenderer(DoomicornDoomArmor.class, new DoomicornRender());
 		GeoArmorRenderer.registerArmorRenderer(NightmareDoomArmor.class, new NightmareRender());
