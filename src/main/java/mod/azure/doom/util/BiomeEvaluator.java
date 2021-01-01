@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IServerWorld;
 import net.minecraft.world.biome.Biome;
-import net.minecraftforge.common.BiomeDictionary;
+import net.minecraft.world.server.ServerWorld;
 
 public class BiomeEvaluator {
 
@@ -62,5 +64,10 @@ public class BiomeEvaluator {
 		}
 		return true;
 	}
+	
+    public static int getLightLevel(IServerWorld worldIn, double x, double y, double z) {
+    ServerWorld o = worldIn.getWorld();
+    return o.isThundering() ? o.getNeighborAwareLightSubtracted(new BlockPos(x, y, z), 10) : o.getLight(new BlockPos(x, y, z));
+}
 
 }

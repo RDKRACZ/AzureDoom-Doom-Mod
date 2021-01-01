@@ -124,31 +124,8 @@ public class ArachnotronEntity extends DemonEntity implements IAnimatable {
 	@Override
 	   public boolean func_230292_f_(PlayerEntity p_230292_1_) {
 		      return true;
-		   }
-	   
-	
-	   /**
-	    * Static predicate for determining if the current light level and environmental conditions allow for a monster to
-	    * spawn.
-	    */
-//	   public static boolean isValidLightLevel(IServerWorld worldIn, BlockPos pos, Random randomIn) {
-//	      if (worldIn.getLightFor(LightType.SKY, pos) > randomIn.nextInt(32)) {
-//	         return false;
-//	      } else {
-//	         int i = worldIn.getWorld().isThundering() ? worldIn.getNeighborAwareLightSubtracted(pos, 10) : worldIn.getLight(pos);
-//	         return i <= randomIn.nextInt(8);
-//	      }
-//	   }
-	   
-	   public static boolean isValidLightLevel(IServerWorld worldIn, BlockPos pos, Random randomIn) {
-		   return true;
-	   }
+		   }   
 
-	   
-	    public int getLightLevel(IServerWorld worldIn, double x, double y, double z) {
-	        ServerWorld o = worldIn.getWorld();
-	        return o.isThundering() ? o.getNeighborAwareLightSubtracted(new BlockPos(x, y, z), 10) : o.getLight(new BlockPos(x, y, z));
-	    }
 
 	@Override
 	protected void registerGoals() {
