@@ -6,6 +6,9 @@ import mod.azure.doom.block.ArgentLampBlock;
 import mod.azure.doom.block.BarrelBlock;
 import mod.azure.doom.block.DoomSandBlock;
 import mod.azure.doom.block.DoomWallBlock;
+import mod.azure.doom.block.E1M1StairsBlock;
+import mod.azure.doom.block.E1M1TurnableBlock;
+import mod.azure.doom.block.E1M1TurnableHurtBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -80,19 +83,54 @@ public class DoomBlocks {
 
 	public static final RegistryObject<Block> E1M1_1 = BLOCKS.register("e1m1_block1",
 			() -> new ArgentBlock((Block.Properties.create(Material.ANVIL).hardnessAndResistance(4.0F))));
-
 	public static final RegistryObject<Block> E1M1_2 = BLOCKS.register("e1m1_block2",
 			() -> new ArgentBlock((Block.Properties.create(Material.ANVIL).hardnessAndResistance(4.0F))));
-
 	public static final RegistryObject<Block> E1M1_3 = BLOCKS.register("e1m1_block3",
 			() -> new ArgentBlock((Block.Properties.create(Material.ANVIL).hardnessAndResistance(4.0F))));
-
 	public static final RegistryObject<Block> E1M1_4 = BLOCKS.register("e1m1_block4",
 			() -> new ArgentBlock((Block.Properties.create(Material.ANVIL).hardnessAndResistance(4.0F))));
-
 	public static final RegistryObject<Block> E1M1_5 = BLOCKS.register("e1m1_block5",
 			() -> new ArgentBlock((Block.Properties.create(Material.ANVIL).hardnessAndResistance(4.0F))));
-
 	public static final RegistryObject<Block> E1M1_6 = BLOCKS.register("e1m1_block6",
 			() -> new ArgentBlock((Block.Properties.create(Material.ANVIL).hardnessAndResistance(4.0F))));
+	public static final RegistryObject<Block> E1M1_7 = BLOCKS.register("e1m1_block7",
+			() -> new E1M1StairsBlock(E1M1_5.get().getDefaultState(), Block.Properties.from(E1M1_5.get())));
+	public static final RegistryObject<Block> E1M1_8 = BLOCKS.register("e1m1_block8",
+			() -> new E1M1StairsBlock(E1M1_4.get().getDefaultState(), Block.Properties.from(E1M1_4.get())));
+	public static final RegistryObject<Block> E1M1_9 = BLOCKS.register("e1m1_block9",
+			() -> new E1M1TurnableBlock((Block.Properties.create(Material.ANVIL).hardnessAndResistance(4.0F))));
+	public static final RegistryObject<Block> E1M1_10 = BLOCKS.register("e1m1_block10",
+			() -> new E1M1TurnableBlock((Block.Properties.create(Material.ANVIL).hardnessAndResistance(4.0F))));
+	public static final RegistryObject<Block> E1M1_11 = BLOCKS.register("e1m1_block11",
+			() -> new E1M1TurnableHurtBlock((Block.Properties.create(Material.ANVIL).hardnessAndResistance(4.0F))));
+	public static final RegistryObject<Block> E1M1_12 = BLOCKS.register("e1m1_block12",
+			() -> new E1M1TurnableBlock((Block.Properties.create(Material.ANVIL).hardnessAndResistance(4.0F))));
+	public static final RegistryObject<Block> E1M1_13 = BLOCKS.register("e1m1_block13",
+			() -> new E1M1TurnableBlock((Block.Properties.create(Material.ANVIL).hardnessAndResistance(4.0F))));
+	public static final RegistryObject<Block> E1M1_14 = BLOCKS.register("e1m1_block14",
+			() -> new E1M1TurnableBlock((Block.Properties.create(Material.ANVIL).hardnessAndResistance(4.0F))));
+	public static final RegistryObject<Block> E1M1_15 = BLOCKS.register("e1m1_block15",
+			() -> new E1M1TurnableBlock((Block.Properties.create(Material.ANVIL).hardnessAndResistance(4.0F))));
+	public static final RegistryObject<Block> E1M1_16 = BLOCKS.register("e1m1_block16",
+			() -> new E1M1TurnableBlock((Block.Properties.create(Material.ANVIL).hardnessAndResistance(4.0F))));
+	public static final RegistryObject<Block> E1M1_17 = BLOCKS.register("e1m1_block17",
+			() -> new E1M1TurnableBlock((Block.Properties.create(Material.ANVIL).hardnessAndResistance(4.0F))));
+	public static final RegistryObject<Block> E1M1_18 = BLOCKS.register("e1m1_block18",
+			() -> new E1M1TurnableBlock((Block.Properties.create(Material.ANVIL).hardnessAndResistance(4.0F))));
+	public static final RegistryObject<Block> E1M1_19 = BLOCKS.register("e1m1_block19",
+			() -> new E1M1TurnableBlock((Block.Properties.create(Material.ANVIL).hardnessAndResistance(4.0F))));
+	public static final RegistryObject<Block> E1M1_20 = BLOCKS.register("e1m1_block20",
+			() -> new E1M1TurnableBlock((Block.Properties.create(Material.ANVIL).hardnessAndResistance(4.0F))));
+	public static final RegistryObject<Block> E1M1_21 = BLOCKS.register("e1m1_block21",
+			() -> new E1M1TurnableBlock((Block.Properties.create(Material.ANVIL).hardnessAndResistance(4.0F))));
+	public static final RegistryObject<Block> E1M1_22 = BLOCKS.register("e1m1_block22",
+			() -> new E1M1TurnableBlock((Block.Properties.create(Material.ANVIL).hardnessAndResistance(4.0F))));
+	public static final RegistryObject<Block> E1M1_23 = BLOCKS.register("e1m1_block23",
+			() -> new E1M1TurnableBlock((Block.Properties.create(Material.ANVIL).hardnessAndResistance(4.0F))));
+	public static final RegistryObject<Block> E1M1_24 = BLOCKS.register("e1m1_block24",
+			() -> new E1M1TurnableBlock((Block.Properties.create(Material.ANVIL).hardnessAndResistance(4.0F))));
+	public static final RegistryObject<Block> E1M1_25 = BLOCKS.register("e1m1_block25",
+			() -> new E1M1TurnableBlock((Block.Properties.create(Material.ANVIL).hardnessAndResistance(4.0F))));
+	public static final RegistryObject<Block> E1M1_26 = BLOCKS.register("e1m1_block26",
+			() -> new E1M1TurnableBlock((Block.Properties.create(Material.ANVIL).hardnessAndResistance(4.0F))));
 }

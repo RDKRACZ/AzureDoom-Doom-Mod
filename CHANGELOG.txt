@@ -1,14 +1,5 @@
-v.3.6.2
+v.3.6.3
 
-- Added Gargoyle thanks to Silly!
-- Updated Arachnotron to fire more often. 
-- Updated Spiderdemon to fire much more often and uses a Goal instead of an invisible item. All mobs now use goals for attacking instead of invisible items.
-- Updated Chaingunner, Marauder, Possessed Soldier, Shotgun Guy, Unwilling and Zombieman models.
-- Updated Imp 2016 texture thanks to Silly.
-- Updated Ballista model thanks to cybercat5555.
-- Updated Rocket model thanks to thelilcoin.
-- Arch-vile now buffs nearby Demons on it's attack, granting Speed and Strength bonuses as well as making the entities glow.
-- Arch-vile now throws fire at it's attacking entity and sets them on fire.
-- Mancubus now throws fire at close range instead of firing it's cannon.
-- Added two new Server config options. Common Demon and Heavy Demon spawn weight. I'm not doing per demon spawn weight configs, there are just two many.
-- Completely rewrote the in-fighting system, in-fighting will now only happen if demon hits another.  
+- Added Weapon Ammo to Weapon Smith level 3 Villagers.
+- Added Argent Tools to Tool Smith Level 3 Villagers.
+- Added E1M! Blocks to Mason Level 3 Villagers.
