@@ -57,6 +57,12 @@ public class ChaingunMobEntity extends DamagingProjectileEntity {
 		this.ticksInAir = compound.getShort("life");
 	}
 
+	private float directHitDamage = 3;
+
+	public void setDirectHitDamage(float directHitDamage) {
+		this.directHitDamage = directHitDamage;
+	}
+
 	@SuppressWarnings("deprecation")
 	@Override
 	public void tick() {
@@ -144,7 +150,7 @@ public class ChaingunMobEntity extends DamagingProjectileEntity {
 			Entity entity = list.get(k2);
 			double d12 = (double) (MathHelper.sqrt(entity.getDistanceSq(vector3d)) / f2);
 			if (d12 <= 1.0D) {
-				entity.attackEntityFrom(DamageSource.causeThrownDamage(this, this), 3);
+				entity.attackEntityFrom(DamageSource.causeThrownDamage(this, this), directHitDamage);
 			}
 		}
 	}

@@ -10,6 +10,9 @@ import mod.azure.doom.entity.ai.goal.RangedChaingunAttackGoal;
 import mod.azure.doom.entity.projectiles.ChaingunBulletEntity;
 import mod.azure.doom.item.ammo.ChaingunAmmo;
 import mod.azure.doom.item.weapons.Chaingun;
+import mod.azure.doom.util.Config;
+import mod.azure.doom.util.EntityConfig;
+import mod.azure.doom.util.EntityDefaults.EntityConfigType;
 import mod.azure.doom.util.registry.DoomItems;
 import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
@@ -62,6 +65,9 @@ public class ChaingunnerEntity extends DemonEntity implements IRangedAttackMob, 
 
 	private final RangedChaingunAttackGoal<ChaingunnerEntity> aiArrowAttack = new RangedChaingunAttackGoal<>(this, 1.0D,
 			1, 15.0F);
+	
+	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.CHAINGUNNER);
+	
 	private final MeleeAttackGoal aiAttackOnCollide = new MeleeAttackGoal(this, 1.2D, false) {
 		public void resetTask() {
 			super.resetTask();
@@ -113,7 +119,7 @@ public class ChaingunnerEntity extends DemonEntity implements IRangedAttackMob, 
 
 	public static boolean spawning(EntityType<ChaingunnerEntity> p_223337_0_, IWorld p_223337_1_, SpawnReason reason,
 			BlockPos p_223337_3_, Random p_223337_4_) {
-		return p_223337_1_.getDifficulty() != Difficulty.PEACEFUL;
+		return passPeacefulAndYCheck(config, p_223337_1_, reason, p_223337_3_, p_223337_4_);
 	}
 
 	@Override
@@ -178,6 +184,7 @@ public class ChaingunnerEntity extends DemonEntity implements IRangedAttackMob, 
 		double d2 = target.getPosZ() - this.getPosZ();
 		double d3 = (double) MathHelper.sqrt(d0 * d0 + d2 * d2);
 		abstractarrowentity.shoot(d0, d1 + d3 * (double) 0.05F, d2, 1.6F, 0.0F);
+		abstractarrowentity.setDamage(config.RANGED_ATTACK_DAMAGE);
 		this.playSound(ModSoundEvents.CHAINGUN_SHOOT.get(), 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
 		this.world.addEntity(abstractarrowentity);
 	}
@@ -196,10 +203,7 @@ public class ChaingunnerEntity extends DemonEntity implements IRangedAttackMob, 
 	}
 
 	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
-		return MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 50.0D)
-				.createMutableAttribute(Attributes.MAX_HEALTH, 15.0D)
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D)
-				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 4.0D);
+		return config.pushAttributes(MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 50.0D));
 	}
 
 	@Override

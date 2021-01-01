@@ -7,6 +7,9 @@ import javax.annotation.Nullable;
 
 import mod.azure.doom.entity.projectiles.entity.ArchvileFiring;
 import mod.azure.doom.entity.projectiles.entity.BarenBlastEntity;
+import mod.azure.doom.util.Config;
+import mod.azure.doom.util.EntityConfig;
+import mod.azure.doom.util.EntityDefaults.EntityConfigType;
 import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.CreatureAttribute;
@@ -41,7 +44,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.IWorld;
@@ -61,6 +63,8 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 
 	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(MancubusEntity.class,
 			DataSerializers.BOOLEAN);
+	
+	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.MANCUBUS);
 
 	private int attackTimer;
 
@@ -131,7 +135,7 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 
 	public static boolean spawning(EntityType<MancubusEntity> p_223337_0_, IWorld p_223337_1_, SpawnReason reason,
 			BlockPos p_223337_3_, Random p_223337_4_) {
-		return p_223337_1_.getDifficulty() != Difficulty.PEACEFUL;
+		return passPeacefulAndYCheck(config, p_223337_1_, reason, p_223337_3_, p_223337_4_);
 	}
 
 	@Override
@@ -205,6 +209,7 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 					} else {
 						fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 1.0D,
 								this.parentEntity.getPosYHeight(0.5D), fireballentity.getPosZ() + 1.0D);
+						fireballentity.setDirectHitDamage(config.RANGED_ATTACK_DAMAGE);
 						world.addEntity(fireballentity);
 					}
 				}
@@ -222,6 +227,7 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 					} else {
 						fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 1.0D,
 								this.parentEntity.getPosYHeight(0.5D), fireballentity.getPosZ() + 1.0D);
+						fireballentity.setDirectHitDamage(config.RANGED_ATTACK_DAMAGE);
 						world.addEntity(fireballentity);
 					}
 					this.attackTimer = -50;
@@ -265,10 +271,7 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 	}
 
 	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
-		return MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 50.0D)
-				.createMutableAttribute(Attributes.MAX_HEALTH, 80.0D)
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D)
-				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 8.0D);
+		return config.pushAttributes(MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 50.0D));
 	}
 
 	@Nullable

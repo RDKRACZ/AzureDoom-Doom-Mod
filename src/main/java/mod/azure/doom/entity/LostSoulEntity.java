@@ -3,6 +3,9 @@ package mod.azure.doom.entity;
 import java.util.EnumSet;
 import java.util.Random;
 
+import mod.azure.doom.util.Config;
+import mod.azure.doom.util.EntityConfig;
+import mod.azure.doom.util.EntityDefaults.EntityConfigType;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
@@ -30,7 +33,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.Difficulty;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -49,6 +51,8 @@ public class LostSoulEntity extends DemonEntity implements IMob, IAnimatable {
 			DataSerializers.BOOLEAN);
 	public int explosionPower = 1;
 	public int flameTimer;
+	
+	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.LOST_SOUL);
 
 	public LostSoulEntity(EntityType<? extends LostSoulEntity> type, World world) {
 		super(type, world);
@@ -106,23 +110,20 @@ public class LostSoulEntity extends DemonEntity implements IMob, IAnimatable {
 	}
 
 	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
-		return MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 50.0D)
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D)
-				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 1.0D)
-				.createMutableAttribute(Attributes.MAX_HEALTH, 10.0D);
+		return config.pushAttributes(MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 50.0D));
 	}
 
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(8, new LostSoulEntity.LookAroundGoal(this));
 		this.goalSelector.addGoal(4, new LostSoulEntity.ChargeAttackGoal());
-		this.targetSelector.addGoal(9, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
+		this.targetSelector.addGoal(7, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)));
 	}
 
 	public static boolean spawning(EntityType<LostSoulEntity> p_223368_0_, IWorld p_223368_1_, SpawnReason reason,
 			BlockPos p_223368_3_, Random p_223368_4_) {
-		return p_223368_1_.getDifficulty() != Difficulty.PEACEFUL && p_223368_4_.nextInt(20) == 0
+		return passPeacefulAndYCheck(config, p_223368_1_, reason, p_223368_3_, p_223368_4_) && p_223368_4_.nextInt(20) == 0
 				&& canSpawnOn(p_223368_0_, p_223368_1_, reason, p_223368_3_, p_223368_4_);
 	}
 
@@ -219,7 +220,7 @@ public class LostSoulEntity extends DemonEntity implements IMob, IAnimatable {
 				--this.attackTimer;
 			} else {
 				double d0 = LostSoulEntity.this.getDistanceSq(livingentity);
-				if (d0 < 30.0D) {
+				if (d0 < 400.0D) { //this was set to 30.0D (very short) is this intended? results in tons of these mobs just sitting around
 					Vector3d vec3d = livingentity.getEyePosition(1.0F);
 					LostSoulEntity.this.moveController.setMoveTo(vec3d.x, vec3d.y, vec3d.z, 1.0D);
 					this.attackTimer = -40;

@@ -10,6 +10,9 @@ import mod.azure.doom.entity.ai.goal.RangedPistolAttackGoal;
 import mod.azure.doom.entity.projectiles.BulletEntity;
 import mod.azure.doom.item.ammo.ClipAmmo;
 import mod.azure.doom.item.weapons.PistolItem;
+import mod.azure.doom.util.Config;
+import mod.azure.doom.util.EntityConfig;
+import mod.azure.doom.util.EntityDefaults.EntityConfigType;
 import mod.azure.doom.util.registry.DoomItems;
 import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
@@ -77,6 +80,8 @@ public class PossessedSoldierEntity extends DemonEntity implements IRangedAttack
 		super(entityType, worldIn);
 		this.setCombatTask();
 	}
+	
+	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.POSSESSED_SOLDIER);
 
 	private AnimationFactory factory = new AnimationFactory(this);
 
@@ -117,7 +122,7 @@ public class PossessedSoldierEntity extends DemonEntity implements IRangedAttack
 
 	public static boolean spawning(EntityType<PossessedSoldierEntity> p_223337_0_, IWorld p_223337_1_,
 			SpawnReason reason, BlockPos p_223337_3_, Random p_223337_4_) {
-		return p_223337_1_.getDifficulty() != Difficulty.PEACEFUL;
+		return passPeacefulAndYCheck(config, p_223337_1_, reason, p_223337_3_, p_223337_4_);
 	}
 
 	@Override
@@ -171,10 +176,7 @@ public class PossessedSoldierEntity extends DemonEntity implements IRangedAttack
 	}
 
 	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
-		return MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 50.0D)
-				.createMutableAttribute(Attributes.MAX_HEALTH, 15.0D)
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D)
-				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 4.0D);
+		return config.pushAttributes(MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 50.0D));
 	}
 
 	@Override
@@ -243,6 +245,7 @@ public class PossessedSoldierEntity extends DemonEntity implements IRangedAttack
 		ItemStack itemstack = this
 				.findAmmo(this.getHeldItem(ProjectileHelper.getHandWith(this, DoomItems.PISTOL.get())));
 		BulletEntity abstractarrowentity = this.fireArrowa(itemstack, distanceFactor);
+		abstractarrowentity.setDamage(config.RANGED_ATTACK_DAMAGE);
 		if (this.getHeldItemMainhand().getItem() instanceof PistolItem)
 			abstractarrowentity = ((PistolItem) this.getHeldItemMainhand().getItem()).customeArrow(abstractarrowentity);
 		double d0 = target.getPosX() - this.getPosX();

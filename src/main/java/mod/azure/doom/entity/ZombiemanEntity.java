@@ -10,6 +10,9 @@ import mod.azure.doom.entity.ai.goal.RangedPistolAttackGoal;
 import mod.azure.doom.entity.projectiles.BulletEntity;
 import mod.azure.doom.item.ammo.ClipAmmo;
 import mod.azure.doom.item.weapons.PistolItem;
+import mod.azure.doom.util.Config;
+import mod.azure.doom.util.EntityConfig;
+import mod.azure.doom.util.EntityDefaults.EntityConfigType;
 import mod.azure.doom.util.registry.DoomItems;
 import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
@@ -80,6 +83,7 @@ public class ZombiemanEntity extends DemonEntity implements IRangedAttackMob, IA
 	}
 
 	private AnimationFactory factory = new AnimationFactory(this);
+	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.ZOMBIEMAN);
 
 	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
 		if (event.isMoving()) {
@@ -117,7 +121,7 @@ public class ZombiemanEntity extends DemonEntity implements IRangedAttackMob, IA
 
 	public static boolean spawning(EntityType<ZombiemanEntity> p_223337_0_, IWorld p_223337_1_, SpawnReason reason,
 			BlockPos p_223337_3_, Random p_223337_4_) {
-		return p_223337_1_.getDifficulty() != Difficulty.PEACEFUL;
+		return passPeacefulAndYCheck(config, p_223337_1_, reason, p_223337_3_, p_223337_4_);
 	}
 
 	@Override
@@ -139,10 +143,7 @@ public class ZombiemanEntity extends DemonEntity implements IRangedAttackMob, IA
 	}
 
 	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
-		return MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 50.0D)
-				.createMutableAttribute(Attributes.MAX_HEALTH, 15.0D)
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D)
-				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 4.0D);
+		return config.pushAttributes(MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 50.0D));
 	}
 
 	@Override
@@ -251,6 +252,7 @@ public class ZombiemanEntity extends DemonEntity implements IRangedAttackMob, IA
 		double d3 = (double) MathHelper.sqrt(d0 * d0 + d2 * d2);
 		abstractarrowentity.shoot(d0, d1 + d3 * (double) 0.05F, d2, 1.6F, 0.0F);
 		this.playSound(ModSoundEvents.PISTOL_HIT.get(), 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
+		abstractarrowentity.setDamage(config.RANGED_ATTACK_DAMAGE);
 		this.world.addEntity(abstractarrowentity);
 	}
 

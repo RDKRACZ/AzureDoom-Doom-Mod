@@ -10,6 +10,7 @@ import net.minecraft.entity.projectile.ProjectileHelper;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
@@ -23,6 +24,8 @@ public class EnergyCellMobEntity extends DamagingProjectileEntity {
 	protected int timeInAir;
 	protected boolean inAir;
 	private int ticksInAir;
+	private float directHitDamage = 3F;
+	private LivingEntity shooter;
 
 	public EnergyCellMobEntity(EntityType<? extends EnergyCellMobEntity> p_i50160_1_, World p_i50160_2_) {
 		super(p_i50160_1_, p_i50160_2_);
@@ -30,11 +33,7 @@ public class EnergyCellMobEntity extends DamagingProjectileEntity {
 
 	public EnergyCellMobEntity(World worldIn, LivingEntity shooter, double accelX, double accelY, double accelZ) {
 		super(ModEntityTypes.ENERGY_CELL_MOB.get(), shooter, accelX, accelY, accelZ, worldIn);
-	}
-
-	public EnergyCellMobEntity(World worldIn, double x, double y, double z, double accelX, double accelY,
-			double accelZ) {
-		super(ModEntityTypes.ENERGY_CELL_MOB.get(), x, y, z, accelX, accelY, accelZ, worldIn);
+		this.shooter = shooter;
 	}
 
 	@Override
@@ -117,10 +116,18 @@ public class EnergyCellMobEntity extends DamagingProjectileEntity {
 		return true;
 	}
 
+	public void setDirectHitDamage(float directHitDamage) {
+		this.directHitDamage = directHitDamage;
+	}
+
 	@Override
 	protected void onEntityHit(EntityRayTraceResult p_213868_1_) {
 		super.onEntityHit(p_213868_1_);
 		if (!this.world.isRemote) {
+			Entity entityHit = p_213868_1_.getEntity();
+			if (entityHit instanceof LivingEntity && directHitDamage > 0)
+				p_213868_1_.getEntity().attackEntityFrom(DamageSource.causeIndirectMagicDamage(this, shooter),
+						directHitDamage);
 			this.explode();
 			this.remove();
 		}
