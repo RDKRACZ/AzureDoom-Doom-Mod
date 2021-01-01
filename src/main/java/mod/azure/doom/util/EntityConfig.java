@@ -66,20 +66,6 @@ public class EntityConfig {
 		RANGED_ATTACK_DAMAGE = specRANGED_ATTACK_DAMAGE == null ? 0F : specRANGED_ATTACK_DAMAGE.get().floatValue();
 		GENERAL_SPEED = specGENERAL_SPEED == null ? 0 : specGENERAL_SPEED.get();
 		FLY_SPEED = specFLY_SPEED == null ? 0 : specFLY_SPEED.get();
-		System.out.println("Config for "+name);
-		System.out.println("SPAWN_WEIGHT: " + SPAWN_WEIGHT);
-		System.out.println("MIN_GROUP: " + MIN_GROUP);
-		System.out.println("MAX_GROUP: " + MAX_GROUP);
-		System.out.println("MIN_Y: " + MIN_Y);
-		System.out.println("MAX_Y: " + MAX_Y);
-		System.out.println("BIOME_DICT: " + BIOME_DICT);
-		System.out.println("MAX_HEALTH: " + MAX_HEALTH);
-		System.out.println("MELEE_ATTACK_DAMAGE: " + MELEE_ATTACK_DAMAGE);
-		System.out.println("RANGED_ATTACK_DAMAGE: " + RANGED_ATTACK_DAMAGE);
-		System.out.println("GENERAL_SPEED: " + GENERAL_SPEED);
-		System.out.println("FLY_SPEED: " + FLY_SPEED);
-		
-
 	}
 
 	public EntityConfig setAttributes(EntityDefaults defaults) {
@@ -90,7 +76,7 @@ public class EntityConfig {
 		FLY_SPEED = defaults.getDefaultFlySpeed();
 		return this;
 	}
-	
+
 	public MutableAttribute pushAttributes(MutableAttribute attributes) {
 		if (MELEE_ATTACK_DAMAGE > 0) {
 			attributes.createMutableAttribute(Attributes.ATTACK_DAMAGE, MELEE_ATTACK_DAMAGE);
@@ -141,14 +127,13 @@ public class EntityConfig {
 				.defineInRange(new StringBuilder(uName).append("_MAX_Y").toString(), MAX_Y, 0, 255);
 
 		specBIOME_DICT = builder.comment(
-				"Allowed biome dictionary values for the entity to spawn in. E.g. \"NETHER\", \"FOREST+HOT\", \"PLAINS+!SNOWY\"")
+				"Allowed biome dictionary values for the entity to spawn in. E.g. [\"NETHER\", \"FOREST+HOT\", \"PLAINS+!SNOWY\"]")
 				.translation(new StringBuilder(DoomMod.MODID).append(".config.").append(lName).append("_biome_dict")
 						.toString())
 				.defineList(new StringBuilder(uName).append("_BIOME_DICT").toString(), BIOME_DICT,
 						string -> string != null);
 
 		builder.pop(3);
-		
 
 		/*
 		 * Customisable mob attributes
@@ -184,7 +169,8 @@ public class EntityConfig {
 
 		if (GENERAL_SPEED > 0) {
 			specGENERAL_SPEED = builder
-					.comment(new StringBuilder("General (most likely walking) movement speed of ").append(name).append("s").toString())
+					.comment(new StringBuilder("General (most likely walking) movement speed of ").append(name)
+							.append("s").toString())
 					.translation(new StringBuilder(DoomMod.MODID).append(".config.").append(lName)
 							.append("_ground_speed").toString())
 					.defineInRange(new StringBuilder(uName).append("_GROUND_SPEED").toString(), GENERAL_SPEED, 0, 10);

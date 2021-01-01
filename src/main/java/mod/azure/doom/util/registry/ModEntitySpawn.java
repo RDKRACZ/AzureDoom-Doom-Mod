@@ -55,11 +55,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 @Mod.EventBusSubscriber(modid = DoomMod.MODID)
 public class ModEntitySpawn {
 
-//	@SubscribeEvent
-//	public static void onLivingSpawn(LivingSpawnEvent.CheckSpawn e) {
-//		e.setResult(Result.ALLOW);
-//	}
-
 	@SubscribeEvent
 	public static void onBiomeLoad(BiomeLoadingEvent event) {
 		if (event.getName() == null)
