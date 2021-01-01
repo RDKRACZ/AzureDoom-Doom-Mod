@@ -43,7 +43,6 @@ import mod.azure.doom.entity.projectiles.entity.BarenBlastEntity;
 import mod.azure.doom.entity.projectiles.entity.ChaingunMobEntity;
 import mod.azure.doom.entity.projectiles.entity.EnergyCellMobEntity;
 import mod.azure.doom.entity.projectiles.entity.RocketMobEntity;
-import mod.azure.doom.entity.tileentity.E1M1Door4Entity;
 import mod.azure.doom.entity.tileentity.IconBlockEntity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
@@ -63,10 +62,6 @@ public class ModEntityTypes {
 
 	public static final RegistryObject<TileEntityType<IconBlockEntity>> ICON = TILE_TYPES.register("icon",
 			() -> TileEntityType.Builder.<IconBlockEntity>create(IconBlockEntity::new, DoomBlocks.DOOM_WALL1.get())
-					.build(null));
-
-	public static final RegistryObject<TileEntityType<E1M1Door4Entity>> E1M1DOOR4 = TILE_TYPES.register("e1m1door4",
-			() -> TileEntityType.Builder.<E1M1Door4Entity>create(E1M1Door4Entity::new, DoomBlocks.E1M1DOOR4.get())
 					.build(null));
 
 	public static final RegistryObject<EntityType<ArchvileFiring>> FIRING = ENTITY_TYPES.register("archvile_firing",

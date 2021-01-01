@@ -59,7 +59,6 @@ import mod.azure.doom.client.render.armors.SantaRender;
 import mod.azure.doom.client.render.armors.SentinelRender;
 import mod.azure.doom.client.render.armors.TwentyFiveRender;
 import mod.azure.doom.client.render.armors.ZombieRender;
-import mod.azure.doom.client.render.blocks.E1M1Door4Render;
 import mod.azure.doom.client.render.projectiles.ArgentBoltRender;
 import mod.azure.doom.client.render.projectiles.BFGCellRender;
 import mod.azure.doom.client.render.projectiles.BarenBlastRender;
@@ -105,7 +104,6 @@ import mod.azure.doom.item.armor.ZombieDoomArmor;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -194,7 +192,5 @@ public class ClientModEventSubscriber {
 		GeoArmorRenderer.registerArmorRenderer(SentinelDoomArmor.class, new SentinelRender());
 		GeoArmorRenderer.registerArmorRenderer(ZombieDoomArmor.class, new ZombieRender());
 		GeoArmorRenderer.registerArmorRenderer(SantaDoomArmor.class, new SantaRender());
-
-		ClientRegistry.bindTileEntityRenderer(ModEntityTypes.E1M1DOOR4.get(), E1M1Door4Render::new);
 	}
 }

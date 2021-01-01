@@ -7,6 +7,10 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import mod.azure.doom.entity.ai.goal.DemonAttackGoal;
+import mod.azure.doom.entity.projectiles.CustomSmallFireballEntity;
+import mod.azure.doom.util.Config;
+import mod.azure.doom.util.EntityConfig;
+import mod.azure.doom.util.EntityDefaults.EntityConfigType;
 import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -28,7 +32,6 @@ import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
 import net.minecraft.entity.passive.IFlyingAnimal;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.SmallFireballEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -62,6 +65,8 @@ public class GargoyleEntity extends DemonEntity implements IAnimatable, IFlyingA
 
 	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(GargoyleEntity.class,
 			DataSerializers.BOOLEAN);
+	
+	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.GARGOYLE);
 
 	public GargoyleEntity(EntityType<GargoyleEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
@@ -132,7 +137,7 @@ public class GargoyleEntity extends DemonEntity implements IAnimatable, IFlyingA
 
 	public static boolean spawning(EntityType<GargoyleEntity> p_223337_0_, IWorld p_223337_1_, SpawnReason reason,
 			BlockPos p_223337_3_, Random p_223337_4_) {
-		return p_223337_1_.getDifficulty() != Difficulty.PEACEFUL;
+		return passPeacefulAndYCheck(config, p_223337_1_, reason, p_223337_3_, p_223337_4_);
 	}
 
 	@Override
@@ -144,8 +149,8 @@ public class GargoyleEntity extends DemonEntity implements IAnimatable, IFlyingA
 	}
 
 	protected void applyEntityAI() {
-		this.goalSelector.addGoal(7, new GargoyleEntity.FireballAttackGoal(this));
-		this.goalSelector.addGoal(7, new DemonAttackGoal(this, 1.0D, false));
+		this.goalSelector.addGoal(4, new GargoyleEntity.FireballAttackGoal(this));
+		this.goalSelector.addGoal(4, new DemonAttackGoal(this, 1.0D, false));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, false));
 		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)));
@@ -184,7 +189,7 @@ public class GargoyleEntity extends DemonEntity implements IAnimatable, IFlyingA
 
 		public void tick() {
 			LivingEntity livingentity = this.parentEntity.getAttackTarget();
-			if (livingentity.getDistanceSq(this.parentEntity) < 4096.0D
+			if (livingentity.getDistanceSq(livingentity) < 4096.0D
 					&& this.parentEntity.canEntityBeSeen(livingentity)) {
 				this.parentEntity.getLookController().setLookPositionWithEntity(livingentity, 90.0F, 30.0F);
 				World world = this.parentEntity.world;
@@ -192,13 +197,14 @@ public class GargoyleEntity extends DemonEntity implements IAnimatable, IFlyingA
 
 				if (this.attackTimer == 20) {
 					Vector3d vector3d = this.parentEntity.getLook(1.0F);
-					double d2 = livingentity.getPosX() - (this.parentEntity.getPosX() + vector3d.x * 4.0D);
+					double d2 = livingentity.getPosX() - (this.parentEntity.getPosX() + vector3d.x * 1.0D);
 					double d3 = livingentity.getPosYHeight(0.5D) - (0.5D + this.parentEntity.getPosYHeight(0.5D));
-					double d4 = livingentity.getPosZ() - (this.parentEntity.getPosZ() + vector3d.z * 4.0D);
-					SmallFireballEntity fireballentity = new SmallFireballEntity(world, this.parentEntity, d2, d3, d4);
-					fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 2.0D,
-							this.parentEntity.getPosYHeight(0.5D) + 0.5D, fireballentity.getPosZ() + vector3d.z * 1.0D);
-					world.addEntity(fireballentity);
+					double d4 = livingentity.getPosZ() - (this.parentEntity.getPosZ() + vector3d.z * 1.0D);
+					CustomSmallFireballEntity fireballEntity = new CustomSmallFireballEntity(world, this.parentEntity, d2, d3, d4);
+					fireballEntity.setDirectHitDamage(config.RANGED_ATTACK_DAMAGE);
+					fireballEntity.setPosition(this.parentEntity.getPosX() + vector3d.x * 1.0D,
+							this.parentEntity.getPosYHeight(0.5D) + 0.5D, fireballEntity.getPosZ() + vector3d.z * 1.0D);
+					world.addEntity(fireballEntity);
 					this.attackTimer = -40;
 				}
 			} else if (this.attackTimer > 0) {
@@ -210,11 +216,7 @@ public class GargoyleEntity extends DemonEntity implements IAnimatable, IFlyingA
 	}
 
 	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
-		return MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 25.0D)
-				.createMutableAttribute(Attributes.MAX_HEALTH, 30.0D)
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D)
-				.createMutableAttribute(Attributes.FLYING_SPEED, 2.25D)
-				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 4.0D);
+		return config.pushAttributes(MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 25.0D));
 	}
 
 	@Nullable

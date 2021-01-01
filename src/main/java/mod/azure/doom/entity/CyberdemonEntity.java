@@ -8,6 +8,9 @@ import javax.annotation.Nullable;
 
 import mod.azure.doom.entity.ai.goal.DemonAttackGoal;
 import mod.azure.doom.entity.projectiles.entity.RocketMobEntity;
+import mod.azure.doom.util.Config;
+import mod.azure.doom.util.EntityConfig;
+import mod.azure.doom.util.EntityDefaults.EntityConfigType;
 import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -58,6 +61,8 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 public class CyberdemonEntity extends DemonEntity implements IAnimatable {
 	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(CyberdemonEntity.class,
 			DataSerializers.BOOLEAN);
+	
+	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.CYBER_DEMON);
 
 	public CyberdemonEntity(EntityType<? extends CyberdemonEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
@@ -105,7 +110,7 @@ public class CyberdemonEntity extends DemonEntity implements IAnimatable {
 
 	public static boolean func_223368_b(EntityType<CyberdemonEntity> p_223368_0_, IWorld p_223368_1_,
 			SpawnReason reason, BlockPos p_223368_3_, Random p_223368_4_) {
-		return p_223368_1_.getDifficulty() != Difficulty.PEACEFUL && p_223368_4_.nextInt(20) == 0
+		return passPeacefulAndYCheck(config, p_223368_1_, reason, p_223368_3_, p_223368_4_) && p_223368_4_.nextInt(20) == 0
 				&& canSpawnOn(p_223368_0_, p_223368_1_, reason, p_223368_3_, p_223368_4_);
 	}
 
@@ -155,6 +160,7 @@ public class CyberdemonEntity extends DemonEntity implements IAnimatable {
 					fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 2.0D,
 							this.parentEntity.getPosYHeight(0.5D) + 0.00D,
 							fireballentity.getPosZ() + vector3d.z * 1.0D);
+					fireballentity.setDirectHitDamage(config.RANGED_ATTACK_DAMAGE);
 					world.addEntity(fireballentity);
 					this.attackTimer = -40;
 				}
@@ -167,10 +173,7 @@ public class CyberdemonEntity extends DemonEntity implements IAnimatable {
 	}
 
 	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
-		return MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 50.0D)
-				.createMutableAttribute(Attributes.MAX_HEALTH, 300.0D)
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D)
-				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 15.0D);
+		return config.pushAttributes(MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 50.0D));
 	}
 
 	@Override

@@ -7,6 +7,9 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import mod.azure.doom.entity.ai.goal.DemonAttackGoal;
+import mod.azure.doom.util.Config;
+import mod.azure.doom.util.EntityConfig;
+import mod.azure.doom.util.EntityDefaults.EntityConfigType;
 import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -52,6 +55,7 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 public class Hellknight2016Entity extends DemonEntity implements IAnimatable {
 
 	private AnimationFactory factory = new AnimationFactory(this);
+	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.HELL_KNIGHT_2016);
 
 	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
 		if (event.isMoving() && !this.isAggressive()) {
@@ -92,7 +96,7 @@ public class Hellknight2016Entity extends DemonEntity implements IAnimatable {
 
 	public static boolean spawning(EntityType<Hellknight2016Entity> p_223337_0_, IWorld p_223337_1_, SpawnReason reason,
 			BlockPos p_223337_3_, Random p_223337_4_) {
-		return p_223337_1_.getDifficulty() != Difficulty.PEACEFUL;
+		return passPeacefulAndYCheck(config, p_223337_1_, reason, p_223337_3_, p_223337_4_);
 	}
 
 	@Override
@@ -113,10 +117,7 @@ public class Hellknight2016Entity extends DemonEntity implements IAnimatable {
 	}
 
 	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
-		return MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 50.0D)
-				.createMutableAttribute(Attributes.MAX_HEALTH, 90.0D)
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D)
-				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 8.0D);
+		return config.pushAttributes(MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 50.0D));
 	}
 
 	@Nullable

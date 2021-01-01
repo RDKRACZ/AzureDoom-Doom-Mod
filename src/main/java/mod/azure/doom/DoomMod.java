@@ -32,6 +32,7 @@ import mod.azure.doom.entity.UnwillingEntity;
 import mod.azure.doom.entity.ZombiemanEntity;
 import mod.azure.doom.util.Config;
 import mod.azure.doom.util.DoomLeapEntityEvents;
+import mod.azure.doom.util.DoomVillagerTrades;
 import mod.azure.doom.util.LootHandler;
 import mod.azure.doom.util.SoulCubeHandler;
 import mod.azure.doom.util.registry.DoomBlocks;
@@ -71,13 +72,15 @@ public class DoomMod {
 		instance = this;
 		final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		ModLoadingContext modLoadingContext = ModLoadingContext.get();
+		modLoadingContext.registerConfig(ModConfig.Type.SERVER, Config.SERVER_SPEC, "doom-config.toml");
+		Config.loadConfig(Config.SERVER_SPEC, FMLPaths.CONFIGDIR.get().resolve("doom-config.toml").toString());
+		Config.SERVER.bakeConfig();
 		MinecraftForge.EVENT_BUS.register(this);
 		MinecraftForge.EVENT_BUS.register(new SoulCubeHandler());
 		modEventBus.addListener(this::setup);
 		modEventBus.addListener(this::clientSetup);
 		modEventBus.addListener(this::enqueueIMC);
-		modLoadingContext.registerConfig(ModConfig.Type.SERVER, Config.SERVER_SPEC, "doom-config.toml");
-		Config.loadConfig(Config.SERVER_SPEC, FMLPaths.CONFIGDIR.get().resolve("doom-config.toml").toString());
+		MinecraftForge.EVENT_BUS.addListener(DoomVillagerTrades::onVillagerTradesEvent);
 		ModSoundEvents.MOD_SOUNDS.register(modEventBus);
 		DoomEnchantments.ENCHANTMENTS.register(modEventBus);
 		ModEntityTypes.ENTITY_TYPES.register(modEventBus);
@@ -85,7 +88,7 @@ public class DoomMod {
 		DoomItems.ITEMS.register(modEventBus);
 		DoomBlocks.BLOCKS.register(modEventBus);
 		if (!ModList.get().isLoaded("lockon")) {
-			if (Config.SERVER.ENABLE_LOCKON.get()) {
+			if (Config.SERVER.ENABLE_LOCKON) {
 				if (FMLEnvironment.dist == Dist.CLIENT)
 					modEventBus.addListener(LockOnHandler::client);
 			}

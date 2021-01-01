@@ -2,6 +2,9 @@ package mod.azure.doom.entity;
 
 import java.util.Random;
 
+import mod.azure.doom.util.Config;
+import mod.azure.doom.util.EntityConfig;
+import mod.azure.doom.util.EntityDefaults.EntityConfigType;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
@@ -33,6 +36,7 @@ public class GoreNestEntity extends DemonEntity implements IAnimatable {
 	private final GoreNestEntity parentEntity;
 
 	private AnimationFactory factory = new AnimationFactory(this);
+	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.GORE_NEST);
 
 	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
 		if ((this.dead || this.getHealth() < 0.01 || this.getShouldBeDead())) {
@@ -86,7 +90,7 @@ public class GoreNestEntity extends DemonEntity implements IAnimatable {
 
 	public static boolean spawning(EntityType<GoreNestEntity> p_223337_0_, IWorld p_223337_1_, SpawnReason reason,
 			BlockPos p_223337_3_, Random p_223337_4_) {
-		return p_223337_1_.getDifficulty() != Difficulty.PEACEFUL;
+		return passPeacefulAndYCheck(config, p_223337_1_, reason, p_223337_3_, p_223337_4_);
 	}
 
 	@Override
@@ -98,10 +102,7 @@ public class GoreNestEntity extends DemonEntity implements IAnimatable {
 	}
 
 	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
-		return MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 50.0D)
-				.createMutableAttribute(Attributes.MAX_HEALTH, 5.0D)
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.0D)
-				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 15.0D);
+		return config.pushAttributes(MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 50.0D));
 	}
 
 	@Override

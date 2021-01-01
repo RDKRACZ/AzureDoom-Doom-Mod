@@ -7,6 +7,10 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import mod.azure.doom.entity.ai.goal.DemonAttackGoal;
+import mod.azure.doom.entity.projectiles.CustomSmallFireballEntity;
+import mod.azure.doom.util.Config;
+import mod.azure.doom.util.EntityConfig;
+import mod.azure.doom.util.EntityDefaults.EntityConfigType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.CreatureAttribute;
@@ -25,7 +29,6 @@ import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.SmallFireballEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -57,6 +60,8 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 public class MechaZombieEntity extends DemonEntity implements IAnimatable {
 	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(MechaZombieEntity.class,
 			DataSerializers.BOOLEAN);
+	
+	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.MECHA_ZOMBIE);
 
 	private AnimationFactory factory = new AnimationFactory(this);
 
@@ -127,7 +132,7 @@ public class MechaZombieEntity extends DemonEntity implements IAnimatable {
 
 	public static boolean spawning(EntityType<MechaZombieEntity> p_223337_0_, IWorld p_223337_1_, SpawnReason reason,
 			BlockPos p_223337_3_, Random p_223337_4_) {
-		return p_223337_1_.getDifficulty() != Difficulty.PEACEFUL;
+		return passPeacefulAndYCheck(config, p_223337_1_, reason, p_223337_3_, p_223337_4_);
 	}
 
 	@Override
@@ -143,10 +148,7 @@ public class MechaZombieEntity extends DemonEntity implements IAnimatable {
 	}
 
 	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
-		return MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 50.0D)
-				.createMutableAttribute(Attributes.MAX_HEALTH, 25.0D)
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D)
-				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 15.0D);
+		return config.pushAttributes(MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 50.0D));
 	}
 
 	static class FireballAttackGoal extends Goal {
@@ -183,9 +185,10 @@ public class MechaZombieEntity extends DemonEntity implements IAnimatable {
 					double d3 = livingentity.getPosYHeight(0.5D) - (0.5D + this.parentEntity.getPosYHeight(0.5D));
 					double d4 = livingentity.getPosZ() - (this.parentEntity.getPosZ() + vector3d.z * 4.0D);
 
-					SmallFireballEntity fireballentity = new SmallFireballEntity(world, this.parentEntity, d2, d3, d4);
+					CustomSmallFireballEntity fireballentity = new CustomSmallFireballEntity(world, this.parentEntity, d2, d3, d4);
 					fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 1.0D,
 							this.parentEntity.getPosYHeight(0.5D), fireballentity.getPosZ() + vector3d.z * 1.0D);
+					fireballentity.setDirectHitDamage(config.RANGED_ATTACK_DAMAGE);
 					world.addEntity(fireballentity);
 					this.attackTimer = -40;
 				}

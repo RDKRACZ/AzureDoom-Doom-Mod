@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Random;
 
 import mod.azure.doom.entity.projectiles.entity.ArchvileFiring;
+import mod.azure.doom.util.Config;
+import mod.azure.doom.util.EntityConfig;
+import mod.azure.doom.util.EntityDefaults.EntityConfigType;
 import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -35,7 +38,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.Difficulty;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -56,16 +58,15 @@ public class ArchvileEntity extends DemonEntity {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
-	public static boolean spawning(EntityType<ArchvileEntity> p_223337_0_, IWorld p_223337_1_, SpawnReason reason,
+	public static boolean spawning(EntityType<? extends DemonEntity> p_223337_0_, IWorld p_223337_1_, SpawnReason reason,
 			BlockPos p_223337_3_, Random p_223337_4_) {
-		return p_223337_1_.getDifficulty() != Difficulty.PEACEFUL;
+		return passPeacefulAndYCheck(config, p_223337_1_, reason, p_223337_3_, p_223337_4_);
 	}
+	
+	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.ARCHVILE);
 
 	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
-		return MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 25.0D)
-				.createMutableAttribute(Attributes.MAX_HEALTH, 100.0D)
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D)
-				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 7.0D);
+		return config.pushAttributes(MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 25.0D));
 	}
 
 	@OnlyIn(Dist.CLIENT)
@@ -102,7 +103,7 @@ public class ArchvileEntity extends DemonEntity {
 		this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
 		this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
 		this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
-		this.goalSelector.addGoal(7, new ArchvileEntity.AttackGoal(this));
+		this.goalSelector.addGoal(4, new ArchvileEntity.AttackGoal(this));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, true));
 		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)));
@@ -233,6 +234,7 @@ public class ArchvileEntity extends DemonEntity {
 					p_190876_3_, p_190876_9_, 1, this);
 			fang.setFire(ticksExisted);
 			fang.setInvisible(false);
+			fang.setDamage(config.RANGED_ATTACK_DAMAGE);
 			this.world.addEntity(fang);
 		}
 	}

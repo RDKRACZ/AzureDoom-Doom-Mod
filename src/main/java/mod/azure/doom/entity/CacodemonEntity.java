@@ -4,6 +4,10 @@ import java.util.EnumSet;
 import java.util.Random;
 
 import mod.azure.doom.entity.ai.goal.DemonAttackGoal;
+import mod.azure.doom.entity.projectiles.CustomFireballEntity;
+import mod.azure.doom.util.Config;
+import mod.azure.doom.util.EntityConfig;
+import mod.azure.doom.util.EntityDefaults.EntityConfigType;
 import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.CreatureAttribute;
@@ -22,7 +26,6 @@ import net.minecraft.entity.ai.goal.HurtByTargetGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.FireballEntity;
 import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -50,6 +53,8 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 public class CacodemonEntity extends DemonEntity implements IMob, IAnimatable {
 	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(CacodemonEntity.class,
 			DataSerializers.BOOLEAN);
+	
+	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.CACODEMON);
 
 	public CacodemonEntity(EntityType<? extends CacodemonEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -118,10 +123,11 @@ public class CacodemonEntity extends DemonEntity implements IMob, IAnimatable {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
+	public static float fireBallDirectHitDamage = 6.0F;
+
 	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
-		return MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 50.0D)
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D)
-				.createMutableAttribute(Attributes.MAX_HEALTH, 80.0D);
+		fireBallDirectHitDamage = config.RANGED_ATTACK_DAMAGE;
+		return config.pushAttributes(MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 50.0D));
 	}
 
 	@Override
@@ -139,7 +145,7 @@ public class CacodemonEntity extends DemonEntity implements IMob, IAnimatable {
 
 	public static boolean spawning(EntityType<CacodemonEntity> p_223368_0_, IWorld p_223368_1_, SpawnReason reason,
 			BlockPos p_223368_3_, Random p_223368_4_) {
-		return p_223368_1_.getDifficulty() != Difficulty.PEACEFUL && p_223368_4_.nextInt(20) == 0
+		return passPeacefulAndYCheck(config, p_223368_1_, reason, p_223368_3_, p_223368_4_) && p_223368_4_.nextInt(20) == 0
 				&& canSpawnOn(p_223368_0_, p_223368_1_, reason, p_223368_3_, p_223368_4_);
 	}
 
@@ -232,14 +238,16 @@ public class CacodemonEntity extends DemonEntity implements IMob, IAnimatable {
 
 				if (this.attackTimer == 20) {
 					Vector3d vector3d = this.parentEntity.getLook(1.0F);
-					double d2 = livingentity.getPosX() - (this.parentEntity.getPosX() + vector3d.x * 4.0D);
-					double d3 = livingentity.getPosYHeight(0.5D) - (0.5D + this.parentEntity.getPosYHeight(0.5D));
-					double d4 = livingentity.getPosZ() - (this.parentEntity.getPosZ() + vector3d.z * 4.0D);
+					double d2 = livingentity.getPosX() - (this.parentEntity.getPosX() + vector3d.x * 0.5D);
+					double d3 = livingentity.getPosYHeight(0.3D) - (0.5D + this.parentEntity.getPosYHeight(0.5D));
+					double d4 = livingentity.getPosZ() - (this.parentEntity.getPosZ() + vector3d.z * 0.5D);
 
-					FireballEntity fireballentity = new FireballEntity(world, this.parentEntity, d2, d3, d4);
+					CustomFireballEntity fireballentity = new CustomFireballEntity(world, this.parentEntity, d2, d3,
+							d4);
+					fireballentity.setDirectHitDamage(CacodemonEntity.fireBallDirectHitDamage);
 					fireballentity.explosionPower = this.parentEntity.getFireballStrength();
-					fireballentity.setPosition(this.parentEntity.getPosX(), this.parentEntity.getPosYHeight(0.15D),
-							fireballentity.getPosZ());
+					fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 0.5D,
+							this.parentEntity.getPosYHeight(0.3D), fireballentity.getPosZ() + vector3d.z * 0.5D);
 					this.parentEntity.playSound(ModSoundEvents.CACODEMON_FIREBALL.get(), 1.0F,
 							1.2F / (this.parentEntity.rand.nextFloat() * 0.2F + 0.9F));
 					world.addEntity(fireballentity);
@@ -302,7 +310,7 @@ public class CacodemonEntity extends DemonEntity implements IMob, IAnimatable {
 					double d0 = vector3d.length();
 					vector3d = vector3d.normalize();
 					if (this.func_220673_a(vector3d, MathHelper.ceil(d0))) {
-						this.parentEntity.setMotion(this.parentEntity.getMotion().add(vector3d.scale(0.1D)));
+						this.parentEntity.setMotion(this.parentEntity.getMotion().add(vector3d.scale(0.1D))); //TODO test fly speed here
 					} else {
 						this.action = MovementController.Action.WAIT;
 					}

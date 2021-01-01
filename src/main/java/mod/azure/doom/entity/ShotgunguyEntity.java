@@ -10,6 +10,9 @@ import mod.azure.doom.entity.ai.goal.RangedShotgunAttackGoal;
 import mod.azure.doom.entity.projectiles.ShotgunShellEntity;
 import mod.azure.doom.item.ammo.ShellAmmo;
 import mod.azure.doom.item.weapons.Shotgun;
+import mod.azure.doom.util.Config;
+import mod.azure.doom.util.EntityConfig;
+import mod.azure.doom.util.EntityDefaults.EntityConfigType;
 import mod.azure.doom.util.registry.DoomItems;
 import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
@@ -80,6 +83,8 @@ public class ShotgunguyEntity extends DemonEntity implements IRangedAttackMob, I
 	}
 
 	private AnimationFactory factory = new AnimationFactory(this);
+	
+	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.SHOTGUN_GUY);
 
 	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
 		if (event.isMoving() && !this.isAggressive()) {
@@ -117,7 +122,7 @@ public class ShotgunguyEntity extends DemonEntity implements IRangedAttackMob, I
 
 	public static boolean spawning(EntityType<ShotgunguyEntity> p_223337_0_, IWorld p_223337_1_, SpawnReason reason,
 			BlockPos p_223337_3_, Random p_223337_4_) {
-		return p_223337_1_.getDifficulty() != Difficulty.PEACEFUL;
+		return passPeacefulAndYCheck(config, p_223337_1_, reason, p_223337_3_, p_223337_4_);
 	}
 
 	@Override
@@ -133,10 +138,7 @@ public class ShotgunguyEntity extends DemonEntity implements IRangedAttackMob, I
 	}
 
 	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
-		return MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 50.0D)
-				.createMutableAttribute(Attributes.MAX_HEALTH, 15.0D)
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D)
-				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 4.0D);
+		return config.pushAttributes(MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 50.0D));
 	}
 
 	@Override
@@ -202,7 +204,7 @@ public class ShotgunguyEntity extends DemonEntity implements IRangedAttackMob, I
 				: DoomItems.SHOTGUN_SHELLS.get());
 		ShotgunShellEntity abstractarrowentity = arrowitem.createArrow(shooter.world, arrowStack, shooter);
 		abstractarrowentity.setEnchantmentEffectsFromEntity(shooter, distanceFactor);
-
+		abstractarrowentity.setDamage(config.RANGED_ATTACK_DAMAGE);
 		return abstractarrowentity;
 	}
 
