@@ -18,7 +18,6 @@ public class BFG9000Render extends GeoItemRenderer<BFG9000> {
 		super(new BFG9000Model());
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void func_239207_a_(ItemStack itemStack, TransformType transformType, MatrixStack stack,
 			IRenderTypeBuffer bufferIn, int combinedLightIn, int p_239207_6_) {
