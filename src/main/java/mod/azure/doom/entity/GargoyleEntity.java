@@ -43,6 +43,7 @@ import net.minecraft.pathfinding.FlyingPathNavigator;
 import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.DifficultyInstance;
@@ -64,7 +65,7 @@ public class GargoyleEntity extends DemonEntity implements IAnimatable, IFlyingA
 
 	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(GargoyleEntity.class,
 			DataSerializers.BOOLEAN);
-	
+
 	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.GARGOYLE);
 
 	public GargoyleEntity(EntityType<GargoyleEntity> entityType, World worldIn) {
@@ -188,8 +189,7 @@ public class GargoyleEntity extends DemonEntity implements IAnimatable, IFlyingA
 
 		public void tick() {
 			LivingEntity livingentity = this.parentEntity.getAttackTarget();
-			if (livingentity.getDistanceSq(livingentity) < 4096.0D
-					&& this.parentEntity.canEntityBeSeen(livingentity)) {
+			if (livingentity.getDistanceSq(livingentity) < 4096.0D && this.parentEntity.canEntityBeSeen(livingentity)) {
 				this.parentEntity.getLookController().setLookPositionWithEntity(livingentity, 90.0F, 30.0F);
 				World world = this.parentEntity.world;
 				++this.attackTimer;
@@ -199,11 +199,13 @@ public class GargoyleEntity extends DemonEntity implements IAnimatable, IFlyingA
 					double d2 = livingentity.getPosX() - (this.parentEntity.getPosX() + vector3d.x * 1.0D);
 					double d3 = livingentity.getPosYHeight(0.5D) - (0.5D + this.parentEntity.getPosYHeight(0.5D));
 					double d4 = livingentity.getPosZ() - (this.parentEntity.getPosZ() + vector3d.z * 1.0D);
-					CustomSmallFireballEntity fireballEntity = new CustomSmallFireballEntity(world, this.parentEntity, d2, d3, d4);
-					fireballEntity.setDirectHitDamage(config.RANGED_ATTACK_DAMAGE);
+					CustomSmallFireballEntity fireballEntity = new CustomSmallFireballEntity(world, this.parentEntity,
+							d2, d3, d4, config.RANGED_ATTACK_DAMAGE);
 					fireballEntity.setPosition(this.parentEntity.getPosX() + vector3d.x * 1.0D,
 							this.parentEntity.getPosYHeight(0.5D) + 0.5D, fireballEntity.getPosZ() + vector3d.z * 1.0D);
 					world.addEntity(fireballEntity);
+					this.parentEntity.playSound(SoundEvents.ITEM_FIRECHARGE_USE, 1F,
+							0.5F + (float) (0.3 * Math.random()));
 					this.attackTimer = -40;
 				}
 			} else if (this.attackTimer > 0) {

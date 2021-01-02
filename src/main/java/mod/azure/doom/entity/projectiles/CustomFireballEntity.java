@@ -10,14 +10,10 @@ import net.minecraft.world.World;
 public class CustomFireballEntity extends FireballEntity {
 	
 	private float directHitDamage = 6.0F;
-	
-	public void setDirectHitDamage(float f) {
-		directHitDamage = f;
-	}
 
-	public CustomFireballEntity(World worldIn, LivingEntity shooter, double accelX, double accelY, double accelZ) {
+	public CustomFireballEntity(World worldIn, LivingEntity shooter, double accelX, double accelY, double accelZ, float directHitDamage) {
 		super(worldIn, shooter, accelX, accelY, accelZ);
-		// TODO Auto-generated constructor stub
+		this.directHitDamage = directHitDamage;
 	}
 
 	@Override

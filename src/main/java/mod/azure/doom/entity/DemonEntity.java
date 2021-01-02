@@ -17,7 +17,7 @@ public class DemonEntity extends MonsterEntity {
 	protected DemonEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
-
+	
 	public static boolean passPeacefulAndYCheck(EntityConfig config, IWorld p_223337_1_, SpawnReason reason,
 			BlockPos p_223337_3_, Random p_223337_4_) {
 		// peaceful check
@@ -31,15 +31,10 @@ public class DemonEntity extends MonsterEntity {
 		return blockY >= config.MIN_Y && blockY <= config.MAX_Y;
 	}
 	
-//	private float rangedDirectHitDamage = 0;
-//	
-//	public float getRangedDirectHitDamage() {
-//		return rangedDirectHitDamage;
-//	}
-//	
-//	public void setRangedDirectHitDamage(float dmg) {
-//		rangedDirectHitDamage = dmg;
-//	}
+	public void setAttacking(boolean attacking) {
+		//override only
+	}
+
 	
 
 }

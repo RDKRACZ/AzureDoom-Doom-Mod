@@ -43,6 +43,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.DifficultyInstance;
@@ -161,16 +162,18 @@ public class ArachnotronEntity extends DemonEntity implements IAnimatable {
 				World world = this.parentEntity.world;
 				this.parentEntity.getLookController().setLookPositionWithEntity(livingentity, 90.0F, 30.0F);
 				++this.attackTimer;
-				Vector3d vector3d = this.parentEntity.getLook(1.0F);
-				double d2 = livingentity.getPosX() - (this.parentEntity.getPosX() + vector3d.x * 2.0D);
-				double d3 = livingentity.getPosYHeight(0.5D) - (0.5D + this.parentEntity.getPosYHeight(0.5D));
-				double d4 = livingentity.getPosZ() - (this.parentEntity.getPosZ() + vector3d.z * 2.0D);
-				EnergyCellMobEntity fireballentity = new EnergyCellMobEntity(world, this.parentEntity, d2, d3, d4);
-				fireballentity.setDirectHitDamage(config.RANGED_ATTACK_DAMAGE);
 				if (this.attackTimer == 10) {
+					Vector3d vector3d = this.parentEntity.getLook(1.0F);
+					double d2 = livingentity.getPosX() - (this.parentEntity.getPosX() + vector3d.x * 2.0D);
+					double d3 = livingentity.getPosYHeight(0.5D) - (0.5D + this.parentEntity.getPosYHeight(0.5D));
+					double d4 = livingentity.getPosZ() - (this.parentEntity.getPosZ() + vector3d.z * 2.0D);
+					EnergyCellMobEntity fireballentity = new EnergyCellMobEntity(world, this.parentEntity, d2, d3, d4);
+					fireballentity.setDirectHitDamage(config.RANGED_ATTACK_DAMAGE);
 					fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 2.0D,
 							this.parentEntity.getPosYHeight(0.5D) + 0.5D, fireballentity.getPosZ() + vector3d.z * 2.0D);
 					world.addEntity(fireballentity);
+					this.parentEntity.playSound(SoundEvents.ENTITY_WITHER_SHOOT, 1F,
+							1.5F + (float) (Math.random() * 0.4));
 					this.attackTimer = -10;
 				}
 			} else if (this.attackTimer > 0) {

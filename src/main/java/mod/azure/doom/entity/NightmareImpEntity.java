@@ -176,10 +176,9 @@ public class NightmareImpEntity extends DemonEntity implements IAnimatable {
 					double d2 = livingentity.getPosX() - (this.parentEntity.getPosX() + vector3d.x * 4.0D);
 					double d3 = livingentity.getPosYHeight(0.5D) - (0.5D + this.parentEntity.getPosYHeight(0.5D));
 					double d4 = livingentity.getPosZ() - (this.parentEntity.getPosZ() + vector3d.z * 4.0D);
-					CustomSmallFireballEntity fireballentity = new CustomSmallFireballEntity(world, this.parentEntity, d2, d3, d4);
+					CustomSmallFireballEntity fireballentity = new CustomSmallFireballEntity(world, this.parentEntity, d2, d3, d4, config.RANGED_ATTACK_DAMAGE);
 					fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 2.0D,
 							this.parentEntity.getPosYHeight(0.5D) + 0.5D, fireballentity.getPosZ() + vector3d.z * 1.0D);
-					fireballentity.setDirectHitDamage(config.RANGED_ATTACK_DAMAGE);
 					world.addEntity(fireballentity);
 					this.attackTimer = -100;
 				}
