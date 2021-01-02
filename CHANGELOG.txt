@@ -3,3 +3,7 @@ v.3.6.3
 - Added Weapon Ammo to Weapon Smith level 3 Villagers.
 - Added Argent Tools to Tool Smith Level 3 Villagers.
 - Added E1M! Blocks to Mason Level 3 Villagers.
+- Tons of new configs for spawning and damage thanks to C0RNDOG!
+- Tons of AI fixes for mob attacks, they will now properly attack at the targets middle instead of feet and attacks have a higher weight thanks to C0RNDOG!.
+- Arch-vile and Mancubus fire attacks are now setting the target on fire properly.
+- Mancubus won't hurt itself with it's fire based attacks. 

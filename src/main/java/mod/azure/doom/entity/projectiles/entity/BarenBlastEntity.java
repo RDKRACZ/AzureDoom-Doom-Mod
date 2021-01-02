@@ -36,10 +36,6 @@ public class BarenBlastEntity extends DamagingProjectileEntity {
 		this.shooter = shooter;
 	}
 
-//	public BarenBlastEntity(World worldIn, double x, double y, double z, double accelX, double accelY, double accelZ) {
-//		super(ModEntityTypes.BARENBLAST.get(), x, y, z, accelX, accelY, accelZ, worldIn);
-//	}
-
 	public void setDirectHitDamage(float directHitDamage) {
 		this.directHitDamage = directHitDamage;
 	}

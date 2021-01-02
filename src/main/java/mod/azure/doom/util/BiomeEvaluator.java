@@ -51,12 +51,11 @@ public class BiomeEvaluator {
 		});
 	}
 
-	private static boolean meetsTag(String query,
-			List<String> biomeTypes) {
+	private static boolean meetsTag(String query, List<String> biomeTypes) {
 		for (String fragment : query.split(Pattern.quote("+"))) {
 			if (fragment.startsWith("!")) {
 				if (biomeTypes.contains(fragment.substring(1)))
-						return false;
+					return false;
 			} else {
 				if (!biomeTypes.contains(fragment))
 					return false;
@@ -64,10 +63,11 @@ public class BiomeEvaluator {
 		}
 		return true;
 	}
-	
-    public static int getLightLevel(IServerWorld worldIn, double x, double y, double z) {
-    ServerWorld o = worldIn.getWorld();
-    return o.isThundering() ? o.getNeighborAwareLightSubtracted(new BlockPos(x, y, z), 10) : o.getLight(new BlockPos(x, y, z));
-}
+
+	public static int getLightLevel(IServerWorld worldIn, double x, double y, double z) {
+		ServerWorld o = worldIn.getWorld();
+		return o.isThundering() ? o.getNeighborAwareLightSubtracted(new BlockPos(x, y, z), 10)
+				: o.getLight(new BlockPos(x, y, z));
+	}
 
 }

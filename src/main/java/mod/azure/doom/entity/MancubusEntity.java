@@ -39,7 +39,6 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.shapes.VoxelShape;
@@ -63,7 +62,7 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 
 	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(MancubusEntity.class,
 			DataSerializers.BOOLEAN);
-	
+
 	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.MANCUBUS);
 
 	private int attackTimer;
@@ -147,7 +146,7 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 	}
 
 	protected void applyEntityAI() {
-		this.goalSelector.addGoal(7, new MancubusEntity.FireballAttackGoal(this));
+		this.goalSelector.addGoal(1, new MancubusEntity.FireballAttackGoal(this));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, false));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
@@ -191,19 +190,25 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 				double d4 = livingentity.getPosZ() - (this.parentEntity.getPosZ() + vector3d.z * 4.0D);
 				float f = (float) MathHelper.atan2(livingentity.getPosZ() - parentEntity.getPosZ(),
 						livingentity.getPosX() - parentEntity.getPosX());
-				final Vector3d facing = Vector3d.fromPitchYaw(parentEntity.getPitchYaw()).normalize();
-				final AxisAlignedBB aabb = new AxisAlignedBB(parentEntity.getPosition().up()).grow(1D, 1D, 1D)
-						.offset(facing.scale(1D));
 				BarenBlastEntity fireballentity = new BarenBlastEntity(world, this.parentEntity, d2, d3, d4);
 				if (this.attackTimer == 15) {
 					if (parentEntity.getDistance(livingentity) < 3.0D) {
-						parentEntity.getEntityWorld().getEntitiesWithinAABBExcludingEntity(parentEntity, aabb)
-								.forEach(e -> e.setFire(5));
+						for (int i = 0; i < 5; ++i) {
+							float f1 = f + (float) i * (float) Math.PI * 0.4F;
+							parentEntity.spawnFlames(parentEntity.getPosX() + (double) MathHelper.cos(f1) * 1.5D,
+									parentEntity.getPosZ() + (double) MathHelper.sin(f1) * 1.5D, d0, d1, f1, 0);
+						}
+
+						for (int k = 0; k < 8; ++k) {
+							float f2 = f + (float) k * (float) Math.PI * 2.0F / 8.0F + 1.2566371F;
+							parentEntity.spawnFlames(parentEntity.getPosX() + (double) MathHelper.cos(f2) * 2.5D,
+									parentEntity.getPosZ() + (double) MathHelper.sin(f2) * 2.5D, d0, d1, f2, 3);
+						}
 					} else if (parentEntity.getDistance(livingentity) < 13.0D) {
 						for (int l = 0; l < 16; ++l) {
 							double d5 = 1.25D * (double) (l + 1);
 							int j = 1 * l;
-							parentEntity.spawnFlames(parentEntity.getPosX() + (double) MathHelper.cos(f) * d2,
+							parentEntity.spawnFlames(parentEntity.getPosX() + (double) MathHelper.cos(f) * d5,
 									parentEntity.getPosZ() + (double) MathHelper.sin(f) * d5, d0, d1, f, j);
 						}
 					} else {
@@ -215,13 +220,22 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 				}
 				if (this.attackTimer == 20) {
 					if (parentEntity.getDistance(livingentity) < 3.0D) {
-						parentEntity.getEntityWorld().getEntitiesWithinAABBExcludingEntity(parentEntity, aabb)
-								.forEach(e -> e.setFire(5));
+						for (int i = 0; i < 5; ++i) {
+							float f1 = f + (float) i * (float) Math.PI * 0.4F;
+							parentEntity.spawnFlames(parentEntity.getPosX() + (double) MathHelper.cos(f1) * 1.5D,
+									parentEntity.getPosZ() + (double) MathHelper.sin(f1) * 1.5D, d0, d1, f1, 0);
+						}
+
+						for (int k = 0; k < 8; ++k) {
+							float f2 = f + (float) k * (float) Math.PI * 2.0F / 8.0F + 1.2566371F;
+							parentEntity.spawnFlames(parentEntity.getPosX() + (double) MathHelper.cos(f2) * 2.5D,
+									parentEntity.getPosZ() + (double) MathHelper.sin(f2) * 2.5D, d0, d1, f2, 3);
+						}
 					} else if (parentEntity.getDistance(livingentity) < 13.0D) {
 						for (int l = 0; l < 16; ++l) {
 							double d5 = 1.25D * (double) (l + 1);
 							int j = 1 * l;
-							parentEntity.spawnFlames(parentEntity.getPosX() + (double) MathHelper.cos(f) * d2,
+							parentEntity.spawnFlames(parentEntity.getPosX() + (double) MathHelper.cos(f) * d5,
 									parentEntity.getPosZ() + (double) MathHelper.sin(f) * d5, d0, d1, f, j);
 						}
 					} else {

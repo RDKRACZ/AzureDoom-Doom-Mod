@@ -49,7 +49,6 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -112,20 +111,18 @@ public class ArachnotronEntity extends DemonEntity implements IAnimatable {
 	public IPacket<?> createSpawnPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
-	
+
 	public static boolean spawning(EntityType<ArachnotronEntity> p_223337_0_, IWorld p_223337_1_, SpawnReason reason,
-			BlockPos p_223337_3_, Random p_223337_4_) {		
+			BlockPos p_223337_3_, Random p_223337_4_) {
 		return passPeacefulAndYCheck(config, p_223337_1_, reason, p_223337_3_, p_223337_4_);
 	}
-	
-	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.ARACHNOTRON);
-	
-	
-	@Override
-	   public boolean func_230292_f_(PlayerEntity p_230292_1_) {
-		      return true;
-		   }   
 
+	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.ARACHNOTRON);
+
+	@Override
+	public boolean func_230292_f_(PlayerEntity p_230292_1_) {
+		return true;
+	}
 
 	@Override
 	protected void registerGoals() {

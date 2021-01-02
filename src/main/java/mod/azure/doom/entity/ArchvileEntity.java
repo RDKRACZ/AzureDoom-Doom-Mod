@@ -58,11 +58,11 @@ public class ArchvileEntity extends DemonEntity {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
-	public static boolean spawning(EntityType<? extends DemonEntity> p_223337_0_, IWorld p_223337_1_, SpawnReason reason,
-			BlockPos p_223337_3_, Random p_223337_4_) {
+	public static boolean spawning(EntityType<? extends DemonEntity> p_223337_0_, IWorld p_223337_1_,
+			SpawnReason reason, BlockPos p_223337_3_, Random p_223337_4_) {
 		return passPeacefulAndYCheck(config, p_223337_1_, reason, p_223337_3_, p_223337_4_);
 	}
-	
+
 	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.ARCHVILE);
 
 	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
@@ -152,16 +152,9 @@ public class ArchvileEntity extends DemonEntity {
 								if (d12 <= 1.0D) {
 									if (entity.isAlive()) {
 										((DemonEntity) entity)
-												.addPotionEffect(new EffectInstance(Effects.SPEED, 1000, 1));
-										((DemonEntity) entity)
 												.addPotionEffect(new EffectInstance(Effects.STRENGTH, 1000, 1));
 										entity.setGlowing(true);
 									}
-								}
-							}
-							if (entity instanceof LivingEntity) {
-								if (entity.isAlive() && parentEntity.getAttackTarget().canEntityBeSeen(livingentity)) {
-									entity.setFire(3);
 								}
 							}
 						}
