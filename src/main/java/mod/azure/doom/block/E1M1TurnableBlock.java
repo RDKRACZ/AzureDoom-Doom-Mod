@@ -47,7 +47,6 @@ public class E1M1TurnableBlock extends Block {
 		builder.add(direction, light);
 	}
 	
-
 	@Override
 	public int getLightValue(BlockState state, IBlockReader world, BlockPos pos) {
 		return 15;

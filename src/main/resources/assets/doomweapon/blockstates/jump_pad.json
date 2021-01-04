@@ -1,0 +1,7 @@
+{
+	"variants": {
+		"": {
+			"model": "doomweapon:block/jump_pad"
+		}
+	}
+}

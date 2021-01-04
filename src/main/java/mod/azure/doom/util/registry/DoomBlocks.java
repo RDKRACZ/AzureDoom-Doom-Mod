@@ -9,6 +9,7 @@ import mod.azure.doom.block.DoomWallBlock;
 import mod.azure.doom.block.E1M1StairsBlock;
 import mod.azure.doom.block.E1M1TurnableBlock;
 import mod.azure.doom.block.E1M1TurnableHurtBlock;
+import mod.azure.doom.block.JumppadBlock;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -34,6 +35,8 @@ public class DoomBlocks {
 
 	public static final RegistryObject<Block> DOOM_SAND = BLOCKS.register("doom_sand", () -> new DoomSandBlock(
 			(Block.Properties.create(Material.ANVIL).hardnessAndResistance(4.0F).sound(SoundType.STONE))));
+
+	public static final RegistryObject<Block> JUMP_PAD = BLOCKS.register("jump_pad", () -> new JumppadBlock());
 
 	public static final RegistryObject<Block> DOOM_WALL1 = BLOCKS.register("icon_wall1", () -> new DoomWallBlock(
 			(Block.Properties.create(Material.ANVIL).hardnessAndResistance(4.0F).sound(SoundType.STONE))));

@@ -101,7 +101,10 @@ import mod.azure.doom.item.armor.SantaDoomArmor;
 import mod.azure.doom.item.armor.SentinelDoomArmor;
 import mod.azure.doom.item.armor.TwentyFiveDoomArmor;
 import mod.azure.doom.item.armor.ZombieDoomArmor;
+import mod.azure.doom.util.registry.DoomBlocks;
 import mod.azure.doom.util.registry.ModEntityTypes;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -192,5 +195,7 @@ public class ClientModEventSubscriber {
 		GeoArmorRenderer.registerArmorRenderer(SentinelDoomArmor.class, new SentinelRender());
 		GeoArmorRenderer.registerArmorRenderer(ZombieDoomArmor.class, new ZombieRender());
 		GeoArmorRenderer.registerArmorRenderer(SantaDoomArmor.class, new SantaRender());
+		
+		RenderTypeLookup.setRenderLayer(DoomBlocks.JUMP_PAD.get(), RenderType.getCutout());
 	}
 }

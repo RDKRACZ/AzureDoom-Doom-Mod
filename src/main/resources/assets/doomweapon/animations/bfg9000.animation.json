@@ -2,19 +2,31 @@
 	"format_version": "1.8.0",
 	"animations": {
 		"firing": {
-			"loop": true,
-			"animation_length": 0.08,
+			"animation_length": 1.04,
 			"bones": {
-				"bfg9000": {
-					"scale": {
+				"bfg": {
+					"position": {
 						"0.0": {
-							"vector": [1, 1, 1]
+							"vector": [0, 0, 0]
 						},
-						"0.04": {
-							"vector": [1, 1, 1]
+						"0.52": {
+							"vector": [0, 0, 0]
 						},
-						"0.08": {
-							"vector": [1, 1, 1]
+						"0.56": {
+							"vector": [0, 0, 1]
+						},
+						"1.04": {
+							"vector": [0, 0, 0]
+						}
+					}
+				},
+				"barrel": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.52": {
+							"vector": [0, 0, 360]
 						}
 					}
 				}
