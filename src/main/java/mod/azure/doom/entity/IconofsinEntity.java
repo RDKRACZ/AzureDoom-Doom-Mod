@@ -205,5 +205,11 @@ public class IconofsinEntity extends DemonEntity {
 				this.addPotionEffect(new EffectInstance(Effects.WEAKNESS, 10000000, 1));
 			}
 		}
+		if (!this.world.getDimensionType().doesRespawnAnchorWorks()) {
+			if (!this.world.isRemote) {
+				this.setGlowing(true);
+				this.addPotionEffect(new EffectInstance(Effects.ABSORPTION, 10000000, 2));
+			}
+		}
 	}
 }
