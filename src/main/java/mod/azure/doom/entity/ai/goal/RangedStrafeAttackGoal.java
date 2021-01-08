@@ -3,10 +3,9 @@ package mod.azure.doom.entity.ai.goal;
 import java.util.EnumSet;
 
 import mod.azure.doom.entity.DemonEntity;
-import mod.azure.doom.entity.attack.RangedAttack;
+import mod.azure.doom.entity.attack.AbstractRangedAttack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.util.Hand;
 
 public class RangedStrafeAttackGoal extends Goal {
 	private final DemonEntity entity;
@@ -21,9 +20,9 @@ public class RangedStrafeAttackGoal extends Goal {
 	private boolean strafingBackwards;
 	private int strafingTime = -1;
 
-	private RangedAttack attack;
+	private AbstractRangedAttack attack;
 
-	public RangedStrafeAttackGoal(DemonEntity mob, RangedAttack attack, double moveSpeedAmpIn, int attackCooldownIn,
+	public RangedStrafeAttackGoal(DemonEntity mob, AbstractRangedAttack attack, double moveSpeedAmpIn, int attackCooldownIn,
 			int visibleTicksDelay, int strafeTicks, float maxAttackDistanceIn) {
 		this.entity = mob;
 		this.moveSpeedAmp = moveSpeedAmpIn;
@@ -34,13 +33,51 @@ public class RangedStrafeAttackGoal extends Goal {
 		this.visibleTicksDelay = visibleTicksDelay;
 		this.strafeTicks = strafeTicks;
 	}
-	
-	//use defaults
-	public RangedStrafeAttackGoal(DemonEntity mob, RangedAttack attack, int attackCooldownIn) {
+
+	// use defaults
+	public RangedStrafeAttackGoal(DemonEntity mob, AbstractRangedAttack attack, int attackCooldownIn) {
 		this.entity = mob;
 		this.attackCooldown = attackCooldownIn;
 		this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
 		this.attack = attack;
+	}
+
+	private boolean multiShot = false;
+	private int multiShotCount = 0;
+	private int multiShotTickDelay = 0;
+
+	private boolean multiShooting = false;
+	private int multiShotsLeft = 0;
+	private int multiShotTicker = 0;
+
+	public RangedStrafeAttackGoal setMultiShot(int count, int tickDelay) {
+		multiShot = true;
+		multiShotCount = count;
+		multiShotTickDelay = tickDelay;
+		return this;
+	}
+
+	public boolean tickMultiShot() {
+		if (multiShotsLeft > 0 && multiShotTicker == 0) {
+			multiShotsLeft--;
+			if (multiShotsLeft == 0)
+				finishMultiShot();
+			multiShotTicker = multiShotTickDelay;
+			return true;
+		}
+		multiShotTicker--;
+		return false;
+	}
+
+	public void beginMultiShooting() {
+		multiShooting = true;
+		multiShotsLeft = multiShotCount - 1;
+		multiShotTicker = multiShotTickDelay;
+	}
+
+	public void finishMultiShot() {
+		multiShooting = false;
+		multiShotsLeft = 0;
 	}
 
 	public void setAttackCooldown(int attackCooldownIn) {
@@ -91,15 +128,17 @@ public class RangedStrafeAttackGoal extends Goal {
 			double distanceToTargetSq = this.entity.getDistanceSq(livingentity.getPosX(), livingentity.getPosY(),
 					livingentity.getPosZ());
 			boolean inLineOfSight = this.entity.getEntitySenses().canSee(livingentity);
-	         if (inLineOfSight != this.seeTime > 0) {
-	            this.seeTime = 0;
-	         }
+			if (inLineOfSight != this.seeTime > 0) {
+				this.seeTime = 0;
+			}
 
-	         if (inLineOfSight) {
-	            ++this.seeTime;
-	         } else {
-	            --this.seeTime;
-	         }
+			if (inLineOfSight) {
+				++this.seeTime;
+			} else {
+				if (multiShot)
+					finishMultiShot();
+				--this.seeTime;
+			}
 
 			if (distanceToTargetSq <= (double) this.maxAttackDistance && this.seeTime >= 20) {
 				this.entity.getNavigator().clearPath();
@@ -134,27 +173,25 @@ public class RangedStrafeAttackGoal extends Goal {
 			} else {
 				this.entity.getLookController().setLookPositionWithEntity(livingentity, 30.0F, 30.0F);
 			}
-			
-			//attack
+
+			// attack
+			if (multiShooting) {
+				if (tickMultiShot())
+					this.attack.shoot();
+				return;
+			}
+
 			if (this.seeTime >= this.visibleTicksDelay) {
 				if (this.attackTime >= this.attackCooldown) {
+					if (multiShot)
+						beginMultiShooting();
 					this.attack.shoot();
 					this.attackTime = 0;
 				} else
 					this.attackTime++;
 			}
-			
+
 			this.entity.setAttacking(this.attackTime >= this.attackCooldown - this.attackCooldown * 0.25);
-//			if (!flag && this.seeTime < -60) {
-//				this.entity.resetActiveHand();
-//			} else if (flag) {
-//				int i = this.entity.getItemInUseMaxCount();
-//				if (i >= 20) {
-//					attack.shoot();
-//					this.attackTime = this.attackCooldown;
-//				}
-//
-//			}
 
 		}
 	}

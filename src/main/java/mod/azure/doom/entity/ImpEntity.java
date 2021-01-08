@@ -61,7 +61,7 @@ public class ImpEntity extends DemonEntity implements IAnimatable {
 			DataSerializers.BOOLEAN);
 
 	private AnimationFactory factory = new AnimationFactory(this);
-	
+
 	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.IMP);
 
 	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
@@ -142,10 +142,11 @@ public class ImpEntity extends DemonEntity implements IAnimatable {
 	protected void applyEntityAI() {
 		this.goalSelector.addGoal(4,
 				new RangedStrafeAttackGoal(this,
-						new FireballAttack(this, false, 0.8, 0.5, 0.5, 0.8, config.RANGED_ATTACK_DAMAGE).overrideShootSound(
-								SoundEvents.ENTITY_BLAZE_SHOOT, 1.0F, 1.4F + this.getRNG().nextFloat() * 0.35F),
+						new FireballAttack(this, false).setProjectileOriginOffset(0.8, 0.8, 0.8)
+								.setDamage(config.RANGED_ATTACK_DAMAGE).setSound(SoundEvents.ENTITY_BLAZE_SHOOT, 1.0F,
+										1.4F + this.getRNG().nextFloat() * 0.35F),
 						1.0D, 50, 30, 15, 15F));
-		this.goalSelector.addGoal(5, new DemonAttackGoal(this, 1.0D, false));
+		this.goalSelector.addGoal(4, new DemonAttackGoal(this, 1.0D, false));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, false));
 		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)));

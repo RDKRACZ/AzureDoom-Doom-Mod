@@ -4,6 +4,7 @@ import java.util.EnumSet;
 import java.util.Random;
 
 import mod.azure.doom.entity.ai.goal.DemonAttackGoal;
+import mod.azure.doom.entity.ai.goal.RandomFlyConvergeOnTargetGoal;
 import mod.azure.doom.entity.ai.goal.RangedStaticAttackGoal;
 import mod.azure.doom.entity.attack.FireballAttack;
 import mod.azure.doom.entity.projectiles.CustomFireballEntity;
@@ -133,13 +134,13 @@ public class CacodemonEntity extends DemonEntity implements IMob, IAnimatable {
 
 	@Override
 	protected void registerGoals() {
-		this.goalSelector.addGoal(5, new CacodemonEntity.RandomFlyGoal(this));
+		this.goalSelector.addGoal(5, new RandomFlyConvergeOnTargetGoal(this, 2, 15, 0.5));
 		this.goalSelector.addGoal(7, new CacodemonEntity.LookAroundGoal(this));
 		this.goalSelector.addGoal(7,
 				new RangedStaticAttackGoal(this,
 						new FireballAttack(this, true).setDamage(config.RANGED_ATTACK_DAMAGE)
 								.setProjectileOriginOffset(1.5, 0.3, 1.5)
-								.overrideShootSound(ModSoundEvents.CACODEMON_FIREBALL.get(), 1.0F,
+								.setSound(ModSoundEvents.CACODEMON_FIREBALL.get(), 1.0F,
 										1.2F / (this.getRNG().nextFloat() * 0.2F + 0.9F)),
 						60, 20, 30F));
 		this.goalSelector.addGoal(7, new DemonAttackGoal(this, 1.0D, false));

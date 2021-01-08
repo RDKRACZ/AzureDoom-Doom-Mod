@@ -1,7 +1,7 @@
 package mod.azure.doom.entity.ai.goal;
 
 import mod.azure.doom.entity.DemonEntity;
-import mod.azure.doom.entity.attack.RangedAttack;
+import mod.azure.doom.entity.attack.AbstractRangedAttack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 
@@ -9,13 +9,13 @@ public class RangedStaticAttackGoal extends Goal{
 
 		private final DemonEntity parentEntity;
 		public int attackTimer;
-		private RangedAttack attack;
+		private AbstractRangedAttack attack;
 		private int attackCooldown;
 		private int visibleTicksDelay = 20;
 		private float maxAttackDistance = 20;
 		private int seeTime = -1;
 
-		public RangedStaticAttackGoal(DemonEntity mob, RangedAttack attack, int attackCooldownIn,
+		public RangedStaticAttackGoal(DemonEntity mob, AbstractRangedAttack attack, int attackCooldownIn,
 				int visibleTicksDelay, float maxAttackDistanceIn) {
 			this.parentEntity = mob;
 			this.attackCooldown = attackCooldownIn;

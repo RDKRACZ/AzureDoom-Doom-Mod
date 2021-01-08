@@ -60,7 +60,7 @@ public class EnergyCellMobEntity extends DamagingProjectileEntity {
 		Entity entity = this.func_234616_v_();
 		if (this.world.isRemote
 				|| (entity == null || entity.isAlive()) && this.world.isBlockLoaded(this.getPosition())) {
-			super.tick();
+			//super.tick();
 			RayTraceResult raytraceresult = ProjectileHelper.func_234618_a_(this, this::func_230298_a_);
 			if (raytraceresult.getType() != RayTraceResult.Type.MISS
 					&& !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, raytraceresult)) {

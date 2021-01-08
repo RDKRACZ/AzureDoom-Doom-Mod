@@ -7,6 +7,8 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import mod.azure.doom.entity.ai.goal.DemonAttackGoal;
+import mod.azure.doom.entity.ai.goal.RangedStrafeAttackGoal;
+import mod.azure.doom.entity.attack.FireballAttack;
 import mod.azure.doom.entity.projectiles.CustomSmallFireballEntity;
 import mod.azure.doom.util.Config;
 import mod.azure.doom.util.EntityConfig;
@@ -39,6 +41,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.DifficultyInstance;
@@ -60,7 +63,7 @@ public class Imp2016Entity extends DemonEntity implements IAnimatable {
 
 	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(Imp2016Entity.class,
 			DataSerializers.BOOLEAN);
-	
+
 	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.IMP_2016);
 
 	public Imp2016Entity(EntityType<Imp2016Entity> entityType, World worldIn) {
@@ -142,8 +145,13 @@ public class Imp2016Entity extends DemonEntity implements IAnimatable {
 	}
 
 	protected void applyEntityAI() {
-		this.goalSelector.addGoal(7, new Imp2016Entity.FireballAttackGoal(this));
-		this.goalSelector.addGoal(7, new DemonAttackGoal(this, 1.0D, false));
+		this.goalSelector.addGoal(4,
+				new RangedStrafeAttackGoal(this,
+						new FireballAttack(this, false).setProjectileOriginOffset(0.8, 0.8, 0.8)
+								.setDamage(config.RANGED_ATTACK_DAMAGE).setSound(SoundEvents.ENTITY_BLAZE_SHOOT, 1.0F,
+										1.4F + this.getRNG().nextFloat() * 0.35F),
+						1.0D, 50, 0, 15, 15F).setMultiShot(5, 3));
+		this.goalSelector.addGoal(4, new DemonAttackGoal(this, 1.0D, false));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, false));
 		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)));
@@ -178,7 +186,8 @@ public class Imp2016Entity extends DemonEntity implements IAnimatable {
 					double d2 = livingentity.getPosX() - (this.parentEntity.getPosX() + vector3d.x * 4.0D);
 					double d3 = livingentity.getPosYHeight(0.5D) - (0.5D + this.parentEntity.getPosYHeight(0.5D));
 					double d4 = livingentity.getPosZ() - (this.parentEntity.getPosZ() + vector3d.z * 4.0D);
-					CustomSmallFireballEntity fireballentity = new CustomSmallFireballEntity(world, this.parentEntity, d2, d3, d4, config.RANGED_ATTACK_DAMAGE);
+					CustomSmallFireballEntity fireballentity = new CustomSmallFireballEntity(world, this.parentEntity,
+							d2, d3, d4, config.RANGED_ATTACK_DAMAGE);
 					fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 2.0D,
 							this.parentEntity.getPosYHeight(0.5D) + 0.5D, fireballentity.getPosZ() + vector3d.z * 1.0D);
 
