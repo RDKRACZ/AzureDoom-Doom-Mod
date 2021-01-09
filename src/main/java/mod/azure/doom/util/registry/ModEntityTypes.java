@@ -253,7 +253,7 @@ public class ModEntityTypes {
 
 	public static final RegistryObject<EntityType<IconofsinEntity>> ICONOFSIN = ENTITY_TYPES.register("iconofsin",
 			() -> EntityType.Builder.<IconofsinEntity>create(IconofsinEntity::new, EntityClassification.MONSTER)
-					.size(2.4f, 10.0F).immuneToFire().setTrackingRange(9)
+					.size(6.3f, 20.0F).immuneToFire().setTrackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "iconofsin").toString()));
 
 	public static final RegistryObject<EntityType<EnergyCellMobEntity>> ENERGY_CELL_MOB = ENTITY_TYPES

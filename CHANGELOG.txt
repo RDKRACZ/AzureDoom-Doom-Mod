@@ -1,4 +1,4 @@
-v.3.7.0
+v.3.7.1
 
 - Added Weapon Ammo to Weapon Smith level 3 Villagers.
 - Added Argent Tools to Tool Smith Level 3 Villagers.
@@ -10,3 +10,4 @@ v.3.7.0
 - Added a far more difficult strafe AI for multiple ranged mobs.
 - Added a convergence AI for flying mobs to avoid them just flying away while they attack you.
 - Added a multi-shot ranged attack for multiple ranged mobs.
+- Increased Icon of Sin size. 
