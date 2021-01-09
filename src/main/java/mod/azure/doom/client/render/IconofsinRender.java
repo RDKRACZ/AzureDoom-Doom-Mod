@@ -157,7 +157,7 @@ public class IconofsinRender extends GeoEntityRenderer<IconofsinEntity> {
 		super.renderEarly(animatable, stackIn, ticks, renderTypeBuffer, vertexBuilder, packedLightIn, packedOverlayIn,
 				red, green, blue, partialTicks);
 
-		stackIn.scale(1.5F, 1.5F, 1.5F);
+		stackIn.scale(2F, 2F, 2F);
 	}
 
 }

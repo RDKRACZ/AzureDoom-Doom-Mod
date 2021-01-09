@@ -249,7 +249,7 @@ public class ModEntityTypes {
 					.build(new ResourceLocation(DoomMod.MODID, "mechazombie").toString()));
 
 	public static final RegistryObject<EntityType<IconofsinEntity>> ICONOFSIN = ENTITY_TYPES.register("iconofsin",
-			() -> EntityType.Builder.create(IconofsinEntity::new, EntityClassification.MONSTER).size(6.3f, 15.0F)
+			() -> EntityType.Builder.create(IconofsinEntity::new, EntityClassification.MONSTER).size(6.3f, 20.0F)
 					.trackingRange(9).immuneToFire()
 					.build(new ResourceLocation(DoomMod.MODID, "iconofsin").toString()));
 
