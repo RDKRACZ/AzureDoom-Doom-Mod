@@ -1,0 +1,22 @@
+{
+	"result": {
+		"item": "doomweapon:jump_pad"
+	},
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"sqs",
+		"q$q",
+		"sqs"
+	],
+	"key": {
+		"$": {
+			"item": "doomweapon:argent_energy"
+		},
+		"q": {
+			"item": "minecraft:iron_block"
+		},
+		"s": {
+			"item": "minecraft:iron_ingot"
+		}
+	}
+}

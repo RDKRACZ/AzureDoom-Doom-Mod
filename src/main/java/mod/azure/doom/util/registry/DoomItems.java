@@ -180,6 +180,9 @@ public class DoomItems {
 	public static final RegistryObject<Item> E1M1_26 = ITEMS.register("e1m1_block26",
 			() -> new BlockItem(DoomBlocks.E1M1_26.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
 
+	public static final RegistryObject<Item> JUMP_PAD = ITEMS.register("jump_pad",
+			() -> new BlockItem(DoomBlocks.JUMP_PAD.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+
 	// AMMO
 	public static final RegistryObject<Item> SHOTGUN_SHELLS = ITEMS.register("shotgun_shells",
 			() -> new ShellAmmo(new Item.Properties().group(DoomMod.DoomWeaponItemGroup), 2.0F));

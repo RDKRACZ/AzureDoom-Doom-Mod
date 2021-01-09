@@ -2,6 +2,7 @@ package mod.azure.doom.entity;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoField;
+import java.util.EnumSet;
 import java.util.Random;
 
 import javax.annotation.Nullable;
@@ -10,6 +11,9 @@ import mod.azure.doom.entity.ai.goal.HurtByAggressorGoal;
 import mod.azure.doom.entity.ai.goal.TargetAggressorGoal;
 import mod.azure.doom.entity.projectiles.entity.ArchvileFiring;
 import mod.azure.doom.entity.projectiles.entity.BarenBlastEntity;
+import mod.azure.doom.util.Config;
+import mod.azure.doom.util.EntityConfig;
+import mod.azure.doom.util.EntityDefaults.EntityConfigType;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
@@ -40,7 +44,6 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -64,6 +67,8 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 
 	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(MancubusEntity.class,
 			DataSerializers.BOOLEAN);
+
+	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.MANCUBUS);
 
 	private int attackTimer;
 
@@ -150,7 +155,6 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 
 	protected void applyEntityAI() {
 		this.goalSelector.addGoal(7, new MancubusEntity.FireballAttackGoal(this));
-		// this.goalSelector.addGoal(7, new DemonAttackGoal(this, 1.0D, false));
 		this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, false));
@@ -165,6 +169,7 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 
 		public FireballAttackGoal(MancubusEntity ghast) {
 			this.parentEntity = ghast;
+			this.setMutexFlags(EnumSet.of(Goal.Flag.LOOK));
 		}
 
 		public boolean shouldExecute() {
@@ -186,44 +191,61 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 				double d1 = Math.max(livingentity.getPosY(), livingentity.getPosY()) + 1.0D;
 				double d2 = livingentity.getPosX() - (this.parentEntity.getPosX() + vector3d.x * 2.0D);
 				double d3 = livingentity.getPosYHeight(0.5D) - (0.5D + this.parentEntity.getPosYHeight(0.5D));
-				double d4 = livingentity.getPosZ() - (this.parentEntity.getPosZ() + vector3d.z * 4.0D);
+				double d4 = livingentity.getPosZ() - (this.parentEntity.getPosZ() + vector3d.z * 2.0D);
 				float f = (float) MathHelper.atan2(livingentity.getPosZ() - parentEntity.getPosZ(),
 						livingentity.getPosX() - parentEntity.getPosX());
-				final Vec3d facing = Vec3d.fromPitchYaw(parentEntity.getPitchYaw()).normalize();
-				final AxisAlignedBB aabb = new AxisAlignedBB(parentEntity.getPosition().up()).grow(1D, 1D, 1D)
-						.offset(facing.scale(1D));
 				BarenBlastEntity fireballentity = new BarenBlastEntity(world, this.parentEntity, d2, d3, d4);
 				if (this.attackTimer == 15) {
 					if (parentEntity.getDistance(livingentity) < 3.0D) {
-						parentEntity.getEntityWorld().getEntitiesWithinAABBExcludingEntity(parentEntity, aabb)
-								.forEach(e -> e.setFire(5));
+						for (int i = 0; i < 5; ++i) {
+							float f1 = f + (float) i * (float) Math.PI * 0.4F;
+							parentEntity.spawnFlames(parentEntity.getPosX() + (double) MathHelper.cos(f1) * 1.5D,
+									parentEntity.getPosZ() + (double) MathHelper.sin(f1) * 1.5D, d0, d1, f1, 0);
+						}
+
+						for (int k = 0; k < 8; ++k) {
+							float f2 = f + (float) k * (float) Math.PI * 2.0F / 8.0F + 1.2566371F;
+							parentEntity.spawnFlames(parentEntity.getPosX() + (double) MathHelper.cos(f2) * 2.5D,
+									parentEntity.getPosZ() + (double) MathHelper.sin(f2) * 2.5D, d0, d1, f2, 3);
+						}
 					} else if (parentEntity.getDistance(livingentity) < 13.0D) {
 						for (int l = 0; l < 16; ++l) {
 							double d5 = 1.25D * (double) (l + 1);
 							int j = 1 * l;
-							parentEntity.spawnFlames(parentEntity.getPosX() + (double) MathHelper.cos(f) * d2,
+							parentEntity.spawnFlames(parentEntity.getPosX() + (double) MathHelper.cos(f) * d5,
 									parentEntity.getPosZ() + (double) MathHelper.sin(f) * d5, d0, d1, f, j);
 						}
 					} else {
-						fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 1.0D,
-								this.parentEntity.getPosYHeight(0.5D), fireballentity.getPosZ() + 1.0D);
+						fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 2.0D,
+								this.parentEntity.getPosYHeight(0.5D) + 0.5D,
+								fireballentity.getPosZ() + vector3d.z * 2.0D);
 						world.addEntity(fireballentity);
 					}
 				}
 				if (this.attackTimer == 20) {
 					if (parentEntity.getDistance(livingentity) < 3.0D) {
-						parentEntity.getEntityWorld().getEntitiesWithinAABBExcludingEntity(parentEntity, aabb)
-								.forEach(e -> e.setFire(5));
+						for (int i = 0; i < 5; ++i) {
+							float f1 = f + (float) i * (float) Math.PI * 0.4F;
+							parentEntity.spawnFlames(parentEntity.getPosX() + (double) MathHelper.cos(f1) * 1.5D,
+									parentEntity.getPosZ() + (double) MathHelper.sin(f1) * 1.5D, d0, d1, f1, 0);
+						}
+
+						for (int k = 0; k < 8; ++k) {
+							float f2 = f + (float) k * (float) Math.PI * 2.0F / 8.0F + 1.2566371F;
+							parentEntity.spawnFlames(parentEntity.getPosX() + (double) MathHelper.cos(f2) * 2.5D,
+									parentEntity.getPosZ() + (double) MathHelper.sin(f2) * 2.5D, d0, d1, f2, 3);
+						}
 					} else if (parentEntity.getDistance(livingentity) < 13.0D) {
 						for (int l = 0; l < 16; ++l) {
 							double d5 = 1.25D * (double) (l + 1);
 							int j = 1 * l;
-							parentEntity.spawnFlames(parentEntity.getPosX() + (double) MathHelper.cos(f) * d2,
+							parentEntity.spawnFlames(parentEntity.getPosX() + (double) MathHelper.cos(f) * d5,
 									parentEntity.getPosZ() + (double) MathHelper.sin(f) * d5, d0, d1, f, j);
 						}
 					} else {
-						fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 1.0D,
-								this.parentEntity.getPosYHeight(0.5D), fireballentity.getPosZ() + 1.0D);
+						fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 2.0D,
+								this.parentEntity.getPosYHeight(0.5D) + 0.5D,
+								fireballentity.getPosZ() + vector3d.z * 2.0D);
 						world.addEntity(fireballentity);
 					}
 					this.attackTimer = -50;

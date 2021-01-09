@@ -31,6 +31,8 @@ public class RocketMobEntity extends DamagingProjectileEntity implements IAnimat
 	protected int timeInAir;
 	protected boolean inAir;
 	private int ticksInAir;
+	private float directHitDamage = 5F;
+	private LivingEntity shooter;
 
 	public RocketMobEntity(EntityType<? extends RocketMobEntity> p_i50160_1_, World p_i50160_2_) {
 		super(p_i50160_1_, p_i50160_2_);
@@ -78,7 +80,7 @@ public class RocketMobEntity extends DamagingProjectileEntity implements IAnimat
 	public void tick() {
 		if (this.world.isRemote || (this.shootingEntity == null || this.shootingEntity.isAlive())
 				&& this.world.isBlockLoaded(new BlockPos(this))) {
-			super.tick();
+			// super.tick();
 			++this.ticksInAir;
 			RayTraceResult raytraceresult = ProjectileHelper.rayTrace(this, true, this.ticksInAir >= 25,
 					this.shootingEntity, RayTraceContext.BlockMode.COLLIDER);
@@ -135,6 +137,10 @@ public class RocketMobEntity extends DamagingProjectileEntity implements IAnimat
 	@Override
 	public boolean canBeCollidedWith() {
 		return true;
+	}
+
+	public void setDirectHitDamage(float directHitDamage) {
+		this.directHitDamage = directHitDamage;
 	}
 
 	@Override

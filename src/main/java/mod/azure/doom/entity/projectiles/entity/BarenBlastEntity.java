@@ -24,6 +24,8 @@ public class BarenBlastEntity extends DamagingProjectileEntity {
 	protected int timeInAir;
 	protected boolean inAir;
 	private int ticksInAir;
+	private float directHitDamage = 4F;
+	private LivingEntity shooter;
 
 	public BarenBlastEntity(EntityType<? extends BarenBlastEntity> p_i50160_1_, World p_i50160_2_) {
 		super(p_i50160_1_, p_i50160_2_);
@@ -31,10 +33,7 @@ public class BarenBlastEntity extends DamagingProjectileEntity {
 
 	public BarenBlastEntity(World worldIn, LivingEntity shooter, double accelX, double accelY, double accelZ) {
 		super(ModEntityTypes.BARENBLAST.get(), shooter, accelX, accelY, accelZ, worldIn);
-	}
-
-	public BarenBlastEntity(World worldIn, double x, double y, double z, double accelX, double accelY, double accelZ) {
-		super(ModEntityTypes.BARENBLAST.get(), x, y, z, accelX, accelY, accelZ, worldIn);
+		this.shooter = shooter;
 	}
 
 	@Override
@@ -47,6 +46,10 @@ public class BarenBlastEntity extends DamagingProjectileEntity {
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
 		this.ticksInAir = compound.getShort("life");
+	}
+
+	public void setDirectHitDamage(float directHitDamage) {
+		this.directHitDamage = directHitDamage;
 	}
 
 	@SuppressWarnings("deprecation")
@@ -128,7 +131,7 @@ public class BarenBlastEntity extends DamagingProjectileEntity {
 	}
 
 	protected void explode() {
-		this.world.createExplosion(this, this.getPosX(), this.getPosYHeight(0.0625D), this.getPosZ(), 1.0F,
+		this.world.createExplosion(this, this.getPosX(), this.getPosYHeight(0.0625D), this.getPosZ(), 2.0F,
 				Explosion.Mode.NONE);
 	}
 

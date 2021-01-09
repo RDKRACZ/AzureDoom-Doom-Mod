@@ -12,6 +12,7 @@ import net.minecraft.entity.AreaEffectCloudEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.boss.dragon.EnderDragonEntity;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.monster.PhantomEntity;
 import net.minecraft.entity.monster.ShulkerEntity;
@@ -205,8 +206,9 @@ public class BFGEntity extends AbstractArrowEntity {
 		for (int k2 = 0; k2 < list.size(); ++k2) {
 			Entity entity = list.get(k2);
 			if (!(entity instanceof ServerPlayerEntity) && !(entity instanceof GoreNestEntity)
-					&& (entity instanceof MonsterEntity) || (entity instanceof SlimeEntity)
-					|| (entity instanceof PhantomEntity) || (entity instanceof ShulkerEntity)) {
+					&& (entity instanceof MonsterEntity) || (entity instanceof EnderDragonEntity)
+					|| (entity instanceof SlimeEntity) || (entity instanceof PhantomEntity)
+					|| (entity instanceof ShulkerEntity)) {
 				double d12 = (double) (MathHelper.sqrt(entity.getDistanceSq(vector3d1)) / f2);
 				if (d12 <= 1.0D) {
 					if (entity.isAlive()) {
@@ -293,7 +295,8 @@ public class BFGEntity extends AbstractArrowEntity {
 			Entity entity = list.get(k2);
 			if (!(entity instanceof ServerPlayerEntity) && !(entity instanceof GoreNestEntity)
 					&& (entity instanceof MonsterEntity) || (entity instanceof SlimeEntity)
-					|| (entity instanceof PhantomEntity) || (entity instanceof ShulkerEntity)) {
+					|| (entity instanceof EnderDragonEntity) || (entity instanceof PhantomEntity)
+					|| (entity instanceof ShulkerEntity)) {
 				double d12 = (double) (MathHelper.sqrt(entity.getDistanceSq(vector3d)) / f2);
 				if (d12 <= 1.0D) {
 					entity.attackEntityFrom(DamageSource.causeArrowDamage(this, this), 100);

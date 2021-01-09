@@ -9,13 +9,20 @@ import javax.annotation.Nullable;
 
 import mod.azure.doom.entity.ai.goal.DemonAttackGoal;
 import mod.azure.doom.entity.ai.goal.HurtByAggressorGoal;
+import mod.azure.doom.entity.ai.goal.RangedStrafeAttackGoal;
 import mod.azure.doom.entity.ai.goal.TargetAggressorGoal;
+import mod.azure.doom.entity.attack.AbstractRangedAttack;
+import mod.azure.doom.entity.attack.AttackSound;
 import mod.azure.doom.entity.projectiles.entity.RocketMobEntity;
+import mod.azure.doom.util.Config;
+import mod.azure.doom.util.EntityConfig;
+import mod.azure.doom.util.EntityDefaults.EntityConfigType;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.CreatureAttribute;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.LivingEntity;
@@ -59,6 +66,8 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 public class RevenantEntity extends DemonEntity implements IAnimatable {
 
 	private AnimationFactory factory = new AnimationFactory(this);
+
+	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.REVENANT);
 
 	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
 		if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F)) {
@@ -105,8 +114,12 @@ public class RevenantEntity extends DemonEntity implements IAnimatable {
 
 	protected void applyEntityAI() {
 		this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
-		this.goalSelector.addGoal(7, new RevenantEntity.FireballAttackGoal(this));
-		this.goalSelector.addGoal(2, new DemonAttackGoal(this, 1.0D, false));
+		this.goalSelector
+				.addGoal(4,
+						new RangedStrafeAttackGoal(this, new RevenantEntity.FireballAttack(this)
+								.setProjectileOriginOffset(0.8, 0.8, 0.8).setDamage(5), 1.0D, 50, 30, 15, 15F)
+										.setMultiShot(2, 3));
+		this.goalSelector.addGoal(4, new DemonAttackGoal(this, 1.0D, false));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, false));
 		this.targetSelector.addGoal(1, new HurtByAggressorGoal(this));
@@ -121,6 +134,29 @@ public class RevenantEntity extends DemonEntity implements IAnimatable {
 		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
 		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(3.0D);
 		this.getAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(2.0D);
+	}
+
+	public class FireballAttack extends AbstractRangedAttack {
+
+		public FireballAttack(DemonEntity parentEntity, double xOffSetModifier, double entityHeightFraction,
+				double zOffSetModifier, float damage) {
+			super(parentEntity, xOffSetModifier, entityHeightFraction, zOffSetModifier, damage);
+		}
+
+		public FireballAttack(DemonEntity parentEntity) {
+			super(parentEntity);
+		}
+
+		@Override
+		public AttackSound getDefaultAttackSound() {
+			return new AttackSound(SoundEvents.ENTITY_FIREWORK_ROCKET_BLAST, 1, 1);
+		}
+
+		@Override
+		public Entity getProjectile(World world, double d2, double d3, double d4) {
+			return new RocketMobEntity(world, this.parentEntity, d2, d3, d4);
+
+		}
 	}
 
 	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(RevenantEntity.class,

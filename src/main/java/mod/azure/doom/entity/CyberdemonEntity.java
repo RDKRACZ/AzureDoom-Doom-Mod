@@ -6,26 +6,33 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
+import mod.azure.doom.entity.ai.goal.DemonAttackGoal;
 import mod.azure.doom.entity.ai.goal.HurtByAggressorGoal;
+import mod.azure.doom.entity.ai.goal.RangedStaticAttackGoal;
 import mod.azure.doom.entity.ai.goal.TargetAggressorGoal;
-import mod.azure.doom.entity.projectiles.entity.RocketMobEntity;
+import mod.azure.doom.entity.attack.AbstractRangedAttack;
+import mod.azure.doom.entity.attack.AttackSound;
+import mod.azure.doom.entity.projectiles.entity.BarenBlastEntity;
+import mod.azure.doom.util.Config;
+import mod.azure.doom.util.EntityConfig;
+import mod.azure.doom.util.EntityDefaults.EntityConfigType;
 import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.CreatureAttribute;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.HurtByTargetGoal;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
+import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
@@ -36,8 +43,8 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IWorld;
@@ -56,6 +63,8 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 public class CyberdemonEntity extends DemonEntity implements IAnimatable {
 	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(CyberdemonEntity.class,
 			DataSerializers.BOOLEAN);
+
+	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.CYBER_DEMON);
 
 	public CyberdemonEntity(EntityType<? extends CyberdemonEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
@@ -111,53 +120,38 @@ public class CyberdemonEntity extends DemonEntity implements IAnimatable {
 		this.goalSelector.addGoal(6, new LookAtGoal(this, PlayerEntity.class, 8.0F));
 		this.goalSelector.addGoal(6, new LookRandomlyGoal(this));
 		this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
-		this.goalSelector.addGoal(7, new CyberdemonEntity.FireballAttackGoal(this));
+		this.goalSelector.addGoal(4,
+				new RangedStaticAttackGoal(this,
+						new CyberdemonEntity.FireballAttack(this).setProjectileOriginOffset(0.8, 0.8, 0.8).setDamage(6),
+						60, 20, 30F));
+		this.goalSelector.addGoal(4, new DemonAttackGoal(this, 1.0D, false));
 		this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
+		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, true));
 		this.targetSelector.addGoal(1, new HurtByAggressorGoal(this));
 		this.targetSelector.addGoal(2, new TargetAggressorGoal(this));
 	}
 
-	static class FireballAttackGoal extends Goal {
-		private final CyberdemonEntity parentEntity;
-		public int attackTimer;
+	public class FireballAttack extends AbstractRangedAttack {
 
-		public FireballAttackGoal(CyberdemonEntity ghast) {
-			this.parentEntity = ghast;
+		public FireballAttack(DemonEntity parentEntity, double xOffSetModifier, double entityHeightFraction,
+				double zOffSetModifier, float damage) {
+			super(parentEntity, xOffSetModifier, entityHeightFraction, zOffSetModifier, damage);
 		}
 
-		public boolean shouldExecute() {
-			return this.parentEntity.getAttackTarget() != null;
+		public FireballAttack(DemonEntity parentEntity) {
+			super(parentEntity);
 		}
 
-		public void startExecuting() {
-			this.attackTimer = 0;
+		@Override
+		public AttackSound getDefaultAttackSound() {
+			return new AttackSound(SoundEvents.ENTITY_FIREWORK_ROCKET_BLAST, 1, 1);
 		}
 
-		public void tick() {
-			LivingEntity livingentity = this.parentEntity.getAttackTarget();
-			if (livingentity.getDistanceSq(this.parentEntity) < 4096.0D
-					&& this.parentEntity.canEntityBeSeen(livingentity)) {
-				this.parentEntity.getLookController().setLookPositionWithEntity(livingentity, 90.0F, 30.0F);
-				World world = this.parentEntity.world;
-				++this.attackTimer;
+		@Override
+		public Entity getProjectile(World world, double d2, double d3, double d4) {
+			return new BarenBlastEntity(world, this.parentEntity, d2, d3, d4);
 
-				if (this.attackTimer == 20) {
-					Vec3d vec3d = this.parentEntity.getLook(1.0F);
-					double d2 = livingentity.getPosX() - (this.parentEntity.getPosX() + vec3d.x * 4.0D);
-					double d3 = livingentity.getPosYHeight(0.5D) - (0.5D + this.parentEntity.getPosYHeight(0.5D));
-					double d4 = livingentity.getPosZ() - (this.parentEntity.getPosZ() + vec3d.z * 4.0D);
-					RocketMobEntity fireballentity = new RocketMobEntity(world, this.parentEntity, d2, d3, d4);
-					fireballentity.setPosition(this.parentEntity.getPosX() + vec3d.x * 2.0D,
-							this.parentEntity.getPosYHeight(0.5D) + 0.00D, fireballentity.getPosZ() + vec3d.z * 1.0D);
-					world.addEntity(fireballentity);
-					this.attackTimer = -40;
-				}
-			} else if (this.attackTimer > 0) {
-				--this.attackTimer;
-			}
-
-			this.parentEntity.setAttacking(this.attackTimer > 10);
 		}
 	}
 

@@ -9,6 +9,7 @@ import mod.azure.doom.block.DoomWallBlock;
 import mod.azure.doom.block.E1M1StairsBlock;
 import mod.azure.doom.block.E1M1TurnableBlock;
 import mod.azure.doom.block.E1M1TurnableHurtBlock;
+import mod.azure.doom.block.JumppadBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -19,6 +20,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class DoomBlocks {
 
 	public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, DoomMod.MODID);
+
+	public static final RegistryObject<Block> JUMP_PAD = BLOCKS.register("jump_pad", () -> new JumppadBlock());
 
 	public static final RegistryObject<Block> BARREL_BLOCK = BLOCKS.register("barrel", () -> new BarrelBlock(
 			(Block.Properties.create(Material.TNT).hardnessAndResistance(0.0F).sound(SoundType.PLANT).notSolid())));

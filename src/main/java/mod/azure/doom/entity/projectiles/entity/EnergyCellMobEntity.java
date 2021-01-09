@@ -18,19 +18,23 @@ import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class EnergyCellMobEntity extends DamagingProjectileEntity  {
+public class EnergyCellMobEntity extends DamagingProjectileEntity {
 
 	public int explosionPower = 1;
 	protected int timeInAir;
 	protected boolean inAir;
 	private int ticksInAir;
+	private float directHitDamage = 3F;
+	private LivingEntity shooter;
 
 	public EnergyCellMobEntity(EntityType<? extends EnergyCellMobEntity> p_i50160_1_, World p_i50160_2_) {
 		super(p_i50160_1_, p_i50160_2_);
 	}
 
-	public EnergyCellMobEntity(World worldIn, LivingEntity shooter, double accelX, double accelY, double accelZ) {
+	public EnergyCellMobEntity(World worldIn, LivingEntity shooter, double accelX, double accelY, double accelZ,
+			float directHitDamage) {
 		super(ModEntityTypes.ENERGY_CELL_MOB.get(), shooter, accelX, accelY, accelZ, worldIn);
+		this.directHitDamage = directHitDamage;
 	}
 
 	public EnergyCellMobEntity(World worldIn, double x, double y, double z, double accelX, double accelY,
@@ -55,7 +59,7 @@ public class EnergyCellMobEntity extends DamagingProjectileEntity  {
 	public void tick() {
 		if (this.world.isRemote || (this.shootingEntity == null || this.shootingEntity.isAlive())
 				&& this.world.isBlockLoaded(new BlockPos(this))) {
-			super.tick();
+			// super.tick();
 			++this.ticksInAir;
 			RayTraceResult raytraceresult = ProjectileHelper.rayTrace(this, true, this.ticksInAir >= 25,
 					this.shootingEntity, RayTraceContext.BlockMode.COLLIDER);
@@ -114,6 +118,10 @@ public class EnergyCellMobEntity extends DamagingProjectileEntity  {
 		return true;
 	}
 
+	public void setDirectHitDamage(float directHitDamage) {
+		this.directHitDamage = directHitDamage;
+	}
+
 	@Override
 	protected void onImpact(RayTraceResult result) {
 		super.onImpact(result);
@@ -128,7 +136,8 @@ public class EnergyCellMobEntity extends DamagingProjectileEntity  {
 	}
 
 	protected void explode() {
-		this.world.createExplosion(this, this.getPosX(), this.getPosYHeight(0.0625D), this.getPosZ(), 1.0F,
+		this.world.createExplosion(this, this.getPosX(), this.getPosYHeight(0.0625D), this.getPosZ(), 2.0F,
 				Explosion.Mode.NONE);
 	}
+
 }

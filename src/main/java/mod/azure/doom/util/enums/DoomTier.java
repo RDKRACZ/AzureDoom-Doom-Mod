@@ -11,7 +11,7 @@ import net.minecraft.util.LazyValue;
 public enum DoomTier implements IItemTier {
 	DOOM(6, 1561, 16.0F, 3.0F, 30, () -> {
 		return Ingredient.fromItems(DoomItems.ARGENT_ENERGY.get());
-	}), DOOM_HIGHTEIR(6, Config.SERVER.CRUCIBLE_MARUADER_MAXDAMAGE.get(), 16.0F, 3.0F, 30, () -> {
+	}), DOOM_HIGHTEIR(6, Config.SERVER.CRUCIBLE_MARAUDER_MAX_DAMAGE, 16.0F, 3.0F, 30, () -> {
 		return Ingredient.fromItems(DoomItems.ARGENT_BLOCK.get());
 	});
 

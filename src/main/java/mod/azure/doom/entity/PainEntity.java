@@ -5,6 +5,7 @@ import java.util.Random;
 
 import mod.azure.doom.entity.ai.goal.DemonAttackGoal;
 import mod.azure.doom.entity.ai.goal.HurtByAggressorGoal;
+import mod.azure.doom.entity.ai.goal.RandomFlyConvergeOnTargetGoal;
 import mod.azure.doom.entity.ai.goal.TargetAggressorGoal;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import mod.azure.doom.util.registry.ModSoundEvents;
@@ -122,7 +123,7 @@ public class PainEntity extends DemonEntity implements IMob, IAnimatable {
 
 	@Override
 	protected void registerGoals() {
-		this.goalSelector.addGoal(5, new PainEntity.RandomFlyGoal(this));
+		this.goalSelector.addGoal(5, new RandomFlyConvergeOnTargetGoal(this, 2, 15, 0.5));
 		this.goalSelector.addGoal(7, new PainEntity.LookAroundGoal(this));
 		this.goalSelector.addGoal(7, new PainEntity.FireballAttackGoal(this));
 		this.goalSelector.addGoal(7, new DemonAttackGoal(this, 1.0D, false));
@@ -245,13 +246,13 @@ public class PainEntity extends DemonEntity implements IMob, IAnimatable {
 				this.parentEntity.getLookController().setLookPositionWithEntity(livingentity, 90.0F, 30.0F);
 				World world = this.parentEntity.world;
 				++this.attackTimer;
-				if (this.attackTimer == 20) {
+				if (this.attackTimer == 200) {
 					LostSoulEntity lost_soul = ModEntityTypes.LOST_SOUL.get().create(world);
 					lost_soul.setLocationAndAngles(this.parentEntity.getPosX(), this.parentEntity.getPosY(),
 							this.parentEntity.getPosZ(), 0, 0);
 					lost_soul.addVelocity(1.0D, 0.0D, 0.0D);
 					world.addEntity(lost_soul);
-					this.attackTimer = -40;
+					this.attackTimer = -400;
 				}
 			} else if (this.attackTimer > 0) {
 				--this.attackTimer;

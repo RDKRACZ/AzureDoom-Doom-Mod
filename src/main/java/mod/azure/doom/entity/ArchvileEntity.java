@@ -61,6 +61,31 @@ public class ArchvileEntity extends DemonEntity {
 	}
 
 	@Override
+	protected void onDeathUpdate() {
+		++this.deathTime;
+		if (!world.isRemote) {
+			float f2 = 200.0F;
+			int k1 = MathHelper.floor(this.getPosX() - (double) f2 - 1.0D);
+			int l1 = MathHelper.floor(this.getPosX() + (double) f2 + 1.0D);
+			int i2 = MathHelper.floor(this.getPosY() - (double) f2 - 1.0D);
+			int i1 = MathHelper.floor(this.getPosY() + (double) f2 + 1.0D);
+			int j2 = MathHelper.floor(this.getPosZ() - (double) f2 - 1.0D);
+			int j1 = MathHelper.floor(this.getPosZ() + (double) f2 + 1.0D);
+			List<Entity> list = this.world.getEntitiesWithinAABBExcludingEntity(this,
+					new AxisAlignedBB((double) k1, (double) i2, (double) j2, (double) l1, (double) i1, (double) j1));
+			for (int k2 = 0; k2 < list.size(); ++k2) {
+				Entity entity = list.get(k2);
+				if (entity.isAlive()) {
+					entity.setGlowing(false);
+				}
+			}
+		}
+		if (this.deathTime == 50) {
+			this.remove();
+		}
+	}
+
+	@Override
 	protected void registerAttributes() {
 		super.registerAttributes();
 		this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(25.0D);
@@ -104,7 +129,7 @@ public class ArchvileEntity extends DemonEntity {
 		this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
 		this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
 		this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
-		this.goalSelector.addGoal(7, new ArchvileEntity.AttackGoal(this));
+		this.goalSelector.addGoal(2, new ArchvileEntity.AttackGoal(this));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(1, new HurtByAggressorGoal(this));
 		this.targetSelector.addGoal(2, new TargetAggressorGoal(this));
@@ -153,16 +178,9 @@ public class ArchvileEntity extends DemonEntity {
 								if (d12 <= 1.0D) {
 									if (entity.isAlive() || entity.isLiving()) {
 										((DemonEntity) entity)
-												.addPotionEffect(new EffectInstance(Effects.SPEED, 1000, 1));
-										((DemonEntity) entity)
 												.addPotionEffect(new EffectInstance(Effects.STRENGTH, 1000, 1));
 									}
 									entity.setGlowing(true);
-								}
-							}
-							if (entity instanceof LivingEntity) {
-								if (entity.isAlive() && parentEntity.getAttackTarget().canEntityBeSeen(livingentity)) {
-									entity.setFire(3);
 								}
 							}
 						}

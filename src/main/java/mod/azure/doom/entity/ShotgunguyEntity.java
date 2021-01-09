@@ -12,6 +12,9 @@ import mod.azure.doom.entity.ai.goal.TargetAggressorGoal;
 import mod.azure.doom.entity.projectiles.ShotgunShellEntity;
 import mod.azure.doom.item.ammo.ShellAmmo;
 import mod.azure.doom.item.weapons.Shotgun;
+import mod.azure.doom.util.Config;
+import mod.azure.doom.util.EntityConfig;
+import mod.azure.doom.util.EntityDefaults.EntityConfigType;
 import mod.azure.doom.util.registry.DoomItems;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import mod.azure.doom.util.registry.ModSoundEvents;
@@ -73,6 +76,8 @@ public class ShotgunguyEntity extends DemonEntity implements IRangedAttackMob, I
 			ShotgunguyEntity.this.setAggroed(true);
 		}
 	};
+
+	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.SHOTGUN_GUY);
 
 	public ShotgunguyEntity(EntityType<ShotgunguyEntity> entityType, World worldIn) {
 		super(entityType, worldIn);

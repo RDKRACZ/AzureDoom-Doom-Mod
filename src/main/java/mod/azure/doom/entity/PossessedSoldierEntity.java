@@ -12,6 +12,9 @@ import mod.azure.doom.entity.ai.goal.TargetAggressorGoal;
 import mod.azure.doom.entity.projectiles.BulletEntity;
 import mod.azure.doom.item.ammo.ClipAmmo;
 import mod.azure.doom.item.weapons.PistolItem;
+import mod.azure.doom.util.Config;
+import mod.azure.doom.util.EntityConfig;
+import mod.azure.doom.util.EntityDefaults.EntityConfigType;
 import mod.azure.doom.util.registry.DoomItems;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import mod.azure.doom.util.registry.ModSoundEvents;
@@ -73,6 +76,8 @@ public class PossessedSoldierEntity extends DemonEntity implements IRangedAttack
 			PossessedSoldierEntity.this.setAggroed(true);
 		}
 	};
+
+	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.POSSESSED_SOLDIER);
 
 	public PossessedSoldierEntity(EntityType<PossessedSoldierEntity> entityType, World worldIn) {
 		super(entityType, worldIn);

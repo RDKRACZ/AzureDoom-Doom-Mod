@@ -21,5 +21,9 @@ public class DemonEntity extends MonsterEntity {
 	public boolean isAngry() {
 		return this.angerLevel > 0;
 	}
+	
+	public void setAttacking(boolean attacking) {
+		
+	}
 
 }

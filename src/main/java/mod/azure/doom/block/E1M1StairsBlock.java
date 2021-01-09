@@ -7,6 +7,7 @@ import net.minecraft.world.IBlockReader;
 
 public class E1M1StairsBlock extends StairsBlock {
 
+	@SuppressWarnings("deprecation")
 	public E1M1StairsBlock(BlockState state, Properties properties) {
 		super(state, properties);
 	}

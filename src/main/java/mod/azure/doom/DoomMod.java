@@ -46,6 +46,7 @@ public class DoomMod {
 		MinecraftForge.EVENT_BUS.addListener(DoomVillagerTrades::onVillagerTradesEvent);
 		modLoadingContext.registerConfig(ModConfig.Type.SERVER, Config.SERVER_SPEC, "doom-config.toml");
 		Config.loadConfig(Config.SERVER_SPEC, FMLPaths.CONFIGDIR.get().resolve("doom-config.toml").toString());
+		Config.SERVER.bakeConfig();
 		MinecraftForge.EVENT_BUS.register(this);
 		MinecraftForge.EVENT_BUS.register(new SoulCubeHandler());
 		ModSoundEvents.MOD_SOUNDS.register(modEventBus);
@@ -55,7 +56,7 @@ public class DoomMod {
 		DoomItems.ITEMS.register(modEventBus);
 		DoomBlocks.BLOCKS.register(modEventBus);
 		if (!ModList.get().isLoaded("lockon")) {
-			if (Config.SERVER.ENABLE_LOCKON.get()) {
+			if (Config.SERVER.ENABLE_LOCKON) {
 				if (FMLEnvironment.dist == Dist.CLIENT)
 					modEventBus.addListener(LockOnHandler::client);
 			}

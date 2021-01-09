@@ -1,5 +1,12 @@
-v.3.6.3
+v.3.7.0
 
 - Added Weapon Ammo to Weapon Smith level 3 Villagers.
 - Added Argent Tools to Tool Smith Level 3 Villagers.
 - Added E1M! Blocks to Mason Level 3 Villagers.
+- Arch-vile and Mancubus fire attacks are now setting the target on fire properly.
+- Mancubus won't hurt itself with it's fire based attacks. 
+- Ranged mobs now shoot accurately at you
+- Many mobs now correctly lock on to you when targeting
+- Added a far more difficult strafe AI for multiple ranged mobs.
+- Added a convergence AI for flying mobs to avoid them just flying away while they attack you.
+- Added a multi-shot ranged attack for multiple ranged mobs.

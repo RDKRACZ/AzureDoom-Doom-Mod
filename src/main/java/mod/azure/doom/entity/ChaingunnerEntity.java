@@ -12,6 +12,9 @@ import mod.azure.doom.entity.ai.goal.TargetAggressorGoal;
 import mod.azure.doom.entity.projectiles.ChaingunBulletEntity;
 import mod.azure.doom.item.ammo.ChaingunAmmo;
 import mod.azure.doom.item.weapons.Chaingun;
+import mod.azure.doom.util.Config;
+import mod.azure.doom.util.EntityConfig;
+import mod.azure.doom.util.EntityDefaults.EntityConfigType;
 import mod.azure.doom.util.registry.DoomItems;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import mod.azure.doom.util.registry.ModSoundEvents;
@@ -73,6 +76,8 @@ public class ChaingunnerEntity extends DemonEntity implements IRangedAttackMob, 
 			ChaingunnerEntity.this.setAggroed(true);
 		}
 	};
+
+	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.CHAINGUNNER);
 
 	public ChaingunnerEntity(EntityType<ChaingunnerEntity> entityType, World worldIn) {
 		super(entityType, worldIn);

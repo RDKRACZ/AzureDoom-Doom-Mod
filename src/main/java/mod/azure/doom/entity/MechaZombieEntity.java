@@ -8,23 +8,25 @@ import javax.annotation.Nullable;
 
 import mod.azure.doom.entity.ai.goal.DemonAttackGoal;
 import mod.azure.doom.entity.ai.goal.HurtByAggressorGoal;
+import mod.azure.doom.entity.ai.goal.RangedStrafeAttackGoal;
 import mod.azure.doom.entity.ai.goal.TargetAggressorGoal;
+import mod.azure.doom.entity.attack.FireballAttack;
+import mod.azure.doom.util.Config;
+import mod.azure.doom.util.EntityConfig;
+import mod.azure.doom.util.EntityDefaults.EntityConfigType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.HurtByTargetGoal;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.SmallFireballEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -36,7 +38,6 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IWorld;
@@ -55,6 +56,8 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 public class MechaZombieEntity extends DemonEntity implements IAnimatable {
 	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(MechaZombieEntity.class,
 			DataSerializers.BOOLEAN);
+
+	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.MECHA_ZOMBIE);
 
 	private AnimationFactory factory = new AnimationFactory(this);
 
@@ -108,6 +111,7 @@ public class MechaZombieEntity extends DemonEntity implements IAnimatable {
 		return this.dataManager.get(ATTACKING);
 	}
 
+	@Override
 	public void setAttacking(boolean attacking) {
 		this.dataManager.set(ATTACKING, attacking);
 	}
@@ -134,8 +138,12 @@ public class MechaZombieEntity extends DemonEntity implements IAnimatable {
 		this.goalSelector.addGoal(6, new LookRandomlyGoal(this));
 		this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
 		this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
-		this.goalSelector.addGoal(7, new MechaZombieEntity.FireballAttackGoal(this));
-		this.goalSelector.addGoal(7, new DemonAttackGoal(this, 1.0D, false));
+		this.goalSelector.addGoal(4,
+				new RangedStrafeAttackGoal(this,
+						new FireballAttack(this, false).setProjectileOriginOffset(0.8, 0.8, 0.8).setDamage(5).setSound(
+								SoundEvents.ENTITY_BLAZE_SHOOT, 1.0F, 1.4F + this.getRNG().nextFloat() * 0.35F),
+						1.0D, 50, 30, 15, 15F).setMultiShot(4, 3));
+		this.goalSelector.addGoal(4, new DemonAttackGoal(this, 1.0D, false));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(1, new HurtByAggressorGoal(this));
 		this.targetSelector.addGoal(2, new TargetAggressorGoal(this));
@@ -149,54 +157,6 @@ public class MechaZombieEntity extends DemonEntity implements IAnimatable {
 		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(3.0D);
 		this.getAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(2.0D);
 		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(25.0D);
-	}
-
-	static class FireballAttackGoal extends Goal {
-		private final MechaZombieEntity parentEntity;
-		public int attackTimer;
-
-		public FireballAttackGoal(MechaZombieEntity ghast) {
-			this.parentEntity = ghast;
-		}
-
-		public boolean shouldExecute() {
-			return this.parentEntity.getAttackTarget() != null;
-		}
-
-		public void startExecuting() {
-			this.attackTimer = 0;
-		}
-
-		public void resetTask() {
-			this.parentEntity.setAttacking(false);
-		}
-
-		public void tick() {
-			LivingEntity livingentity = this.parentEntity.getAttackTarget();
-			if (livingentity.getDistanceSq(this.parentEntity) > 9.0D
-					&& this.parentEntity.canEntityBeSeen(livingentity)) {
-				this.parentEntity.getLookController().setLookPositionWithEntity(livingentity, 90.0F, 30.0F);
-				World world = this.parentEntity.world;
-				++this.attackTimer;
-
-				if (this.attackTimer == 20) {
-					Vec3d vector3d = this.parentEntity.getLook(1.0F);
-					double d2 = livingentity.getPosX() - (this.parentEntity.getPosX() + vector3d.x * 4.0D);
-					double d3 = livingentity.getPosYHeight(0.5D) - (0.5D + this.parentEntity.getPosYHeight(0.5D));
-					double d4 = livingentity.getPosZ() - (this.parentEntity.getPosZ() + vector3d.z * 4.0D);
-
-					SmallFireballEntity fireballentity = new SmallFireballEntity(world, this.parentEntity, d2, d3, d4);
-					fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 1.0D,
-							this.parentEntity.getPosYHeight(0.5D), fireballentity.getPosZ() + vector3d.z * 1.0D);
-					world.addEntity(fireballentity);
-					this.attackTimer = -40;
-				}
-			} else if (this.attackTimer > 0) {
-				--this.attackTimer;
-			}
-
-			this.parentEntity.setAttacking(this.attackTimer > 10);
-		}
 	}
 
 	@Override

@@ -155,7 +155,7 @@ public class ModEntityTypes {
 
 	public static final RegistryObject<EntityType<ArachnotronEntity>> ARACHNOTRON = ENTITY_TYPES.register("arachnotron",
 			() -> EntityType.Builder.<ArachnotronEntity>create(ArachnotronEntity::new, EntityClassification.MONSTER)
-					.size(5.0F, 2.0F).immuneToFire().setTrackingRange(9)
+					.size(4.0F, 2.0F).immuneToFire().setTrackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "arachnotron").toString()));
 
 	public static final RegistryObject<EntityType<SpiderdemonEntity>> SPIDERDEMON = ENTITY_TYPES.register("spiderdemon",
