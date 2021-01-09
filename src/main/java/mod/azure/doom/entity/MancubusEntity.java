@@ -1,6 +1,5 @@
 package mod.azure.doom.entity;
 
-import java.util.EnumSet;
 import java.util.Random;
 
 import javax.annotation.Nullable;
@@ -117,6 +116,7 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 		return this.dataManager.get(ATTACKING);
 	}
 
+	@Override
 	public void setAttacking(boolean attacking) {
 		this.dataManager.set(ATTACKING, attacking);
 	}
@@ -150,7 +150,7 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, false));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
-		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)));
+		this.targetSelector.addGoal(3, (new HurtByTargetGoal(this)));
 	}
 
 	@Override
@@ -166,7 +166,6 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 
 		public FireballAttackGoal(MancubusEntity ghast) {
 			this.parentEntity = ghast;
-			this.setMutexFlags(EnumSet.of(Goal.Flag.TARGET));
 		}
 
 		public boolean shouldExecute() {
@@ -187,7 +186,7 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 				double d1 = Math.max(livingentity.getPosY(), livingentity.getPosY()) + 1.0D;
 				double d2 = livingentity.getPosX() - (this.parentEntity.getPosX() + vector3d.x * 2.0D);
 				double d3 = livingentity.getPosYHeight(0.5D) - (0.5D + this.parentEntity.getPosYHeight(0.5D));
-				double d4 = livingentity.getPosZ() - (this.parentEntity.getPosZ() + vector3d.z * 4.0D);
+				double d4 = livingentity.getPosZ() - (this.parentEntity.getPosZ() + vector3d.z * 2.0D);
 				float f = (float) MathHelper.atan2(livingentity.getPosZ() - parentEntity.getPosZ(),
 						livingentity.getPosX() - parentEntity.getPosX());
 				BarenBlastEntity fireballentity = new BarenBlastEntity(world, this.parentEntity, d2, d3, d4);
@@ -212,8 +211,9 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 									parentEntity.getPosZ() + (double) MathHelper.sin(f) * d5, d0, d1, f, j);
 						}
 					} else {
-						fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 1.0D,
-								this.parentEntity.getPosYHeight(0.5D), fireballentity.getPosZ() + 1.0D);
+						fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 2.0D,
+								this.parentEntity.getPosYHeight(0.5D) + 0.5D,
+								fireballentity.getPosZ() + vector3d.z * 2.0D);
 						fireballentity.setDirectHitDamage(config.RANGED_ATTACK_DAMAGE);
 						world.addEntity(fireballentity);
 					}
@@ -239,8 +239,9 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 									parentEntity.getPosZ() + (double) MathHelper.sin(f) * d5, d0, d1, f, j);
 						}
 					} else {
-						fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 1.0D,
-								this.parentEntity.getPosYHeight(0.5D), fireballentity.getPosZ() + 1.0D);
+						fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 2.0D,
+								this.parentEntity.getPosYHeight(0.5D) + 0.5D,
+								fireballentity.getPosZ() + vector3d.z * 2.0D);
 						fireballentity.setDirectHitDamage(config.RANGED_ATTACK_DAMAGE);
 						world.addEntity(fireballentity);
 					}
@@ -249,7 +250,7 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 			} else if (this.attackTimer > 0) {
 				--this.attackTimer;
 			}
-			this.parentEntity.getLookController().setLookPositionWithEntity(livingentity, 30.0F, 30.0F);
+			this.parentEntity.faceEntity(livingentity, 30.0F, 30.0F);
 			this.parentEntity.setAttacking(this.attackTimer > 10);
 		}
 

@@ -9,16 +9,13 @@ import net.minecraft.world.World;
 
 public class CustomSmallFireballEntity extends SmallFireballEntity {
 
-	public CustomSmallFireballEntity(World worldIn, LivingEntity shooter, double accelX, double accelY, double accelZ) {
+	public CustomSmallFireballEntity(World worldIn, LivingEntity shooter, double accelX, double accelY, double accelZ,
+			float directHitDamage) {
 		super(worldIn, shooter, accelX, accelY, accelZ);
-		// TODO Auto-generated constructor stub
+		this.directHitDamage = directHitDamage;
 	}
-	
+
 	private float directHitDamage = 5.0F;
-	
-	public void setDirectHitDamage(float f) {
-		directHitDamage = f;
-	}
 
 	@Override
 	protected void onEntityHit(EntityRayTraceResult p_213868_1_) {

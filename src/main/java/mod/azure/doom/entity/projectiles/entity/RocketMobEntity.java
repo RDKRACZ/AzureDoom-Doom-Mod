@@ -31,7 +31,7 @@ public class RocketMobEntity extends DamagingProjectileEntity implements IAnimat
 	protected int timeInAir;
 	protected boolean inAir;
 	private int ticksInAir;
-	private float directHitDamage = 0F;
+	private float directHitDamage = 5F;
 	private LivingEntity shooter;
 
 	public RocketMobEntity(EntityType<? extends RocketMobEntity> p_i50160_1_, World p_i50160_2_) {
@@ -42,10 +42,6 @@ public class RocketMobEntity extends DamagingProjectileEntity implements IAnimat
 		super(ModEntityTypes.ROCKET_MOB.get(), shooter, accelX, accelY, accelZ, worldIn);
 		this.shooter = shooter;
 	}
-
-//	public RocketMobEntity(World worldIn, double x, double y, double z, double accelX, double accelY, double accelZ) {
-//		super(ModEntityTypes.ROCKET_MOB.get(), x, y, z, accelX, accelY, accelZ, worldIn);
-//	}
 	
 	public void setDirectHitDamage(float directHitDamage) {
 		this.directHitDamage = directHitDamage;

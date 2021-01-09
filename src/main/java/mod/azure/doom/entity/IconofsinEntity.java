@@ -42,8 +42,15 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerBossInfo;
 import net.minecraftforge.fml.network.NetworkHooks;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-public class IconofsinEntity extends DemonEntity {
+public class IconofsinEntity extends DemonEntity implements IAnimatable {
 
 	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.ICON_OF_SIN);
 
@@ -52,6 +59,55 @@ public class IconofsinEntity extends DemonEntity {
 
 	public IconofsinEntity(EntityType<IconofsinEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
+	}
+
+	private AnimationFactory factory = new AnimationFactory(this);
+
+	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+		if (event.isMoving()) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("walking", true));
+			return PlayState.CONTINUE;
+		}
+		if (this.isAggressive() && !(this.dead || this.getHealth() < 0.01 || this.getShouldBeDead())) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("attack", true));
+			return PlayState.CONTINUE;
+		}
+		if ((this.dead || this.getHealth() < 0.01 || this.getShouldBeDead())) {
+			if (world.isRemote) {
+				event.getController().setAnimation(new AnimationBuilder().addAnimation("death", false));
+				return PlayState.CONTINUE;
+			}
+		}
+		if (event.isMoving() && this.getHealth() < 500.0D) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("walking_nohelmet", true));
+			return PlayState.CONTINUE;
+		}
+		if (this.getHealth() < 500.0D) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("idle_nohelmet", true));
+			return PlayState.CONTINUE;
+		}
+		event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
+		return PlayState.CONTINUE;
+	}
+
+	@Override
+	public void registerControllers(AnimationData data) {
+		data.addAnimationController(new AnimationController<IconofsinEntity>(this, "controller", 0, this::predicate));
+	}
+
+	@Override
+	public AnimationFactory getFactory() {
+		return this.factory;
+	}
+
+	@Override
+	protected void onDeathUpdate() {
+		++this.deathTime;
+		if (this.deathTime == 50) {
+			this.remove();
+			if (world.isRemote) {
+			}
+		}
 	}
 
 	@Override
@@ -94,7 +150,7 @@ public class IconofsinEntity extends DemonEntity {
 
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
-		return 4.70F;
+		return 13.70F;
 	}
 
 	@Nullable
@@ -208,7 +264,9 @@ public class IconofsinEntity extends DemonEntity {
 		if (!this.world.getDimensionType().doesRespawnAnchorWorks()) {
 			if (!this.world.isRemote) {
 				this.setGlowing(true);
-				this.addPotionEffect(new EffectInstance(Effects.ABSORPTION, 10000000, 2));
+				this.addPotionEffect(new EffectInstance(Effects.HEALTH_BOOST, 10000000, this.ticksExisted + 1));
+				this.addPotionEffect(
+						new EffectInstance(Effects.INSTANT_DAMAGE, 10000000, this.ticksExisted / 20 + 1));
 			}
 		}
 	}

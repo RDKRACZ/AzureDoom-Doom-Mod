@@ -24,7 +24,7 @@ public class BarenBlastEntity extends DamagingProjectileEntity {
 	protected int timeInAir;
 	protected boolean inAir;
 	private int ticksInAir;
-	private float directHitDamage = 0F;
+	private float directHitDamage = 4F;
 	private LivingEntity shooter;
 
 	public BarenBlastEntity(EntityType<? extends BarenBlastEntity> p_i50160_1_, World p_i50160_2_) {
@@ -139,7 +139,6 @@ public class BarenBlastEntity extends DamagingProjectileEntity {
 			if (entityHit instanceof LivingEntity && directHitDamage > 0)
 				p_213868_1_.getEntity().attackEntityFrom(DamageSource.causeIndirectMagicDamage(this, shooter),
 						directHitDamage);
-			this.explode();
 			this.remove();
 		}
 		this.playSound(ModSoundEvents.ROCKET_HIT.get(), 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));

@@ -4,6 +4,7 @@ import java.util.EnumSet;
 import java.util.Random;
 
 import mod.azure.doom.entity.ai.goal.DemonAttackGoal;
+import mod.azure.doom.entity.ai.goal.RandomFlyConvergeOnTargetGoal;
 import mod.azure.doom.util.Config;
 import mod.azure.doom.util.EntityConfig;
 import mod.azure.doom.util.EntityDefaults.EntityConfigType;
@@ -24,6 +25,7 @@ import net.minecraft.entity.ai.controller.MovementController;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.HurtByTargetGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
+import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.IPacket;
@@ -52,7 +54,7 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 public class PainEntity extends DemonEntity implements IMob, IAnimatable {
 	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(PainEntity.class,
 			DataSerializers.BOOLEAN);
-	
+
 	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.PAIN);
 
 	public PainEntity(EntityType<? extends PainEntity> type, World worldIn) {
@@ -105,12 +107,16 @@ public class PainEntity extends DemonEntity implements IMob, IAnimatable {
 
 	@Override
 	protected void registerGoals() {
-		this.goalSelector.addGoal(5, new PainEntity.RandomFlyGoal(this));
+		this.goalSelector.addGoal(5, new RandomFlyConvergeOnTargetGoal(this, 2, 15, 0.5));
 		this.goalSelector.addGoal(7, new PainEntity.LookAroundGoal(this));
 		this.goalSelector.addGoal(7, new PainEntity.FireballAttackGoal(this));
 		this.goalSelector.addGoal(7, new DemonAttackGoal(this, 1.0D, false));
 		this.targetSelector.addGoal(1,
 				new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 10, true, false, (p_213812_1_) -> {
+					return Math.abs(p_213812_1_.getPosY() - this.getPosY()) <= 4.0D;
+				}));
+		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, 10, true,
+				false, (p_213812_1_) -> {
 					return Math.abs(p_213812_1_.getPosY() - this.getPosY()) <= 4.0D;
 				}));
 		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)));
@@ -143,7 +149,8 @@ public class PainEntity extends DemonEntity implements IMob, IAnimatable {
 
 	public static boolean spawning(EntityType<PainEntity> p_223368_0_, IWorld p_223368_1_, SpawnReason reason,
 			BlockPos p_223368_3_, Random p_223368_4_) {
-		return passPeacefulAndYCheck(config, p_223368_1_, reason, p_223368_3_, p_223368_4_) && p_223368_4_.nextInt(20) == 0
+		return passPeacefulAndYCheck(config, p_223368_1_, reason, p_223368_3_, p_223368_4_)
+				&& p_223368_4_.nextInt(20) == 0
 				&& canSpawnOn(p_223368_0_, p_223368_1_, reason, p_223368_3_, p_223368_4_);
 	}
 
@@ -224,13 +231,13 @@ public class PainEntity extends DemonEntity implements IMob, IAnimatable {
 				this.parentEntity.getLookController().setLookPositionWithEntity(livingentity, 90.0F, 30.0F);
 				World world = this.parentEntity.world;
 				++this.attackTimer;
-				if (this.attackTimer == 20) {
+				if (this.attackTimer == 200) {
 					LostSoulEntity lost_soul = ModEntityTypes.LOST_SOUL.get().create(world);
 					lost_soul.setLocationAndAngles(this.parentEntity.getPosX(), this.parentEntity.getPosY(),
 							this.parentEntity.getPosZ(), 0, 0);
 					lost_soul.addVelocity(1.0D, 0.0D, 0.0D);
 					world.addEntity(lost_soul);
-					this.attackTimer = -40;
+					this.attackTimer = -400;
 				}
 			} else if (this.attackTimer > 0) {
 				--this.attackTimer;

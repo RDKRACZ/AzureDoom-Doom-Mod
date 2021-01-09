@@ -27,4 +27,5 @@ public class ArachnotronModel extends AnimatedGeoModel<ArachnotronEntity> {
 	public ResourceLocation getAnimationFileLocation(ArachnotronEntity object) {
 		return new ResourceLocation(DoomMod.MODID, "animations/arachnotron_walking.json");
 	}
+
 }

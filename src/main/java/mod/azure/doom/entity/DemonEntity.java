@@ -31,15 +31,8 @@ public class DemonEntity extends MonsterEntity {
 		return blockY >= config.MIN_Y && blockY <= config.MAX_Y;
 	}
 	
-//	private float rangedDirectHitDamage = 0;
-//	
-//	public float getRangedDirectHitDamage() {
-//		return rangedDirectHitDamage;
-//	}
-//	
-//	public void setRangedDirectHitDamage(float dmg) {
-//		rangedDirectHitDamage = dmg;
-//	}
-	
+	public void setAttacking(boolean attacking) {
+		
+	}
 
 }

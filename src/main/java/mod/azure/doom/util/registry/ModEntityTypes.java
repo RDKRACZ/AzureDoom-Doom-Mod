@@ -162,7 +162,7 @@ public class ModEntityTypes {
 					.build(new ResourceLocation(DoomMod.MODID, "spiderdemon").toString()));
 
 	public static final RegistryObject<EntityType<ArachnotronEntity>> ARACHNOTRON = ENTITY_TYPES.register("arachnotron",
-			() -> EntityType.Builder.create(ArachnotronEntity::new, EntityClassification.MONSTER).size(5.0F, 2.0F)
+			() -> EntityType.Builder.create(ArachnotronEntity::new, EntityClassification.MONSTER).size(4.0F, 2.0F)
 					.immuneToFire().trackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "arachnotron").toString()));
 
@@ -249,7 +249,7 @@ public class ModEntityTypes {
 					.build(new ResourceLocation(DoomMod.MODID, "mechazombie").toString()));
 
 	public static final RegistryObject<EntityType<IconofsinEntity>> ICONOFSIN = ENTITY_TYPES.register("iconofsin",
-			() -> EntityType.Builder.create(IconofsinEntity::new, EntityClassification.MONSTER).size(2.4f, 10.0F)
+			() -> EntityType.Builder.create(IconofsinEntity::new, EntityClassification.MONSTER).size(6.3f, 15.0F)
 					.trackingRange(9).immuneToFire()
 					.build(new ResourceLocation(DoomMod.MODID, "iconofsin").toString()));
 

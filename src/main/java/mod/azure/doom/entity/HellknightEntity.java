@@ -7,6 +7,10 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import mod.azure.doom.entity.ai.goal.DemonAttackGoal;
+import mod.azure.doom.entity.ai.goal.RangedStaticAttackGoal;
+import mod.azure.doom.entity.attack.AbstractRangedAttack;
+import mod.azure.doom.entity.attack.AttackSound;
+import mod.azure.doom.entity.projectiles.CustomFireballEntity;
 import mod.azure.doom.util.Config;
 import mod.azure.doom.util.EntityConfig;
 import mod.azure.doom.util.EntityDefaults.EntityConfigType;
@@ -31,6 +35,7 @@ import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
 import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -97,12 +102,40 @@ public class HellknightEntity extends DemonEntity implements IAnimatable {
 	}
 
 	protected void applyEntityAI() {
-		this.goalSelector.addGoal(2, new DemonAttackGoal(this, 1.0D, false));
+		this.goalSelector
+				.addGoal(4,
+						new RangedStaticAttackGoal(this, new HellknightEntity.FireballAttack(this)
+								.setProjectileOriginOffset(0.8, 0.8, 0.8).setDamage(config.RANGED_ATTACK_DAMAGE), 60,
+								20, 30F));
+		this.goalSelector.addGoal(4, new DemonAttackGoal(this, 1.0D, false));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, false));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
 		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)));
+	}
+
+	public class FireballAttack extends AbstractRangedAttack {
+
+		public FireballAttack(DemonEntity parentEntity, double xOffSetModifier, double entityHeightFraction,
+				double zOffSetModifier, float damage) {
+			super(parentEntity, xOffSetModifier, entityHeightFraction, zOffSetModifier, damage);
+		}
+
+		public FireballAttack(DemonEntity parentEntity) {
+			super(parentEntity);
+		}
+
+		@Override
+		public AttackSound getDefaultAttackSound() {
+			return new AttackSound(SoundEvents.ENTITY_FIREWORK_ROCKET_BLAST, 1, 1);
+		}
+
+		@Override
+		public ProjectileEntity getProjectile(World world, double d2, double d3, double d4) {
+			return new CustomFireballEntity(world, this.parentEntity, d2, d3, d4, damage);
+
+		}
 	}
 
 	public static AttributeModifierMap.MutableAttribute func_234200_m_() {

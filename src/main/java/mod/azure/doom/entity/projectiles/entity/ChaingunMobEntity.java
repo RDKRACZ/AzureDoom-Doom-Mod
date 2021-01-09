@@ -1,7 +1,5 @@
 package mod.azure.doom.entity.projectiles.entity;
 
-import java.util.List;
-
 import mod.azure.doom.util.registry.ModEntityTypes;
 import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.entity.Entity;
@@ -13,11 +11,10 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
@@ -129,29 +126,17 @@ public class ChaingunMobEntity extends DamagingProjectileEntity {
 	protected void onEntityHit(EntityRayTraceResult p_213868_1_) {
 		super.onEntityHit(p_213868_1_);
 		if (!this.world.isRemote) {
-			this.doDamage();
+			Entity entityHit = p_213868_1_.getEntity();
+			if (entityHit instanceof LivingEntity && directHitDamage > 0)
+				this.attackEntityFrom(DamageSource.causeIndirectMagicDamage(this, this), 3);
+			this.explode();
 			this.remove();
 		}
 		this.playSound(ModSoundEvents.CHAINGUN_SHOOT.get(), 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 	}
 
-	public void doDamage() {
-		float f2 = 24.0F;
-		int k1 = MathHelper.floor(this.getPosX() - (double) f2 - 1.0D);
-		int l1 = MathHelper.floor(this.getPosX() + (double) f2 + 1.0D);
-		int i2 = MathHelper.floor(this.getPosY() - (double) f2 - 1.0D);
-		int i1 = MathHelper.floor(this.getPosY() + (double) f2 + 1.0D);
-		int j2 = MathHelper.floor(this.getPosZ() - (double) f2 - 1.0D);
-		int j1 = MathHelper.floor(this.getPosZ() + (double) f2 + 1.0D);
-		List<Entity> list = this.world.getEntitiesWithinAABBExcludingEntity(this,
-				new AxisAlignedBB((double) k1, (double) i2, (double) j2, (double) l1, (double) i1, (double) j1));
-		Vector3d vector3d = new Vector3d(this.getPosX(), this.getPosY(), this.getPosZ());
-		for (int k2 = 0; k2 < list.size(); ++k2) {
-			Entity entity = list.get(k2);
-			double d12 = (double) (MathHelper.sqrt(entity.getDistanceSq(vector3d)) / f2);
-			if (d12 <= 1.0D) {
-				entity.attackEntityFrom(DamageSource.causeThrownDamage(this, this), directHitDamage);
-			}
-		}
+	protected void explode() {
+		this.world.createExplosion(this, this.getPosX(), this.getPosYHeight(0.0625D), this.getPosZ(), 1.0F, false,
+				Explosion.Mode.NONE);
 	}
 }
