@@ -1,4 +1,4 @@
-package mod.azure.doom.util;
+package mod.azure.doom.util.config;
 
 import java.io.File;
 import java.util.Arrays;
@@ -11,7 +11,7 @@ import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
 
 import mod.azure.doom.DoomMod;
-import mod.azure.doom.util.EntityDefaults.EntityConfigType;
+import mod.azure.doom.util.config.EntityDefaults.EntityConfigType;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.ForgeConfigSpec.Builder;
@@ -21,11 +21,23 @@ public class Config {
 
 	public static final ServerConfig SERVER;
 	public static final ForgeConfigSpec SERVER_SPEC;
+    public static final ForgeConfigSpec BIOME_SPEC;
+	public static final BiomeConfig BIOME;
 
 	static {
-		final Pair<ServerConfig, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(ServerConfig::new);
-		SERVER_SPEC = specPair.getRight();
-		SERVER = specPair.getLeft();
+
+		{
+			final Pair<ServerConfig, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder()
+					.configure(ServerConfig::new);
+			SERVER_SPEC = specPair.getRight();
+			SERVER = specPair.getLeft();
+		}
+		{
+			final Pair<BiomeConfig, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder()
+					.configure(BiomeConfig::new);
+			BIOME = specPair.getLeft();
+			BIOME_SPEC = specPair.getRight();
+		}
 	}
 
 	public static class ServerConfig {
@@ -39,11 +51,6 @@ public class Config {
 		/*
 		 * Spawn Weights
 		 */
-		private ConfigValue<Integer> specCOMMON_DEMON_SPAWN_WEIGHT;
-		private ConfigValue<Integer> specHEAVY_DEMON_SPAWN_WEIGHT;
-		private ConfigValue<Boolean> specUSE_INDIVIDUAL_SPAWN_RULES;
-		private ConfigValue<List<? extends String>> specBIOME_DICT;
-
 		public int COMMON_DEMON_SPAWN_WEIGHT;
 		public int HEAVY_DEMON_SPAWN_WEIGHT;
 		public boolean USE_INDIVIDUAL_SPAWN_RULES;
@@ -51,20 +58,6 @@ public class Config {
 
 		ServerConfig(ForgeConfigSpec.Builder builder) {
 			builder.push("spawn_weight");
-			specCOMMON_DEMON_SPAWN_WEIGHT = builder.comment("Spawn weight of Common Demons.")
-					.translation(DoomMod.MODID + ".config.common_demon_spawn_weight")
-					.define("COMMON_DEMON_SPAWN_WEIGHT", 30);
-			specHEAVY_DEMON_SPAWN_WEIGHT = builder.comment("Spawn weight of Heavy Demons.")
-					.translation(DoomMod.MODID + ".config.heavy_demon_spawn_weight")
-					.define("HEAVY_DEMON_SPAWN_WEIGHT", 10);
-			specUSE_INDIVIDUAL_SPAWN_RULES = builder.comment(
-					"Define spawn rules and weights for each entity separately. Overrides the COMMON & HEAVY_DEMON_SPAWN_WEIGHT fields.")
-					.translation(DoomMod.MODID + ".config.use_individual_spawn_rules")
-					.define("USE_INDIVIDUAL_SPAWN_RULES", false);
-			specBIOME_DICT = builder.comment(
-					"Allowed biome dictionary values for all entities to spawn in. E.g. \"NETHER\", \"FOREST+HOT\", \"PLAINS+!SNOWY\"")
-					.translation(new StringBuilder(DoomMod.MODID).append("biome_dict").toString())
-					.defineList("BIOME_DICT", Arrays.asList("NETHER"), string -> string != null);
 
 			// Default settings per entity here.
 			for (EntityConfigType entityType : EntityConfigType.values())
@@ -88,17 +81,13 @@ public class Config {
 			entityConfig.put(type,
 					new EntityConfig(type.toString(),
 							type.getDefaultAttributes().isHeavy() ? 10 : type == EntityConfigType.ICON_OF_SIN ? 0 : 30,
-							1, type.getDefaultAttributes().getDefaultMaxRoll(), 0, 255, Arrays.asList("NETHER"))
+							1, type.getDefaultAttributes().getDefaultMaxRoll(), 0, 255, Arrays.asList("nether"))
 									.setAttributes(type.getDefaultAttributes()).buildVia(builder));
 		}
 
 		public void bakeConfig() {
 			CRUCIBLE_MARAUDER_MAX_DAMAGE = specCRUCIBLE_MARAUDER_MAX_DAMAGE.get();
 			ENABLE_LOCKON = specENABLE_LOCKON.get();
-			COMMON_DEMON_SPAWN_WEIGHT = specCOMMON_DEMON_SPAWN_WEIGHT.get();
-			HEAVY_DEMON_SPAWN_WEIGHT = specHEAVY_DEMON_SPAWN_WEIGHT.get();
-			USE_INDIVIDUAL_SPAWN_RULES = specUSE_INDIVIDUAL_SPAWN_RULES.get();
-			BIOME_DICT = specBIOME_DICT.get();
 			entityConfig.values().forEach(config -> config.bake());
 		}
 

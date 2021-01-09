@@ -2,8 +2,8 @@ package mod.azure.doom.entity;
 
 import java.util.Random;
 
-import mod.azure.doom.util.Config;
-import mod.azure.doom.util.EntityConfig;
+import mod.azure.doom.util.config.Config;
+import mod.azure.doom.util.config.EntityConfig;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.monster.MonsterEntity;

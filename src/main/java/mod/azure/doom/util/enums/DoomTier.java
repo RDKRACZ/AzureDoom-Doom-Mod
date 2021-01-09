@@ -2,7 +2,7 @@ package mod.azure.doom.util.enums;
 
 import java.util.function.Supplier;
 
-import mod.azure.doom.util.Config;
+import mod.azure.doom.util.config.Config;
 import mod.azure.doom.util.registry.DoomItems;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.crafting.Ingredient;

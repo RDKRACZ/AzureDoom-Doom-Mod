@@ -3,9 +3,9 @@ package mod.azure.doom.entity;
 import java.util.EnumSet;
 import java.util.Random;
 
-import mod.azure.doom.util.Config;
-import mod.azure.doom.util.EntityConfig;
-import mod.azure.doom.util.EntityDefaults.EntityConfigType;
+import mod.azure.doom.util.config.Config;
+import mod.azure.doom.util.config.EntityConfig;
+import mod.azure.doom.util.config.EntityDefaults.EntityConfigType;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;

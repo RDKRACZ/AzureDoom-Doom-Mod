@@ -30,14 +30,16 @@ import mod.azure.doom.entity.ShotgunguyEntity;
 import mod.azure.doom.entity.SpiderdemonEntity;
 import mod.azure.doom.entity.UnwillingEntity;
 import mod.azure.doom.entity.ZombiemanEntity;
-import mod.azure.doom.util.Config;
 import mod.azure.doom.util.DoomLeapEntityEvents;
 import mod.azure.doom.util.DoomVillagerTrades;
 import mod.azure.doom.util.LootHandler;
 import mod.azure.doom.util.SoulCubeHandler;
+import mod.azure.doom.util.config.BiomeConfig;
+import mod.azure.doom.util.config.Config;
 import mod.azure.doom.util.registry.DoomBlocks;
 import mod.azure.doom.util.registry.DoomEnchantments;
 import mod.azure.doom.util.registry.DoomItems;
+import mod.azure.doom.util.registry.ModEntitySpawn;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
@@ -46,7 +48,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -72,7 +76,9 @@ public class DoomMod {
 		instance = this;
 		final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		ModLoadingContext modLoadingContext = ModLoadingContext.get();
+		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onModConfigEvent);
 		modLoadingContext.registerConfig(ModConfig.Type.SERVER, Config.SERVER_SPEC, "doom-config.toml");
+		modLoadingContext.registerConfig(ModConfig.Type.SERVER, Config.BIOME_SPEC, "doom-mob-biomes.toml");
 		Config.loadConfig(Config.SERVER_SPEC, FMLPaths.CONFIGDIR.get().resolve("doom-config.toml").toString());
 		Config.SERVER.bakeConfig();
 		MinecraftForge.EVENT_BUS.register(this);
@@ -87,6 +93,7 @@ public class DoomMod {
 		ModEntityTypes.TILE_TYPES.register(modEventBus);
 		DoomItems.ITEMS.register(modEventBus);
 		DoomBlocks.BLOCKS.register(modEventBus);
+		MinecraftForge.EVENT_BUS.addListener(this::onBiomeLoad);
 		if (!ModList.get().isLoaded("lockon")) {
 			if (Config.SERVER.ENABLE_LOCKON) {
 				if (FMLEnvironment.dist == Dist.CLIENT)
@@ -97,6 +104,19 @@ public class DoomMod {
 			MinecraftForge.EVENT_BUS.register(new DoomLeapEntityEvents());
 		}
 		GeckoLib.initialize();
+	}
+
+	@SubscribeEvent
+	public void onModConfigEvent(final ModConfig.ModConfigEvent event) {
+		final ModConfig config = event.getConfig();
+		if (config.getSpec() == Config.BIOME_SPEC) {
+			BiomeConfig.bake(config);
+		}
+	}
+
+	@SubscribeEvent
+	public void onBiomeLoad(BiomeLoadingEvent event) {
+		ModEntitySpawn.onBiomesLoad(event);
 	}
 
 	private void clientSetup(FMLClientSetupEvent event) {

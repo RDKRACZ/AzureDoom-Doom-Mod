@@ -1,4 +1,4 @@
-package mod.azure.doom.util;
+package mod.azure.doom.util.config;
 
 public class EntityDefaults {
 

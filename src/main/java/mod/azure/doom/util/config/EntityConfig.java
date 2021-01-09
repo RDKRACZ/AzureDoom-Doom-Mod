@@ -1,10 +1,10 @@
-package mod.azure.doom.util;
+package mod.azure.doom.util.config;
 
 import java.util.List;
 
 import mod.azure.doom.DoomMod;
-import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap.MutableAttribute;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraftforge.common.ForgeConfigSpec.Builder;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 
@@ -19,7 +19,6 @@ public class EntityConfig {
 	private ConfigValue<Integer> specMAX_GROUP;
 	private ConfigValue<Integer> specMIN_Y;
 	private ConfigValue<Integer> specMAX_Y;
-	private ConfigValue<List<? extends String>> specBIOME_DICT;
 
 	public int SPAWN_WEIGHT;
 	public int MIN_GROUP;
@@ -38,7 +37,6 @@ public class EntityConfig {
 		MAX_GROUP = maxGroup;
 		MIN_Y = minY;
 		MAX_Y = maxY;
-		BIOME_DICT = biomeDict;
 	}
 
 	private ConfigValue<Double> specMAX_HEALTH;
@@ -60,7 +58,6 @@ public class EntityConfig {
 		MAX_GROUP = specMAX_GROUP.get();
 		MIN_Y = specMIN_Y.get();
 		MAX_Y = specMAX_Y.get();
-		BIOME_DICT = specBIOME_DICT.get();
 		MAX_HEALTH = specMAX_HEALTH.get();
 		MELEE_ATTACK_DAMAGE = specMELEE_ATTACK_DAMAGE == null ? 0 : specMELEE_ATTACK_DAMAGE.get();
 		RANGED_ATTACK_DAMAGE = specRANGED_ATTACK_DAMAGE == null ? 0F : specRANGED_ATTACK_DAMAGE.get().floatValue();
@@ -125,13 +122,6 @@ public class EntityConfig {
 				.translation(
 						new StringBuilder(DoomMod.MODID).append(".config.").append(lName).append("_max_y").toString())
 				.defineInRange(new StringBuilder(uName).append("_MAX_Y").toString(), MAX_Y, 0, 255);
-
-		specBIOME_DICT = builder.comment(
-				"Allowed biome dictionary values for the entity to spawn in. E.g. [\"NETHER\", \"FOREST+HOT\", \"PLAINS+!SNOWY\"]")
-				.translation(new StringBuilder(DoomMod.MODID).append(".config.").append(lName).append("_biome_dict")
-						.toString())
-				.defineList(new StringBuilder(uName).append("_BIOME_DICT").toString(), BIOME_DICT,
-						string -> string != null);
 
 		builder.pop(3);
 
