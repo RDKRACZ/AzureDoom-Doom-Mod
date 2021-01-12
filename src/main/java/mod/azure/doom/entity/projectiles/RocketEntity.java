@@ -14,8 +14,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceContext;
@@ -36,6 +36,7 @@ public class RocketEntity extends AbstractArrowEntity implements IAnimatable {
 	protected int timeInAir;
 	protected boolean inAir;
 	private int ticksInAir;
+	private LivingEntity shooter;
 
 	public RocketEntity(EntityType<? extends AbstractArrowEntity> type, World world) {
 		super((EntityType<? extends AbstractArrowEntity>) type, world);
@@ -188,6 +189,25 @@ public class RocketEntity extends AbstractArrowEntity implements IAnimatable {
 		}
 	}
 
+	private SoundEvent hitSound = this.getHitEntitySound();
+	private List<Entity> hitEntities;
+
+	@Override
+	protected void func_230299_a_(BlockRayTraceResult p_230299_1_) {
+		super.func_230299_a_(p_230299_1_);
+		this.setHitSound(ModSoundEvents.ROCKET_HIT.get());
+	}
+
+	@Override
+	public void setHitSound(SoundEvent soundIn) {
+		this.hitSound = soundIn;
+	}
+
+	@Override
+	protected SoundEvent getHitEntitySound() {
+		return ModSoundEvents.ROCKET_HIT.get();
+	}
+
 	@Override
 	public boolean isPushedByWater() {
 		return false;
@@ -196,38 +216,23 @@ public class RocketEntity extends AbstractArrowEntity implements IAnimatable {
 	@Override
 	protected void onEntityHit(EntityRayTraceResult p_213868_1_) {
 		super.onEntityHit(p_213868_1_);
-		if (!this.world.isRemote) {
-			this.doDamage();
-			this.remove();
+		Entity entity = this.func_234616_v_();
+		if (p_213868_1_.getType() != RayTraceResult.Type.ENTITY
+				|| !((EntityRayTraceResult) p_213868_1_).getEntity().isEntityEqual(entity)) {
+			if (!this.world.isRemote) {
+				this.remove();
+			}
 		}
-		this.playSound(ModSoundEvents.ROCKET_HIT.get(), 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 	}
 
+	@Override
 	protected void onImpact(RayTraceResult result) {
 		super.onImpact(result);
-		if (!this.world.isRemote) {
-			this.doDamage();
-			this.remove();
-		}
-		this.playSound(ModSoundEvents.ROCKET_HIT.get(), 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
-	}
-
-	public void doDamage() {
-		float f2 = 4.0F;
-		int k1 = MathHelper.floor(this.getPosX() - (double) f2 - 1.0D);
-		int l1 = MathHelper.floor(this.getPosX() + (double) f2 + 1.0D);
-		int i2 = MathHelper.floor(this.getPosY() - (double) f2 - 1.0D);
-		int i1 = MathHelper.floor(this.getPosY() + (double) f2 + 1.0D);
-		int j2 = MathHelper.floor(this.getPosZ() - (double) f2 - 1.0D);
-		int j1 = MathHelper.floor(this.getPosZ() + (double) f2 + 1.0D);
-		List<Entity> list = this.world.getEntitiesWithinAABBExcludingEntity(this,
-				new AxisAlignedBB((double) k1, (double) i2, (double) j2, (double) l1, (double) i1, (double) j1));
-		Vector3d vector3d = new Vector3d(this.getPosX(), this.getPosY(), this.getPosZ());
-		for (int k2 = 0; k2 < list.size(); ++k2) {
-			Entity entity = list.get(k2);
-			double d12 = (double) (MathHelper.sqrt(entity.getDistanceSq(vector3d)) / f2);
-			if (d12 <= 1.0D) {
-				entity.attackEntityFrom(DamageSource.func_233546_a_(), 40);
+		Entity entity = this.func_234616_v_();
+		if (result.getType() != RayTraceResult.Type.ENTITY
+				|| !((EntityRayTraceResult) result).getEntity().isEntityEqual(entity)) {
+			if (!this.world.isRemote) {
+				this.remove();
 			}
 		}
 	}

@@ -5,48 +5,49 @@ import mod.azure.doom.entity.attack.AbstractRangedAttack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 
-public class RangedStaticAttackGoal extends Goal{
+public class RangedStaticAttackGoal extends Goal {
 
-		private final DemonEntity parentEntity;
-		public int attackTimer;
-		private AbstractRangedAttack attack;
-		private int attackCooldown;
-		private int visibleTicksDelay = 20;
-		private float maxAttackDistance = 20;
-		private int seeTime = -1;
+	private final DemonEntity parentEntity;
+	public int attackTimer;
+	private AbstractRangedAttack attack;
+	private int attackCooldown;
+	private int visibleTicksDelay = 20;
+	private float maxAttackDistance = 20;
+	private int seeTime = -1;
 
-		public RangedStaticAttackGoal(DemonEntity mob, AbstractRangedAttack attack, int attackCooldownIn,
-				int visibleTicksDelay, float maxAttackDistanceIn) {
-			this.parentEntity = mob;
-			this.attackCooldown = attackCooldownIn;
-			this.maxAttackDistance = maxAttackDistanceIn * maxAttackDistanceIn;
-			this.attack = attack;
-			this.visibleTicksDelay = visibleTicksDelay;
-		}
-		
-		public boolean shouldExecute() {
-			return this.parentEntity.getAttackTarget() != null;
-		}
+	public RangedStaticAttackGoal(DemonEntity mob, AbstractRangedAttack attack, int attackCooldownIn,
+			int visibleTicksDelay, float maxAttackDistanceIn) {
+		this.parentEntity = mob;
+		this.attackCooldown = attackCooldownIn;
+		this.maxAttackDistance = maxAttackDistanceIn * maxAttackDistanceIn;
+		this.attack = attack;
+		this.visibleTicksDelay = visibleTicksDelay;
+	}
 
-		public void startExecuting() {
-			this.attackTimer = 0;
-		}
+	public boolean shouldExecute() {
+		return this.parentEntity.getAttackTarget() != null;
+	}
 
-		public void resetTask() {
-			this.parentEntity.setAttacking(false);
-		}
+	public void startExecuting() {
+		this.attackTimer = 0;
+	}
 
-		public void tick() {
+	public void resetTask() {
+		this.parentEntity.setAttacking(false);
+	}
+
+	public void tick() {
+		if (this.parentEntity.getAttackTarget() != null) {
 			LivingEntity livingentity = this.parentEntity.getAttackTarget();
 			boolean inLineOfSight = this.parentEntity.getEntitySenses().canSee(livingentity);
-	         if (inLineOfSight != this.seeTime > 0) {
-	            this.seeTime = 0;
-	         }
-	         if (inLineOfSight) {
-	            ++this.seeTime;
-	         } else {
-	            --this.seeTime;
-	         }
+			if (inLineOfSight != this.seeTime > 0) {
+				this.seeTime = 0;
+			}
+			if (inLineOfSight) {
+				++this.seeTime;
+			} else {
+				--this.seeTime;
+			}
 			if (livingentity.getDistanceSq(this.parentEntity) < this.maxAttackDistance
 					&& this.seeTime >= this.visibleTicksDelay) {
 				this.parentEntity.getLookController().setLookPositionWithEntity(livingentity, 90.0F, 30.0F);
@@ -61,5 +62,6 @@ public class RangedStaticAttackGoal extends Goal{
 			}
 			this.parentEntity.setAttacking(attackTimer >= attackCooldown * 0.75);
 		}
-	
+	}
+
 }

@@ -36,7 +36,6 @@ public class Unmaykr extends ShootableItem implements IVanishable {
 		ItemStack stack = new ItemStack(this);
 		stack.hasTag();
 		stack.addEnchantment(Enchantments.INFINITY, 1);
-		stack.addEnchantment(Enchantments.PUNCH, 2);
 		if (group == DoomMod.DoomWeaponItemGroup) {
 			items.add(stack);
 		}
@@ -46,7 +45,6 @@ public class Unmaykr extends ShootableItem implements IVanishable {
 	public void onCreated(ItemStack stack, World worldIn, PlayerEntity playerIn) {
 		stack.hasTag();
 		stack.addEnchantment(Enchantments.INFINITY, 1);
-		stack.addEnchantment(Enchantments.PUNCH, 2);
 	}
 
 	@Override
@@ -72,50 +70,41 @@ public class Unmaykr extends ShootableItem implements IVanishable {
 					itemstack = new ItemStack(DoomItems.UNMAKRY_BOLT.get());
 				}
 
-				boolean flag1 = playerentity.abilities.isCreativeMode || (itemstack.getItem() instanceof UnmaykrBolt
-						&& ((UnmaykrBolt) itemstack.getItem()).isInfinite(itemstack, stack, playerentity));
-				if (!worldIn.isRemote) {
-					UnmaykrBolt arrowitem = (UnmaykrBolt) (itemstack.getItem() instanceof UnmaykrBolt
-							? itemstack.getItem()
-							: DoomItems.UNMAKRY_BOLT.get());
-					UnmaykrBoltEntity abstractarrowentity = arrowitem.createArrow(worldIn, itemstack, playerentity);
-					abstractarrowentity = customeArrow(abstractarrowentity);
-					abstractarrowentity.func_234612_a_(playerentity, playerentity.rotationPitch,
-							playerentity.rotationYaw, 0.0F, 1.0F * 3.0F, 1.0F);
-					abstractarrowentity.setIsCritical(true);
+				if (playerentity.getHeldItemMainhand().getAnimationsToGo() == 0) {
 
-					int j = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, stack);
-					if (j > 0) {
-						abstractarrowentity.setDamage(abstractarrowentity.getDamage() + (double) j * 0.5D + 0.5D);
-					}
+					boolean flag1 = playerentity.abilities.isCreativeMode || (itemstack.getItem() instanceof UnmaykrBolt
+							&& ((UnmaykrBolt) itemstack.getItem()).isInfinite(itemstack, stack, playerentity));
+					if (!worldIn.isRemote) {
+						UnmaykrBolt arrowitem = (UnmaykrBolt) (itemstack.getItem() instanceof UnmaykrBolt
+								? itemstack.getItem()
+								: DoomItems.UNMAKRY_BOLT.get());
+						UnmaykrBoltEntity abstractarrowentity = arrowitem.createArrow(worldIn, itemstack, playerentity);
+						abstractarrowentity = customeArrow(abstractarrowentity);
+						abstractarrowentity.func_234612_a_(playerentity, playerentity.rotationPitch,
+								playerentity.rotationYaw, 0.0F, 1.0F * 3.0F, 1.0F);
 
-					int k = EnchantmentHelper.getEnchantmentLevel(Enchantments.PUNCH, stack);
-					if (k > 0) {
-						abstractarrowentity.setKnockbackStrength(k);
-					}
+						abstractarrowentity.setDamage(abstractarrowentity.getDamage() + 1.5);
 
-					if (EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAME, stack) > 0) {
-						abstractarrowentity.setFire(100);
+						stack.damageItem(1, playerentity, (p_220009_1_) -> {
+							p_220009_1_.sendBreakAnimation(playerentity.getActiveHand());
+						});
+						if (flag1 || playerentity.abilities.isCreativeMode
+								&& (itemstack.getItem() == DoomItems.UNMAKRY_BOLT.get()
+										|| itemstack.getItem() == DoomItems.UNMAKRY_BOLT.get())) {
+							abstractarrowentity.pickupStatus = AbstractArrowEntity.PickupStatus.DISALLOWED;
+						}
+						worldIn.addEntity(abstractarrowentity);
 					}
-
-					stack.damageItem(1, playerentity, (p_220009_1_) -> {
-						p_220009_1_.sendBreakAnimation(playerentity.getActiveHand());
-					});
-					if (flag1 || playerentity.abilities.isCreativeMode
-							&& (itemstack.getItem() == DoomItems.UNMAKRY_BOLT.get()
-									|| itemstack.getItem() == DoomItems.UNMAKRY_BOLT.get())) {
-						abstractarrowentity.pickupStatus = AbstractArrowEntity.PickupStatus.DISALLOWED;
+					worldIn.playSound((PlayerEntity) null, playerentity.getPosX(), playerentity.getPosY(),
+							playerentity.getPosZ(), ModSoundEvents.UNMAKYR_FIRE.get(), SoundCategory.PLAYERS, 1.0F,
+							1.0F / (random.nextFloat() * 0.4F + 1.2F) + 1 * 0.5F);
+					if (!flag1 && !playerentity.abilities.isCreativeMode) {
+						itemstack.shrink(1);
+						if (itemstack.isEmpty()) {
+							playerentity.inventory.deleteStack(itemstack);
+						}
 					}
-					worldIn.addEntity(abstractarrowentity);
-				}
-				worldIn.playSound((PlayerEntity) null, playerentity.getPosX(), playerentity.getPosY(),
-						playerentity.getPosZ(), ModSoundEvents.UNMAKYR_FIRE.get(), SoundCategory.PLAYERS, 1.0F,
-						1.0F / (random.nextFloat() * 0.4F + 1.2F) + 1 * 0.5F);
-				if (!flag1 && !playerentity.abilities.isCreativeMode) {
-					itemstack.shrink(1);
-					if (itemstack.isEmpty()) {
-						playerentity.inventory.deleteStack(itemstack);
-					}
+					playerentity.getHeldItemMainhand().setAnimationsToGo(20);
 				}
 			}
 		}

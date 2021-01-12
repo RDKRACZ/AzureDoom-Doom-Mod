@@ -30,7 +30,9 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceContext;
@@ -206,6 +208,25 @@ public class BFGEntity extends AbstractArrowEntity {
 		}
 	}
 
+	private SoundEvent hitSound = this.getHitEntitySound();
+	private List<Entity> hitEntities;
+
+	@Override
+	protected void func_230299_a_(BlockRayTraceResult p_230299_1_) {
+		super.func_230299_a_(p_230299_1_);
+		this.setHitSound(ModSoundEvents.BFG_HIT.get());
+	}
+
+	@Override
+	public void setHitSound(SoundEvent soundIn) {
+		this.hitSound = soundIn;
+	}
+
+	@Override
+	protected SoundEvent getHitEntitySound() {
+		return ModSoundEvents.BFG_HIT.get();
+	}
+
 	@Override
 	public boolean isPushedByWater() {
 		return false;
@@ -237,11 +258,6 @@ public class BFGEntity extends AbstractArrowEntity {
 			}
 			this.playSound(ModSoundEvents.BFG_HIT.get(), 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 		}
-	}
-
-	@Override
-	public void setHitSound(SoundEvent soundIn) {
-		super.setHitSound(ModSoundEvents.BFG_HIT.get());
 	}
 
 	public void doDamage() {

@@ -18,6 +18,10 @@ public class DemonAttackGoal extends MeleeAttackGoal {
 		this.raiseArmTicks = 0;
 	}
 
+	public boolean shouldExecute() {
+		return this.zombie.getAttackTarget() != null;
+	}
+
 	public void resetTask() {
 		super.resetTask();
 		this.zombie.setAggroed(false);

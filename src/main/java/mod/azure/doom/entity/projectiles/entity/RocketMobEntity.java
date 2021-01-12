@@ -42,7 +42,7 @@ public class RocketMobEntity extends DamagingProjectileEntity implements IAnimat
 		super(ModEntityTypes.ROCKET_MOB.get(), shooter, accelX, accelY, accelZ, worldIn);
 		this.shooter = shooter;
 	}
-	
+
 	public void setDirectHitDamage(float directHitDamage) {
 		this.directHitDamage = directHitDamage;
 	}
@@ -150,8 +150,7 @@ public class RocketMobEntity extends DamagingProjectileEntity implements IAnimat
 		if (!this.world.isRemote) {
 			Entity entityHit = p_213868_1_.getEntity();
 			if (entityHit instanceof LivingEntity && directHitDamage > 0)
-				p_213868_1_.getEntity().attackEntityFrom(DamageSource.causeExplosionDamage(shooter),
-						directHitDamage);
+				p_213868_1_.getEntity().attackEntityFrom(DamageSource.causeExplosionDamage(shooter), directHitDamage);
 			this.explode();
 			this.remove();
 		}

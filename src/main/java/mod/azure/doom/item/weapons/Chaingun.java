@@ -85,7 +85,7 @@ public class Chaingun extends ShootableItem implements IAnimatable {
 					abstractarrowentity = customeArrow(abstractarrowentity);
 					abstractarrowentity.func_234612_a_(playerentity, playerentity.rotationPitch,
 							playerentity.rotationYaw, 0.0F, 1.0F * 3.0F, 1.0F);
-					abstractarrowentity.setDamage(3);
+					abstractarrowentity.setDamage(abstractarrowentity.getDamage() - 1.5);
 					stack.damageItem(1, playerentity, (p_220009_1_) -> {
 						p_220009_1_.sendBreakAnimation(playerentity.getActiveHand());
 					});

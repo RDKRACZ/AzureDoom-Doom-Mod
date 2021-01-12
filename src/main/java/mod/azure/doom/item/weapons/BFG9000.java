@@ -62,11 +62,6 @@ public class BFG9000 extends ShootableItem implements IAnimatable {
 	}
 
 	@Override
-	public void onCreated(ItemStack stack, World worldIn, PlayerEntity playerIn) {
-		stack.hasTag();
-	}
-
-	@Override
 	public boolean hasEffect(ItemStack stack) {
 		return false;
 	}
@@ -89,46 +84,50 @@ public class BFG9000 extends ShootableItem implements IAnimatable {
 					itemstack = new ItemStack(DoomItems.BFG_CELL.get());
 				}
 
-				boolean flag1 = playerentity.abilities.isCreativeMode || (itemstack.getItem() instanceof BFGCell
-						&& ((BFGCell) itemstack.getItem()).isInfinite(itemstack, stack, playerentity));
-				if (!worldIn.isRemote) {
-					BFGCell arrowitem = (BFGCell) (itemstack.getItem() instanceof BFGCell ? itemstack.getItem()
-							: DoomItems.BFG_CELL.get());
-					BFGEntity abstractarrowentity = arrowitem.createArrow(worldIn, itemstack, playerentity);
-					abstractarrowentity = customeArrow(abstractarrowentity);
-					abstractarrowentity.func_234612_a_(playerentity, playerentity.rotationPitch,
-							playerentity.rotationYaw, 0.0F, 0.25F * 3.0F, 1.0F);
+				if (playerentity.getHeldItemMainhand().getAnimationsToGo() == 0) {
 
-					abstractarrowentity.hasNoGravity();
+					boolean flag1 = playerentity.abilities.isCreativeMode || (itemstack.getItem() instanceof BFGCell
+							&& ((BFGCell) itemstack.getItem()).isInfinite(itemstack, stack, playerentity));
+					if (!worldIn.isRemote) {
+						BFGCell arrowitem = (BFGCell) (itemstack.getItem() instanceof BFGCell ? itemstack.getItem()
+								: DoomItems.BFG_CELL.get());
+						BFGEntity abstractarrowentity = arrowitem.createArrow(worldIn, itemstack, playerentity);
+						abstractarrowentity = customeArrow(abstractarrowentity);
+						abstractarrowentity.func_234612_a_(playerentity, playerentity.rotationPitch,
+								playerentity.rotationYaw, 0.0F, 0.25F * 3.0F, 1.0F);
 
-					stack.damageItem(1, playerentity, (p_220009_1_) -> {
-						p_220009_1_.sendBreakAnimation(playerentity.getActiveHand());
-					});
-					if (flag1
-							|| playerentity.abilities.isCreativeMode && (itemstack.getItem() == DoomItems.BFG_CELL.get()
-									|| itemstack.getItem() == DoomItems.BFG_CELL.get())) {
-						abstractarrowentity.pickupStatus = AbstractArrowEntity.PickupStatus.DISALLOWED;
+						abstractarrowentity.hasNoGravity();
+
+						stack.damageItem(1, playerentity, (p_220009_1_) -> {
+							p_220009_1_.sendBreakAnimation(playerentity.getActiveHand());
+						});
+						if (flag1 || playerentity.abilities.isCreativeMode
+								&& (itemstack.getItem() == DoomItems.BFG_CELL.get()
+										|| itemstack.getItem() == DoomItems.BFG_CELL.get())) {
+							abstractarrowentity.pickupStatus = AbstractArrowEntity.PickupStatus.DISALLOWED;
+						}
+						worldIn.addEntity(abstractarrowentity);
 					}
-					worldIn.addEntity(abstractarrowentity);
-				}
-				worldIn.playSound((PlayerEntity) null, playerentity.getPosX(), playerentity.getPosY(),
-						playerentity.getPosZ(), ModSoundEvents.BFG_FIRING.get(), SoundCategory.PLAYERS, 1.0F,
-						1.0F / (random.nextFloat() * 0.4F + 1.2F) + 0.25F * 0.5F);
-				if (!flag1 && !playerentity.abilities.isCreativeMode) {
-					itemstack.shrink(1);
-					if (itemstack.isEmpty()) {
-						playerentity.inventory.deleteStack(itemstack);
+					worldIn.playSound((PlayerEntity) null, playerentity.getPosX(), playerentity.getPosY(),
+							playerentity.getPosZ(), ModSoundEvents.BFG_FIRING.get(), SoundCategory.PLAYERS, 1.0F,
+							1.0F / (random.nextFloat() * 0.4F + 1.2F) + 0.25F * 0.5F);
+					if (!flag1 && !playerentity.abilities.isCreativeMode) {
+						itemstack.shrink(1);
+						if (itemstack.isEmpty()) {
+							playerentity.inventory.deleteStack(itemstack);
+						}
 					}
-				}
 
-				AnimationController<?> controller = GeckoLibUtil.getControllerForStack(this.factory, stack,
-						controllerName);
+					AnimationController<?> controller = GeckoLibUtil.getControllerForStack(this.factory, stack,
+							controllerName);
 
-				if (controller.getAnimationState() == AnimationState.Stopped) {
-					// playerIn.sendStatusMessage(new StringTextComponent("Opening the jack in the
-					// box!"), true);
-					controller.markNeedsReload();
-					controller.setAnimation(new AnimationBuilder().addAnimation("firing", false));
+					if (controller.getAnimationState() == AnimationState.Stopped) {
+						// playerIn.sendStatusMessage(new StringTextComponent("Opening the jack in the
+						// box!"), true);
+						controller.markNeedsReload();
+						controller.setAnimation(new AnimationBuilder().addAnimation("firing", false));
+					}
+					playerentity.getHeldItemMainhand().setAnimationsToGo(20);
 				}
 			}
 		}

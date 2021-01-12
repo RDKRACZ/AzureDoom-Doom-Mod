@@ -3,8 +3,8 @@ package mod.azure.doom.client.render.weapons;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
-import mod.azure.doom.client.models.weapons.BallistaModel;
-import mod.azure.doom.item.weapons.Ballista;
+import mod.azure.doom.client.models.weapons.PlasmagunModel;
+import mod.azure.doom.item.weapons.PlasmaGun;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderHelper;
@@ -13,17 +13,17 @@ import net.minecraft.client.renderer.model.ItemCameraTransforms.TransformType;
 import net.minecraft.item.ItemStack;
 import software.bernie.geckolib3.renderers.geo.GeoItemRenderer;
 
-public class BallistaRender extends GeoItemRenderer<Ballista> {
-	public BallistaRender() {
-		super(new BallistaModel());
+public class PlasmagunRender extends GeoItemRenderer<PlasmaGun> {
+
+	public PlasmagunRender() {
+		super(new PlasmagunModel());
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void func_239207_a_(ItemStack itemStack, TransformType transformType, MatrixStack stack,
 			IRenderTypeBuffer bufferIn, int combinedLightIn, int p_239207_6_) {
 		if (transformType == ItemCameraTransforms.TransformType.GUI) {
-			stack.push();
+			RenderSystem.pushMatrix();
 			IRenderTypeBuffer.Impl irendertypebuffer$impl = Minecraft.getInstance().getRenderTypeBuffers()
 					.getBufferSource();
 			RenderHelper.setupGuiFlatDiffuseLighting();
@@ -31,7 +31,7 @@ public class BallistaRender extends GeoItemRenderer<Ballista> {
 			irendertypebuffer$impl.finish();
 			RenderSystem.enableDepthTest();
 			RenderHelper.setupGui3DDiffuseLighting();
-			stack.pop();
+			RenderSystem.popMatrix();
 		} else {
 			super.func_239207_a_(itemStack, transformType, stack, bufferIn, combinedLightIn, p_239207_6_);
 		}

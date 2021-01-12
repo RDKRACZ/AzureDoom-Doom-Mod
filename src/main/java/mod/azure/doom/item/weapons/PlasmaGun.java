@@ -3,6 +3,7 @@ package mod.azure.doom.item.weapons;
 import java.util.function.Predicate;
 
 import mod.azure.doom.DoomMod;
+import mod.azure.doom.client.render.weapons.PlasmagunRender;
 import mod.azure.doom.entity.projectiles.EnergyCellEntity;
 import mod.azure.doom.item.ammo.EnergyCell;
 import mod.azure.doom.util.enums.DoomTier;
@@ -14,36 +15,46 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ShootableItem;
 import net.minecraft.item.UseAction;
-import net.minecraft.stats.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
-import net.minecraftforge.common.extensions.IForgeItem;
+import software.bernie.geckolib3.core.AnimationState;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
 
-public class PlasmaGun extends ShootableItem implements IForgeItem {
+public class PlasmaGun extends ShootableItem implements IAnimatable {
+
+	public AnimationFactory factory = new AnimationFactory(this);
+	private String controllerName = "controller";
+
+	private <P extends ShootableItem & IAnimatable> PlayState predicate(AnimationEvent<P> event) {
+		return PlayState.CONTINUE;
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Override
+	public void registerControllers(AnimationData data) {
+		data.addAnimationController(new AnimationController(this, controllerName, 1, this::predicate));
+	}
+
+	@Override
+	public AnimationFactory getFactory() {
+		return this.factory;
+	}
 
 	public PlasmaGun() {
-		super(new Item.Properties().group(DoomMod.DoomWeaponItemGroup).maxStackSize(1).maxDamage(9000));
-	}
-
-	@Override
-	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
-		ItemStack stack = new ItemStack(this);
-		stack.hasTag();
-		if (group == DoomMod.DoomWeaponItemGroup) {
-			items.add(stack);
-		}
-	}
-
-	@Override
-	public void onCreated(ItemStack stack, World worldIn, PlayerEntity playerIn) {
-		stack.hasTag();
+		super(new Item.Properties().group(DoomMod.DoomWeaponItemGroup).maxStackSize(1).maxDamage(9000)
+				.setISTER(() -> PlasmagunRender::new));
 	}
 
 	@Override
@@ -64,38 +75,50 @@ public class PlasmaGun extends ShootableItem implements IForgeItem {
 					itemstack = new ItemStack(DoomItems.ENERGY_CELLS.get());
 				}
 
-				boolean flag1 = playerentity.abilities.isCreativeMode || (itemstack.getItem() instanceof EnergyCell
-						&& ((EnergyCell) itemstack.getItem()).isInfinite(itemstack, stack, playerentity));
-				if (!worldIn.isRemote) {
-					EnergyCell arrowitem = (EnergyCell) (itemstack.getItem() instanceof EnergyCell ? itemstack.getItem()
-							: DoomItems.ENERGY_CELLS.get());
-					EnergyCellEntity abstractarrowentity = arrowitem.createArrow(worldIn, itemstack, playerentity);
-					abstractarrowentity = customeArrow(abstractarrowentity);
-					abstractarrowentity.func_234612_a_(playerentity, playerentity.rotationPitch,
-							playerentity.rotationYaw, 0.0F, 0.15F * 3.0F, 1.0F);
+				if (playerentity.getHeldItemMainhand().getAnimationsToGo() == 0) {
 
-					abstractarrowentity.hasNoGravity();
+					boolean flag1 = playerentity.abilities.isCreativeMode || (itemstack.getItem() instanceof EnergyCell
+							&& ((EnergyCell) itemstack.getItem()).isInfinite(itemstack, stack, playerentity));
+					if (!worldIn.isRemote) {
+						EnergyCell arrowitem = (EnergyCell) (itemstack.getItem() instanceof EnergyCell
+								? itemstack.getItem()
+								: DoomItems.ENERGY_CELLS.get());
+						EnergyCellEntity abstractarrowentity = arrowitem.createArrow(worldIn, itemstack, playerentity);
+						abstractarrowentity = customeArrow(abstractarrowentity);
+						abstractarrowentity.func_234612_a_(playerentity, playerentity.rotationPitch,
+								playerentity.rotationYaw, 0.0F, 0.15F * 3.0F, 1.0F);
 
-					stack.damageItem(1, playerentity, (p_220009_1_) -> {
-						p_220009_1_.sendBreakAnimation(playerentity.getActiveHand());
-					});
-					if (flag1 || playerentity.abilities.isCreativeMode
-							&& (itemstack.getItem() == DoomItems.ENERGY_CELLS.get()
-									|| itemstack.getItem() == DoomItems.ENERGY_CELLS.get())) {
-						abstractarrowentity.pickupStatus = AbstractArrowEntity.PickupStatus.DISALLOWED;
+						abstractarrowentity.setDamage(abstractarrowentity.getDamage() + 22.0);
+
+						abstractarrowentity.hasNoGravity();
+
+						stack.damageItem(1, playerentity, (p_220009_1_) -> {
+							p_220009_1_.sendBreakAnimation(playerentity.getActiveHand());
+						});
+						if (flag1 || playerentity.abilities.isCreativeMode
+								&& (itemstack.getItem() == DoomItems.ENERGY_CELLS.get()
+										|| itemstack.getItem() == DoomItems.ENERGY_CELLS.get())) {
+							abstractarrowentity.pickupStatus = AbstractArrowEntity.PickupStatus.DISALLOWED;
+						}
+						worldIn.addEntity(abstractarrowentity);
 					}
-					worldIn.addEntity(abstractarrowentity);
-				}
-				worldIn.playSound((PlayerEntity) null, playerentity.getPosX(), playerentity.getPosY(),
-						playerentity.getPosZ(), ModSoundEvents.PLASMA_FIRING.get(), SoundCategory.PLAYERS, 1.0F,
-						1.0F / (random.nextFloat() * 0.4F + 1.2F) + 0.10F * 0.5F);
-				if (!flag1 && !playerentity.abilities.isCreativeMode) {
-					itemstack.shrink(1);
-					if (itemstack.isEmpty()) {
-						playerentity.inventory.deleteStack(itemstack);
+					worldIn.playSound((PlayerEntity) null, playerentity.getPosX(), playerentity.getPosY(),
+							playerentity.getPosZ(), ModSoundEvents.PLASMA_FIRING.get(), SoundCategory.PLAYERS, 1.0F,
+							1.0F / (random.nextFloat() * 0.4F + 1.2F) + 0.10F * 0.5F);
+					if (!flag1 && !playerentity.abilities.isCreativeMode) {
+						itemstack.shrink(1);
+						if (itemstack.isEmpty()) {
+							playerentity.inventory.deleteStack(itemstack);
+						}
 					}
+					AnimationController<?> controller = GeckoLibUtil.getControllerForStack(this.factory, stack,
+							controllerName);
+					if (controller.getAnimationState() == AnimationState.Stopped) {
+						controller.markNeedsReload();
+						controller.setAnimation(new AnimationBuilder().addAnimation("firing", false));
+					}
+					playerentity.getHeldItemMainhand().setAnimationsToGo(10);
 				}
-				playerentity.addStat(Stats.ITEM_USED.get(this));
 			}
 		}
 	}
@@ -107,7 +130,7 @@ public class PlasmaGun extends ShootableItem implements IForgeItem {
 
 	@Override
 	public UseAction getUseAction(ItemStack stack) {
-		return UseAction.BOW;
+		return UseAction.BLOCK;
 	}
 
 	@Override

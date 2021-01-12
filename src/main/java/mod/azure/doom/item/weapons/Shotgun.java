@@ -15,13 +15,11 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ShootableItem;
 import net.minecraft.item.UseAction;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 import software.bernie.geckolib3.core.AnimationState;
@@ -60,24 +58,6 @@ public class Shotgun extends ShootableItem implements IAnimatable {
 	}
 
 	@Override
-	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
-		ItemStack stack = new ItemStack(this);
-		stack.hasTag();
-		stack.addEnchantment(Enchantments.PUNCH, 2);
-		stack.addEnchantment(Enchantments.POWER, 3);
-		if (group == DoomMod.DoomWeaponItemGroup) {
-			items.add(stack);
-		}
-	}
-
-	@Override
-	public void onCreated(ItemStack stack, World worldIn, PlayerEntity playerIn) {
-		stack.hasTag();
-		stack.addEnchantment(Enchantments.PUNCH, 2);
-		stack.addEnchantment(Enchantments.POWER, 3);
-	}
-
-	@Override
 	public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
 		return DoomTier.DOOM.getRepairMaterial().test(repair) || super.getIsRepairable(toRepair, repair);
 	}
@@ -101,62 +81,64 @@ public class Shotgun extends ShootableItem implements IAnimatable {
 					itemstack = new ItemStack(DoomItems.SHOTGUN_SHELLS.get());
 				}
 
-				float f = getArrowVelocity(i);
-				if (!((double) f < 0.1D)) {
-					boolean flag1 = playerentity.abilities.isCreativeMode || (itemstack.getItem() instanceof ShellAmmo
-							&& ((ShellAmmo) itemstack.getItem()).isInfinite(itemstack, stack, playerentity));
-					if (!worldIn.isRemote) {
-						ShellAmmo arrowitem = (ShellAmmo) (itemstack.getItem() instanceof ShellAmmo
-								? itemstack.getItem()
-								: DoomItems.SHOTGUN_SHELLS.get());
-						ShotgunShellEntity abstractarrowentity = arrowitem.createArrow(worldIn, itemstack,
-								playerentity);
-						abstractarrowentity = customeArrow(abstractarrowentity);
-						abstractarrowentity.func_234612_a_(playerentity, playerentity.rotationPitch,
-								playerentity.rotationYaw, 0.0F, 1.0F * 3.0F, 1.0F);
-						if (f == 1.0F) {
-							abstractarrowentity.setIsCritical(true);
-						}
+				if (playerentity.getHeldItemMainhand().getAnimationsToGo() == 0) {
 
-						int j = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, stack);
-						if (j > 0) {
-							abstractarrowentity.setDamage(abstractarrowentity.getDamage() + (double) j * 0.5D + 0.5D);
-						}
+					float f = getArrowVelocity(i);
+					if (!((double) f < 0.1D)) {
+						boolean flag1 = playerentity.abilities.isCreativeMode
+								|| (itemstack.getItem() instanceof ShellAmmo && ((ShellAmmo) itemstack.getItem())
+										.isInfinite(itemstack, stack, playerentity));
+						if (!worldIn.isRemote) {
+							ShellAmmo arrowitem = (ShellAmmo) (itemstack.getItem() instanceof ShellAmmo
+									? itemstack.getItem()
+									: DoomItems.SHOTGUN_SHELLS.get());
+							ShotgunShellEntity abstractarrowentity = arrowitem.createArrow(worldIn, itemstack,
+									playerentity);
+							abstractarrowentity = customeArrow(abstractarrowentity);
+							abstractarrowentity.func_234612_a_(playerentity, playerentity.rotationPitch,
+									playerentity.rotationYaw, 0.0F, 1.0F * 3.0F, 1.0F);
+							if (f == 1.0F) {
+								abstractarrowentity.setIsCritical(true);
+							}
 
-						int k = EnchantmentHelper.getEnchantmentLevel(Enchantments.PUNCH, stack);
-						if (k > 0) {
-							abstractarrowentity.setKnockbackStrength(k);
-						}
+							abstractarrowentity.setDamage(abstractarrowentity.getDamage() + 1.8);
 
-						if (EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAME, stack) > 0) {
-							abstractarrowentity.setFire(100);
-						}
+							int k = EnchantmentHelper.getEnchantmentLevel(Enchantments.PUNCH, stack);
+							if (k > 0) {
+								abstractarrowentity.setKnockbackStrength(k);
+							}
 
-						stack.damageItem(1, playerentity, (p_220009_1_) -> {
-							p_220009_1_.sendBreakAnimation(playerentity.getActiveHand());
-						});
-						if (flag1 || playerentity.abilities.isCreativeMode
-								&& (itemstack.getItem() == DoomItems.SHOTGUN_SHELLS.get()
-										|| itemstack.getItem() == DoomItems.SHOTGUN_SHELLS.get())) {
-							abstractarrowentity.pickupStatus = AbstractArrowEntity.PickupStatus.DISALLOWED;
+							if (EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAME, stack) > 0) {
+								abstractarrowentity.setFire(100);
+							}
+
+							stack.damageItem(1, playerentity, (p_220009_1_) -> {
+								p_220009_1_.sendBreakAnimation(playerentity.getActiveHand());
+							});
+							if (flag1 || playerentity.abilities.isCreativeMode
+									&& (itemstack.getItem() == DoomItems.SHOTGUN_SHELLS.get()
+											|| itemstack.getItem() == DoomItems.SHOTGUN_SHELLS.get())) {
+								abstractarrowentity.pickupStatus = AbstractArrowEntity.PickupStatus.DISALLOWED;
+							}
+							worldIn.addEntity(abstractarrowentity);
 						}
-						worldIn.addEntity(abstractarrowentity);
+						worldIn.playSound((PlayerEntity) null, playerentity.getPosX(), playerentity.getPosY(),
+								playerentity.getPosZ(), ModSoundEvents.SHOTGUN_SHOOT.get(), SoundCategory.PLAYERS, 1.0F,
+								1.0F / (random.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
+						if (!flag1 && !playerentity.abilities.isCreativeMode) {
+							itemstack.shrink(1);
+							if (itemstack.isEmpty()) {
+								playerentity.inventory.deleteStack(itemstack);
+							}
+						}
+						AnimationController<?> controller = GeckoLibUtil.getControllerForStack(this.factory, stack,
+								controllerName);
+						if (controller.getAnimationState() == AnimationState.Stopped) {
+							controller.markNeedsReload();
+							controller.setAnimation(new AnimationBuilder().addAnimation("firing", false));
+						}
 					}
-					worldIn.playSound((PlayerEntity) null, playerentity.getPosX(), playerentity.getPosY(),
-							playerentity.getPosZ(), ModSoundEvents.SHOTGUN_SHOOT.get(), SoundCategory.PLAYERS, 1.0F,
-							1.0F / (random.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
-					if (!flag1 && !playerentity.abilities.isCreativeMode) {
-						itemstack.shrink(1);
-						if (itemstack.isEmpty()) {
-							playerentity.inventory.deleteStack(itemstack);
-						}
-					}
-					AnimationController<?> controller = GeckoLibUtil.getControllerForStack(this.factory, stack,
-							controllerName);
-					if (controller.getAnimationState() == AnimationState.Stopped) {
-						controller.markNeedsReload();
-						controller.setAnimation(new AnimationBuilder().addAnimation("firing", false));
-					}
+					playerentity.getHeldItemMainhand().setAnimationsToGo(20);
 				}
 			}
 		}

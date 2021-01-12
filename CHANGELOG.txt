@@ -1,3 +1,6 @@
-v.3.7.3
+v.3.7.5
 
-- Un-disabled biome dictionary & specific biome configs, moved to doom-mob-biomes.toml now.
+- Possible fix for some mods that like the break things with Mixins.
+- Complete projectile damage revamping. Demons will hit harder but so will you. 
+- Projectiles no longer make arrow sounds when hitting things. 
+- Guns now have a cool down in between uses, expect the Chaingun. 

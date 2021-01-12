@@ -1,5 +1,7 @@
 package mod.azure.doom.entity.projectiles;
 
+import java.util.List;
+
 import mod.azure.doom.util.registry.ModEntityTypes;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -10,6 +12,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceContext;
@@ -160,6 +165,25 @@ public class UnmaykrBoltEntity extends AbstractArrowEntity {
 		} else {
 			return true;
 		}
+	}
+
+	private SoundEvent hitSound = this.getHitEntitySound();
+	private List<Entity> hitEntities;
+
+	@Override
+	protected void func_230299_a_(BlockRayTraceResult p_230299_1_) {
+		super.func_230299_a_(p_230299_1_);
+		this.setHitSound(SoundEvents.ITEM_ARMOR_EQUIP_IRON);
+	}
+
+	@Override
+	public void setHitSound(SoundEvent soundIn) {
+		this.hitSound = soundIn;
+	}
+
+	@Override
+	protected SoundEvent getHitEntitySound() {
+		return SoundEvents.ITEM_ARMOR_EQUIP_IRON;
 	}
 
 	@Override
