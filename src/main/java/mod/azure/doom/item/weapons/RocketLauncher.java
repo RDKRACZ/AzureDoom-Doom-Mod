@@ -57,8 +57,6 @@ public class RocketLauncher extends ShootableItem {
 						abstractarrowentity.shoot(playerentity, playerentity.rotationPitch, playerentity.rotationYaw,
 								0.0F, 0.25F * 3.0F, 1.0F);
 
-						abstractarrowentity.setDamage(abstractarrowentity.getDamage() + 28.3);
-
 						abstractarrowentity.setNoGravity(true);
 
 						stack.damageItem(1, playerentity, (p_220009_1_) -> {

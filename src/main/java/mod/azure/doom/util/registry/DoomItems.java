@@ -200,6 +200,8 @@ public class DoomItems {
 			() -> new BFGCell(new Item.Properties().group(DoomMod.DoomWeaponItemGroup), 1.2F));
 	public static final RegistryObject<Item> ROCKET = ITEMS.register("rocket",
 			() -> new Rocket(new Item.Properties().group(DoomMod.DoomWeaponItemGroup), 1.2F));
+	public static final RegistryObject<Item> GAS_BARREL = ITEMS.register("gas_barrel",
+			() -> new Item(new Item.Properties().group(DoomMod.DoomWeaponItemGroup)));
 	// MISC
 	public static final RegistryObject<Item> ARGENT_ENERGY = ITEMS.register("argent_energy",
 			() -> new ArgentEnergyItem());
