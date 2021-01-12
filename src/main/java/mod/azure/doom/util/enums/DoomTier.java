@@ -13,6 +13,8 @@ public enum DoomTier implements IItemTier {
 		return Ingredient.fromItems(DoomItems.ARGENT_ENERGY.get());
 	}), DOOM_HIGHTEIR(6, Config.SERVER.CRUCIBLE_MARAUDER_MAX_DAMAGE, 16.0F, 3.0F, 30, () -> {
 		return Ingredient.fromItems(DoomItems.ARGENT_BLOCK.get());
+	}), CHAINSAW(6, 600, 16.0F, 0.0F, 30, () -> {
+		return Ingredient.fromItems(DoomItems.GAS_BARREL.get());
 	});
 
 	private final int harvestLevel;

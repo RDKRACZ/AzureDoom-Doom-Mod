@@ -125,7 +125,7 @@ public class SuperShotgun extends ShootableItem implements IAnimatable {
 							controller.setAnimation(new AnimationBuilder().addAnimation("firing", false));
 						}
 					}
-					playerentity.getHeldItemMainhand().setAnimationsToGo(20);
+					playerentity.getHeldItemMainhand().setAnimationsToGo(30);
 				}
 			}
 		}

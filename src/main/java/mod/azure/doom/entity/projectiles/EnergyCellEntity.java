@@ -1,7 +1,5 @@
 package mod.azure.doom.entity.projectiles;
 
-import java.util.List;
-
 import mod.azure.doom.util.registry.DoomItems;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import mod.azure.doom.util.registry.ModSoundEvents;
@@ -14,9 +12,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.MathHelper;
@@ -166,8 +162,7 @@ public class EnergyCellEntity extends AbstractArrowEntity {
 		}
 	}
 
-	private SoundEvent hitSound = this.getHitEntitySound();
-	private List<Entity> hitEntities;
+	public SoundEvent hitSound = this.getHitEntitySound();
 
 	@Override
 	protected void func_230299_a_(BlockRayTraceResult p_230299_1_) {

@@ -138,7 +138,7 @@ public class Ballista extends ShootableItem implements IAnimatable {
 							controller.markNeedsReload();
 							controller.setAnimation(new AnimationBuilder().addAnimation("firing", false).addAnimation("idle"));
 						}
-						playerentity.getHeldItemMainhand().setAnimationsToGo(20);
+						playerentity.getHeldItemMainhand().setAnimationsToGo(70);
 					}
 				}
 			}

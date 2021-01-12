@@ -104,7 +104,7 @@ public class Unmaykr extends ShootableItem implements IVanishable {
 							playerentity.inventory.deleteStack(itemstack);
 						}
 					}
-					playerentity.getHeldItemMainhand().setAnimationsToGo(20);
+					playerentity.getHeldItemMainhand().setAnimationsToGo(10);
 				}
 			}
 		}

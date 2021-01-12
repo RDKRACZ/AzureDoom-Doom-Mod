@@ -1,7 +1,5 @@
 package mod.azure.doom.entity.projectiles;
 
-import java.util.List;
-
 import mod.azure.doom.util.registry.ModEntityTypes;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -167,8 +165,7 @@ public class ShotgunShellEntity extends AbstractArrowEntity {
 		}
 	}
 
-	private SoundEvent hitSound = this.getHitEntitySound();
-	private List<Entity> hitEntities;
+	public SoundEvent hitSound = this.getHitEntitySound();
 
 	@Override
 	protected void func_230299_a_(BlockRayTraceResult p_230299_1_) {

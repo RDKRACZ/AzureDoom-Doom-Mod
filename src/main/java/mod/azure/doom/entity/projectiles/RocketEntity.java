@@ -14,7 +14,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.MathHelper;
@@ -44,6 +46,7 @@ public class RocketEntity extends AbstractArrowEntity implements IAnimatable {
 
 	public RocketEntity(LivingEntity shooter, World world, Item referenceItemIn) {
 		super(ModEntityTypes.ROCKET.get(), shooter, world);
+		this.shooter = shooter;
 	}
 
 	private AnimationFactory factory = new AnimationFactory(this);
@@ -189,8 +192,7 @@ public class RocketEntity extends AbstractArrowEntity implements IAnimatable {
 		}
 	}
 
-	private SoundEvent hitSound = this.getHitEntitySound();
-	private List<Entity> hitEntities;
+	public SoundEvent hitSound = this.getHitEntitySound();
 
 	@Override
 	protected void func_230299_a_(BlockRayTraceResult p_230299_1_) {
@@ -220,6 +222,7 @@ public class RocketEntity extends AbstractArrowEntity implements IAnimatable {
 		if (p_213868_1_.getType() != RayTraceResult.Type.ENTITY
 				|| !((EntityRayTraceResult) p_213868_1_).getEntity().isEntityEqual(entity)) {
 			if (!this.world.isRemote) {
+				this.doDamage();
 				this.remove();
 			}
 		}
@@ -232,7 +235,30 @@ public class RocketEntity extends AbstractArrowEntity implements IAnimatable {
 		if (result.getType() != RayTraceResult.Type.ENTITY
 				|| !((EntityRayTraceResult) result).getEntity().isEntityEqual(entity)) {
 			if (!this.world.isRemote) {
+				this.doDamage();
 				this.remove();
+			}
+		}
+	}
+
+	public void doDamage() {
+		float f2 = 4.0F;
+		int k1 = MathHelper.floor(this.getPosX() - (double) f2 - 1.0D);
+		int l1 = MathHelper.floor(this.getPosX() + (double) f2 + 1.0D);
+		int i2 = MathHelper.floor(this.getPosY() - (double) f2 - 1.0D);
+		int i1 = MathHelper.floor(this.getPosY() + (double) f2 + 1.0D);
+		int j2 = MathHelper.floor(this.getPosZ() - (double) f2 - 1.0D);
+		int j1 = MathHelper.floor(this.getPosZ() + (double) f2 + 1.0D);
+		List<Entity> list = this.world.getEntitiesWithinAABBExcludingEntity(this,
+				new AxisAlignedBB((double) k1, (double) i2, (double) j2, (double) l1, (double) i1, (double) j1));
+		Vector3d vector3d = new Vector3d(this.getPosX(), this.getPosY(), this.getPosZ());
+		for (int k2 = 0; k2 < list.size(); ++k2) {
+			Entity entity = list.get(k2);
+			double d12 = (double) (MathHelper.sqrt(entity.getDistanceSq(vector3d)) / f2);
+			if (d12 <= 1.0D) {
+				if (entity instanceof LivingEntity) {
+					entity.attackEntityFrom(DamageSource.causePlayerDamage((PlayerEntity) this.shooter), 20);
+				}
 			}
 		}
 	}
