@@ -15,8 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceContext;
@@ -229,33 +228,25 @@ public class RocketEntity extends AbstractArrowEntity implements IAnimatable {
 		return false;
 	}
 
+	private SoundEvent hitSound = this.getHitEntitySound();
+	private List<Entity> hitEntities;
+
 	@Override
-	protected void onHit(RayTraceResult result) {
-		super.onHit(result);
-		if (!this.world.isRemote) {
-			this.doDamage();
-			this.remove();
-		}
-		this.playSound(ModSoundEvents.ROCKET_HIT.get(), 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
+	public void setHitSound(SoundEvent soundIn) {
+		this.hitSound = soundIn;
 	}
 
-	public void doDamage() {
-		float f2 = 4.0F;
-		int k1 = MathHelper.floor(this.getPosX() - (double) f2 - 1.0D);
-		int l1 = MathHelper.floor(this.getPosX() + (double) f2 + 1.0D);
-		int i2 = MathHelper.floor(this.getPosY() - (double) f2 - 1.0D);
-		int i1 = MathHelper.floor(this.getPosY() + (double) f2 + 1.0D);
-		int j2 = MathHelper.floor(this.getPosZ() - (double) f2 - 1.0D);
-		int j1 = MathHelper.floor(this.getPosZ() + (double) f2 + 1.0D);
-		List<Entity> list = this.world.getEntitiesWithinAABBExcludingEntity(this,
-				new AxisAlignedBB((double) k1, (double) i2, (double) j2, (double) l1, (double) i1, (double) j1));
-		Vec3d vector3d = new Vec3d(this.getPosX(), this.getPosY(), this.getPosZ());
-		for (int k2 = 0; k2 < list.size(); ++k2) {
-			Entity entity = list.get(k2);
-			double d12 = (double) (MathHelper.sqrt(entity.getDistanceSq(vector3d)) / f2);
-			if (d12 <= 1.0D) {
-				entity.attackEntityFrom(DamageSource.netherBedExplosion(), 40);
-			}
+	@Override
+	protected SoundEvent getHitEntitySound() {
+		return ModSoundEvents.ROCKET_HIT.get();
+	}
+
+	@Override
+	protected void onHit(RayTraceResult raytraceResultIn) {
+		super.onHit(raytraceResultIn);
+		this.setHitSound(ModSoundEvents.ROCKET_HIT.get());
+		if (!this.world.isRemote) {
+			this.remove();
 		}
 	}
 }

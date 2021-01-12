@@ -38,7 +38,7 @@ public class ArchvileFiring extends Entity implements IAnimatable {
 	private boolean clientSideAttackStarted;
 	private LivingEntity caster;
 	private UUID casterUuid;
-	private float damage = 2.0F;
+	private float damage = 14.0F;
 
 	public ArchvileFiring(EntityType<ArchvileFiring> p_i50170_1_, World p_i50170_2_) {
 		super(p_i50170_1_, p_i50170_2_);

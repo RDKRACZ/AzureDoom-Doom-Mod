@@ -117,9 +117,9 @@ public class SpiderdemonEntity extends DemonEntity implements IAnimatable {
 		this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
 		this.goalSelector.addGoal(6, new LookRandomlyGoal(this));
 		this.goalSelector.addGoal(4,
-				new RangedStrafeAttackGoal(this,
-						new SpiderdemonEntity.FireballAttack(this).setProjectileOriginOffset(0.8, 0.8, 0.8), 1.0D, 50,
-						30, 15, 15F).setMultiShot(5, 1));
+				new RangedStrafeAttackGoal(this, new SpiderdemonEntity.FireballAttack(this)
+						.setProjectileOriginOffset(0.8, 0.8, 0.8).setDamage(15), 1.0D, 50, 30, 15, 15F).setMultiShot(5,
+								1));
 		this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, false));

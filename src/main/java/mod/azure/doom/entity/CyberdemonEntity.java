@@ -122,7 +122,7 @@ public class CyberdemonEntity extends DemonEntity implements IAnimatable {
 		this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
 		this.goalSelector.addGoal(4,
 				new RangedStaticAttackGoal(this,
-						new CyberdemonEntity.FireballAttack(this).setProjectileOriginOffset(0.8, 0.8, 0.8).setDamage(6),
+						new CyberdemonEntity.FireballAttack(this).setProjectileOriginOffset(0.8, 0.8, 0.8).setDamage(18),
 						60, 20, 30F));
 		this.goalSelector.addGoal(4, new DemonAttackGoal(this, 1.0D, false));
 		this.targetSelector.addGoal(1, new HurtByTargetGoal(this));

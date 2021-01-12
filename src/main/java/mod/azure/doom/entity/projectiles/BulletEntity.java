@@ -1,5 +1,7 @@
 package mod.azure.doom.entity.projectiles;
 
+import java.util.List;
+
 import mod.azure.doom.util.registry.ModEntityTypes;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -11,6 +13,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceContext;
@@ -198,9 +203,23 @@ public class BulletEntity extends AbstractArrowEntity {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
+	private SoundEvent hitSound = this.getHitEntitySound();
+	private List<Entity> hitEntities;
+
+	@Override
+	public void setHitSound(SoundEvent soundIn) {
+		this.hitSound = soundIn;
+	}
+
+	@Override
+	protected SoundEvent getHitEntitySound() {
+		return SoundEvents.ITEM_ARMOR_EQUIP_IRON;
+	}
+
 	@Override
 	protected void onHit(RayTraceResult raytraceResultIn) {
 		super.onHit(raytraceResultIn);
+		this.setHitSound(SoundEvents.ITEM_ARMOR_EQUIP_IRON);
 		if (!this.world.isRemote) {
 			this.remove();
 		}
