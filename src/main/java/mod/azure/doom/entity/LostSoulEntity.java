@@ -15,6 +15,7 @@ import net.minecraft.entity.MoverType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.controller.MovementController;
 import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.ai.goal.HurtByTargetGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
 import net.minecraft.entity.monster.IMob;
@@ -159,6 +160,7 @@ public class LostSoulEntity extends DemonEntity implements IMob, IAnimatable {
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, true));
 		this.targetSelector.addGoal(1, new HurtByAggressorGoal(this));
 		this.targetSelector.addGoal(2, new TargetAggressorGoal(this));
+		this.targetSelector.addGoal(1, new HurtByTargetGoal(this).setCallsForHelp());
 	}
 
 	public static boolean spawning(EntityType<LostSoulEntity> p_223368_0_, IWorld p_223368_1_, SpawnReason reason,

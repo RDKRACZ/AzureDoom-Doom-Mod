@@ -1,0 +1,19 @@
+{
+	"name": "BFG",
+	"icon": "doomweapon:bfg9000",
+	"category": "doomweapon:weapons_category",
+	"pages": [
+		{
+			"type": "crafting",
+			"recipe": "doomweapon:bfg"
+		},
+		{
+			"type": "crafting",
+			"recipe": "doomweapon:bfg_eternal"
+		},
+		{
+			"type": "crafting",
+			"recipe": "doomweapon:bfg_cells"
+		}
+	]
+}

@@ -1,0 +1,26 @@
+{
+	"name": "Jump Pad",
+	"icon": "doomweapon:jump_pad",
+	"category": "doomweapon:blocks_category",
+	"pages": [
+		{
+			"type": "crafting",
+			"recipe": "doomweapon:jump_pad"
+		},
+		{
+			"type": "multiblock",
+			"enable_visualize": false,
+			"offset": [0, 4, 0],
+			"multiblock": {
+				"pattern": [
+					[
+						"0"
+					]
+				],
+				"mapping": {
+					"0": "doomweapon:jump_pad"
+				}
+			}
+		}
+	]
+}

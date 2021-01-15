@@ -20,7 +20,7 @@ apply plugin: 'com.matthewprenger.cursegradle'
 import groovy.json.JsonSlurper
 import groovy.json.JsonOutput
 
-version = "3.7.3"
+version = "3.7.5"
 group = "mod.azure.doomweapon"
 archivesBaseName = "MCDoom-Mod-1.15.2"
 
@@ -165,7 +165,8 @@ curseforge {
         relations {
             requiredDependency 'curios'
             requiredDependency 'geckolib'    
-            optionalDependency 'project-mmo' 
+            optionalDependency 'project-mmo'  
+            optionalDependency 'patchouli'    
             optionalDependency 'extended-nether-backport'    
             optionalDependency 'netherex'   
             optionalDependency 'oh-the-biomes-youll-go'    

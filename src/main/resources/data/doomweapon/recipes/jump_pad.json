@@ -1,22 +1,24 @@
 {
-	"result": {
-		"item": "doomweapon:jump_pad"
-	},
 	"type": "minecraft:crafting_shaped",
 	"pattern": [
-		"sqs",
-		"q$q",
-		"sqs"
+		"asa",
+		"ptp"
 	],
 	"key": {
-		"$": {
+		"a": {
 			"item": "doomweapon:argent_energy"
 		},
-		"q": {
-			"item": "minecraft:iron_block"
+		"p": {
+			"item": "minecraft:heavy_weighted_pressure_plate"
 		},
 		"s": {
-			"item": "minecraft:iron_ingot"
+			"item": "minecraft:slime_block"
+		},
+		"t": {
+			"item": "minecraft:piston"
 		}
+	},
+	"result": {
+		"item": "doomweapon:jump_pad"
 	}
 }

@@ -24,6 +24,7 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.controller.MovementController;
 import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.ai.goal.HurtByTargetGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
 import net.minecraft.entity.monster.IMob;
@@ -164,6 +165,7 @@ public class CacodemonEntity extends DemonEntity implements IMob, IAnimatable {
 				}));
 		this.targetSelector.addGoal(1, new HurtByAggressorGoal(this));
 		this.targetSelector.addGoal(2, new TargetAggressorGoal(this));
+		this.targetSelector.addGoal(1, new HurtByTargetGoal(this).setCallsForHelp());
 	}
 
 	public static boolean spawning(EntityType<CacodemonEntity> p_223368_0_, IWorld p_223368_1_, SpawnReason reason,

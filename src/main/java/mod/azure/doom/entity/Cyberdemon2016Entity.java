@@ -82,7 +82,7 @@ public class Cyberdemon2016Entity extends DemonEntity {
 				new Cyberdemon2016Entity.FireballAttack(this).setProjectileOriginOffset(0.8, 0.8, 0.8).setDamage(18), 60,
 				20, 30F));
 		this.goalSelector.addGoal(4, new DemonAttackGoal(this, 1.0D, false));
-		this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
+		this.targetSelector.addGoal(1, new HurtByTargetGoal(this).setCallsForHelp());
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, true));
 		this.targetSelector.addGoal(1, new HurtByAggressorGoal(this));

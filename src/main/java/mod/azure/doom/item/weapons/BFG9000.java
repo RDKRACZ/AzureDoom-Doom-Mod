@@ -75,9 +75,7 @@ public class BFG9000 extends ShootableItem implements IAnimatable {
 				if (itemstack.isEmpty()) {
 					itemstack = new ItemStack(DoomItems.BFG_CELL.get());
 				}
-
-				if (playerentity.getHeldItemMainhand().getAnimationsToGo() == 0) {
-
+				playerentity.getCooldownTracker().setCooldown(this, 20);
 					boolean flag1 = playerentity.abilities.isCreativeMode || (itemstack.getItem() instanceof BFGCell
 							&& ((BFGCell) itemstack.getItem()).isInfinite(itemstack, stack, playerentity));
 					if (!worldIn.isRemote) {
@@ -120,8 +118,6 @@ public class BFG9000 extends ShootableItem implements IAnimatable {
 						controller.setAnimation(new AnimationBuilder().addAnimation("firing", false));
 					}
 				}
-				playerentity.getHeldItemMainhand().setAnimationsToGo(20);
-			}
 		}
 	}
 

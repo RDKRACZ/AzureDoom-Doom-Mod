@@ -1,0 +1,48 @@
+{
+	"name": "Mullet Doom Armor",
+	"icon": "doomweapon:redneck_doom1_helmet",
+	"category": "doomweapon:armor_category",
+	"secret": false,
+	"read_by_default": true,
+	"pages": [
+		{
+			"type": "entity",
+			"name": "Mullet US Flag Armor",
+			"entity": "minecraft:armor_stand{Invisible:1, ArmorItems:[{id:'doomweapon:redneck_doom1_boots',Count:1},{id:'doomweapon:redneck_doom1_leggings',Count:1},{id:'doomweapon:redneck_doom1_chestplate',Count:1},{id:'doomweapon:redneck_doom1_helmet',Count:1}]}",
+			"rotate": true,
+			"text": "The Armor fitting only for the slayer that has a magical hair style and a 6 pack to slam before slaying Demons of the Nether."
+		},
+		{
+			"type": "crafting",
+			"recipe": "doomweapon:redneck_doom1_helmet",
+			"recipe2": "doomweapon:redneck_doom_chestplate1"
+		},
+		{
+			"type": "crafting",
+			"recipe": "doomweapon:redneck_doom1_leggings",
+			"recipe2": "doomweapon:redneck_doom1_boots"
+		},
+		{
+			"type": "entity",
+			"name": "Mullet Green Armor",
+			"entity": "minecraft:armor_stand{Invisible:1, ArmorItems:[{id:'doomweapon:redneck_doom1_boots',Count:1},{id:'doomweapon:redneck_doom1_leggings',Count:1},{id:'doomweapon:redneck_doom2_chestplate',Count:1},{id:'doomweapon:redneck_doom1_helmet',Count:1}]}",
+			"rotate": true,
+			"text": "The Armor fitting only for the slayer that has a magical hair style and a 6 pack to slam before slaying Demons of the Nether."
+		},
+		{
+			"type": "crafting",
+			"recipe": "doomweapon:redneck_doom_chestplate2"
+		},
+		{
+			"type": "entity",
+			"name": "Mullet White Armor",
+			"entity": "minecraft:armor_stand{Invisible:1, ArmorItems:[{id:'doomweapon:redneck_doom1_boots',Count:1},{id:'doomweapon:redneck_doom1_leggings',Count:1},{id:'doomweapon:redneck_doom3_chestplate',Count:1},{id:'doomweapon:redneck_doom1_helmet',Count:1}]}",
+			"rotate": true,
+			"text": "The Armor fitting only for the slayer that has a magical hair style and a 6 pack to slam before slaying Demons of the Nether."
+		},
+		{
+			"type": "crafting",
+			"recipe": "doomweapon:redneck_doom_chestplate3"
+		}
+	]
+}

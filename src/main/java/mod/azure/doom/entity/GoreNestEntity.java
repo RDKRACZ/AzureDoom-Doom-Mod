@@ -1,5 +1,7 @@
 package mod.azure.doom.entity;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 import javax.annotation.Nullable;
@@ -34,11 +36,8 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 public class GoreNestEntity extends DemonEntity implements IAnimatable {
 
-	private final GoreNestEntity parentEntity;
-
 	public GoreNestEntity(EntityType<? extends GoreNestEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
-		this.parentEntity = GoreNestEntity.this;
 	}
 
 	private AnimationFactory factory = new AnimationFactory(this);
@@ -150,25 +149,44 @@ public class GoreNestEntity extends DemonEntity implements IAnimatable {
 	}
 
 	public void spawnWave() {
-		HellknightEntity fireballentity = ModEntityTypes.HELLKNIGHT.get().create(world);
-		fireballentity.setPosition(this.parentEntity.getPosX() + 2.0D, this.parentEntity.getPosY() + 0.5D,
-				this.parentEntity.getPosZ() + 2.0D);
-		world.addEntity(fireballentity);
+		Random rand = new Random();
+		List<EntityType<?>> givenList = Arrays.asList(ModEntityTypes.HELLKNIGHT.get(),
+				ModEntityTypes.POSSESSEDSCIENTIST.get(), ModEntityTypes.IMP.get(), ModEntityTypes.NIGHTMARE_IMP.get(),
+				ModEntityTypes.PINKY.get(), ModEntityTypes.CACODEMON.get(), ModEntityTypes.CHAINGUNNER.get(),
+				ModEntityTypes.GARGOYLE.get(), ModEntityTypes.HELLKNIGHT2016.get(), ModEntityTypes.IMP2016.get(),
+				ModEntityTypes.LOST_SOUL.get(), ModEntityTypes.POSSESSEDSOLDIER.get(), ModEntityTypes.SHOTGUNGUY.get(),
+				ModEntityTypes.UNWILLING.get(), ModEntityTypes.ZOMBIEMAN.get(), ModEntityTypes.ARACHNOTRON.get(),
+				ModEntityTypes.ARCHVILE.get(), ModEntityTypes.MECHAZOMBIE.get(), ModEntityTypes.PAIN.get(),
+				ModEntityTypes.MANCUBUS.get());
 
-		PossessedScientistEntity fireballentity1 = ModEntityTypes.POSSESSEDSCIENTIST.get().create(world);
-		fireballentity1.setPosition(this.parentEntity.getPosX() + -2.0D, this.parentEntity.getPosY() + 0.5D,
-				this.parentEntity.getPosZ() + -2.0D);
-		world.addEntity(fireballentity1);
-
-		ImpEntity fireballentity11 = ModEntityTypes.IMP.get().create(world);
-		fireballentity11.setPosition(this.parentEntity.getPosX() + 1.0D, this.parentEntity.getPosY() + 0.5D,
-				this.parentEntity.getPosZ() + 1.0D);
-		world.addEntity(fireballentity11);
-
-		NightmareImpEntity fireballentity111 = ModEntityTypes.NIGHTMARE_IMP.get().create(world);
-		fireballentity111.setPosition(this.parentEntity.getPosX() + -1.0D, this.parentEntity.getPosY() + 0.5D,
-				this.parentEntity.getPosZ() + -1.0D);
-		world.addEntity(fireballentity111);
+		for (int i = 0; i < 1; i++) {
+			int randomIndex = rand.nextInt(givenList.size());
+			EntityType<?> randomElement = givenList.get(randomIndex);
+			Entity fireballentity = randomElement.create(world);
+			fireballentity.setPosition(this.getPosX() + 2.0D, this.getPosY() + 0.5D, this.getPosZ() + 2.0D);
+			world.addEntity(fireballentity);
+		}
+		for (int i = 0; i < 1; i++) {
+			int randomIndex = rand.nextInt(givenList.size());
+			EntityType<?> randomElement = givenList.get(randomIndex);
+			Entity fireballentity1 = randomElement.create(world);
+			fireballentity1.setPosition(this.getPosX() + -2.0D, this.getPosY() + 0.5D, this.getPosZ() + -2.0D);
+			world.addEntity(fireballentity1);
+		}
+		for (int i = 0; i < 1; i++) {
+			int randomIndex = rand.nextInt(givenList.size());
+			EntityType<?> randomElement = givenList.get(randomIndex);
+			Entity fireballentity11 = randomElement.create(world);
+			fireballentity11.setPosition(this.getPosX() + 1.0D, this.getPosY() + 0.5D, this.getPosZ() + 1.0D);
+			world.addEntity(fireballentity11);
+		}
+		for (int i = 0; i < 1; i++) {
+			int randomIndex = rand.nextInt(givenList.size());
+			EntityType<?> randomElement = givenList.get(randomIndex);
+			Entity fireballentity111 = randomElement.create(world);
+			fireballentity111.setPosition(this.getPosX() + -1.0D, this.getPosY() + 0.5D, this.getPosZ() + -1.0D);
+			world.addEntity(fireballentity111);
+		}
 	}
 
 	@Override

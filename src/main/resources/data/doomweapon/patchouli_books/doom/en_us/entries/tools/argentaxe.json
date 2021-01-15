@@ -1,0 +1,16 @@
+{
+	"name": "Argent Axe",
+	"icon": "doomweapon:argent_axe",
+	"category": "doomweapon:tools_category",
+	"pages": [
+		{
+			"type": "spotlight",
+			"item": "doomweapon:argent_axe",
+			"link_recipe": true
+		},
+		{
+			"type": "crafting",
+			"recipe": "doomweapon:argent_axe"
+		}
+	]
+}
