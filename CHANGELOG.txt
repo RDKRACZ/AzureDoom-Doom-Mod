@@ -1,7 +1,7 @@
-v.3.7.6
+v.3.7.8
 
-- Fixed Rockets splash damage, no longer breaks drops and mobs will now drop items when killed with a rocket. 
-- Chainsaws no longer break frames, drops, or armor stands.
-- Chainsaws now repairable with Gas Barrels instead of Argent Energy. Wiki has recipe for the Gas Barrel
-- Combat Shotgun animation updated to be different then Super Shotguns. 
-- Weapon cooldowns have been rebalanced to only fire after the reload of most weapons. 
+- Gore Nest now properly spawns 4 random Demons instead of the set ones.
+- Demons will now call for help when attacked. 
+- Fixed Optifine emissive textures, it's a broken feature.
+- Added a Patchouli book with all the possible info on the mod. Crafted with 1 Argent Energy and 1 Paper.
+- Redid Jump Pad recipe thanks to Nachtflame.

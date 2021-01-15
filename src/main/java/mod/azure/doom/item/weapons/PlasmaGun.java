@@ -74,50 +74,45 @@ public class PlasmaGun extends ShootableItem implements IAnimatable {
 				if (itemstack.isEmpty()) {
 					itemstack = new ItemStack(DoomItems.ENERGY_CELLS.get());
 				}
+				playerentity.getCooldownTracker().setCooldown(this, 15);
+				boolean flag1 = playerentity.abilities.isCreativeMode || (itemstack.getItem() instanceof EnergyCell
+						&& ((EnergyCell) itemstack.getItem()).isInfinite(itemstack, stack, playerentity));
+				if (!worldIn.isRemote) {
+					EnergyCell arrowitem = (EnergyCell) (itemstack.getItem() instanceof EnergyCell ? itemstack.getItem()
+							: DoomItems.ENERGY_CELLS.get());
+					EnergyCellEntity abstractarrowentity = arrowitem.createArrow(worldIn, itemstack, playerentity);
+					abstractarrowentity = customeArrow(abstractarrowentity);
+					abstractarrowentity.func_234612_a_(playerentity, playerentity.rotationPitch,
+							playerentity.rotationYaw, 0.0F, 0.15F * 3.0F, 1.0F);
 
-				if (playerentity.getHeldItemMainhand().getAnimationsToGo() == 0) {
+					abstractarrowentity.setDamage(abstractarrowentity.getDamage() + 22.0);
 
-					boolean flag1 = playerentity.abilities.isCreativeMode || (itemstack.getItem() instanceof EnergyCell
-							&& ((EnergyCell) itemstack.getItem()).isInfinite(itemstack, stack, playerentity));
-					if (!worldIn.isRemote) {
-						EnergyCell arrowitem = (EnergyCell) (itemstack.getItem() instanceof EnergyCell
-								? itemstack.getItem()
-								: DoomItems.ENERGY_CELLS.get());
-						EnergyCellEntity abstractarrowentity = arrowitem.createArrow(worldIn, itemstack, playerentity);
-						abstractarrowentity = customeArrow(abstractarrowentity);
-						abstractarrowentity.func_234612_a_(playerentity, playerentity.rotationPitch,
-								playerentity.rotationYaw, 0.0F, 0.15F * 3.0F, 1.0F);
+					abstractarrowentity.hasNoGravity();
 
-						abstractarrowentity.setDamage(abstractarrowentity.getDamage() + 22.0);
-
-						abstractarrowentity.hasNoGravity();
-
-						stack.damageItem(1, playerentity, (p_220009_1_) -> {
-							p_220009_1_.sendBreakAnimation(playerentity.getActiveHand());
-						});
-						if (flag1 || playerentity.abilities.isCreativeMode
-								&& (itemstack.getItem() == DoomItems.ENERGY_CELLS.get()
-										|| itemstack.getItem() == DoomItems.ENERGY_CELLS.get())) {
-							abstractarrowentity.pickupStatus = AbstractArrowEntity.PickupStatus.DISALLOWED;
-						}
-						worldIn.addEntity(abstractarrowentity);
+					stack.damageItem(1, playerentity, (p_220009_1_) -> {
+						p_220009_1_.sendBreakAnimation(playerentity.getActiveHand());
+					});
+					if (flag1 || playerentity.abilities.isCreativeMode
+							&& (itemstack.getItem() == DoomItems.ENERGY_CELLS.get()
+									|| itemstack.getItem() == DoomItems.ENERGY_CELLS.get())) {
+						abstractarrowentity.pickupStatus = AbstractArrowEntity.PickupStatus.DISALLOWED;
 					}
-					worldIn.playSound((PlayerEntity) null, playerentity.getPosX(), playerentity.getPosY(),
-							playerentity.getPosZ(), ModSoundEvents.PLASMA_FIRING.get(), SoundCategory.PLAYERS, 1.0F,
-							1.0F / (random.nextFloat() * 0.4F + 1.2F) + 0.10F * 0.5F);
-					if (!flag1 && !playerentity.abilities.isCreativeMode) {
-						itemstack.shrink(1);
-						if (itemstack.isEmpty()) {
-							playerentity.inventory.deleteStack(itemstack);
-						}
+					worldIn.addEntity(abstractarrowentity);
+				}
+				worldIn.playSound((PlayerEntity) null, playerentity.getPosX(), playerentity.getPosY(),
+						playerentity.getPosZ(), ModSoundEvents.PLASMA_FIRING.get(), SoundCategory.PLAYERS, 1.0F,
+						1.0F / (random.nextFloat() * 0.4F + 1.2F) + 0.10F * 0.5F);
+				if (!flag1 && !playerentity.abilities.isCreativeMode) {
+					itemstack.shrink(1);
+					if (itemstack.isEmpty()) {
+						playerentity.inventory.deleteStack(itemstack);
 					}
-					AnimationController<?> controller = GeckoLibUtil.getControllerForStack(this.factory, stack,
-							controllerName);
-					if (controller.getAnimationState() == AnimationState.Stopped) {
-						controller.markNeedsReload();
-						controller.setAnimation(new AnimationBuilder().addAnimation("firing", false));
-					}
-					playerentity.getHeldItemMainhand().setAnimationsToGo(10);
+				}
+				AnimationController<?> controller = GeckoLibUtil.getControllerForStack(this.factory, stack,
+						controllerName);
+				if (controller.getAnimationState() == AnimationState.Stopped) {
+					controller.markNeedsReload();
+					controller.setAnimation(new AnimationBuilder().addAnimation("firing", false));
 				}
 			}
 		}

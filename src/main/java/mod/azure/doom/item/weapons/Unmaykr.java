@@ -69,42 +69,38 @@ public class Unmaykr extends ShootableItem implements IVanishable {
 				if (itemstack.isEmpty()) {
 					itemstack = new ItemStack(DoomItems.UNMAKRY_BOLT.get());
 				}
+				playerentity.getCooldownTracker().setCooldown(this, 5);
+				boolean flag1 = playerentity.abilities.isCreativeMode || (itemstack.getItem() instanceof UnmaykrBolt
+						&& ((UnmaykrBolt) itemstack.getItem()).isInfinite(itemstack, stack, playerentity));
+				if (!worldIn.isRemote) {
+					UnmaykrBolt arrowitem = (UnmaykrBolt) (itemstack.getItem() instanceof UnmaykrBolt
+							? itemstack.getItem()
+							: DoomItems.UNMAKRY_BOLT.get());
+					UnmaykrBoltEntity abstractarrowentity = arrowitem.createArrow(worldIn, itemstack, playerentity);
+					abstractarrowentity = customeArrow(abstractarrowentity);
+					abstractarrowentity.func_234612_a_(playerentity, playerentity.rotationPitch,
+							playerentity.rotationYaw, 0.0F, 1.0F * 3.0F, 1.0F);
 
-				if (playerentity.getHeldItemMainhand().getAnimationsToGo() == 0) {
+					abstractarrowentity.setDamage(abstractarrowentity.getDamage() + 1.5);
 
-					boolean flag1 = playerentity.abilities.isCreativeMode || (itemstack.getItem() instanceof UnmaykrBolt
-							&& ((UnmaykrBolt) itemstack.getItem()).isInfinite(itemstack, stack, playerentity));
-					if (!worldIn.isRemote) {
-						UnmaykrBolt arrowitem = (UnmaykrBolt) (itemstack.getItem() instanceof UnmaykrBolt
-								? itemstack.getItem()
-								: DoomItems.UNMAKRY_BOLT.get());
-						UnmaykrBoltEntity abstractarrowentity = arrowitem.createArrow(worldIn, itemstack, playerentity);
-						abstractarrowentity = customeArrow(abstractarrowentity);
-						abstractarrowentity.func_234612_a_(playerentity, playerentity.rotationPitch,
-								playerentity.rotationYaw, 0.0F, 1.0F * 3.0F, 1.0F);
-
-						abstractarrowentity.setDamage(abstractarrowentity.getDamage() + 1.5);
-
-						stack.damageItem(1, playerentity, (p_220009_1_) -> {
-							p_220009_1_.sendBreakAnimation(playerentity.getActiveHand());
-						});
-						if (flag1 || playerentity.abilities.isCreativeMode
-								&& (itemstack.getItem() == DoomItems.UNMAKRY_BOLT.get()
-										|| itemstack.getItem() == DoomItems.UNMAKRY_BOLT.get())) {
-							abstractarrowentity.pickupStatus = AbstractArrowEntity.PickupStatus.DISALLOWED;
-						}
-						worldIn.addEntity(abstractarrowentity);
+					stack.damageItem(1, playerentity, (p_220009_1_) -> {
+						p_220009_1_.sendBreakAnimation(playerentity.getActiveHand());
+					});
+					if (flag1 || playerentity.abilities.isCreativeMode
+							&& (itemstack.getItem() == DoomItems.UNMAKRY_BOLT.get()
+									|| itemstack.getItem() == DoomItems.UNMAKRY_BOLT.get())) {
+						abstractarrowentity.pickupStatus = AbstractArrowEntity.PickupStatus.DISALLOWED;
 					}
-					worldIn.playSound((PlayerEntity) null, playerentity.getPosX(), playerentity.getPosY(),
-							playerentity.getPosZ(), ModSoundEvents.UNMAKYR_FIRE.get(), SoundCategory.PLAYERS, 1.0F,
-							1.0F / (random.nextFloat() * 0.4F + 1.2F) + 1 * 0.5F);
-					if (!flag1 && !playerentity.abilities.isCreativeMode) {
-						itemstack.shrink(1);
-						if (itemstack.isEmpty()) {
-							playerentity.inventory.deleteStack(itemstack);
-						}
+					worldIn.addEntity(abstractarrowentity);
+				}
+				worldIn.playSound((PlayerEntity) null, playerentity.getPosX(), playerentity.getPosY(),
+						playerentity.getPosZ(), ModSoundEvents.UNMAKYR_FIRE.get(), SoundCategory.PLAYERS, 1.0F,
+						1.0F / (random.nextFloat() * 0.4F + 1.2F) + 1 * 0.5F);
+				if (!flag1 && !playerentity.abilities.isCreativeMode) {
+					itemstack.shrink(1);
+					if (itemstack.isEmpty()) {
+						playerentity.inventory.deleteStack(itemstack);
 					}
-					playerentity.getHeldItemMainhand().setAnimationsToGo(10);
 				}
 			}
 		}

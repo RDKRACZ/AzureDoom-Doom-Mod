@@ -119,7 +119,7 @@ public class PainEntity extends DemonEntity implements IMob, IAnimatable {
 				false, (p_213812_1_) -> {
 					return Math.abs(p_213812_1_.getPosY() - this.getPosY()) <= 4.0D;
 				}));
-		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)));
+		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this).setCallsForHelp()));
 	}
 
 	@Override

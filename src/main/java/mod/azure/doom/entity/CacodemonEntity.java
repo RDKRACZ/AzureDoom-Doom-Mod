@@ -154,7 +154,7 @@ public class CacodemonEntity extends DemonEntity implements IMob, IAnimatable {
 				false, (p_213812_1_) -> {
 					return Math.abs(p_213812_1_.getPosY() - this.getPosY()) <= 4.0D;
 				}));
-		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)));
+		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this).setCallsForHelp()));
 	}
 
 	public static boolean spawning(EntityType<CacodemonEntity> p_223368_0_, IWorld p_223368_1_, SpawnReason reason,

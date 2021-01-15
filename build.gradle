@@ -20,7 +20,7 @@ apply plugin: 'com.matthewprenger.cursegradle'
 import groovy.json.JsonSlurper
 import groovy.json.JsonOutput
 
-version = "3.7.6"
+version = "3.7.8"
 group = "mod.azure.doomweapon"
 archivesBaseName = "MCDoom-Mod-1.16.4"
 
@@ -32,6 +32,7 @@ minecraft {
     runs {
         client {
             workingDirectory project.file('run')
+            properties 'mixin.env.disableRefMap': 'true'
             mods {
                 doomweapon {
                     source sourceSets.main
@@ -40,6 +41,7 @@ minecraft {
         }
         server {
             workingDirectory project.file('run')
+            properties 'mixin.env.disableRefMap': 'true'
             mods {
                 doomweapon {
                     source sourceSets.main
@@ -48,6 +50,7 @@ minecraft {
         }
         data {
             workingDirectory project.file('run')
+            properties 'mixin.env.disableRefMap': 'true'
             args '--mod', 'doomweapon', '--all', '--output', file('src/generated/resources/')
             mods {
                 doomweapon {
@@ -73,6 +76,7 @@ repositories {
         url = "https://minecraft.curseforge.com/api/maven/"
     }
     maven { url 'https://repo.repsy.io/mvn/gandiber/geckolib' }
+    maven { url 'https://maven.blamejared.com' }
 }
 
 dependencies {
@@ -83,6 +87,8 @@ dependencies {
 	compile fg.deobf("curse.maven:JEI-238222:3108050")
 	//compile fg.deobf("curse.maven:GTE-417802:3114274")
 	//compile fg.deobf("curse.maven:GTEP-283644:3092113")
+	compileOnly fg.deobf("vazkii.patchouli:Patchouli:1.16.4-48:api")
+    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.16.4-48")
 	compile fg.deobf("curse.maven:TDI-245733:3144151")
 	compile fg.deobf("curse.maven:projectmmo-353935:3100529")
 	compile fg.deobf("curse.maven:worldedit-225608:3135187")
@@ -155,7 +161,8 @@ curseforge {
         relations {
             requiredDependency 'curios'  
             requiredDependency 'geckolib' 
-            optionalDependency 'project-mmo'      
+            optionalDependency 'project-mmo'   
+            optionalDependency 'patchouli'     
         }
     }
 }

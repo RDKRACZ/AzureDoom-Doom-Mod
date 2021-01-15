@@ -45,40 +45,36 @@ public class RocketLauncher extends ShootableItem {
 				if (itemstack.isEmpty()) {
 					itemstack = new ItemStack(DoomItems.ROCKET.get());
 				}
-
 				boolean flag1 = playerentity.abilities.isCreativeMode || (itemstack.getItem() instanceof Rocket
 						&& ((Rocket) itemstack.getItem()).isInfinite(itemstack, stack, playerentity));
-				if (playerentity.getHeldItemMainhand().getAnimationsToGo() == 0) {
-					if (!worldIn.isRemote) {
-						Rocket arrowitem = (Rocket) (itemstack.getItem() instanceof Rocket ? itemstack.getItem()
-								: DoomItems.ROCKET.get());
-						RocketEntity abstractarrowentity = arrowitem.createArrow(worldIn, itemstack, playerentity);
-						abstractarrowentity = customeArrow(abstractarrowentity);
-						abstractarrowentity.func_234612_a_(playerentity, playerentity.rotationPitch,
-								playerentity.rotationYaw, 0.0F, 0.25F * 3.0F, 1.0F);
+				playerentity.getCooldownTracker().setCooldown(this, 15);
+				if (!worldIn.isRemote) {
+					Rocket arrowitem = (Rocket) (itemstack.getItem() instanceof Rocket ? itemstack.getItem()
+							: DoomItems.ROCKET.get());
+					RocketEntity abstractarrowentity = arrowitem.createArrow(worldIn, itemstack, playerentity);
+					abstractarrowentity = customeArrow(abstractarrowentity);
+					abstractarrowentity.func_234612_a_(playerentity, playerentity.rotationPitch,
+							playerentity.rotationYaw, 0.0F, 0.25F * 3.0F, 1.0F);
 
-						abstractarrowentity.setNoGravity(true);
+					abstractarrowentity.setNoGravity(true);
 
-						stack.damageItem(1, entityLiving, p -> p.sendBreakAnimation(entityLiving.getActiveHand()));
-						if (flag1 || playerentity.abilities.isCreativeMode
-								&& (itemstack.getItem() == DoomItems.ROCKET.get()
-										|| itemstack.getItem() == DoomItems.ROCKET.get())) {
-							abstractarrowentity.pickupStatus = AbstractArrowEntity.PickupStatus.DISALLOWED;
-						}
-						worldIn.addEntity(abstractarrowentity);
-
-						playerentity.getHeldItemMainhand().setAnimationsToGo(20);
+					stack.damageItem(1, entityLiving, p -> p.sendBreakAnimation(entityLiving.getActiveHand()));
+					if (flag1 || playerentity.abilities.isCreativeMode && (itemstack.getItem() == DoomItems.ROCKET.get()
+							|| itemstack.getItem() == DoomItems.ROCKET.get())) {
+						abstractarrowentity.pickupStatus = AbstractArrowEntity.PickupStatus.DISALLOWED;
 					}
-					worldIn.playSound((PlayerEntity) null, playerentity.getPosX(), playerentity.getPosY(),
-							playerentity.getPosZ(), ModSoundEvents.ROCKET_FIRING.get(), SoundCategory.PLAYERS, 1.0F,
-							1.0F / (random.nextFloat() * 0.4F + 1.2F) + 0.25F * 0.5F);
-					if (!flag1 && !playerentity.abilities.isCreativeMode) {
-						itemstack.shrink(1);
-						if (itemstack.isEmpty()) {
-							playerentity.inventory.deleteStack(itemstack);
-						}
-					}
+					worldIn.addEntity(abstractarrowentity);
+
 					playerentity.getHeldItemMainhand().setAnimationsToGo(20);
+				}
+				worldIn.playSound((PlayerEntity) null, playerentity.getPosX(), playerentity.getPosY(),
+						playerentity.getPosZ(), ModSoundEvents.ROCKET_FIRING.get(), SoundCategory.PLAYERS, 1.0F,
+						1.0F / (random.nextFloat() * 0.4F + 1.2F) + 0.25F * 0.5F);
+				if (!flag1 && !playerentity.abilities.isCreativeMode) {
+					itemstack.shrink(1);
+					if (itemstack.isEmpty()) {
+						playerentity.inventory.deleteStack(itemstack);
+					}
 				}
 			}
 		}

@@ -18,7 +18,6 @@ public class BallistaRender extends GeoItemRenderer<Ballista> {
 		super(new BallistaModel());
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void func_239207_a_(ItemStack itemStack, TransformType transformType, MatrixStack stack,
 			IRenderTypeBuffer bufferIn, int combinedLightIn, int p_239207_6_) {

@@ -1,0 +1,20 @@
+{
+	"name": "Unmaykr",
+	"icon": "doomweapon:unmaykr",
+	"category": "doomweapon:weapons_category",
+	"pages": [
+		{
+			"type": "spotlight",
+			"item": "doomweapon:unmaykr",
+			"link_recipe": true
+		},
+		{
+			"type": "crafting",
+			"recipe": "doomweapon:unmaykr"
+		},
+		{
+			"type": "crafting",
+			"recipe": "doomweapon:unmaykr_bolt"
+		}
+	]
+}

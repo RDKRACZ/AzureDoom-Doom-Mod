@@ -1,0 +1,19 @@
+{
+  "result": {
+    "item": "doomweapon:praetor_doom_leggings"
+  },
+  "type": "minecraft:crafting_shaped",
+   "pattern": [
+        "###",
+        "#@#",
+        "###"
+    ],
+    "key": {
+        "#": {
+            "item": "doomweapon:argent_plate"
+        },
+		"@": {
+			"item": "doomweapon:argent_energy"
+		}
+    }
+}

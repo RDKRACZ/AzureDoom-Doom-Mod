@@ -127,11 +127,11 @@ public class ArchvileEntity extends DemonEntity {
 		this.goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8.0F));
 		this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
 		this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
-		this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
+		this.targetSelector.addGoal(2, new HurtByTargetGoal(this).setCallsForHelp());
 		this.goalSelector.addGoal(4, new ArchvileEntity.AttackGoal(this));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, true));
-		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)));
+		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this).setCallsForHelp()));
 	}
 
 	static class AttackGoal extends Goal {

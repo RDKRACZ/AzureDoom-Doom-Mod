@@ -140,7 +140,7 @@ public class IconofsinEntity extends DemonEntity implements IAnimatable {
 	protected void applyEntityAI() {
 		this.goalSelector.addGoal(2, new DemonAttackGoal(this, 1.0D, false));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
-		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)));
+		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this).setCallsForHelp()));
 	}
 
 	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
@@ -245,18 +245,33 @@ public class IconofsinEntity extends DemonEntity implements IAnimatable {
 		super.updateAITasks();
 		this.bossInfo.setPercent(this.getHealth() / this.getMaxHealth());
 	}
-	
+
 	@Override
 	public void tick() {
 		super.tick();
 		if (this.isAlive()) {
-	         if (this.isEntityInsideOpaqueBlock()) {
-	             this.noClip = true;
-	         }
-	         if (!this.isEntityInsideOpaqueBlock()) {
-	             this.noClip = false;
-	         }
+			if (this.isEntityInsideOpaqueBlock()) {
+				this.noClip = true;
+			}
+			if (!this.isEntityInsideOpaqueBlock()) {
+				this.noClip = false;
+			}
 		}
+	}
+
+	@Override
+	public int getTotalArmorValue() {
+		float health = this.getHealth();
+		return (health < 950 && health >= 900 ? 27
+				: health < 900 && health >= 850 ? 24
+						: health < 850 && health >= 800 ? 21
+								: health < 800 && health >= 750 ? 18
+										: health < 750 && health >= 700 ? 15
+												: health < 700 && health >= 650 ? 12
+														: health < 650 && health >= 600 ? 9
+																: health < 600 && health >= 550 ? 6
+																		: health < 550 && health >= 500 ? 3
+																				: health < 500 ? 0 : 30);
 	}
 
 	@Override
@@ -277,9 +292,7 @@ public class IconofsinEntity extends DemonEntity implements IAnimatable {
 		if (!this.world.getDimensionType().doesRespawnAnchorWorks()) {
 			if (!this.world.isRemote) {
 				this.setGlowing(true);
-				this.addPotionEffect(new EffectInstance(Effects.HEALTH_BOOST, 10000000, this.ticksExisted + 1));
-				this.addPotionEffect(
-						new EffectInstance(Effects.INSTANT_DAMAGE, 10000000, this.ticksExisted / 20 + 1));
+				this.addPotionEffect(new EffectInstance(Effects.STRENGTH, 10000000, 3));
 			}
 		}
 	}

@@ -137,7 +137,7 @@ public class MechaZombieEntity extends DemonEntity implements IAnimatable {
 	protected void registerGoals() {
 		this.goalSelector.addGoal(6, new LookAtGoal(this, PlayerEntity.class, 8.0F));
 		this.goalSelector.addGoal(6, new LookRandomlyGoal(this));
-		this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
+		this.targetSelector.addGoal(1, new HurtByTargetGoal(this).setCallsForHelp());
 		this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
 		this.goalSelector.addGoal(4,
 				new RangedStrafeAttackGoal(this,
@@ -147,7 +147,7 @@ public class MechaZombieEntity extends DemonEntity implements IAnimatable {
 						1.0D, 50, 30, 15, 15F).setMultiShot(4, 3));
 		this.goalSelector.addGoal(4, new DemonAttackGoal(this, 1.0D, false));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
-		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)));
+		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this).setCallsForHelp()));
 	}
 
 	public static AttributeModifierMap.MutableAttribute func_234200_m_() {

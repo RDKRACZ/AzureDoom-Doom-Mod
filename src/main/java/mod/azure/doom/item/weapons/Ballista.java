@@ -92,53 +92,49 @@ public class Ballista extends ShootableItem implements IAnimatable {
 
 				float f = getArrowVelocity(i);
 				if (!((double) f < 0.1D)) {
+					playerentity.getCooldownTracker().setCooldown(this, 60);
+					boolean flag1 = playerentity.abilities.isCreativeMode || (itemstack.getItem() instanceof ArgentBolt
+							&& ((ArgentBolt) itemstack.getItem()).isInfinite(itemstack, stack, playerentity));
+					if (!worldIn.isRemote) {
+						ArgentBolt arrowitem = (ArgentBolt) (itemstack.getItem() instanceof ArgentBolt
+								? itemstack.getItem()
+								: DoomItems.ARGENT_BOLT.get());
+						ArgentBoltEntity abstractarrowentity = arrowitem.createArrow(worldIn, itemstack, playerentity);
+						abstractarrowentity = customeArrow(abstractarrowentity);
+						abstractarrowentity.func_234612_a_(playerentity, playerentity.rotationPitch,
+								playerentity.rotationYaw, 0.0F, 1.0F * 3.0F, 1.0F);
 
-					if (playerentity.getHeldItemMainhand().getAnimationsToGo() == 0) {
-						boolean flag1 = playerentity.abilities.isCreativeMode
-								|| (itemstack.getItem() instanceof ArgentBolt && ((ArgentBolt) itemstack.getItem())
-										.isInfinite(itemstack, stack, playerentity));
-						if (!worldIn.isRemote) {
-							ArgentBolt arrowitem = (ArgentBolt) (itemstack.getItem() instanceof ArgentBolt
-									? itemstack.getItem()
-									: DoomItems.ARGENT_BOLT.get());
-							ArgentBoltEntity abstractarrowentity = arrowitem.createArrow(worldIn, itemstack,
-									playerentity);
-							abstractarrowentity = customeArrow(abstractarrowentity);
-							abstractarrowentity.func_234612_a_(playerentity, playerentity.rotationPitch,
-									playerentity.rotationYaw, 0.0F, 1.0F * 3.0F, 1.0F);
+						abstractarrowentity.setDamage(abstractarrowentity.getDamage() + 4.0);
 
-							abstractarrowentity.setDamage(abstractarrowentity.getDamage() + 4.0);
+						abstractarrowentity.hasNoGravity();
 
-							abstractarrowentity.hasNoGravity();
-
-							stack.damageItem(1, playerentity, (p_220009_1_) -> {
-								p_220009_1_.sendBreakAnimation(playerentity.getActiveHand());
-							});
-							if (flag1 || playerentity.abilities.isCreativeMode
-									&& (itemstack.getItem() == DoomItems.ARGENT_BOLT.get()
-											|| itemstack.getItem() == DoomItems.ARGENT_BOLT.get())) {
-								abstractarrowentity.pickupStatus = AbstractArrowEntity.PickupStatus.DISALLOWED;
-							}
-							worldIn.addEntity(abstractarrowentity);
+						stack.damageItem(1, playerentity, (p_220009_1_) -> {
+							p_220009_1_.sendBreakAnimation(playerentity.getActiveHand());
+						});
+						if (flag1 || playerentity.abilities.isCreativeMode
+								&& (itemstack.getItem() == DoomItems.ARGENT_BOLT.get()
+										|| itemstack.getItem() == DoomItems.ARGENT_BOLT.get())) {
+							abstractarrowentity.pickupStatus = AbstractArrowEntity.PickupStatus.DISALLOWED;
 						}
-						worldIn.playSound((PlayerEntity) null, playerentity.getPosX(), playerentity.getPosY(),
-								playerentity.getPosZ(), ModSoundEvents.ROCKET_FIRING.get(), SoundCategory.PLAYERS, 1.0F,
-								1.0F / (random.nextFloat() * 0.4F + 1.2F) + 0.25F * 0.5F);
-						if (!flag1 && !playerentity.abilities.isCreativeMode) {
-							itemstack.shrink(1);
-							if (itemstack.isEmpty()) {
-								playerentity.inventory.deleteStack(itemstack);
-							}
+						worldIn.addEntity(abstractarrowentity);
+					}
+					worldIn.playSound((PlayerEntity) null, playerentity.getPosX(), playerentity.getPosY(),
+							playerentity.getPosZ(), ModSoundEvents.ROCKET_FIRING.get(), SoundCategory.PLAYERS, 1.0F,
+							1.0F / (random.nextFloat() * 0.4F + 1.2F) + 0.25F * 0.5F);
+					if (!flag1 && !playerentity.abilities.isCreativeMode) {
+						itemstack.shrink(1);
+						if (itemstack.isEmpty()) {
+							playerentity.inventory.deleteStack(itemstack);
 						}
+					}
 
-						AnimationController<?> controller = GeckoLibUtil.getControllerForStack(this.factory, stack,
-								controllerName);
+					AnimationController<?> controller = GeckoLibUtil.getControllerForStack(this.factory, stack,
+							controllerName);
 
-						if (controller.getAnimationState() == AnimationState.Stopped) {
-							controller.markNeedsReload();
-							controller.setAnimation(new AnimationBuilder().addAnimation("firing", false).addAnimation("idle"));
-						}
-						playerentity.getHeldItemMainhand().setAnimationsToGo(70);
+					if (controller.getAnimationState() == AnimationState.Stopped) {
+						controller.markNeedsReload();
+						controller.setAnimation(
+								new AnimationBuilder().addAnimation("firing", false).addAnimation("idle"));
 					}
 				}
 			}

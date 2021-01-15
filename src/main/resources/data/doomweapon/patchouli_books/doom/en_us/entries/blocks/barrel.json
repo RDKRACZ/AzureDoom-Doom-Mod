@@ -1,0 +1,17 @@
+{
+	"name": "Barrel",
+	"icon": "doomweapon:barrel",
+	"category": "doomweapon:blocks_category",
+	"pages": [
+		{
+			"type": "spotlight",
+			"item": "doomweapon:barrel",
+			"link_recipe": true,
+			"text": "If your shots hit one of these barrels, it's kablooey time!"
+		},
+		{
+			"type": "crafting",
+			"recipe": "doomweapon:barrel"
+		}
+	]
+}

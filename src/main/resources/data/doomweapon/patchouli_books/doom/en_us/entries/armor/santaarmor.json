@@ -1,0 +1,21 @@
+{
+	"name": "Santa Doom Armor",
+	"icon": "doomweapon:santa_helmet",
+	"category": "doomweapon:armor_category",
+	"secret": false,
+	"read_by_default": true,
+	"pages": [
+		{
+			"type": "entity",
+			"name": "Santa Doom Armor",
+			"entity": "minecraft:armor_stand{Invisible:1, ArmorItems:[{id:air,Count:1},{id:air,Count:1},{id:air,Count:1},{id:'doomweapon:santa_helmet',Count:1}]}",
+			"rotate": true,
+			"offset": 0.2,
+			"text": "Deck the halls with Nether blood and guts!"
+		},
+		{
+			"type": "crafting",
+			"recipe": "doomweapon:santa_doom_helmet"
+		}
+	]
+}

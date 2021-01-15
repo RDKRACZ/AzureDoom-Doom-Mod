@@ -1,0 +1,20 @@
+{
+	"name": "Ballista",
+	"icon": "doomweapon:ballista",
+	"category": "doomweapon:weapons_category",
+	"pages": [
+		{
+			"type": "spotlight",
+			"item": "doomweapon:ballista",
+			"link_recipe": true
+		},
+		{
+			"type": "crafting",
+			"recipe": "doomweapon:ballista"
+		},
+		{
+			"type": "crafting",
+			"recipe": "doomweapon:argent_bolt"
+		}
+	]
+}
