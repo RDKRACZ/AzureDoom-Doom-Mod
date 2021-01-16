@@ -13,8 +13,7 @@
 		{
 			"type": "entity",
 			"entity": "doomweapon:arachnotron",
-			"scale": 0.7, 
-			"rotate" : false
+			"scale": 0.9
 		}
 	]
 }

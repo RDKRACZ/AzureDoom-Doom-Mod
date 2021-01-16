@@ -20,9 +20,9 @@ apply plugin: 'com.matthewprenger.cursegradle'
 import groovy.json.JsonSlurper
 import groovy.json.JsonOutput
 
-version = "3.7.8"
+version = "3.8.0"
 group = "mod.azure.doomweapon"
-archivesBaseName = "MCDoom-Mod-1.16.4"
+archivesBaseName = "MCDoom-Mod-1.16.5"
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
@@ -80,7 +80,7 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.4-35.1.36'
+    minecraft 'net.minecraftforge:forge:1.16.5-36.0.0'
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.3-4.0.2.0")
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.3-4.0.2.0:api")
 	compile fg.deobf("curse.maven:SD-392762:3069533")
@@ -153,8 +153,8 @@ curseforge {
         releaseType = "${curse_release}"
         changelogType = 'text'
         changelog = file('CHANGELOG.txt')
-        addGameVersion("1.16.3")
         addGameVersion("1.16.4")
+        addGameVersion("1.16.5")
         addGameVersion("Forge")
         addGameVersion("Java 8")
 

@@ -46,11 +46,11 @@ public class DemonEntity extends MonsterEntity implements IAngerable {
 	public void setAttacking(boolean attacking) {
 
 	}
-	
+
 	@Override
 	protected void registerData() {
 		super.registerData();
-	      this.dataManager.register(ANGER_TIME, 0);
+		this.dataManager.register(ANGER_TIME, 0);
 	}
 
 	@Override

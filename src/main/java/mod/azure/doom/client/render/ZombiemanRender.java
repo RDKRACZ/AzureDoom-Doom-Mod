@@ -3,6 +3,7 @@ package mod.azure.doom.client.render;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
+import mod.azure.doom.client.DoomGeoEntityRenderer;
 import mod.azure.doom.client.models.ZombiemanModel;
 import mod.azure.doom.entity.ZombiemanEntity;
 import mod.azure.doom.util.registry.DoomItems;
@@ -15,9 +16,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Vector3f;
 import software.bernie.geckolib3.geo.render.built.GeoBone;
-import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 
-public class ZombiemanRender extends GeoEntityRenderer<ZombiemanEntity> {
+public class ZombiemanRender extends DoomGeoEntityRenderer<ZombiemanEntity> {
 
 	private static final ItemStack chaingun = new ItemStack(DoomItems.PISTOL.get());
 	private IRenderTypeBuffer rtb;

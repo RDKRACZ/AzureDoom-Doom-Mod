@@ -3,15 +3,15 @@ package mod.azure.doom.client.render;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
+import mod.azure.doom.client.DoomGeoEntityRenderer;
 import mod.azure.doom.client.models.Imp2016Model;
 import mod.azure.doom.entity.Imp2016Entity;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.util.ResourceLocation;
-import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 
-public class Imp2016Render extends GeoEntityRenderer<Imp2016Entity> {
+public class Imp2016Render extends DoomGeoEntityRenderer<Imp2016Entity> {
 
 	public Imp2016Render(EntityRendererManager renderManagerIn) {
 		super(renderManagerIn, new Imp2016Model());
