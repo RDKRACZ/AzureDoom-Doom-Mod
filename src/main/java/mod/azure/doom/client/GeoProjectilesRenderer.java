@@ -3,9 +3,12 @@ package mod.azure.doom.client;
 import java.awt.Color;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -47,8 +50,8 @@ public class GeoProjectilesRenderer<T extends Entity & IAnimatable> extends Enti
 			IRenderTypeBuffer bufferIn, int packedLightIn) {
 		GeoModel model = modelProvider.getModel(modelProvider.getModelLocation(entityIn));
 		matrixStackIn.push();
-		matrixStackIn.rotate(Vector3f.YP.rotationDegrees(
-				MathHelper.lerp(partialTicks, entityIn.prevRotationYaw, entityIn.rotationYaw)));
+		matrixStackIn.rotate(Vector3f.YP
+				.rotationDegrees(MathHelper.lerp(partialTicks, entityIn.prevRotationYaw, entityIn.rotationYaw)));
 		matrixStackIn.rotate(Vector3f.ZP
 				.rotationDegrees(MathHelper.lerp(partialTicks, entityIn.prevRotationPitch, entityIn.rotationPitch)));
 		Minecraft.getInstance().textureManager.bindTexture(getEntityTexture(entityIn));
@@ -61,6 +64,23 @@ public class GeoProjectilesRenderer<T extends Entity & IAnimatable> extends Enti
 				(float) renderColor.getAlpha() / 255);
 		matrixStackIn.pop();
 		super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
+	}
+
+	@Override
+	public void render(GeoModel model, T animatable, float partialTicks, RenderType type, MatrixStack matrixStackIn,
+			IRenderTypeBuffer renderTypeBuffer, IVertexBuilder vertexBuilder, int packedLightIn, int packedOverlayIn,
+			float red, float green, float blue, float alpha) {
+		// TODO Auto-generated method stub
+		IGeoRenderer.super.render(model, animatable, partialTicks, type, matrixStackIn, renderTypeBuffer, vertexBuilder,
+				packedLightIn, packedOverlayIn, red, green, blue, alpha);
+		matrixStackIn.push();
+		IRenderTypeBuffer.Impl irendertypebuffer$impl = Minecraft.getInstance().getRenderTypeBuffers()
+				.getBufferSource();
+		RenderHelper.setupGuiFlatDiffuseLighting();
+		irendertypebuffer$impl.finish();
+		RenderSystem.enableDepthTest();
+		RenderHelper.setupGui3DDiffuseLighting();
+		matrixStackIn.pop();
 	}
 
 	public static int getPackedOverlay(Entity livingEntityIn, float uIn) {

@@ -1,5 +1,5 @@
 {
-	"name": "Spiderdemon",
+	"name": "Spider Mastermind",
 	"icon": "doomweapon:soulcube",
 	"category": "doomweapon:mob_category",	
 	"secret":false,
@@ -8,13 +8,12 @@
 	"pages": [
 		{
 			"type": "text",
-			"text": "The Spider Demon. The mother of the Arachnotron. Watch out for her chaingun or it'll rip you apart!"
+			"text": "The Spider Mastermind. The mother of the Arachnotron. Watch out for her chaingun or it'll rip you apart!"
 		},
 		{
 			"type": "entity",
 			"entity": "doomweapon:spiderdemon",
-			"scale": 0.7, 
-			"rotate" : false
+			"scale": 0.9
 		}
 	]
 }
