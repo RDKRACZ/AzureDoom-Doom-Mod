@@ -1,21 +1,18 @@
 package mod.azure.doom.entity.projectiles;
 
-import java.util.List;
-
+import mod.azure.doom.util.registry.DoomItems;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceContext;
@@ -26,20 +23,16 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 public class BulletEntity extends AbstractArrowEntity {
 
-	private final Item referenceItem;
 	protected int timeInAir;
 	protected boolean inAir;
 	private int ticksInAir;
 
-	@SuppressWarnings("unchecked")
-	public BulletEntity(EntityType<?> type, World world) {
-		super((EntityType<? extends AbstractArrowEntity>) type, world);
-		this.referenceItem = null;
+	public BulletEntity(EntityType<? extends AbstractArrowEntity> type, World world) {
+		super(type, world);
 	}
 
-	public BulletEntity(LivingEntity shooter, World world, Item referenceItemIn) {
-		super(ModEntityTypes.BULLETS.get(), shooter, world);
-		this.referenceItem = referenceItemIn;
+	public BulletEntity(World world, LivingEntity owner) {
+		super(ModEntityTypes.BULLETS.get(), owner, world);
 	}
 
 	@Override
@@ -195,7 +188,7 @@ public class BulletEntity extends AbstractArrowEntity {
 
 	@Override
 	public ItemStack getArrowStack() {
-		return new ItemStack(this.referenceItem);
+		return new ItemStack(DoomItems.BULLETS.get());
 	}
 
 	@Override
@@ -203,8 +196,7 @@ public class BulletEntity extends AbstractArrowEntity {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
-	private SoundEvent hitSound = this.getHitEntitySound();
-	private List<Entity> hitEntities;
+	public SoundEvent hitSound = this.getHitEntitySound();
 
 	@Override
 	public void setHitSound(SoundEvent soundIn) {

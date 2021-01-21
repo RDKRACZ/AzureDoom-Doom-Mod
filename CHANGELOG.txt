@@ -1,6 +1,8 @@
-v.3.8.0
+v.3.8.1
 
-- Fixes lighting of mobs and armors in the Patchouli books.
-- Fixes Spider Mastermind Entry.
-- Spider Mastermind and Arachnotron spin now.
-- Added section on Forge only features, currently just Lock On.
+- Rebalanced a few mobs health. 
+- Complete rework done to all guns.
+	- All Guns, Chain Saws and Crucible now use their durability as ammo, with all but the Crucible stopping at 1 durability. 
+	- To reload the Guns, Chain Saws and Crucible, simple have their ammo in your main inventory* and press the Reload key.**
+	- Super Shotgun now takes 2 durability per shot and requires you have at least 2 Shotgun Shells to reload and will not fire without at least 2 ammo in it.
+	- Chain Saws no longer take damage when not hitting an entity.

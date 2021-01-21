@@ -1,7 +1,5 @@
 package mod.azure.doom.entity.projectiles;
 
-import java.util.List;
-
 import mod.azure.doom.util.registry.DoomItems;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import mod.azure.doom.util.registry.ModSoundEvents;
@@ -10,15 +8,11 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceContext;
@@ -38,8 +32,8 @@ public class EnergyCellEntity extends AbstractArrowEntity {
 		super(type, world);
 	}
 
-	public EnergyCellEntity(LivingEntity shooter, World world, Item referenceItemIn) {
-		super(ModEntityTypes.ENERGY_CELL.get(), shooter, world);
+	public EnergyCellEntity(World world, LivingEntity owner) {
+		super(ModEntityTypes.ENERGY_CELL.get(), owner, world);
 	}
 
 	@Override
@@ -208,8 +202,7 @@ public class EnergyCellEntity extends AbstractArrowEntity {
 		return false;
 	}
 
-	private SoundEvent hitSound = this.getHitEntitySound();
-	private List<Entity> hitEntities;
+	public SoundEvent hitSound = this.getHitEntitySound();
 
 	@Override
 	public void setHitSound(SoundEvent soundIn) {

@@ -20,7 +20,6 @@ import net.minecraft.entity.monster.SlimeEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
@@ -51,7 +50,7 @@ public class BFGEntity extends AbstractArrowEntity {
 		super(type, world);
 	}
 
-	public BFGEntity(LivingEntity shooter, World world, Item referenceItemIn) {
+	public BFGEntity(World world, LivingEntity shooter) {
 		super(ModEntityTypes.BFG_CELL.get(), shooter, world);
 	}
 

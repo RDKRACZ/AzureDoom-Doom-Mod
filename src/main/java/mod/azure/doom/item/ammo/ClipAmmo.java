@@ -6,19 +6,16 @@ import mod.azure.doom.entity.projectiles.BulletEntity;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ArrowItem;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.RegistryObject;
 
 public class ClipAmmo extends ArrowItem {
 
 	public final float damage;
-	private RegistryObject<Item> ref;
 
 	public ClipAmmo(Properties properties, float damageIn) {
 		super(properties);
@@ -39,14 +36,9 @@ public class ClipAmmo extends ArrowItem {
 		return enchant <= 0 ? false : this instanceof ClipAmmo;
 	}
 
-	public ClipAmmo setItemReference(RegistryObject<Item> refIn) {
-		this.ref = refIn;
-		return this;
-	}
-
 	@Override
 	public BulletEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
-		BulletEntity arrowentity = new BulletEntity(shooter, worldIn, ref.get());
+		BulletEntity arrowentity = new BulletEntity(worldIn, shooter);
 		arrowentity.setDamage(this.damage);
 		return arrowentity;
 	}

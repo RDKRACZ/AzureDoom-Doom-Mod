@@ -6,6 +6,7 @@ import mod.azure.doom.util.DoomLeapEntityEvents;
 import mod.azure.doom.util.DoomVillagerTrades;
 import mod.azure.doom.util.LootHandler;
 import mod.azure.doom.util.SoulCubeHandler;
+import mod.azure.doom.util.packets.DoomPacketHandler;
 import mod.azure.doom.util.registry.DoomBlocks;
 import mod.azure.doom.util.registry.DoomEnchantments;
 import mod.azure.doom.util.registry.DoomItems;
@@ -69,6 +70,7 @@ public class DoomMod {
 
 	private void setup(final FMLCommonSetupEvent event) {
 		MinecraftForge.EVENT_BUS.register(new LootHandler());
+		DoomPacketHandler.register();
 	}
 
 	private void enqueueIMC(InterModEnqueueEvent event) {

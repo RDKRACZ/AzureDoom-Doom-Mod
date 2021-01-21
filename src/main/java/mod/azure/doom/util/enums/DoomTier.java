@@ -15,6 +15,22 @@ public enum DoomTier implements IItemTier {
 		return Ingredient.fromItems(DoomItems.ARGENT_BLOCK.get());
 	}), CHAINSAW(6, 600, 16.0F, 0.0F, 30, () -> {
 		return Ingredient.fromItems(DoomItems.GAS_BARREL.get());
+	}), PISTOL(6, 600, 16.0F, 0.0F, 30, () -> {
+		return Ingredient.fromItems(DoomItems.BULLETS.get());
+	}), BALLISTA(6, 600, 16.0F, 0.0F, 30, () -> {
+		return Ingredient.fromItems(DoomItems.ARGENT_BOLT.get());
+	}), BFG(6, 600, 16.0F, 0.0F, 30, () -> {
+		return Ingredient.fromItems(DoomItems.BFG_CELL.get());
+	}), CHAINGUN(6, 600, 16.0F, 0.0F, 30, () -> {
+		return Ingredient.fromItems(DoomItems.CHAINGUN_BULLETS.get());
+	}), PLASMA(6, 600, 16.0F, 0.0F, 30, () -> {
+		return Ingredient.fromItems(DoomItems.ENERGY_CELLS.get());
+	}), ROCKET(6, 600, 16.0F, 0.0F, 30, () -> {
+		return Ingredient.fromItems(DoomItems.ROCKET.get());
+	}), SHOTGUN(6, 600, 16.0F, 0.0F, 30, () -> {
+		return Ingredient.fromItems(DoomItems.SHOTGUN_SHELLS.get());
+	}), UNMAYKR(6, 600, 16.0F, 0.0F, 30, () -> {
+		return Ingredient.fromItems(DoomItems.UNMAKRY_BOLT.get());
 	});
 
 	private final int harvestLevel;

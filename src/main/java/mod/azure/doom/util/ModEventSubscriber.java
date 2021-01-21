@@ -1,47 +1,22 @@
 package mod.azure.doom.util;
 
 import mod.azure.doom.DoomMod;
-import mod.azure.doom.item.ammo.ArgentBolt;
-import mod.azure.doom.item.ammo.BFGCell;
-import mod.azure.doom.item.ammo.ChaingunAmmo;
-import mod.azure.doom.item.ammo.ClipAmmo;
-import mod.azure.doom.item.ammo.EnergyCell;
-import mod.azure.doom.item.ammo.Rocket;
-import mod.azure.doom.item.ammo.ShellAmmo;
-import mod.azure.doom.item.ammo.UnmaykrBolt;
 import mod.azure.doom.util.compat.BYGSpawns;
 import mod.azure.doom.util.compat.BoPSpawns;
 import mod.azure.doom.util.compat.ExtraModSpawns;
 import mod.azure.doom.util.compat.NetherExSpawns;
-import mod.azure.doom.util.registry.DoomItems;
 import mod.azure.doom.util.registry.ModEntitySpawn;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import net.minecraft.entity.EntityType;
-import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
 @EventBusSubscriber(modid = DoomMod.MODID, bus = EventBusSubscriber.Bus.MOD)
 public class ModEventSubscriber {
-
-	@SubscribeEvent
-	public static void onRegisterItems(RegistryEvent.Register<Item> event) {
-		@SuppressWarnings("unused")
-		final IForgeRegistry<Item> registry = event.getRegistry();
-		((ArgentBolt) (DoomItems.ARGENT_BOLT.get())).setItemReference(DoomItems.ARGENT_BOLT);
-		((ShellAmmo) (DoomItems.SHOTGUN_SHELLS.get())).setItemReference(DoomItems.SHOTGUN_SHELLS);
-		((EnergyCell) (DoomItems.ENERGY_CELLS.get())).setItemReference(DoomItems.ENERGY_CELLS);
-		((ChaingunAmmo) (DoomItems.CHAINGUN_BULLETS.get())).setItemReference(DoomItems.CHAINGUN_BULLETS);
-		((ClipAmmo) (DoomItems.BULLETS.get())).setItemReference(DoomItems.BULLETS);
-		((BFGCell) (DoomItems.BFG_CELL.get())).setItemReference(DoomItems.BFG_CELL);
-		((Rocket) (DoomItems.ROCKET.get())).setItemReference(DoomItems.ROCKET);
-		((UnmaykrBolt) (DoomItems.UNMAKRY_BOLT.get())).setItemReference(DoomItems.UNMAKRY_BOLT);
-	}
 
 	@SubscribeEvent
 	public static void registerEntities(final RegistryEvent.Register<EntityType<?>> event) {
