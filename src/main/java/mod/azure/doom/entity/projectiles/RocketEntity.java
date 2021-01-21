@@ -10,7 +10,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
@@ -41,12 +40,12 @@ public class RocketEntity extends AbstractArrowEntity implements IAnimatable {
 	private LivingEntity shooter;
 
 	public RocketEntity(EntityType<? extends AbstractArrowEntity> type, World world) {
-		super((EntityType<? extends AbstractArrowEntity>) type, world);
+		super(type, world);
 	}
 
-	public RocketEntity(LivingEntity shooter, World world, Item referenceItemIn) {
-		super(ModEntityTypes.ROCKET.get(), shooter, world);
-		this.shooter = shooter;
+	public RocketEntity(World world, LivingEntity owner) {
+		super(ModEntityTypes.ROCKET.get(), owner, world);
+		this.shooter = owner;
 	}
 
 	private AnimationFactory factory = new AnimationFactory(this);
@@ -174,7 +173,7 @@ public class RocketEntity extends AbstractArrowEntity implements IAnimatable {
 	}
 
 	@Override
-	protected ItemStack getArrowStack() {
+	public ItemStack getArrowStack() {
 		return new ItemStack(DoomItems.ROCKET.get());
 	}
 

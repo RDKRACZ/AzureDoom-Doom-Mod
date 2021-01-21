@@ -1,5 +1,7 @@
 package mod.azure.doom.client;
 
+import org.lwjgl.glfw.GLFW;
+
 import mod.azure.doom.DoomMod;
 import mod.azure.doom.client.render.ArachnotronRender;
 import mod.azure.doom.client.render.ArchvileRender;
@@ -105,8 +107,10 @@ import mod.azure.doom.util.registry.DoomBlocks;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -117,6 +121,9 @@ public class ClientModEventSubscriber {
 
 	@SubscribeEvent
 	public static void onClientSetup(final FMLClientSetupEvent event) {
+		Keybindings.RELOAD = new KeyBinding("key." + DoomMod.MODID + ".reload", GLFW.GLFW_KEY_R,
+				"key.categories." + DoomMod.MODID);
+		ClientRegistry.registerKeyBinding(Keybindings.RELOAD);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BARREL.get(), BarrelRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.SHOTGUN_SHELL.get(), ShotgunShellRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ARGENT_BOLT.get(), ArgentBoltRender::new);
@@ -195,7 +202,7 @@ public class ClientModEventSubscriber {
 		GeoArmorRenderer.registerArmorRenderer(SentinelDoomArmor.class, new SentinelRender());
 		GeoArmorRenderer.registerArmorRenderer(ZombieDoomArmor.class, new ZombieRender());
 		GeoArmorRenderer.registerArmorRenderer(SantaDoomArmor.class, new SantaRender());
-		
+
 		RenderTypeLookup.setRenderLayer(DoomBlocks.JUMP_PAD.get(), RenderType.getCutout());
 	}
 }

@@ -1,7 +1,5 @@
 package mod.azure.doom.entity;
 
-import java.time.LocalDate;
-import java.time.temporal.ChronoField;
 import java.util.Random;
 
 import javax.annotation.Nullable;
@@ -16,7 +14,6 @@ import mod.azure.doom.util.config.EntityConfig;
 import mod.azure.doom.util.config.EntityDefaults.EntityConfigType;
 import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
@@ -30,11 +27,8 @@ import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
-import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
@@ -123,11 +117,10 @@ public class BaronEntity extends DemonEntity implements IAnimatable {
 		this.goalSelector.addGoal(6, new LookAtGoal(this, PlayerEntity.class, 8.0F));
 		this.goalSelector.addGoal(6, new LookRandomlyGoal(this));
 		this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
-		this.goalSelector
-				.addGoal(4,
-						new RangedStaticAttackGoal(this, new BaronEntity.FireballAttack(this)
-								.setProjectileOriginOffset(0.8, 0.8, 0.8).setDamage(12), 60,
-								20, 30F));
+		this.goalSelector.addGoal(4,
+				new RangedStaticAttackGoal(this,
+						new BaronEntity.FireballAttack(this).setProjectileOriginOffset(0.8, 0.8, 0.8).setDamage(12), 60,
+						20, 30F));
 		this.goalSelector.addGoal(4, new DemonAttackGoal(this, 1.0D, false));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, true));
@@ -194,46 +187,8 @@ public class BaronEntity extends DemonEntity implements IAnimatable {
 		float f = difficultyIn.getClampedAdditionalDifficulty();
 		this.setCanPickUpLoot(this.rand.nextFloat() < 0.55F * f);
 		this.setEnchantmentBasedOnDifficulty(difficultyIn);
-		if (spawnDataIn == null) {
-			spawnDataIn = new BaronEntity.GroupData(worldIn.getRandom()
-					.nextFloat() < net.minecraftforge.common.ForgeConfig.SERVER.zombieBabyChance.get());
-		}
-
-		if (spawnDataIn instanceof ZombieEntity.GroupData) {
-			ZombieEntity.GroupData zombieentity$groupdata = (ZombieEntity.GroupData) spawnDataIn;
-			if (zombieentity$groupdata.isChild) {
-				this.setChild(true);
-			}
-
-			this.setEquipmentBasedOnDifficulty(difficultyIn);
-			this.setEnchantmentBasedOnDifficulty(difficultyIn);
-		}
-
-		if (this.getItemStackFromSlot(EquipmentSlotType.HEAD).isEmpty()) {
-			LocalDate localdate = LocalDate.now();
-			int i = localdate.get(ChronoField.DAY_OF_MONTH);
-			int j = localdate.get(ChronoField.MONTH_OF_YEAR);
-			if (j == 10 && i == 31 && this.rand.nextFloat() < 0.25F) {
-				this.setItemStackToSlot(EquipmentSlotType.HEAD,
-						new ItemStack(this.rand.nextFloat() < 0.1F ? Blocks.JACK_O_LANTERN : Blocks.CARVED_PUMPKIN));
-				this.inventoryArmorDropChances[EquipmentSlotType.HEAD.getIndex()] = 0.0F;
-			}
-		}
 
 		return spawnDataIn;
-	}
-
-	public class GroupData implements ILivingEntityData {
-		public final boolean isChild;
-
-		private GroupData(boolean isChildIn) {
-			this.isChild = isChildIn;
-		}
-	}
-
-	@Override
-	public boolean isChild() {
-		return false;
 	}
 
 	protected boolean shouldDrown() {

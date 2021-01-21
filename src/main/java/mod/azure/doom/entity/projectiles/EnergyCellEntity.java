@@ -8,7 +8,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
@@ -32,8 +31,8 @@ public class EnergyCellEntity extends AbstractArrowEntity {
 		super(type, world);
 	}
 
-	public EnergyCellEntity(LivingEntity shooter, World world, Item referenceItemIn) {
-		super(ModEntityTypes.ENERGY_CELL.get(), shooter, world);
+	public EnergyCellEntity(World world, LivingEntity owner) {
+		super(ModEntityTypes.ENERGY_CELL.get(), owner, world);
 	}
 
 	@Override
@@ -144,7 +143,7 @@ public class EnergyCellEntity extends AbstractArrowEntity {
 	}
 
 	@Override
-	protected ItemStack getArrowStack() {
+	public ItemStack getArrowStack() {
 		return new ItemStack(DoomItems.ENERGY_CELLS.get());
 	}
 

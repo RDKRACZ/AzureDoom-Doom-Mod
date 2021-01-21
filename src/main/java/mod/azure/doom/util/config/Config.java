@@ -21,7 +21,7 @@ public class Config {
 
 	public static final ServerConfig SERVER;
 	public static final ForgeConfigSpec SERVER_SPEC;
-    public static final ForgeConfigSpec BIOME_SPEC;
+	public static final ForgeConfigSpec BIOME_SPEC;
 	public static final BiomeConfig BIOME;
 
 	static {

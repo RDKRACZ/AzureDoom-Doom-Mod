@@ -192,7 +192,7 @@ public class DoomItems {
 			() -> new EnergyCell(new Item.Properties().group(DoomMod.DoomWeaponItemGroup), 10.0F));
 	public static final RegistryObject<Item> CHAINGUN_BULLETS = ITEMS.register("chaingunbullets",
 			() -> new ChaingunAmmo(new Item.Properties().group(DoomMod.DoomWeaponItemGroup), 10.0F));
-	public static final RegistryObject<Item> BULLETS = ITEMS.register("bullets",
+	public static final RegistryObject<ClipAmmo> BULLETS = ITEMS.register("bullets",
 			() -> new ClipAmmo(new Item.Properties().group(DoomMod.DoomWeaponItemGroup), 1.2F));
 	public static final RegistryObject<Item> BFG_CELL = ITEMS.register("bfg_cell",
 			() -> new BFGCell(new Item.Properties().group(DoomMod.DoomWeaponItemGroup), 1.2F));

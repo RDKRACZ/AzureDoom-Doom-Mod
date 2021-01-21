@@ -23,7 +23,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 /**
  * 
- * @credit to https://github.com/Tfarcenim/LockOn/tree/1.16.x/src/main/java/tfar/lockon
+ * @credit to
+ *         https://github.com/Tfarcenim/LockOn/tree/1.16.x/src/main/java/tfar/lockon
  *
  */
 public class LockOnHandler {
@@ -35,8 +36,10 @@ public class LockOnHandler {
 	private static final Minecraft mc = Minecraft.getInstance();
 
 	public static void client(FMLClientSetupEvent e) {
-		LOCK_ON = new KeyBinding("key." + DoomMod.MODID + ".lock_on", GLFW.GLFW_KEY_O, "key.categories." + DoomMod.MODID);
-		TAB = new KeyBinding("key." + DoomMod.MODID + ".tab", GLFW.GLFW_KEY_LEFT_ALT, "key.categories." + DoomMod.MODID);
+		LOCK_ON = new KeyBinding("key." + DoomMod.MODID + ".lock_on", GLFW.GLFW_KEY_O,
+				"key.categories." + DoomMod.MODID);
+		TAB = new KeyBinding("key." + DoomMod.MODID + ".tab", GLFW.GLFW_KEY_LEFT_ALT,
+				"key.categories." + DoomMod.MODID);
 		ClientRegistry.registerKeyBinding(LOCK_ON);
 		ClientRegistry.registerKeyBinding(TAB);
 		EVENT_BUS.addListener(LockOnHandler::handleKeyPress);

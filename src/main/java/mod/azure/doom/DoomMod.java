@@ -1,5 +1,8 @@
 package mod.azure.doom;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import mod.azure.doom.client.LockOnHandler;
 import mod.azure.doom.client.ModItemModelsProperties;
 import mod.azure.doom.entity.ArachnotronEntity;
@@ -30,12 +33,15 @@ import mod.azure.doom.entity.ShotgunguyEntity;
 import mod.azure.doom.entity.SpiderdemonEntity;
 import mod.azure.doom.entity.UnwillingEntity;
 import mod.azure.doom.entity.ZombiemanEntity;
+import mod.azure.doom.structures.DoomConfiguredStructures;
+import mod.azure.doom.structures.DoomStructures;
 import mod.azure.doom.util.DoomLeapEntityEvents;
 import mod.azure.doom.util.DoomVillagerTrades;
 import mod.azure.doom.util.LootHandler;
 import mod.azure.doom.util.SoulCubeHandler;
 import mod.azure.doom.util.config.BiomeConfig;
 import mod.azure.doom.util.config.Config;
+import mod.azure.doom.util.packets.DoomPacketHandler;
 import mod.azure.doom.util.registry.DoomBlocks;
 import mod.azure.doom.util.registry.DoomEnchantments;
 import mod.azure.doom.util.registry.DoomItems;
@@ -45,10 +51,18 @@ import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
+import net.minecraft.world.gen.FlatChunkGenerator;
+import net.minecraft.world.gen.feature.structure.Structure;
+import net.minecraft.world.gen.settings.DimensionStructuresSettings;
+import net.minecraft.world.gen.settings.StructureSeparationSettings;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
+import net.minecraftforge.event.world.WorldEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.InterModComms;
@@ -75,6 +89,7 @@ public class DoomMod {
 	public DoomMod() {
 		instance = this;
 		final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+		IEventBus forgeBus = MinecraftForge.EVENT_BUS;
 		ModLoadingContext modLoadingContext = ModLoadingContext.get();
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onModConfigEvent);
 		modLoadingContext.registerConfig(ModConfig.Type.SERVER, Config.SERVER_SPEC, "doom-config.toml");
@@ -86,6 +101,11 @@ public class DoomMod {
 		modEventBus.addListener(this::setup);
 		modEventBus.addListener(this::clientSetup);
 		modEventBus.addListener(this::enqueueIMC);
+		if (!FMLEnvironment.production) {
+			DoomStructures.DEFERRED_REGISTRY_STRUCTURE.register(modEventBus);
+			forgeBus.addListener(EventPriority.NORMAL, this::addDimensionalSpacing);
+			forgeBus.addListener(EventPriority.HIGH, this::biomeModification);
+		}
 		MinecraftForge.EVENT_BUS.addListener(DoomVillagerTrades::onVillagerTradesEvent);
 		ModSoundEvents.MOD_SOUNDS.register(modEventBus);
 		DoomEnchantments.ENCHANTMENTS.register(modEventBus);
@@ -125,6 +145,11 @@ public class DoomMod {
 
 	private void setup(final FMLCommonSetupEvent event) {
 		MinecraftForge.EVENT_BUS.register(new LootHandler());
+		DoomPacketHandler.register();
+		event.enqueueWork(() -> {
+			DoomStructures.setupStructures();
+			DoomConfiguredStructures.registerConfiguredStructures();
+		});
 		event.enqueueWork(() -> {
 			GlobalEntityTypeAttributes.put(ModEntityTypes.CYBERDEMON.get(), CyberdemonEntity.func_234200_m_().create());
 			GlobalEntityTypeAttributes.put(ModEntityTypes.ARCHVILE.get(), ArchvileEntity.func_234200_m_().create());
@@ -164,6 +189,26 @@ public class DoomMod {
 					MechaZombieEntity.func_234200_m_().create());
 			GlobalEntityTypeAttributes.put(ModEntityTypes.GARGOYLE.get(), GargoyleEntity.func_234200_m_().create());
 		});
+	}
+
+	public void biomeModification(final BiomeLoadingEvent event) {
+		event.getGeneration().getStructures().add(() -> DoomConfiguredStructures.CONFIGURED_DOOM1);
+	}
+
+	public void addDimensionalSpacing(final WorldEvent.Load event) {
+		if (event.getWorld() instanceof ServerWorld) {
+			ServerWorld serverWorld = (ServerWorld) event.getWorld();
+			if (serverWorld.getChunkProvider().getChunkGenerator() instanceof FlatChunkGenerator
+					&& serverWorld.getDimensionKey().equals(World.OVERWORLD)) {
+				return;
+			}
+
+			Map<Structure<?>, StructureSeparationSettings> tempMap = new HashMap<>(
+					serverWorld.getChunkProvider().generator.func_235957_b_().func_236195_a_());
+			tempMap.putIfAbsent(DoomStructures.DOOM1.get(),
+					DimensionStructuresSettings.field_236191_b_.get(DoomStructures.DOOM1.get()));
+			serverWorld.getChunkProvider().generator.func_235957_b_().field_236193_d_ = tempMap;
+		}
 	}
 
 	private void enqueueIMC(InterModEnqueueEvent event) {

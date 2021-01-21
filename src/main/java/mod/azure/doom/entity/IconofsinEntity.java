@@ -145,7 +145,8 @@ public class IconofsinEntity extends DemonEntity implements IAnimatable {
 
 	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
 		return config.pushAttributes(MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 100.0D)
-				.createMutableAttribute(Attributes.KNOCKBACK_RESISTANCE, 1000.0D));
+				.createMutableAttribute(Attributes.KNOCKBACK_RESISTANCE, 1000.0D)
+				.createMutableAttribute(Attributes.MAX_HEALTH, 1000.0D));
 	}
 
 	@Override

@@ -1,97 +1,98 @@
 package mod.azure.doom.item.weapons;
 
-import java.util.function.Predicate;
+import java.util.List;
 
 import mod.azure.doom.DoomMod;
+import mod.azure.doom.client.Keybindings;
 import mod.azure.doom.entity.projectiles.BulletEntity;
-import mod.azure.doom.item.ammo.ClipAmmo;
 import mod.azure.doom.util.enums.DoomTier;
+import mod.azure.doom.util.packets.DoomPacketHandler;
+import mod.azure.doom.util.packets.PistolLoadingPacket;
 import mod.azure.doom.util.registry.DoomItems;
 import mod.azure.doom.util.registry.ModSoundEvents;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.item.BowItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.UseAction;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
-public class PistolItem extends BowItem {
+public class PistolItem extends Item {
 
 	public PistolItem() {
-		super(new Item.Properties().group(DoomMod.DoomWeaponItemGroup).maxStackSize(1).maxDamage(9000));
+		super(new Item.Properties().group(DoomMod.DoomWeaponItemGroup).maxStackSize(1).maxDamage(201));
 	}
 
 	@Override
 	public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
-		return DoomTier.DOOM.getRepairMaterial().test(repair) || super.getIsRepairable(toRepair, repair);
+		return DoomTier.PISTOL.getRepairMaterial().test(repair) || super.getIsRepairable(toRepair, repair);
 	}
 
 	@Override
 	public void onPlayerStoppedUsing(ItemStack stack, World worldIn, LivingEntity entityLiving, int timeLeft) {
 		if (entityLiving instanceof PlayerEntity) {
 			PlayerEntity playerentity = (PlayerEntity) entityLiving;
-			boolean flag = playerentity.abilities.isCreativeMode
-					|| EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, stack) > 0;
-			ItemStack itemstack = playerentity.findAmmo(stack);
-
-			int i = this.getUseDuration(stack) - timeLeft;
-			i = net.minecraftforge.event.ForgeEventFactory.onArrowLoose(stack, worldIn, playerentity, i,
-					!itemstack.isEmpty() || flag);
-			if (i < 0)
-				return;
-
-			if (!itemstack.isEmpty() || flag) {
-				if (itemstack.isEmpty()) {
-					itemstack = new ItemStack(DoomItems.BULLETS.get());
-				}
+			if (stack.getDamage() < (stack.getMaxDamage() - 1)) {
 				playerentity.getCooldownTracker().setCooldown(this, 5);
-				boolean flag1 = playerentity.abilities.isCreativeMode || (itemstack.getItem() instanceof ClipAmmo
-						&& ((ClipAmmo) itemstack.getItem()).isInfinite(itemstack, stack, playerentity));
 				if (!worldIn.isRemote) {
-					ClipAmmo arrowitem = (ClipAmmo) (itemstack.getItem() instanceof ClipAmmo ? itemstack.getItem()
-							: DoomItems.BULLETS.get());
-					BulletEntity abstractarrowentity = arrowitem.createArrow(worldIn, itemstack, playerentity);
+					BulletEntity abstractarrowentity = createArrow(worldIn, stack, playerentity);
 					abstractarrowentity = customeArrow(abstractarrowentity);
 					abstractarrowentity.func_234612_a_(playerentity, playerentity.rotationPitch,
-							playerentity.rotationYaw, 0.0F, 0.25F * 3.0F, 1.0F);
+							playerentity.rotationYaw, 0.0F, 1.0F * 3.0F, 1.0F);
 
-					abstractarrowentity.setDamage(abstractarrowentity.getDamage() + 1.3);
+					abstractarrowentity.setDamage(2.5);
+					abstractarrowentity.hasNoGravity();
 
-					int k = EnchantmentHelper.getEnchantmentLevel(Enchantments.PUNCH, stack);
-					if (k > 0) {
-						abstractarrowentity.setKnockbackStrength(k);
-					}
-
-					if (EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAME, stack) > 0) {
-						abstractarrowentity.setFire(100);
-					}
-
-					stack.damageItem(1, playerentity, (p_220009_1_) -> {
-						p_220009_1_.sendBreakAnimation(playerentity.getActiveHand());
-					});
-					if (flag1
-							|| playerentity.abilities.isCreativeMode && (itemstack.getItem() == DoomItems.BULLETS.get()
-									|| itemstack.getItem() == DoomItems.BULLETS.get())) {
-						abstractarrowentity.pickupStatus = AbstractArrowEntity.PickupStatus.DISALLOWED;
-					}
+					stack.damageItem(1, entityLiving, p -> p.sendBreakAnimation(entityLiving.getActiveHand()));
 					worldIn.addEntity(abstractarrowentity);
-
 					worldIn.playSound((PlayerEntity) null, playerentity.getPosX(), playerentity.getPosY(),
 							playerentity.getPosZ(), ModSoundEvents.PISTOL_HIT.get(), SoundCategory.PLAYERS, 1.0F,
 							1.0F / (random.nextFloat() * 0.4F + 1.2F) + 0.25F * 0.5F);
-					if (!flag1 && !playerentity.abilities.isCreativeMode) {
-						itemstack.shrink(1);
-						if (itemstack.isEmpty()) {
-							playerentity.inventory.deleteStack(itemstack);
-						}
-					}
+				}
+			}
+		}
+	}
+
+	public BulletEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
+		BulletEntity arrowentity = new BulletEntity(worldIn, shooter);
+		return arrowentity;
+	}
+
+	@Override
+	public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+		if (worldIn.isRemote) {
+			if (((PlayerEntity) entityIn).getHeldItemMainhand().getItem() instanceof PistolItem) {
+				while (Keybindings.RELOAD.isPressed() && isSelected) {
+					DoomPacketHandler.PISTOL.sendToServer(new PistolLoadingPacket(itemSlot));
+				}
+			}
+		}
+	}
+
+	public static void reload(PlayerEntity user, Hand hand) {
+		if (user.getHeldItemMainhand().getItem() instanceof PistolItem) {
+			while (user.getHeldItem(hand).getDamage() != 0 && user.inventory.count(DoomItems.BULLETS.get()) > 0) {
+				removeAmmo(DoomItems.BULLETS.get(), user);
+				user.getHeldItemMainhand().damageItem(-1, user, s -> user.sendBreakAnimation(hand));
+				user.getHeldItemMainhand().setAnimationsToGo(3);
+			}
+		}
+	}
+
+	private static void removeAmmo(Item ammo, PlayerEntity playerEntity) {
+		if (!playerEntity.isCreative()) {
+			for (ItemStack item : playerEntity.inventory.mainInventory) {
+				if (item.getItem() == DoomItems.BULLETS.get()) {
+					item.shrink(1);
+					break;
 				}
 			}
 		}
@@ -118,31 +119,17 @@ public class PistolItem extends BowItem {
 	}
 
 	@Override
+	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(new TranslationTextComponent(
+				"Ammo: " + (stack.getMaxDamage() - stack.getDamage() - 1) + " / " + (stack.getMaxDamage() - 1))
+						.mergeStyle(TextFormatting.ITALIC));
+	}
+
+	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
 		ItemStack itemstack = playerIn.getHeldItem(handIn);
-		boolean flag = !playerIn.findAmmo(itemstack).isEmpty();
-
-		ActionResult<ItemStack> ret = net.minecraftforge.event.ForgeEventFactory.onArrowNock(itemstack, worldIn,
-				playerIn, handIn, flag);
-		if (ret != null)
-			return ret;
-
-		if (!playerIn.abilities.isCreativeMode && !flag) {
-			return ActionResult.resultFail(itemstack);
-		} else {
-			playerIn.setActiveHand(handIn);
-			return ActionResult.resultConsume(itemstack);
-		}
-	}
-
-	@Override
-	public Predicate<ItemStack> getInventoryAmmoPredicate() {
-		return getAmmoPredicate();
-	}
-
-	@Override
-	public Predicate<ItemStack> getAmmoPredicate() {
-		return itemStack -> itemStack.getItem() instanceof ClipAmmo;
+		playerIn.setActiveHand(handIn);
+		return ActionResult.resultConsume(itemstack);
 	}
 
 	public BulletEntity customeArrow(BulletEntity arrow) {

@@ -14,12 +14,10 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.RegistryObject;
 
 public class UnmaykrBolt extends ArrowItem {
 
 	public final float damage;
-	private RegistryObject<Item> ref;
 
 	public UnmaykrBolt(float damageIn) {
 		super(new Item.Properties().group(DoomMod.DoomWeaponItemGroup));
@@ -40,14 +38,9 @@ public class UnmaykrBolt extends ArrowItem {
 		return enchant <= 0 ? false : this instanceof UnmaykrBolt;
 	}
 
-	public UnmaykrBolt setItemReference(RegistryObject<Item> refIn) {
-		this.ref = refIn;
-		return this;
-	}
-
 	@Override
 	public UnmaykrBoltEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
-		UnmaykrBoltEntity arrowentity = new UnmaykrBoltEntity(shooter, worldIn, ref.get());
+		UnmaykrBoltEntity arrowentity = new UnmaykrBoltEntity(worldIn, shooter);
 		arrowentity.setDamage(this.damage);
 		return arrowentity;
 	}
