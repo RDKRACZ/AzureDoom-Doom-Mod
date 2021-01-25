@@ -1,10 +1,3 @@
-v.3.9.1
+v.3.9.2
 
-- Updated Mechzombie model and animations.
-- Fixed a few Demons attacks not being played correctly.
-- Added the Spectre with configs.
-- Added the Spectre into the Book of Doom.
-- Fixed Demons crashing when glowing and being made invisible.
-- Fixed Name plates not appearing on the demons when named, which only appear when named and looked at.
-- Changed the build.gradle of the github repo to more friendly for people to set up the repo to send in PRs.
-- Removed Geckolib/Patchouli hacks, issue was fixed in Geckolib itself.
+- Updated Armor for new Geckolib armor rotation fix.
