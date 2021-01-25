@@ -13,6 +13,8 @@ public class BoPSpawns {
 				BOPBiomes.undergarden.get(), BOPBiomes.visceral_heap.get());
 		registerEntityWorldSpawn(ModEntityTypes.PINKY.get(), 12, 2, 4, BOPBiomes.ashen_inferno.get(),
 				BOPBiomes.undergarden.get(), BOPBiomes.visceral_heap.get());
+		registerEntityWorldSpawn(ModEntityTypes.SPECTRE.get(), 12, 2, 4, BOPBiomes.ashen_inferno.get(),
+				BOPBiomes.undergarden.get(), BOPBiomes.visceral_heap.get());
 		registerEntityWorldSpawn(ModEntityTypes.CACODEMON.get(), 8, 1, 2, BOPBiomes.ashen_inferno.get(),
 				BOPBiomes.undergarden.get(), BOPBiomes.visceral_heap.get());
 		registerEntityWorldSpawn(ModEntityTypes.ARCHVILE.get(), 4, 1, 2, BOPBiomes.ashen_inferno.get(),

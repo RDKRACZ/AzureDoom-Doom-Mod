@@ -29,6 +29,7 @@ import mod.azure.doom.client.render.PossessedScientistRender;
 import mod.azure.doom.client.render.PossessedSoldierRender;
 import mod.azure.doom.client.render.RevenantRender;
 import mod.azure.doom.client.render.ShotgunguyRender;
+import mod.azure.doom.client.render.SpectreRender;
 import mod.azure.doom.client.render.SpiderdemonRender;
 import mod.azure.doom.client.render.UnwillingRender;
 import mod.azure.doom.client.render.ZombiemanRender;
@@ -172,6 +173,8 @@ public class ClientModEventSubscriber {
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.HELLKNIGHT2016.get(),
 				Hellknight2016Render::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.FIRING.get(), ArchvileFiringRender::new);
+
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.SPECTRE.get(), SpectreRender::new);
 
 		GeoArmorRenderer.registerArmorRenderer(DoomicornDoomArmor.class, new DoomicornRender());
 		GeoArmorRenderer.registerArmorRenderer(NightmareDoomArmor.class, new NightmareRender());

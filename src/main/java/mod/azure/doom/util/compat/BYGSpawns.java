@@ -13,6 +13,8 @@ public class BYGSpawns {
 				BYGBiomeList.GLOWSTONEGARDENS, BYGBiomeList.SYTHIANTORRIDS, BYGBiomeList.WARPEDDESERT);
 		registerEntityWorldSpawn(ModEntityTypes.PINKY.get(), 12, 2, 4, BYGBiomeList.EMBURBOG,
 				BYGBiomeList.GLOWSTONEGARDENS, BYGBiomeList.SYTHIANTORRIDS, BYGBiomeList.WARPEDDESERT);
+		registerEntityWorldSpawn(ModEntityTypes.SPECTRE.get(), 12, 2, 4, BYGBiomeList.EMBURBOG,
+				BYGBiomeList.GLOWSTONEGARDENS, BYGBiomeList.SYTHIANTORRIDS, BYGBiomeList.WARPEDDESERT);
 		registerEntityWorldSpawn(ModEntityTypes.CACODEMON.get(), 8, 1, 2, BYGBiomeList.EMBURBOG,
 				BYGBiomeList.GLOWSTONEGARDENS, BYGBiomeList.SYTHIANTORRIDS, BYGBiomeList.WARPEDDESERT);
 		registerEntityWorldSpawn(ModEntityTypes.ARCHVILE.get(), 4, 1, 2, BYGBiomeList.EMBURBOG,

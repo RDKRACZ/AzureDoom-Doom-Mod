@@ -8,19 +8,11 @@ import javax.annotation.Nullable;
 
 import mod.azure.doom.entity.ai.goal.DemonAttackGoal;
 import mod.azure.doom.entity.ai.goal.HurtByAggressorGoal;
-import mod.azure.doom.entity.ai.goal.RangedStaticAttackGoal;
 import mod.azure.doom.entity.ai.goal.TargetAggressorGoal;
-import mod.azure.doom.entity.attack.AbstractRangedAttack;
-import mod.azure.doom.entity.attack.AttackSound;
-import mod.azure.doom.entity.projectiles.entity.BarenBlastEntity;
-import mod.azure.doom.util.Config;
-import mod.azure.doom.util.EntityConfig;
-import mod.azure.doom.util.EntityDefaults.EntityConfigType;
 import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.CreatureAttribute;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -30,24 +22,20 @@ import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
+import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
+import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -57,33 +45,31 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-public class BaronEntity extends DemonEntity implements IAnimatable {
-	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(BaronEntity.class,
-			DataSerializers.BOOLEAN);
+public class SpectreEntity extends DemonEntity implements IAnimatable {
 
-	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.BARON);
-
-	public BaronEntity(EntityType<? extends BaronEntity> entityType, World worldIn) {
+	public SpectreEntity(EntityType<SpectreEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
 	}
 
 	private AnimationFactory factory = new AnimationFactory(this);
 
 	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-		if (event.isMoving()) { //&& !this.dataManager.get(ATTACKING)) {
+		if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F)) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("walking", true));
 			return PlayState.CONTINUE;
 		}
-//		if (this.dataManager.get(ATTACKING)) {
-//			event.getController().setAnimation(new AnimationBuilder().addAnimation("attacking", true));
-//			return PlayState.CONTINUE;
-//		}
+		if (this.dead) {
+			if (world.isRemote) {
+				event.getController().setAnimation(new AnimationBuilder().addAnimation("death", false));
+				return PlayState.CONTINUE;
+			}
+		}
 		return PlayState.STOP;
 	}
 
 	@Override
 	public void registerControllers(AnimationData data) {
-		data.addAnimationController(new AnimationController<BaronEntity>(this, "controller", 0, this::predicate));
+		data.addAnimationController(new AnimationController<SpectreEntity>(this, "controller", 0, this::predicate));
 	}
 
 	@Override
@@ -91,19 +77,12 @@ public class BaronEntity extends DemonEntity implements IAnimatable {
 		return this.factory;
 	}
 
-	@OnlyIn(Dist.CLIENT)
-	public boolean isAttacking() {
-		return this.dataManager.get(ATTACKING);
-	}
-
-	public void setAttacking(boolean attacking) {
-		this.dataManager.set(ATTACKING, attacking);
-	}
-
 	@Override
-	protected void registerData() {
-		super.registerData();
-		this.dataManager.register(ATTACKING, false);
+	protected void onDeathUpdate() {
+		++this.deathTime;
+		if (this.deathTime == 80) {
+			this.remove();
+		}
 	}
 
 	@Override
@@ -111,83 +90,37 @@ public class BaronEntity extends DemonEntity implements IAnimatable {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
-	public static boolean spawning(EntityType<BaronEntity> p_223337_0_, IWorld p_223337_1_, SpawnReason reason,
+	public static boolean spawning(EntityType<SpectreEntity> p_223337_0_, IWorld p_223337_1_, SpawnReason reason,
 			BlockPos p_223337_3_, Random p_223337_4_) {
 		return p_223337_1_.getDifficulty() != Difficulty.PEACEFUL;
 	}
 
 	@Override
 	protected void registerGoals() {
-		this.goalSelector.addGoal(6, new LookAtGoal(this, PlayerEntity.class, 8.0F));
-		this.goalSelector.addGoal(6, new LookRandomlyGoal(this));
-		this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
-		this.goalSelector.addGoal(4,
-				new RangedStaticAttackGoal(this,
-						new BaronEntity.FireballAttack(this).setProjectileOriginOffset(0.8, 0.8, 0.8).setDamage(12), 60,
-						20, 30F));
-		this.goalSelector.addGoal(4, new DemonAttackGoal(this, 1.0D, false));
-		this.targetSelector.addGoal(1, new HurtByTargetGoal(this).setCallsForHelp());
-		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
-		this.targetSelector.addGoal(1, new HurtByAggressorGoal(this));
-		this.targetSelector.addGoal(2, new TargetAggressorGoal(this));
+		this.goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8.0F));
+		this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
+		this.applyEntityAI();
 	}
 
-	public class FireballAttack extends AbstractRangedAttack {
-
-		public FireballAttack(DemonEntity parentEntity, double xOffSetModifier, double entityHeightFraction,
-				double zOffSetModifier, float damage) {
-			super(parentEntity, xOffSetModifier, entityHeightFraction, zOffSetModifier, damage);
-		}
-
-		public FireballAttack(DemonEntity parentEntity) {
-			super(parentEntity);
-		}
-
-		@Override
-		public AttackSound getDefaultAttackSound() {
-			return new AttackSound(SoundEvents.ENTITY_FIREWORK_ROCKET_BLAST, 1, 1);
-		}
-
-		@Override
-		public Entity getProjectile(World world, double d2, double d3, double d4) {
-			return new BarenBlastEntity(world, this.parentEntity, d2, d3, d4);
-
-		}
+	protected void applyEntityAI() {
+		this.goalSelector.addGoal(2, new DemonAttackGoal(this, 1.0D, false));
+		this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
+		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
+		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, false));
+		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
+		this.targetSelector.addGoal(1, new HurtByAggressorGoal(this));
+		this.targetSelector.addGoal(1, new HurtByTargetGoal(this).setCallsForHelp());
+		this.targetSelector.addGoal(2, new TargetAggressorGoal(this));
 	}
 
 	@Override
 	protected void registerAttributes() {
 		super.registerAttributes();
 		this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(35.0D);
-		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(180.0D);
-		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double) 0.23F);
+		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
 		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(3.0D);
 		this.getAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(2.0D);
-	}
-
-	@Override
-	public void notifyDataManagerChange(DataParameter<?> key) {
-		super.notifyDataManagerChange(key);
-	}
-
-	@Override
-	public void tick() {
-		super.tick();
-	}
-
-	@Override
-	public void livingTick() {
-		super.livingTick();
-	}
-
-	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
-	}
-
-	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(75.0F);
 	}
 
 	@Nullable
@@ -198,9 +131,11 @@ public class BaronEntity extends DemonEntity implements IAnimatable {
 		float f = difficultyIn.getClampedAdditionalDifficulty();
 		this.setCanPickUpLoot(this.rand.nextFloat() < 0.55F * f);
 		if (spawnDataIn == null) {
-			spawnDataIn = new BaronEntity.GroupData(worldIn.getRandom()
+			spawnDataIn = new SpectreEntity.GroupData(worldIn.getRandom()
 					.nextFloat() < net.minecraftforge.common.ForgeConfig.SERVER.zombieBabyChance.get());
 		}
+
+		this.setEquipmentBasedOnDifficulty(difficultyIn);
 		this.setEnchantmentBasedOnDifficulty(difficultyIn);
 
 		if (this.getItemStackFromSlot(EquipmentSlotType.HEAD).isEmpty()) {
@@ -229,31 +164,23 @@ public class BaronEntity extends DemonEntity implements IAnimatable {
 		return false;
 	}
 
-	protected boolean shouldDrown() {
-		return false;
-	}
-
-	protected boolean shouldBurnInDay() {
-		return false;
-	}
-
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return ModSoundEvents.BARON_AMBIENT.get();
+		return ModSoundEvents.PINKY_AMBIENT.get();
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-		return ModSoundEvents.BARON_HURT.get();
+		return ModSoundEvents.PINKY_HURT.get();
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return ModSoundEvents.BARON_DEATH.get();
+		return ModSoundEvents.PINKY_DEATH.get();
 	}
 
 	protected SoundEvent getStepSound() {
-		return ModSoundEvents.BARON_STEP.get();
+		return ModSoundEvents.PINKY_STEP.get();
 	}
 
 	@Override
@@ -268,6 +195,7 @@ public class BaronEntity extends DemonEntity implements IAnimatable {
 
 	@Override
 	public int getMaxSpawnedInChunk() {
-		return 1;
+		return 7;
 	}
+
 }

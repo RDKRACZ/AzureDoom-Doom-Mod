@@ -9,6 +9,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
+import mod.azure.doom.entity.SpectreEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderHelper;
@@ -132,9 +133,10 @@ public class DoomGeoEntityRenderer<T extends LivingEntity & IAnimatable> extends
 		Color renderColor = getRenderColor(entity, partialTicks, stack, bufferIn, null, packedLightIn);
 		RenderType renderType = getRenderType(entity, partialTicks, stack, bufferIn, null, packedLightIn,
 				getEntityTexture(entity));
+		boolean invis = entity.isInvisibleToPlayer(Minecraft.getInstance().player);
 		render(model, entity, partialTicks, renderType, stack, bufferIn, null, packedLightIn,
 				getPackedOverlay(entity, 0), (float) renderColor.getRed() / 255f, (float) renderColor.getBlue() / 255f,
-				(float) renderColor.getGreen() / 255f, (float) renderColor.getAlpha() / 255);
+				(float) renderColor.getGreen() / 255f, invis ? 0.0F : entity instanceof SpectreEntity ? 0.1F : 1.0F);
 
 		if (!entity.isSpectator()) {
 			for (GeoLayerRenderer<T> layerRenderer : this.layerRenderers) {
@@ -159,6 +161,16 @@ public class DoomGeoEntityRenderer<T extends LivingEntity & IAnimatable> extends
 	public static int getPackedOverlay(LivingEntity livingEntityIn, float uIn) {
 		return OverlayTexture.getPackedUV(OverlayTexture.getU(uIn),
 				OverlayTexture.getV(livingEntityIn.hurtTime > 0 || livingEntityIn.deathTime > 0));
+	}
+
+	public boolean canRenderName(T entity) {
+		double d0 = this.renderManager.squareDistanceTo(entity);
+		float f = entity.isDiscrete() ? 32.0F : 64.0F;
+		if (d0 >= (double) (f * f)) {
+			return false;
+		} else {
+			return entity == this.renderManager.pointedEntity && entity.hasCustomName();
+		}
 	}
 
 	protected void applyRotations(T entityLiving, MatrixStack matrixStackIn, float ageInTicks, float rotationYaw,
@@ -203,14 +215,14 @@ public class DoomGeoEntityRenderer<T extends LivingEntity & IAnimatable> extends
 			float red, float green, float blue, float alpha) {
 		IGeoRenderer.super.render(model, animatable, partialTicks, type, matrixStackIn, renderTypeBuffer, vertexBuilder,
 				packedLightIn, packedOverlayIn, red, green, blue, alpha);
-		matrixStackIn.push();
-		IRenderTypeBuffer.Impl irendertypebuffer$impl = Minecraft.getInstance().getRenderTypeBuffers()
-				.getBufferSource();
-		RenderHelper.setupGuiFlatDiffuseLighting();
-		irendertypebuffer$impl.finish();
-		RenderSystem.enableDepthTest();
-		RenderHelper.setupGui3DDiffuseLighting();
-		matrixStackIn.pop();
+//		matrixStackIn.push();
+//		IRenderTypeBuffer.Impl irendertypebuffer$impl = Minecraft.getInstance().getRenderTypeBuffers()
+//				.getBufferSource();
+//		RenderHelper.setupGuiFlatDiffuseLighting();
+//		irendertypebuffer$impl.finish();
+//		RenderSystem.enableDepthTest();
+//		RenderHelper.setupGui3DDiffuseLighting();
+//		matrixStackIn.pop();
 	}
 
 	protected boolean isVisible(T livingEntityIn) {

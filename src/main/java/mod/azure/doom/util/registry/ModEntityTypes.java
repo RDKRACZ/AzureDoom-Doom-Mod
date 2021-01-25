@@ -26,6 +26,7 @@ import mod.azure.doom.entity.PossessedScientistEntity;
 import mod.azure.doom.entity.PossessedSoldierEntity;
 import mod.azure.doom.entity.RevenantEntity;
 import mod.azure.doom.entity.ShotgunguyEntity;
+import mod.azure.doom.entity.SpectreEntity;
 import mod.azure.doom.entity.SpiderdemonEntity;
 import mod.azure.doom.entity.UnwillingEntity;
 import mod.azure.doom.entity.ZombiemanEntity;
@@ -132,6 +133,11 @@ public class ModEntityTypes {
 			() -> EntityType.Builder.<PinkyEntity>create(PinkyEntity::new, EntityClassification.MONSTER)
 					.size(0.6f, 1.95F).immuneToFire().setTrackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "pinky").toString()));
+
+	public static final RegistryObject<EntityType<SpectreEntity>> SPECTRE = ENTITY_TYPES.register("spectre",
+			() -> EntityType.Builder.create(SpectreEntity::new, EntityClassification.MONSTER).size(1.7f, 2.2F)
+					.immuneToFire().setTrackingRange(9)
+					.build(new ResourceLocation(DoomMod.MODID, "spectre").toString()));
 
 	public static final RegistryObject<EntityType<CacodemonEntity>> CACODEMON = ENTITY_TYPES.register("cacodemon",
 			() -> EntityType.Builder.<CacodemonEntity>create(CacodemonEntity::new, EntityClassification.MONSTER)
@@ -247,7 +253,7 @@ public class ModEntityTypes {
 					.build(new ResourceLocation(DoomMod.MODID, "possessed_scientist").toString()));
 
 	public static final RegistryObject<EntityType<MechaZombieEntity>> MECHAZOMBIE = ENTITY_TYPES.register("mechazombie",
-			() -> EntityType.Builder.create(MechaZombieEntity::new, EntityClassification.MONSTER).size(0.6f, 1.95F)
+			() -> EntityType.Builder.create(MechaZombieEntity::new, EntityClassification.MONSTER).size(1.2f, 2.3f)
 					.immuneToFire().setTrackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "mechazombie").toString()));
 

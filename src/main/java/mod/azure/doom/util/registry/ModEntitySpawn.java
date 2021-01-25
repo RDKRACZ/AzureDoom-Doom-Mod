@@ -23,6 +23,7 @@ import mod.azure.doom.entity.PossessedScientistEntity;
 import mod.azure.doom.entity.PossessedSoldierEntity;
 import mod.azure.doom.entity.RevenantEntity;
 import mod.azure.doom.entity.ShotgunguyEntity;
+import mod.azure.doom.entity.SpectreEntity;
 import mod.azure.doom.entity.SpiderdemonEntity;
 import mod.azure.doom.entity.UnwillingEntity;
 import mod.azure.doom.entity.ZombiemanEntity;
@@ -40,6 +41,8 @@ public class ModEntitySpawn {
 		registerEntityWorldSpawn(ModEntityTypes.IMP.get(), Config.SERVER.COMMON_DEMON_SPAWN_WEIGHT, 1, 4,
 				Biomes.NETHER);
 		registerEntityWorldSpawn(ModEntityTypes.PINKY.get(), Config.SERVER.HEAVY_DEMON_SPAWN_WEIGHT, 2, 4,
+				Biomes.NETHER);
+		registerEntityWorldSpawn(ModEntityTypes.SPECTRE.get(), Config.SERVER.HEAVY_DEMON_SPAWN_WEIGHT, 2, 4,
 				Biomes.NETHER);
 		registerEntityWorldSpawn(ModEntityTypes.CACODEMON.get(), Config.SERVER.HEAVY_DEMON_SPAWN_WEIGHT, 1, 2,
 				Biomes.NETHER);
@@ -59,8 +62,8 @@ public class ModEntitySpawn {
 				Biomes.NETHER);
 		registerEntityWorldSpawn(ModEntityTypes.ARACHNOTRON.get(), Config.SERVER.COMMON_DEMON_SPAWN_WEIGHT, 1, 4,
 				Biomes.NETHER);
-		registerEntityWorldSpawn(ModEntityTypes.NIGHTMARE_IMP.get(), Config.SERVER.COMMON_DEMON_SPAWN_WEIGHT, 1,
-				4, Biomes.NETHER);
+		registerEntityWorldSpawn(ModEntityTypes.NIGHTMARE_IMP.get(), Config.SERVER.COMMON_DEMON_SPAWN_WEIGHT, 1, 4,
+				Biomes.NETHER);
 		registerEntityWorldSpawn(ModEntityTypes.GARGOYLE.get(), Config.SERVER.COMMON_DEMON_SPAWN_WEIGHT, 1, 4,
 				Biomes.NETHER);
 		registerEntityWorldSpawn(ModEntityTypes.CHAINGUNNER.get(), Config.SERVER.COMMON_DEMON_SPAWN_WEIGHT, 1, 4,
@@ -73,18 +76,18 @@ public class ModEntitySpawn {
 				Biomes.NETHER);
 		registerEntityWorldSpawn(ModEntityTypes.HELLKNIGHT.get(), Config.SERVER.HEAVY_DEMON_SPAWN_WEIGHT, 1, 1,
 				Biomes.NETHER);
-		registerEntityWorldSpawn(ModEntityTypes.HELLKNIGHT2016.get(), Config.SERVER.HEAVY_DEMON_SPAWN_WEIGHT, 1,
-				1, Biomes.NETHER);
+		registerEntityWorldSpawn(ModEntityTypes.HELLKNIGHT2016.get(), Config.SERVER.HEAVY_DEMON_SPAWN_WEIGHT, 1, 1,
+				Biomes.NETHER);
 		registerEntityWorldSpawn(ModEntityTypes.CYBERDEMON.get(), Config.SERVER.HEAVY_DEMON_SPAWN_WEIGHT, 1, 1,
 				Biomes.NETHER);
 		registerEntityWorldSpawn(ModEntityTypes.UNWILLING.get(), Config.SERVER.COMMON_DEMON_SPAWN_WEIGHT, 1, 4,
 				Biomes.NETHER);
-		registerEntityWorldSpawn(ModEntityTypes.POSSESSEDSCIENTIST.get(), Config.SERVER.COMMON_DEMON_SPAWN_WEIGHT,
-				1, 4, Biomes.NETHER);
-		registerEntityWorldSpawn(ModEntityTypes.POSSESSEDSOLDIER.get(), Config.SERVER.COMMON_DEMON_SPAWN_WEIGHT,
-				1, 4, Biomes.NETHER);
-		registerEntityWorldSpawn(ModEntityTypes.CYBERDEMON2016.get(), Config.SERVER.HEAVY_DEMON_SPAWN_WEIGHT, 1,
-				1, Biomes.NETHER);
+		registerEntityWorldSpawn(ModEntityTypes.POSSESSEDSCIENTIST.get(), Config.SERVER.COMMON_DEMON_SPAWN_WEIGHT, 1, 4,
+				Biomes.NETHER);
+		registerEntityWorldSpawn(ModEntityTypes.POSSESSEDSOLDIER.get(), Config.SERVER.COMMON_DEMON_SPAWN_WEIGHT, 1, 4,
+				Biomes.NETHER);
+		registerEntityWorldSpawn(ModEntityTypes.CYBERDEMON2016.get(), Config.SERVER.HEAVY_DEMON_SPAWN_WEIGHT, 1, 1,
+				Biomes.NETHER);
 		registerEntityWorldSpawn(ModEntityTypes.GORE_NEST.get(), Config.SERVER.HEAVY_DEMON_SPAWN_WEIGHT, 1, 1,
 				Biomes.NETHER);
 		registerEntityWorldSpawn(ModEntityTypes.MECHAZOMBIE.get(), Config.SERVER.COMMON_DEMON_SPAWN_WEIGHT, 1, 4,
@@ -122,6 +125,9 @@ public class ModEntitySpawn {
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.PINKY.get(),
 				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
 				PinkyEntity::spawning);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.SPECTRE.get(),
+				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+				SpectreEntity::spawning);
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.CACODEMON.get(),
 				EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
 				CacodemonEntity::spawning);

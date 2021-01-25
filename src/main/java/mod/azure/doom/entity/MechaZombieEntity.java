@@ -26,6 +26,7 @@ import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
+import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
@@ -62,15 +63,15 @@ public class MechaZombieEntity extends DemonEntity implements IAnimatable {
 	private AnimationFactory factory = new AnimationFactory(this);
 
 	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-		if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F)) {
+		if (event.isMoving() && !this.dataManager.get(ATTACKING)) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("walking", true));
 			return PlayState.CONTINUE;
 		}
-		if (this.dataManager.get(ATTACKING)) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("attack", true));
+		if (this.dataManager.get(ATTACKING) && !(this.dead || this.getHealth() < 0.01)) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("attack", false));
 			return PlayState.CONTINUE;
 		}
-		if (this.dead) {
+		if ((this.dead || this.getHealth() < 0.01)) {
 			if (world.isRemote) {
 				event.getController().setAnimation(new AnimationBuilder().addAnimation("death", false));
 				return PlayState.CONTINUE;
@@ -145,6 +146,7 @@ public class MechaZombieEntity extends DemonEntity implements IAnimatable {
 						1.0D, 50, 30, 15, 15F).setMultiShot(4, 3));
 		this.goalSelector.addGoal(4, new DemonAttackGoal(this, 1.0D, false));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
+		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, true));
 		this.targetSelector.addGoal(1, new HurtByAggressorGoal(this));
 		this.targetSelector.addGoal(2, new TargetAggressorGoal(this));
 	}

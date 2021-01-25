@@ -67,7 +67,7 @@ public class CacodemonEntity extends DemonEntity implements IMob, IAnimatable {
 	private AnimationFactory factory = new AnimationFactory(this);
 
 	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-		if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F) && !this.dataManager.get(ATTACKING)) {
+		if (event.isMoving() && !this.dataManager.get(ATTACKING)) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("walking", true));
 			return PlayState.CONTINUE;
 		}
@@ -77,19 +77,12 @@ public class CacodemonEntity extends DemonEntity implements IMob, IAnimatable {
 				return PlayState.CONTINUE;
 			}
 		}
-		if (this.dataManager.get(ATTACKING)) {
+		if (this.dataManager.get(ATTACKING) && !this.dead) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("attacking", true));
 			return PlayState.CONTINUE;
 		}
-		if (this.isAggressive()) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("attacking"));
-			return PlayState.CONTINUE;
-		}
-		if ((limbSwingAmount > -0.15F && limbSwingAmount < 0.15F) && !this.dataManager.get(ATTACKING)) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
-			return PlayState.CONTINUE;
-		}
-		return PlayState.STOP;
+		event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
+		return PlayState.CONTINUE;
 	}
 
 	@Override

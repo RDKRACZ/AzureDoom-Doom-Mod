@@ -14,6 +14,9 @@ public class NetherExSpawns {
 		registerEntityWorldSpawn(ModEntityTypes.PINKY.get(), 12, 2, 4, NetherExBiomes.RUTHLESS_SANDS.get(),
 				NetherExBiomes.FUNGI_FOREST.get(), NetherExBiomes.TORRID_WASTELAND.get(),
 				NetherExBiomes.ARCTIC_ABYSS.get());
+		registerEntityWorldSpawn(ModEntityTypes.SPECTRE.get(), 12, 2, 4, NetherExBiomes.RUTHLESS_SANDS.get(),
+				NetherExBiomes.FUNGI_FOREST.get(), NetherExBiomes.TORRID_WASTELAND.get(),
+				NetherExBiomes.ARCTIC_ABYSS.get());
 		registerEntityWorldSpawn(ModEntityTypes.CACODEMON.get(), 8, 1, 2, NetherExBiomes.RUTHLESS_SANDS.get(),
 				NetherExBiomes.FUNGI_FOREST.get(), NetherExBiomes.TORRID_WASTELAND.get(),
 				NetherExBiomes.ARCTIC_ABYSS.get());
