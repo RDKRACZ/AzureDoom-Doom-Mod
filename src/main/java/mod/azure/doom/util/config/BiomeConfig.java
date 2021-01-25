@@ -32,6 +32,7 @@ public class BiomeConfig {
 	public static List<? extends String> NIGHTMARE_IMP = Lists.newArrayList(DefaultBiomes.NIGHTMARE_IMP);
 	public static List<? extends String> PAIN = Lists.newArrayList(DefaultBiomes.PAIN);
 	public static List<? extends String> PINKY = Lists.newArrayList(DefaultBiomes.PINKY);
+	public static List<? extends String> SPECTRE = Lists.newArrayList(DefaultBiomes.SPECTRE);
 	public static List<? extends String> POSSESSED_SCIENTIST = Lists.newArrayList(DefaultBiomes.POSSESSED_SCIENTIST);
 	public static List<? extends String> POSSESSED_SOLDIER = Lists.newArrayList(DefaultBiomes.POSSESSED_SOLDIER);
 	public static List<? extends String> REVENANT = Lists.newArrayList(DefaultBiomes.REVENANT);

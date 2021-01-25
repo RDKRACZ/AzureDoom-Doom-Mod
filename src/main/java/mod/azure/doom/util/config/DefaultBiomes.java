@@ -23,6 +23,7 @@ public class DefaultBiomes {
 	public static final String[] NIGHTMARE_IMP = new String[] { "|#nether" };
 	public static final String[] PAIN = new String[] { "|#nether" };
 	public static final String[] PINKY = new String[] { "|#nether" };
+	public static final String[] SPECTRE = new String[] { "|#nether" };
 	public static final String[] POSSESSED_SCIENTIST = new String[] { "|#nether" };
 	public static final String[] POSSESSED_SOLDIER = new String[] { "|#nether" };
 	public static final String[] REVENANT = new String[] { "|#nether" };

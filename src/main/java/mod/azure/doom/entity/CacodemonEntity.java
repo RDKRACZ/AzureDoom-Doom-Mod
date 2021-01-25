@@ -67,25 +67,22 @@ public class CacodemonEntity extends DemonEntity implements IMob, IAnimatable {
 	private AnimationFactory factory = new AnimationFactory(this);
 
 	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-		if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F) && !this.dataManager.get(ATTACKING)) {
+		if (event.isMoving() && !this.dataManager.get(ATTACKING)) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("walking", true));
 			return PlayState.CONTINUE;
 		}
-		if ((this.dead || this.getHealth() < 0.01 || this.getShouldBeDead())) {
+		if (this.dead || this.getHealth() < 0.01 || this.getShouldBeDead()) {
 			if (world.isRemote) {
 				event.getController().setAnimation(new AnimationBuilder().addAnimation("death", false));
 				return PlayState.CONTINUE;
 			}
 		}
-		if (this.dataManager.get(ATTACKING)) {
+		if (this.dataManager.get(ATTACKING) && (this.dead || this.getHealth() < 0.01 || this.getShouldBeDead())) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("attacking", false));
 			return PlayState.CONTINUE;
 		}
-		if ((limbSwingAmount > -0.15F && limbSwingAmount < 0.15F) && !this.dataManager.get(ATTACKING)) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
-			return PlayState.CONTINUE;
-		}
-		return PlayState.STOP;
+		event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
+		return PlayState.CONTINUE;
 	}
 
 	@Override
@@ -141,9 +138,10 @@ public class CacodemonEntity extends DemonEntity implements IMob, IAnimatable {
 		this.goalSelector.addGoal(5, new RandomFlyConvergeOnTargetGoal(this, 2, 15, 0.5));
 		this.goalSelector.addGoal(7, new CacodemonEntity.LookAroundGoal(this));
 		this.goalSelector.addGoal(4,
-				new RangedStaticAttackGoal(this, new FireballAttack(this, true).setDamage(10)
-						.setProjectileOriginOffset(1.5, 0.3, 1.5).setSound(ModSoundEvents.CACODEMON_FIREBALL.get(),
-								1.0F, 1.2F / (this.getRNG().nextFloat() * 0.2F + 0.9F)),
+				new RangedStaticAttackGoal(this,
+						new FireballAttack(this, true).setDamage(10).setProjectileOriginOffset(1.5, 0.3, 1.5).setSound(
+								ModSoundEvents.CACODEMON_FIREBALL.get(), 1.0F,
+								1.2F / (this.getRNG().nextFloat() * 0.2F + 0.9F)),
 						60, 20, 30F));
 		this.goalSelector.addGoal(4, new DemonAttackGoal(this, 1.0D, false));
 		this.targetSelector.addGoal(1,

@@ -30,6 +30,7 @@ import mod.azure.doom.entity.PossessedScientistEntity;
 import mod.azure.doom.entity.PossessedSoldierEntity;
 import mod.azure.doom.entity.RevenantEntity;
 import mod.azure.doom.entity.ShotgunguyEntity;
+import mod.azure.doom.entity.SpectreEntity;
 import mod.azure.doom.entity.SpiderdemonEntity;
 import mod.azure.doom.entity.UnwillingEntity;
 import mod.azure.doom.entity.ZombiemanEntity;
@@ -169,6 +170,7 @@ public class DoomMod {
 			GlobalEntityTypeAttributes.put(ModEntityTypes.MANCUBUS.get(), MancubusEntity.func_234200_m_().create());
 			GlobalEntityTypeAttributes.put(ModEntityTypes.MARAUDER.get(), MarauderEntity.func_234200_m_().create());
 			GlobalEntityTypeAttributes.put(ModEntityTypes.PINKY.get(), PinkyEntity.func_234200_m_().create());
+			GlobalEntityTypeAttributes.put(ModEntityTypes.SPECTRE.get(), SpectreEntity.func_234200_m_().create());
 			GlobalEntityTypeAttributes.put(ModEntityTypes.LOST_SOUL.get(), LostSoulEntity.func_234200_m_().create());
 			GlobalEntityTypeAttributes.put(ModEntityTypes.POSSESSEDSCIENTIST.get(),
 					PossessedScientistEntity.func_234200_m_().create());

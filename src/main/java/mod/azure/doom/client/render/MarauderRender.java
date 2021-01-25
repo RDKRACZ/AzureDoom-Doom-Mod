@@ -3,7 +3,7 @@ package mod.azure.doom.client.render;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
-import mod.azure.doom.client.DoomGeoEntityRenderer;
+import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 import mod.azure.doom.client.models.MarauderModel;
 import mod.azure.doom.entity.MarauderEntity;
 import mod.azure.doom.util.registry.DoomItems;
@@ -17,7 +17,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Vector3f;
 import software.bernie.geckolib3.geo.render.built.GeoBone;
 
-public class MarauderRender extends DoomGeoEntityRenderer<MarauderEntity> {
+public class MarauderRender extends GeoEntityRenderer<MarauderEntity> {
 
 	private static final ItemStack chaingun = new ItemStack(DoomItems.AXE_OPEN.get());
 	private IRenderTypeBuffer rtb;

@@ -271,6 +271,8 @@ public class DoomItems {
 			() -> new DoomSpawnEgg(ModEntityTypes.HELLKNIGHT2016));
 	public static final RegistryObject<Item> GARGOYLE_SPAWN_EGG = ITEMS.register("gargoyle_spawn_egg",
 			() -> new DoomSpawnEgg(ModEntityTypes.GARGOYLE));
+	public static final RegistryObject<Item> SPECTRE_SPAWN_EGG = ITEMS.register("spectre_spawn_egg",
+			() -> new DoomSpawnEgg(ModEntityTypes.SPECTRE));
 
 	// WEAPONS AND TOOLS
 	public static final RegistryObject<Item> CRUCIBLESWORD = ITEMS.register("cruciblesword",

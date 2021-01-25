@@ -30,6 +30,7 @@ public class EntityDefaults {
 		POSSESSED_SOLDIER("Possessed Soldier", new EntityDefaults(false, 4, 15).setMeleeDamage(4).setRangedDamage(3).setGeneralSpeed(0.25)),
 		REVENANT("Revenant", new EntityDefaults (true, 1, 45).setMeleeDamage(6).setRangedDamage(10).setGeneralSpeed(0.25)),
 		SHOTGUN_GUY("Shotgun Guy", new EntityDefaults(false, 4, 15).setMeleeDamage(4).setRangedDamage(4).setGeneralSpeed(0.25)),
+		SPECTRE("spectre", new EntityDefaults(false, 4, 75).setMeleeDamage(6).setGeneralSpeed(0.25)),
 		SPIDER_DEMON("Spider Mastermind", new EntityDefaults(true, 1, 300).setRangedDamage(15).setMeleeDamage(8).setGeneralSpeed(0.25)),
 		UNWILLING("Unwilling", new EntityDefaults(false, 4, 15).setMeleeDamage(4).setGeneralSpeed(0.25)),
 		ZOMBIEMAN("Zombieman", new EntityDefaults(false, 4, 15).setMeleeDamage(4).setRangedDamage(4).setGeneralSpeed(0.25));

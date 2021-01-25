@@ -30,6 +30,11 @@ public class ModEntitySpawn {
 			base.add(new Spawners(ModEntityTypes.PINKY.get(), config.get(EntityConfigType.PINKY).SPAWN_WEIGHT,
 					config.get(EntityConfigType.PINKY).MIN_GROUP, config.get(EntityConfigType.PINKY).MAX_GROUP));
 		}
+		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.SPECTRE, biome)
+				&& config.get(EntityConfigType.SPECTRE).SPAWN_WEIGHT > 0) {
+			base.add(new Spawners(ModEntityTypes.SPECTRE.get(), config.get(EntityConfigType.SPECTRE).SPAWN_WEIGHT,
+					config.get(EntityConfigType.SPECTRE).MIN_GROUP, config.get(EntityConfigType.SPECTRE).MAX_GROUP));
+		}
 		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.LOST_SOUL, biome)
 				&& config.get(EntityConfigType.LOST_SOUL).SPAWN_WEIGHT > 0) {
 			base.add(new Spawners(ModEntityTypes.LOST_SOUL.get(), config.get(EntityConfigType.LOST_SOUL).SPAWN_WEIGHT,

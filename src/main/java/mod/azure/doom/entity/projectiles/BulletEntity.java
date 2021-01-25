@@ -74,7 +74,7 @@ public class BulletEntity extends AbstractArrowEntity {
 			this.prevRotationPitch = this.rotationPitch;
 		}
 
-		if (this.ticksExisted >= 600) {
+		if (this.ticksExisted >= 40) {
 			this.remove();
 		}
 

@@ -76,7 +76,7 @@ public class SuperShotgun extends Item implements IAnimatable {
 		if (entityLiving instanceof PlayerEntity) {
 			PlayerEntity playerentity = (PlayerEntity) entityLiving;
 			if (stack.getDamage() < (stack.getMaxDamage() - 1)) {
-				playerentity.getCooldownTracker().setCooldown(this, 28);
+				playerentity.getCooldownTracker().setCooldown(stack.getItem(), 28);
 				if (!worldIn.isRemote) {
 					ShotgunShellEntity abstractarrowentity = createArrow(worldIn, stack, playerentity);
 					abstractarrowentity = customeArrow(abstractarrowentity);

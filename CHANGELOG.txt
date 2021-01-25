@@ -1,12 +1,10 @@
-v.3.9.0
+v.3.9.1
 
-- Rebalanced a few mobs health. 
-- Complete rework done to all guns.
-	- All Guns, Chain Saws and Crucible now use their durability as ammo, with all but the Crucible stopping at 1 durability. 
-	- To reload the Guns, Chain Saws and Crucible, simple have their ammo in your main inventory* and press the Reload key.**
-	- Super Shotgun now takes 2 durability per shot and requires you have at least 2 Shotgun Shells to reload and will not fire without at least 2 ammo in it.
-	- Chain Saws no longer take damage when not hitting an entity.
-- Started work on Doom related Strutures for 1.16 only. 
-
-*Untested with any type of bag mod.
-** Reload is bound to R by default but is configurable.
+- Updated Mechzombie model and animations.
+- Fixed a few Demons attacks not being played correctly.
+- Added the Spectre with configs.
+- Added the Spectre into the Book of Doom.
+- Fixed Demons crashing when glowing and being made invisible.
+- Fixed Name plates not appearing on the demons when named, which only appear when named and looked at.
+- Changed the build.gradle of the github repo to more friendly for people to set up the repo to send in PRs.
+- Removed Geckolib/Patchouli hacks, issue was fixed in Geckolib itself.
