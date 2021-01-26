@@ -1,3 +1,4 @@
-v.3.9.2
+v.3.9.3
 
-- Updated Armor for new Geckolib armor rotation fix.
+- Rotated how the Chaingunner holds the chaingun.
+- Increased the Jump distance of the jump enchantment and the player now longer takes fall damage when using it.

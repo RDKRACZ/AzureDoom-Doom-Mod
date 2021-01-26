@@ -74,7 +74,7 @@ public class GargoyleEntity extends DemonEntity implements IAnimatable, IFlyingA
 	private AnimationFactory factory = new AnimationFactory(this);
 
 	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-		if (!this.dataManager.get(ATTACKING) && !this.isOnGround() && !this.onGround
+		if (event.isMoving() && !this.dataManager.get(ATTACKING) && !this.isOnGround() && !this.onGround
 				&& !(this.dead || this.getHealth() < 0.01 || this.getShouldBeDead())) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("flying", true));
 			return PlayState.CONTINUE;

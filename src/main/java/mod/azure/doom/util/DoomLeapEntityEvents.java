@@ -47,10 +47,10 @@ public class DoomLeapEntityEvents {
 
 			if (canJump && !entity.isElytraFlying() && !((PlayerEntity) entity).abilities.isFlying) {
 				if (playerJumping && entity.getMotion().getY() < 0) {
-					entity.setMotion(entity.getMotion().getX(), 0.5D, entity.getMotion().getZ());
+					entity.setMotion(entity.getMotion().getX(), 0.8D, entity.getMotion().getZ());
 					uuidHasJumpedMap.put(entity.getUniqueID().toString(), true);
 
-					entity.playSound(SoundEvents.ENTITY_GENERIC_EXPLODE, 0.3F, 2.0F);
+					entity.playSound(SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE, 0.3F, 2.0F);
 					if (!entity.isOnGround()) {
 						if (entity instanceof ServerPlayerEntity) {
 							entity.addPotionEffect(new EffectInstance(Effects.RESISTANCE, 100, 4));
@@ -61,7 +61,7 @@ public class DoomLeapEntityEvents {
 						double d1 = entity.world.rand.nextGaussian() * 0.02D;
 						double d2 = entity.world.rand.nextGaussian() * 0.02D;
 
-						entity.world.addParticle(ParticleTypes.EXPLOSION,
+						entity.world.addParticle(ParticleTypes.CRIT,
 								entity.getPosX() + (double) (entity.world.rand.nextFloat() * entity.getWidth() * 2.0F)
 										- (double) entity.getWidth() - d0 * 10.0D,
 								entity.getPosY() - d1 * 10.0D,
@@ -84,7 +84,7 @@ public class DoomLeapEntityEvents {
 
 		if (enchantmentLevel > 0 && uuidHasJumpedMap.containsKey(event.getEntityLiving().getUniqueID().toString())
 				&& uuidHasJumpedMap.get(event.getEntityLiving().getUniqueID().toString())) {
-			int i = MathHelper.ceil((event.getDistance() - 1.0F - enchantmentLevel) * event.getDamageMultiplier());
+			int i = MathHelper.ceil((event.getDistance() - 1.0F - enchantmentLevel) * 0);
 			event.setDistance(i);
 		}
 	}
