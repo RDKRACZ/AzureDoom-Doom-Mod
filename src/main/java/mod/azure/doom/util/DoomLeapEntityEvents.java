@@ -47,7 +47,7 @@ public class DoomLeapEntityEvents {
 
 			if (canJump && !entity.isElytraFlying() && !((PlayerEntity) entity).abilities.isFlying) {
 				if (playerJumping && entity.getMotion().getY() < 0) {
-					entity.setMotion(entity.getMotion().getX(), 0.5D, entity.getMotion().getZ());
+					entity.setMotion(entity.getMotion().getX(), 0.8D, entity.getMotion().getZ());
 					uuidHasJumpedMap.put(entity.getUniqueID().toString(), true);
 
 					entity.playSound(SoundEvents.ENTITY_GENERIC_EXPLODE, 0.3F, 2.0F);
@@ -84,7 +84,7 @@ public class DoomLeapEntityEvents {
 
 		if (enchantmentLevel > 0 && uuidHasJumpedMap.containsKey(event.getEntityLiving().getUniqueID().toString())
 				&& uuidHasJumpedMap.get(event.getEntityLiving().getUniqueID().toString())) {
-			int i = MathHelper.ceil((event.getDistance() - 1.0F - enchantmentLevel) * event.getDamageMultiplier());
+			int i = MathHelper.ceil((event.getDistance() - 1.0F - enchantmentLevel) * 0);
 			event.setDistance(i);
 		}
 	}
