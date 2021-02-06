@@ -72,12 +72,26 @@ public class Unmaykr extends Item implements IVanishable {
 					abstractarrowentity = customeArrow(abstractarrowentity);
 					abstractarrowentity.func_234612_a_(playerentity, playerentity.rotationPitch,
 							playerentity.rotationYaw, 0.0F, 1.0F * 3.0F, 1.0F);
+					UnmaykrBoltEntity abstractarrowentity1 = createArrow(worldIn, stack, playerentity);
+					abstractarrowentity1 = customeArrow(abstractarrowentity1);
+					abstractarrowentity1.func_234612_a_(playerentity, playerentity.rotationPitch,
+							playerentity.rotationYaw + 10, 0.0F, 1.0F * 3.0F, 1.0F);
+					UnmaykrBoltEntity abstractarrowentity2 = createArrow(worldIn, stack, playerentity);
+					abstractarrowentity2 = customeArrow(abstractarrowentity2);
+					abstractarrowentity2.func_234612_a_(playerentity, playerentity.rotationPitch,
+							playerentity.rotationYaw - 10, 0.0F, 1.0F * 3.0F, 1.0F);
 
 					abstractarrowentity.setDamage(5.7);
 					abstractarrowentity.hasNoGravity();
+					abstractarrowentity1.setDamage(5.7);
+					abstractarrowentity1.hasNoGravity();
+					abstractarrowentity2.setDamage(5.7);
+					abstractarrowentity2.hasNoGravity();
 
 					stack.damageItem(1, entityLiving, p -> p.sendBreakAnimation(entityLiving.getActiveHand()));
 					worldIn.addEntity(abstractarrowentity);
+					worldIn.addEntity(abstractarrowentity1);
+					worldIn.addEntity(abstractarrowentity2);
 					worldIn.playSound((PlayerEntity) null, playerentity.getPosX(), playerentity.getPosY(),
 							playerentity.getPosZ(), ModSoundEvents.UNMAKYR_FIRE.get(), SoundCategory.PLAYERS, 1.0F,
 							1.0F / (random.nextFloat() * 0.4F + 1.2F) + 0.25F * 0.5F);

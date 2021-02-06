@@ -1,5 +1,6 @@
 package mod.azure.doom.entity.projectiles;
 
+import mod.azure.doom.entity.IconofsinEntity;
 import mod.azure.doom.util.registry.DoomItems;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import mod.azure.doom.util.registry.ModSoundEvents;
@@ -50,6 +51,14 @@ public class EnergyCellEntity extends AbstractArrowEntity {
 	}
 
 	@Override
+	protected void arrowHit(LivingEntity living) {
+		super.arrowHit(living);
+		if (!(living instanceof PlayerEntity) && !(living instanceof IconofsinEntity)) {
+			living.hurtResistantTime = 0;
+		}
+	}
+
+	@Override
 	public void writeAdditional(CompoundNBT compound) {
 		super.writeAdditional(compound);
 		compound.putShort("life", (short) this.ticksInAir);
@@ -74,7 +83,7 @@ public class EnergyCellEntity extends AbstractArrowEntity {
 			this.prevRotationPitch = this.rotationPitch;
 		}
 
-		if (this.ticksExisted >= 100) {
+		if (this.ticksExisted >= 60) {
 			this.remove();
 		}
 

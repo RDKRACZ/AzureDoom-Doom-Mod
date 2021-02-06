@@ -1,5 +1,6 @@
 package mod.azure.doom.entity.projectiles;
 
+import mod.azure.doom.entity.IconofsinEntity;
 import mod.azure.doom.util.registry.DoomItems;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import net.minecraft.entity.Entity;
@@ -44,6 +45,14 @@ public class ChaingunBulletEntity extends AbstractArrowEntity {
 	}
 
 	@Override
+	protected void arrowHit(LivingEntity living) {
+		super.arrowHit(living);
+		if (!(living instanceof PlayerEntity) && !(living instanceof IconofsinEntity)) {
+			living.hurtResistantTime = 0;
+		}
+	}
+
+	@Override
 	public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
 		super.shoot(x, y, z, velocity, inaccuracy);
 		this.ticksInAir = 0;
@@ -74,7 +83,7 @@ public class ChaingunBulletEntity extends AbstractArrowEntity {
 			this.prevRotationPitch = this.rotationPitch;
 		}
 
-		if (this.ticksExisted >= 600) {
+		if (this.ticksExisted >= 40) {
 			this.remove();
 		}
 
