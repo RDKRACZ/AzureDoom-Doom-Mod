@@ -702,6 +702,7 @@
 				},
 				{
 					"name": "lLeg1_flat",
+					"parent": "thighs",
 					"pivot": [4.5, 31.7, 1.4],
 					"cubes": [
 						{
@@ -800,6 +801,7 @@
 				},
 				{
 					"name": "rLeg1_flat",
+					"parent": "thighs",
 					"pivot": [-4.5, 29.1, 0],
 					"cubes": [
 						{

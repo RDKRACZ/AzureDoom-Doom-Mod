@@ -4,6 +4,7 @@ import java.util.EnumSet;
 import java.util.Random;
 
 import mod.azure.doom.entity.ai.goal.HurtByAggressorGoal;
+import mod.azure.doom.entity.ai.goal.RandomFlyConvergeOnTargetGoal;
 import mod.azure.doom.entity.ai.goal.TargetAggressorGoal;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import mod.azure.doom.util.registry.ModSoundEvents;
@@ -16,6 +17,7 @@ import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.controller.MovementController;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.HurtByTargetGoal;
+import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
 import net.minecraft.entity.monster.IMob;
@@ -154,6 +156,8 @@ public class LostSoulEntity extends DemonEntity implements IMob, IAnimatable {
 
 	@Override
 	protected void registerGoals() {
+		this.goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8.0F));
+		this.goalSelector.addGoal(5, new RandomFlyConvergeOnTargetGoal(this, 4, 15, 0.5));
 		this.goalSelector.addGoal(8, new LostSoulEntity.LookAroundGoal(this));
 		this.goalSelector.addGoal(4, new LostSoulEntity.ChargeAttackGoal());
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
@@ -233,7 +237,7 @@ public class LostSoulEntity extends DemonEntity implements IMob, IAnimatable {
 				double d0 = LostSoulEntity.this.getDistanceSq(livingentity);
 				if (d0 < 9.0D) {
 					Vec3d vec3d = livingentity.getEyePosition(1.0F);
-					LostSoulEntity.this.moveController.setMoveTo(vec3d.x, vec3d.y, vec3d.z, 1.0D);
+					LostSoulEntity.this.moveController.setMoveTo(vec3d.x, vec3d.y, vec3d.z, 4.0D);
 				}
 			}
 
