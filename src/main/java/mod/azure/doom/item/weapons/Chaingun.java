@@ -79,6 +79,7 @@ public class Chaingun extends Item implements IAnimatable {
 
 					abstractarrowentity.setDamage(1.5);
 					abstractarrowentity.hasNoGravity();
+					abstractarrowentity.ticksExisted = 35;
 
 					stack.damageItem(1, entityLiving, p -> p.sendBreakAnimation(entityLiving.getActiveHand()));
 					worldIn.addEntity(abstractarrowentity);
@@ -118,7 +119,7 @@ public class Chaingun extends Item implements IAnimatable {
 			while (user.getHeldItem(hand).getDamage() != 0
 					&& user.inventory.count(DoomItems.CHAINGUN_BULLETS.get()) > 0) {
 				removeAmmo(DoomItems.CHAINGUN_BULLETS.get(), user);
-				user.getHeldItem(hand).damageItem(-1, user, s -> user.sendBreakAnimation(hand));
+				user.getHeldItem(hand).damageItem(-50, user, s -> user.sendBreakAnimation(hand));
 				user.getHeldItem(hand).setAnimationsToGo(3);
 			}
 		}

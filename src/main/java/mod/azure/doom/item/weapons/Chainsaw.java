@@ -27,7 +27,7 @@ import net.minecraft.world.World;
 public class Chainsaw extends Item {
 
 	public Chainsaw() {
-		super(new Item.Properties().group(DoomMod.DoomWeaponItemGroup).maxStackSize(1).maxDamage(600));
+		super(new Item.Properties().group(DoomMod.DoomWeaponItemGroup).maxStackSize(1).maxDamage(601));
 	}
 
 	@Override
@@ -75,7 +75,7 @@ public class Chainsaw extends Item {
 		if (user.getHeldItem(hand).getItem() instanceof Chainsaw) {
 			while (user.getHeldItem(hand).getDamage() != 0 && user.inventory.count(DoomItems.GAS_BARREL.get()) > 0) {
 				removeAmmo(DoomItems.GAS_BARREL.get(), user);
-				user.getHeldItem(hand).damageItem(-1, user, s -> user.sendBreakAnimation(hand));
+				user.getHeldItem(hand).damageItem(-200, user, s -> user.sendBreakAnimation(hand));
 				user.getHeldItem(hand).setAnimationsToGo(3);
 			}
 		}
@@ -94,6 +94,7 @@ public class Chainsaw extends Item {
 
 	private void doDamage(LivingEntity user, final Entity target) {
 		if (target instanceof LivingEntity) {
+			target.hurtResistantTime = 0;
 			target.attackEntityFrom(DamageSource.causePlayerDamage((PlayerEntity) user), 2F);
 		}
 	}

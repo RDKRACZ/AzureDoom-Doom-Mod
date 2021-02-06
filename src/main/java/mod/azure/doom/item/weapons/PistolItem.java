@@ -49,6 +49,7 @@ public class PistolItem extends Item {
 							playerentity.rotationYaw, 0.0F, 1.0F * 3.0F, 1.0F);
 
 					abstractarrowentity.setDamage(2.5);
+					abstractarrowentity.ticksExisted = 35;
 					abstractarrowentity.hasNoGravity();
 
 					stack.damageItem(1, entityLiving, p -> p.sendBreakAnimation(entityLiving.getActiveHand()));
@@ -81,7 +82,7 @@ public class PistolItem extends Item {
 		if (user.getHeldItemMainhand().getItem() instanceof PistolItem) {
 			while (user.getHeldItem(hand).getDamage() != 0 && user.inventory.count(DoomItems.BULLETS.get()) > 0) {
 				removeAmmo(DoomItems.BULLETS.get(), user);
-				user.getHeldItemMainhand().damageItem(-1, user, s -> user.sendBreakAnimation(hand));
+				user.getHeldItemMainhand().damageItem(-10, user, s -> user.sendBreakAnimation(hand));
 				user.getHeldItemMainhand().setAnimationsToGo(3);
 			}
 		}

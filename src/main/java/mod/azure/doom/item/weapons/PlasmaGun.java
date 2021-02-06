@@ -57,7 +57,7 @@ public class PlasmaGun extends Item implements IAnimatable {
 	}
 
 	public PlasmaGun() {
-		super(new Item.Properties().group(DoomMod.DoomWeaponItemGroup).maxStackSize(1).maxDamage(301)
+		super(new Item.Properties().group(DoomMod.DoomWeaponItemGroup).maxStackSize(1).maxDamage(401)
 				.setISTER(() -> PlasmagunRender::new));
 	}
 
@@ -78,7 +78,8 @@ public class PlasmaGun extends Item implements IAnimatable {
 					abstractarrowentity.func_234612_a_(playerentity, playerentity.rotationPitch,
 							playerentity.rotationYaw, 0.0F, 0.15F * 3.0F, 1.0F);
 
-					abstractarrowentity.setDamage(35);
+					abstractarrowentity.setDamage(15);
+					abstractarrowentity.ticksExisted = 35;
 					abstractarrowentity.hasNoGravity();
 
 					stack.damageItem(1, entityLiving, p -> p.sendBreakAnimation(entityLiving.getActiveHand()));
@@ -118,7 +119,7 @@ public class PlasmaGun extends Item implements IAnimatable {
 		if (user.getHeldItem(hand).getItem() instanceof PlasmaGun) {
 			while (user.getHeldItem(hand).getDamage() != 0 && user.inventory.count(DoomItems.ENERGY_CELLS.get()) > 0) {
 				removeAmmo(DoomItems.ENERGY_CELLS.get(), user);
-				user.getHeldItem(hand).damageItem(-1, user, s -> user.sendBreakAnimation(hand));
+				user.getHeldItem(hand).damageItem(-20, user, s -> user.sendBreakAnimation(hand));
 				user.getHeldItem(hand).setAnimationsToGo(3);
 			}
 		}

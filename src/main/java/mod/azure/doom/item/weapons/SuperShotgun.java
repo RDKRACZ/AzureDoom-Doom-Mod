@@ -122,9 +122,9 @@ public class SuperShotgun extends Item implements IAnimatable {
 	public static void reload(PlayerEntity user, Hand hand) {
 		if (user.getHeldItem(hand).getItem() instanceof SuperShotgun) {
 			while (user.getHeldItem(hand).getDamage() != 0
-					&& user.inventory.count(DoomItems.SHOTGUN_SHELLS.get()) > 1) {
+					&& user.inventory.count(DoomItems.SHOTGUN_SHELLS.get()) > 0) {
 				removeAmmo(DoomItems.SHOTGUN_SHELLS.get(), user);
-				user.getHeldItem(hand).damageItem(-2, user, s -> user.sendBreakAnimation(hand));
+				user.getHeldItem(hand).damageItem(-4, user, s -> user.sendBreakAnimation(hand));
 				user.getHeldItem(hand).setAnimationsToGo(3);
 			}
 		}
@@ -134,7 +134,7 @@ public class SuperShotgun extends Item implements IAnimatable {
 		if (!playerEntity.isCreative()) {
 			for (ItemStack item : playerEntity.inventory.mainInventory) {
 				if (item.getItem() == DoomItems.SHOTGUN_SHELLS.get()) {
-					item.shrink(2);
+					item.shrink(1);
 					break;
 				}
 			}

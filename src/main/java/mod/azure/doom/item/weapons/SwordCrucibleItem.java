@@ -73,7 +73,7 @@ public class SwordCrucibleItem extends SwordItem {
 		if (user.getHeldItem(hand).getItem() instanceof SwordCrucibleItem) {
 			while (user.getHeldItem(hand).getDamage() != 0 && user.inventory.count(DoomItems.ARGENT_BLOCK.get()) > 0) {
 				removeAmmo(DoomItems.ARGENT_BLOCK.get(), user);
-				user.getHeldItem(hand).damageItem(-1, user, s -> user.sendBreakAnimation(hand));
+				user.getHeldItem(hand).damageItem(-5, user, s -> user.sendBreakAnimation(hand));
 				user.getHeldItem(hand).setAnimationsToGo(3);
 			}
 		}

@@ -59,7 +59,7 @@ public class BFG extends Item implements IAnimatable {
 	}
 
 	public BFG() {
-		super(new Item.Properties().group(DoomMod.DoomWeaponItemGroup).maxStackSize(1).maxDamage(301)
+		super(new Item.Properties().group(DoomMod.DoomWeaponItemGroup).maxStackSize(1).maxDamage(401)
 				.setISTER(() -> BFGRender::new));
 	}
 
@@ -88,7 +88,7 @@ public class BFG extends Item implements IAnimatable {
 					abstractarrowentity.setDamage(2.5);
 					abstractarrowentity.hasNoGravity();
 
-					stack.damageItem(1, entityLiving, p -> p.sendBreakAnimation(entityLiving.getActiveHand()));
+					stack.damageItem(20, entityLiving, p -> p.sendBreakAnimation(entityLiving.getActiveHand()));
 					worldIn.addEntity(abstractarrowentity);
 					worldIn.playSound((PlayerEntity) null, playerentity.getPosX(), playerentity.getPosY(),
 							playerentity.getPosZ(), ModSoundEvents.BFG_FIRING.get(), SoundCategory.PLAYERS, 1.0F,
@@ -125,7 +125,7 @@ public class BFG extends Item implements IAnimatable {
 		if (user.getHeldItem(hand).getItem() instanceof BFG) {
 			while (user.getHeldItem(hand).getDamage() != 0 && user.inventory.count(DoomItems.BFG_CELL.get()) > 0) {
 				removeAmmo(DoomItems.BFG_CELL.get(), user);
-				user.getHeldItem(hand).damageItem(-1, user, s -> user.sendBreakAnimation(hand));
+				user.getHeldItem(hand).damageItem(-20, user, s -> user.sendBreakAnimation(hand));
 				user.getHeldItem(hand).setAnimationsToGo(3);
 			}
 		}
