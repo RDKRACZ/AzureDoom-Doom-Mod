@@ -1,4 +1,8 @@
-v.3.9.3
+v.3.9.4
 
-- Rotated how the Chaingunner holds the chaingun.
-- Increased the Jump distance of the jump enchantment and the player now longer takes fall damage when using it.
+- Added head rotations to all demons.
+- Reworked a few animations and added new idle animations to demons that were missing them.
+- Fixed what item the Marauder is holding.
+- Added Jumping enchantment page to book.
+- Reworked ammo reload amounts and added some i-frame bypass to chainsaw, chaingun, and plasmagun.
+- Unmaykr now fires 3 blasts instead of 1, in a spread.
