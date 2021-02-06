@@ -19,8 +19,8 @@ public class ServerEvents {
 	@SubscribeEvent
 	public static void onLivingUpdateEvent(LivingEvent.LivingUpdateEvent event) {
 
+		LivingEntity le = event.getEntityLiving();
 		if (!FMLEnvironment.production) {
-			LivingEntity le = event.getEntityLiving();
 			if (le instanceof DemonEntity) {
 				PathNavigator navi = ((DemonEntity) le).getNavigator();
 				if (le.world instanceof ServerWorld && le.world.getGameTime() % 10 == 0) {
