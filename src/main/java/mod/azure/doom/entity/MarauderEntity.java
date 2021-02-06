@@ -129,7 +129,7 @@ public class MarauderEntity extends DemonEntity implements IAnimatable {
 	@Override
 	protected void setEquipmentBasedOnDifficulty(DifficultyInstance difficulty) {
 		super.setEquipmentBasedOnDifficulty(difficulty);
-		this.setItemStackToSlot(EquipmentSlotType.MAINHAND, new ItemStack(DoomItems.AXE_OPEN.get()));
+		this.setItemStackToSlot(EquipmentSlotType.MAINHAND, new ItemStack(DoomItems.ARGENT_AXE.get()));
 	}
 
 	@Nullable
