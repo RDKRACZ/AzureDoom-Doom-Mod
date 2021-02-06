@@ -19,7 +19,7 @@ import software.bernie.geckolib3.geo.render.built.GeoBone;
 
 public class MarauderRender extends GeoEntityRenderer<MarauderEntity> {
 
-	private static final ItemStack chaingun = new ItemStack(DoomItems.AXE_OPEN.get());
+	private static final ItemStack chaingun = new ItemStack(DoomItems.ARGENT_AXE.get());
 	private IRenderTypeBuffer rtb;
 	private ResourceLocation whTexture;
 
