@@ -117,7 +117,7 @@ public class Shotgun extends Item implements IAnimatable {
 	public static void reload(PlayerEntity user, Hand hand) {
 		if (user.getHeldItem(hand).getDamage() != 0 && user.inventory.count(DoomItems.SHOTGUN_SHELLS.get()) > 0) {
 			removeAmmo(DoomItems.SHOTGUN_SHELLS.get(), user);
-			user.getHeldItem(hand).damageItem(-1, user, s -> user.sendBreakAnimation(hand));
+			user.getHeldItem(hand).damageItem(-4, user, s -> user.sendBreakAnimation(hand));
 			user.getHeldItem(hand).setAnimationsToGo(3);
 		}
 	}
