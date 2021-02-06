@@ -77,7 +77,8 @@ public class ImpEntity extends DemonEntity implements IAnimatable {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("death", false));
 			return PlayState.CONTINUE;
 		}
-		return PlayState.STOP;
+		event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
+		return PlayState.CONTINUE;
 	}
 
 	@Override

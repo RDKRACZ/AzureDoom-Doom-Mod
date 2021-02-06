@@ -40,6 +40,9 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
@@ -48,6 +51,8 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -58,16 +63,28 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 public class HellknightEntity extends DemonEntity implements IAnimatable {
+	
+	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(HellknightEntity.class,
+			DataSerializers.BOOLEAN);
 
 	private AnimationFactory factory = new AnimationFactory(this);
 	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.HELL_KNIGHT);
 
 	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-		if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F)) {
+		if (event.isMoving() && !this.dataManager.get(ATTACKING)) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("walking", true));
 			return PlayState.CONTINUE;
 		}
-		return PlayState.STOP;
+		if (this.dataManager.get(ATTACKING) && !(this.dead || this.getHealth() < 0.01 || this.getShouldBeDead())) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("attacking"));
+			return PlayState.CONTINUE;
+		}
+		if ((this.dead || this.getHealth() < 0.01 || this.getShouldBeDead())) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("death", false));
+			return PlayState.CONTINUE;
+		}
+		event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
+		return PlayState.CONTINUE;
 	}
 
 	@Override
@@ -78,6 +95,21 @@ public class HellknightEntity extends DemonEntity implements IAnimatable {
 	@Override
 	public AnimationFactory getFactory() {
 		return this.factory;
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	public boolean isAttacking() {
+		return this.dataManager.get(ATTACKING);
+	}
+
+	public void setAttacking(boolean attacking) {
+		this.dataManager.set(ATTACKING, attacking);
+	}
+
+	@Override
+	protected void registerData() {
+		super.registerData();
+		this.dataManager.register(ATTACKING, false);
 	}
 
 	public HellknightEntity(EntityType<? extends HellknightEntity> entityType, World worldIn) {

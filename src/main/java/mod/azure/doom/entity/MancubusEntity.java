@@ -139,7 +139,7 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 
 	@Override
 	protected void registerGoals() {
-		this.goalSelector.addGoal(8, new LookAtGoal(this, MobEntity.class, 8.0F));
+		this.goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8.0F));
 		this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
 		this.goalSelector.addGoal(2, new MoveTowardsTargetGoal(this, 0.9D, 32.0F));
 		this.applyEntityAI();

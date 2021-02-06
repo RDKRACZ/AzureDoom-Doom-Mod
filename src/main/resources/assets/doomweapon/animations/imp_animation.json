@@ -31,7 +31,7 @@
 				"rLeg1": {
 					"rotation": {
 						"0.0": {
-							"vector": [-5, 0, 0]
+							"vector": [0, 0, 0]
 						},
 						"0.48": {
 							"vector": [15, 0, 0],
@@ -46,7 +46,7 @@
 							"easing": "easeInOutQuad"
 						},
 						"2.08": {
-							"vector": [-5, 0, 0],
+							"vector": [0, 0, 0],
 							"easing": "easeInOutQuad"
 						}
 					}
@@ -187,7 +187,7 @@
 				"lLeg1": {
 					"rotation": {
 						"0.0": {
-							"vector": [-5, 0, 0]
+							"vector": [0, 0, 0]
 						},
 						"0.48": {
 							"vector": [-15, 0, 0],
@@ -202,7 +202,7 @@
 							"easing": "easeInOutQuad"
 						},
 						"2.08": {
-							"vector": [-5, 0, 0],
+							"vector": [0, 0, 0],
 							"easing": "easeInOutQuad"
 						}
 					}
@@ -339,6 +339,19 @@
 							"vector": [0, -17, 13],
 							"easing": "easeInOutQuad"
 						}
+					},
+					"scale": {
+						"0.0": {
+							"vector": [1, 1, 1]
+						},
+						"1.04": {
+							"vector": [1, 1, 1],
+							"easing": "easeInOutSine"
+						},
+						"3.56": {
+							"vector": [0, 0, 0],
+							"easing": "easeInOutSine"
+						}
 					}
 				},
 				"rLeg1": {
@@ -409,6 +422,69 @@
 						"1.04": {
 							"vector": [-7.5, 12.5, 0],
 							"easing": "easeInOutQuad"
+						}
+					}
+				}
+			}
+		},
+		"idle": {
+			"loop": true,
+			"animation_length": 1.04,
+			"bones": {
+				"thighs": {
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.32": {
+							"vector": [0, -0.2, 0],
+							"easing": "easeInOutSine"
+						},
+						"0.76": {
+							"vector": [0, 0.2, 0],
+							"easing": "easeInOutSine"
+						},
+						"1.04": {
+							"vector": [0, 0, 0],
+							"easing": "easeInOutSine"
+						}
+					}
+				},
+				"rShoulder": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.28": {
+							"vector": [0, 0, -3.5],
+							"easing": "easeInOutSine"
+						},
+						"0.72": {
+							"vector": [0, 0, 3.5],
+							"easing": "easeInOutSine"
+						},
+						"1.04": {
+							"vector": [0, 0, 0],
+							"easing": "easeInOutSine"
+						}
+					}
+				},
+				"lShoulder": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.28": {
+							"vector": [0, 0, 3.5],
+							"easing": "easeInOutSine"
+						},
+						"0.72": {
+							"vector": [0, 0, -3.5],
+							"easing": "easeInOutSine"
+						},
+						"1.04": {
+							"vector": [0, 0, 0],
+							"easing": "easeInOutSine"
 						}
 					}
 				}

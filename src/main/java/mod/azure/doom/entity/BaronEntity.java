@@ -64,15 +64,20 @@ public class BaronEntity extends DemonEntity implements IAnimatable {
 	private AnimationFactory factory = new AnimationFactory(this);
 
 	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-		if (event.isMoving()) { //&& !this.dataManager.get(ATTACKING)) {
+		if (event.isMoving() && !this.dataManager.get(ATTACKING)) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("walking", true));
 			return PlayState.CONTINUE;
 		}
-//		if (this.dataManager.get(ATTACKING)) {
-//			event.getController().setAnimation(new AnimationBuilder().addAnimation("attacking", true));
-//			return PlayState.CONTINUE;
-//		}
-		return PlayState.STOP;
+		if (this.dataManager.get(ATTACKING) && !(this.dead || this.getHealth() < 0.01 || this.getShouldBeDead())) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("attacking"));
+			return PlayState.CONTINUE;
+		}
+		if ((this.dead || this.getHealth() < 0.01 || this.getShouldBeDead())) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("death", false));
+			return PlayState.CONTINUE;
+		}
+		event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
+		return PlayState.CONTINUE;
 	}
 
 	@Override

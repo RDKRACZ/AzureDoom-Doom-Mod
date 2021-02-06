@@ -24,6 +24,7 @@ import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.controller.MovementController;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.HurtByTargetGoal;
+import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
 import net.minecraft.entity.monster.IMob;
@@ -107,6 +108,7 @@ public class PainEntity extends DemonEntity implements IMob, IAnimatable {
 
 	@Override
 	protected void registerGoals() {
+		this.goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8.0F));
 		this.goalSelector.addGoal(5, new RandomFlyConvergeOnTargetGoal(this, 2, 15, 0.5));
 		this.goalSelector.addGoal(7, new PainEntity.LookAroundGoal(this));
 		this.goalSelector.addGoal(7, new PainEntity.FireballAttackGoal(this));

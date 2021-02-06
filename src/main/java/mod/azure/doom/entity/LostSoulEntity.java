@@ -3,6 +3,7 @@ package mod.azure.doom.entity;
 import java.util.EnumSet;
 import java.util.Random;
 
+import mod.azure.doom.entity.ai.goal.RandomFlyConvergeOnTargetGoal;
 import mod.azure.doom.util.config.Config;
 import mod.azure.doom.util.config.EntityConfig;
 import mod.azure.doom.util.config.EntityDefaults.EntityConfigType;
@@ -20,6 +21,7 @@ import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.controller.MovementController;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.HurtByTargetGoal;
+import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
 import net.minecraft.entity.monster.IMob;
@@ -117,8 +119,10 @@ public class LostSoulEntity extends DemonEntity implements IMob, IAnimatable {
 
 	@Override
 	protected void registerGoals() {
+		this.goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8.0F));
 		this.goalSelector.addGoal(8, new LostSoulEntity.LookAroundGoal(this));
 		this.goalSelector.addGoal(4, new LostSoulEntity.ChargeAttackGoal());
+		this.goalSelector.addGoal(5, new RandomFlyConvergeOnTargetGoal(this, 4, 15, 0.5));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, false));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
@@ -204,7 +208,7 @@ public class LostSoulEntity extends DemonEntity implements IMob, IAnimatable {
 		public void startExecuting() {
 			LivingEntity livingentity = LostSoulEntity.this.getAttackTarget();
 			Vector3d vec3d = livingentity.getEyePosition(1.0F);
-			LostSoulEntity.this.moveController.setMoveTo(vec3d.x, vec3d.y, vec3d.z, 1.0D);
+			LostSoulEntity.this.moveController.setMoveTo(vec3d.x, vec3d.y, vec3d.z, 4.0D);
 			LostSoulEntity.this.setCharging(true);
 			LostSoulEntity.this.playSound(ModSoundEvents.LOST_SOUL_AMBIENT.get(), 1.0F, 1.0F);
 			this.attackTimer = 0;

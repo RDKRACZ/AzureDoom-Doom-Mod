@@ -70,7 +70,8 @@ public class SpectreEntity extends DemonEntity implements IAnimatable {
 				return PlayState.CONTINUE;
 			}
 		}
-		return PlayState.STOP;
+		event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
+		return PlayState.CONTINUE;
 	}
 
 	@Override
