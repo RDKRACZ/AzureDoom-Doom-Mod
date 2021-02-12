@@ -75,10 +75,6 @@ public class CueBallEntity extends DemonEntity implements IAnimatable {
 	}
 
 	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-		if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F)) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("walking", true));
-			return PlayState.CONTINUE;
-		}
 		event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
 		return PlayState.CONTINUE;
 	}

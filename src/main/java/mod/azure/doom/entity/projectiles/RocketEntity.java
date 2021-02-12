@@ -22,6 +22,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -258,6 +259,8 @@ public class RocketEntity extends AbstractArrowEntity implements IAnimatable {
 				if (entity instanceof LivingEntity) {
 					entity.attackEntityFrom(DamageSource.causePlayerDamage((PlayerEntity) this.shooter), 20);
 				}
+				this.world.createExplosion(this, this.getPosX(), this.getPosYHeight(0.0625D), this.getPosZ(), 0.0F,
+						Explosion.Mode.NONE);
 			}
 		}
 	}

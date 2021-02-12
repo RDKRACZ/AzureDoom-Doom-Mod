@@ -15,7 +15,7 @@ public class PossessedSoldierModel extends AnimatedGeoModel<PossessedSoldierEnti
 
 	@Override
 	public ResourceLocation getModelLocation(PossessedSoldierEntity object) {
-		return new ResourceLocation(DoomMod.MODID, "geo/shotgunzombie.geo.json");
+		return new ResourceLocation(DoomMod.MODID, "geo/possessedsoldier.geo.json");
 	}
 
 	@Override
@@ -25,14 +25,14 @@ public class PossessedSoldierModel extends AnimatedGeoModel<PossessedSoldierEnti
 
 	@Override
 	public ResourceLocation getAnimationFileLocation(PossessedSoldierEntity object) {
-		return new ResourceLocation(DoomMod.MODID, "animations/shotgunzombie.animation.json");
+		return new ResourceLocation(DoomMod.MODID, "animations/possessedsoldier.animation.json");
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public void setLivingAnimations(PossessedSoldierEntity entity, Integer uniqueID, AnimationEvent customPredicate) {
 		super.setLivingAnimations(entity, uniqueID, customPredicate);
-		IBone head = this.getAnimationProcessor().getBone("bipedHead");
+		IBone head = this.getAnimationProcessor().getBone("head");
 
 		EntityModelData extraData = (EntityModelData) customPredicate.getExtraDataOfType(EntityModelData.class).get(0);
 		head.setRotationX(extraData.headPitch * ((float) Math.PI / 180F));

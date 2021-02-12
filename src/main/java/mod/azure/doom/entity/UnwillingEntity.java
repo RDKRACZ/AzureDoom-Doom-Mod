@@ -36,6 +36,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
@@ -53,7 +54,7 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 public class UnwillingEntity extends DemonEntity implements IAnimatable {
 
 	private AnimationFactory factory = new AnimationFactory(this);
-	
+
 	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.UNWILLING);
 
 	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
@@ -182,21 +183,21 @@ public class UnwillingEntity extends DemonEntity implements IAnimatable {
 
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return ModSoundEvents.IMP_AMBIENT.get();
+		return ModSoundEvents.ZOMBIEMAN_AMBIENT.get();
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-		return ModSoundEvents.IMP_HURT.get();
+		return ModSoundEvents.ZOMBIEMAN_HURT.get();
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return ModSoundEvents.IMP_DEATH.get();
+		return ModSoundEvents.ZOMBIEMAN_DEATH.get();
 	}
 
 	protected SoundEvent getStepSound() {
-		return ModSoundEvents.IMP_STEP.get();
+		return SoundEvents.ENTITY_ZOMBIE_STEP;
 	}
 
 	@Override

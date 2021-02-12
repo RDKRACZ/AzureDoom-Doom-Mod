@@ -64,7 +64,7 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 public class ChaingunnerEntity extends DemonEntity implements IRangedAttackMob, IAnimatable {
 
 	private final RangedChaingunAttackGoal<ChaingunnerEntity> aiArrowAttack = new RangedChaingunAttackGoal<>(this, 1.0D,
-			1, 15.0F);
+			0, 15.0F);
 	
 	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.CHAINGUNNER);
 	

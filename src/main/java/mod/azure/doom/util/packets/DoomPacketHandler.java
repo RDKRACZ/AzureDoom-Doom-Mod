@@ -28,6 +28,10 @@ public class DoomPacketHandler {
 			new ResourceLocation(DoomMod.MODID, "pistol"), () -> PROTOCOL_VERSION, PROTOCOL_VERSION::equals,
 			PROTOCOL_VERSION::equals);
 
+	public static final SimpleChannel HEAVYCANNON = NetworkRegistry.newSimpleChannel(
+			new ResourceLocation(DoomMod.MODID, "heavycannon"), () -> PROTOCOL_VERSION, PROTOCOL_VERSION::equals,
+			PROTOCOL_VERSION::equals);
+
 	public static final SimpleChannel PLASMA = NetworkRegistry.newSimpleChannel(
 			new ResourceLocation(DoomMod.MODID, "plasma"), () -> PROTOCOL_VERSION, PROTOCOL_VERSION::equals,
 			PROTOCOL_VERSION::equals);
@@ -56,6 +60,10 @@ public class DoomPacketHandler {
 			new ResourceLocation(DoomMod.MODID, "chainsaw"), () -> PROTOCOL_VERSION, PROTOCOL_VERSION::equals,
 			PROTOCOL_VERSION::equals);
 
+	public static final SimpleChannel CHAINSAW_ETERNAL = NetworkRegistry.newSimpleChannel(
+			new ResourceLocation(DoomMod.MODID, "chainsaweternal"), () -> PROTOCOL_VERSION, PROTOCOL_VERSION::equals,
+			PROTOCOL_VERSION::equals);
+
 	public static void register() {
 		BALLISTA.registerMessage(channel_id++, BallistaLoadingPacket.class, BallistaLoadingPacket::encode,
 				BallistaLoadingPacket::new, BallistaLoadingPacket::handle);
@@ -82,5 +90,10 @@ public class DoomPacketHandler {
 				CrucibleLoadingPacket::new, CrucibleLoadingPacket::handle);
 		CHAINSAW.registerMessage(channel_id++, ChainsawLoadingPacket.class, ChainsawLoadingPacket::encode,
 				ChainsawLoadingPacket::new, ChainsawLoadingPacket::handle);
+		CHAINSAW_ETERNAL.registerMessage(channel_id++, ChainsawEternalLoadingPacket.class,
+				ChainsawEternalLoadingPacket::encode, ChainsawEternalLoadingPacket::new,
+				ChainsawEternalLoadingPacket::handle);
+		HEAVYCANNON.registerMessage(channel_id++, HeavyCannonLoadingPacket.class, HeavyCannonLoadingPacket::encode,
+				HeavyCannonLoadingPacket::new, HeavyCannonLoadingPacket::handle);
 	}
 }

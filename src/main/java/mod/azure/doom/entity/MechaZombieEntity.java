@@ -12,6 +12,7 @@ import mod.azure.doom.entity.attack.FireballAttack;
 import mod.azure.doom.util.config.Config;
 import mod.azure.doom.util.config.EntityConfig;
 import mod.azure.doom.util.config.EntityDefaults.EntityConfigType;
+import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.CreatureAttribute;
@@ -241,17 +242,17 @@ public class MechaZombieEntity extends DemonEntity implements IAnimatable {
 
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundEvents.ENTITY_ZOMBIE_AMBIENT;
+		return ModSoundEvents.MECHA_AMBIENT.get();
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-		return SoundEvents.ENTITY_ZOMBIE_HURT;
+		return ModSoundEvents.MECHA_HURT.get();
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundEvents.ENTITY_ZOMBIE_DEATH;
+		return ModSoundEvents.MECHA_DEATH.get();
 	}
 
 	protected SoundEvent getStepSound() {

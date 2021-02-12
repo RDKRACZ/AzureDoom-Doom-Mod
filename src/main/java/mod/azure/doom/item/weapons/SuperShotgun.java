@@ -76,7 +76,7 @@ public class SuperShotgun extends Item implements IAnimatable {
 		if (entityLiving instanceof PlayerEntity) {
 			PlayerEntity playerentity = (PlayerEntity) entityLiving;
 			if (stack.getDamage() < (stack.getMaxDamage() - 1)) {
-				playerentity.getCooldownTracker().setCooldown(stack.getItem(), 28);
+				playerentity.getCooldownTracker().setCooldown(stack.getItem(), 24);
 				if (!worldIn.isRemote) {
 					ShotgunShellEntity abstractarrowentity = createArrow(worldIn, stack, playerentity);
 					abstractarrowentity = customeArrow(abstractarrowentity);
@@ -89,8 +89,8 @@ public class SuperShotgun extends Item implements IAnimatable {
 					stack.damageItem(2, entityLiving, p -> p.sendBreakAnimation(entityLiving.getActiveHand()));
 					worldIn.addEntity(abstractarrowentity);
 					worldIn.playSound((PlayerEntity) null, playerentity.getPosX(), playerentity.getPosY(),
-							playerentity.getPosZ(), ModSoundEvents.SHOTGUN_SHOOT.get(), SoundCategory.PLAYERS, 1.0F,
-							1.0F / (random.nextFloat() * 0.4F + 1.2F) + 0.25F * 0.5F);
+							playerentity.getPosZ(), ModSoundEvents.SUPER_SHOTGUN_SHOOT.get(), SoundCategory.PLAYERS, 1.0F,
+							1.0F);
 				}
 				AnimationController<?> controller = GeckoLibUtil.getControllerForStack(this.factory, stack,
 						controllerName);

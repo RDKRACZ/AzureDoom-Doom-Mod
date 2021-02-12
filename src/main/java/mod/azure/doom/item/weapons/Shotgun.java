@@ -85,7 +85,7 @@ public class Shotgun extends Item implements IAnimatable {
 					worldIn.addEntity(abstractarrowentity);
 					worldIn.playSound((PlayerEntity) null, playerentity.getPosX(), playerentity.getPosY(),
 							playerentity.getPosZ(), ModSoundEvents.SHOTGUN_SHOOT.get(), SoundCategory.PLAYERS, 1.0F,
-							1.0F / (random.nextFloat() * 0.4F + 1.2F) + 0.25F * 0.5F);
+							1.5F);
 				}
 				AnimationController<?> controller = GeckoLibUtil.getControllerForStack(this.factory, stack,
 						controllerName);

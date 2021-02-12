@@ -32,7 +32,7 @@ public class DemonAttackGoal extends MeleeAttackGoal {
 		++this.raiseArmTicks;
 		LivingEntity livingentity = this.zombie.getAttackTarget();
 		this.zombie.getLookController().setLookPositionWithEntity(livingentity, 90.0F, 30.0F);
-		if (livingentity.getDistanceSq(this.zombie) < 4.0D) {
+		if (livingentity.getDistanceSq(this.zombie) < 1.0D) {
 			if (this.raiseArmTicks >= 5 && this.func_234041_j_() < this.func_234042_k_() / 2) {
 				this.zombie.setAggroed(true);
 			} else {
@@ -40,5 +40,10 @@ public class DemonAttackGoal extends MeleeAttackGoal {
 			}
 		}
 
+	}
+
+	@Override
+	protected double getAttackReachSqr(LivingEntity attackTarget) {
+		return (double) (this.attacker.getWidth() * 1.0F * this.attacker.getWidth() * 1.0F + attackTarget.getWidth());
 	}
 }

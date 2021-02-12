@@ -8,8 +8,17 @@
 	"doom.chaingun_fire": {
 		"category": "music", "sounds": [{"name": "doomweapon:chaingun_fire", "stream": true}]
 	},
+	"doom.heavy_cannon": {
+		"category": "music", "sounds": [{"name": "doomweapon:heavy_cannon", "stream": true}]
+	},
 	"doom.unmakyr_fire": {
 		"category": "music", "sounds": [{"name": "doomweapon:unmakyr_fire", "stream": true}]
+	},
+	"doom.chainsaw_attacking": {
+		"category": "music", "sounds": [{"name": "doomweapon:chainsaw_attacking", "stream": true}]
+	},
+	"doom.chainsaw_idle": {
+		"category": "music", "sounds": [{"name": "doomweapon:chainsaw_idle", "stream": true}]
 	},
 	"doom.icon_death": {
 		"category": "music", "sounds": [{"name": "doomweapon:icon_death", "stream": true}]
@@ -34,6 +43,9 @@
 	},
 	"doom.shotgun_fire": {
 		"category": "music", "sounds": [{"name": "doomweapon:shotgun_fire", "stream": true}]
+	},
+	"doom.super_shotgun_fire": {
+		"category": "music", "sounds": [{"name": "doomweapon:super_shotgun_fire", "stream": true}]
 	},
 	"doom.pistol_fire": {
 		"category": "music", "sounds": [{"name": "doomweapon:pistol_fire", "stream": true}]
@@ -214,5 +226,35 @@
 	},
 	"doom.rocketfire": {
 		"category": "music", "sounds": [{"name": "doomweapon:rocketfire", "stream": true}]
+	},
+	"doom.gargolye_idle": {
+		"category": "music", "sounds": [{"name": "doomweapon:gargolye_idle", "stream": true}]
+	},
+	"doom.gargolye_hit": {
+		"category": "music", "sounds": [{"name": "doomweapon:gargolye_hit", "stream": true}]
+	},
+	"doom.gargolye_death": {
+		"category": "music", "sounds": [{"name": "doomweapon:gargolye_death", "stream": true}]
+	},
+	"doom.psoldier_idle": {
+		"category": "music", "sounds": [{"name": "doomweapon:psoldier_idle", "stream": true}]
+	},
+	"doom.psoldier_hit": {
+		"category": "music", "sounds": [{"name": "doomweapon:psoldier_hit", "stream": true}]
+	},
+	"doom.psoldier_death": {
+		"category": "music", "sounds": [{"name": "doomweapon:psoldier_death", "stream": true}]
+	},
+	"doom.mecha_idle": {
+		"category": "music", "sounds": [{"name": "doomweapon:mecha_idle", "stream": true}]
+	},
+	"doom.mecha_hit": {
+		"category": "music", "sounds": [{"name": "doomweapon:mecha_hit", "stream": true}]
+	},
+	"doom.mecha_death": {
+		"category": "music", "sounds": [{"name": "doomweapon:mecha_death", "stream": true}]
+	},
+	"doom.ballista_firing": {
+		"category": "music", "sounds": [{"name": "doomweapon:ballista_firing", "stream": true}]
 	}
 }

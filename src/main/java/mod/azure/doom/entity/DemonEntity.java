@@ -28,6 +28,7 @@ public class DemonEntity extends MonsterEntity implements IAngerable {
 
 	protected DemonEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
+		this.ignoreFrustumCheck = true;
 	}
 
 	public static boolean passPeacefulAndYCheck(EntityConfig config, IWorld p_223337_1_, SpawnReason reason,

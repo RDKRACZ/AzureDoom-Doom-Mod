@@ -213,26 +213,17 @@ public class GargoyleEntity extends DemonEntity implements IAnimatable, IFlyingA
 
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return ModSoundEvents.IMP_AMBIENT.get();
+		return ModSoundEvents.GARGOLYE_AMBIENT.get();
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-		return ModSoundEvents.IMP_HURT.get();
+		return ModSoundEvents.GARGOLYE_HURT.get();
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return ModSoundEvents.IMP_DEATH.get();
-	}
-
-	protected SoundEvent getStepSound() {
-		return ModSoundEvents.IMP_STEP.get();
-	}
-
-	@Override
-	protected void playStepSound(BlockPos pos, BlockState blockIn) {
-		this.playSound(this.getStepSound(), 0.15F, 1.0F);
+		return ModSoundEvents.GARGOLYE_DEATH.get();
 	}
 
 	@Override

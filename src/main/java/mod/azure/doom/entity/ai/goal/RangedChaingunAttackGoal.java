@@ -114,13 +114,10 @@ public class RangedChaingunAttackGoal<T extends MonsterEntity & IRangedAttackMob
 				if (!flag && this.seeTime < -60) {
 					this.entity.resetActiveHand();
 				} else if (flag) {
-					int i = this.entity.getItemInUseMaxCount();
-					if (i >= 20) {
-						this.entity.resetActiveHand();
-						((IRangedAttackMob) this.entity).attackEntityWithRangedAttack(livingentity,
-								Chaingun.getArrowVelocity(i));
-						this.attackTime = this.attackCooldown;
-					}
+					this.entity.resetActiveHand();
+					((IRangedAttackMob) this.entity).attackEntityWithRangedAttack(livingentity,
+							Chaingun.getArrowVelocity(1));
+					this.attackTime = this.attackCooldown;
 				}
 			} else if (--this.attackTime <= 0 && this.seeTime >= -60) {
 				this.entity.setActiveHand(ProjectileHelper.getHandWith(this.entity, DoomItems.CHAINGUN.get()));
