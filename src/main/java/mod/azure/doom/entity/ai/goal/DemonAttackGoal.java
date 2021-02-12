@@ -29,4 +29,9 @@ public class DemonAttackGoal extends MeleeAttackGoal {
 			this.zombie.setAggroed(true);
 		}
 	}
+
+	@Override
+	protected double getAttackReachSqr(LivingEntity attackTarget) {
+		return (double) (this.attacker.getWidth() * 1.0F * this.attacker.getWidth() * 1.0F + attackTarget.getWidth());
+	}
 }

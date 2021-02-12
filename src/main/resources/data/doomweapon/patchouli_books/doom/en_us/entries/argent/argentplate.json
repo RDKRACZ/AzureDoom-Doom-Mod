@@ -10,7 +10,7 @@
 			"text": "Argent Plate is one of the main crafting ingredient in crafting your Doom items."
 		},
 		{
-			"type": "crafting",
+			"type": "smithing",
 			"recipe": "doomweapon:argent_plate"
 		}
 	]

@@ -8,6 +8,7 @@ import mod.azure.doom.util.enums.DoomTier;
 import mod.azure.doom.util.packets.ChainsawLoadingPacket;
 import mod.azure.doom.util.packets.DoomPacketHandler;
 import mod.azure.doom.util.registry.DoomItems;
+import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -18,6 +19,7 @@ import net.minecraft.item.SwordItem;
 import net.minecraft.particles.RedstoneParticleData;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
@@ -62,12 +64,16 @@ public class Chainsaw extends SwordItem {
 			entityIn.getEntityWorld().getEntitiesWithinAABBExcludingEntity(user, aabb)
 					.forEach(e -> damageItem(user, stack));
 			entityIn.getEntityWorld().getEntitiesWithinAABBExcludingEntity(user, aabb).forEach(e -> addParticle(e));
-
-			if (worldIn.isRemote) {
-				if (player.getHeldItemMainhand().isItemEqualIgnoreDurability(stack)) {
-					while (Keybindings.RELOAD.isPressed() && isSelected) {
-						DoomPacketHandler.CHAINSAW.sendToServer(new ChainsawLoadingPacket(itemSlot));
-					}
+		}
+		if (isSelected) {
+			worldIn.playSound((PlayerEntity) null, user.getPosX(), user.getPosY(), user.getPosZ(),
+					ModSoundEvents.CHAINSAW_IDLE.get(), SoundCategory.PLAYERS, 1.0F,
+					1.0F / (random.nextFloat() * 0.4F + 1.2F) + 0.25F * 0.5F);
+		}
+		if (worldIn.isRemote) {
+			if (player.getHeldItemMainhand().isItemEqualIgnoreDurability(stack)) {
+				while (Keybindings.RELOAD.isPressed() && isSelected) {
+					DoomPacketHandler.CHAINSAW.sendToServer(new ChainsawLoadingPacket(itemSlot));
 				}
 			}
 		}
@@ -96,7 +102,12 @@ public class Chainsaw extends SwordItem {
 
 	private void doDamage(final LivingEntity user, final Entity target) {
 		if (target instanceof LivingEntity) {
+			target.hurtResistantTime = 0;
+			((LivingEntity) target).knockBack(target, 0, 0, 0);
 			target.attackEntityFrom(DamageSource.causePlayerDamage((PlayerEntity) user), 2F);
+			user.world.playSound((PlayerEntity) null, user.getPosX(), user.getPosY(), user.getPosZ(),
+					ModSoundEvents.CHAINSAW_ATTACKING.get(), SoundCategory.PLAYERS, 1.0F,
+					1.0F / (random.nextFloat() * 0.4F + 1.2F) + 0.25F * 0.5F);
 		}
 	}
 

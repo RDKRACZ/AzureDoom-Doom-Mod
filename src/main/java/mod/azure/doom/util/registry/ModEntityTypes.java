@@ -237,7 +237,7 @@ public class ModEntityTypes {
 			"possessed_soldier",
 			() -> EntityType.Builder
 					.<PossessedSoldierEntity>create(PossessedSoldierEntity::new, EntityClassification.MONSTER)
-					.size(0.6f, 1.95F).immuneToFire().setTrackingRange(9)
+					.size(0.9f, 2.35F).immuneToFire().setTrackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "possessed_soldier").toString()));
 
 	public static final RegistryObject<EntityType<GoreNestEntity>> GORE_NEST = ENTITY_TYPES.register("gore_nest",

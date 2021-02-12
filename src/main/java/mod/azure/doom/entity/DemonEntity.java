@@ -11,6 +11,7 @@ public class DemonEntity extends MonsterEntity {
 
 	protected DemonEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
+		this.ignoreFrustumCheck = true;
 	}
 
 	public boolean func_226547_i_(LivingEntity p_226547_1_) {

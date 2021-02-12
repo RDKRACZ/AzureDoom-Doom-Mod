@@ -47,6 +47,8 @@ public class RocketLauncher extends Item {
 					abstractarrowentity = customeArrow(abstractarrowentity);
 					abstractarrowentity.shoot(playerentity, playerentity.rotationPitch, playerentity.rotationYaw, 0.0F,
 							0.25F * 3.0F, 1.0F);
+					abstractarrowentity.setLocationAndAngles(entityLiving.getPosX(), entityLiving.getPosYHeight(0.5),
+							entityLiving.getPosZ(), 0, 0);
 
 					abstractarrowentity.setDamage(2.5);
 					abstractarrowentity.hasNoGravity();
