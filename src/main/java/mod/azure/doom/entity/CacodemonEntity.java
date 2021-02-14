@@ -141,7 +141,7 @@ public class CacodemonEntity extends DemonEntity implements IMob, IAnimatable {
 		this.goalSelector.addGoal(7, new CacodemonEntity.LookAroundGoal(this));
 		this.goalSelector.addGoal(4,
 				new RangedStaticAttackGoal(this,
-						new FireballAttack(this, true).setDamage(10).setProjectileOriginOffset(1.5, 0.3, 1.5).setSound(
+						new FireballAttack(this, true).setDamage(5).setProjectileOriginOffset(1.5, 0.3, 1.5).setSound(
 								ModSoundEvents.CACODEMON_FIREBALL.get(), 1.0F,
 								1.2F / (this.getRNG().nextFloat() * 0.2F + 0.9F)),
 						60, 20, 30F));

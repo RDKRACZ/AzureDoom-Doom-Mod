@@ -80,7 +80,7 @@ public class Config {
 		public void pushDefaults(Builder builder, EntityConfigType type) {
 			entityConfig.put(type,
 					new EntityConfig(type.toString(),
-							type.getDefaultAttributes().isHeavy() ? 10 : type == EntityConfigType.ICON_OF_SIN ? 0 : 30,
+							type.getDefaultAttributes().isHeavy() ? 5 : type == EntityConfigType.ICON_OF_SIN ? 0 : 15,
 							1, type.getDefaultAttributes().getDefaultMaxRoll(), 0, 255, Arrays.asList("nether"))
 									.setAttributes(type.getDefaultAttributes()).buildVia(builder));
 		}

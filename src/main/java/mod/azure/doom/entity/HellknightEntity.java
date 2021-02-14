@@ -135,7 +135,7 @@ public class HellknightEntity extends DemonEntity implements IAnimatable {
 
 	protected void applyEntityAI() {
 		this.goalSelector.addGoal(4, new RangedStaticAttackGoal(this,
-				new HellknightEntity.FireballAttack(this).setProjectileOriginOffset(0.8, 0.8, 0.8).setDamage(12), 60,
+				new HellknightEntity.FireballAttack(this).setProjectileOriginOffset(0.8, 0.8, 0.8).setDamage(6), 60,
 				20, 30F));
 		this.goalSelector.addGoal(4, new DemonAttackGoal(this, 1.0D, false));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));

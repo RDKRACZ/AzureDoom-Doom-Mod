@@ -144,7 +144,7 @@ public class Imp2016Entity extends DemonEntity implements IAnimatable {
 	protected void applyEntityAI() {
 		this.goalSelector.addGoal(4,
 				new RangedStrafeAttackGoal(this,
-						new FireballAttack(this, false).setProjectileOriginOffset(0.8, 0.8, 0.8).setDamage(8).setSound(
+						new FireballAttack(this, false).setProjectileOriginOffset(0.8, 0.8, 0.8).setDamage(4).setSound(
 								SoundEvents.ENTITY_BLAZE_SHOOT, 1.0F, 1.4F + this.getRNG().nextFloat() * 0.35F),
 						1.0D, 50, 30, 15, 15F).setMultiShot(5, 3));
 		this.goalSelector.addGoal(4, new DemonAttackGoal(this, 1.0D, false));

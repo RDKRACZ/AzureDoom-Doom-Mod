@@ -214,7 +214,7 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 						fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 2.0D,
 								this.parentEntity.getPosYHeight(0.5D) + 0.5D,
 								fireballentity.getPosZ() + vector3d.z * 2.0D);
-						fireballentity.setDirectHitDamage(13);
+						fireballentity.setDirectHitDamage(6);
 						world.addEntity(fireballentity);
 					}
 				}
@@ -242,7 +242,7 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 						fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 2.0D,
 								this.parentEntity.getPosYHeight(0.5D) + 0.5D,
 								fireballentity.getPosZ() + vector3d.z * 2.0D);
-						fireballentity.setDirectHitDamage(config.RANGED_ATTACK_DAMAGE);
+						fireballentity.setDirectHitDamage(6);
 						world.addEntity(fireballentity);
 					}
 					this.attackTimer = -50;

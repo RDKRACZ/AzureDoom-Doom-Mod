@@ -167,7 +167,7 @@ public class RocketMobEntity extends DamagingProjectileEntity implements IAnimat
 	}
 
 	protected void explode() {
-		this.world.createExplosion(this, this.getPosX(), this.getPosYHeight(0.0625D), this.getPosZ(), 2.0F,
+		this.world.createExplosion(this, this.getPosX(), this.getPosYHeight(0.0625D), this.getPosZ(), 1.0F,
 				Explosion.Mode.NONE);
 	}
 
