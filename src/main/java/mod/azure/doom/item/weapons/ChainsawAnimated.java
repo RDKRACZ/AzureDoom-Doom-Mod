@@ -21,7 +21,6 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -82,11 +81,9 @@ public class ChainsawAnimated extends Item implements IAnimatable {
 	public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
 		LivingEntity user = (LivingEntity) entityIn;
 		PlayerEntity player = (PlayerEntity) entityIn;
-		final Vector3d facing = Vector3d.fromPitchYaw(user.getPitchYaw()).normalize();
 		if (player.getHeldItemMainhand().isItemEqualIgnoreDurability(stack)
 				&& stack.getDamage() < (stack.getMaxDamage() - 1)) {
-			final AxisAlignedBB aabb = new AxisAlignedBB(entityIn.getPosition().up()).grow(1D, 1D, 1D)
-					.offset(facing.scale(1D));
+			final AxisAlignedBB aabb = new AxisAlignedBB(entityIn.getPosition().up()).grow(1D, 1D, 1D);
 			entityIn.getEntityWorld().getEntitiesWithinAABBExcludingEntity(user, aabb).forEach(e -> doDamage(user, e));
 			entityIn.getEntityWorld().getEntitiesWithinAABBExcludingEntity(user, aabb)
 					.forEach(e -> damageItem(user, stack));
@@ -130,7 +127,6 @@ public class ChainsawAnimated extends Item implements IAnimatable {
 	private void doDamage(LivingEntity user, final Entity target) {
 		if (target instanceof LivingEntity) {
 			target.hurtResistantTime = 0;
-			((LivingEntity) target).applyKnockback(0, 0, 0);
 			target.attackEntityFrom(DamageSource.causePlayerDamage((PlayerEntity) user), 2F);
 			user.world.playSound((PlayerEntity) null, user.getPosX(), user.getPosY(), user.getPosZ(),
 					ModSoundEvents.CHAINSAW_ATTACKING.get(), SoundCategory.PLAYERS, 1.0F,
