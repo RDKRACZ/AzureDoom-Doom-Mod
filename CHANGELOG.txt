@@ -1,17 +1,3 @@
-v.3.9.4
+v.3.9.7
 
-- Added Heavy Cannon!
-- Added Eternal Chainsaw!
-- Updated Possessed Soldier with new model thanks to Silly!
-- Possessed Soldiers now fire plasma balls instead of using a pistol.
-- Rockets now fly with the correct rotation when fired with the rocket launcher.
-- Arch-vile now teleports around randomly.
-- Chaingunners now fire every tick.
-- Argent Plates are now created by smithing Argent Energy and Iron. 
-- All demons should now render when looking up high.
-- Arachnotron, Arch-vile, Baron, Cacodemon, Cyberdemon, Chaingunner, Zombieman, Possessed Soldier/Scientist, Unwilling, Shotgun guy, Gargoyle, Hell Knight, some of the Icon, Imp, Mancubus, Mecha Zombie, Pain, Pinky, and Revenant sound effects have been overhauled thanks to Cannot!
-- Super Shotgun, Heavy Cannon, and Ballista have new sounds thanks to Cannot!
-- Melee distance has been fixed for all demons.
-- Ballista animation now plays faster and has a smaller cooldown.
-- Chainsaws now have sounds thanks to Cannot!
-- Combat Shotgun and Super Shotgun models have been updated.
+- Fixed Chainsaws on servers.
