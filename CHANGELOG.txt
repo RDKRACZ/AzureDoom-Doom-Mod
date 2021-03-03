@@ -1,3 +1,4 @@
-v.3.9.7
+v.3.9.9
 
-- Fixed Chainsaws on servers.
+- Fixed BFG call crash due to leftover debugging.
+- Enchantments now blacklisted on guns.
