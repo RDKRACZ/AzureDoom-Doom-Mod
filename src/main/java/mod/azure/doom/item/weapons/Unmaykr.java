@@ -29,7 +29,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
-public class Unmaykr extends Item implements IVanishable {
+public class Unmaykr extends DoomBaseItem implements IVanishable {
 
 	public Unmaykr() {
 		super(new Item.Properties().group(DoomMod.DoomWeaponItemGroup).maxStackSize(1).maxDamage(9000));

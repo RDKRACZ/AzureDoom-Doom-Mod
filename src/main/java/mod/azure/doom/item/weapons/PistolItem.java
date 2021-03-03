@@ -25,7 +25,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
-public class PistolItem extends Item {
+public class PistolItem extends DoomBaseItem {
 
 	public PistolItem() {
 		super(new Item.Properties().group(DoomMod.DoomWeaponItemGroup).maxStackSize(1).maxDamage(201));

@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+	"doomweapon:bfg9000",
+	"doomweapon:shotgun",
+	"doomweapon:bfg_eternal",
+	"doomweapon:unmaykr",
+	"doomweapon:ballista",
+	"doomweapon:pistol",
+	"doomweapon:chaingun",
+	"doomweapon:rocketlauncher",
+	"doomweapon:chainsaw",
+	"doomweapon:chainsaw64",
+	"doomweapon:plasmagun",
+	"doomweapon:supershotgun",
+	"doomweapon:heavycannon",
+	"doomweapon:axe_marauder_open",
+	"doomweapon:cruciblesword",
+	"doomweapon:chainsaweternal"
+  ]
+}

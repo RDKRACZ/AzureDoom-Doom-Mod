@@ -25,7 +25,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
-public class RocketLauncher extends Item {
+public class RocketLauncher extends DoomBaseItem {
 
 	public RocketLauncher() {
 		super(new Item.Properties().group(DoomMod.DoomWeaponItemGroup).maxStackSize(1).maxDamage(51));

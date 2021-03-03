@@ -2,12 +2,17 @@ package mod.azure.doom.util;
 
 import mod.azure.doom.DoomMod;
 import mod.azure.doom.entity.DemonEntity;
+import mod.azure.doom.item.weapons.AxeMarauderItem;
+import mod.azure.doom.item.weapons.DoomBaseItem;
+import mod.azure.doom.item.weapons.SwordCrucibleItem;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.Items;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.pathfinding.Path;
 import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -52,4 +57,15 @@ public class ServerEvents {
 			}
 		}
 	}
+
+	@SubscribeEvent
+	public static void anvilEvent(AnvilUpdateEvent event) {
+		if ((event.getLeft().getItem() instanceof DoomBaseItem)
+				|| (event.getLeft().getItem() instanceof AxeMarauderItem)
+				|| (event.getLeft().getItem() instanceof SwordCrucibleItem)
+						&& event.getRight().getItem() == Items.ENCHANTED_BOOK) {
+			event.setCanceled(true);
+		}
+	}
+
 }
