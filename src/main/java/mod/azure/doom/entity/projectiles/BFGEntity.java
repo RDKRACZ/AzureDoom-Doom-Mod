@@ -165,6 +165,7 @@ public class BFGEntity extends AbstractArrowEntity {
 			this.setPosition(d5, d1, d2);
 			this.doBlockCollisions();
 		}
+
 		float f2 = 24.0F;
 		int k1 = MathHelper.floor(this.getPosX() - (double) f2 - 1.0D);
 		int l1 = MathHelper.floor(this.getPosX() + (double) f2 + 1.0D);
