@@ -1,6 +1,7 @@
 package mod.azure.doom.client;
 
 import java.awt.Color;
+import java.util.Collections;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 
@@ -17,9 +18,11 @@ import net.minecraft.util.math.vector.Vector3f;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.IAnimatableModel;
 import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.geo.render.built.GeoModel;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 import software.bernie.geckolib3.model.provider.GeoModelProvider;
+import software.bernie.geckolib3.model.provider.data.EntityModelData;
 import software.bernie.geckolib3.renderers.geo.IGeoRenderer;
 import software.bernie.geckolib3.util.AnimationUtils;
 
@@ -59,6 +62,15 @@ public class GeoProjectilesRenderer<T extends Entity & IAnimatable> extends Enti
 				getPackedOverlay(entityIn, 0), (float) renderColor.getRed() / 255f,
 				(float) renderColor.getBlue() / 255f, (float) renderColor.getGreen() / 255f,
 				(float) renderColor.getAlpha() / 255);
+
+		float lastLimbDistance = 0.0F;
+		float limbSwing = 0.0F;
+		EntityModelData entityModelData = new EntityModelData();
+		AnimationEvent<T> predicate = new AnimationEvent<T>(entityIn, limbSwing, lastLimbDistance, partialTicks,
+				!(lastLimbDistance > -0.15F && lastLimbDistance < 0.15F), Collections.singletonList(entityModelData));
+		if (modelProvider instanceof IAnimatableModel) {
+			((IAnimatableModel<T>) modelProvider).setLivingAnimations(entityIn, this.getUniqueID(entityIn), predicate);
+		}
 		matrixStackIn.pop();
 		super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
 	}

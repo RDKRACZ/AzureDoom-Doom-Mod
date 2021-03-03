@@ -57,7 +57,7 @@ public class ChaingunnerRender extends GeoEntityRenderer<ChaingunnerEntity> {
 			Minecraft.getInstance().getItemRenderer().renderItem(chaingun, TransformType.THIRD_PERSON_RIGHT_HAND,
 					packedLightIn, packedOverlayIn, stack, this.rtb);
 			stack.pop();
-			bufferIn = rtb.getBuffer(RenderType.getEntitySmoothCutout(whTexture));
+			bufferIn = rtb.getBuffer(RenderType.getEntityTranslucent(whTexture));
 		}
 		super.renderRecursively(bone, stack, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
 	}

@@ -31,9 +31,11 @@ public class EnergyCellMobEntity extends DamagingProjectileEntity {
 		super(p_i50160_1_, p_i50160_2_);
 	}
 
-	public EnergyCellMobEntity(World worldIn, LivingEntity shooter, double accelX, double accelY, double accelZ) {
+	public EnergyCellMobEntity(World worldIn, LivingEntity shooter, double accelX, double accelY, double accelZ,
+			float directHitDamage) {
 		super(ModEntityTypes.ENERGY_CELL_MOB.get(), shooter, accelX, accelY, accelZ, worldIn);
 		this.shooter = shooter;
+		this.directHitDamage = directHitDamage;
 	}
 
 	@Override
@@ -120,12 +122,12 @@ public class EnergyCellMobEntity extends DamagingProjectileEntity {
 	protected void onEntityHit(EntityRayTraceResult p_213868_1_) {
 		super.onEntityHit(p_213868_1_);
 		if (!this.world.isRemote) {
-			Entity entityHit = p_213868_1_.getEntity();
-			if (entityHit instanceof LivingEntity && directHitDamage > 0)
-				p_213868_1_.getEntity().attackEntityFrom(DamageSource.causeIndirectMagicDamage(this, shooter),
-						directHitDamage);
-			this.explode();
-			this.remove();
+			Entity entity = p_213868_1_.getEntity();
+			Entity entity1 = this.func_234616_v_();
+			entity.attackEntityFrom(DamageSource.causeIndirectMagicDamage(this, entity1), directHitDamage);
+			if (entity1 instanceof LivingEntity) {
+				this.applyEnchantments((LivingEntity) entity1, entity);
+			}
 		}
 		this.playSound(ModSoundEvents.PLASMA_HIT.get(), 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 	}

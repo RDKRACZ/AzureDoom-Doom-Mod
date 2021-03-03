@@ -189,7 +189,7 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 				double d4 = livingentity.getPosZ() - (this.parentEntity.getPosZ() + vector3d.z * 2.0D);
 				float f = (float) MathHelper.atan2(livingentity.getPosZ() - parentEntity.getPosZ(),
 						livingentity.getPosX() - parentEntity.getPosX());
-				BarenBlastEntity fireballentity = new BarenBlastEntity(world, this.parentEntity, d2, d3, d4);
+				BarenBlastEntity fireballentity = new BarenBlastEntity(world, this.parentEntity, d2, d3, d4, 6);
 				if (this.attackTimer == 15) {
 					if (parentEntity.getDistance(livingentity) < 3.0D) {
 						for (int i = 0; i < 5; ++i) {
@@ -214,7 +214,6 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 						fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 2.0D,
 								this.parentEntity.getPosYHeight(0.5D) + 0.5D,
 								fireballentity.getPosZ() + vector3d.z * 2.0D);
-						fireballentity.setDirectHitDamage(6);
 						world.addEntity(fireballentity);
 					}
 				}
@@ -242,7 +241,6 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 						fireballentity.setPosition(this.parentEntity.getPosX() + vector3d.x * 2.0D,
 								this.parentEntity.getPosYHeight(0.5D) + 0.5D,
 								fireballentity.getPosZ() + vector3d.z * 2.0D);
-						fireballentity.setDirectHitDamage(6);
 						world.addEntity(fireballentity);
 					}
 					this.attackTimer = -50;

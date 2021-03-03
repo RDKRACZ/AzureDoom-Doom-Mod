@@ -148,7 +148,7 @@ public class ModEntityTypes {
 					.build(new ResourceLocation(DoomMod.MODID, "cacodemon").toString()));
 
 	public static final RegistryObject<EntityType<ArchvileEntity>> ARCHVILE = ENTITY_TYPES.register("archvile",
-			() -> EntityType.Builder.create(ArchvileEntity::new, EntityClassification.MONSTER).size(0.6F, 2.9F)
+			() -> EntityType.Builder.create(ArchvileEntity::new, EntityClassification.MONSTER).size(0.9F, 3.3F)
 					.immuneToFire().trackingRange(9).build(new ResourceLocation(DoomMod.MODID, "archvile").toString()));
 
 	public static final RegistryObject<EntityType<BaronEntity>> BARON = ENTITY_TYPES.register("baron",

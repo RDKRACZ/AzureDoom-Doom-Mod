@@ -48,12 +48,20 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-public class ArchvileEntity extends DemonEntity {
+public class ArchvileEntity extends DemonEntity implements IAnimatable {
 
 	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(ArchvileEntity.class,
 			DataSerializers.BOOLEAN);
 	private int targetChangeTime;
+	public int flameTimer;
 
 	public ArchvileEntity(EntityType<ArchvileEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
@@ -100,6 +108,35 @@ public class ArchvileEntity extends DemonEntity {
 		}
 	}
 
+	private AnimationFactory factory = new AnimationFactory(this);
+
+	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+		if (event.isMoving() && !this.dataManager.get(ATTACKING)) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("walking", true));
+			return PlayState.CONTINUE;
+		}
+		if (this.dataManager.get(ATTACKING) && !(this.dead || this.getHealth() < 0.01 || this.getShouldBeDead())) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("attacking"));
+			return PlayState.CONTINUE;
+		}
+		if ((this.dead || this.getHealth() < 0.01 || this.getShouldBeDead())) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("death", false));
+			return PlayState.CONTINUE;
+		}
+		event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
+		return PlayState.CONTINUE;
+	}
+
+	@Override
+	public void registerControllers(AnimationData data) {
+		data.addAnimationController(new AnimationController<ArchvileEntity>(this, "controller", 0, this::predicate));
+	}
+
+	@Override
+	public AnimationFactory getFactory() {
+		return this.factory;
+	}
+
 	@OnlyIn(Dist.CLIENT)
 	public boolean isAttacking() {
 		return this.dataManager.get(ATTACKING);
@@ -113,6 +150,16 @@ public class ArchvileEntity extends DemonEntity {
 	protected void registerData() {
 		super.registerData();
 		this.dataManager.register(ATTACKING, false);
+	}
+
+	@Override
+	public void livingTick() {
+		super.livingTick();
+		flameTimer = (flameTimer + 1) % 8;
+	}
+
+	public int getFlameTimer() {
+		return flameTimer;
 	}
 
 	@Override
@@ -159,7 +206,6 @@ public class ArchvileEntity extends DemonEntity {
 
 		public void tick() {
 			LivingEntity livingentity = this.parentEntity.getAttackTarget();
-			this.parentEntity.getLookController().setLookPositionWithEntity(livingentity, 90.0F, 30.0F);
 			if (this.parentEntity.canEntityBeSeen(livingentity)) {
 				++this.attackTimer;
 				if (this.attackTimer == 40) {
@@ -210,24 +256,22 @@ public class ArchvileEntity extends DemonEntity {
 						} else {
 							for (int l = 0; l < 16; ++l) {
 								double d2 = 1.25D * (double) (l + 1);
-								int j = 1 * l;
 								parentEntity.spawnFangs(parentEntity.getPosX() + (double) MathHelper.cos(f) * d2,
-										parentEntity.getPosZ() + (double) MathHelper.sin(f) * d2, d0, d1, f, j);
+										parentEntity.getPosZ() + (double) MathHelper.sin(f) * d2, d0, d1, f, 32);
 							}
 						}
 					}
-					this.parentEntity.getLookController().setLookPositionWithEntity(livingentity, 30.0F, 30.0F);
 					if (!(this.parentEntity.world.isRemote)) {
 						this.parentEntity.playSound(ModSoundEvents.ARCHVILE_SCREAM.get(), 1.0F,
 								1.2F / (this.parentEntity.rand.nextFloat() * 0.2F + 0.9F));
 					}
 					this.attackTimer = -80;
 				}
+				this.parentEntity.setAttacking(this.attackTimer > 20);
 			} else if (this.attackTimer > 0) {
 				--this.attackTimer;
 			}
-
-			this.parentEntity.setAttacking(this.attackTimer > 10);
+			this.parentEntity.faceEntity(livingentity, 30.0F, 30.0F);
 		}
 
 	}

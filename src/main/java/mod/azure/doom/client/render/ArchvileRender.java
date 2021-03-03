@@ -1,39 +1,39 @@
 package mod.azure.doom.client.render;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
 
-import mod.azure.doom.DoomMod;
 import mod.azure.doom.client.models.ArchvileModel;
 import mod.azure.doom.entity.ArchvileEntity;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.math.BlockPos;
+import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 
-public class ArchvileRender extends MobRenderer<ArchvileEntity, ArchvileModel<ArchvileEntity>> {
-
-	protected static final ResourceLocation TEXTURE = new ResourceLocation(DoomMod.MODID,
-			"textures/entity/archvile.png");
+public class ArchvileRender extends GeoEntityRenderer<ArchvileEntity> {
 
 	public ArchvileRender(EntityRendererManager renderManagerIn) {
-		super(renderManagerIn, new ArchvileModel<>(0.0F), 0.5F);
+		super(renderManagerIn, new ArchvileModel());
+		this.shadowSize = 0.7F;
 	}
 
 	@Override
-	public void render(ArchvileEntity entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn,
-			IRenderTypeBuffer bufferIn, int packedLightIn) {
-		super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
+	public RenderType getRenderType(ArchvileEntity animatable, float partialTicks, MatrixStack stack,
+			IRenderTypeBuffer renderTypeBuffer, IVertexBuilder vertexBuilder, int packedLightIn,
+			ResourceLocation textureLocation) {
+		return RenderType.getEntityTranslucent(getTextureLocation(animatable));
 	}
 
 	@Override
-	public Vector3d getRenderOffset(ArchvileEntity entityIn, float partialTicks) {
-		return super.getRenderOffset(entityIn, partialTicks);
+	protected int getBlockLight(ArchvileEntity entityIn, BlockPos partialTicks) {
+		return entityIn.isAttacking() ? 15 : 1;
 	}
-
+	
 	@Override
-	public ResourceLocation getEntityTexture(ArchvileEntity entity) {
-		return TEXTURE;
+	protected float getDeathMaxRotation(ArchvileEntity entityLivingBaseIn) {
+		return 0;
 	}
 
 }

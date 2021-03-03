@@ -139,7 +139,7 @@ public class RevenantEntity extends DemonEntity implements IAnimatable {
 
 		@Override
 		public ProjectileEntity getProjectile(World world, double d2, double d3, double d4) {
-			return new RocketMobEntity(world, this.parentEntity, d2, d3, d4);
+			return new RocketMobEntity(world, this.parentEntity, d2, d3, d4, damage);
 
 		}
 	}

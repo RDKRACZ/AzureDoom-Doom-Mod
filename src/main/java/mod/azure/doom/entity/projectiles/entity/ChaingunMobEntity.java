@@ -14,7 +14,6 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
@@ -28,8 +27,10 @@ public class ChaingunMobEntity extends DamagingProjectileEntity {
 		super(p_i50160_1_, p_i50160_2_);
 	}
 
-	public ChaingunMobEntity(World worldIn, LivingEntity shooter, double accelX, double accelY, double accelZ) {
+	public ChaingunMobEntity(World worldIn, LivingEntity shooter, double accelX, double accelY, double accelZ,
+			float directHitDamage) {
 		super(ModEntityTypes.CHAINGUN_MOB.get(), shooter, accelX, accelY, accelZ, worldIn);
+		this.directHitDamage = directHitDamage;
 	}
 
 	public ChaingunMobEntity(World worldIn, double x, double y, double z, double accelX, double accelY, double accelZ) {
@@ -126,17 +127,13 @@ public class ChaingunMobEntity extends DamagingProjectileEntity {
 	protected void onEntityHit(EntityRayTraceResult p_213868_1_) {
 		super.onEntityHit(p_213868_1_);
 		if (!this.world.isRemote) {
-			Entity entityHit = p_213868_1_.getEntity();
-			if (entityHit instanceof LivingEntity && directHitDamage > 0)
-				this.attackEntityFrom(DamageSource.causeIndirectMagicDamage(this, this), 3);
-			this.explode();
-			this.remove();
+			Entity entity = p_213868_1_.getEntity();
+			Entity entity1 = this.func_234616_v_();
+			entity.attackEntityFrom(DamageSource.causeIndirectMagicDamage(this, entity1), directHitDamage);
+			if (entity1 instanceof LivingEntity) {
+				this.applyEnchantments((LivingEntity) entity1, entity);
+			}
 		}
 		this.playSound(ModSoundEvents.CHAINGUN_SHOOT.get(), 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
-	}
-
-	protected void explode() {
-		this.world.createExplosion(this, this.getPosX(), this.getPosYHeight(0.0625D), this.getPosZ(), 1.0F, false,
-				Explosion.Mode.NONE);
 	}
 }
