@@ -174,4 +174,12 @@ public class RocketMobEntity extends DamagingProjectileEntity implements IAnimat
 				Explosion.Mode.NONE);
 	}
 
+	public LivingEntity getShooter() {
+		return shooter;
+	}
+
+	public void setShooter(LivingEntity shooter) {
+		this.shooter = shooter;
+	}
+
 }

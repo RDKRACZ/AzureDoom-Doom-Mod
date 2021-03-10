@@ -83,7 +83,7 @@ public class BFG9000 extends DoomBaseItem implements IAnimatable {
 					BFGEntity abstractarrowentity = createArrow(worldIn, stack, playerentity);
 					abstractarrowentity = customeArrow(abstractarrowentity);
 					abstractarrowentity.func_234612_a_(playerentity, playerentity.rotationPitch,
-							playerentity.rotationYaw, 0.0F, 0.5F * 3.0F, 1.0F);
+							playerentity.rotationYaw, 0.0F, 0.25F * 3.0F, 1.0F);
 
 					abstractarrowentity.setDamage(2.5);
 					abstractarrowentity.hasNoGravity();

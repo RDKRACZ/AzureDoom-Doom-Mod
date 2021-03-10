@@ -48,6 +48,7 @@ public class ChaingunBulletEntity extends AbstractArrowEntity {
 	protected void arrowHit(LivingEntity living) {
 		super.arrowHit(living);
 		if (!(living instanceof PlayerEntity) && !(living instanceof IconofsinEntity)) {
+			living.setVelocity(0, 0, 0);
 			living.hurtResistantTime = 0;
 		}
 	}

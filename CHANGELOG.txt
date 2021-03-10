@@ -1,4 +1,6 @@
-v.3.9.9
+v.3.9.10
 
-- Fixed BFG call crash due to leftover debugging.
-- Enchantments now blacklisted on guns.
+- New textures for Argent Energy, Plate, and the power ups thanks to temhotaokeaha.
+- Fixed Super Shotgun breaking.
+- Removed knockback from chaingun.
+- Slowed down BFG projectile.

@@ -145,4 +145,12 @@ public class EnergyCellMobEntity extends DamagingProjectileEntity {
 		this.world.createExplosion(this, this.getPosX(), this.getPosYHeight(0.0625D), this.getPosZ(), 1.0F,
 				Explosion.Mode.NONE);
 	}
+
+	public LivingEntity getShooter() {
+		return shooter;
+	}
+
+	public void setShooter(LivingEntity shooter) {
+		this.shooter = shooter;
+	}
 }
