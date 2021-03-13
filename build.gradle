@@ -6,7 +6,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '4.1.+', changing: true
 		classpath "com.wynprice.cursemaven:CurseMaven:2.1.5"
         classpath 'gradle.plugin.com.matthewprenger:CurseGradle:1.4.0'
     }
@@ -20,14 +20,15 @@ apply plugin: 'com.matthewprenger.cursegradle'
 import groovy.json.JsonSlurper
 import groovy.json.JsonOutput
 
-version = "3.9.10"
+version = "3.9.10a"
 group = "mod.azure.doomweapon"
 archivesBaseName = "MCDoom-Mod-1.16.5"
 
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
+java.toolchain.languageVersion = JavaLanguageVersion.of(8) // Mojang ships Java 8 to end users, so your mod should target Java 8.
 
+println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
-    mappings channel: 'snapshot', version: '20201028-1.16.3'
+    mappings channel: 'official', version: '1.16.5'
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
     runs {
         client {
@@ -61,6 +62,8 @@ minecraft {
     }
 }
 
+sourceSets.main.resources { srcDir 'src/generated/resources' }
+
 repositories {
 	jcenter()
 	maven {
@@ -80,19 +83,19 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.5-36.0.0'
+    minecraft 'net.minecraftforge:forge:1.16.5-36.0.48'
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.3-4.0.2.0")
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.3-4.0.2.0:api")
 	compile fg.deobf("curse.maven:SD-392762:3069533")
 	compile fg.deobf("curse.maven:JEI-238222:3108050")
 	//compile fg.deobf("curse.maven:GTE-417802:3114274")
 	//compile fg.deobf("curse.maven:GTEP-283644:3092113")
-	compileOnly fg.deobf("vazkii.patchouli:Patchouli:1.16.4-48:api")
-    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.16.4-48")
+	//compileOnly fg.deobf("vazkii.patchouli:Patchouli:1.16.4-48:api")
+    //runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.16.4-48")
 	compile fg.deobf("curse.maven:TDI-245733:3144151")
-	compile fg.deobf("curse.maven:projectmmo-353935:3100529")
+	//compile fg.deobf("curse.maven:projectmmo-353935:3100529")
 	compile fg.deobf("curse.maven:worldedit-225608:3135187")
-	implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.16.5:3.0.10')
+	implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.16.5:3.0.15')
 }
 
 jar {
