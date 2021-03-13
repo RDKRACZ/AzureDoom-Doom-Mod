@@ -57,34 +57,34 @@ public class Shotgun extends DoomBaseItem implements IAnimatable {
 	}
 
 	public Shotgun() {
-		super(new Item.Properties().group(DoomMod.DoomWeaponItemGroup).maxStackSize(1).maxDamage(51)
+		super(new Item.Properties().tab(DoomMod.DoomWeaponItemGroup).stacksTo(1).durability(51)
 				.setISTER(() -> SGRender::new));
 	}
 
 	@Override
-	public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
-		return DoomTier.SHOTGUN.getRepairMaterial().test(repair) || super.getIsRepairable(toRepair, repair);
+	public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
+		return DoomTier.SHOTGUN.getRepairIngredient().test(repair) || super.isValidRepairItem(toRepair, repair);
 	}
 
 	@Override
-	public void onPlayerStoppedUsing(ItemStack stack, World worldIn, LivingEntity entityLiving, int timeLeft) {
+	public void releaseUsing(ItemStack stack, World worldIn, LivingEntity entityLiving, int timeLeft) {
 		if (entityLiving instanceof PlayerEntity) {
 			PlayerEntity playerentity = (PlayerEntity) entityLiving;
-			if (stack.getDamage() < (stack.getMaxDamage() - 1)) {
-				playerentity.getCooldownTracker().setCooldown(this, 10);
-				if (!worldIn.isRemote) {
+			if (stack.getDamageValue() < (stack.getMaxDamage() - 1)) {
+				playerentity.getCooldowns().addCooldown(this, 10);
+				if (!worldIn.isClientSide) {
 					ShotgunShellEntity abstractarrowentity = createArrow(worldIn, stack, playerentity);
 					abstractarrowentity = customeArrow(abstractarrowentity);
-					abstractarrowentity.func_234612_a_(playerentity, playerentity.rotationPitch,
-							playerentity.rotationYaw, 0.0F, 1.0F * 3.0F, 1.0F);
+					abstractarrowentity.shootFromRotation(playerentity, playerentity.xRot,
+							playerentity.yRot, 0.0F, 1.0F * 3.0F, 1.0F);
 
-					abstractarrowentity.setDamage(3.7);
-					abstractarrowentity.hasNoGravity();
+					abstractarrowentity.setBaseDamage(3.7);
+					abstractarrowentity.isNoGravity();
 
-					stack.damageItem(1, entityLiving, p -> p.sendBreakAnimation(entityLiving.getActiveHand()));
-					worldIn.addEntity(abstractarrowentity);
-					worldIn.playSound((PlayerEntity) null, playerentity.getPosX(), playerentity.getPosY(),
-							playerentity.getPosZ(), ModSoundEvents.SHOTGUN_SHOOT.get(), SoundCategory.PLAYERS, 1.0F,
+					stack.hurtAndBreak(1, entityLiving, p -> p.broadcastBreakEvent(entityLiving.getUsedItemHand()));
+					worldIn.addFreshEntity(abstractarrowentity);
+					worldIn.playSound((PlayerEntity) null, playerentity.getX(), playerentity.getY(),
+							playerentity.getZ(), ModSoundEvents.SHOTGUN_SHOOT.get(), SoundCategory.PLAYERS, 1.0F,
 							1.5F);
 				}
 				AnimationController<?> controller = GeckoLibUtil.getControllerForStack(this.factory, stack,
@@ -105,9 +105,9 @@ public class Shotgun extends DoomBaseItem implements IAnimatable {
 
 	@Override
 	public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-		if (worldIn.isRemote) {
-			if (((PlayerEntity) entityIn).getHeldItemMainhand().getItem() instanceof Shotgun) {
-				while (Keybindings.RELOAD.isPressed() && isSelected) {
+		if (worldIn.isClientSide) {
+			if (((PlayerEntity) entityIn).getMainHandItem().getItem() instanceof Shotgun) {
+				while (Keybindings.RELOAD.consumeClick() && isSelected) {
 					DoomPacketHandler.SHOTGUN.sendToServer(new SGLoadingPacket(itemSlot));
 				}
 			}
@@ -115,16 +115,16 @@ public class Shotgun extends DoomBaseItem implements IAnimatable {
 	}
 
 	public static void reload(PlayerEntity user, Hand hand) {
-		if (user.getHeldItem(hand).getDamage() != 0 && user.inventory.count(DoomItems.SHOTGUN_SHELLS.get()) > 0) {
+		if (user.getItemInHand(hand).getDamageValue() != 0 && user.inventory.countItem(DoomItems.SHOTGUN_SHELLS.get()) > 0) {
 			removeAmmo(DoomItems.SHOTGUN_SHELLS.get(), user);
-			user.getHeldItem(hand).damageItem(-4, user, s -> user.sendBreakAnimation(hand));
-			user.getHeldItem(hand).setAnimationsToGo(3);
+			user.getItemInHand(hand).hurtAndBreak(-4, user, s -> user.broadcastBreakEvent(hand));
+			user.getItemInHand(hand).setPopTime(3);
 		}
 	}
 
 	private static void removeAmmo(Item ammo, PlayerEntity playerEntity) {
 		if (!playerEntity.isCreative()) {
-			for (ItemStack item : playerEntity.inventory.mainInventory) {
+			for (ItemStack item : playerEntity.inventory.items) {
 				if (item.getItem() == DoomItems.SHOTGUN_SHELLS.get()) {
 					item.shrink(1);
 					break;
@@ -149,22 +149,22 @@ public class Shotgun extends DoomBaseItem implements IAnimatable {
 	}
 
 	@Override
-	public UseAction getUseAction(ItemStack stack) {
+	public UseAction getUseAnimation(ItemStack stack) {
 		return UseAction.BLOCK;
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(new TranslationTextComponent(
-				"Ammo: " + (stack.getMaxDamage() - stack.getDamage() - 1) + " / " + (stack.getMaxDamage() - 1))
-						.mergeStyle(TextFormatting.ITALIC));
+				"Ammo: " + (stack.getMaxDamage() - stack.getDamageValue() - 1) + " / " + (stack.getMaxDamage() - 1))
+						.withStyle(TextFormatting.ITALIC));
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		ItemStack itemstack = playerIn.getHeldItem(handIn);
-		playerIn.setActiveHand(handIn);
-		return ActionResult.resultConsume(itemstack);
+	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+		ItemStack itemstack = playerIn.getItemInHand(handIn);
+		playerIn.startUsingItem(handIn);
+		return ActionResult.consume(itemstack);
 	}
 
 	public ShotgunShellEntity customeArrow(ShotgunShellEntity arrow) {

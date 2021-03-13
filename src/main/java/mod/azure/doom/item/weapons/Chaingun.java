@@ -57,34 +57,34 @@ public class Chaingun extends DoomBaseItem implements IAnimatable {
 	}
 
 	public Chaingun() {
-		super(new Item.Properties().group(DoomMod.DoomWeaponItemGroup).maxStackSize(1).maxDamage(201)
+		super(new Item.Properties().tab(DoomMod.DoomWeaponItemGroup).stacksTo(1).durability(201)
 				.setISTER(() -> ChaingunRender::new));
 	}
 
 	@Override
-	public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
-		return DoomTier.CHAINGUN.getRepairMaterial().test(repair) || super.getIsRepairable(toRepair, repair);
+	public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
+		return DoomTier.CHAINGUN.getRepairIngredient().test(repair) || super.isValidRepairItem(toRepair, repair);
 	}
 
 	@Override
-	public void onUse(World worldIn, LivingEntity entityLiving, ItemStack stack, int count) {
+	public void onUseTick(World worldIn, LivingEntity entityLiving, ItemStack stack, int count) {
 		if (entityLiving instanceof PlayerEntity) {
 			PlayerEntity playerentity = (PlayerEntity) entityLiving;
-			if (stack.getDamage() < (stack.getMaxDamage() - 1)) {
-				if (!worldIn.isRemote) {
+			if (stack.getDamageValue() < (stack.getMaxDamage() - 1)) {
+				if (!worldIn.isClientSide) {
 					ChaingunBulletEntity abstractarrowentity = createArrow(worldIn, stack, playerentity);
 					abstractarrowentity = customeArrow(abstractarrowentity);
-					abstractarrowentity.func_234612_a_(playerentity, playerentity.rotationPitch,
-							playerentity.rotationYaw, 0.0F, 1.0F * 3.0F, 1.0F);
+					abstractarrowentity.shootFromRotation(playerentity, playerentity.xRot,
+							playerentity.yRot, 0.0F, 1.0F * 3.0F, 1.0F);
 
-					abstractarrowentity.setDamage(1.5);
-					abstractarrowentity.hasNoGravity();
-					abstractarrowentity.ticksExisted = 35;
+					abstractarrowentity.setBaseDamage(1.5);
+					abstractarrowentity.isNoGravity();
+					abstractarrowentity.tickCount = 35;
 
-					stack.damageItem(1, entityLiving, p -> p.sendBreakAnimation(entityLiving.getActiveHand()));
-					worldIn.addEntity(abstractarrowentity);
-					worldIn.playSound((PlayerEntity) null, playerentity.getPosX(), playerentity.getPosY(),
-							playerentity.getPosZ(), ModSoundEvents.CHAINGUN_SHOOT.get(), SoundCategory.PLAYERS, 1.0F,
+					stack.hurtAndBreak(1, entityLiving, p -> p.broadcastBreakEvent(entityLiving.getUsedItemHand()));
+					worldIn.addFreshEntity(abstractarrowentity);
+					worldIn.playSound((PlayerEntity) null, playerentity.getX(), playerentity.getY(),
+							playerentity.getZ(), ModSoundEvents.CHAINGUN_SHOOT.get(), SoundCategory.PLAYERS, 1.0F,
 							1.0F / (random.nextFloat() * 0.4F + 1.2F) + 0.25F * 0.5F);
 				}
 				AnimationController<?> controller = GeckoLibUtil.getControllerForStack(this.factory, stack,
@@ -105,9 +105,9 @@ public class Chaingun extends DoomBaseItem implements IAnimatable {
 
 	@Override
 	public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-		if (worldIn.isRemote) {
-			if (((PlayerEntity) entityIn).getHeldItemMainhand().getItem() instanceof Chaingun) {
-				while (Keybindings.RELOAD.isPressed() && isSelected) {
+		if (worldIn.isClientSide) {
+			if (((PlayerEntity) entityIn).getMainHandItem().getItem() instanceof Chaingun) {
+				while (Keybindings.RELOAD.consumeClick() && isSelected) {
 					DoomPacketHandler.CHAINGUN.sendToServer(new ChaingunLoadingPacket(itemSlot));
 				}
 			}
@@ -115,19 +115,19 @@ public class Chaingun extends DoomBaseItem implements IAnimatable {
 	}
 
 	public static void reload(PlayerEntity user, Hand hand) {
-		if (user.getHeldItem(hand).getItem() instanceof Chaingun) {
-			while (user.getHeldItem(hand).getDamage() != 0
-					&& user.inventory.count(DoomItems.CHAINGUN_BULLETS.get()) > 0) {
+		if (user.getItemInHand(hand).getItem() instanceof Chaingun) {
+			while (user.getItemInHand(hand).getDamageValue() != 0
+					&& user.inventory.countItem(DoomItems.CHAINGUN_BULLETS.get()) > 0) {
 				removeAmmo(DoomItems.CHAINGUN_BULLETS.get(), user);
-				user.getHeldItem(hand).damageItem(-50, user, s -> user.sendBreakAnimation(hand));
-				user.getHeldItem(hand).setAnimationsToGo(3);
+				user.getItemInHand(hand).hurtAndBreak(-50, user, s -> user.broadcastBreakEvent(hand));
+				user.getItemInHand(hand).setPopTime(3);
 			}
 		}
 	}
 
 	private static void removeAmmo(Item ammo, PlayerEntity playerEntity) {
 		if (!playerEntity.isCreative()) {
-			for (ItemStack item : playerEntity.inventory.mainInventory) {
+			for (ItemStack item : playerEntity.inventory.items) {
 				if (item.getItem() == DoomItems.CHAINGUN_BULLETS.get()) {
 					item.shrink(1);
 					break;
@@ -147,7 +147,7 @@ public class Chaingun extends DoomBaseItem implements IAnimatable {
 	}
 
 	@Override
-	public UseAction getUseAction(ItemStack stack) {
+	public UseAction getUseAnimation(ItemStack stack) {
 		return UseAction.BLOCK;
 	}
 
@@ -157,17 +157,17 @@ public class Chaingun extends DoomBaseItem implements IAnimatable {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(new TranslationTextComponent(
-				"Ammo: " + (stack.getMaxDamage() - stack.getDamage() - 1) + " / " + (stack.getMaxDamage() - 1))
-						.mergeStyle(TextFormatting.ITALIC));
+				"Ammo: " + (stack.getMaxDamage() - stack.getDamageValue() - 1) + " / " + (stack.getMaxDamage() - 1))
+						.withStyle(TextFormatting.ITALIC));
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		ItemStack itemstack = playerIn.getHeldItem(handIn);
-		playerIn.setActiveHand(handIn);
-		return ActionResult.resultConsume(itemstack);
+	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+		ItemStack itemstack = playerIn.getItemInHand(handIn);
+		playerIn.startUsingItem(handIn);
+		return ActionResult.consume(itemstack);
 	}
 
 	public ChaingunBulletEntity customeArrow(ChaingunBulletEntity arrow) {

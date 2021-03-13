@@ -24,22 +24,22 @@ import net.minecraftforge.fml.ModList;
 public class PowerSphereItem extends Item {
 
 	public PowerSphereItem() {
-		super(new Item.Properties().group(DoomMod.DoomPowerUPItemGroup).maxStackSize(1));
+		super(new Item.Properties().tab(DoomMod.DoomPowerUPItemGroup).stacksTo(1));
 	}
 
 	@Override
-	public void onUse(World worldIn, LivingEntity livingEntityIn, ItemStack stack, int count) {
+	public void onUseTick(World worldIn, LivingEntity livingEntityIn, ItemStack stack, int count) {
 		if (livingEntityIn instanceof ServerPlayerEntity) {
 			ServerPlayerEntity playerentity = (ServerPlayerEntity) livingEntityIn;
-			if (!worldIn.isRemote) {
+			if (!worldIn.isClientSide) {
 				livingEntityIn.heal(20);
 				if (ModList.get().isLoaded("pmmo")) {
 					PMMOCompat.awardPowerXp(playerentity);
 				}
-				if (!playerentity.abilities.isCreativeMode) {
+				if (!playerentity.abilities.instabuild) {
 					stack.shrink(1);
 					if (stack.isEmpty()) {
-						playerentity.inventory.deleteStack(stack);
+						playerentity.inventory.removeItem(stack);
 					}
 				}
 			}
@@ -52,26 +52,26 @@ public class PowerSphereItem extends Item {
 	}
 
 	@Override
-	public UseAction getUseAction(ItemStack stack) {
+	public UseAction getUseAnimation(ItemStack stack) {
 		return UseAction.NONE;
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		ItemStack itemstack = playerIn.getHeldItem(handIn);
-		playerIn.setActiveHand(handIn);
-		return ActionResult.resultConsume(itemstack);
+	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+		ItemStack itemstack = playerIn.getItemInHand(handIn);
+		playerIn.startUsingItem(handIn);
+		return ActionResult.consume(itemstack);
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new TranslationTextComponent("doom.power.text").mergeStyle(TextFormatting.ITALIC));
-		super.addInformation(stack, worldIn, tooltip, flagIn);
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(new TranslationTextComponent("doom.power.text").withStyle(TextFormatting.ITALIC));
+		super.appendHoverText(stack, worldIn, tooltip, flagIn);
 	}
 
 	@Override
-	public boolean hasEffect(ItemStack stack) {
+	public boolean isFoil(ItemStack stack) {
 		return false;
 	}
 

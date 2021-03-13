@@ -20,28 +20,28 @@ public class UnmaykrBolt extends ArrowItem {
 	public final float damage;
 
 	public UnmaykrBolt(float damageIn) {
-		super(new Item.Properties().group(DoomMod.DoomWeaponItemGroup));
+		super(new Item.Properties().tab(DoomMod.DoomWeaponItemGroup));
 		this.damage = damageIn;
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(new StringTextComponent("\u00A7o" + "Powered by Argent. Used for Unmaykr."));
-		super.addInformation(stack, worldIn, tooltip, flagIn);
+		super.appendHoverText(stack, worldIn, tooltip, flagIn);
 	}
 
 	@Override
 	public boolean isInfinite(ItemStack stack, ItemStack bow, net.minecraft.entity.player.PlayerEntity player) {
 		int enchant = net.minecraft.enchantment.EnchantmentHelper
-				.getEnchantmentLevel(net.minecraft.enchantment.Enchantments.INFINITY, bow);
+				.getItemEnchantmentLevel(net.minecraft.enchantment.Enchantments.INFINITY_ARROWS, bow);
 		return enchant <= 0 ? false : this instanceof UnmaykrBolt;
 	}
 
 	@Override
 	public UnmaykrBoltEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
 		UnmaykrBoltEntity arrowentity = new UnmaykrBoltEntity(worldIn, shooter);
-		arrowentity.setDamage(this.damage);
+		arrowentity.setBaseDamage(this.damage);
 		return arrowentity;
 	}
 

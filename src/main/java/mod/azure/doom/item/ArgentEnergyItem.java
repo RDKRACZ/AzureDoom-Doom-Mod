@@ -16,19 +16,19 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class ArgentEnergyItem extends Item {
 
 	public ArgentEnergyItem() {
-		super(new Item.Properties().group(DoomMod.DoomPowerUPItemGroup));
+		super(new Item.Properties().tab(DoomMod.DoomPowerUPItemGroup));
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new TranslationTextComponent("doom.argent_engery1.text").mergeStyle(TextFormatting.RED)
-				.mergeStyle(TextFormatting.ITALIC));
-		tooltip.add(new TranslationTextComponent("doom.argent_engery2.text").mergeStyle(TextFormatting.RED)
-				.mergeStyle(TextFormatting.ITALIC));
-		tooltip.add(new TranslationTextComponent("doom.argent_engery3.text").mergeStyle(TextFormatting.RED)
-				.mergeStyle(TextFormatting.ITALIC));
-		super.addInformation(stack, worldIn, tooltip, flagIn);
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(new TranslationTextComponent("doom.argent_engery1.text").withStyle(TextFormatting.RED)
+				.withStyle(TextFormatting.ITALIC));
+		tooltip.add(new TranslationTextComponent("doom.argent_engery2.text").withStyle(TextFormatting.RED)
+				.withStyle(TextFormatting.ITALIC));
+		tooltip.add(new TranslationTextComponent("doom.argent_engery3.text").withStyle(TextFormatting.RED)
+				.withStyle(TextFormatting.ITALIC));
+		super.appendHoverText(stack, worldIn, tooltip, flagIn);
 	}
 
 	@Override
@@ -37,7 +37,7 @@ public class ArgentEnergyItem extends Item {
 	}
 
 	@Override
-	public boolean hasEffect(ItemStack stack) {
+	public boolean isFoil(ItemStack stack) {
 		return false;
 	}
 

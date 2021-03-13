@@ -49,28 +49,28 @@ public class CueBallEntity extends DemonEntity implements IAnimatable {
 		super(type, worldIn);
 	}
 
-	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
-		return config.pushAttributes(MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 35.0D));
+	public static AttributeModifierMap.MutableAttribute createAttributes() {
+		return config.pushAttributes(MobEntity.createMobAttributes().add(Attributes.FOLLOW_RANGE, 35.0D));
 	}
 
 	@Override
-	public void applyKnockback(float strength, double ratioX, double ratioZ) {
-		super.applyKnockback(3, ratioX, ratioZ);
+	public void knockback(float strength, double ratioX, double ratioZ) {
+		super.knockback(3, ratioX, ratioZ);
 	}
 
 	@Override
-	protected void onDeathUpdate() {
+	protected void tickDeath() {
 		++this.deathTime;
 		if (this.deathTime == 60) {
 			this.remove();
 		}
-		if (!this.world.isRemote) {
+		if (!this.level.isClientSide) {
 			this.explode();
 		}
 	}
 
 	protected void explode() {
-		this.world.createExplosion(this, this.getPosX(), this.getPosYHeight(0.0625D), this.getPosZ(), 1.0F,
+		this.level.explode(this, this.getX(), this.getY(0.0625D), this.getZ(), 1.0F,
 				Explosion.Mode.NONE);
 	}
 
@@ -90,7 +90,7 @@ public class CueBallEntity extends DemonEntity implements IAnimatable {
 	}
 
 	@Override
-	public IPacket<?> createSpawnPacket() {
+	public IPacket<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
@@ -107,17 +107,17 @@ public class CueBallEntity extends DemonEntity implements IAnimatable {
 		this.goalSelector.addGoal(4, new DemonAttackGoal(this, 1.0D, false));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, true));
-		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this).setCallsForHelp()));
+		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this).setAlertOthers()));
 	}
 
 	@Nullable
 	@Override
-	public ILivingEntityData onInitialSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
+	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
 			@Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
-		spawnDataIn = super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
-		float f = difficultyIn.getClampedAdditionalDifficulty();
-		this.setCanPickUpLoot(this.rand.nextFloat() < 0.55F * f);
-		this.setEnchantmentBasedOnDifficulty(difficultyIn);
+		spawnDataIn = super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+		float f = difficultyIn.getSpecialMultiplier();
+		this.setCanPickUpLoot(this.random.nextFloat() < 0.55F * f);
+		this.populateDefaultEquipmentEnchantments(difficultyIn);
 
 		return spawnDataIn;
 	}
@@ -131,12 +131,12 @@ public class CueBallEntity extends DemonEntity implements IAnimatable {
 	}
 
 	@Override
-	public CreatureAttribute getCreatureAttribute() {
+	public CreatureAttribute getMobType() {
 		return CreatureAttribute.UNDEAD;
 	}
 
 	@Override
-	public int getMaxSpawnedInChunk() {
+	public int getMaxSpawnClusterSize() {
 		return 1;
 	}
 

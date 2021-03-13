@@ -16,37 +16,37 @@ import net.minecraft.world.World;
 public class JumppadBlock extends Block {
 
 	public JumppadBlock() {
-		super(Block.Properties.create(Material.ANVIL).hardnessAndResistance(4.0F).sound(SoundType.STONE).notSolid());
+		super(Block.Properties.of(Material.HEAVY_METAL).strength(4.0F).sound(SoundType.STONE).noOcclusion());
 	}
 
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-		return VoxelShapes.create(0.00f, 0.0f, 0.00f, 1.0f, 0.2f, 1.0f);
+		return VoxelShapes.box(0.00f, 0.0f, 0.00f, 1.0f, 0.2f, 1.0f);
 	}
 
 	@Override
-	public void onFallenUpon(World worldIn, BlockPos pos, Entity entityIn, float fallDistance) {
-		entityIn.onLivingFall(5.0F, 0.0F);
+	public void fallOn(World worldIn, BlockPos pos, Entity entityIn, float fallDistance) {
+		entityIn.causeFallDamage(5.0F, 0.0F);
 	}
 
 	@Override
-	public void onLanded(IBlockReader worldIn, Entity entityIn) {
+	public void updateEntityAfterFallOn(IBlockReader worldIn, Entity entityIn) {
 		this.jumpEntity(entityIn);
 	}
 
 	private void jumpEntity(Entity entity) {
-		Vector3d vector3d = entity.getMotion();
+		Vector3d vector3d = entity.getDeltaMovement();
 		if (vector3d.y < 0.0D) {
-			entity.setMotion(vector3d.x, 1D, vector3d.z);
+			entity.setDeltaMovement(vector3d.x, 1D, vector3d.z);
 		}
 	}
 
 	@Override
-	public void onEntityWalk(World worldIn, BlockPos pos, Entity entityIn) {
-		double d0 = Math.abs(entityIn.getMotion().y);
+	public void stepOn(World worldIn, BlockPos pos, Entity entityIn) {
+		double d0 = Math.abs(entityIn.getDeltaMovement().y);
 		double d1 = 1.4D + d0 * 0.2D;
-		entityIn.setMotion(entityIn.getMotion().mul(d1, 1.0D, 0.5D));
-		super.onEntityWalk(worldIn, pos, entityIn);
+		entityIn.setDeltaMovement(entityIn.getDeltaMovement().multiply(d1, 1.0D, 0.5D));
+		super.stepOn(worldIn, pos, entityIn);
 	}
 
 }

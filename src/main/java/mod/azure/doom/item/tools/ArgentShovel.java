@@ -18,15 +18,15 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class ArgentShovel extends ShovelItem {
 
 	public ArgentShovel() {
-		super(DoomTier.DOOM, 4, -2.4F, new Item.Properties().group(DoomMod.DoomWeaponItemGroup).maxStackSize(1));
+		super(DoomTier.DOOM, 4, -2.4F, new Item.Properties().tab(DoomMod.DoomWeaponItemGroup).stacksTo(1));
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new TranslationTextComponent("doom.argent_powered.text").mergeStyle(TextFormatting.RED)
-				.mergeStyle(TextFormatting.ITALIC));
-		super.addInformation(stack, worldIn, tooltip, flagIn);
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(new TranslationTextComponent("doom.argent_powered.text").withStyle(TextFormatting.RED)
+				.withStyle(TextFormatting.ITALIC));
+		super.appendHoverText(stack, worldIn, tooltip, flagIn);
 	}
 
 }

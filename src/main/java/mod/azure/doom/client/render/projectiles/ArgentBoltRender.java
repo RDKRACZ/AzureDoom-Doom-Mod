@@ -16,7 +16,7 @@ public class ArgentBoltRender extends ArrowRenderer<ArgentBoltEntity> {
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(ArgentBoltEntity entity) {
+	public ResourceLocation getTextureLocation(ArgentBoltEntity entity) {
 		return ARGENT_BOLT_TEXTURE;
 	}
 

@@ -19,11 +19,11 @@ public class Cyberdemon2016Render extends MobRenderer<Cyberdemon2016Entity, Cybe
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(Cyberdemon2016Entity entity) {
+	public ResourceLocation getTextureLocation(Cyberdemon2016Entity entity) {
 		return TEXTURE;
 	}
 
-	protected void preRenderCallback(Cyberdemon2016Entity entitylivingbaseIn, MatrixStack matrixStackIn,
+	protected void scale(Cyberdemon2016Entity entitylivingbaseIn, MatrixStack matrixStackIn,
 			float partialTickTime) {
 		matrixStackIn.scale(2.5F, 2.5F, 2.5F);
 	}

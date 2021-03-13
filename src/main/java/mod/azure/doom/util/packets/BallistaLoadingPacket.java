@@ -29,7 +29,7 @@ public class BallistaLoadingPacket {
 	public static void handle(BallistaLoadingPacket packet, Supplier<NetworkEvent.Context> ctx) {
 		ctx.get().enqueueWork(() -> {
 			NetworkEvent.Context context = ctx.get();
-			INetHandler handler = context.getNetworkManager().getNetHandler();
+			INetHandler handler = context.getNetworkManager().getPacketListener();
 			if (handler instanceof ServerPlayNetHandler) {
 				ServerPlayerEntity playerEntity = ((ServerPlayNetHandler) handler).player;
 				Ballista.reload(playerEntity, Hand.MAIN_HAND);

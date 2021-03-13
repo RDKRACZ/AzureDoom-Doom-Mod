@@ -12,7 +12,7 @@ public class E1M1MusicDisc extends MusicDiscItem {
 
 	public E1M1MusicDisc(Supplier<SoundEvent> soundSupplier) {
 		super(1, soundSupplier,
-				(new Item.Properties()).maxStackSize(1).group(DoomMod.DoomPowerUPItemGroup).rarity(Rarity.RARE));
+				(new Item.Properties()).stacksTo(1).tab(DoomMod.DoomPowerUPItemGroup).rarity(Rarity.RARE));
 	}
 
 }

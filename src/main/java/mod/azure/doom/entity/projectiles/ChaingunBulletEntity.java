@@ -37,19 +37,19 @@ public class ChaingunBulletEntity extends AbstractArrowEntity {
 	}
 
 	@Override
-	protected void func_225516_i_() {
+	protected void tickDespawn() {
 		++this.ticksInAir;
-		if (this.ticksExisted >= 40) {
+		if (this.tickCount >= 40) {
 			this.remove();
 		}
 	}
 
 	@Override
-	protected void arrowHit(LivingEntity living) {
-		super.arrowHit(living);
+	protected void doPostHurtEffects(LivingEntity living) {
+		super.doPostHurtEffects(living);
 		if (!(living instanceof PlayerEntity) && !(living instanceof IconofsinEntity)) {
-			living.hurtResistantTime = 0;
 			living.setDeltaMovement(0, 0, 0);
+			living.invulnerableTime = 0;
 		}
 	}
 
@@ -60,110 +60,110 @@ public class ChaingunBulletEntity extends AbstractArrowEntity {
 	}
 
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putShort("life", (short) this.ticksInAir);
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		this.ticksInAir = compound.getShort("life");
 	}
 
 	@Override
 	public void tick() {
 		super.tick();
-		boolean flag = this.getNoClip();
-		Vector3d vector3d = this.getMotion();
-		if (this.prevRotationPitch == 0.0F && this.prevRotationYaw == 0.0F) {
-			float f = MathHelper.sqrt(horizontalMag(vector3d));
-			this.rotationYaw = (float) (MathHelper.atan2(vector3d.x, vector3d.z) * (double) (180F / (float) Math.PI));
-			this.rotationPitch = (float) (MathHelper.atan2(vector3d.y, (double) f) * (double) (180F / (float) Math.PI));
-			this.prevRotationYaw = this.rotationYaw;
-			this.prevRotationPitch = this.rotationPitch;
+		boolean flag = this.isNoPhysics();
+		Vector3d vector3d = this.getDeltaMovement();
+		if (this.xRotO == 0.0F && this.yRotO == 0.0F) {
+			float f = MathHelper.sqrt(getHorizontalDistanceSqr(vector3d));
+			this.yRot = (float) (MathHelper.atan2(vector3d.x, vector3d.z) * (double) (180F / (float) Math.PI));
+			this.xRot = (float) (MathHelper.atan2(vector3d.y, (double) f) * (double) (180F / (float) Math.PI));
+			this.yRotO = this.yRot;
+			this.xRotO = this.xRot;
 		}
 
-		if (this.ticksExisted >= 40) {
+		if (this.tickCount >= 40) {
 			this.remove();
 		}
 
 		if (this.inAir && !flag) {
-			this.func_225516_i_();
+			this.tickDespawn();
 
 			++this.timeInAir;
 		} else {
 			this.timeInAir = 0;
-			Vector3d vector3d2 = this.getPositionVec();
+			Vector3d vector3d2 = this.position();
 			Vector3d vector3d3 = vector3d2.add(vector3d);
-			RayTraceResult raytraceresult = this.world.rayTraceBlocks(new RayTraceContext(vector3d2, vector3d3,
+			RayTraceResult raytraceresult = this.level.clip(new RayTraceContext(vector3d2, vector3d3,
 					RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, this));
 			if (raytraceresult.getType() != RayTraceResult.Type.MISS) {
-				vector3d3 = raytraceresult.getHitVec();
+				vector3d3 = raytraceresult.getLocation();
 			}
 			while (this.isAlive()) {
-				EntityRayTraceResult entityraytraceresult = this.rayTraceEntities(vector3d2, vector3d3);
+				EntityRayTraceResult entityraytraceresult = this.findHitEntity(vector3d2, vector3d3);
 				if (entityraytraceresult != null) {
 					raytraceresult = entityraytraceresult;
 				}
 				if (raytraceresult != null && raytraceresult.getType() == RayTraceResult.Type.ENTITY) {
 					Entity entity = ((EntityRayTraceResult) raytraceresult).getEntity();
-					Entity entity1 = this.func_234616_v_();
+					Entity entity1 = this.getOwner();
 					if (entity instanceof PlayerEntity && entity1 instanceof PlayerEntity
-							&& !((PlayerEntity) entity1).canAttackPlayer((PlayerEntity) entity)) {
+							&& !((PlayerEntity) entity1).canHarmPlayer((PlayerEntity) entity)) {
 						raytraceresult = null;
 						entityraytraceresult = null;
 					}
 				}
 				if (raytraceresult != null && raytraceresult.getType() != RayTraceResult.Type.MISS && !flag
 						&& !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, raytraceresult)) {
-					this.onImpact(raytraceresult);
-					this.isAirBorne = true;
+					this.onHit(raytraceresult);
+					this.hasImpulse = true;
 				}
 				if (entityraytraceresult == null || this.getPierceLevel() <= 0) {
 					break;
 				}
 				raytraceresult = null;
 			}
-			vector3d = this.getMotion();
+			vector3d = this.getDeltaMovement();
 			double d3 = vector3d.x;
 			double d4 = vector3d.y;
 			double d0 = vector3d.z;
-			double d5 = this.getPosX() + d3;
-			double d1 = this.getPosY() + d4;
-			double d2 = this.getPosZ() + d0;
-			float f1 = MathHelper.sqrt(horizontalMag(vector3d));
+			double d5 = this.getX() + d3;
+			double d1 = this.getY() + d4;
+			double d2 = this.getZ() + d0;
+			float f1 = MathHelper.sqrt(getHorizontalDistanceSqr(vector3d));
 			if (flag) {
-				this.rotationYaw = (float) (MathHelper.atan2(-d3, -d0) * (double) (180F / (float) Math.PI));
+				this.yRot = (float) (MathHelper.atan2(-d3, -d0) * (double) (180F / (float) Math.PI));
 			} else {
-				this.rotationYaw = (float) (MathHelper.atan2(d3, d0) * (double) (180F / (float) Math.PI));
+				this.yRot = (float) (MathHelper.atan2(d3, d0) * (double) (180F / (float) Math.PI));
 			}
-			this.rotationPitch = (float) (MathHelper.atan2(d4, (double) f1) * (double) (180F / (float) Math.PI));
-			this.rotationPitch = func_234614_e_(this.prevRotationPitch, this.rotationPitch);
-			this.rotationYaw = func_234614_e_(this.prevRotationYaw, this.rotationYaw);
+			this.xRot = (float) (MathHelper.atan2(d4, (double) f1) * (double) (180F / (float) Math.PI));
+			this.xRot = lerpRotation(this.xRotO, this.xRot);
+			this.yRot = lerpRotation(this.yRotO, this.yRot);
 			float f2 = 0.99F;
-			this.setMotion(vector3d.scale((double) f2));
-			if (!this.hasNoGravity() && !flag) {
-				Vector3d vector3d4 = this.getMotion();
-				this.setMotion(vector3d4.x, vector3d4.y - (double) 0.05F, vector3d4.z);
+			this.setDeltaMovement(vector3d.scale((double) f2));
+			if (!this.isNoGravity() && !flag) {
+				Vector3d vector3d4 = this.getDeltaMovement();
+				this.setDeltaMovement(vector3d4.x, vector3d4.y - (double) 0.05F, vector3d4.z);
 			}
-			this.setPosition(d5, d1, d2);
-			this.doBlockCollisions();
+			this.setPos(d5, d1, d2);
+			this.checkInsideBlocks();
 		}
 	}
 
 	@Override
-	public ItemStack getArrowStack() {
+	public ItemStack getPickupItem() {
 		return new ItemStack(DoomItems.CHAINGUN_BULLETS.get());
 	}
 
 	@Override
-	public IPacket<?> createSpawnPacket() {
+	public IPacket<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
 	@Override
-	public boolean hasNoGravity() {
+	public boolean isNoGravity() {
 		if (this.isInWater()) {
 			return false;
 		} else {
@@ -171,43 +171,43 @@ public class ChaingunBulletEntity extends AbstractArrowEntity {
 		}
 	}
 
-	public SoundEvent hitSound = this.getHitEntitySound();
+	public SoundEvent hitSound = this.getDefaultHitGroundSoundEvent();
 
 	@Override
-	protected void func_230299_a_(BlockRayTraceResult p_230299_1_) {
-		super.func_230299_a_(p_230299_1_);
-		this.setHitSound(SoundEvents.ITEM_ARMOR_EQUIP_IRON);
+	protected void onHitBlock(BlockRayTraceResult p_230299_1_) {
+		super.onHitBlock(p_230299_1_);
+		this.setSoundEvent(SoundEvents.ARMOR_EQUIP_IRON);
 	}
 
 	@Override
-	public void setHitSound(SoundEvent soundIn) {
+	public void setSoundEvent(SoundEvent soundIn) {
 		this.hitSound = soundIn;
 	}
 
 	@Override
-	protected SoundEvent getHitEntitySound() {
-		return SoundEvents.ITEM_ARMOR_EQUIP_IRON;
+	protected SoundEvent getDefaultHitGroundSoundEvent() {
+		return SoundEvents.ARMOR_EQUIP_IRON;
 	}
 
 	@Override
-	protected void onEntityHit(EntityRayTraceResult p_213868_1_) {
-		super.onEntityHit(p_213868_1_);
-		Entity entity = this.func_234616_v_();
+	protected void onHitEntity(EntityRayTraceResult p_213868_1_) {
+		super.onHitEntity(p_213868_1_);
+		Entity entity = this.getOwner();
 		if (p_213868_1_.getType() != RayTraceResult.Type.ENTITY
-				|| !((EntityRayTraceResult) p_213868_1_).getEntity().isEntityEqual(entity)) {
-			if (!this.world.isRemote) {
+				|| !((EntityRayTraceResult) p_213868_1_).getEntity().is(entity)) {
+			if (!this.level.isClientSide) {
 				this.remove();
 			}
 		}
 	}
 
 	@Override
-	protected void onImpact(RayTraceResult result) {
-		super.onImpact(result);
-		Entity entity = this.func_234616_v_();
+	protected void onHit(RayTraceResult result) {
+		super.onHit(result);
+		Entity entity = this.getOwner();
 		if (result.getType() != RayTraceResult.Type.ENTITY
-				|| !((EntityRayTraceResult) result).getEntity().isEntityEqual(entity)) {
-			if (!this.world.isRemote) {
+				|| !((EntityRayTraceResult) result).getEntity().is(entity)) {
+			if (!this.level.isClientSide) {
 				this.remove();
 			}
 		}

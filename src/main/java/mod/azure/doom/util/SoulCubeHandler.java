@@ -64,10 +64,10 @@ public class SoulCubeHandler {
 	}
 
 	private boolean soulCube(LivingEntity livingEntity, DamageSource source) {
-		if (source.canHarmInCreative()) {
+		if (source.isBypassInvul()) {
 			return false;
 		}
-		for (ItemStack held : livingEntity.getHeldEquipment()) {
+		for (ItemStack held : livingEntity.getHandSlots()) {
 			if (held.getItem() == DoomItems.SOULCUBE.get()) {
 				return false;
 			}
@@ -80,8 +80,8 @@ public class SoulCubeHandler {
 
 	private void activateSoulCube(LivingEntity livingEntity, ItemStack soulcube) {
 		ItemStack copy = soulcube.copy();
-		soulcube.damageItem(1, livingEntity, (entity) -> {
-			entity.sendBreakAnimation(EquipmentSlotType.MAINHAND);
+		soulcube.hurtAndBreak(1, livingEntity, (entity) -> {
+			entity.broadcastBreakEvent(EquipmentSlotType.MAINHAND);
 		});
 
 		if (livingEntity instanceof ServerPlayerEntity) {
@@ -90,9 +90,9 @@ public class SoulCubeHandler {
 		}
 		if (livingEntity instanceof PlayerEntity) {
 			livingEntity.setHealth(20.0F);
-			livingEntity.addPotionEffect(new EffectInstance(Effects.RESISTANCE, 100, 4));
-			livingEntity.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 100, 4));
-			livingEntity.world.setEntityState(livingEntity, (byte) 90);
+			livingEntity.addEffect(new EffectInstance(Effects.DAMAGE_RESISTANCE, 100, 4));
+			livingEntity.addEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 100, 4));
+			livingEntity.level.broadcastEntityEvent(livingEntity, (byte) 90);
 		}
 
 		if (soulcube.isEmpty()) {

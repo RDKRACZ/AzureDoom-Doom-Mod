@@ -13,6 +13,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import net.minecraft.item.Item.Properties;
+
 public class ArgentBolt extends ArrowItem {
 
 	public final float damage;
@@ -24,22 +26,22 @@ public class ArgentBolt extends ArrowItem {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(new StringTextComponent("\u00A7o" + "Powered by Argent. Used for Ballista."));
-		super.addInformation(stack, worldIn, tooltip, flagIn);
+		super.appendHoverText(stack, worldIn, tooltip, flagIn);
 	}
 
 	@Override
 	public boolean isInfinite(ItemStack stack, ItemStack bow, net.minecraft.entity.player.PlayerEntity player) {
 		int enchant = net.minecraft.enchantment.EnchantmentHelper
-				.getEnchantmentLevel(net.minecraft.enchantment.Enchantments.INFINITY, bow);
+				.getItemEnchantmentLevel(net.minecraft.enchantment.Enchantments.INFINITY_ARROWS, bow);
 		return enchant <= 0 ? false : this instanceof ArgentBolt;
 	}
 
 	@Override
 	public ArgentBoltEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
 		ArgentBoltEntity arrowentity = new ArgentBoltEntity(worldIn, shooter);
-		arrowentity.setDamage(this.damage);
+		arrowentity.setBaseDamage(this.damage);
 		return arrowentity;
 	}
 

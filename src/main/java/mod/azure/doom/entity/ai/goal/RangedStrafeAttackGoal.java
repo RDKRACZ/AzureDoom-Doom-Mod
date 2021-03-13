@@ -28,7 +28,7 @@ public class RangedStrafeAttackGoal extends Goal {
 		this.moveSpeedAmp = moveSpeedAmpIn;
 		this.attackCooldown = attackCooldownIn;
 		this.maxAttackDistance = maxAttackDistanceIn * maxAttackDistanceIn;
-		this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
+		this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
 		this.attack = attack;
 		this.visibleTicksDelay = visibleTicksDelay;
 		this.strafeTicks = strafeTicks;
@@ -38,7 +38,7 @@ public class RangedStrafeAttackGoal extends Goal {
 	public RangedStrafeAttackGoal(DemonEntity mob, AbstractRangedAttack attack, int attackCooldownIn) {
 		this.entity = mob;
 		this.attackCooldown = attackCooldownIn;
-		this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
+		this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
 		this.attack = attack;
 	}
 
@@ -88,46 +88,46 @@ public class RangedStrafeAttackGoal extends Goal {
 	 * Returns whether execution should begin. You can also read and cache any state
 	 * necessary for execution in this method as well.
 	 */
-	public boolean shouldExecute() {
-		return this.entity.getAttackTarget() != null;
+	public boolean canUse() {
+		return this.entity.getTarget() != null;
 	}
 
 	/**
 	 * Returns whether an in-progress EntityAIBase should continue executing
 	 */
-	public boolean shouldContinueExecuting() {
-		return (this.shouldExecute() || !this.entity.getNavigator().noPath());
+	public boolean canContinueToUse() {
+		return (this.canUse() || !this.entity.getNavigation().isDone());
 	}
 
 	/**
 	 * Execute a one shot task or start executing a continuous task
 	 */
-	public void startExecuting() {
-		super.startExecuting();
-		this.entity.setAggroed(true);
+	public void start() {
+		super.start();
+		this.entity.setAggressive(true);
 	}
 
 	/**
 	 * Reset the task's internal state. Called when this task is interrupted by
 	 * another one
 	 */
-	public void resetTask() {
-		super.resetTask();
-		this.entity.setAggroed(false);
+	public void stop() {
+		super.stop();
+		this.entity.setAggressive(false);
 		this.seeTime = 0;
 		this.attackTime = -1;
-		this.entity.resetActiveHand();
+		this.entity.stopUsingItem();
 	}
 
 	/**
 	 * Keep ticking a continuous task that has already been started
 	 */
 	public void tick() {
-		LivingEntity livingentity = this.entity.getAttackTarget();
+		LivingEntity livingentity = this.entity.getTarget();
 		if (livingentity != null) {
-			double distanceToTargetSq = this.entity.getDistanceSq(livingentity.getPosX(), livingentity.getPosY(),
-					livingentity.getPosZ());
-			boolean inLineOfSight = this.entity.getEntitySenses().canSee(livingentity);
+			double distanceToTargetSq = this.entity.distanceToSqr(livingentity.getX(), livingentity.getY(),
+					livingentity.getZ());
+			boolean inLineOfSight = this.entity.getSensing().canSee(livingentity);
 			if (inLineOfSight != this.seeTime > 0) {
 				this.seeTime = 0;
 			}
@@ -141,19 +141,19 @@ public class RangedStrafeAttackGoal extends Goal {
 			}
 
 			if (distanceToTargetSq <= (double) this.maxAttackDistance && this.seeTime >= 20) {
-				this.entity.getNavigator().clearPath();
+				this.entity.getNavigation().stop();
 				++this.strafingTime;
 			} else {
-				this.entity.getNavigator().tryMoveToEntityLiving(livingentity, this.moveSpeedAmp);
+				this.entity.getNavigation().moveTo(livingentity, this.moveSpeedAmp);
 				this.strafingTime = -1;
 			}
 
 			if (this.strafingTime >= strafeTicks) {
-				if ((double) this.entity.getRNG().nextFloat() < 0.3D) {
+				if ((double) this.entity.getRandom().nextFloat() < 0.3D) {
 					this.strafingClockwise = !this.strafingClockwise;
 				}
 
-				if ((double) this.entity.getRNG().nextFloat() < 0.3D) {
+				if ((double) this.entity.getRandom().nextFloat() < 0.3D) {
 					this.strafingBackwards = !this.strafingBackwards;
 				}
 
@@ -167,11 +167,11 @@ public class RangedStrafeAttackGoal extends Goal {
 					this.strafingBackwards = true;
 				}
 
-				this.entity.getMoveHelper().strafe(this.strafingBackwards ? -0.5F : 0.5F,
+				this.entity.getMoveControl().strafe(this.strafingBackwards ? -0.5F : 0.5F,
 						this.strafingClockwise ? 0.5F : -0.5F);
-				this.entity.faceEntity(livingentity, 30.0F, 30.0F);
+				this.entity.lookAt(livingentity, 30.0F, 30.0F);
 			} else {
-				this.entity.getLookController().setLookPositionWithEntity(livingentity, 30.0F, 30.0F);
+				this.entity.getLookControl().setLookAt(livingentity, 30.0F, 30.0F);
 			}
 
 			// attack

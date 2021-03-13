@@ -29,7 +29,7 @@ public class ChaingunLoadingPacket {
 	public static void handle(ChaingunLoadingPacket packet, Supplier<NetworkEvent.Context> ctx) {
 		ctx.get().enqueueWork(() -> {
 			NetworkEvent.Context context = ctx.get();
-			INetHandler handler = context.getNetworkManager().getNetHandler();
+			INetHandler handler = context.getNetworkManager().getPacketListener();
 			if (handler instanceof ServerPlayNetHandler) {
 				ServerPlayerEntity playerEntity = ((ServerPlayNetHandler) handler).player;
 				Chaingun.reload(playerEntity, Hand.MAIN_HAND);

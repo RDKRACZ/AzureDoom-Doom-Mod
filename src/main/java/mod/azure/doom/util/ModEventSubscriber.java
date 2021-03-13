@@ -36,6 +36,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.registries.IForgeRegistryEntry;
@@ -59,6 +60,39 @@ public class ModEventSubscriber {
 				ModEntityTypes.ROCKET_MOB.get(), ModEntityTypes.MECHAZOMBIE.get(), ModEntityTypes.GARGOYLE.get(),
 				ModEntityTypes.POSSESSEDSCIENTIST.get(), ModEntityTypes.ZOMBIEMAN.get());
 		EntitySpawnPlacementRegistry();
+	}
+
+	@SubscribeEvent
+	public static void entityAttributes(EntityAttributeCreationEvent event) {
+		event.put(ModEntityTypes.CYBERDEMON.get(), CyberdemonEntity.createAttributes().build());
+		event.put(ModEntityTypes.ARCHVILE.get(), ArchvileEntity.createAttributes().build());
+		event.put(ModEntityTypes.BARON.get(), BaronEntity.createAttributes().build());
+		event.put(ModEntityTypes.CHAINGUNNER.get(), ChaingunnerEntity.createAttributes().build());
+		event.put(ModEntityTypes.CYBERDEMON2016.get(), Cyberdemon2016Entity.createAttributes().build());
+		event.put(ModEntityTypes.HELLKNIGHT.get(), HellknightEntity.createAttributes().build());
+		event.put(ModEntityTypes.HELLKNIGHT2016.get(), Hellknight2016Entity.createAttributes().build());
+		event.put(ModEntityTypes.ICONOFSIN.get(), IconofsinEntity.createAttributes().build());
+		event.put(ModEntityTypes.IMP2016.get(), Imp2016Entity.createAttributes().build());
+		event.put(ModEntityTypes.NIGHTMARE_IMP.get(), NightmareImpEntity.createAttributes().build());
+		event.put(ModEntityTypes.IMP.get(), ImpEntity.createAttributes().build());
+		event.put(ModEntityTypes.MANCUBUS.get(), MancubusEntity.createAttributes().build());
+		event.put(ModEntityTypes.MARAUDER.get(), MarauderEntity.createAttributes().build());
+		event.put(ModEntityTypes.PINKY.get(), PinkyEntity.createAttributes().build());
+		event.put(ModEntityTypes.SPECTRE.get(), SpectreEntity.createAttributes().build());
+		event.put(ModEntityTypes.LOST_SOUL.get(), LostSoulEntity.createAttributes().build());
+		event.put(ModEntityTypes.POSSESSEDSCIENTIST.get(), PossessedScientistEntity.createAttributes().build());
+		event.put(ModEntityTypes.POSSESSEDSOLDIER.get(), PossessedSoldierEntity.createAttributes().build());
+		event.put(ModEntityTypes.REVENANT.get(), RevenantEntity.createAttributes().build());
+		event.put(ModEntityTypes.SHOTGUNGUY.get(), ShotgunguyEntity.createAttributes().build());
+		event.put(ModEntityTypes.ARACHNOTRON.get(), ArachnotronEntity.createAttributes().build());
+		event.put(ModEntityTypes.SPIDERDEMON.get(), SpiderdemonEntity.createAttributes().build());
+		event.put(ModEntityTypes.UNWILLING.get(), UnwillingEntity.createAttributes().build());
+		event.put(ModEntityTypes.ZOMBIEMAN.get(), ZombiemanEntity.createAttributes().build());
+		event.put(ModEntityTypes.CACODEMON.get(), CacodemonEntity.createAttributes().build());
+		event.put(ModEntityTypes.PAIN.get(), PainEntity.createAttributes().build());
+		event.put(ModEntityTypes.GORE_NEST.get(), GoreNestEntity.createAttributes().build());
+		event.put(ModEntityTypes.MECHAZOMBIE.get(), MechaZombieEntity.createAttributes().build());
+		event.put(ModEntityTypes.GARGOYLE.get(), GargoyleEntity.createAttributes().build());
 	}
 
 	public static <T extends IForgeRegistryEntry<T>> T setup(final T entry, final String name) {
@@ -133,7 +167,7 @@ public class ModEventSubscriber {
 				Hellknight2016Entity::spawning);
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.CYBERDEMON.get(),
 				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
-				CyberdemonEntity::func_223368_b);
+				CyberdemonEntity::checkGhastSpawnRules);
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.CYBERDEMON2016.get(),
 				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
 				Cyberdemon2016Entity::spawning);

@@ -16,13 +16,13 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class UnopenedItem extends Item {
 
 	public UnopenedItem() {
-		super(new Item.Properties().group(DoomMod.DoomWeaponItemGroup).maxStackSize(1));
+		super(new Item.Properties().tab(DoomMod.DoomWeaponItemGroup).stacksTo(1));
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new TranslationTextComponent("doom.expired.text").mergeStyle(TextFormatting.ITALIC));
-		super.addInformation(stack, worldIn, tooltip, flagIn);
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(new TranslationTextComponent("doom.expired.text").withStyle(TextFormatting.ITALIC));
+		super.appendHoverText(stack, worldIn, tooltip, flagIn);
 	}
 }

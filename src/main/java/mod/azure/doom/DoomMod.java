@@ -5,35 +5,6 @@ import java.util.Map;
 
 import mod.azure.doom.client.LockOnHandler;
 import mod.azure.doom.client.ModItemModelsProperties;
-import mod.azure.doom.entity.ArachnotronEntity;
-import mod.azure.doom.entity.ArchvileEntity;
-import mod.azure.doom.entity.BaronEntity;
-import mod.azure.doom.entity.CacodemonEntity;
-import mod.azure.doom.entity.ChaingunnerEntity;
-import mod.azure.doom.entity.Cyberdemon2016Entity;
-import mod.azure.doom.entity.CyberdemonEntity;
-import mod.azure.doom.entity.GargoyleEntity;
-import mod.azure.doom.entity.GoreNestEntity;
-import mod.azure.doom.entity.Hellknight2016Entity;
-import mod.azure.doom.entity.HellknightEntity;
-import mod.azure.doom.entity.IconofsinEntity;
-import mod.azure.doom.entity.Imp2016Entity;
-import mod.azure.doom.entity.ImpEntity;
-import mod.azure.doom.entity.LostSoulEntity;
-import mod.azure.doom.entity.MancubusEntity;
-import mod.azure.doom.entity.MarauderEntity;
-import mod.azure.doom.entity.MechaZombieEntity;
-import mod.azure.doom.entity.NightmareImpEntity;
-import mod.azure.doom.entity.PainEntity;
-import mod.azure.doom.entity.PinkyEntity;
-import mod.azure.doom.entity.PossessedScientistEntity;
-import mod.azure.doom.entity.PossessedSoldierEntity;
-import mod.azure.doom.entity.RevenantEntity;
-import mod.azure.doom.entity.ShotgunguyEntity;
-import mod.azure.doom.entity.SpectreEntity;
-import mod.azure.doom.entity.SpiderdemonEntity;
-import mod.azure.doom.entity.UnwillingEntity;
-import mod.azure.doom.entity.ZombiemanEntity;
 import mod.azure.doom.structures.DoomConfiguredStructures;
 import mod.azure.doom.structures.DoomStructures;
 import mod.azure.doom.util.DoomLeapEntityEvents;
@@ -49,7 +20,6 @@ import mod.azure.doom.util.registry.DoomItems;
 import mod.azure.doom.util.registry.ModEntitySpawn;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import mod.azure.doom.util.registry.ModSoundEvents;
-import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -59,7 +29,6 @@ import net.minecraft.world.gen.settings.DimensionStructuresSettings;
 import net.minecraft.world.gen.settings.StructureSeparationSettings;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.event.world.WorldEvent;
@@ -151,46 +120,6 @@ public class DoomMod {
 			DoomStructures.setupStructures();
 			DoomConfiguredStructures.registerConfiguredStructures();
 		});
-		event.enqueueWork(() -> {
-			GlobalEntityTypeAttributes.put(ModEntityTypes.CYBERDEMON.get(), CyberdemonEntity.func_234200_m_().create());
-			GlobalEntityTypeAttributes.put(ModEntityTypes.ARCHVILE.get(), ArchvileEntity.func_234200_m_().create());
-			GlobalEntityTypeAttributes.put(ModEntityTypes.BARON.get(), BaronEntity.func_234200_m_().create());
-			GlobalEntityTypeAttributes.put(ModEntityTypes.CHAINGUNNER.get(),
-					ChaingunnerEntity.func_234200_m_().create());
-			GlobalEntityTypeAttributes.put(ModEntityTypes.CYBERDEMON2016.get(),
-					Cyberdemon2016Entity.func_234200_m_().create());
-			GlobalEntityTypeAttributes.put(ModEntityTypes.HELLKNIGHT.get(), HellknightEntity.func_234200_m_().create());
-			GlobalEntityTypeAttributes.put(ModEntityTypes.HELLKNIGHT2016.get(),
-					Hellknight2016Entity.func_234200_m_().create());
-			GlobalEntityTypeAttributes.put(ModEntityTypes.ICONOFSIN.get(), IconofsinEntity.func_234200_m_().create());
-			GlobalEntityTypeAttributes.put(ModEntityTypes.IMP2016.get(), Imp2016Entity.func_234200_m_().create());
-			GlobalEntityTypeAttributes.put(ModEntityTypes.NIGHTMARE_IMP.get(),
-					NightmareImpEntity.func_234200_m_().create());
-			GlobalEntityTypeAttributes.put(ModEntityTypes.IMP.get(), ImpEntity.func_234200_m_().create());
-			GlobalEntityTypeAttributes.put(ModEntityTypes.MANCUBUS.get(), MancubusEntity.func_234200_m_().create());
-			GlobalEntityTypeAttributes.put(ModEntityTypes.MARAUDER.get(), MarauderEntity.func_234200_m_().create());
-			GlobalEntityTypeAttributes.put(ModEntityTypes.PINKY.get(), PinkyEntity.func_234200_m_().create());
-			GlobalEntityTypeAttributes.put(ModEntityTypes.SPECTRE.get(), SpectreEntity.func_234200_m_().create());
-			GlobalEntityTypeAttributes.put(ModEntityTypes.LOST_SOUL.get(), LostSoulEntity.func_234200_m_().create());
-			GlobalEntityTypeAttributes.put(ModEntityTypes.POSSESSEDSCIENTIST.get(),
-					PossessedScientistEntity.func_234200_m_().create());
-			GlobalEntityTypeAttributes.put(ModEntityTypes.POSSESSEDSOLDIER.get(),
-					PossessedSoldierEntity.func_234200_m_().create());
-			GlobalEntityTypeAttributes.put(ModEntityTypes.REVENANT.get(), RevenantEntity.func_234200_m_().create());
-			GlobalEntityTypeAttributes.put(ModEntityTypes.SHOTGUNGUY.get(), ShotgunguyEntity.func_234200_m_().create());
-			GlobalEntityTypeAttributes.put(ModEntityTypes.ARACHNOTRON.get(),
-					ArachnotronEntity.func_234200_m_().create());
-			GlobalEntityTypeAttributes.put(ModEntityTypes.SPIDERDEMON.get(),
-					SpiderdemonEntity.func_234200_m_().create());
-			GlobalEntityTypeAttributes.put(ModEntityTypes.UNWILLING.get(), UnwillingEntity.func_234200_m_().create());
-			GlobalEntityTypeAttributes.put(ModEntityTypes.ZOMBIEMAN.get(), ZombiemanEntity.func_234200_m_().create());
-			GlobalEntityTypeAttributes.put(ModEntityTypes.CACODEMON.get(), CacodemonEntity.func_234200_m_().create());
-			GlobalEntityTypeAttributes.put(ModEntityTypes.PAIN.get(), PainEntity.func_234200_m_().create());
-			GlobalEntityTypeAttributes.put(ModEntityTypes.GORE_NEST.get(), GoreNestEntity.func_234200_m_().create());
-			GlobalEntityTypeAttributes.put(ModEntityTypes.MECHAZOMBIE.get(),
-					MechaZombieEntity.func_234200_m_().create());
-			GlobalEntityTypeAttributes.put(ModEntityTypes.GARGOYLE.get(), GargoyleEntity.func_234200_m_().create());
-		});
 	}
 
 	public void biomeModification(final BiomeLoadingEvent event) {
@@ -200,16 +129,16 @@ public class DoomMod {
 	public void addDimensionalSpacing(final WorldEvent.Load event) {
 		if (event.getWorld() instanceof ServerWorld) {
 			ServerWorld serverWorld = (ServerWorld) event.getWorld();
-			if (serverWorld.getChunkProvider().getChunkGenerator() instanceof FlatChunkGenerator
-					&& serverWorld.getDimensionKey().equals(World.OVERWORLD)) {
+			if (serverWorld.getChunkSource().getGenerator() instanceof FlatChunkGenerator
+					&& serverWorld.dimension().equals(World.OVERWORLD)) {
 				return;
 			}
 
 			Map<Structure<?>, StructureSeparationSettings> tempMap = new HashMap<>(
-					serverWorld.getChunkProvider().generator.func_235957_b_().func_236195_a_());
+					serverWorld.getChunkSource().generator.getSettings().structureConfig());
 			tempMap.putIfAbsent(DoomStructures.DOOM1.get(),
-					DimensionStructuresSettings.field_236191_b_.get(DoomStructures.DOOM1.get()));
-			serverWorld.getChunkProvider().generator.func_235957_b_().field_236193_d_ = tempMap;
+					DimensionStructuresSettings.DEFAULTS.get(DoomStructures.DOOM1.get()));
+			serverWorld.getChunkSource().generator.getSettings().structureConfig = tempMap;
 		}
 	}
 
@@ -221,36 +150,36 @@ public class DoomMod {
 	}
 
 	public static final ItemGroup DoomWeaponItemGroup = (new ItemGroup("doomweapons") {
-		@OnlyIn(Dist.CLIENT)
-		public ItemStack createIcon() {
+		@Override
+		public ItemStack makeIcon() {
 			return new ItemStack(DoomItems.CRUCIBLESWORD.get());
 		}
 	});
 
 	public static final ItemGroup DoomArmorItemGroup = (new ItemGroup("doomarmor") {
-		@OnlyIn(Dist.CLIENT)
-		public ItemStack createIcon() {
+		@Override
+		public ItemStack makeIcon() {
 			return new ItemStack(DoomItems.DOOM_HELMET.get());
 		}
 	});
 
 	public static final ItemGroup DoomBlockItemGroup = (new ItemGroup("doomblocks") {
-		@OnlyIn(Dist.CLIENT)
-		public ItemStack createIcon() {
+		@Override
+		public ItemStack makeIcon() {
 			return new ItemStack(DoomBlocks.BARREL_BLOCK.get());
 		}
 	});
 
 	public static final ItemGroup DoomEggItemGroup = (new ItemGroup("doomeggs") {
-		@OnlyIn(Dist.CLIENT)
-		public ItemStack createIcon() {
+		@Override
+		public ItemStack makeIcon() {
 			return new ItemStack(DoomItems.IMP_SPAWN_EGG.get());
 		}
 	});
 
 	public static final ItemGroup DoomPowerUPItemGroup = (new ItemGroup("doompowerup") {
-		@OnlyIn(Dist.CLIENT)
-		public ItemStack createIcon() {
+		@Override
+		public ItemStack makeIcon() {
 			return new ItemStack(DoomItems.INMORTAL.get());
 		}
 	});

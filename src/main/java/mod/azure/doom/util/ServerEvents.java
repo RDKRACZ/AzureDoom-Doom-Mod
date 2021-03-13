@@ -27,30 +27,30 @@ public class ServerEvents {
 		LivingEntity le = event.getEntityLiving();
 		if (!FMLEnvironment.production) {
 			if (le instanceof DemonEntity) {
-				PathNavigator navi = ((DemonEntity) le).getNavigator();
-				if (le.world instanceof ServerWorld && le.world.getGameTime() % 10 == 0) {
+				PathNavigator navi = ((DemonEntity) le).getNavigation();
+				if (le.level instanceof ServerWorld && le.level.getGameTime() % 10 == 0) {
 					Path path = navi.getPath();
 					if (path != null) {
-						for (int i = path.getCurrentPathIndex(); i < path.getCurrentPathLength(); i++) {
+						for (int i = path.getNextNodeIndex(); i < path.getNodeCount(); i++) {
 							// get current point
-							BlockPos pos = path.getPathPointFromIndex(i).func_224759_a();
+							BlockPos pos = path.getNode(i).asBlockPos();
 							// get next point (or current point)
-							BlockPos nextPos = (i + 1) != path.getCurrentPathLength()
-									? path.getPathPointFromIndex(i + 1).func_224759_a()
+							BlockPos nextPos = (i + 1) != path.getNodeCount()
+									? path.getNode(i + 1).asBlockPos()
 									: pos;
 							// get difference for vector
 							BlockPos endPos = nextPos.subtract(pos);
 							// render pathpoints
-							((ServerWorld) le.world).spawnParticle(ParticleTypes.HAPPY_VILLAGER, pos.getX() + 0.5,
+							((ServerWorld) le.level).sendParticles(ParticleTypes.HAPPY_VILLAGER, pos.getX() + 0.5,
 									pos.getY() + 0.5, pos.getZ() + 0.5, 0, 0, 0, 0, 0);
 							// send a particle between points for direction
-							((ServerWorld) le.world).spawnParticle(ParticleTypes.END_ROD, pos.getX() + 0.5,
+							((ServerWorld) le.level).sendParticles(ParticleTypes.END_ROD, pos.getX() + 0.5,
 									pos.getY() + 0.5, pos.getZ() + 0.5, 0, endPos.getX(), endPos.getY(), endPos.getZ(),
 									0.1);
 						}
 						// render end point
 						BlockPos pos = navi.getTargetPos();
-						((ServerWorld) le.world).spawnParticle(ParticleTypes.HEART, pos.getX() + 0.5, pos.getY() + 0.5,
+						((ServerWorld) le.level).sendParticles(ParticleTypes.HEART, pos.getX() + 0.5, pos.getY() + 0.5,
 								pos.getZ() + 0.5, 0, 0, 0, 0, 0);
 					}
 				}

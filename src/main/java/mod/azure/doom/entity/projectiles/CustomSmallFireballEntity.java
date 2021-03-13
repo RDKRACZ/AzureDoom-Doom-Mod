@@ -18,18 +18,18 @@ public class CustomSmallFireballEntity extends SmallFireballEntity {
 	private float directHitDamage = 5.0F;
 
 	@Override
-	protected void onEntityHit(EntityRayTraceResult p_213868_1_) {
-		if (!this.world.isRemote) {
+	protected void onHitEntity(EntityRayTraceResult p_213868_1_) {
+		if (!this.level.isClientSide) {
 			Entity entity = p_213868_1_.getEntity();
-			if (!entity.isImmuneToFire()) {
-				Entity entity1 = this.func_234616_v_();
-				int i = entity.getFireTimer();
-				entity.setFire(5);
-				boolean flag = entity.attackEntityFrom(DamageSource.func_233547_a_(this, entity1), directHitDamage);
+			if (!entity.fireImmune()) {
+				Entity entity1 = this.getOwner();
+				int i = entity.getRemainingFireTicks();
+				entity.setSecondsOnFire(5);
+				boolean flag = entity.hurt(DamageSource.fireball(this, entity1), directHitDamage);
 				if (!flag) {
-					entity.forceFireTicks(i);
+					entity.setRemainingFireTicks(i);
 				} else if (entity1 instanceof LivingEntity) {
-					this.applyEnchantments((LivingEntity) entity1, entity);
+					this.doEnchantDamageEffects((LivingEntity) entity1, entity);
 				}
 			}
 

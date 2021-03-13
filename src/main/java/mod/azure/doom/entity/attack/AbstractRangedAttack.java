@@ -59,21 +59,21 @@ public abstract class AbstractRangedAttack implements IRangedAttack {
 	}
 
 	public double rollAccuracy(double directional) {
-		return directional + (1.0D - accuracy) * directional * this.parentEntity.getRNG().nextGaussian();
+		return directional + (1.0D - accuracy) * directional * this.parentEntity.getRandom().nextGaussian();
 	}
 
 	public void shoot() {
-		LivingEntity livingentity = this.parentEntity.getAttackTarget();
-		World world = this.parentEntity.getEntityWorld();
-		Vector3d vector3d = this.parentEntity.getLook(1.0F);
-		double d2 = livingentity.getPosX() - (this.parentEntity.getPosX() + vector3d.x * xOffSetModifier);
-		double d3 = livingentity.getPosYHeight(0.5D) - (this.parentEntity.getPosYHeight(entityHeightFraction));
-		double d4 = livingentity.getPosZ() - (this.parentEntity.getPosZ() + vector3d.z * zOffSetModifier);
+		LivingEntity livingentity = this.parentEntity.getTarget();
+		World world = this.parentEntity.getCommandSenderWorld();
+		Vector3d vector3d = this.parentEntity.getViewVector(1.0F);
+		double d2 = livingentity.getX() - (this.parentEntity.getX() + vector3d.x * xOffSetModifier);
+		double d3 = livingentity.getY(0.5D) - (this.parentEntity.getY(entityHeightFraction));
+		double d4 = livingentity.getZ() - (this.parentEntity.getZ() + vector3d.z * zOffSetModifier);
 		ProjectileEntity projectile = getProjectile(world, rollAccuracy(d2), rollAccuracy(d3), rollAccuracy(d4));
-		projectile.setPosition(this.parentEntity.getPosX() + vector3d.x * xOffSetModifier,
-				this.parentEntity.getPosYHeight(entityHeightFraction),
-				this.parentEntity.getPosZ() + vector3d.z * zOffSetModifier);
-		world.addEntity(projectile);
+		projectile.setPos(this.parentEntity.getX() + vector3d.x * xOffSetModifier,
+				this.parentEntity.getY(entityHeightFraction),
+				this.parentEntity.getZ() + vector3d.z * zOffSetModifier);
+		world.addFreshEntity(projectile);
 		if (sound == null)
 			getDefaultAttackSound().play(this.parentEntity);
 		else

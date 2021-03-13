@@ -29,7 +29,7 @@ public class ChainsawEternalLoadingPacket {
 	public static void handle(ChainsawEternalLoadingPacket packet, Supplier<NetworkEvent.Context> ctx) {
 		ctx.get().enqueueWork(() -> {
 			NetworkEvent.Context context = ctx.get();
-			INetHandler handler = context.getNetworkManager().getNetHandler();
+			INetHandler handler = context.getNetworkManager().getPacketListener();
 			if (handler instanceof ServerPlayNetHandler) {
 				ServerPlayerEntity playerEntity = ((ServerPlayNetHandler) handler).player;
 				ChainsawAnimated.reload(playerEntity, Hand.MAIN_HAND);

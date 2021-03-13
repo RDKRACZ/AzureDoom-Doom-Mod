@@ -33,9 +33,9 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class ArgentAxe extends ToolItem {
 
-	private static final Set<Material> field_234662_c_ = Sets.newHashSet(Material.WOOD, Material.NETHER_WOOD,
-			Material.PLANTS, Material.TALL_PLANTS, Material.BAMBOO, Material.GOURD);
-	private static final Set<Block> field_150917_d_ = Sets.newHashSet(Blocks.LADDER, Blocks.SCAFFOLDING,
+	private static final Set<Material> DIGGABLE_MATERIALS = Sets.newHashSet(Material.WOOD, Material.NETHER_WOOD,
+			Material.PLANT, Material.REPLACEABLE_PLANT, Material.BAMBOO, Material.VEGETABLE);
+	private static final Set<Block> OTHER_DIGGABLE_BLOCKS = Sets.newHashSet(Blocks.LADDER, Blocks.SCAFFOLDING,
 			Blocks.OAK_BUTTON, Blocks.SPRUCE_BUTTON, Blocks.BIRCH_BUTTON, Blocks.JUNGLE_BUTTON, Blocks.DARK_OAK_BUTTON,
 			Blocks.ACACIA_BUTTON, Blocks.CRIMSON_BUTTON, Blocks.WARPED_BUTTON);
 	protected static final Map<Block, Block> BLOCK_STRIPPING_MAP = (new Builder<Block, Block>())
@@ -51,35 +51,35 @@ public class ArgentAxe extends ToolItem {
 			.put(Blocks.CRIMSON_HYPHAE, Blocks.STRIPPED_CRIMSON_HYPHAE).build();
 
 	public ArgentAxe() {
-		super(8, -2.4F, DoomTier.DOOM, field_150917_d_,
-				new Item.Properties().group(DoomMod.DoomWeaponItemGroup).maxStackSize(1));
+		super(8, -2.4F, DoomTier.DOOM, OTHER_DIGGABLE_BLOCKS,
+				new Item.Properties().tab(DoomMod.DoomWeaponItemGroup).stacksTo(1));
 	}
 
 	public float getDestroySpeed(ItemStack stack, BlockState state) {
 		Material material = state.getMaterial();
-		return field_234662_c_.contains(material) ? this.efficiency : super.getDestroySpeed(stack, state);
+		return DIGGABLE_MATERIALS.contains(material) ? this.speed : super.getDestroySpeed(stack, state);
 	}
 
-	public ActionResultType onItemUse(ItemUseContext context) {
-		World world = context.getWorld();
-		BlockPos blockpos = context.getPos();
+	public ActionResultType useOn(ItemUseContext context) {
+		World world = context.getLevel();
+		BlockPos blockpos = context.getClickedPos();
 		BlockState blockstate = world.getBlockState(blockpos);
 		Block block = BLOCK_STRIPPING_MAP.get(blockstate.getBlock());
 		if (block != null) {
 			PlayerEntity playerentity = context.getPlayer();
-			world.playSound(playerentity, blockpos, SoundEvents.ITEM_AXE_STRIP, SoundCategory.BLOCKS, 1.0F, 1.0F);
-			if (!world.isRemote) {
-				world.setBlockState(blockpos,
-						block.getDefaultState().with(RotatedPillarBlock.AXIS, blockstate.get(RotatedPillarBlock.AXIS)),
+			world.playSound(playerentity, blockpos, SoundEvents.AXE_STRIP, SoundCategory.BLOCKS, 1.0F, 1.0F);
+			if (!world.isClientSide) {
+				world.setBlock(blockpos,
+						block.defaultBlockState().setValue(RotatedPillarBlock.AXIS, blockstate.getValue(RotatedPillarBlock.AXIS)),
 						11);
 				if (playerentity != null) {
-					context.getItem().damageItem(1, playerentity, (p_220040_1_) -> {
-						p_220040_1_.sendBreakAnimation(context.getHand());
+					context.getItemInHand().hurtAndBreak(1, playerentity, (p_220040_1_) -> {
+						p_220040_1_.broadcastBreakEvent(context.getHand());
 					});
 				}
 			}
 
-			return ActionResultType.func_233537_a_(world.isRemote);
+			return ActionResultType.sidedSuccess(world.isClientSide);
 		} else {
 			return ActionResultType.PASS;
 		}
@@ -87,10 +87,10 @@ public class ArgentAxe extends ToolItem {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new TranslationTextComponent("doom.argent_powered.text").mergeStyle(TextFormatting.RED)
-				.mergeStyle(TextFormatting.ITALIC));
-		super.addInformation(stack, worldIn, tooltip, flagIn);
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(new TranslationTextComponent("doom.argent_powered.text").withStyle(TextFormatting.RED)
+				.withStyle(TextFormatting.ITALIC));
+		super.appendHoverText(stack, worldIn, tooltip, flagIn);
 	}
 
 }

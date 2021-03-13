@@ -66,14 +66,14 @@ public class ZombiemanEntity extends DemonEntity implements IRangedAttackMob, IA
 	private final RangedPistolAttackGoal<ZombiemanEntity> aiArrowAttack = new RangedPistolAttackGoal<>(this, 1.0D, 20,
 			15.0F);
 	private final MeleeAttackGoal aiAttackOnCollide = new MeleeAttackGoal(this, 1.2D, false) {
-		public void resetTask() {
-			super.resetTask();
-			ZombiemanEntity.this.setAggroed(false);
+		public void stop() {
+			super.stop();
+			ZombiemanEntity.this.setAggressive(false);
 		}
 
-		public void startExecuting() {
-			super.startExecuting();
-			ZombiemanEntity.this.setAggroed(true);
+		public void start() {
+			super.start();
+			ZombiemanEntity.this.setAggressive(true);
 		}
 	};
 
@@ -90,12 +90,12 @@ public class ZombiemanEntity extends DemonEntity implements IRangedAttackMob, IA
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("walking", true));
 			return PlayState.CONTINUE;
 		}
-		if (this.isAggressive() && !(this.dead || this.getHealth() < 0.01 || this.getShouldBeDead())) {
+		if (this.isAggressive() && !(this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("attack", true));
 			return PlayState.CONTINUE;
 		}
-		if ((this.dead || this.getHealth() < 0.01 || this.getShouldBeDead())) {
-			if (world.isRemote) {
+		if ((this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
+			if (level.isClientSide) {
 				event.getController().setAnimation(new AnimationBuilder().addAnimation("death", false));
 				return PlayState.CONTINUE;
 			}
@@ -115,7 +115,7 @@ public class ZombiemanEntity extends DemonEntity implements IRangedAttackMob, IA
 	}
 
 	@Override
-	public IPacket<?> createSpawnPacket() {
+	public IPacket<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
@@ -129,45 +129,45 @@ public class ZombiemanEntity extends DemonEntity implements IRangedAttackMob, IA
 		this.goalSelector.addGoal(6, new LookAtGoal(this, PlayerEntity.class, 8.0F));
 		this.goalSelector.addGoal(6, new LookRandomlyGoal(this));
 		this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
-		this.targetSelector.addGoal(1, new HurtByTargetGoal(this).setCallsForHelp());
+		this.targetSelector.addGoal(1, new HurtByTargetGoal(this).setAlertOthers());
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, false));
-		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this).setCallsForHelp()));
+		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this).setAlertOthers()));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
 	}
 
 	@Override
-	protected void setEquipmentBasedOnDifficulty(DifficultyInstance difficulty) {
-		super.setEquipmentBasedOnDifficulty(difficulty);
-		this.setItemStackToSlot(EquipmentSlotType.MAINHAND, new ItemStack(DoomItems.PISTOL.get()));
+	protected void populateDefaultEquipmentSlots(DifficultyInstance difficulty) {
+		super.populateDefaultEquipmentSlots(difficulty);
+		this.setItemSlot(EquipmentSlotType.MAINHAND, new ItemStack(DoomItems.PISTOL.get()));
 	}
 
-	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
-		return config.pushAttributes(MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 50.0D));
+	public static AttributeModifierMap.MutableAttribute createAttributes() {
+		return config.pushAttributes(MobEntity.createMobAttributes().add(Attributes.FOLLOW_RANGE, 50.0D));
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		this.setCombatTask();
 	}
 
 	@Override
-	public void setItemStackToSlot(EquipmentSlotType slotIn, ItemStack stack) {
-		super.setItemStackToSlot(slotIn, stack);
-		if (!this.world.isRemote) {
+	public void setItemSlot(EquipmentSlotType slotIn, ItemStack stack) {
+		super.setItemSlot(slotIn, stack);
+		if (!this.level.isClientSide) {
 			this.setCombatTask();
 		}
 	}
 
 	public void setCombatTask() {
-		if (this.world != null && !this.world.isRemote) {
+		if (this.level != null && !this.level.isClientSide) {
 			this.goalSelector.removeGoal(this.aiAttackOnCollide);
 			this.goalSelector.removeGoal(this.aiArrowAttack);
-			ItemStack itemstack = this.getHeldItem(ProjectileHelper.getHandWith(this, DoomItems.PISTOL.get()));
+			ItemStack itemstack = this.getItemInHand(ProjectileHelper.getWeaponHoldingHand(this, DoomItems.PISTOL.get()));
 			if (itemstack.getItem() instanceof PistolItem) {
 				int i = 20;
-				if (this.world.getDifficulty() != Difficulty.HARD) {
+				if (this.level.getDifficulty() != Difficulty.HARD) {
 					i = 20;
 				}
 				this.aiArrowAttack.setAttackCooldown(i);
@@ -185,21 +185,21 @@ public class ZombiemanEntity extends DemonEntity implements IRangedAttackMob, IA
 
 	@Nullable
 	@Override
-	public ILivingEntityData onInitialSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
+	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
 			@Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
-		spawnDataIn = super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
-		this.setEquipmentBasedOnDifficulty(difficultyIn);
+		spawnDataIn = super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+		this.populateDefaultEquipmentSlots(difficultyIn);
 		this.setCombatTask();
-		this.setEnchantmentBasedOnDifficulty(difficultyIn);
-		this.setCanPickUpLoot(this.rand.nextFloat() < 0.55F * difficultyIn.getClampedAdditionalDifficulty());
-		if (this.getItemStackFromSlot(EquipmentSlotType.HEAD).isEmpty()) {
+		this.populateDefaultEquipmentEnchantments(difficultyIn);
+		this.setCanPickUpLoot(this.random.nextFloat() < 0.55F * difficultyIn.getSpecialMultiplier());
+		if (this.getItemBySlot(EquipmentSlotType.HEAD).isEmpty()) {
 			LocalDate localdate = LocalDate.now();
 			int i = localdate.get(ChronoField.DAY_OF_MONTH);
 			int j = localdate.get(ChronoField.MONTH_OF_YEAR);
-			if (j == 10 && i == 31 && this.rand.nextFloat() < 0.25F) {
-				this.setItemStackToSlot(EquipmentSlotType.HEAD,
-						new ItemStack(this.rand.nextFloat() < 0.1F ? Blocks.JACK_O_LANTERN : Blocks.CARVED_PUMPKIN));
-				this.inventoryArmorDropChances[EquipmentSlotType.HEAD.getIndex()] = 0.0F;
+			if (j == 10 && i == 31 && this.random.nextFloat() < 0.25F) {
+				this.setItemSlot(EquipmentSlotType.HEAD,
+						new ItemStack(this.random.nextFloat() < 0.1F ? Blocks.JACK_O_LANTERN : Blocks.CARVED_PUMPKIN));
+				this.armorDropChances[EquipmentSlotType.HEAD.getIndex()] = 0.0F;
 			}
 		}
 		return spawnDataIn;
@@ -221,7 +221,7 @@ public class ZombiemanEntity extends DemonEntity implements IRangedAttackMob, IA
 	}
 
 	protected SoundEvent getStepSound() {
-		return SoundEvents.ENTITY_ZOMBIE_STEP;
+		return SoundEvents.ZOMBIE_STEP;
 	}
 
 	@Override
@@ -230,30 +230,30 @@ public class ZombiemanEntity extends DemonEntity implements IRangedAttackMob, IA
 	}
 
 	@Override
-	public CreatureAttribute getCreatureAttribute() {
+	public CreatureAttribute getMobType() {
 		return CreatureAttribute.UNDEAD;
 	}
 
 	@Override
-	public int getMaxSpawnedInChunk() {
+	public int getMaxSpawnClusterSize() {
 		return 7;
 	}
 
 	@Override
-	public void attackEntityWithRangedAttack(LivingEntity target, float distanceFactor) {
+	public void performRangedAttack(LivingEntity target, float distanceFactor) {
 		ItemStack itemstack = this
-				.findAmmo(this.getHeldItem(ProjectileHelper.getHandWith(this, DoomItems.PISTOL.get())));
+				.getProjectile(this.getItemInHand(ProjectileHelper.getWeaponHoldingHand(this, DoomItems.PISTOL.get())));
 		BulletEntity abstractarrowentity = this.fireArrowa(itemstack, distanceFactor);
-		if (this.getHeldItemMainhand().getItem() instanceof PistolItem)
-			abstractarrowentity = ((PistolItem) this.getHeldItemMainhand().getItem()).customeArrow(abstractarrowentity);
-		double d0 = target.getPosX() - this.getPosX();
-		double d1 = target.getPosYHeight(0.3333333333333333D) - abstractarrowentity.getPosY();
-		double d2 = target.getPosZ() - this.getPosZ();
+		if (this.getMainHandItem().getItem() instanceof PistolItem)
+			abstractarrowentity = ((PistolItem) this.getMainHandItem().getItem()).customeArrow(abstractarrowentity);
+		double d0 = target.getX() - this.getX();
+		double d1 = target.getY(0.3333333333333333D) - abstractarrowentity.getY();
+		double d2 = target.getZ() - this.getZ();
 		double d3 = (double) MathHelper.sqrt(d0 * d0 + d2 * d2);
 		abstractarrowentity.shoot(d0, d1 + d3 * (double) 0.05F, d2, 1.6F, 0.0F);
-		this.playSound(ModSoundEvents.PISTOL_HIT.get(), 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
-		abstractarrowentity.setDamage(config.RANGED_ATTACK_DAMAGE);
-		this.world.addEntity(abstractarrowentity);
+		this.playSound(ModSoundEvents.PISTOL_HIT.get(), 1.0F, 1.0F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
+		abstractarrowentity.setBaseDamage(config.RANGED_ATTACK_DAMAGE);
+		this.level.addFreshEntity(abstractarrowentity);
 	}
 
 	protected BulletEntity fireArrowa(ItemStack arrowStack, float distanceFactor) {
@@ -263,7 +263,7 @@ public class ZombiemanEntity extends DemonEntity implements IRangedAttackMob, IA
 	public static BulletEntity fireArrow(LivingEntity shooter, ItemStack arrowStack, float distanceFactor) {
 		ClipAmmo arrowitem = (ClipAmmo) (arrowStack.getItem() instanceof ClipAmmo ? arrowStack.getItem()
 				: DoomItems.BULLETS.get());
-		BulletEntity abstractarrowentity = arrowitem.createArrow(shooter.world, arrowStack, shooter);
+		BulletEntity abstractarrowentity = arrowitem.createArrow(shooter.level, arrowStack, shooter);
 		abstractarrowentity.setEnchantmentEffectsFromEntity(shooter, distanceFactor);
 
 		return abstractarrowentity;

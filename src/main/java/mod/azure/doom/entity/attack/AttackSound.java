@@ -6,7 +6,7 @@ import net.minecraft.util.SoundEvents;
 
 public class AttackSound {
 
-	public SoundEvent sound = SoundEvents.ENTITY_ARROW_SHOOT;
+	public SoundEvent sound = SoundEvents.ARROW_SHOOT;
 	public float volume = 1.0F;
 	public float pitch = 1.0F;
 

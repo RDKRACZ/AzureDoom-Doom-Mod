@@ -39,8 +39,8 @@ public class GoreNestEntity extends DemonEntity implements IAnimatable {
 	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.GORE_NEST);
 
 	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-		if ((this.dead || this.getHealth() < 0.01 || this.getShouldBeDead())) {
-			if (world.isRemote) {
+		if ((this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
+			if (level.isClientSide) {
 				event.getController().setAnimation(new AnimationBuilder().addAnimation("death", false));
 				return PlayState.CONTINUE;
 			}
@@ -55,17 +55,17 @@ public class GoreNestEntity extends DemonEntity implements IAnimatable {
 	}
 
 	@Override
-	public boolean canBePushed() {
+	public boolean isPushable() {
 		return false;
 	}
 
 	@Override
-	protected void collideWithNearbyEntities() {
+	protected void pushEntities() {
 	}
 
 	@Override
-	public void applyKnockback(float strength, double ratioX, double ratioZ) {
-		super.applyKnockback(0, 0, 0);
+	public void knockback(float strength, double ratioX, double ratioZ) {
+		super.knockback(0, 0, 0);
 	}
 
 	@Override
@@ -78,12 +78,12 @@ public class GoreNestEntity extends DemonEntity implements IAnimatable {
 	}
 
 	@Override
-	protected void registerData() {
-		super.registerData();
+	protected void defineSynchedData() {
+		super.defineSynchedData();
 	}
 
 	@Override
-	public IPacket<?> createSpawnPacket() {
+	public IPacket<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
@@ -93,25 +93,25 @@ public class GoreNestEntity extends DemonEntity implements IAnimatable {
 	}
 
 	@Override
-	protected void onDeathUpdate() {
+	protected void tickDeath() {
 		++this.deathTime;
 		if (this.deathTime == 60) {
 			this.remove();
 		}
 	}
 
-	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
-		return config.pushAttributes(MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 50.0D));
+	public static AttributeModifierMap.MutableAttribute createAttributes() {
+		return config.pushAttributes(MobEntity.createMobAttributes().add(Attributes.FOLLOW_RANGE, 50.0D));
 	}
 
 	@Override
-	public void notifyDataManagerChange(DataParameter<?> key) {
-		super.notifyDataManagerChange(key);
+	public void onSyncedDataUpdated(DataParameter<?> key) {
+		super.onSyncedDataUpdated(key);
 	}
 
 	@Override
-	protected void damageEntity(DamageSource damageSrc, float damageAmount) {
-		if (!(damageSrc.getTrueSource() instanceof PlayerEntity)) {
+	protected void actuallyHurt(DamageSource damageSrc, float damageAmount) {
+		if (!(damageSrc.getEntity() instanceof PlayerEntity)) {
 			this.setHealth(5.0F);
 		} else {
 			this.remove();
@@ -119,21 +119,21 @@ public class GoreNestEntity extends DemonEntity implements IAnimatable {
 	}
 
 	@Override
-	public void livingTick() {
-		if (this.world.isRemote) {
-			this.world.addParticle(RedstoneParticleData.REDSTONE_DUST, this.getPosXRandom(0.5D), this.getPosYRandom(),
-					this.getPosZRandom(0.5D), (this.rand.nextDouble() - 0.5D) * 2.0D, -this.rand.nextDouble(),
-					(this.rand.nextDouble() - 0.5D) * 2.0D);
-			this.world.addParticle(ParticleTypes.SOUL, this.getPosXRandom(0.2D), this.getPosYRandom(),
-					this.getPosZRandom(0.5D), 0.0D, 0D, 0D);
+	public void aiStep() {
+		if (this.level.isClientSide) {
+			this.level.addParticle(RedstoneParticleData.REDSTONE, this.getRandomX(0.5D), this.getRandomY(),
+					this.getRandomZ(0.5D), (this.random.nextDouble() - 0.5D) * 2.0D, -this.random.nextDouble(),
+					(this.random.nextDouble() - 0.5D) * 2.0D);
+			this.level.addParticle(ParticleTypes.SOUL, this.getRandomX(0.2D), this.getRandomY(),
+					this.getRandomZ(0.5D), 0.0D, 0D, 0D);
 		}
-		++this.ticksExisted;
-		if (!world.isRemote) {
-			if (this.ticksExisted % 800 == 0) {
+		++this.tickCount;
+		if (!level.isClientSide) {
+			if (this.tickCount % 800 == 0) {
 				this.spawnWave();
 			}
 		}
-		super.livingTick();
+		super.aiStep();
 	}
 
 	public void spawnWave() {
@@ -150,41 +150,41 @@ public class GoreNestEntity extends DemonEntity implements IAnimatable {
 		for (int i = 0; i < 1; i++) {
 			int randomIndex = rand.nextInt(givenList.size());
 			EntityType<?> randomElement = givenList.get(randomIndex);
-			Entity fireballentity = randomElement.create(world);
-			fireballentity.setPosition(this.getPosX() + 2.0D, this.getPosY() + 1.5D, this.getPosZ() + 2.0D);
-			world.addEntity(fireballentity);
+			Entity fireballentity = randomElement.create(level);
+			fireballentity.setPos(this.getX() + 2.0D, this.getY() + 1.5D, this.getZ() + 2.0D);
+			level.addFreshEntity(fireballentity);
 		}
 		for (int i = 0; i < 1; i++) {
 			int randomIndex = rand.nextInt(givenList.size());
 			EntityType<?> randomElement = givenList.get(randomIndex);
-			Entity fireballentity1 = randomElement.create(world);
-			fireballentity1.setPosition(this.getPosX() + -2.0D, this.getPosY() + 1.5D, this.getPosZ() + -2.0D);
-			world.addEntity(fireballentity1);
+			Entity fireballentity1 = randomElement.create(level);
+			fireballentity1.setPos(this.getX() + -2.0D, this.getY() + 1.5D, this.getZ() + -2.0D);
+			level.addFreshEntity(fireballentity1);
 		}
 		for (int i = 0; i < 1; i++) {
 			int randomIndex = rand.nextInt(givenList.size());
 			EntityType<?> randomElement = givenList.get(randomIndex);
-			Entity fireballentity11 = randomElement.create(world);
-			fireballentity11.setPosition(this.getPosX() + 1.0D, this.getPosY() + 1.5D, this.getPosZ() + 1.0D);
-			world.addEntity(fireballentity11);
+			Entity fireballentity11 = randomElement.create(level);
+			fireballentity11.setPos(this.getX() + 1.0D, this.getY() + 1.5D, this.getZ() + 1.0D);
+			level.addFreshEntity(fireballentity11);
 		}
 		for (int i = 0; i < 1; i++) {
 			int randomIndex = rand.nextInt(givenList.size());
 			EntityType<?> randomElement = givenList.get(randomIndex);
-			Entity fireballentity111 = randomElement.create(world);
-			fireballentity111.setPosition(this.getPosX() + -1.0D, this.getPosY() + 1.5D, this.getPosZ() + -1.0D);
-			world.addEntity(fireballentity111);
+			Entity fireballentity111 = randomElement.create(level);
+			fireballentity111.setPos(this.getX() + -1.0D, this.getY() + 1.5D, this.getZ() + -1.0D);
+			level.addFreshEntity(fireballentity111);
 		}
 	}
 
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 	}
 
 	protected boolean shouldDrown() {

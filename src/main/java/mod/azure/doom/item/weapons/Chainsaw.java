@@ -28,47 +28,47 @@ import net.minecraft.world.World;
 public class Chainsaw extends DoomBaseItem {
 
 	public Chainsaw() {
-		super(new Item.Properties().group(DoomMod.DoomWeaponItemGroup).maxStackSize(1).maxDamage(601));
+		super(new Item.Properties().tab(DoomMod.DoomWeaponItemGroup).stacksTo(1).durability(601));
 	}
 
 	@Override
-	public boolean hasEffect(ItemStack stack) {
+	public boolean isFoil(ItemStack stack) {
 		return false;
 	}
 
 	@Override
-	public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
-		return DoomTier.CHAINSAW.getRepairMaterial().test(repair) || super.getIsRepairable(toRepair, repair);
+	public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
+		return DoomTier.CHAINSAW.getRepairIngredient().test(repair) || super.isValidRepairItem(toRepair, repair);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(new TranslationTextComponent(
-				"Fuel: " + (stack.getMaxDamage() - stack.getDamage() - 1) + " / " + (stack.getMaxDamage() - 1))
-						.mergeStyle(TextFormatting.ITALIC));
-		super.addInformation(stack, worldIn, tooltip, flagIn);
+				"Fuel: " + (stack.getMaxDamage() - stack.getDamageValue() - 1) + " / " + (stack.getMaxDamage() - 1))
+						.withStyle(TextFormatting.ITALIC));
+		super.appendHoverText(stack, worldIn, tooltip, flagIn);
 	}
 
 	@Override
 	public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
 		LivingEntity user = (LivingEntity) entityIn;
 		PlayerEntity player = (PlayerEntity) entityIn;
-		if (player.getHeldItemMainhand().isItemEqualIgnoreDurability(stack)
-				&& stack.getDamage() < (stack.getMaxDamage() - 1)) {
-			final AxisAlignedBB aabb = new AxisAlignedBB(entityIn.getPosition().up()).grow(1D, 1D, 1D);
-			entityIn.getEntityWorld().getEntitiesWithinAABBExcludingEntity(user, aabb).forEach(e -> doDamage(user, e));
-			entityIn.getEntityWorld().getEntitiesWithinAABBExcludingEntity(user, aabb)
+		if (player.getMainHandItem().sameItemStackIgnoreDurability(stack)
+				&& stack.getDamageValue() < (stack.getMaxDamage() - 1)) {
+			final AxisAlignedBB aabb = new AxisAlignedBB(entityIn.blockPosition().above()).inflate(1D, 1D, 1D);
+			entityIn.getCommandSenderWorld().getEntities(user, aabb).forEach(e -> doDamage(user, e));
+			entityIn.getCommandSenderWorld().getEntities(user, aabb)
 					.forEach(e -> damageItem(user, stack));
-			entityIn.getEntityWorld().getEntitiesWithinAABBExcludingEntity(user, aabb).forEach(e -> addParticle(e));
+			entityIn.getCommandSenderWorld().getEntities(user, aabb).forEach(e -> addParticle(e));
 		}
 		if (isSelected) {
-			worldIn.playSound((PlayerEntity) null, user.getPosX(), user.getPosY(), user.getPosZ(),
+			worldIn.playSound((PlayerEntity) null, user.getX(), user.getY(), user.getZ(),
 					ModSoundEvents.CHAINSAW_IDLE.get(), SoundCategory.PLAYERS, 1.0F,
 					1.0F / (random.nextFloat() * 0.4F + 1.2F) + 0.25F * 0.5F);
 		}
-		if (worldIn.isRemote) {
-			if (player.getHeldItemMainhand().isItemEqualIgnoreDurability(stack)) {
-				while (Keybindings.RELOAD.isPressed() && isSelected) {
+		if (worldIn.isClientSide) {
+			if (player.getMainHandItem().sameItemStackIgnoreDurability(stack)) {
+				while (Keybindings.RELOAD.consumeClick() && isSelected) {
 					DoomPacketHandler.CHAINSAW.sendToServer(new ChainsawLoadingPacket(itemSlot));
 				}
 			}
@@ -76,18 +76,18 @@ public class Chainsaw extends DoomBaseItem {
 	}
 
 	public static void reload(PlayerEntity user, Hand hand) {
-		if (user.getHeldItem(hand).getItem() instanceof Chainsaw) {
-			while (user.getHeldItem(hand).getDamage() != 0 && user.inventory.count(DoomItems.GAS_BARREL.get()) > 0) {
+		if (user.getItemInHand(hand).getItem() instanceof Chainsaw) {
+			while (user.getItemInHand(hand).getDamageValue() != 0 && user.inventory.countItem(DoomItems.GAS_BARREL.get()) > 0) {
 				removeAmmo(DoomItems.GAS_BARREL.get(), user);
-				user.getHeldItem(hand).damageItem(-200, user, s -> user.sendBreakAnimation(hand));
-				user.getHeldItem(hand).setAnimationsToGo(3);
+				user.getItemInHand(hand).hurtAndBreak(-200, user, s -> user.broadcastBreakEvent(hand));
+				user.getItemInHand(hand).setPopTime(3);
 			}
 		}
 	}
 
 	private static void removeAmmo(Item ammo, PlayerEntity playerEntity) {
 		if (!playerEntity.isCreative()) {
-			for (ItemStack item : playerEntity.inventory.mainInventory) {
+			for (ItemStack item : playerEntity.inventory.items) {
 				if (item.getItem() == DoomItems.GAS_BARREL.get()) {
 					item.shrink(1);
 					break;
@@ -98,9 +98,9 @@ public class Chainsaw extends DoomBaseItem {
 
 	private void doDamage(LivingEntity user, final Entity target) {
 		if (target instanceof LivingEntity) {
-			target.hurtResistantTime = 0;
-			target.attackEntityFrom(DamageSource.causePlayerDamage((PlayerEntity) user), 2F);
-			user.world.playSound((PlayerEntity) null, user.getPosX(), user.getPosY(), user.getPosZ(),
+			target.invulnerableTime = 0;
+			target.hurt(DamageSource.playerAttack((PlayerEntity) user), 2F);
+			user.level.playSound((PlayerEntity) null, user.getX(), user.getY(), user.getZ(),
 					ModSoundEvents.CHAINSAW_ATTACKING.get(), SoundCategory.PLAYERS, 1.0F,
 					1.0F / (random.nextFloat() * 0.4F + 1.2F) + 0.25F * 0.5F);
 		}
@@ -108,15 +108,15 @@ public class Chainsaw extends DoomBaseItem {
 
 	private void damageItem(LivingEntity user, ItemStack stack) {
 		PlayerEntity player = (PlayerEntity) user;
-		if (!player.abilities.isCreativeMode) {
-			stack.setDamage(stack.getDamage() + 1);
+		if (!player.abilities.instabuild) {
+			stack.setDamageValue(stack.getDamageValue() + 1);
 		}
 	}
 
 	private void addParticle(Entity target) {
 		if (target instanceof LivingEntity) {
-			target.world.addParticle(RedstoneParticleData.REDSTONE_DUST, target.getPosXRandom(0.5D),
-					target.getPosYRandom(), target.getPosZRandom(0.5D), 0.0D, 0D, 0D);
+			target.level.addParticle(RedstoneParticleData.REDSTONE, target.getRandomX(0.5D),
+					target.getRandomY(), target.getRandomZ(0.5D), 0.0D, 0D, 0D);
 		}
 	}
 

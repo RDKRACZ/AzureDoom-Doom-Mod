@@ -23,46 +23,46 @@ public class AxeMarauderItem extends AxeItem {
 
 	public AxeMarauderItem() {
 		super(DoomTier.DOOM_HIGHTEIR, 36, -2.4F,
-				new Item.Properties().group(DoomMod.DoomWeaponItemGroup).maxStackSize(1).maxDamage(5));
+				new Item.Properties().tab(DoomMod.DoomWeaponItemGroup).stacksTo(1).durability(5));
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new TranslationTextComponent("doom.marauder_axe1.text").mergeStyle(TextFormatting.RED)
-				.mergeStyle(TextFormatting.ITALIC));
-		tooltip.add(new TranslationTextComponent("doom.marauder_axe2.text").mergeStyle(TextFormatting.RED)
-				.mergeStyle(TextFormatting.ITALIC));
-		tooltip.add(new TranslationTextComponent("doom.marauder_axe3.text").mergeStyle(TextFormatting.RED)
-				.mergeStyle(TextFormatting.ITALIC));
-		super.addInformation(stack, worldIn, tooltip, flagIn);
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(new TranslationTextComponent("doom.marauder_axe1.text").withStyle(TextFormatting.RED)
+				.withStyle(TextFormatting.ITALIC));
+		tooltip.add(new TranslationTextComponent("doom.marauder_axe2.text").withStyle(TextFormatting.RED)
+				.withStyle(TextFormatting.ITALIC));
+		tooltip.add(new TranslationTextComponent("doom.marauder_axe3.text").withStyle(TextFormatting.RED)
+				.withStyle(TextFormatting.ITALIC));
+		super.appendHoverText(stack, worldIn, tooltip, flagIn);
 	}
 
 	@Override
-	public boolean hasEffect(ItemStack stack) {
+	public boolean isFoil(ItemStack stack) {
 		return false;
 	}
 
 	@Override
-	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
+	public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items) {
 		ItemStack stack = new ItemStack(this);
 		stack.hasTag();
-		stack.addEnchantment(Enchantments.SMITE, 10);
-		stack.addEnchantment(Enchantments.LOOTING, 10);
-		stack.addEnchantment(Enchantments.SHARPNESS, 10);
-		stack.addEnchantment(Enchantments.SWEEPING, 10);
+		stack.enchant(Enchantments.SMITE, 10);
+		stack.enchant(Enchantments.MOB_LOOTING, 10);
+		stack.enchant(Enchantments.SHARPNESS, 10);
+		stack.enchant(Enchantments.SWEEPING_EDGE, 10);
 		if (group == DoomMod.DoomWeaponItemGroup) {
 			items.add(stack);
 		}
 	}
 
 	@Override
-	public void onCreated(ItemStack stack, World worldIn, PlayerEntity playerIn) {
+	public void onCraftedBy(ItemStack stack, World worldIn, PlayerEntity playerIn) {
 		stack.hasTag();
-		stack.addEnchantment(Enchantments.SMITE, 10);
-		stack.addEnchantment(Enchantments.LOOTING, 10);
-		stack.addEnchantment(Enchantments.SHARPNESS, 10);
-		stack.addEnchantment(Enchantments.SWEEPING, 10);
+		stack.enchant(Enchantments.SMITE, 10);
+		stack.enchant(Enchantments.MOB_LOOTING, 10);
+		stack.enchant(Enchantments.SHARPNESS, 10);
+		stack.enchant(Enchantments.SWEEPING_EDGE, 10);
 	}
 
 }

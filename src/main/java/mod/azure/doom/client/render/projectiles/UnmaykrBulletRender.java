@@ -16,7 +16,7 @@ public class UnmaykrBulletRender extends ArrowRenderer<UnmaykrBoltEntity> {
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(UnmaykrBoltEntity entity) {
+	public ResourceLocation getTextureLocation(UnmaykrBoltEntity entity) {
 		return ARGENT_BOLT_TEXTURE;
 	}
 

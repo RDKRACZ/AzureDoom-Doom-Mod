@@ -22,33 +22,33 @@ import net.minecraft.world.World;
 
 public class E1M1TurnableHurtBlock extends Block {
 
-	public static final DirectionProperty direction = HorizontalBlock.HORIZONTAL_FACING;
+	public static final DirectionProperty direction = HorizontalBlock.FACING;
 	public static final BooleanProperty light = RedstoneTorchBlock.LIT;
 
 	public E1M1TurnableHurtBlock(AbstractBlock.Properties properties) {
 		super(properties);
-		this.setDefaultState(
-				this.stateContainer.getBaseState().with(direction, Direction.NORTH).with(light, Boolean.valueOf(true)));
+		this.registerDefaultState(
+				this.stateDefinition.any().setValue(direction, Direction.NORTH).setValue(light, Boolean.valueOf(true)));
 	}
 
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
-		return this.getDefaultState().with(direction, context.getPlacementHorizontalFacing());
+		return this.defaultBlockState().setValue(direction, context.getHorizontalDirection());
 	}
 
 	@Override
 	public BlockState rotate(BlockState state, Rotation rot) {
-		return state.with(direction, rot.rotate(state.get(direction)));
+		return state.setValue(direction, rot.rotate(state.getValue(direction)));
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
 	public BlockState mirror(BlockState state, Mirror mirrorIn) {
-		return state.rotate(mirrorIn.toRotation(state.get(direction)));
+		return state.rotate(mirrorIn.getRotation(state.getValue(direction)));
 	}
 
 	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
 		builder.add(direction, light);
 	}
 
@@ -58,12 +58,12 @@ public class E1M1TurnableHurtBlock extends Block {
 	}
 
 	@Override
-	public void onEntityWalk(World worldIn, BlockPos pos, Entity entityIn) {
-		if (!entityIn.isImmuneToFire() && entityIn instanceof LivingEntity
+	public void stepOn(World worldIn, BlockPos pos, Entity entityIn) {
+		if (!entityIn.fireImmune() && entityIn instanceof LivingEntity
 				&& !EnchantmentHelper.hasFrostWalker((LivingEntity) entityIn)) {
-			entityIn.attackEntityFrom(DamageSource.HOT_FLOOR, 1.0F);
+			entityIn.hurt(DamageSource.HOT_FLOOR, 1.0F);
 		}
-		super.onEntityWalk(worldIn, pos, entityIn);
+		super.stepOn(worldIn, pos, entityIn);
 	}
 
 }

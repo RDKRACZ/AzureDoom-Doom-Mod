@@ -26,48 +26,48 @@ public class RandomFlyConvergeOnTargetGoal extends Goal {
 		this.flySpeed = flySpeed;
 		this.convergeDistance = convergeDistance * convergeDistance;
 		this.convergenceAdherence = convergenceAdherence;
-		this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE));
+		this.setFlags(EnumSet.of(Goal.Flag.MOVE));
 	}
 
-	public boolean shouldExecute() {
-		MovementController movementcontroller = this.parentEntity.getMoveHelper();
-		if (!movementcontroller.isUpdating()) {
+	public boolean canUse() {
+		MovementController movementcontroller = this.parentEntity.getMoveControl();
+		if (!movementcontroller.hasWanted()) {
 			return true;
 		} else {
-			double d0 = movementcontroller.getX() - this.parentEntity.getPosX();
-			double d1 = movementcontroller.getY() - this.parentEntity.getPosY();
-			double d2 = movementcontroller.getZ() - this.parentEntity.getPosZ();
+			double d0 = movementcontroller.getWantedX() - this.parentEntity.getX();
+			double d1 = movementcontroller.getWantedY() - this.parentEntity.getY();
+			double d2 = movementcontroller.getWantedZ() - this.parentEntity.getZ();
 			double d3 = d0 * d0 + d1 * d1 + d2 * d2;
 			return d3 < 1.0D || d3 > 10.0D;
 		}
 	}
 
-	public boolean shouldContinueExecuting() {
+	public boolean canContinueToUse() {
 		return false;
 	}
 
 	public boolean shouldConverge(LivingEntity target) {
-		return target != null && this.parentEntity.getDistanceSq(target) >= convergeDistance;
+		return target != null && this.parentEntity.distanceToSqr(target) >= convergeDistance;
 	}
 
-	public void startExecuting() {
-		LivingEntity target = this.parentEntity.getAttackTarget();
+	public void start() {
+		LivingEntity target = this.parentEntity.getTarget();
 		boolean converge = shouldConverge(target);
-		Random random = this.parentEntity.getRNG();
-		double d0 = this.parentEntity.getPosX() + (double) ((random.nextFloat() * 2.0F - 1.0F) * 2.0F);
-		double d1 = this.parentEntity.getPosY() + (double) ((random.nextFloat() * 2.0F - 1.0F) * 2.0F);
-		double d2 = this.parentEntity.getPosZ() + (double) ((random.nextFloat() * 2.0F - 1.0F) * 2.0F);
+		Random random = this.parentEntity.getRandom();
+		double d0 = this.parentEntity.getX() + (double) ((random.nextFloat() * 2.0F - 1.0F) * 2.0F);
+		double d1 = this.parentEntity.getY() + (double) ((random.nextFloat() * 2.0F - 1.0F) * 2.0F);
+		double d2 = this.parentEntity.getZ() + (double) ((random.nextFloat() * 2.0F - 1.0F) * 2.0F);
 
 		if (converge) {
-			double xDifference = target.getPosX() - this.parentEntity.getPosX();
-			double yDifference = target.getPosY() - this.parentEntity.getPosY();
-			double zDifference = target.getPosZ() - this.parentEntity.getPosZ();
+			double xDifference = target.getX() - this.parentEntity.getX();
+			double yDifference = target.getY() - this.parentEntity.getY();
+			double zDifference = target.getZ() - this.parentEntity.getZ();
 			double maxAbs = Math.max(Math.abs(xDifference), Math.abs(yDifference));
 			maxAbs = Math.max(maxAbs, Math.abs(zDifference));
 			d0 += 2 * xDifference/maxAbs * convergenceAdherence;
 			d1 += 2 * yDifference/maxAbs * convergenceAdherence;
 			d2 += 2 * zDifference/maxAbs * convergenceAdherence;
 		}
-		this.parentEntity.getMoveHelper().setMoveTo(d0, d1, d2, flySpeed);
+		this.parentEntity.getMoveControl().setWantedPosition(d0, d1, d2, flySpeed);
 	}
 }

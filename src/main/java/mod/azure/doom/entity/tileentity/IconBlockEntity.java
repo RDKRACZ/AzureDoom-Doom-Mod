@@ -16,24 +16,24 @@ public class IconBlockEntity extends TileEntity {
 	}
 
 	@Override
-	public void markDirty() {
-		super.markDirty();
+	public void setChanged() {
+		super.setChanged();
 	}
 
 	@Override
 	@Nullable
 	public SUpdateTileEntityPacket getUpdatePacket() {
-		return new SUpdateTileEntityPacket(this.pos, 12, this.getUpdateTag());
+		return new SUpdateTileEntityPacket(this.worldPosition, 12, this.getUpdateTag());
 	}
 
 	@Override
     public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        this.read(world.getBlockState(pkt.getPos()), pkt.getNbtCompound());
+        this.load(level.getBlockState(pkt.getPos()), pkt.getTag());
     }
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public double getMaxRenderDistanceSquared() {
+	public double getViewDistance() {
 		return 65536.0D;
 	}
 

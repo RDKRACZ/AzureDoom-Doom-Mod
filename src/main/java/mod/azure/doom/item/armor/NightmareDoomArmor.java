@@ -36,7 +36,7 @@ import software.bernie.geckolib3.item.GeoArmorItem;
 public class NightmareDoomArmor extends GeoArmorItem implements IAnimatable {
 
 	public NightmareDoomArmor(IArmorMaterial materialIn, EquipmentSlotType slot) {
-		super(materialIn, slot, new Item.Properties().group(DoomMod.DoomArmorItemGroup).maxStackSize(1));
+		super(materialIn, slot, new Item.Properties().tab(DoomMod.DoomArmorItemGroup).stacksTo(1));
 
 	}
 
@@ -56,7 +56,7 @@ public class NightmareDoomArmor extends GeoArmorItem implements IAnimatable {
 		} else if (livingEntity instanceof ClientPlayerEntity) {
 			ClientPlayerEntity client = (ClientPlayerEntity) livingEntity;
 			List<Item> equipmentList = new ArrayList<>();
-			client.getEquipmentAndArmor().forEach((x) -> equipmentList.add(x.getItem()));
+			client.getAllSlots().forEach((x) -> equipmentList.add(x.getItem()));
 			List<Item> armorList = equipmentList.subList(2, 6);
 			boolean isWearingAll = armorList.containsAll(
 					Arrays.asList(DoomItems.NIGHTMARE_DOOM_BOOTS.get(), DoomItems.NIGHTMARE_DOOM_LEGGINGS.get(),
@@ -73,10 +73,10 @@ public class NightmareDoomArmor extends GeoArmorItem implements IAnimatable {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new TranslationTextComponent("doom.nightmarearmor.text").mergeStyle(TextFormatting.YELLOW)
-				.mergeStyle(TextFormatting.ITALIC));
-		super.addInformation(stack, worldIn, tooltip, flagIn);
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(new TranslationTextComponent("doom.nightmarearmor.text").withStyle(TextFormatting.YELLOW)
+				.withStyle(TextFormatting.ITALIC));
+		super.appendHoverText(stack, worldIn, tooltip, flagIn);
 	}
 
 	@Override
@@ -85,24 +85,24 @@ public class NightmareDoomArmor extends GeoArmorItem implements IAnimatable {
 	}
 
 	@Override
-	public boolean hasEffect(ItemStack stack) {
+	public boolean isFoil(ItemStack stack) {
 		return false;
 	}
 
 	@Override
-	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
+	public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items) {
 		ItemStack stack = new ItemStack(this);
 		stack.hasTag();
-		stack.addEnchantment(Enchantments.FIRE_PROTECTION, 1);
+		stack.enchant(Enchantments.FIRE_PROTECTION, 1);
 		if (group == DoomMod.DoomArmorItemGroup) {
 			items.add(stack);
 		}
 	}
 
 	@Override
-	public void onCreated(ItemStack stack, World worldIn, PlayerEntity playerIn) {
+	public void onCraftedBy(ItemStack stack, World worldIn, PlayerEntity playerIn) {
 		stack.hasTag();
-		stack.addEnchantment(Enchantments.FIRE_PROTECTION, 1);
+		stack.enchant(Enchantments.FIRE_PROTECTION, 1);
 	}
 
 }

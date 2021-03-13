@@ -57,7 +57,7 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 public class PossessedSoldierEntity extends DemonEntity implements IAnimatable {
 
-	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(PossessedSoldierEntity.class,
+	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.defineId(PossessedSoldierEntity.class,
 			DataSerializers.BOOLEAN);
 
 	public PossessedSoldierEntity(EntityType<PossessedSoldierEntity> entityType, World worldIn) {
@@ -69,15 +69,15 @@ public class PossessedSoldierEntity extends DemonEntity implements IAnimatable {
 	private AnimationFactory factory = new AnimationFactory(this);
 
 	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-		if (event.isMoving() && !this.dataManager.get(ATTACKING)) {
+		if (event.isMoving() && !this.entityData.get(ATTACKING)) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("walking", true));
 			return PlayState.CONTINUE;
 		}
-		if (this.dataManager.get(ATTACKING) && !(this.dead || this.getHealth() < 0.01 || this.getShouldBeDead())) {
+		if (this.entityData.get(ATTACKING) && !(this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("attacking"));
 			return PlayState.CONTINUE;
 		}
-		if ((this.dead || this.getHealth() < 0.01 || this.getShouldBeDead())) {
+		if ((this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("death", false));
 			return PlayState.CONTINUE;
 		}
@@ -98,21 +98,21 @@ public class PossessedSoldierEntity extends DemonEntity implements IAnimatable {
 
 	@OnlyIn(Dist.CLIENT)
 	public boolean isAttacking() {
-		return this.dataManager.get(ATTACKING);
+		return this.entityData.get(ATTACKING);
 	}
 
 	public void setAttacking(boolean attacking) {
-		this.dataManager.set(ATTACKING, attacking);
+		this.entityData.set(ATTACKING, attacking);
 	}
 
 	@Override
-	protected void registerData() {
-		super.registerData();
-		this.dataManager.register(ATTACKING, false);
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(ATTACKING, false);
 	}
 
 	@Override
-	public IPacket<?> createSpawnPacket() {
+	public IPacket<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
@@ -129,10 +129,10 @@ public class PossessedSoldierEntity extends DemonEntity implements IAnimatable {
 		this.goalSelector.addGoal(4, new RangedStrafeAttackGoal(this,
 				new PossessedSoldierEntity.FireballAttack(this).setProjectileOriginOffset(0.8, 0.8, 0.8).setDamage(4),
 				1.0D, 50, 30, 15, 15F));
-		this.targetSelector.addGoal(1, new HurtByTargetGoal(this).setCallsForHelp());
+		this.targetSelector.addGoal(1, new HurtByTargetGoal(this).setAlertOthers());
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, false));
-		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this).setCallsForHelp()));
+		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this).setAlertOthers()));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
 	}
 
@@ -149,7 +149,7 @@ public class PossessedSoldierEntity extends DemonEntity implements IAnimatable {
 
 		@Override
 		public AttackSound getDefaultAttackSound() {
-			return new AttackSound(SoundEvents.ENTITY_FIREWORK_ROCKET_BLAST, 1, 1);
+			return new AttackSound(SoundEvents.FIREWORK_ROCKET_BLAST, 1, 1);
 		}
 
 		@Override
@@ -159,12 +159,12 @@ public class PossessedSoldierEntity extends DemonEntity implements IAnimatable {
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 	}
 
-	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
-		return config.pushAttributes(MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 50.0D));
+	public static AttributeModifierMap.MutableAttribute createAttributes() {
+		return config.pushAttributes(MobEntity.createMobAttributes().add(Attributes.FOLLOW_RANGE, 50.0D));
 	}
 
 	@Override
@@ -174,10 +174,10 @@ public class PossessedSoldierEntity extends DemonEntity implements IAnimatable {
 
 	@Nullable
 	@Override
-	public ILivingEntityData onInitialSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
+	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
 			@Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
-		spawnDataIn = super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
-		this.setEquipmentBasedOnDifficulty(difficultyIn);
+		spawnDataIn = super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+		this.populateDefaultEquipmentSlots(difficultyIn);
 		return spawnDataIn;
 	}
 
@@ -197,7 +197,7 @@ public class PossessedSoldierEntity extends DemonEntity implements IAnimatable {
 	}
 
 	protected SoundEvent getStepSound() {
-		return SoundEvents.ENTITY_ZOMBIE_STEP;
+		return SoundEvents.ZOMBIE_STEP;
 	}
 
 	@Override
@@ -206,12 +206,12 @@ public class PossessedSoldierEntity extends DemonEntity implements IAnimatable {
 	}
 
 	@Override
-	public CreatureAttribute getCreatureAttribute() {
+	public CreatureAttribute getMobType() {
 		return CreatureAttribute.UNDEAD;
 	}
 
 	@Override
-	public int getMaxSpawnedInChunk() {
+	public int getMaxSpawnClusterSize() {
 		return 7;
 	}
 }

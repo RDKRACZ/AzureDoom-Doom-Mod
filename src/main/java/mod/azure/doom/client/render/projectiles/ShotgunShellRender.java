@@ -16,7 +16,7 @@ public class ShotgunShellRender extends ArrowRenderer<ShotgunShellEntity> {
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(ShotgunShellEntity entity) {
+	public ResourceLocation getTextureLocation(ShotgunShellEntity entity) {
 		return SHOTGUN_SHELL_TEXTURE;
 	}
 

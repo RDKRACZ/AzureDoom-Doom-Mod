@@ -17,23 +17,23 @@ public class BarrelRender extends EntityRenderer<BarrelEntity> {
 
 	public BarrelRender(EntityRendererManager renderManagerIn) {
 		super(renderManagerIn);
-		this.shadowSize = 0.5F;
+		this.shadowRadius = 0.5F;
 	}
 
 	public void render(BarrelEntity entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn,
 			IRenderTypeBuffer bufferIn, int packedLightIn) {
-		matrixStackIn.push();
+		matrixStackIn.pushPose();
 		matrixStackIn.translate(0.0D, 0.5D, 0.0D);
 
-		matrixStackIn.rotate(Vector3f.YP.rotationDegrees(-90.0F));
+		matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(-90.0F));
 		matrixStackIn.translate(-0.5D, -0.5D, 0.5D);
-		matrixStackIn.rotate(Vector3f.YP.rotationDegrees(90.0F));
-		matrixStackIn.pop();
+		matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(90.0F));
+		matrixStackIn.popPose();
 		super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(BarrelEntity entity) {
+	public ResourceLocation getTextureLocation(BarrelEntity entity) {
 		return TEXTURE;
 	}
 }

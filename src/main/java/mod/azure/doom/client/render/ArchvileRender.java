@@ -16,18 +16,18 @@ public class ArchvileRender extends GeoEntityRenderer<ArchvileEntity> {
 
 	public ArchvileRender(EntityRendererManager renderManagerIn) {
 		super(renderManagerIn, new ArchvileModel());
-		this.shadowSize = 0.7F;
+		this.shadowRadius = 0.7F;
 	}
 
 	@Override
 	public RenderType getRenderType(ArchvileEntity animatable, float partialTicks, MatrixStack stack,
 			IRenderTypeBuffer renderTypeBuffer, IVertexBuilder vertexBuilder, int packedLightIn,
 			ResourceLocation textureLocation) {
-		return RenderType.getEntityTranslucent(getTextureLocation(animatable));
+		return RenderType.entityTranslucent(getTextureLocation(animatable));
 	}
 
 	@Override
-	protected int getBlockLight(ArchvileEntity entityIn, BlockPos partialTicks) {
+	protected int getBlockLightLevel(ArchvileEntity entityIn, BlockPos partialTicks) {
 		return entityIn.isAttacking() ? 15 : 1;
 	}
 	

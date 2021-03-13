@@ -73,62 +73,62 @@ public class RocketMobEntity extends DamagingProjectileEntity implements IAnimat
 	}
 
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putShort("life", (short) this.ticksInAir);
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		this.ticksInAir = compound.getShort("life");
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
 	public void tick() {
-		Entity entity = this.func_234616_v_();
-		if (this.world.isRemote
-				|| (entity == null || entity.isAlive()) && this.world.isBlockLoaded(this.getPosition())) {
+		Entity entity = this.getOwner();
+		if (this.level.isClientSide
+				|| (entity == null || entity.isAlive()) && this.level.hasChunkAt(this.blockPosition())) {
 			super.tick();
-			RayTraceResult raytraceresult = ProjectileHelper.func_234618_a_(this, this::func_230298_a_);
+			RayTraceResult raytraceresult = ProjectileHelper.getHitResult(this, this::canHitEntity);
 			if (raytraceresult.getType() != RayTraceResult.Type.MISS
 					&& !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, raytraceresult)) {
-				this.onImpact(raytraceresult);
+				this.onHit(raytraceresult);
 			}
-			this.doBlockCollisions();
-			Vector3d vector3d = this.getMotion();
-			double d0 = this.getPosX() + vector3d.x;
-			double d1 = this.getPosY() + vector3d.y;
-			double d2 = this.getPosZ() + vector3d.z;
+			this.checkInsideBlocks();
+			Vector3d vector3d = this.getDeltaMovement();
+			double d0 = this.getX() + vector3d.x;
+			double d1 = this.getY() + vector3d.y;
+			double d2 = this.getZ() + vector3d.z;
 			ProjectileHelper.rotateTowardsMovement(this, 0.2F);
-			float f = this.getMotionFactor();
+			float f = this.getInertia();
 			if (this.isInWater()) {
 				for (int i = 0; i < 4; ++i) {
-					this.world.addParticle(ParticleTypes.BUBBLE, d0 - vector3d.x * 0.25D, d1 - vector3d.y * 0.25D,
+					this.level.addParticle(ParticleTypes.BUBBLE, d0 - vector3d.x * 0.25D, d1 - vector3d.y * 0.25D,
 							d2 - vector3d.z * 0.25D, vector3d.x, vector3d.y, vector3d.z);
 				}
 				f = 0.8F;
 			}
-			this.setMotion(vector3d.add(this.accelerationX, this.accelerationY, this.accelerationZ).scale((double) f));
-			this.world.addParticle(this.getParticle(), d0, d1 + 0.5D, d2, 0.0D, 0.0D, 0.0D);
-			this.setPosition(d0, d1, d2);
+			this.setDeltaMovement(vector3d.add(this.xPower, this.yPower, this.zPower).scale((double) f));
+			this.level.addParticle(this.getTrailParticle(), d0, d1 + 0.5D, d2, 0.0D, 0.0D, 0.0D);
+			this.setPos(d0, d1, d2);
 		} else {
 			this.remove();
 		}
 	}
 
-	protected boolean isFireballFiery() {
+	protected boolean shouldBurn() {
 		return false;
 	}
 
 	@Override
-	public IPacket<?> createSpawnPacket() {
+	public IPacket<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
 	@Override
-	public boolean hasNoGravity() {
+	public boolean isNoGravity() {
 		if (this.isInWater()) {
 			return false;
 		} else {
@@ -137,40 +137,40 @@ public class RocketMobEntity extends DamagingProjectileEntity implements IAnimat
 	}
 
 	@Override
-	public boolean isPushedByWater() {
+	public boolean isPushedByFluid() {
 		return false;
 	}
 
 	@Override
-	public boolean canBeCollidedWith() {
+	public boolean isPickable() {
 		return true;
 	}
 
 	@Override
-	protected void onEntityHit(EntityRayTraceResult p_213868_1_) {
-		super.onEntityHit(p_213868_1_);
-		if (!this.world.isRemote) {
+	protected void onHitEntity(EntityRayTraceResult p_213868_1_) {
+		super.onHitEntity(p_213868_1_);
+		if (!this.level.isClientSide) {
 			Entity entity = p_213868_1_.getEntity();
-			Entity entity1 = this.func_234616_v_();
-			entity.attackEntityFrom(DamageSource.causeIndirectMagicDamage(this, entity1), directHitDamage);
+			Entity entity1 = this.getOwner();
+			entity.hurt(DamageSource.indirectMagic(this, entity1), directHitDamage);
 			if (entity1 instanceof LivingEntity) {
-				this.applyEnchantments((LivingEntity) entity1, entity);
+				this.doEnchantDamageEffects((LivingEntity) entity1, entity);
 			}
 		}
-		this.playSound(ModSoundEvents.ROCKET_HIT.get(), 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
+		this.playSound(ModSoundEvents.ROCKET_HIT.get(), 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
 	}
 
-	protected void onImpact(RayTraceResult result) {
-		super.onImpact(result);
-		if (!this.world.isRemote) {
+	protected void onHit(RayTraceResult result) {
+		super.onHit(result);
+		if (!this.level.isClientSide) {
 			this.explode();
 			this.remove();
 		}
-		this.playSound(ModSoundEvents.ROCKET_HIT.get(), 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
+		this.playSound(ModSoundEvents.ROCKET_HIT.get(), 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
 	}
 
 	protected void explode() {
-		this.world.createExplosion(this, this.getPosX(), this.getPosYHeight(0.0625D), this.getPosZ(), 1.0F,
+		this.level.explode(this, this.getX(), this.getY(0.0625D), this.getZ(), 1.0F,
 				Explosion.Mode.NONE);
 	}
 

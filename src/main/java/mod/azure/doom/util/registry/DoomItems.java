@@ -85,123 +85,123 @@ public class DoomItems {
 	// BLOCKS
 	public static final RegistryObject<Item> ITEM = ITEMS.register("barrel",
 			() -> new BlockItem(DoomBlocks.BARREL_BLOCK.get(),
-					new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+					new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> ARGENT_BLOCK = ITEMS.register("argent_block",
 			() -> new BlockItem(DoomBlocks.ARGENT_BLOCK.get(),
-					new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+					new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> ARGENT_LAMP_BLOCK = ITEMS.register("argent_lamp_block",
 			() -> new BlockItem(DoomBlocks.ARGENT_LAMP_BLOCK.get(),
-					new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+					new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> DOOM_SAND = ITEMS.register("doom_sand",
-			() -> new BlockItem(DoomBlocks.DOOM_SAND.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+			() -> new BlockItem(DoomBlocks.DOOM_SAND.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> DOOM_WALL1 = ITEMS.register("icon_wall1",
-			() -> new BlockItem(DoomBlocks.DOOM_WALL1.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+			() -> new BlockItem(DoomBlocks.DOOM_WALL1.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> DOOM_WALL2 = ITEMS.register("icon_wall2",
-			() -> new BlockItem(DoomBlocks.DOOM_WALL2.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+			() -> new BlockItem(DoomBlocks.DOOM_WALL2.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> DOOM_WALL3 = ITEMS.register("icon_wall3",
-			() -> new BlockItem(DoomBlocks.DOOM_WALL3.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+			() -> new BlockItem(DoomBlocks.DOOM_WALL3.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> DOOM_WALL4 = ITEMS.register("icon_wall4",
-			() -> new BlockItem(DoomBlocks.DOOM_WALL4.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+			() -> new BlockItem(DoomBlocks.DOOM_WALL4.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> DOOM_WALL5 = ITEMS.register("icon_wall5",
-			() -> new BlockItem(DoomBlocks.DOOM_WALL5.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+			() -> new BlockItem(DoomBlocks.DOOM_WALL5.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> DOOM_WALL6 = ITEMS.register("icon_wall6",
-			() -> new BlockItem(DoomBlocks.DOOM_WALL6.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+			() -> new BlockItem(DoomBlocks.DOOM_WALL6.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> DOOM_WALL7 = ITEMS.register("icon_wall7",
-			() -> new BlockItem(DoomBlocks.DOOM_WALL7.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+			() -> new BlockItem(DoomBlocks.DOOM_WALL7.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> DOOM_WALL8 = ITEMS.register("icon_wall8",
-			() -> new BlockItem(DoomBlocks.DOOM_WALL8.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+			() -> new BlockItem(DoomBlocks.DOOM_WALL8.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> DOOM_WALL9 = ITEMS.register("icon_wall9",
-			() -> new BlockItem(DoomBlocks.DOOM_WALL9.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+			() -> new BlockItem(DoomBlocks.DOOM_WALL9.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> DOOM_WALL10 = ITEMS.register("icon_wall10",
-			() -> new BlockItem(DoomBlocks.DOOM_WALL10.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+			() -> new BlockItem(DoomBlocks.DOOM_WALL10.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> DOOM_WALL11 = ITEMS.register("icon_wall11",
-			() -> new BlockItem(DoomBlocks.DOOM_WALL11.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+			() -> new BlockItem(DoomBlocks.DOOM_WALL11.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> DOOM_WALL12 = ITEMS.register("icon_wall12",
-			() -> new BlockItem(DoomBlocks.DOOM_WALL12.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+			() -> new BlockItem(DoomBlocks.DOOM_WALL12.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> DOOM_WALL13 = ITEMS.register("icon_wall13",
-			() -> new BlockItem(DoomBlocks.DOOM_WALL13.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+			() -> new BlockItem(DoomBlocks.DOOM_WALL13.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> DOOM_WALL14 = ITEMS.register("icon_wall14",
-			() -> new BlockItem(DoomBlocks.DOOM_WALL14.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+			() -> new BlockItem(DoomBlocks.DOOM_WALL14.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> DOOM_WALL15 = ITEMS.register("icon_wall15",
-			() -> new BlockItem(DoomBlocks.DOOM_WALL15.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+			() -> new BlockItem(DoomBlocks.DOOM_WALL15.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> DOOM_WALL16 = ITEMS.register("icon_wall16",
-			() -> new BlockItem(DoomBlocks.DOOM_WALL16.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+			() -> new BlockItem(DoomBlocks.DOOM_WALL16.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 
 	public static final RegistryObject<Item> E1M1_1 = ITEMS.register("e1m1_block1",
-			() -> new BlockItem(DoomBlocks.E1M1_1.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+			() -> new BlockItem(DoomBlocks.E1M1_1.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> E1M1_2 = ITEMS.register("e1m1_block2",
-			() -> new BlockItem(DoomBlocks.E1M1_2.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+			() -> new BlockItem(DoomBlocks.E1M1_2.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> E1M1_3 = ITEMS.register("e1m1_block3",
-			() -> new BlockItem(DoomBlocks.E1M1_3.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+			() -> new BlockItem(DoomBlocks.E1M1_3.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> E1M1_4 = ITEMS.register("e1m1_block4",
-			() -> new BlockItem(DoomBlocks.E1M1_4.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+			() -> new BlockItem(DoomBlocks.E1M1_4.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> E1M1_5 = ITEMS.register("e1m1_block5",
-			() -> new BlockItem(DoomBlocks.E1M1_5.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+			() -> new BlockItem(DoomBlocks.E1M1_5.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> E1M1_6 = ITEMS.register("e1m1_block6",
-			() -> new BlockItem(DoomBlocks.E1M1_6.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+			() -> new BlockItem(DoomBlocks.E1M1_6.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> E1M1_7 = ITEMS.register("e1m1_block7",
-			() -> new BlockItem(DoomBlocks.E1M1_7.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+			() -> new BlockItem(DoomBlocks.E1M1_7.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> E1M1_8 = ITEMS.register("e1m1_block8",
-			() -> new BlockItem(DoomBlocks.E1M1_8.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+			() -> new BlockItem(DoomBlocks.E1M1_8.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> E1M1_9 = ITEMS.register("e1m1_block9",
-			() -> new BlockItem(DoomBlocks.E1M1_9.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+			() -> new BlockItem(DoomBlocks.E1M1_9.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> E1M1_10 = ITEMS.register("e1m1_block10",
-			() -> new BlockItem(DoomBlocks.E1M1_10.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+			() -> new BlockItem(DoomBlocks.E1M1_10.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> E1M1_11 = ITEMS.register("e1m1_block11",
-			() -> new BlockItem(DoomBlocks.E1M1_11.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+			() -> new BlockItem(DoomBlocks.E1M1_11.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> E1M1_12 = ITEMS.register("e1m1_block12",
-			() -> new BlockItem(DoomBlocks.E1M1_12.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+			() -> new BlockItem(DoomBlocks.E1M1_12.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> E1M1_13 = ITEMS.register("e1m1_block13",
-			() -> new BlockItem(DoomBlocks.E1M1_13.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+			() -> new BlockItem(DoomBlocks.E1M1_13.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> E1M1_14 = ITEMS.register("e1m1_block14",
-			() -> new BlockItem(DoomBlocks.E1M1_14.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+			() -> new BlockItem(DoomBlocks.E1M1_14.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> E1M1_15 = ITEMS.register("e1m1_block15",
-			() -> new BlockItem(DoomBlocks.E1M1_15.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+			() -> new BlockItem(DoomBlocks.E1M1_15.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> E1M1_16 = ITEMS.register("e1m1_block16",
-			() -> new BlockItem(DoomBlocks.E1M1_16.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+			() -> new BlockItem(DoomBlocks.E1M1_16.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> E1M1_17 = ITEMS.register("e1m1_block17",
-			() -> new BlockItem(DoomBlocks.E1M1_17.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+			() -> new BlockItem(DoomBlocks.E1M1_17.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> E1M1_18 = ITEMS.register("e1m1_block18",
-			() -> new BlockItem(DoomBlocks.E1M1_18.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+			() -> new BlockItem(DoomBlocks.E1M1_18.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> E1M1_19 = ITEMS.register("e1m1_block19",
-			() -> new BlockItem(DoomBlocks.E1M1_19.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+			() -> new BlockItem(DoomBlocks.E1M1_19.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> E1M1_20 = ITEMS.register("e1m1_block20",
-			() -> new BlockItem(DoomBlocks.E1M1_20.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+			() -> new BlockItem(DoomBlocks.E1M1_20.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> E1M1_21 = ITEMS.register("e1m1_block21",
-			() -> new BlockItem(DoomBlocks.E1M1_21.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+			() -> new BlockItem(DoomBlocks.E1M1_21.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> E1M1_22 = ITEMS.register("e1m1_block22",
-			() -> new BlockItem(DoomBlocks.E1M1_22.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+			() -> new BlockItem(DoomBlocks.E1M1_22.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> E1M1_23 = ITEMS.register("e1m1_block23",
-			() -> new BlockItem(DoomBlocks.E1M1_23.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+			() -> new BlockItem(DoomBlocks.E1M1_23.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> E1M1_24 = ITEMS.register("e1m1_block24",
-			() -> new BlockItem(DoomBlocks.E1M1_24.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+			() -> new BlockItem(DoomBlocks.E1M1_24.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> E1M1_25 = ITEMS.register("e1m1_block25",
-			() -> new BlockItem(DoomBlocks.E1M1_25.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+			() -> new BlockItem(DoomBlocks.E1M1_25.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> E1M1_26 = ITEMS.register("e1m1_block26",
-			() -> new BlockItem(DoomBlocks.E1M1_26.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+			() -> new BlockItem(DoomBlocks.E1M1_26.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 
 	public static final RegistryObject<Item> JUMP_PAD = ITEMS.register("jump_pad",
-			() -> new BlockItem(DoomBlocks.JUMP_PAD.get(), new Item.Properties().group(DoomMod.DoomBlockItemGroup)));
+			() -> new BlockItem(DoomBlocks.JUMP_PAD.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 
 	// AMMO
 	public static final RegistryObject<Item> SHOTGUN_SHELLS = ITEMS.register("shotgun_shells",
-			() -> new ShellAmmo(new Item.Properties().group(DoomMod.DoomWeaponItemGroup), 2.0F));
+			() -> new ShellAmmo(new Item.Properties().tab(DoomMod.DoomWeaponItemGroup), 2.0F));
 	public static final RegistryObject<Item> ARGENT_BOLT = ITEMS.register("argent_bolt",
-			() -> new ArgentBolt(new Item.Properties().group(DoomMod.DoomWeaponItemGroup), 2.7F));
+			() -> new ArgentBolt(new Item.Properties().tab(DoomMod.DoomWeaponItemGroup), 2.7F));
 	public static final RegistryObject<Item> UNMAKRY_BOLT = ITEMS.register("unmaykr_bolt",
 			() -> new UnmaykrBolt(10.7F));
 	public static final RegistryObject<Item> ENERGY_CELLS = ITEMS.register("energy_cells",
-			() -> new EnergyCell(new Item.Properties().group(DoomMod.DoomWeaponItemGroup), 10.0F));
+			() -> new EnergyCell(new Item.Properties().tab(DoomMod.DoomWeaponItemGroup), 10.0F));
 	public static final RegistryObject<Item> CHAINGUN_BULLETS = ITEMS.register("chaingunbullets",
-			() -> new ChaingunAmmo(new Item.Properties().group(DoomMod.DoomWeaponItemGroup), 10.0F));
+			() -> new ChaingunAmmo(new Item.Properties().tab(DoomMod.DoomWeaponItemGroup), 10.0F));
 	public static final RegistryObject<ClipAmmo> BULLETS = ITEMS.register("bullets",
-			() -> new ClipAmmo(new Item.Properties().group(DoomMod.DoomWeaponItemGroup), 1.2F));
+			() -> new ClipAmmo(new Item.Properties().tab(DoomMod.DoomWeaponItemGroup), 1.2F));
 	public static final RegistryObject<Item> BFG_CELL = ITEMS.register("bfg_cell",
-			() -> new BFGCell(new Item.Properties().group(DoomMod.DoomWeaponItemGroup), 1.2F));
+			() -> new BFGCell(new Item.Properties().tab(DoomMod.DoomWeaponItemGroup), 1.2F));
 	public static final RegistryObject<Item> ROCKET = ITEMS.register("rocket",
-			() -> new Rocket(new Item.Properties().group(DoomMod.DoomWeaponItemGroup), 1.2F));
+			() -> new Rocket(new Item.Properties().tab(DoomMod.DoomWeaponItemGroup), 1.2F));
 	public static final RegistryObject<Item> GAS_BARREL = ITEMS.register("gas_barrel",
-			() -> new Item(new Item.Properties().group(DoomMod.DoomWeaponItemGroup)));
+			() -> new Item(new Item.Properties().tab(DoomMod.DoomWeaponItemGroup)));
 
 	// MISC
 	public static final RegistryObject<Item> ARGENT_ENERGY = ITEMS.register("argent_energy",

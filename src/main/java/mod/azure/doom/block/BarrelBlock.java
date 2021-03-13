@@ -33,17 +33,17 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 public class BarrelBlock extends Block {
-	public static final DirectionProperty direction = HorizontalBlock.HORIZONTAL_FACING;
+	public static final DirectionProperty direction = HorizontalBlock.FACING;
 	public static final BooleanProperty light = RedstoneTorchBlock.LIT;
 
 	public BarrelBlock(AbstractBlock.Properties properties) {
 		super(properties);
-		this.setDefaultState(
-				this.stateContainer.getBaseState().with(direction, Direction.NORTH).with(light, Boolean.valueOf(true)));
+		this.registerDefaultState(
+				this.stateDefinition.any().setValue(direction, Direction.NORTH).setValue(light, Boolean.valueOf(true)));
 	}
 
 	@Override
-	public boolean canDropFromExplosion(Explosion explosionIn) {
+	public boolean dropFromExplosion(Explosion explosionIn) {
 		return false;
 	}
 
@@ -65,64 +65,64 @@ public class BarrelBlock extends Block {
 	}
 
 	@Override
-	public void onExplosionDestroy(World worldIn, BlockPos pos, Explosion explosionIn) {
-		if (!worldIn.isRemote) {
+	public void wasExploded(World worldIn, BlockPos pos, Explosion explosionIn) {
+		if (!worldIn.isClientSide) {
 			BarrelEntity tntentity = new BarrelEntity(worldIn, (double) pos.getX() + 0.5D, (double) pos.getY(),
-					(double) pos.getZ() + 0.5D, explosionIn.getExplosivePlacedBy());
-			worldIn.addEntity(tntentity);
+					(double) pos.getZ() + 0.5D, explosionIn.getSourceMob());
+			worldIn.addFreshEntity(tntentity);
 		}
 	}
 
 	@Override
 	public void catchFire(BlockState state, World world, BlockPos pos, Direction face, LivingEntity igniter) {
-		if (!world.isRemote) {
+		if (!world.isClientSide) {
 			BarrelEntity tntentity = new BarrelEntity(world, (double) pos.getX() + 0.5D, (double) pos.getY(),
 					(double) pos.getZ() + 0.5D, igniter);
 			;
-			world.addEntity(tntentity);
+			world.addFreshEntity(tntentity);
 		}
 	}
 
 	@Override
-	public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
-		if (!worldIn.isRemote() && !player.isCreative()) {
+	public void playerWillDestroy(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
+		if (!worldIn.isClientSide() && !player.isCreative()) {
 			catchFire(state, worldIn, pos, null, null);
 		}
 
-		super.onBlockHarvested(worldIn, pos, state, player);
+		super.playerWillDestroy(worldIn, pos, state, player);
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
+	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
 			Hand handIn, BlockRayTraceResult hit) {
-		ItemStack itemstack = player.getHeldItem(handIn);
+		ItemStack itemstack = player.getItemInHand(handIn);
 		Item item = itemstack.getItem();
 		if (item != Items.FLINT_AND_STEEL && item != Items.FIRE_CHARGE) {
-			return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
+			return super.use(state, worldIn, pos, player, handIn, hit);
 		} else {
-			catchFire(state, worldIn, pos, hit.getFace(), player);
-			worldIn.setBlockState(pos, Blocks.AIR.getDefaultState(), 11);
+			catchFire(state, worldIn, pos, hit.getDirection(), player);
+			worldIn.setBlock(pos, Blocks.AIR.defaultBlockState(), 11);
 			if (!player.isCreative()) {
 				if (item == Items.FLINT_AND_STEEL) {
-					itemstack.damageItem(1, player, (player1) -> {
-						player1.sendBreakAnimation(handIn);
+					itemstack.hurtAndBreak(1, player, (player1) -> {
+						player1.broadcastBreakEvent(handIn);
 					});
 				} else {
 					itemstack.shrink(1);
 				}
 			}
 
-			return ActionResultType.func_233537_a_(worldIn.isRemote);
+			return ActionResultType.sidedSuccess(worldIn.isClientSide);
 		}
 	}
 
 	@Override
-	public void onProjectileCollision(World worldIn, BlockState state, BlockRayTraceResult hit,
+	public void onProjectileHit(World worldIn, BlockState state, BlockRayTraceResult hit,
 			ProjectileEntity projectile) {
-		if (!worldIn.isRemote) {
-			Entity entity = projectile.func_234616_v_();
-			BlockPos blockpos = hit.getPos();
+		if (!worldIn.isClientSide) {
+			Entity entity = projectile.getOwner();
+			BlockPos blockpos = hit.getBlockPos();
 			catchFire(state, worldIn, blockpos, null, entity instanceof LivingEntity ? (LivingEntity) entity : null);
 			worldIn.removeBlock(blockpos, false);
 		}
@@ -136,28 +136,28 @@ public class BarrelBlock extends Block {
 
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
-		return this.getDefaultState().with(direction, context.getPlacementHorizontalFacing().getOpposite());
+		return this.defaultBlockState().setValue(direction, context.getHorizontalDirection().getOpposite());
 	}
 
 	@Override
 	public BlockState rotate(BlockState state, Rotation rot) {
-		return state.with(direction, rot.rotate(state.get(direction)));
+		return state.setValue(direction, rot.rotate(state.getValue(direction)));
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
 	public BlockState mirror(BlockState state, Mirror mirrorIn) {
-		return state.rotate(mirrorIn.toRotation(state.get(direction)));
+		return state.rotate(mirrorIn.getRotation(state.getValue(direction)));
 	}
 
 	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
 		builder.add(direction, light);
 	}
 
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-		return VoxelShapes.create(0.06f, 0f, 0.06f, 0.94f, 1.0f, 0.94f);
+		return VoxelShapes.box(0.06f, 0f, 0.06f, 0.94f, 1.0f, 0.94f);
 	}
 
 }

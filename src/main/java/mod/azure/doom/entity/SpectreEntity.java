@@ -60,12 +60,12 @@ public class SpectreEntity extends DemonEntity implements IAnimatable {
 	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.SPECTRE);
 
 	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-		if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F)) {
+		if (!(animationSpeed > -0.15F && animationSpeed < 0.15F)) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("walking", true));
 			return PlayState.CONTINUE;
 		}
-		if ((this.dead || this.getHealth() < 0.01 || this.getShouldBeDead())) {
-			if (world.isRemote) {
+		if ((this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
+			if (level.isClientSide) {
 				event.getController().setAnimation(new AnimationBuilder().addAnimation("death", false));
 				return PlayState.CONTINUE;
 			}
@@ -85,7 +85,7 @@ public class SpectreEntity extends DemonEntity implements IAnimatable {
 	}
 
 	@Override
-	protected void onDeathUpdate() {
+	protected void tickDeath() {
 		++this.deathTime;
 		if (this.deathTime == 80) {
 			this.remove();
@@ -93,7 +93,7 @@ public class SpectreEntity extends DemonEntity implements IAnimatable {
 	}
 
 	@Override
-	public IPacket<?> createSpawnPacket() {
+	public IPacket<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
@@ -115,20 +115,20 @@ public class SpectreEntity extends DemonEntity implements IAnimatable {
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, false));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
-		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this).setCallsForHelp()));
+		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this).setAlertOthers()));
 	}
 
-	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
-		return config.pushAttributes(MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 25.0D));
+	public static AttributeModifierMap.MutableAttribute createAttributes() {
+		return config.pushAttributes(MobEntity.createMobAttributes().add(Attributes.FOLLOW_RANGE, 25.0D));
 	}
 
 	@Nullable
 	@Override
-	public ILivingEntityData onInitialSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
+	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
 			@Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
-		spawnDataIn = super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
-		float f = difficultyIn.getClampedAdditionalDifficulty();
-		this.setCanPickUpLoot(this.rand.nextFloat() < 0.55F * f);
+		spawnDataIn = super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+		float f = difficultyIn.getSpecialMultiplier();
+		this.setCanPickUpLoot(this.random.nextFloat() < 0.55F * f);
 		if (spawnDataIn == null) {
 			spawnDataIn = new SpectreEntity.GroupData(worldIn.getRandom()
 					.nextFloat() < net.minecraftforge.common.ForgeConfig.SERVER.zombieBabyChance.get());
@@ -136,22 +136,22 @@ public class SpectreEntity extends DemonEntity implements IAnimatable {
 
 		if (spawnDataIn instanceof ZombieEntity.GroupData) {
 			ZombieEntity.GroupData zombieentity$groupdata = (ZombieEntity.GroupData) spawnDataIn;
-			if (zombieentity$groupdata.isChild) {
-				this.setChild(true);
+			if (zombieentity$groupdata.isBaby) {
+				this.setBaby(true);
 			}
 
-			this.setEquipmentBasedOnDifficulty(difficultyIn);
-			this.setEnchantmentBasedOnDifficulty(difficultyIn);
+			this.populateDefaultEquipmentSlots(difficultyIn);
+			this.populateDefaultEquipmentEnchantments(difficultyIn);
 		}
 
-		if (this.getItemStackFromSlot(EquipmentSlotType.HEAD).isEmpty()) {
+		if (this.getItemBySlot(EquipmentSlotType.HEAD).isEmpty()) {
 			LocalDate localdate = LocalDate.now();
 			int i = localdate.get(ChronoField.DAY_OF_MONTH);
 			int j = localdate.get(ChronoField.MONTH_OF_YEAR);
-			if (j == 10 && i == 31 && this.rand.nextFloat() < 0.25F) {
-				this.setItemStackToSlot(EquipmentSlotType.HEAD,
-						new ItemStack(this.rand.nextFloat() < 0.1F ? Blocks.JACK_O_LANTERN : Blocks.CARVED_PUMPKIN));
-				this.inventoryArmorDropChances[EquipmentSlotType.HEAD.getIndex()] = 0.0F;
+			if (j == 10 && i == 31 && this.random.nextFloat() < 0.25F) {
+				this.setItemSlot(EquipmentSlotType.HEAD,
+						new ItemStack(this.random.nextFloat() < 0.1F ? Blocks.JACK_O_LANTERN : Blocks.CARVED_PUMPKIN));
+				this.armorDropChances[EquipmentSlotType.HEAD.getIndex()] = 0.0F;
 			}
 		}
 
@@ -167,7 +167,7 @@ public class SpectreEntity extends DemonEntity implements IAnimatable {
 	}
 
 	@Override
-	public boolean isChild() {
+	public boolean isBaby() {
 		return false;
 	}
 
@@ -196,12 +196,12 @@ public class SpectreEntity extends DemonEntity implements IAnimatable {
 	}
 
 	@Override
-	public CreatureAttribute getCreatureAttribute() {
+	public CreatureAttribute getMobType() {
 		return CreatureAttribute.UNDEAD;
 	}
 
 	@Override
-	public int getMaxSpawnedInChunk() {
+	public int getMaxSpawnClusterSize() {
 		return 7;
 	}
 }

@@ -19,7 +19,7 @@ public class DoomStructures {
 			.create(ForgeRegistries.STRUCTURE_FEATURES, DoomMod.MODID);
 
 	public static final RegistryObject<Structure<NoFeatureConfig>> DOOM1 = registerStructure("doom1",
-			() -> (new DoomStructure(NoFeatureConfig.field_236558_a_)));
+			() -> (new DoomStructure(NoFeatureConfig.CODEC)));
 
 	private static <T extends Structure<?>> RegistryObject<T> registerStructure(String name, Supplier<T> structure) {
 		return DEFERRED_REGISTRY_STRUCTURE.register(name, structure);
@@ -32,13 +32,13 @@ public class DoomStructures {
 
 	public static <F extends Structure<?>> void setupMapSpacingAndLand(F structure,
 			StructureSeparationSettings structureSeparationSettings, boolean transformSurroundingLand) {
-		Structure.NAME_STRUCTURE_BIMAP.put(structure.getRegistryName().toString(), structure);
+		Structure.STRUCTURES_REGISTRY.put(structure.getRegistryName().toString(), structure);
 		if (transformSurroundingLand) {
-			Structure.field_236384_t_ = ImmutableList.<Structure<?>>builder().addAll(Structure.field_236384_t_)
+			Structure.NOISE_AFFECTING_FEATURES = ImmutableList.<Structure<?>>builder().addAll(Structure.NOISE_AFFECTING_FEATURES)
 					.add(structure).build();
 		}
-		DimensionStructuresSettings.field_236191_b_ = ImmutableMap.<Structure<?>, StructureSeparationSettings>builder()
-				.putAll(DimensionStructuresSettings.field_236191_b_).put(structure, structureSeparationSettings)
+		DimensionStructuresSettings.DEFAULTS = ImmutableMap.<Structure<?>, StructureSeparationSettings>builder()
+				.putAll(DimensionStructuresSettings.DEFAULTS).put(structure, structureSeparationSettings)
 				.build();
 	}
 }

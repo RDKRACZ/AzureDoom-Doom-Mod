@@ -44,8 +44,8 @@ public class BFGEntity extends AbstractArrowEntity {
 	protected int timeInAir;
 	protected boolean inAir;
 	private int ticksInAir;
-	private static final DataParameter<Integer> TARGET_ENTITY = EntityDataManager.createKey(BFGEntity.class,
-			DataSerializers.VARINT);
+	private static final DataParameter<Integer> TARGET_ENTITY = EntityDataManager.defineId(BFGEntity.class,
+			DataSerializers.INT);
 	private LivingEntity targetedEntity;
 
 	public BFGEntity(EntityType<? extends AbstractArrowEntity> type, World world) {
@@ -57,15 +57,15 @@ public class BFGEntity extends AbstractArrowEntity {
 	}
 
 	@Override
-	protected void func_225516_i_() {
+	protected void tickDespawn() {
 		++this.ticksInAir;
-		if (this.ticksExisted >= 40) {
+		if (this.tickCount >= 40) {
 			this.remove();
 		}
 	}
 
 	public DamageSource getDamageSource() {
-		return DamageSource.causeArrowDamage(this, this);
+		return DamageSource.arrow(this, this);
 	}
 
 	@Override
@@ -75,118 +75,118 @@ public class BFGEntity extends AbstractArrowEntity {
 	}
 
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putShort("life", (short) this.ticksInAir);
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		this.ticksInAir = compound.getShort("life");
 	}
 
 	@Override
 	public void tick() {
 		super.tick();
-		boolean flag = this.getNoClip();
-		Vector3d vector3d = this.getMotion();
-		if (this.prevRotationPitch == 0.0F && this.prevRotationYaw == 0.0F) {
-			float f = MathHelper.sqrt(horizontalMag(vector3d));
-			this.rotationYaw = (float) (MathHelper.atan2(vector3d.x, vector3d.z) * (double) (180F / (float) Math.PI));
-			this.rotationPitch = (float) (MathHelper.atan2(vector3d.y, (double) f) * (double) (180F / (float) Math.PI));
-			this.prevRotationYaw = this.rotationYaw;
-			this.prevRotationPitch = this.rotationPitch;
+		boolean flag = this.isNoPhysics();
+		Vector3d vector3d = this.getDeltaMovement();
+		if (this.xRotO == 0.0F && this.yRotO == 0.0F) {
+			float f = MathHelper.sqrt(getHorizontalDistanceSqr(vector3d));
+			this.yRot = (float) (MathHelper.atan2(vector3d.x, vector3d.z) * (double) (180F / (float) Math.PI));
+			this.xRot = (float) (MathHelper.atan2(vector3d.y, (double) f) * (double) (180F / (float) Math.PI));
+			this.yRotO = this.yRot;
+			this.xRotO = this.xRot;
 		}
 
-		if (this.ticksExisted >= 100) {
+		if (this.tickCount >= 100) {
 			this.remove();
 		}
 
 		if (this.inAir && !flag) {
-			this.func_225516_i_();
+			this.tickDespawn();
 
 			++this.timeInAir;
 		} else {
 			this.timeInAir = 0;
-			Vector3d vector3d2 = this.getPositionVec();
+			Vector3d vector3d2 = this.position();
 			Vector3d vector3d3 = vector3d2.add(vector3d);
-			RayTraceResult raytraceresult = this.world.rayTraceBlocks(new RayTraceContext(vector3d2, vector3d3,
+			RayTraceResult raytraceresult = this.level.clip(new RayTraceContext(vector3d2, vector3d3,
 					RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, this));
 			if (raytraceresult.getType() != RayTraceResult.Type.MISS) {
-				vector3d3 = raytraceresult.getHitVec();
+				vector3d3 = raytraceresult.getLocation();
 			}
 			while (this.isAlive()) {
-				EntityRayTraceResult entityraytraceresult = this.rayTraceEntities(vector3d2, vector3d3);
+				EntityRayTraceResult entityraytraceresult = this.findHitEntity(vector3d2, vector3d3);
 				if (entityraytraceresult != null) {
 					raytraceresult = entityraytraceresult;
 				}
 				if (raytraceresult != null && raytraceresult.getType() == RayTraceResult.Type.ENTITY) {
 					Entity entity = ((EntityRayTraceResult) raytraceresult).getEntity();
-					Entity entity1 = this.func_234616_v_();
+					Entity entity1 = this.getOwner();
 					if (entity instanceof PlayerEntity && entity1 instanceof PlayerEntity
-							&& !((PlayerEntity) entity1).canAttackPlayer((PlayerEntity) entity)) {
+							&& !((PlayerEntity) entity1).canHarmPlayer((PlayerEntity) entity)) {
 						raytraceresult = null;
 						entityraytraceresult = null;
 					}
 				}
 				if (raytraceresult != null && raytraceresult.getType() != RayTraceResult.Type.MISS && !flag
 						&& !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, raytraceresult)) {
-					this.onImpact(raytraceresult);
-					this.isAirBorne = true;
+					this.onHit(raytraceresult);
+					this.hasImpulse = true;
 				}
 				if (entityraytraceresult == null || this.getPierceLevel() <= 0) {
 					break;
 				}
 				raytraceresult = null;
 			}
-			vector3d = this.getMotion();
+			vector3d = this.getDeltaMovement();
 			double d3 = vector3d.x;
 			double d4 = vector3d.y;
 			double d0 = vector3d.z;
-			double d5 = this.getPosX() + d3;
-			double d1 = this.getPosY() + d4;
-			double d2 = this.getPosZ() + d0;
-			float f1 = MathHelper.sqrt(horizontalMag(vector3d));
+			double d5 = this.getX() + d3;
+			double d1 = this.getY() + d4;
+			double d2 = this.getZ() + d0;
+			float f1 = MathHelper.sqrt(getHorizontalDistanceSqr(vector3d));
 			if (flag) {
-				this.rotationYaw = (float) (MathHelper.atan2(-d3, -d0) * (double) (180F / (float) Math.PI));
+				this.yRot = (float) (MathHelper.atan2(-d3, -d0) * (double) (180F / (float) Math.PI));
 			} else {
-				this.rotationYaw = (float) (MathHelper.atan2(d3, d0) * (double) (180F / (float) Math.PI));
+				this.yRot = (float) (MathHelper.atan2(d3, d0) * (double) (180F / (float) Math.PI));
 			}
-			this.rotationPitch = (float) (MathHelper.atan2(d4, (double) f1) * (double) (180F / (float) Math.PI));
-			this.rotationPitch = func_234614_e_(this.prevRotationPitch, this.rotationPitch);
-			this.rotationYaw = func_234614_e_(this.prevRotationYaw, this.rotationYaw);
+			this.xRot = (float) (MathHelper.atan2(d4, (double) f1) * (double) (180F / (float) Math.PI));
+			this.xRot = lerpRotation(this.xRotO, this.xRot);
+			this.yRot = lerpRotation(this.yRotO, this.yRot);
 			float f2 = 0.99F;
-			this.setMotion(vector3d.scale((double) f2));
-			if (!this.hasNoGravity() && !flag) {
-				Vector3d vector3d4 = this.getMotion();
-				this.setMotion(vector3d4.x, vector3d4.y - (double) 0.05F, vector3d4.z);
+			this.setDeltaMovement(vector3d.scale((double) f2));
+			if (!this.isNoGravity() && !flag) {
+				Vector3d vector3d4 = this.getDeltaMovement();
+				this.setDeltaMovement(vector3d4.x, vector3d4.y - (double) 0.05F, vector3d4.z);
 			}
-			this.setPosition(d5, d1, d2);
-			this.doBlockCollisions();
+			this.setPos(d5, d1, d2);
+			this.checkInsideBlocks();
 		}
 
 		float f2 = 24.0F;
-		int k1 = MathHelper.floor(this.getPosX() - (double) f2 - 1.0D);
-		int l1 = MathHelper.floor(this.getPosX() + (double) f2 + 1.0D);
-		int i2 = MathHelper.floor(this.getPosY() - (double) f2 - 1.0D);
-		int i1 = MathHelper.floor(this.getPosY() + (double) f2 + 1.0D);
-		int j2 = MathHelper.floor(this.getPosZ() - (double) f2 - 1.0D);
-		int j1 = MathHelper.floor(this.getPosZ() + (double) f2 + 1.0D);
-		List<Entity> list = this.world.getEntitiesWithinAABBExcludingEntity(this,
+		int k1 = MathHelper.floor(this.getX() - (double) f2 - 1.0D);
+		int l1 = MathHelper.floor(this.getX() + (double) f2 + 1.0D);
+		int i2 = MathHelper.floor(this.getY() - (double) f2 - 1.0D);
+		int i1 = MathHelper.floor(this.getY() + (double) f2 + 1.0D);
+		int j2 = MathHelper.floor(this.getZ() - (double) f2 - 1.0D);
+		int j1 = MathHelper.floor(this.getZ() + (double) f2 + 1.0D);
+		List<Entity> list = this.level.getEntities(this,
 				new AxisAlignedBB((double) k1, (double) i2, (double) j2, (double) l1, (double) i1, (double) j1));
-		Vector3d vector3d1 = new Vector3d(this.getPosX(), this.getPosY(), this.getPosZ());
+		Vector3d vector3d1 = new Vector3d(this.getX(), this.getY(), this.getZ());
 		for (int k2 = 0; k2 < list.size(); ++k2) {
 			Entity entity = list.get(k2);
 			if (!(entity instanceof ServerPlayerEntity) && !(entity instanceof GoreNestEntity)
 					&& (entity instanceof MonsterEntity) || (entity instanceof SlimeEntity)
 					|| (entity instanceof PhantomEntity) || (entity instanceof ShulkerEntity)
 					|| (entity instanceof HoglinEntity)) {
-				double d12 = (double) (MathHelper.sqrt(entity.getDistanceSq(vector3d1)) / f2);
+				double d12 = (double) (MathHelper.sqrt(entity.distanceToSqr(vector3d1)) / f2);
 				if (d12 <= 1.0D) {
 					if (entity.isAlive()) {
-						entity.attackEntityFrom(DamageSource.causeArrowDamage(this, this), 10);
-						this.setTargetedEntity(entity.getEntityId());
+						entity.hurt(DamageSource.arrow(this, this), 10);
+						this.setTargetedEntity(entity.getId());
 					}
 				}
 			}
@@ -194,12 +194,12 @@ public class BFGEntity extends AbstractArrowEntity {
 	}
 
 	@Override
-	public IPacket<?> createSpawnPacket() {
+	public IPacket<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
 	@Override
-	public boolean hasNoGravity() {
+	public boolean isNoGravity() {
 		if (this.isInWater()) {
 			return false;
 		} else {
@@ -207,96 +207,96 @@ public class BFGEntity extends AbstractArrowEntity {
 		}
 	}
 
-	public SoundEvent hitSound = this.getHitEntitySound();
+	public SoundEvent hitSound = this.getDefaultHitGroundSoundEvent();
 
 	@Override
-	protected void func_230299_a_(BlockRayTraceResult p_230299_1_) {
-		super.func_230299_a_(p_230299_1_);
-		this.setHitSound(ModSoundEvents.BFG_HIT.get());
+	protected void onHitBlock(BlockRayTraceResult p_230299_1_) {
+		super.onHitBlock(p_230299_1_);
+		this.setSoundEvent(ModSoundEvents.BFG_HIT.get());
 	}
 
 	@Override
-	public void setHitSound(SoundEvent soundIn) {
+	public void setSoundEvent(SoundEvent soundIn) {
 		this.hitSound = soundIn;
 	}
 
 	@Override
-	protected SoundEvent getHitEntitySound() {
+	protected SoundEvent getDefaultHitGroundSoundEvent() {
 		return ModSoundEvents.BFG_HIT.get();
 	}
 
 	@Override
-	public boolean isPushedByWater() {
+	public boolean isPushedByFluid() {
 		return false;
 	}
 
 	@Override
-	protected void onEntityHit(EntityRayTraceResult p_213868_1_) {
-		super.onEntityHit(p_213868_1_);
-		Entity entity = this.func_234616_v_();
+	protected void onHitEntity(EntityRayTraceResult p_213868_1_) {
+		super.onHitEntity(p_213868_1_);
+		Entity entity = this.getOwner();
 		if (p_213868_1_.getType() != RayTraceResult.Type.ENTITY
-				|| !((EntityRayTraceResult) p_213868_1_).getEntity().isEntityEqual(entity)) {
-			if (!this.world.isRemote) {
+				|| !((EntityRayTraceResult) p_213868_1_).getEntity().is(entity)) {
+			if (!this.level.isClientSide) {
 				this.doDamage();
 				this.remove();
 			}
-			this.playSound(ModSoundEvents.BFG_HIT.get(), 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
+			this.playSound(ModSoundEvents.BFG_HIT.get(), 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
 
 		}
 	}
 
-	protected void onImpact(RayTraceResult result) {
-		super.onImpact(result);
-		Entity entity = this.func_234616_v_();
+	protected void onHit(RayTraceResult result) {
+		super.onHit(result);
+		Entity entity = this.getOwner();
 		if (result.getType() != RayTraceResult.Type.ENTITY
-				|| !((EntityRayTraceResult) result).getEntity().isEntityEqual(entity)) {
-			if (!this.world.isRemote) {
+				|| !((EntityRayTraceResult) result).getEntity().is(entity)) {
+			if (!this.level.isClientSide) {
 				this.doDamage();
 				this.remove();
 			}
-			this.playSound(ModSoundEvents.BFG_HIT.get(), 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
+			this.playSound(ModSoundEvents.BFG_HIT.get(), 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
 		}
 	}
 
 	public void doDamage() {
 		float f2 = 24.0F;
-		int k1 = MathHelper.floor(this.getPosX() - (double) f2 - 1.0D);
-		int l1 = MathHelper.floor(this.getPosX() + (double) f2 + 1.0D);
-		int i2 = MathHelper.floor(this.getPosY() - (double) f2 - 1.0D);
-		int i1 = MathHelper.floor(this.getPosY() + (double) f2 + 1.0D);
-		int j2 = MathHelper.floor(this.getPosZ() - (double) f2 - 1.0D);
-		int j1 = MathHelper.floor(this.getPosZ() + (double) f2 + 1.0D);
-		List<Entity> list = this.world.getEntitiesWithinAABBExcludingEntity(this,
+		int k1 = MathHelper.floor(this.getX() - (double) f2 - 1.0D);
+		int l1 = MathHelper.floor(this.getX() + (double) f2 + 1.0D);
+		int i2 = MathHelper.floor(this.getY() - (double) f2 - 1.0D);
+		int i1 = MathHelper.floor(this.getY() + (double) f2 + 1.0D);
+		int j2 = MathHelper.floor(this.getZ() - (double) f2 - 1.0D);
+		int j1 = MathHelper.floor(this.getZ() + (double) f2 + 1.0D);
+		List<Entity> list = this.level.getEntities(this,
 				new AxisAlignedBB((double) k1, (double) i2, (double) j2, (double) l1, (double) i1, (double) j1));
-		Vector3d vector3d = new Vector3d(this.getPosX(), this.getPosY(), this.getPosZ());
+		Vector3d vector3d = new Vector3d(this.getX(), this.getY(), this.getZ());
 		for (int k2 = 0; k2 < list.size(); ++k2) {
 			Entity entity = list.get(k2);
 			if (!(entity instanceof ServerPlayerEntity) && !(entity instanceof GoreNestEntity)
 					&& (entity instanceof MonsterEntity) || (entity instanceof SlimeEntity)
 					|| (entity instanceof PhantomEntity) || (entity instanceof ShulkerEntity)
 					|| (entity instanceof HoglinEntity)) {
-				double d12 = (double) (MathHelper.sqrt(entity.getDistanceSq(vector3d)) / f2);
+				double d12 = (double) (MathHelper.sqrt(entity.distanceToSqr(vector3d)) / f2);
 				if (d12 <= 1.0D) {
-					entity.attackEntityFrom(DamageSource.causeArrowDamage(this, this), 100);
-					setTargetedEntity(entity.getEntityId());
-					if (!this.world.isRemote) {
-						List<LivingEntity> list1 = this.world.getEntitiesWithinAABB(LivingEntity.class,
-								this.getBoundingBox().grow(4.0D, 2.0D, 4.0D));
-						AreaEffectCloudEntity areaeffectcloudentity = new AreaEffectCloudEntity(entity.world,
-								entity.getPosX(), entity.getPosY(), entity.getPosZ());
-						areaeffectcloudentity.setParticleData(ParticleTypes.TOTEM_OF_UNDYING);
+					entity.hurt(DamageSource.arrow(this, this), 100);
+					setTargetedEntity(entity.getId());
+					if (!this.level.isClientSide) {
+						List<LivingEntity> list1 = this.level.getEntitiesOfClass(LivingEntity.class,
+								this.getBoundingBox().inflate(4.0D, 2.0D, 4.0D));
+						AreaEffectCloudEntity areaeffectcloudentity = new AreaEffectCloudEntity(entity.level,
+								entity.getX(), entity.getY(), entity.getZ());
+						areaeffectcloudentity.setParticle(ParticleTypes.TOTEM_OF_UNDYING);
 						areaeffectcloudentity.setRadius(3.0F);
 						areaeffectcloudentity.setDuration(10);
 						if (!list1.isEmpty()) {
 							for (LivingEntity livingentity : list1) {
-								double d0 = this.getDistanceSq(livingentity);
+								double d0 = this.distanceToSqr(livingentity);
 								if (d0 < 16.0D) {
-									areaeffectcloudentity.setPosition(entity.getPosX(), entity.getPosYEye(),
-											entity.getPosZ());
+									areaeffectcloudentity.setPos(entity.getX(), entity.getEyeY(),
+											entity.getZ());
 								}
 							}
 						}
-						entity.world.addEntity(areaeffectcloudentity);
+						entity.level.addFreshEntity(areaeffectcloudentity);
 					}
 				}
 			}
@@ -305,33 +305,33 @@ public class BFGEntity extends AbstractArrowEntity {
 	}
 
 	@Override
-	protected ItemStack getArrowStack() {
+	protected ItemStack getPickupItem() {
 		return new ItemStack(DoomItems.BFG_CELL.get());
 	}
 
 	@Override
-	protected void registerData() {
-		super.registerData();
-		this.dataManager.register(TARGET_ENTITY, 0);
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(TARGET_ENTITY, 0);
 	}
 
 	private void setTargetedEntity(int entityId) {
-		this.dataManager.set(TARGET_ENTITY, entityId);
+		this.entityData.set(TARGET_ENTITY, entityId);
 	}
 
 	public boolean hasTargetedEntity() {
-		return this.dataManager.get(TARGET_ENTITY) != 0;
+		return this.entityData.get(TARGET_ENTITY) != 0;
 	}
 
 	@Nullable
 	public LivingEntity getTargetedEntity() {
 		if (!this.hasTargetedEntity()) {
 			return null;
-		} else if (this.world.isRemote) {
+		} else if (this.level.isClientSide) {
 			if (this.targetedEntity != null) {
 				return this.targetedEntity;
 			} else {
-				Entity entity = this.world.getEntityByID(this.dataManager.get(TARGET_ENTITY));
+				Entity entity = this.level.getEntity(this.entityData.get(TARGET_ENTITY));
 				if (!(entity instanceof ServerPlayerEntity) && entity instanceof LivingEntity) {
 					this.targetedEntity = (LivingEntity) entity;
 					return this.targetedEntity;
@@ -345,8 +345,8 @@ public class BFGEntity extends AbstractArrowEntity {
 	}
 
 	@Override
-	public void notifyDataManagerChange(DataParameter<?> key) {
-		super.notifyDataManagerChange(key);
+	public void onSyncedDataUpdated(DataParameter<?> key) {
+		super.onSyncedDataUpdated(key);
 		if (TARGET_ENTITY.equals(key)) {
 			this.targetedEntity = null;
 		}

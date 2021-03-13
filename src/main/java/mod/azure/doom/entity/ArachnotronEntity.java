@@ -63,7 +63,7 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 public class ArachnotronEntity extends DemonEntity implements IAnimatable {
-	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(ArachnotronEntity.class,
+	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.defineId(ArachnotronEntity.class,
 			DataSerializers.BOOLEAN);
 
 	public ArachnotronEntity(EntityType<ArachnotronEntity> entityType, World worldIn) {
@@ -73,11 +73,11 @@ public class ArachnotronEntity extends DemonEntity implements IAnimatable {
 	private AnimationFactory factory = new AnimationFactory(this);
 
 	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-		if (event.isMoving() && !this.dataManager.get(ATTACKING)) {
+		if (event.isMoving() && !this.entityData.get(ATTACKING)) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("walking", true));
 			return PlayState.CONTINUE;
 		}
-		if (this.dataManager.get(ATTACKING)) {
+		if (this.entityData.get(ATTACKING)) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("attacking", true));
 			return PlayState.CONTINUE;
 		}
@@ -96,22 +96,22 @@ public class ArachnotronEntity extends DemonEntity implements IAnimatable {
 
 	@OnlyIn(Dist.CLIENT)
 	public boolean isAttacking() {
-		return this.dataManager.get(ATTACKING);
+		return this.entityData.get(ATTACKING);
 	}
 
 	@Override
 	public void setAttacking(boolean attacking) {
-		this.dataManager.set(ATTACKING, attacking);
+		this.entityData.set(ATTACKING, attacking);
 	}
 
 	@Override
-	protected void registerData() {
-		super.registerData();
-		this.dataManager.register(ATTACKING, false);
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(ATTACKING, false);
 	}
 
 	@Override
-	public IPacket<?> createSpawnPacket() {
+	public IPacket<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
@@ -123,7 +123,7 @@ public class ArachnotronEntity extends DemonEntity implements IAnimatable {
 	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.ARACHNOTRON);
 
 	@Override
-	public boolean func_230292_f_(PlayerEntity p_230292_1_) {
+	public boolean isPreventingPlayerRest(PlayerEntity p_230292_1_) {
 		return true;
 	}
 
@@ -137,11 +137,11 @@ public class ArachnotronEntity extends DemonEntity implements IAnimatable {
 						.setProjectileOriginOffset(0.8, 0.8, 0.8).setDamage(5), 1.0D, 50, 30, 15, 15F).setMultiShot(2,
 								3));
 		this.goalSelector.addGoal(4, new DemonAttackGoal(this, 1.0D, false));
-		this.targetSelector.addGoal(1, new HurtByTargetGoal(this).setCallsForHelp());
+		this.targetSelector.addGoal(1, new HurtByTargetGoal(this).setAlertOthers());
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, false));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
-		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this).setCallsForHelp()));
+		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this).setAlertOthers()));
 	}
 
 	public class FireballAttack extends AbstractRangedAttack {
@@ -157,7 +157,7 @@ public class ArachnotronEntity extends DemonEntity implements IAnimatable {
 
 		@Override
 		public AttackSound getDefaultAttackSound() {
-			return new AttackSound(SoundEvents.ITEM_ARMOR_EQUIP_IRON, 1, 1);
+			return new AttackSound(SoundEvents.ARMOR_EQUIP_IRON, 1, 1);
 		}
 
 		@Override
@@ -167,8 +167,8 @@ public class ArachnotronEntity extends DemonEntity implements IAnimatable {
 		}
 	}
 
-	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
-		return config.pushAttributes(MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 50.0D));
+	public static AttributeModifierMap.MutableAttribute createAttributes() {
+		return config.pushAttributes(MobEntity.createMobAttributes().add(Attributes.FOLLOW_RANGE, 50.0D));
 	}
 
 	@Override
@@ -177,8 +177,8 @@ public class ArachnotronEntity extends DemonEntity implements IAnimatable {
 	}
 
 	@Override
-	public void notifyDataManagerChange(DataParameter<?> key) {
-		super.notifyDataManagerChange(key);
+	public void onSyncedDataUpdated(DataParameter<?> key) {
+		super.onSyncedDataUpdated(key);
 	}
 
 	@Override
@@ -187,33 +187,33 @@ public class ArachnotronEntity extends DemonEntity implements IAnimatable {
 	}
 
 	@Override
-	public void livingTick() {
-		super.livingTick();
+	public void aiStep() {
+		super.aiStep();
 	}
 
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 	}
 
 	@Override
-	protected int getExperiencePoints(PlayerEntity player) {
-		return super.getExperiencePoints(player);
+	protected int getExperienceReward(PlayerEntity player) {
+		return super.getExperienceReward(player);
 	}
 
 	@Nullable
 	@Override
-	public ILivingEntityData onInitialSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
+	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
 			@Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
-		spawnDataIn = super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
-		this.setEnchantmentBasedOnDifficulty(difficultyIn);
-		float f = difficultyIn.getClampedAdditionalDifficulty();
-		this.setCanPickUpLoot(this.rand.nextFloat() < 0.55F * f);
+		spawnDataIn = super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+		this.populateDefaultEquipmentEnchantments(difficultyIn);
+		float f = difficultyIn.getSpecialMultiplier();
+		this.setCanPickUpLoot(this.random.nextFloat() < 0.55F * f);
 		if (spawnDataIn == null) {
 			spawnDataIn = new ArachnotronEntity.GroupData(worldIn.getRandom()
 					.nextFloat() < net.minecraftforge.common.ForgeConfig.SERVER.zombieBabyChance.get());
@@ -221,22 +221,22 @@ public class ArachnotronEntity extends DemonEntity implements IAnimatable {
 
 		if (spawnDataIn instanceof ZombieEntity.GroupData) {
 			ZombieEntity.GroupData zombieentity$groupdata = (ZombieEntity.GroupData) spawnDataIn;
-			if (zombieentity$groupdata.isChild) {
-				this.setChild(true);
+			if (zombieentity$groupdata.isBaby) {
+				this.setBaby(true);
 			}
 
-			this.setEquipmentBasedOnDifficulty(difficultyIn);
-			this.setEnchantmentBasedOnDifficulty(difficultyIn);
+			this.populateDefaultEquipmentSlots(difficultyIn);
+			this.populateDefaultEquipmentEnchantments(difficultyIn);
 		}
 
-		if (this.getItemStackFromSlot(EquipmentSlotType.HEAD).isEmpty()) {
+		if (this.getItemBySlot(EquipmentSlotType.HEAD).isEmpty()) {
 			LocalDate localdate = LocalDate.now();
 			int i = localdate.get(ChronoField.DAY_OF_MONTH);
 			int j = localdate.get(ChronoField.MONTH_OF_YEAR);
-			if (j == 10 && i == 31 && this.rand.nextFloat() < 0.25F) {
-				this.setItemStackToSlot(EquipmentSlotType.HEAD,
-						new ItemStack(this.rand.nextFloat() < 0.1F ? Blocks.JACK_O_LANTERN : Blocks.CARVED_PUMPKIN));
-				this.inventoryArmorDropChances[EquipmentSlotType.HEAD.getIndex()] = 0.0F;
+			if (j == 10 && i == 31 && this.random.nextFloat() < 0.25F) {
+				this.setItemSlot(EquipmentSlotType.HEAD,
+						new ItemStack(this.random.nextFloat() < 0.1F ? Blocks.JACK_O_LANTERN : Blocks.CARVED_PUMPKIN));
+				this.armorDropChances[EquipmentSlotType.HEAD.getIndex()] = 0.0F;
 			}
 		}
 
@@ -252,7 +252,7 @@ public class ArachnotronEntity extends DemonEntity implements IAnimatable {
 	}
 
 	@Override
-	public boolean isChild() {
+	public boolean isBaby() {
 		return false;
 	}
 
@@ -289,12 +289,12 @@ public class ArachnotronEntity extends DemonEntity implements IAnimatable {
 	}
 
 	@Override
-	public CreatureAttribute getCreatureAttribute() {
+	public CreatureAttribute getMobType() {
 		return CreatureAttribute.UNDEAD;
 	}
 
 	@Override
-	public int getMaxSpawnedInChunk() {
+	public int getMaxSpawnClusterSize() {
 		return 2;
 	}
 

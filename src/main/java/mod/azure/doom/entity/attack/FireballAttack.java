@@ -24,7 +24,7 @@ public class FireballAttack extends AbstractRangedAttack {
 
 	@Override
 	public AttackSound getDefaultAttackSound() {
-		return new AttackSound(SoundEvents.ITEM_FIRECHARGE_USE, 1, 1);
+		return new AttackSound(SoundEvents.FIRECHARGE_USE, 1, 1);
 	}
 
 	@Override

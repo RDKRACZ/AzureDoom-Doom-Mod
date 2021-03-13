@@ -21,7 +21,7 @@ public class MechaZombieRender extends GeoEntityRenderer<MechaZombieEntity> {
 	public RenderType getRenderType(MechaZombieEntity animatable, float partialTicks, MatrixStack stack,
 			IRenderTypeBuffer renderTypeBuffer, IVertexBuilder vertexBuilder, int packedLightIn,
 			ResourceLocation textureLocation) {
-		return RenderType.getEntityTranslucent(getTextureLocation(animatable));
+		return RenderType.entityTranslucent(getTextureLocation(animatable));
 	}
 
 	@Override

@@ -16,14 +16,14 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class ArgentPlateItem extends Item {
 
 	public ArgentPlateItem() {
-		super(new Item.Properties().group(DoomMod.DoomBlockItemGroup).maxStackSize(64));
+		super(new Item.Properties().tab(DoomMod.DoomBlockItemGroup).stacksTo(64));
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new TranslationTextComponent("doom.argent_plate.text").mergeStyle(TextFormatting.RED)
-				.mergeStyle(TextFormatting.ITALIC));
-		super.addInformation(stack, worldIn, tooltip, flagIn);
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(new TranslationTextComponent("doom.argent_plate.text").withStyle(TextFormatting.RED)
+				.withStyle(TextFormatting.ITALIC));
+		super.appendHoverText(stack, worldIn, tooltip, flagIn);
 	}
 }

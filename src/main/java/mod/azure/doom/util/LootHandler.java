@@ -35,12 +35,12 @@ public class LootHandler {
 	}
 
 	private static net.minecraft.loot.LootPool getInjectPool(String entryName) {
-		return LootPool.builder().addEntry(getInjectEntry(entryName, 1)).bonusRolls(0, 1).name("doom_inject").build();
+		return LootPool.lootPool().add(getInjectEntry(entryName, 1)).bonusRolls(0, 1).name("doom_inject").build();
 	}
 
 	@SuppressWarnings("rawtypes")
 	private static LootEntry.Builder getInjectEntry(String name, int weight) {
 		ResourceLocation table = new ResourceLocation(DoomMod.MODID, "chests/" + name);
-		return TableLootEntry.builder(table).weight(weight);
+		return TableLootEntry.lootTableReference(table).setWeight(weight);
 	}
 }

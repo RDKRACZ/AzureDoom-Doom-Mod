@@ -31,7 +31,7 @@ public class MarauderRender extends GeoEntityRenderer<MarauderEntity> {
 	public RenderType getRenderType(MarauderEntity animatable, float partialTicks, MatrixStack stack,
 			IRenderTypeBuffer renderTypeBuffer, IVertexBuilder vertexBuilder, int packedLightIn,
 			ResourceLocation textureLocation) {
-		return RenderType.getEntityTranslucent(getTextureLocation(animatable));
+		return RenderType.entityTranslucent(getTextureLocation(animatable));
 	}
 
 	@Override
@@ -48,16 +48,16 @@ public class MarauderRender extends GeoEntityRenderer<MarauderEntity> {
 	public void renderRecursively(GeoBone bone, MatrixStack stack, IVertexBuilder bufferIn, int packedLightIn,
 			int packedOverlayIn, float red, float green, float blue, float alpha) {
 		if (bone.getName().equals("bipedLeftArm_1")) {
-			stack.push();
-			stack.rotate(Vector3f.XP.rotationDegrees(-40));
-			stack.rotate(Vector3f.YP.rotationDegrees(0));
-			stack.rotate(Vector3f.ZP.rotationDegrees(-5));
+			stack.pushPose();
+			stack.mulPose(Vector3f.XP.rotationDegrees(-40));
+			stack.mulPose(Vector3f.YP.rotationDegrees(0));
+			stack.mulPose(Vector3f.ZP.rotationDegrees(-5));
 			stack.translate(0.30D, 0.90D, 0.3D);
 			stack.scale(1.0f, 1.0f, 1.0f);
-			Minecraft.getInstance().getItemRenderer().renderItem(chaingun, TransformType.THIRD_PERSON_RIGHT_HAND,
+			Minecraft.getInstance().getItemRenderer().renderStatic(chaingun, TransformType.THIRD_PERSON_RIGHT_HAND,
 					packedLightIn, packedOverlayIn, stack, this.rtb);
-			stack.pop();
-			bufferIn = rtb.getBuffer(RenderType.getEntityTranslucent(whTexture));
+			stack.popPose();
+			bufferIn = rtb.getBuffer(RenderType.entityTranslucent(whTexture));
 		}
 		super.renderRecursively(bone, stack, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
 	}

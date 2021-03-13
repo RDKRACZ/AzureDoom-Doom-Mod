@@ -42,7 +42,7 @@ import net.minecraftforge.common.util.Constants.WorldEvents;
 public class ArgentPaxel extends ToolItem {
 
 	protected static final Map<Block, BlockState> SHOVEL_LOOKUP = Maps
-			.newHashMap(ImmutableMap.of(Blocks.GRASS_BLOCK, Blocks.GRASS_PATH.getDefaultState()));
+			.newHashMap(ImmutableMap.of(Blocks.GRASS_BLOCK, Blocks.GRASS_PATH.defaultBlockState()));
 	protected static final Map<Block, Block> BLOCK_STRIPPING_MAP = (new Builder<Block, Block>())
 			.put(Blocks.OAK_WOOD, Blocks.STRIPPED_OAK_WOOD).put(Blocks.OAK_LOG, Blocks.STRIPPED_OAK_LOG)
 			.put(Blocks.DARK_OAK_WOOD, Blocks.STRIPPED_DARK_OAK_WOOD)
@@ -57,7 +57,7 @@ public class ArgentPaxel extends ToolItem {
 
 	public ArgentPaxel() {
 		super(8, -2.4F, DoomTier.DOOM, Collections.emptySet(),
-				new Item.Properties().group(DoomMod.DoomWeaponItemGroup).maxStackSize(1).addToolType(ToolType.AXE, 18)
+				new Item.Properties().tab(DoomMod.DoomWeaponItemGroup).stacksTo(1).addToolType(ToolType.AXE, 18)
 						.addToolType(ToolType.SHOVEL, 18).addToolType(ToolType.PICKAXE, 18));
 	}
 
@@ -67,7 +67,7 @@ public class ArgentPaxel extends ToolItem {
 	}
 
 	@Override
-	public boolean canHarvestBlock(BlockState state) {
+	public boolean isCorrectToolForDrops(BlockState state) {
 		ToolType harvestTool = state.getHarvestTool();
 		if (harvestTool == ToolType.AXE || harvestTool == ToolType.PICKAXE || harvestTool == ToolType.SHOVEL) {
 			return true;
@@ -77,42 +77,42 @@ public class ArgentPaxel extends ToolItem {
 			return true;
 		}
 		Material material = state.getMaterial();
-		return material == Material.ROCK || material == Material.IRON || material == Material.ANVIL;
+		return material == Material.STONE || material == Material.METAL || material == Material.HEAVY_METAL;
 	}
 
 	@Nonnull
 	@Override
-	public ActionResultType onItemUse(ItemUseContext context) {
-		World world = context.getWorld();
-		BlockPos blockpos = context.getPos();
+	public ActionResultType useOn(ItemUseContext context) {
+		World world = context.getLevel();
+		BlockPos blockpos = context.getClickedPos();
 		PlayerEntity player = context.getPlayer();
 		BlockState blockstate = world.getBlockState(blockpos);
 		BlockState resultToSet = null;
 		Block strippedResult = BLOCK_STRIPPING_MAP.get(blockstate.getBlock());
 		if (strippedResult != null) {
-			world.playSound(player, blockpos, SoundEvents.ITEM_AXE_STRIP, SoundCategory.BLOCKS, 1.0F, 1.0F);
-			resultToSet = strippedResult.getDefaultState().with(RotatedPillarBlock.AXIS,
-					blockstate.get(RotatedPillarBlock.AXIS));
+			world.playSound(player, blockpos, SoundEvents.AXE_STRIP, SoundCategory.BLOCKS, 1.0F, 1.0F);
+			resultToSet = strippedResult.defaultBlockState().setValue(RotatedPillarBlock.AXIS,
+					blockstate.getValue(RotatedPillarBlock.AXIS));
 		} else {
-			if (context.getFace() == Direction.DOWN) {
+			if (context.getClickedFace() == Direction.DOWN) {
 				return ActionResultType.PASS;
 			}
 			BlockState foundResult = SHOVEL_LOOKUP.get(blockstate.getBlock());
-			if (foundResult != null && world.isAirBlock(blockpos.up())) {
-				world.playSound(player, blockpos, SoundEvents.ITEM_SHOVEL_FLATTEN, SoundCategory.BLOCKS, 1.0F, 1.0F);
+			if (foundResult != null && world.isEmptyBlock(blockpos.above())) {
+				world.playSound(player, blockpos, SoundEvents.SHOVEL_FLATTEN, SoundCategory.BLOCKS, 1.0F, 1.0F);
 				resultToSet = foundResult;
-			} else if (blockstate.getBlock() instanceof CampfireBlock && blockstate.get(CampfireBlock.LIT)) {
-				world.playEvent(null, WorldEvents.FIRE_EXTINGUISH_SOUND, blockpos, 0);
-				resultToSet = blockstate.with(CampfireBlock.LIT, false);
+			} else if (blockstate.getBlock() instanceof CampfireBlock && blockstate.getValue(CampfireBlock.LIT)) {
+				world.levelEvent(null, WorldEvents.FIRE_EXTINGUISH_SOUND, blockpos, 0);
+				resultToSet = blockstate.setValue(CampfireBlock.LIT, false);
 			}
 		}
 		if (resultToSet == null) {
 			return ActionResultType.PASS;
 		}
-		if (!world.isRemote) {
-			world.setBlockState(blockpos, resultToSet, BlockFlags.DEFAULT_AND_RERENDER);
+		if (!world.isClientSide) {
+			world.setBlock(blockpos, resultToSet, BlockFlags.DEFAULT_AND_RERENDER);
 			if (player != null) {
-				context.getItem().damageItem(1, player, onBroken -> onBroken.sendBreakAnimation(context.getHand()));
+				context.getItemInHand().hurtAndBreak(1, player, onBroken -> onBroken.broadcastBreakEvent(context.getHand()));
 			}
 		}
 		return ActionResultType.SUCCESS;
@@ -120,10 +120,10 @@ public class ArgentPaxel extends ToolItem {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new TranslationTextComponent("doom.argent_powered.text").mergeStyle(TextFormatting.RED)
-				.mergeStyle(TextFormatting.ITALIC));
-		super.addInformation(stack, worldIn, tooltip, flagIn);
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(new TranslationTextComponent("doom.argent_powered.text").withStyle(TextFormatting.RED)
+				.withStyle(TextFormatting.ITALIC));
+		super.appendHoverText(stack, worldIn, tooltip, flagIn);
 	}
 
 }

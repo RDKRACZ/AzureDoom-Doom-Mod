@@ -20,22 +20,22 @@ public class BarrelEntity extends Entity {
 
 	public BarrelEntity(EntityType<?> entityTypeIn, World worldIn) {
 		super(entityTypeIn, worldIn);
-		this.preventEntitySpawning = true;
+		this.blocksBuilding = true;
 	}
 
 	protected void explode() {
-		this.world.createExplosion(this, this.getPosX(), this.getPosY(), this.getPosZ(), 2.0F, true,
+		this.level.explode(this, this.getX(), this.getY(), this.getZ(), 2.0F, true,
 				Explosion.Mode.NONE);
 	}
 
 	public BarrelEntity(World worldIn, double x, double y, double z, @Nullable LivingEntity igniter) {
 		this(ModEntityTypes.BARREL.get(), worldIn);
-		this.setPosition(x, y, z);
-		double d0 = worldIn.rand.nextDouble() * (double) ((float) Math.PI * 2F);
-		this.setMotion(-Math.sin(d0) * 0.02D, (double) 0.2F, -Math.cos(d0) * 0.02D);
-		this.prevPosX = x;
-		this.prevPosY = y;
-		this.prevPosZ = z;
+		this.setPos(x, y, z);
+		double d0 = worldIn.random.nextDouble() * (double) ((float) Math.PI * 2F);
+		this.setDeltaMovement(-Math.sin(d0) * 0.02D, (double) 0.2F, -Math.cos(d0) * 0.02D);
+		this.xo = x;
+		this.yo = y;
+		this.zo = z;
 		this.tntPlacedBy = igniter;
 	}
 
@@ -45,37 +45,37 @@ public class BarrelEntity extends Entity {
 	}
 
 	@Override
-	protected void registerData() {
+	protected void defineSynchedData() {
 	}
 
 	@Override
 	public void tick() {
-		if (!this.hasNoGravity()) {
-			this.setMotion(this.getMotion().add(0.0D, -0.04D, 0.0D));
+		if (!this.isNoGravity()) {
+			this.setDeltaMovement(this.getDeltaMovement().add(0.0D, -0.04D, 0.0D));
 		}
 
-		this.move(MoverType.SELF, this.getMotion());
-		this.setMotion(this.getMotion().scale(0.98D));
+		this.move(MoverType.SELF, this.getDeltaMovement());
+		this.setDeltaMovement(this.getDeltaMovement().scale(0.98D));
 		if (this.onGround) {
-			this.setMotion(this.getMotion().mul(0.7D, -0.5D, 0.7D));
+			this.setDeltaMovement(this.getDeltaMovement().multiply(0.7D, -0.5D, 0.7D));
 		}
 
 		this.remove();
-		if (!this.world.isRemote) {
+		if (!this.level.isClientSide) {
 			this.explode();
 		}
 	}
 
 	@Override
-	protected void readAdditional(CompoundNBT compound) {
+	protected void readAdditionalSaveData(CompoundNBT compound) {
 	}
 
 	@Override
-	protected void writeAdditional(CompoundNBT compound) {
+	protected void addAdditionalSaveData(CompoundNBT compound) {
 	}
 
 	@Override
-	public IPacket<?> createSpawnPacket() {
+	public IPacket<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 

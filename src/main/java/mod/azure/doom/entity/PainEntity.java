@@ -53,34 +53,34 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 public class PainEntity extends DemonEntity implements IMob, IAnimatable {
-	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(PainEntity.class,
+	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.defineId(PainEntity.class,
 			DataSerializers.BOOLEAN);
 
 	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.PAIN);
 
 	public PainEntity(EntityType<? extends PainEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.moveController = new PainEntity.MoveHelperController(this);
+		this.moveControl = new PainEntity.MoveHelperController(this);
 	}
 
 	private AnimationFactory factory = new AnimationFactory(this);
 
 	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-		if (event.isMoving() && !this.dataManager.get(ATTACKING)) {
+		if (event.isMoving() && !this.entityData.get(ATTACKING)) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("walking", true));
 			return PlayState.CONTINUE;
 		}
-		if ((this.dead || this.getHealth() < 0.01 || this.getShouldBeDead())) {
-			if (world.isRemote) {
+		if ((this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
+			if (level.isClientSide) {
 				event.getController().setAnimation(new AnimationBuilder().addAnimation("death", false));
 				return PlayState.CONTINUE;
 			}
 		}
-		if (this.dataManager.get(ATTACKING) && (this.dead || this.getHealth() < 0.01 || this.getShouldBeDead())) {
+		if (this.entityData.get(ATTACKING) && (this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("attacking", false));
 			return PlayState.CONTINUE;
 		}
-		if ((limbSwingAmount > -0.15F && limbSwingAmount < 0.15F) && !this.dataManager.get(ATTACKING)) {
+		if ((animationSpeed > -0.15F && animationSpeed < 0.15F) && !this.entityData.get(ATTACKING)) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
 			return PlayState.CONTINUE;
 		}
@@ -98,12 +98,12 @@ public class PainEntity extends DemonEntity implements IMob, IAnimatable {
 	}
 
 	@Override
-	public IPacket<?> createSpawnPacket() {
+	public IPacket<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
-	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
-		return config.pushAttributes(MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 50.0D));
+	public static AttributeModifierMap.MutableAttribute createAttributes() {
+		return config.pushAttributes(MobEntity.createMobAttributes().add(Attributes.FOLLOW_RANGE, 50.0D));
 	}
 
 	@Override
@@ -115,45 +115,45 @@ public class PainEntity extends DemonEntity implements IMob, IAnimatable {
 		this.goalSelector.addGoal(7, new DemonAttackGoal(this, 1.0D, false));
 		this.targetSelector.addGoal(1,
 				new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 10, true, false, (p_213812_1_) -> {
-					return Math.abs(p_213812_1_.getPosY() - this.getPosY()) <= 4.0D;
+					return Math.abs(p_213812_1_.getY() - this.getY()) <= 4.0D;
 				}));
 		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, 10, true,
 				false, (p_213812_1_) -> {
-					return Math.abs(p_213812_1_.getPosY() - this.getPosY()) <= 4.0D;
+					return Math.abs(p_213812_1_.getY() - this.getY()) <= 4.0D;
 				}));
-		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this).setCallsForHelp()));
+		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this).setAlertOthers()));
 	}
 
 	@Override
-	protected void onDeathUpdate() {
+	protected void tickDeath() {
 		++this.deathTime;
 		if (this.deathTime == 60) {
 			this.remove();
-			if (world.isRemote) {
+			if (level.isClientSide) {
 			}
 		}
 	}
 
 	@OnlyIn(Dist.CLIENT)
 	public boolean isAttacking() {
-		return this.dataManager.get(ATTACKING);
+		return this.entityData.get(ATTACKING);
 	}
 
 	public void setAttacking(boolean attacking) {
-		this.dataManager.set(ATTACKING, attacking);
+		this.entityData.set(ATTACKING, attacking);
 	}
 
 	@Override
-	protected void registerData() {
-		super.registerData();
-		this.dataManager.register(ATTACKING, false);
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(ATTACKING, false);
 	}
 
 	public static boolean spawning(EntityType<PainEntity> p_223368_0_, IWorld p_223368_1_, SpawnReason reason,
 			BlockPos p_223368_3_, Random p_223368_4_) {
 		return passPeacefulAndYCheck(config, p_223368_1_, reason, p_223368_3_, p_223368_4_)
 				&& p_223368_4_.nextInt(20) == 0
-				&& canSpawnOn(p_223368_0_, p_223368_1_, reason, p_223368_3_, p_223368_4_);
+				&& checkMobSpawnRules(p_223368_0_, p_223368_1_, reason, p_223368_3_, p_223368_4_);
 	}
 
 	public int getFireballStrength() {
@@ -161,48 +161,48 @@ public class PainEntity extends DemonEntity implements IMob, IAnimatable {
 	}
 
 	@Override
-	protected boolean isDespawnPeaceful() {
+	protected boolean shouldDespawnInPeaceful() {
 		return true;
 	}
 
-	public boolean onLivingFall(float distance, float damageMultiplier) {
+	public boolean causeFallDamage(float distance, float damageMultiplier) {
 		return false;
 	}
 
-	protected void updateFallState(double y, boolean onGroundIn, BlockState state, BlockPos pos) {
+	protected void checkFallDamage(double y, boolean onGroundIn, BlockState state, BlockPos pos) {
 	}
 
 	public void travel(Vector3d travelVector) {
 		if (this.isInWater()) {
 			this.moveRelative(0.02F, travelVector);
-			this.move(MoverType.SELF, this.getMotion());
-			this.setMotion(this.getMotion().scale((double) 0.8F));
+			this.move(MoverType.SELF, this.getDeltaMovement());
+			this.setDeltaMovement(this.getDeltaMovement().scale((double) 0.8F));
 		} else if (this.isInLava()) {
 			this.moveRelative(0.02F, travelVector);
-			this.move(MoverType.SELF, this.getMotion());
-			this.setMotion(this.getMotion().scale(0.5D));
+			this.move(MoverType.SELF, this.getDeltaMovement());
+			this.setDeltaMovement(this.getDeltaMovement().scale(0.5D));
 		} else {
-			BlockPos ground = new BlockPos(this.getPosX(), this.getPosY() - 1.0D, this.getPosZ());
+			BlockPos ground = new BlockPos(this.getX(), this.getY() - 1.0D, this.getZ());
 			float f = 0.91F;
 			if (this.onGround) {
-				f = this.world.getBlockState(ground).getSlipperiness(this.world, ground, this) * 0.91F;
+				f = this.level.getBlockState(ground).getSlipperiness(this.level, ground, this) * 0.91F;
 			}
 
 			float f1 = 0.16277137F / (f * f * f);
 			f = 0.91F;
 			if (this.onGround) {
-				f = this.world.getBlockState(ground).getSlipperiness(this.world, ground, this) * 0.91F;
+				f = this.level.getBlockState(ground).getSlipperiness(this.level, ground, this) * 0.91F;
 			}
 
 			this.moveRelative(this.onGround ? 0.1F * f1 : 0.02F, travelVector);
-			this.move(MoverType.SELF, this.getMotion());
-			this.setMotion(this.getMotion().scale((double) f));
+			this.move(MoverType.SELF, this.getDeltaMovement());
+			this.setDeltaMovement(this.getDeltaMovement().scale((double) f));
 		}
 
-		this.func_233629_a_(this, false);
+		this.calculateEntityAnimation(this, false);
 	}
 
-	public boolean isOnLadder() {
+	public boolean onClimbable() {
 		return false;
 	}
 
@@ -214,31 +214,31 @@ public class PainEntity extends DemonEntity implements IMob, IAnimatable {
 			this.parentEntity = ghast;
 		}
 
-		public boolean shouldExecute() {
-			return this.parentEntity.getAttackTarget() != null;
+		public boolean canUse() {
+			return this.parentEntity.getTarget() != null;
 		}
 
-		public void startExecuting() {
+		public void start() {
 			this.attackTimer = 0;
 		}
 
-		public void resetTask() {
+		public void stop() {
 			this.parentEntity.setAttacking(false);
 		}
 
 		public void tick() {
-			LivingEntity livingentity = this.parentEntity.getAttackTarget();
-			if (livingentity.getDistanceSq(this.parentEntity) < 4096.0D
-					&& this.parentEntity.canEntityBeSeen(livingentity)) {
-				this.parentEntity.getLookController().setLookPositionWithEntity(livingentity, 90.0F, 30.0F);
-				World world = this.parentEntity.world;
+			LivingEntity livingentity = this.parentEntity.getTarget();
+			if (livingentity.distanceToSqr(this.parentEntity) < 4096.0D
+					&& this.parentEntity.canSee(livingentity)) {
+				this.parentEntity.getLookControl().setLookAt(livingentity, 90.0F, 30.0F);
+				World world = this.parentEntity.level;
 				++this.attackTimer;
 				if (this.attackTimer == 200) {
 					LostSoulEntity lost_soul = ModEntityTypes.LOST_SOUL.get().create(world);
-					lost_soul.setLocationAndAngles(this.parentEntity.getPosX(), this.parentEntity.getPosY(),
-							this.parentEntity.getPosZ(), 0, 0);
-					lost_soul.addVelocity(1.0D, 0.0D, 0.0D);
-					world.addEntity(lost_soul);
+					lost_soul.moveTo(this.parentEntity.getX(), this.parentEntity.getY(),
+							this.parentEntity.getZ(), 0, 0);
+					lost_soul.push(1.0D, 0.0D, 0.0D);
+					world.addFreshEntity(lost_soul);
 					this.attackTimer = -400;
 				}
 			} else if (this.attackTimer > 0) {
@@ -254,26 +254,26 @@ public class PainEntity extends DemonEntity implements IMob, IAnimatable {
 
 		public LookAroundGoal(PainEntity ghast) {
 			this.parentEntity = ghast;
-			this.setMutexFlags(EnumSet.of(Goal.Flag.LOOK));
+			this.setFlags(EnumSet.of(Goal.Flag.LOOK));
 		}
 
-		public boolean shouldExecute() {
+		public boolean canUse() {
 			return true;
 		}
 
 		public void tick() {
-			if (this.parentEntity.getAttackTarget() == null) {
-				Vector3d vec3d = this.parentEntity.getMotion();
-				this.parentEntity.rotationYaw = -((float) MathHelper.atan2(vec3d.x, vec3d.z))
+			if (this.parentEntity.getTarget() == null) {
+				Vector3d vec3d = this.parentEntity.getDeltaMovement();
+				this.parentEntity.yRot = -((float) MathHelper.atan2(vec3d.x, vec3d.z))
 						* (180F / (float) Math.PI);
-				this.parentEntity.renderYawOffset = this.parentEntity.rotationYaw;
+				this.parentEntity.yBodyRot = this.parentEntity.yRot;
 			} else {
-				LivingEntity livingentity = this.parentEntity.getAttackTarget();
-				if (livingentity.getDistanceSq(this.parentEntity) < 4096.0D) {
-					double d1 = livingentity.getPosX() - this.parentEntity.getPosX();
-					double d2 = livingentity.getPosZ() - this.parentEntity.getPosZ();
-					this.parentEntity.rotationYaw = -((float) MathHelper.atan2(d1, d2)) * (180F / (float) Math.PI);
-					this.parentEntity.renderYawOffset = this.parentEntity.rotationYaw;
+				LivingEntity livingentity = this.parentEntity.getTarget();
+				if (livingentity.distanceToSqr(this.parentEntity) < 4096.0D) {
+					double d1 = livingentity.getX() - this.parentEntity.getX();
+					double d2 = livingentity.getZ() - this.parentEntity.getZ();
+					this.parentEntity.yRot = -((float) MathHelper.atan2(d1, d2)) * (180F / (float) Math.PI);
+					this.parentEntity.yBodyRot = this.parentEntity.yRot;
 				}
 			}
 
@@ -290,29 +290,29 @@ public class PainEntity extends DemonEntity implements IMob, IAnimatable {
 		}
 
 		public void tick() {
-			if (this.action == MovementController.Action.MOVE_TO) {
+			if (this.operation == MovementController.Action.MOVE_TO) {
 				if (this.courseChangeCooldown-- <= 0) {
-					this.courseChangeCooldown += this.parentEntity.getRNG().nextInt(5) + 2;
-					Vector3d vector3d = new Vector3d(this.posX - this.parentEntity.getPosX(),
-							this.posY - this.parentEntity.getPosY(), this.posZ - this.parentEntity.getPosZ());
+					this.courseChangeCooldown += this.parentEntity.getRandom().nextInt(5) + 2;
+					Vector3d vector3d = new Vector3d(this.wantedX - this.parentEntity.getX(),
+							this.wantedY - this.parentEntity.getY(), this.wantedZ - this.parentEntity.getZ());
 					double d0 = vector3d.length();
 					vector3d = vector3d.normalize();
-					if (this.func_220673_a(vector3d, MathHelper.ceil(d0))) {
-						this.parentEntity.setMotion(this.parentEntity.getMotion().add(vector3d.scale(0.1D)));
+					if (this.canReach(vector3d, MathHelper.ceil(d0))) {
+						this.parentEntity.setDeltaMovement(this.parentEntity.getDeltaMovement().add(vector3d.scale(0.1D)));
 					} else {
-						this.action = MovementController.Action.WAIT;
+						this.operation = MovementController.Action.WAIT;
 					}
 				}
 
 			}
 		}
 
-		private boolean func_220673_a(Vector3d p_220673_1_, int p_220673_2_) {
+		private boolean canReach(Vector3d p_220673_1_, int p_220673_2_) {
 			AxisAlignedBB axisalignedbb = this.parentEntity.getBoundingBox();
 
 			for (int i = 1; i < p_220673_2_; ++i) {
-				axisalignedbb = axisalignedbb.offset(p_220673_1_);
-				if (!this.parentEntity.world.hasNoCollisions(this.parentEntity, axisalignedbb)) {
+				axisalignedbb = axisalignedbb.move(p_220673_1_);
+				if (!this.parentEntity.level.noCollision(this.parentEntity, axisalignedbb)) {
 					return false;
 				}
 			}
@@ -326,32 +326,32 @@ public class PainEntity extends DemonEntity implements IMob, IAnimatable {
 
 		public RandomFlyGoal(PainEntity ghast) {
 			this.parentEntity = ghast;
-			this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE));
+			this.setFlags(EnumSet.of(Goal.Flag.MOVE));
 		}
 
-		public boolean shouldExecute() {
-			MovementController movementcontroller = this.parentEntity.getMoveHelper();
-			if (!movementcontroller.isUpdating()) {
+		public boolean canUse() {
+			MovementController movementcontroller = this.parentEntity.getMoveControl();
+			if (!movementcontroller.hasWanted()) {
 				return true;
 			} else {
-				double d0 = movementcontroller.getX() - this.parentEntity.getPosX();
-				double d1 = movementcontroller.getY() - this.parentEntity.getPosY();
-				double d2 = movementcontroller.getZ() - this.parentEntity.getPosZ();
+				double d0 = movementcontroller.getWantedX() - this.parentEntity.getX();
+				double d1 = movementcontroller.getWantedY() - this.parentEntity.getY();
+				double d2 = movementcontroller.getWantedZ() - this.parentEntity.getZ();
 				double d3 = d0 * d0 + d1 * d1 + d2 * d2;
 				return d3 < 1.0D || d3 > 10.0D;
 			}
 		}
 
-		public boolean shouldContinueExecuting() {
+		public boolean canContinueToUse() {
 			return false;
 		}
 
-		public void startExecuting() {
-			Random random = this.parentEntity.getRNG();
-			double d0 = this.parentEntity.getPosX() + (double) ((random.nextFloat() * 2.0F - 1.0F) * 2.0F);
-			double d1 = this.parentEntity.getPosY() + (double) ((random.nextFloat() * 2.0F - 1.0F) * 2.0F);
-			double d2 = this.parentEntity.getPosZ() + (double) ((random.nextFloat() * 2.0F - 1.0F) * 2.0F);
-			this.parentEntity.getMoveHelper().setMoveTo(d0, d1, d2, 1.0D);
+		public void start() {
+			Random random = this.parentEntity.getRandom();
+			double d0 = this.parentEntity.getX() + (double) ((random.nextFloat() * 2.0F - 1.0F) * 2.0F);
+			double d1 = this.parentEntity.getY() + (double) ((random.nextFloat() * 2.0F - 1.0F) * 2.0F);
+			double d2 = this.parentEntity.getZ() + (double) ((random.nextFloat() * 2.0F - 1.0F) * 2.0F);
+			this.parentEntity.getMoveControl().setWantedPosition(d0, d1, d2, 1.0D);
 		}
 	}
 
@@ -380,7 +380,7 @@ public class PainEntity extends DemonEntity implements IMob, IAnimatable {
 	}
 
 	@Override
-	public CreatureAttribute getCreatureAttribute() {
+	public CreatureAttribute getMobType() {
 		return CreatureAttribute.UNDEAD;
 	}
 
@@ -390,7 +390,7 @@ public class PainEntity extends DemonEntity implements IMob, IAnimatable {
 	}
 
 	@Override
-	public int getMaxSpawnedInChunk() {
+	public int getMaxSpawnClusterSize() {
 		return 2;
 	}
 

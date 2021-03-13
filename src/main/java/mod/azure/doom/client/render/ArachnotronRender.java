@@ -15,14 +15,14 @@ public class ArachnotronRender extends GeoEntityRenderer<ArachnotronEntity> {
 
 	public ArachnotronRender(EntityRendererManager renderManagerIn) {
 		super(renderManagerIn, new ArachnotronModel());
-		this.shadowSize = 0.7F;
+		this.shadowRadius = 0.7F;
 	}
 
 	@Override
 	public RenderType getRenderType(ArachnotronEntity animatable, float partialTicks, MatrixStack stack,
 			IRenderTypeBuffer renderTypeBuffer, IVertexBuilder vertexBuilder, int packedLightIn,
 			ResourceLocation textureLocation) {
-		return RenderType.getEntityTranslucent(getTextureLocation(animatable));
+		return RenderType.entityTranslucent(getTextureLocation(animatable));
 	}
 
 }

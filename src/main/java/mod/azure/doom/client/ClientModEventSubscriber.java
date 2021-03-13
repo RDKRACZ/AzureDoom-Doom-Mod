@@ -206,6 +206,6 @@ public class ClientModEventSubscriber {
 		GeoArmorRenderer.registerArmorRenderer(ZombieDoomArmor.class, new ZombieRender());
 		GeoArmorRenderer.registerArmorRenderer(SantaDoomArmor.class, new SantaRender());
 
-		RenderTypeLookup.setRenderLayer(DoomBlocks.JUMP_PAD.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(DoomBlocks.JUMP_PAD.get(), RenderType.cutout());
 	}
 }

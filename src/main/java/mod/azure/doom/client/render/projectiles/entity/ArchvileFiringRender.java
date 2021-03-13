@@ -18,7 +18,7 @@ public class ArchvileFiringRender extends GeoProjectilesRenderer<ArchvileFiring>
 		super(renderManagerIn, new ArchvileFiringModel());
 	}
 
-	protected int getBlockLight(ArchvileFiring entityIn, BlockPos partialTicks) {
+	protected int getBlockLightLevel(ArchvileFiring entityIn, BlockPos partialTicks) {
 		return 15;
 	}
 
@@ -26,7 +26,7 @@ public class ArchvileFiringRender extends GeoProjectilesRenderer<ArchvileFiring>
 	public RenderType getRenderType(ArchvileFiring animatable, float partialTicks, MatrixStack stack,
 			IRenderTypeBuffer renderTypeBuffer, IVertexBuilder vertexBuilder, int packedLightIn,
 			ResourceLocation textureLocation) {
-		return RenderType.getEntityTranslucent(getTextureLocation(animatable));
+		return RenderType.entityTranslucent(getTextureLocation(animatable));
 	}
 
 }

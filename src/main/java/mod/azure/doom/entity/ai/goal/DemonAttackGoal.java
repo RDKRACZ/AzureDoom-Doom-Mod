@@ -13,30 +13,30 @@ public class DemonAttackGoal extends MeleeAttackGoal {
 		this.zombie = zombieIn;
 	}
 
-	public void startExecuting() {
-		super.startExecuting();
+	public void start() {
+		super.start();
 		this.raiseArmTicks = 0;
 	}
 
-	public boolean shouldExecute() {
-		return this.zombie.getAttackTarget() != null;
+	public boolean canUse() {
+		return this.zombie.getTarget() != null;
 	}
 
-	public void resetTask() {
-		super.resetTask();
-		this.zombie.setAggroed(false);
+	public void stop() {
+		super.stop();
+		this.zombie.setAggressive(false);
 	}
 
 	public void tick() {
 		super.tick();
 		++this.raiseArmTicks;
-		LivingEntity livingentity = this.zombie.getAttackTarget();
-		this.zombie.getLookController().setLookPositionWithEntity(livingentity, 90.0F, 30.0F);
-		if (livingentity.getDistanceSq(this.zombie) < 1.0D) {
-			if (this.raiseArmTicks >= 5 && this.func_234041_j_() < this.func_234042_k_() / 2) {
-				this.zombie.setAggroed(true);
+		LivingEntity livingentity = this.zombie.getTarget();
+		this.zombie.getLookControl().setLookAt(livingentity, 90.0F, 30.0F);
+		if (livingentity.distanceToSqr(this.zombie) < 1.0D) {
+			if (this.raiseArmTicks >= 5 && this.getTicksUntilNextAttack() < this.getAttackInterval() / 2) {
+				this.zombie.setAggressive(true);
 			} else {
-				this.zombie.setAggroed(false);
+				this.zombie.setAggressive(false);
 			}
 		}
 
@@ -44,6 +44,6 @@ public class DemonAttackGoal extends MeleeAttackGoal {
 
 	@Override
 	protected double getAttackReachSqr(LivingEntity attackTarget) {
-		return (double) (this.attacker.getWidth() * 1.0F * this.attacker.getWidth() * 1.0F + attackTarget.getWidth());
+		return (double) (this.mob.getBbWidth() * 1.0F * this.mob.getBbWidth() * 1.0F + attackTarget.getBbWidth());
 	}
 }

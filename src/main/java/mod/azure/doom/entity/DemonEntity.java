@@ -21,14 +21,14 @@ import net.minecraft.world.World;
 
 public class DemonEntity extends MonsterEntity implements IAngerable {
 
-	private static final DataParameter<Integer> ANGER_TIME = EntityDataManager.createKey(DemonEntity.class,
-			DataSerializers.VARINT);
-	private static final RangedInteger ANGER_TIME_RANGE = TickRangeConverter.convertRange(20, 39);
+	private static final DataParameter<Integer> ANGER_TIME = EntityDataManager.defineId(DemonEntity.class,
+			DataSerializers.INT);
+	private static final RangedInteger ANGER_TIME_RANGE = TickRangeConverter.rangeOfSeconds(20, 39);
 	private UUID targetUuid;
 
 	protected DemonEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.ignoreFrustumCheck = true;
+		this.noCulling = true;
 	}
 
 	public static boolean passPeacefulAndYCheck(EntityConfig config, IWorld p_223337_1_, SpawnReason reason,
@@ -49,34 +49,34 @@ public class DemonEntity extends MonsterEntity implements IAngerable {
 	}
 
 	@Override
-	protected void registerData() {
-		super.registerData();
-		this.dataManager.register(ANGER_TIME, 0);
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(ANGER_TIME, 0);
 	}
 
 	@Override
-	public int getAngerTime() {
-		return this.dataManager.get(ANGER_TIME);
+	public int getRemainingPersistentAngerTime() {
+		return this.entityData.get(ANGER_TIME);
 	}
 
 	@Override
-	public void setAngerTime(int time) {
-		this.dataManager.set(ANGER_TIME, time);
+	public void setRemainingPersistentAngerTime(int time) {
+		this.entityData.set(ANGER_TIME, time);
 	}
 
 	@Override
-	public UUID getAngerTarget() {
+	public UUID getPersistentAngerTarget() {
 		return this.targetUuid;
 	}
 
 	@Override
-	public void setAngerTarget(UUID target) {
+	public void setPersistentAngerTarget(UUID target) {
 		this.targetUuid = target;
 	}
 
 	@Override
-	public void func_230258_H__() {
-		this.setAngerTime(ANGER_TIME_RANGE.getRandomWithinRange(this.rand));
+	public void startPersistentAngerTimer() {
+		this.setRemainingPersistentAngerTime(ANGER_TIME_RANGE.randomValue(this.random));
 	}
 
 }

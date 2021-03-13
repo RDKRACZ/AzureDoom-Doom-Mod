@@ -21,7 +21,7 @@ public class SpiderdemonRender extends GeoEntityRenderer<SpiderdemonEntity> {
 	public RenderType getRenderType(SpiderdemonEntity animatable, float partialTicks, MatrixStack stack,
 			IRenderTypeBuffer renderTypeBuffer, IVertexBuilder vertexBuilder, int packedLightIn,
 			ResourceLocation textureLocation) {
-		return RenderType.getEntityTranslucent(getTextureLocation(animatable));
+		return RenderType.entityTranslucent(getTextureLocation(animatable));
 	}
 
 }

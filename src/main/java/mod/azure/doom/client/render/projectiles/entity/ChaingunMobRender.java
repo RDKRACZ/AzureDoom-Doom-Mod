@@ -28,7 +28,7 @@ public class ChaingunMobRender extends EntityRenderer<ChaingunMobEntity> {
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(ChaingunMobEntity entity) {
+	public ResourceLocation getTextureLocation(ChaingunMobEntity entity) {
 		return SHELL_TEXTURE;
 	}
 
@@ -39,19 +39,19 @@ public class ChaingunMobRender extends EntityRenderer<ChaingunMobEntity> {
 	@Override
 	public void render(ChaingunMobEntity entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn,
 			IRenderTypeBuffer bufferIn, int packedLightIn) {
-		matrixStackIn.push();
-		matrixStackIn.rotate(Vector3f.YP.rotationDegrees(
-				MathHelper.lerp(partialTicks, entityIn.prevRotationYaw, entityIn.rotationYaw) - 90.0F));
-		matrixStackIn.rotate(Vector3f.ZP
-				.rotationDegrees(MathHelper.lerp(partialTicks, entityIn.prevRotationPitch, entityIn.rotationPitch)));
+		matrixStackIn.pushPose();
+		matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(
+				MathHelper.lerp(partialTicks, entityIn.yRotO, entityIn.yRot) - 90.0F));
+		matrixStackIn.mulPose(Vector3f.ZP
+				.rotationDegrees(MathHelper.lerp(partialTicks, entityIn.xRotO, entityIn.xRot)));
 
-		matrixStackIn.rotate(Vector3f.XP.rotationDegrees(45.0F));
+		matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(45.0F));
 		matrixStackIn.scale(0.05625F, 0.05625F, 0.05625F);
 		matrixStackIn.translate(-4.0D, 0.0D, 0.0D);
-		IVertexBuilder ivertexbuilder = bufferIn.getBuffer(RenderType.getEntityCutout(this.getEntityTexture(entityIn)));
-		MatrixStack.Entry matrixstack$entry = matrixStackIn.getLast();
-		Matrix4f matrix4f = matrixstack$entry.getMatrix();
-		Matrix3f matrix3f = matrixstack$entry.getNormal();
+		IVertexBuilder ivertexbuilder = bufferIn.getBuffer(RenderType.entityCutout(this.getTextureLocation(entityIn)));
+		MatrixStack.Entry matrixstack$entry = matrixStackIn.last();
+		Matrix4f matrix4f = matrixstack$entry.pose();
+		Matrix3f matrix3f = matrixstack$entry.normal();
 		this.drawVertex(matrix4f, matrix3f, ivertexbuilder, -7, -2, -2, 0.0F, 0.15625F, -1, 0, 0, packedLightIn);
 		this.drawVertex(matrix4f, matrix3f, ivertexbuilder, -7, -2, 2, 0.15625F, 0.15625F, -1, 0, 0, packedLightIn);
 		this.drawVertex(matrix4f, matrix3f, ivertexbuilder, -7, 2, 2, 0.15625F, 0.3125F, -1, 0, 0, packedLightIn);
@@ -62,22 +62,22 @@ public class ChaingunMobRender extends EntityRenderer<ChaingunMobEntity> {
 		this.drawVertex(matrix4f, matrix3f, ivertexbuilder, -7, -2, -2, 0.0F, 0.3125F, 1, 0, 0, packedLightIn);
 
 		for (int j = 0; j < 4; ++j) {
-			matrixStackIn.rotate(Vector3f.XP.rotationDegrees(90.0F));
+			matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(90.0F));
 			this.drawVertex(matrix4f, matrix3f, ivertexbuilder, -8, -2, 0, 0.0F, 0.0F, 0, 1, 0, packedLightIn);
 			this.drawVertex(matrix4f, matrix3f, ivertexbuilder, 8, -2, 0, 0.5F, 0.0F, 0, 1, 0, packedLightIn);
 			this.drawVertex(matrix4f, matrix3f, ivertexbuilder, 8, 2, 0, 0.5F, 0.15625F, 0, 1, 0, packedLightIn);
 			this.drawVertex(matrix4f, matrix3f, ivertexbuilder, -8, 2, 0, 0.0F, 0.15625F, 0, 1, 0, packedLightIn);
 		}
 
-		matrixStackIn.pop();
+		matrixStackIn.popPose();
 		super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
 	}
 
 	public void drawVertex(Matrix4f matrix, Matrix3f normals, IVertexBuilder vertexBuilder, int offsetX, int offsetY,
 			int offsetZ, float textureX, float textureY, int p_229039_9_, int p_229039_10_, int p_229039_11_,
 			int packedLightIn) {
-		vertexBuilder.pos(matrix, (float) offsetX, (float) offsetY, (float) offsetZ).color(255, 255, 255, 255)
-				.tex(textureX, textureY).overlay(OverlayTexture.NO_OVERLAY).lightmap(packedLightIn)
+		vertexBuilder.vertex(matrix, (float) offsetX, (float) offsetY, (float) offsetZ).color(255, 255, 255, 255)
+				.uv(textureX, textureY).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(packedLightIn)
 				.normal(normals, (float) p_229039_9_, (float) p_229039_11_, (float) p_229039_10_).endVertex();
 	}
 }

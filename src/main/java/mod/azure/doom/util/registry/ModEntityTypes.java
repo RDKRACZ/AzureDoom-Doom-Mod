@@ -62,221 +62,221 @@ public class ModEntityTypes {
 			.create(ForgeRegistries.TILE_ENTITIES, DoomMod.MODID);
 
 	public static final RegistryObject<TileEntityType<IconBlockEntity>> ICON = TILE_TYPES.register("icon",
-			() -> TileEntityType.Builder.<IconBlockEntity>create(IconBlockEntity::new, DoomBlocks.DOOM_WALL1.get())
+			() -> TileEntityType.Builder.<IconBlockEntity>of(IconBlockEntity::new, DoomBlocks.DOOM_WALL1.get())
 					.build(null));
 
 	public static final RegistryObject<EntityType<ArchvileFiring>> FIRING = ENTITY_TYPES.register("archvile_firing",
-			() -> EntityType.Builder.<ArchvileFiring>create(ArchvileFiring::new, EntityClassification.MISC)
-					.size(0.5F, 0.8F).trackingRange(10)
+			() -> EntityType.Builder.<ArchvileFiring>of(ArchvileFiring::new, EntityClassification.MISC)
+					.sized(0.5F, 0.8F).clientTrackingRange(10)
 					.build(new ResourceLocation(DoomMod.MODID, "archvile_firing").toString()));
 
 	public static final RegistryObject<EntityType<BarrelEntity>> BARREL = ENTITY_TYPES.register("barrel",
-			() -> EntityType.Builder.<BarrelEntity>create(BarrelEntity::new, EntityClassification.MISC)
-					.size(0.98F, 0.98F).trackingRange(10)
+			() -> EntityType.Builder.<BarrelEntity>of(BarrelEntity::new, EntityClassification.MISC)
+					.sized(0.98F, 0.98F).clientTrackingRange(10)
 					.build(new ResourceLocation(DoomMod.MODID, "barrel").toString()));
 
 	public static final RegistryObject<EntityType<ShotgunShellEntity>> SHOTGUN_SHELL = ENTITY_TYPES.register(
 			"shotgun_shell",
-			() -> EntityType.Builder.<ShotgunShellEntity>create(ShotgunShellEntity::new, EntityClassification.MISC)
-					.size(0.5F, 0.5F).trackingRange(9)
+			() -> EntityType.Builder.<ShotgunShellEntity>of(ShotgunShellEntity::new, EntityClassification.MISC)
+					.sized(0.5F, 0.5F).clientTrackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "shotgun_shell").toString()));
 
 	public static final RegistryObject<EntityType<ArgentBoltEntity>> ARGENT_BOLT = ENTITY_TYPES.register("argent_bolt",
-			() -> EntityType.Builder.<ArgentBoltEntity>create(ArgentBoltEntity::new, EntityClassification.MISC)
-					.trackingRange(9).size(0.5F, 0.5F)
+			() -> EntityType.Builder.<ArgentBoltEntity>of(ArgentBoltEntity::new, EntityClassification.MISC)
+					.clientTrackingRange(9).sized(0.5F, 0.5F)
 					.build(new ResourceLocation(DoomMod.MODID, "argent_bolt").toString()));
 
 	public static final RegistryObject<EntityType<UnmaykrBoltEntity>> UNMAYKR = ENTITY_TYPES.register("unmaykr_bolt",
-			() -> EntityType.Builder.<UnmaykrBoltEntity>create(UnmaykrBoltEntity::new, EntityClassification.MISC)
-					.trackingRange(9).size(0.5F, 0.5F)
+			() -> EntityType.Builder.<UnmaykrBoltEntity>of(UnmaykrBoltEntity::new, EntityClassification.MISC)
+					.clientTrackingRange(9).sized(0.5F, 0.5F)
 					.build(new ResourceLocation(DoomMod.MODID, "unmaykr_bolt").toString()));
 
 	public static final RegistryObject<EntityType<EnergyCellEntity>> ENERGY_CELL = ENTITY_TYPES.register("energy_cell",
-			() -> EntityType.Builder.<EnergyCellEntity>create(EnergyCellEntity::new, EntityClassification.MISC)
-					.trackingRange(9).size(0.5F, 0.5F)
+			() -> EntityType.Builder.<EnergyCellEntity>of(EnergyCellEntity::new, EntityClassification.MISC)
+					.clientTrackingRange(9).sized(0.5F, 0.5F)
 					.build(new ResourceLocation(DoomMod.MODID, "energy_cell").toString()));
 
 	public static final RegistryObject<EntityType<BFGEntity>> BFG_CELL = ENTITY_TYPES.register("bfg_cell",
-			() -> EntityType.Builder.<BFGEntity>create(BFGEntity::new, EntityClassification.MISC).size(2.0F, 2.0F)
-					.trackingRange(9).build(new ResourceLocation(DoomMod.MODID, "bfg_cell").toString()));
+			() -> EntityType.Builder.<BFGEntity>of(BFGEntity::new, EntityClassification.MISC).sized(2.0F, 2.0F)
+					.clientTrackingRange(9).build(new ResourceLocation(DoomMod.MODID, "bfg_cell").toString()));
 
 	public static final RegistryObject<EntityType<RocketEntity>> ROCKET = ENTITY_TYPES.register("rocket",
-			() -> EntityType.Builder.<RocketEntity>create(RocketEntity::new, EntityClassification.MISC).size(0.5F, 0.5F)
-					.trackingRange(9).build(new ResourceLocation(DoomMod.MODID, "rocket").toString()));
+			() -> EntityType.Builder.<RocketEntity>of(RocketEntity::new, EntityClassification.MISC).sized(0.5F, 0.5F)
+					.clientTrackingRange(9).build(new ResourceLocation(DoomMod.MODID, "rocket").toString()));
 
 	public static final RegistryObject<EntityType<LostSoulEntity>> LOST_SOUL = ENTITY_TYPES.register("lost_soul",
-			() -> EntityType.Builder.<LostSoulEntity>create(LostSoulEntity::new, EntityClassification.MISC)
-					.size(1.0F, 1.0F).trackingRange(9)
+			() -> EntityType.Builder.<LostSoulEntity>of(LostSoulEntity::new, EntityClassification.MISC)
+					.sized(1.0F, 1.0F).clientTrackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "lost_soul").toString()));
 
 	public static final RegistryObject<EntityType<BarenBlastEntity>> BARENBLAST = ENTITY_TYPES.register("barenblast",
-			() -> EntityType.Builder.<BarenBlastEntity>create(BarenBlastEntity::new, EntityClassification.MISC)
-					.size(1.0F, 1.0F).trackingRange(9)
+			() -> EntityType.Builder.<BarenBlastEntity>of(BarenBlastEntity::new, EntityClassification.MISC)
+					.sized(1.0F, 1.0F).clientTrackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "barenblast").toString()));
 
 	public static final RegistryObject<EntityType<BulletEntity>> BULLETS = ENTITY_TYPES.register("bullets",
-			() -> EntityType.Builder.<BulletEntity>create(BulletEntity::new, EntityClassification.MISC).size(0.5F, 0.5F)
-					.trackingRange(9).build(new ResourceLocation(DoomMod.MODID, "bullets").toString()));
+			() -> EntityType.Builder.<BulletEntity>of(BulletEntity::new, EntityClassification.MISC).sized(0.5F, 0.5F)
+					.clientTrackingRange(9).build(new ResourceLocation(DoomMod.MODID, "bullets").toString()));
 
 	public static final RegistryObject<EntityType<ChaingunBulletEntity>> CHAINGUN_BULLET = ENTITY_TYPES.register(
 			"chaingunbullets",
-			() -> EntityType.Builder.<ChaingunBulletEntity>create(ChaingunBulletEntity::new, EntityClassification.MISC)
-					.size(0.5F, 0.5F).trackingRange(9)
+			() -> EntityType.Builder.<ChaingunBulletEntity>of(ChaingunBulletEntity::new, EntityClassification.MISC)
+					.sized(0.5F, 0.5F).clientTrackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "chaingunbullets").toString()));
 
 	public static final RegistryObject<EntityType<ImpEntity>> IMP = ENTITY_TYPES.register("imp",
-			() -> EntityType.Builder.create(ImpEntity::new, EntityClassification.MONSTER).size(0.6f, 1.95F)
-					.immuneToFire().trackingRange(9).build(new ResourceLocation(DoomMod.MODID, "imp").toString()));
+			() -> EntityType.Builder.of(ImpEntity::new, EntityClassification.MONSTER).sized(0.6f, 1.95F)
+					.fireImmune().clientTrackingRange(9).build(new ResourceLocation(DoomMod.MODID, "imp").toString()));
 
 	public static final RegistryObject<EntityType<NightmareImpEntity>> NIGHTMARE_IMP = ENTITY_TYPES.register(
 			"nightmare_imp",
-			() -> EntityType.Builder.create(NightmareImpEntity::new, EntityClassification.MONSTER).size(0.6f, 1.95F)
-					.immuneToFire().trackingRange(9)
+			() -> EntityType.Builder.of(NightmareImpEntity::new, EntityClassification.MONSTER).sized(0.6f, 1.95F)
+					.fireImmune().clientTrackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "nightmare_imp").toString()));
 
 	public static final RegistryObject<EntityType<PinkyEntity>> PINKY = ENTITY_TYPES.register("pinky",
-			() -> EntityType.Builder.create(PinkyEntity::new, EntityClassification.MONSTER).size(1.7f, 2.2F)
-					.immuneToFire().trackingRange(9).build(new ResourceLocation(DoomMod.MODID, "pinky").toString()));
+			() -> EntityType.Builder.of(PinkyEntity::new, EntityClassification.MONSTER).sized(1.7f, 2.2F)
+					.fireImmune().clientTrackingRange(9).build(new ResourceLocation(DoomMod.MODID, "pinky").toString()));
 
 	public static final RegistryObject<EntityType<SpectreEntity>> SPECTRE = ENTITY_TYPES.register("spectre",
-			() -> EntityType.Builder.create(SpectreEntity::new, EntityClassification.MONSTER).size(1.7f, 2.2F)
-					.immuneToFire().trackingRange(9).build(new ResourceLocation(DoomMod.MODID, "spectre").toString()));
+			() -> EntityType.Builder.of(SpectreEntity::new, EntityClassification.MONSTER).sized(1.7f, 2.2F)
+					.fireImmune().clientTrackingRange(9).build(new ResourceLocation(DoomMod.MODID, "spectre").toString()));
 
 	public static final RegistryObject<EntityType<CacodemonEntity>> CACODEMON = ENTITY_TYPES.register("cacodemon",
-			() -> EntityType.Builder.create(CacodemonEntity::new, EntityClassification.MONSTER).size(2.0F, 2.0F)
-					.immuneToFire().trackingRange(9)
+			() -> EntityType.Builder.of(CacodemonEntity::new, EntityClassification.MONSTER).sized(2.0F, 2.0F)
+					.fireImmune().clientTrackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "cacodemon").toString()));
 
 	public static final RegistryObject<EntityType<ArchvileEntity>> ARCHVILE = ENTITY_TYPES.register("archvile",
-			() -> EntityType.Builder.create(ArchvileEntity::new, EntityClassification.MONSTER).size(0.9F, 3.3F)
-					.immuneToFire().trackingRange(9).build(new ResourceLocation(DoomMod.MODID, "archvile").toString()));
+			() -> EntityType.Builder.of(ArchvileEntity::new, EntityClassification.MONSTER).sized(0.9F, 3.3F)
+					.fireImmune().clientTrackingRange(9).build(new ResourceLocation(DoomMod.MODID, "archvile").toString()));
 
 	public static final RegistryObject<EntityType<BaronEntity>> BARON = ENTITY_TYPES.register("baron",
-			() -> EntityType.Builder.create(BaronEntity::new, EntityClassification.MONSTER).trackingRange(9)
-					.size(1.3f, 3.9F).immuneToFire().trackingRange(9)
+			() -> EntityType.Builder.of(BaronEntity::new, EntityClassification.MONSTER).clientTrackingRange(9)
+					.sized(1.3f, 3.9F).fireImmune().clientTrackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "baron").toString()));
 
 	public static final RegistryObject<EntityType<MancubusEntity>> MANCUBUS = ENTITY_TYPES.register("mancubus",
-			() -> EntityType.Builder.create(MancubusEntity::new, EntityClassification.MONSTER).trackingRange(9)
-					.size(2.3F, 3.0F).immuneToFire().trackingRange(9)
+			() -> EntityType.Builder.of(MancubusEntity::new, EntityClassification.MONSTER).clientTrackingRange(9)
+					.sized(2.3F, 3.0F).fireImmune().clientTrackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "mancubus").toString()));
 
 	public static final RegistryObject<EntityType<SpiderdemonEntity>> SPIDERDEMON = ENTITY_TYPES.register("spiderdemon",
-			() -> EntityType.Builder.create(SpiderdemonEntity::new, EntityClassification.MONSTER).size(6.0F, 4.0F)
-					.immuneToFire().trackingRange(9)
+			() -> EntityType.Builder.of(SpiderdemonEntity::new, EntityClassification.MONSTER).sized(6.0F, 4.0F)
+					.fireImmune().clientTrackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "spiderdemon").toString()));
 
 	public static final RegistryObject<EntityType<ArachnotronEntity>> ARACHNOTRON = ENTITY_TYPES.register("arachnotron",
-			() -> EntityType.Builder.create(ArachnotronEntity::new, EntityClassification.MONSTER).size(4.0F, 2.0F)
-					.immuneToFire().trackingRange(9)
+			() -> EntityType.Builder.of(ArachnotronEntity::new, EntityClassification.MONSTER).sized(4.0F, 2.0F)
+					.fireImmune().clientTrackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "arachnotron").toString()));
 
 	public static final RegistryObject<EntityType<ZombiemanEntity>> ZOMBIEMAN = ENTITY_TYPES.register("zombieman",
-			() -> EntityType.Builder.create(ZombiemanEntity::new, EntityClassification.MONSTER).size(0.6f, 1.95F)
-					.immuneToFire().trackingRange(9)
+			() -> EntityType.Builder.of(ZombiemanEntity::new, EntityClassification.MONSTER).sized(0.6f, 1.95F)
+					.fireImmune().clientTrackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "zombieman").toString()));
 
 	public static final RegistryObject<EntityType<RevenantEntity>> REVENANT = ENTITY_TYPES.register("revenant",
-			() -> EntityType.Builder.create(RevenantEntity::new, EntityClassification.MONSTER).size(0.6f, 1.95F)
-					.immuneToFire().trackingRange(9).build(new ResourceLocation(DoomMod.MODID, "revenant").toString()));
+			() -> EntityType.Builder.of(RevenantEntity::new, EntityClassification.MONSTER).sized(0.6f, 1.95F)
+					.fireImmune().clientTrackingRange(9).build(new ResourceLocation(DoomMod.MODID, "revenant").toString()));
 
 	public static final RegistryObject<EntityType<Imp2016Entity>> IMP2016 = ENTITY_TYPES.register("imp2016",
-			() -> EntityType.Builder.create(Imp2016Entity::new, EntityClassification.MONSTER).size(0.6f, 1.95F)
-					.immuneToFire().trackingRange(9).build(new ResourceLocation(DoomMod.MODID, "imp2016").toString()));
+			() -> EntityType.Builder.of(Imp2016Entity::new, EntityClassification.MONSTER).sized(0.6f, 1.95F)
+					.fireImmune().clientTrackingRange(9).build(new ResourceLocation(DoomMod.MODID, "imp2016").toString()));
 
 	public static final RegistryObject<EntityType<ChaingunnerEntity>> CHAINGUNNER = ENTITY_TYPES.register("chaingunner",
-			() -> EntityType.Builder.create(ChaingunnerEntity::new, EntityClassification.MONSTER).size(0.6f, 1.95F)
-					.immuneToFire().trackingRange(9)
+			() -> EntityType.Builder.of(ChaingunnerEntity::new, EntityClassification.MONSTER).sized(0.6f, 1.95F)
+					.fireImmune().clientTrackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "chaingunner").toString()));
 
 	public static final RegistryObject<EntityType<MarauderEntity>> MARAUDER = ENTITY_TYPES.register("marauder",
-			() -> EntityType.Builder.create(MarauderEntity::new, EntityClassification.MONSTER).size(0.6f, 1.95F)
-					.immuneToFire().trackingRange(9).build(new ResourceLocation(DoomMod.MODID, "marauder").toString()));
+			() -> EntityType.Builder.of(MarauderEntity::new, EntityClassification.MONSTER).sized(0.6f, 1.95F)
+					.fireImmune().clientTrackingRange(9).build(new ResourceLocation(DoomMod.MODID, "marauder").toString()));
 
 	public static final RegistryObject<EntityType<ShotgunguyEntity>> SHOTGUNGUY = ENTITY_TYPES.register("shotgunguy",
-			() -> EntityType.Builder.create(ShotgunguyEntity::new, EntityClassification.MONSTER).size(0.6f, 1.95F)
-					.immuneToFire().trackingRange(9)
+			() -> EntityType.Builder.of(ShotgunguyEntity::new, EntityClassification.MONSTER).sized(0.6f, 1.95F)
+					.fireImmune().clientTrackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "shotgunguy").toString()));
 
 	public static final RegistryObject<EntityType<PainEntity>> PAIN = ENTITY_TYPES.register("painelemental",
-			() -> EntityType.Builder.create(PainEntity::new, EntityClassification.MONSTER).size(2.0F, 2.0F)
-					.immuneToFire().trackingRange(9)
+			() -> EntityType.Builder.of(PainEntity::new, EntityClassification.MONSTER).sized(2.0F, 2.0F)
+					.fireImmune().clientTrackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "painelemental").toString()));
 
 	public static final RegistryObject<EntityType<HellknightEntity>> HELLKNIGHT = ENTITY_TYPES.register("hellknight",
-			() -> EntityType.Builder.create(HellknightEntity::new, EntityClassification.MONSTER).size(1.4F, 3.5F)
-					.immuneToFire().trackingRange(9)
+			() -> EntityType.Builder.of(HellknightEntity::new, EntityClassification.MONSTER).sized(1.4F, 3.5F)
+					.fireImmune().clientTrackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "hellknight").toString()));
 
 	public static final RegistryObject<EntityType<Hellknight2016Entity>> HELLKNIGHT2016 = ENTITY_TYPES.register(
 			"hellknight2016",
 			() -> EntityType.Builder
-					.<Hellknight2016Entity>create(Hellknight2016Entity::new, EntityClassification.MONSTER)
-					.size(1.8F, 3.0F).trackingRange(9).immuneToFire()
+					.<Hellknight2016Entity>of(Hellknight2016Entity::new, EntityClassification.MONSTER)
+					.sized(1.8F, 3.0F).clientTrackingRange(9).fireImmune()
 					.build(new ResourceLocation(DoomMod.MODID, "hellknight2016").toString()));
 
 	public static final RegistryObject<EntityType<CyberdemonEntity>> CYBERDEMON = ENTITY_TYPES.register("cyberdemon",
-			() -> EntityType.Builder.create(CyberdemonEntity::new, EntityClassification.MONSTER).size(1.6f, 4.75F)
-					.immuneToFire().trackingRange(9)
+			() -> EntityType.Builder.of(CyberdemonEntity::new, EntityClassification.MONSTER).sized(1.6f, 4.75F)
+					.fireImmune().clientTrackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "cyberdemon").toString()));
 
 	public static final RegistryObject<EntityType<Cyberdemon2016Entity>> CYBERDEMON2016 = ENTITY_TYPES.register(
 			"cyberdemon2016",
-			() -> EntityType.Builder.create(Cyberdemon2016Entity::new, EntityClassification.MONSTER).size(1.6f, 4.75F)
-					.immuneToFire().trackingRange(9)
+			() -> EntityType.Builder.of(Cyberdemon2016Entity::new, EntityClassification.MONSTER).sized(1.6f, 4.75F)
+					.fireImmune().clientTrackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "cyberdemon2016").toString()));
 
 	public static final RegistryObject<EntityType<UnwillingEntity>> UNWILLING = ENTITY_TYPES.register("unwilling",
-			() -> EntityType.Builder.create(UnwillingEntity::new, EntityClassification.MONSTER).size(0.6f, 1.95F)
-					.immuneToFire().trackingRange(9)
+			() -> EntityType.Builder.of(UnwillingEntity::new, EntityClassification.MONSTER).sized(0.6f, 1.95F)
+					.fireImmune().clientTrackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "unwilling").toString()));
 
 	public static final RegistryObject<EntityType<PossessedSoldierEntity>> POSSESSEDSOLDIER = ENTITY_TYPES.register(
 			"possessed_soldier",
-			() -> EntityType.Builder.create(PossessedSoldierEntity::new, EntityClassification.MONSTER).size(0.9f, 2.35F)
-					.immuneToFire().trackingRange(9)
+			() -> EntityType.Builder.of(PossessedSoldierEntity::new, EntityClassification.MONSTER).sized(0.9f, 2.35F)
+					.fireImmune().clientTrackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "possessed_soldier").toString()));
 
 	public static final RegistryObject<EntityType<GoreNestEntity>> GORE_NEST = ENTITY_TYPES.register("gore_nest",
-			() -> EntityType.Builder.create(GoreNestEntity::new, EntityClassification.MONSTER).size(3.0f, 4.0F)
-					.immuneToFire().trackingRange(9)
+			() -> EntityType.Builder.of(GoreNestEntity::new, EntityClassification.MONSTER).sized(3.0f, 4.0F)
+					.fireImmune().clientTrackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "gore_nest").toString()));
 
 	public static final RegistryObject<EntityType<PossessedScientistEntity>> POSSESSEDSCIENTIST = ENTITY_TYPES.register(
 			"possessed_scientist",
-			() -> EntityType.Builder.create(PossessedScientistEntity::new, EntityClassification.MONSTER)
-					.size(1.5f, 1.95F).trackingRange(9).immuneToFire()
+			() -> EntityType.Builder.of(PossessedScientistEntity::new, EntityClassification.MONSTER)
+					.sized(1.5f, 1.95F).clientTrackingRange(9).fireImmune()
 					.build(new ResourceLocation(DoomMod.MODID, "possessed_scientist").toString()));
 
 	public static final RegistryObject<EntityType<MechaZombieEntity>> MECHAZOMBIE = ENTITY_TYPES.register("mechazombie",
-			() -> EntityType.Builder.create(MechaZombieEntity::new, EntityClassification.MONSTER).size(1.2f, 2.3F)
-					.trackingRange(9).immuneToFire()
+			() -> EntityType.Builder.of(MechaZombieEntity::new, EntityClassification.MONSTER).sized(1.2f, 2.3F)
+					.clientTrackingRange(9).fireImmune()
 					.build(new ResourceLocation(DoomMod.MODID, "mechazombie").toString()));
 
 	public static final RegistryObject<EntityType<IconofsinEntity>> ICONOFSIN = ENTITY_TYPES.register("iconofsin",
-			() -> EntityType.Builder.create(IconofsinEntity::new, EntityClassification.MONSTER).size(6.3f, 20.0F)
-					.trackingRange(9).immuneToFire()
+			() -> EntityType.Builder.of(IconofsinEntity::new, EntityClassification.MONSTER).sized(6.3f, 20.0F)
+					.clientTrackingRange(9).fireImmune()
 					.build(new ResourceLocation(DoomMod.MODID, "iconofsin").toString()));
 
 	public static final RegistryObject<EntityType<EnergyCellMobEntity>> ENERGY_CELL_MOB = ENTITY_TYPES.register(
 			"energy_cell_mob",
-			() -> EntityType.Builder.<EnergyCellMobEntity>create(EnergyCellMobEntity::new, EntityClassification.MISC)
-					.trackingRange(9).size(0.5F, 0.5F)
+			() -> EntityType.Builder.<EnergyCellMobEntity>of(EnergyCellMobEntity::new, EntityClassification.MISC)
+					.clientTrackingRange(9).sized(0.5F, 0.5F)
 					.build(new ResourceLocation(DoomMod.MODID, "energy_cell_mob").toString()));
 
 	public static final RegistryObject<EntityType<RocketMobEntity>> ROCKET_MOB = ENTITY_TYPES.register("rocket_mob",
-			() -> EntityType.Builder.<RocketMobEntity>create(RocketMobEntity::new, EntityClassification.MISC)
-					.size(0.5F, 0.5F).trackingRange(9)
+			() -> EntityType.Builder.<RocketMobEntity>of(RocketMobEntity::new, EntityClassification.MISC)
+					.sized(0.5F, 0.5F).clientTrackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "rocket_mob").toString()));
 
 	public static final RegistryObject<EntityType<ChaingunMobEntity>> CHAINGUN_MOB = ENTITY_TYPES.register(
 			"chaingun_mob",
-			() -> EntityType.Builder.<ChaingunMobEntity>create(ChaingunMobEntity::new, EntityClassification.MISC)
-					.size(0.5F, 0.5F).trackingRange(9)
+			() -> EntityType.Builder.<ChaingunMobEntity>of(ChaingunMobEntity::new, EntityClassification.MISC)
+					.sized(0.5F, 0.5F).clientTrackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "chaingun_mob").toString()));
 
 	public static final RegistryObject<EntityType<GargoyleEntity>> GARGOYLE = ENTITY_TYPES.register("gargoyle",
-			() -> EntityType.Builder.create(GargoyleEntity::new, EntityClassification.MONSTER).size(1.3f, 2.25F)
-					.immuneToFire().trackingRange(9).build(new ResourceLocation(DoomMod.MODID, "gargoyle").toString()));
+			() -> EntityType.Builder.of(GargoyleEntity::new, EntityClassification.MONSTER).sized(1.3f, 2.25F)
+					.fireImmune().clientTrackingRange(9).build(new ResourceLocation(DoomMod.MODID, "gargoyle").toString()));
 
 }

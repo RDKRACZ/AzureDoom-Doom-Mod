@@ -50,9 +50,9 @@ public class LockOnHandler {
 
 	private static void handleKeyPress(TickEvent.RenderTickEvent e) {
 		PlayerEntity player = mc.player;
-		if (e.phase == TickEvent.Phase.START && mc.player != null && !mc.isGamePaused()) {
+		if (e.phase == TickEvent.Phase.START && mc.player != null && !mc.isPaused()) {
 			tickLockedOn();
-			while (LOCK_ON.isPressed()) {
+			while (LOCK_ON.consumeClick()) {
 				if (lockedOn) {
 					leaveLockOn();
 				} else {
@@ -60,16 +60,16 @@ public class LockOnHandler {
 				}
 			}
 
-			while (TAB.isPressed()) {
+			while (TAB.consumeClick()) {
 				tabToNextEnemy(player);
 			}
 
 			if (targetted != null) {
-				Vector3d targetPos = targetted.getPositionVec();
-				Vector3d directionVec = targetPos.subtract(mc.player.getPositionVec()).normalize();
+				Vector3d targetPos = targetted.position();
+				Vector3d directionVec = targetPos.subtract(mc.player.position()).normalize();
 				double angle = Math.atan2(-directionVec.x, directionVec.z) * 180 / Math.PI;
 
-				float adjustedPrevYaw = mc.player.prevRotationYaw;
+				float adjustedPrevYaw = mc.player.yRotO;
 				if (Math.abs(angle - adjustedPrevYaw) > 180) {
 					if (adjustedPrevYaw > angle) {
 						angle += 360;
@@ -85,7 +85,7 @@ public class LockOnHandler {
 				if (newDelta < -180) {
 					newDelta += 360;
 				}
-				mc.player.rotationYaw = (float) newDelta;
+				mc.player.yRot = (float) newDelta;
 			}
 		}
 	}
@@ -106,14 +106,14 @@ public class LockOnHandler {
 	}
 
 	private static final Predicate<LivingEntity> ENTITY_PREDICATE = entity -> entity.isAlive() && entity.attackable();
-	private static final EntityPredicate ENEMY_CONDITION = new EntityPredicate().setDistance(20.0D)
-			.setCustomPredicate(ENTITY_PREDICATE);
+	private static final EntityPredicate ENEMY_CONDITION = new EntityPredicate().range(20.0D)
+			.selector(ENTITY_PREDICATE);
 
 	private static int cycle = -1;
 
 	public static Entity findNearby(PlayerEntity player) {
-		List<LivingEntity> entities = player.world.getTargettableEntitiesWithinAABB(LivingEntity.class, ENEMY_CONDITION,
-				player, player.getBoundingBox().grow(10.0D, 2.0D, 10.0D));
+		List<LivingEntity> entities = player.level.getNearbyEntities(LivingEntity.class, ENEMY_CONDITION,
+				player, player.getBoundingBox().inflate(10.0D, 2.0D, 10.0D));
 		if (lockedOn) {
 			cycle++;
 			for (LivingEntity entity : entities) {

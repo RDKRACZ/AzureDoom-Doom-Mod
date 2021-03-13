@@ -18,7 +18,7 @@ public class RocketMobRender extends GeoProjectilesRenderer<RocketMobEntity> {
 		super(renderManagerIn, new RocketMobModel());
 	}
 
-	protected int getBlockLight(RocketMobEntity entityIn, BlockPos partialTicks) {
+	protected int getBlockLightLevel(RocketMobEntity entityIn, BlockPos partialTicks) {
 		return 15;
 	}
 
@@ -26,7 +26,7 @@ public class RocketMobRender extends GeoProjectilesRenderer<RocketMobEntity> {
 	public RenderType getRenderType(RocketMobEntity animatable, float partialTicks, MatrixStack stack,
 			IRenderTypeBuffer renderTypeBuffer, IVertexBuilder vertexBuilder, int packedLightIn,
 			ResourceLocation textureLocation) {
-		return RenderType.getEntityTranslucent(getTextureLocation(animatable));
+		return RenderType.entityTranslucent(getTextureLocation(animatable));
 	}
 
 }

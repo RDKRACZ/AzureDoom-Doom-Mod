@@ -24,22 +24,22 @@ public class RangedStaticAttackGoal extends Goal {
 		this.visibleTicksDelay = visibleTicksDelay;
 	}
 
-	public boolean shouldExecute() {
-		return this.parentEntity.getAttackTarget() != null;
+	public boolean canUse() {
+		return this.parentEntity.getTarget() != null;
 	}
 
-	public void startExecuting() {
+	public void start() {
 		this.attackTimer = 0;
 	}
 
-	public void resetTask() {
+	public void stop() {
 		this.parentEntity.setAttacking(false);
 	}
 
 	public void tick() {
-		if (this.parentEntity.getAttackTarget() != null) {
-			LivingEntity livingentity = this.parentEntity.getAttackTarget();
-			boolean inLineOfSight = this.parentEntity.getEntitySenses().canSee(livingentity);
+		if (this.parentEntity.getTarget() != null) {
+			LivingEntity livingentity = this.parentEntity.getTarget();
+			boolean inLineOfSight = this.parentEntity.getSensing().canSee(livingentity);
 			if (inLineOfSight != this.seeTime > 0) {
 				this.seeTime = 0;
 			}
@@ -48,9 +48,9 @@ public class RangedStaticAttackGoal extends Goal {
 			} else {
 				--this.seeTime;
 			}
-			if (livingentity.getDistanceSq(this.parentEntity) < this.maxAttackDistance
+			if (livingentity.distanceToSqr(this.parentEntity) < this.maxAttackDistance
 					&& this.seeTime >= this.visibleTicksDelay) {
-				this.parentEntity.getLookController().setLookPositionWithEntity(livingentity, 90.0F, 30.0F);
+				this.parentEntity.getLookControl().setLookAt(livingentity, 90.0F, 30.0F);
 				++this.attackTimer;
 
 				if (this.attackTimer == this.attackCooldown) {

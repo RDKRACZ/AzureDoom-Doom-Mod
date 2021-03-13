@@ -32,16 +32,16 @@ import top.theillusivec4.curios.api.type.capability.ICurio;
 public class DaisyItem extends Item {
 
 	public DaisyItem() {
-		super(new Item.Properties().group(DoomMod.DoomPowerUPItemGroup).maxStackSize(1));
+		super(new Item.Properties().tab(DoomMod.DoomPowerUPItemGroup).stacksTo(1));
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new TranslationTextComponent("doom.daisy1.text").mergeStyle(TextFormatting.YELLOW)
-				.mergeStyle(TextFormatting.ITALIC));
-		tooltip.add(new TranslationTextComponent("doom.daisy2.text").mergeStyle(TextFormatting.ITALIC));
-		super.addInformation(stack, worldIn, tooltip, flagIn);
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(new TranslationTextComponent("doom.daisy1.text").withStyle(TextFormatting.YELLOW)
+				.withStyle(TextFormatting.ITALIC));
+		tooltip.add(new TranslationTextComponent("doom.daisy2.text").withStyle(TextFormatting.ITALIC));
+		super.appendHoverText(stack, worldIn, tooltip, flagIn);
 	}
 
 	@Override
@@ -67,11 +67,11 @@ public class DaisyItem extends Item {
 			}
 
 			private void startPowers(PlayerEntity player) {
-				player.addPotionEffect(new EffectInstance(Effects.SPEED, 10000000, 2));
+				player.addEffect(new EffectInstance(Effects.MOVEMENT_SPEED, 10000000, 2));
 			}
 
 			private void stopPowers(PlayerEntity player) {
-				player.removePotionEffect(Effects.SPEED);
+				player.removeEffect(Effects.MOVEMENT_SPEED);
 			}
 
 			@Override

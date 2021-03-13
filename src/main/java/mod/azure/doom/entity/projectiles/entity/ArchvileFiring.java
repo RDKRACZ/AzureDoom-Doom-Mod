@@ -60,26 +60,26 @@ public class ArchvileFiring extends Entity implements IAnimatable {
 		this(ModEntityTypes.FIRING.get(), worldIn);
 		this.warmupDelayTicks = p_i47276_9_;
 		this.setCaster(casterIn);
-		this.rotationYaw = p_i47276_8_ * (180F / (float) Math.PI);
-		this.setPosition(x, y, z);
+		this.yRot = p_i47276_8_ * (180F / (float) Math.PI);
+		this.setPos(x, y, z);
 	}
 
 	public void setDamage(float damage) {
 		this.damage = damage;
 	}
 
-	protected void registerData() {
+	protected void defineSynchedData() {
 	}
 
 	public void setCaster(@Nullable LivingEntity p_190549_1_) {
 		this.caster = p_190549_1_;
-		this.casterUuid = p_190549_1_ == null ? null : p_190549_1_.getUniqueID();
+		this.casterUuid = p_190549_1_ == null ? null : p_190549_1_.getUUID();
 	}
 
 	@Nullable
 	public LivingEntity getCaster() {
-		if (this.caster == null && this.casterUuid != null && this.world instanceof ServerWorld) {
-			Entity entity = ((ServerWorld) this.world).getEntityByUuid(this.casterUuid);
+		if (this.caster == null && this.casterUuid != null && this.level instanceof ServerWorld) {
+			Entity entity = ((ServerWorld) this.level).getEntity(this.casterUuid);
 			if (entity instanceof LivingEntity) {
 				this.caster = (LivingEntity) entity;
 			}
@@ -88,44 +88,44 @@ public class ArchvileFiring extends Entity implements IAnimatable {
 		return this.caster;
 	}
 
-	protected void readAdditional(CompoundNBT compound) {
+	protected void readAdditionalSaveData(CompoundNBT compound) {
 		this.warmupDelayTicks = compound.getInt("Warmup");
-		if (compound.hasUniqueId("Owner")) {
-			this.casterUuid = compound.getUniqueId("Owner");
+		if (compound.hasUUID("Owner")) {
+			this.casterUuid = compound.getUUID("Owner");
 		}
 
 	}
 
-	protected void writeAdditional(CompoundNBT compound) {
+	protected void addAdditionalSaveData(CompoundNBT compound) {
 		compound.putInt("Warmup", this.warmupDelayTicks);
 		if (this.casterUuid != null) {
-			compound.putUniqueId("Owner", this.casterUuid);
+			compound.putUUID("Owner", this.casterUuid);
 		}
 
 	}
 
 	public void tick() {
 		super.tick();
-		if (this.world.isRemote) {
+		if (this.level.isClientSide) {
 			if (this.clientSideAttackStarted) {
 				--this.lifeTicks;
 				if (this.lifeTicks == 14) {
 					for (int i = 0; i < 12; ++i) {
-						double d0 = this.getPosX()
-								+ (this.rand.nextDouble() * 2.0D - 1.0D) * (double) this.getWidth() * 0.5D;
-						double d1 = this.getPosY() + 0.05D + this.rand.nextDouble();
-						double d2 = this.getPosZ()
-								+ (this.rand.nextDouble() * 2.0D - 1.0D) * (double) this.getWidth() * 0.5D;
-						double d3 = (this.rand.nextDouble() * 2.0D - 1.0D) * 0.3D;
-						double d4 = 0.3D + this.rand.nextDouble() * 0.3D;
-						double d5 = (this.rand.nextDouble() * 2.0D - 1.0D) * 0.3D;
-						this.world.addParticle(ParticleTypes.LAVA, d0, d1 + 1.0D, d2, d3, d4, d5);
+						double d0 = this.getX()
+								+ (this.random.nextDouble() * 2.0D - 1.0D) * (double) this.getBbWidth() * 0.5D;
+						double d1 = this.getY() + 0.05D + this.random.nextDouble();
+						double d2 = this.getZ()
+								+ (this.random.nextDouble() * 2.0D - 1.0D) * (double) this.getBbWidth() * 0.5D;
+						double d3 = (this.random.nextDouble() * 2.0D - 1.0D) * 0.3D;
+						double d4 = 0.3D + this.random.nextDouble() * 0.3D;
+						double d5 = (this.random.nextDouble() * 2.0D - 1.0D) * 0.3D;
+						this.level.addParticle(ParticleTypes.LAVA, d0, d1 + 1.0D, d2, d3, d4, d5);
 					}
 				}
 			}
 		} else if (--this.warmupDelayTicks < 0) {
 			if (!this.sentSpikeEvent) {
-				this.world.setEntityState(this, (byte) 4);
+				this.level.broadcastEntityEvent(this, (byte) 4);
 				this.sentSpikeEvent = true;
 			}
 
@@ -133,16 +133,17 @@ public class ArchvileFiring extends Entity implements IAnimatable {
 				this.remove();
 			}
 		}
-		final Vector3d facing = Vector3d.fromPitchYaw(this.getPitchYaw()).normalize();
-		List<Entity> list = this.world.getEntitiesWithinAABBExcludingEntity(this,
-				new AxisAlignedBB(this.getPosition().up()).grow(5D, 5D, 5D).offset(facing.scale(1D)));
+		final Vector3d facing = Vector3d.directionFromRotation(this.getRotationVector()).normalize();
+		List<Entity> list = this.level.getEntities(this,
+				new AxisAlignedBB(this.blockPosition().above()).inflate(5D, 5D, 5D).move(facing.scale(1D)));
 		for (int k2 = 0; k2 < list.size(); ++k2) {
 			Entity entity = list.get(k2);
 			if (!(entity instanceof MancubusEntity) && !(entity instanceof ArchvileEntity)) {
-				double d12 = (double) (MathHelper.sqrt(entity.getDistance(this)));
+				double d12 = (double) (MathHelper.sqrt(entity.distanceTo(this)));
 				if (d12 <= 1.0D) {
 					if (entity.isAlive()) {
-						entity.attackEntityFrom(DamageSource.causeIndirectMagicDamage(this, this), damage);
+						entity.hurt(DamageSource.indirectMagic(this, this), damage);
+						entity.setRemainingFireTicks(60);
 					}
 				}
 			}
@@ -150,8 +151,8 @@ public class ArchvileFiring extends Entity implements IAnimatable {
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	public void handleStatusUpdate(byte id) {
-		super.handleStatusUpdate(id);
+	public void handleEntityEvent(byte id) {
+		super.handleEntityEvent(id);
 		if (id == 4) {
 			this.clientSideAttackStarted = true;
 		}
@@ -174,7 +175,7 @@ public class ArchvileFiring extends Entity implements IAnimatable {
 	}
 
 	@Override
-	public IPacket<?> createSpawnPacket() {
+	public IPacket<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 

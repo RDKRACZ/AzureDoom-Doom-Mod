@@ -30,39 +30,39 @@ public class SwordCrucibleItem extends SwordItem {
 
 	public SwordCrucibleItem() {
 		super(DoomTier.DOOM_HIGHTEIR, 36, -2.4F,
-				new Item.Properties().group(DoomMod.DoomWeaponItemGroup).maxStackSize(1).maxDamage(5));
+				new Item.Properties().tab(DoomMod.DoomWeaponItemGroup).stacksTo(1).durability(5));
 	}
 
 	@Override
-	public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
-		return DoomTier.DOOM_HIGHTEIR.getRepairMaterial().test(repair) || super.getIsRepairable(toRepair, repair);
+	public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
+		return DoomTier.DOOM_HIGHTEIR.getRepairIngredient().test(repair) || super.isValidRepairItem(toRepair, repair);
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new TranslationTextComponent("doom.crucible_sword.text").mergeStyle(TextFormatting.RED)
-				.mergeStyle(TextFormatting.ITALIC));
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(new TranslationTextComponent("doom.crucible_sword.text").withStyle(TextFormatting.RED)
+				.withStyle(TextFormatting.ITALIC));
 		tooltip.add(new TranslationTextComponent(
-				"Ammo: " + (stack.getMaxDamage() - stack.getDamage() - 1) + " / " + (stack.getMaxDamage() - 1))
-						.mergeStyle(TextFormatting.ITALIC));
-		super.addInformation(stack, worldIn, tooltip, flagIn);
+				"Ammo: " + (stack.getMaxDamage() - stack.getDamageValue() - 1) + " / " + (stack.getMaxDamage() - 1))
+						.withStyle(TextFormatting.ITALIC));
+		super.appendHoverText(stack, worldIn, tooltip, flagIn);
 	}
 
 	@Override
-	public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-		if (stack.getDamage() < (stack.getMaxDamage() - 1)) {
-			stack.damageItem(1, target, p -> p.sendBreakAnimation(target.getActiveHand()));
+	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+		if (stack.getDamageValue() < (stack.getMaxDamage() - 1)) {
+			stack.hurtAndBreak(1, target, p -> p.broadcastBreakEvent(target.getUsedItemHand()));
 		}
-		return (stack.getDamage() < (stack.getMaxDamage() - 1)) ? true : false;
+		return (stack.getDamageValue() < (stack.getMaxDamage() - 1)) ? true : false;
 	}
 
 	@Override
 	public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-		if (worldIn.isRemote) {
+		if (worldIn.isClientSide) {
 			PlayerEntity playerentity = (PlayerEntity) entityIn;
-			if (playerentity.getHeldItemMainhand().getItem() instanceof SwordCrucibleItem) {
-				while (Keybindings.RELOAD.isPressed() && isSelected) {
+			if (playerentity.getMainHandItem().getItem() instanceof SwordCrucibleItem) {
+				while (Keybindings.RELOAD.consumeClick() && isSelected) {
 					DoomPacketHandler.CRUCIBLE.sendToServer(new CrucibleLoadingPacket(itemSlot));
 				}
 			}
@@ -70,18 +70,18 @@ public class SwordCrucibleItem extends SwordItem {
 	}
 
 	public static void reload(PlayerEntity user, Hand hand) {
-		if (user.getHeldItem(hand).getItem() instanceof SwordCrucibleItem) {
-			while (user.getHeldItem(hand).getDamage() != 0 && user.inventory.count(DoomItems.ARGENT_BLOCK.get()) > 0) {
+		if (user.getItemInHand(hand).getItem() instanceof SwordCrucibleItem) {
+			while (user.getItemInHand(hand).getDamageValue() != 0 && user.inventory.countItem(DoomItems.ARGENT_BLOCK.get()) > 0) {
 				removeAmmo(DoomItems.ARGENT_BLOCK.get(), user);
-				user.getHeldItem(hand).damageItem(-5, user, s -> user.sendBreakAnimation(hand));
-				user.getHeldItem(hand).setAnimationsToGo(3);
+				user.getItemInHand(hand).hurtAndBreak(-5, user, s -> user.broadcastBreakEvent(hand));
+				user.getItemInHand(hand).setPopTime(3);
 			}
 		}
 	}
 
 	private static void removeAmmo(Item ammo, PlayerEntity playerEntity) {
 		if (!playerEntity.isCreative()) {
-			for (ItemStack item : playerEntity.inventory.mainInventory) {
+			for (ItemStack item : playerEntity.inventory.items) {
 				if (item.getItem() == DoomItems.ARGENT_BLOCK.get()) {
 					item.shrink(1);
 					break;
@@ -91,29 +91,29 @@ public class SwordCrucibleItem extends SwordItem {
 	}
 
 	@Override
-	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
+	public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items) {
 		ItemStack stack = new ItemStack(this);
 		stack.hasTag();
-		stack.addEnchantment(Enchantments.SMITE, 10);
-		stack.addEnchantment(Enchantments.LOOTING, 10);
-		stack.addEnchantment(Enchantments.SHARPNESS, 10);
-		stack.addEnchantment(Enchantments.SWEEPING, 10);
+		stack.enchant(Enchantments.SMITE, 10);
+		stack.enchant(Enchantments.MOB_LOOTING, 10);
+		stack.enchant(Enchantments.SHARPNESS, 10);
+		stack.enchant(Enchantments.SWEEPING_EDGE, 10);
 		if (group == DoomMod.DoomWeaponItemGroup) {
 			items.add(stack);
 		}
 	}
 
 	@Override
-	public void onCreated(ItemStack stack, World worldIn, PlayerEntity playerIn) {
+	public void onCraftedBy(ItemStack stack, World worldIn, PlayerEntity playerIn) {
 		stack.hasTag();
-		stack.addEnchantment(Enchantments.SMITE, 10);
-		stack.addEnchantment(Enchantments.LOOTING, 10);
-		stack.addEnchantment(Enchantments.SHARPNESS, 10);
-		stack.addEnchantment(Enchantments.SWEEPING, 10);
+		stack.enchant(Enchantments.SMITE, 10);
+		stack.enchant(Enchantments.MOB_LOOTING, 10);
+		stack.enchant(Enchantments.SHARPNESS, 10);
+		stack.enchant(Enchantments.SWEEPING_EDGE, 10);
 	}
 
 	@Override
-	public boolean hasEffect(ItemStack stack) {
+	public boolean isFoil(ItemStack stack) {
 		return false;
 	}
 }

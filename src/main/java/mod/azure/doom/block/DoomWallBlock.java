@@ -36,7 +36,7 @@ import net.minecraft.world.World;
 
 public class DoomWallBlock extends ContainerBlock {
 
-	public static final DirectionProperty direction = HorizontalBlock.HORIZONTAL_FACING;
+	public static final DirectionProperty direction = HorizontalBlock.FACING;
 	public static final BooleanProperty light = RedstoneTorchBlock.LIT;
 
 	@Nullable
@@ -44,28 +44,28 @@ public class DoomWallBlock extends ContainerBlock {
 
 	public DoomWallBlock(Block.Properties properties) {
 		super(properties);
-		this.setDefaultState(
-				this.stateContainer.getBaseState().with(direction, Direction.NORTH).with(light, Boolean.valueOf(true)));
+		this.registerDefaultState(
+				this.stateDefinition.any().setValue(direction, Direction.NORTH).setValue(light, Boolean.valueOf(true)));
 	}
 
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
-		return this.getDefaultState().with(direction, context.getPlacementHorizontalFacing());
+		return this.defaultBlockState().setValue(direction, context.getHorizontalDirection());
 	}
 
 	@Override
 	public BlockState rotate(BlockState state, Rotation rot) {
-		return state.with(direction, rot.rotate(state.get(direction)));
+		return state.setValue(direction, rot.rotate(state.getValue(direction)));
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
 	public BlockState mirror(BlockState state, Mirror mirrorIn) {
-		return state.rotate(mirrorIn.toRotation(state.get(direction)));
+		return state.rotate(mirrorIn.getRotation(state.getValue(direction)));
 	}
 
 	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
 		builder.add(direction, light);
 	}
 
@@ -75,16 +75,16 @@ public class DoomWallBlock extends ContainerBlock {
 	}
 
 	@Override
-	public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
-		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
-		TileEntity tileentity = worldIn.getTileEntity(pos);
+	public void setPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+		super.setPlacedBy(worldIn, pos, state, placer, stack);
+		TileEntity tileentity = worldIn.getBlockEntity(pos);
 		if (tileentity instanceof IconBlockEntity) {
 			checkIconSpawn(worldIn, pos, (IconBlockEntity) tileentity);
 		}
 	}
 
 	public static void checkIconSpawn(World worldIn, BlockPos pos, IconBlockEntity tileEntityIn) {
-		if (!worldIn.isRemote) {
+		if (!worldIn.isClientSide) {
 			Block block = tileEntityIn.getBlockState().getBlock();
 			boolean flag = block == DoomBlocks.DOOM_WALL1.get() || block == DoomBlocks.DOOM_WALL2.get()
 					|| block == DoomBlocks.DOOM_WALL3.get() || block == DoomBlocks.DOOM_WALL4.get()
@@ -96,33 +96,33 @@ public class DoomWallBlock extends ContainerBlock {
 					|| block == DoomBlocks.DOOM_WALL15.get() || block == DoomBlocks.DOOM_WALL16.get();
 			if (flag && pos.getY() >= 3 && worldIn.getDifficulty() != Difficulty.PEACEFUL) {
 				BlockPattern blockpattern = getOrCreateIconFull();
-				BlockPattern.PatternHelper blockpattern$patternhelper = blockpattern.match(worldIn, pos);
+				BlockPattern.PatternHelper blockpattern$patternhelper = blockpattern.find(worldIn, pos);
 				if (blockpattern$patternhelper != null) {
-					for (int i = 0; i < blockpattern.getPalmLength(); ++i) {
-						for (int j = 0; j < blockpattern.getThumbLength(); ++j) {
-							CachedBlockInfo cachedblockinfo = blockpattern$patternhelper.translateOffset(i, j, 0);
-							worldIn.setBlockState(cachedblockinfo.getPos(), Blocks.AIR.getDefaultState(), 2);
-							worldIn.playEvent(2001, cachedblockinfo.getPos(),
-									Block.getStateId(cachedblockinfo.getBlockState()));
+					for (int i = 0; i < blockpattern.getWidth(); ++i) {
+						for (int j = 0; j < blockpattern.getHeight(); ++j) {
+							CachedBlockInfo cachedblockinfo = blockpattern$patternhelper.getBlock(i, j, 0);
+							worldIn.setBlock(cachedblockinfo.getPos(), Blocks.AIR.defaultBlockState(), 2);
+							worldIn.levelEvent(2001, cachedblockinfo.getPos(),
+									Block.getId(cachedblockinfo.getState()));
 						}
 					}
 
 					IconofsinEntity witherentity = ModEntityTypes.ICONOFSIN.get().create(worldIn);
-					BlockPos blockpos = blockpattern$patternhelper.translateOffset(1, 2, 0).getPos();
-					witherentity.setLocationAndAngles((double) blockpos.getX() + 0.5D, (double) blockpos.getY() + 0.55D,
+					BlockPos blockpos = blockpattern$patternhelper.getBlock(1, 2, 0).getPos();
+					witherentity.moveTo((double) blockpos.getX() + 0.5D, (double) blockpos.getY() + 0.55D,
 							(double) blockpos.getZ() + 0.5D,
 							blockpattern$patternhelper.getForwards().getAxis() == Direction.Axis.X ? 0.0F : 90.0F,
 							0.0F);
-					witherentity.renderYawOffset = blockpattern$patternhelper.getForwards()
+					witherentity.yBodyRot = blockpattern$patternhelper.getForwards()
 							.getAxis() == Direction.Axis.X ? 0.0F : 90.0F;
-					witherentity.addPotionEffect(new EffectInstance(Effects.SLOWNESS, 200, 4));
-					witherentity.addPotionEffect(new EffectInstance(Effects.RESISTANCE, 200, 4));
-					worldIn.addEntity(witherentity);
+					witherentity.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 200, 4));
+					witherentity.addEffect(new EffectInstance(Effects.DAMAGE_RESISTANCE, 200, 4));
+					worldIn.addFreshEntity(witherentity);
 
-					for (int k = 0; k < blockpattern.getPalmLength(); ++k) {
-						for (int l = 0; l < blockpattern.getThumbLength(); ++l) {
-							worldIn.notifyNeighborsOfStateChange(
-									blockpattern$patternhelper.translateOffset(k, l, 0).getPos(), Blocks.AIR);
+					for (int k = 0; k < blockpattern.getWidth(); ++k) {
+						for (int l = 0; l < blockpattern.getHeight(); ++l) {
+							worldIn.updateNeighborsAt(
+									blockpattern$patternhelper.getBlock(k, l, 0).getPos(), Blocks.AIR);
 						}
 					}
 
@@ -156,12 +156,12 @@ public class DoomWallBlock extends ContainerBlock {
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(IBlockReader worldIn) {
+	public TileEntity newBlockEntity(IBlockReader worldIn) {
 		return new IconBlockEntity();
 	}
 
 	@Override
-	public BlockRenderType getRenderType(BlockState state) {
+	public BlockRenderType getRenderShape(BlockState state) {
 		return BlockRenderType.MODEL;
 	}
 }

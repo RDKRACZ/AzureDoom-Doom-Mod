@@ -16,7 +16,7 @@ public class BulletsRender extends ArrowRenderer<BulletEntity> {
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(BulletEntity entity) {
+	public ResourceLocation getTextureLocation(BulletEntity entity) {
 		return SHOTGUN_SHELL_TEXTURE;
 	}
 

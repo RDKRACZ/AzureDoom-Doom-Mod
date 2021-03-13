@@ -16,7 +16,7 @@ public class ChaingunBulletRender extends ArrowRenderer<ChaingunBulletEntity> {
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(ChaingunBulletEntity entity) {
+	public ResourceLocation getTextureLocation(ChaingunBulletEntity entity) {
 		return SHOTGUN_SHELL_TEXTURE;
 	}
 

@@ -13,6 +13,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import net.minecraft.item.Item.Properties;
+
 public class ClipAmmo extends ArrowItem {
 
 	public final float damage;
@@ -24,22 +26,22 @@ public class ClipAmmo extends ArrowItem {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(new StringTextComponent("\u00A7o" + "Used for the Pistol."));
-		super.addInformation(stack, worldIn, tooltip, flagIn);
+		super.appendHoverText(stack, worldIn, tooltip, flagIn);
 	}
 
 	@Override
 	public boolean isInfinite(ItemStack stack, ItemStack bow, net.minecraft.entity.player.PlayerEntity player) {
 		int enchant = net.minecraft.enchantment.EnchantmentHelper
-				.getEnchantmentLevel(net.minecraft.enchantment.Enchantments.INFINITY, bow);
+				.getItemEnchantmentLevel(net.minecraft.enchantment.Enchantments.INFINITY_ARROWS, bow);
 		return enchant <= 0 ? false : this instanceof ClipAmmo;
 	}
 
 	@Override
 	public BulletEntity createArrow(World worldIn, ItemStack stack, LivingEntity shooter) {
 		BulletEntity arrowentity = new BulletEntity(worldIn, shooter);
-		arrowentity.setDamage(this.damage);
+		arrowentity.setBaseDamage(this.damage);
 		return arrowentity;
 	}
 

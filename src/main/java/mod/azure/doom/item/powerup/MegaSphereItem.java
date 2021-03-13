@@ -26,25 +26,25 @@ import net.minecraftforge.fml.ModList;
 public class MegaSphereItem extends Item {
 
 	public MegaSphereItem() {
-		super(new Item.Properties().group(DoomMod.DoomPowerUPItemGroup).maxStackSize(1));
+		super(new Item.Properties().tab(DoomMod.DoomPowerUPItemGroup).stacksTo(1));
 	}
 
 	@Override
-	public void onUse(World worldIn, LivingEntity livingEntityIn, ItemStack stack, int count) {
+	public void onUseTick(World worldIn, LivingEntity livingEntityIn, ItemStack stack, int count) {
 		if (livingEntityIn instanceof ServerPlayerEntity) {
 			ServerPlayerEntity playerentity = (ServerPlayerEntity) livingEntityIn;
-			if (!worldIn.isRemote)
-				livingEntityIn.addPotionEffect(new EffectInstance(Effects.HEALTH_BOOST, 600, 4));
+			if (!worldIn.isClientSide)
+				livingEntityIn.addEffect(new EffectInstance(Effects.HEALTH_BOOST, 600, 4));
 			livingEntityIn.heal(40);
-			livingEntityIn.addPotionEffect(new EffectInstance(Effects.RESISTANCE, 600, 4));
-			livingEntityIn.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 600, 4));
+			livingEntityIn.addEffect(new EffectInstance(Effects.DAMAGE_RESISTANCE, 600, 4));
+			livingEntityIn.addEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 600, 4));
 			if (ModList.get().isLoaded("pmmo")) {
 				PMMOCompat.awardMegaXp(playerentity);
 			}
-			if (!playerentity.abilities.isCreativeMode) {
+			if (!playerentity.abilities.instabuild) {
 				stack.shrink(1);
 				if (stack.isEmpty()) {
-					playerentity.inventory.deleteStack(stack);
+					playerentity.inventory.removeItem(stack);
 				}
 			}
 		}
@@ -56,26 +56,26 @@ public class MegaSphereItem extends Item {
 	}
 
 	@Override
-	public UseAction getUseAction(ItemStack stack) {
+	public UseAction getUseAnimation(ItemStack stack) {
 		return UseAction.NONE;
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		ItemStack itemstack = playerIn.getHeldItem(handIn);
-		playerIn.setActiveHand(handIn);
-		return ActionResult.resultConsume(itemstack);
+	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+		ItemStack itemstack = playerIn.getItemInHand(handIn);
+		playerIn.startUsingItem(handIn);
+		return ActionResult.consume(itemstack);
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new TranslationTextComponent("doom.mega.text").mergeStyle(TextFormatting.ITALIC));
-		super.addInformation(stack, worldIn, tooltip, flagIn);
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(new TranslationTextComponent("doom.mega.text").withStyle(TextFormatting.ITALIC));
+		super.appendHoverText(stack, worldIn, tooltip, flagIn);
 	}
 
 	@Override
-	public boolean hasEffect(ItemStack stack) {
+	public boolean isFoil(ItemStack stack) {
 		return false;
 	}
 

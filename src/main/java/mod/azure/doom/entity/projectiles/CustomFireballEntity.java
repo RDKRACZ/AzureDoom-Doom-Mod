@@ -18,13 +18,13 @@ public class CustomFireballEntity extends FireballEntity {
 	}
 
 	@Override
-	protected void onEntityHit(EntityRayTraceResult p_213868_1_) {
-		if (!this.world.isRemote) {
+	protected void onHitEntity(EntityRayTraceResult p_213868_1_) {
+		if (!this.level.isClientSide) {
 			Entity entity = p_213868_1_.getEntity();
-			Entity entity1 = this.func_234616_v_();
-			entity.attackEntityFrom(DamageSource.func_233547_a_(this, entity1), directHitDamage);
+			Entity entity1 = this.getOwner();
+			entity.hurt(DamageSource.fireball(this, entity1), directHitDamage);
 			if (entity1 instanceof LivingEntity) {
-				this.applyEnchantments((LivingEntity) entity1, entity);
+				this.doEnchantDamageEffects((LivingEntity) entity1, entity);
 			}
 
 		}

@@ -76,15 +76,15 @@ public class EntityConfig {
 
 	public MutableAttribute pushAttributes(MutableAttribute attributes) {
 		if (MELEE_ATTACK_DAMAGE > 0) {
-			attributes.createMutableAttribute(Attributes.ATTACK_DAMAGE, MELEE_ATTACK_DAMAGE);
+			attributes.add(Attributes.ATTACK_DAMAGE, MELEE_ATTACK_DAMAGE);
 		}
 		if (GENERAL_SPEED > 0) {
-			attributes.createMutableAttribute(Attributes.MOVEMENT_SPEED, GENERAL_SPEED);
+			attributes.add(Attributes.MOVEMENT_SPEED, GENERAL_SPEED);
 		}
 		if (FLY_SPEED > 0) {
-			attributes.createMutableAttribute(Attributes.FLYING_SPEED, FLY_SPEED);
+			attributes.add(Attributes.FLYING_SPEED, FLY_SPEED);
 		}
-		return attributes.createMutableAttribute(Attributes.MAX_HEALTH, MAX_HEALTH);
+		return attributes.add(Attributes.MAX_HEALTH, MAX_HEALTH);
 	}
 
 	public EntityConfig buildVia(Builder builder) {

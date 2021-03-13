@@ -55,7 +55,7 @@ public class IconofsinEntity extends DemonEntity implements IAnimatable {
 	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.ICON_OF_SIN);
 
 	private final ServerBossInfo bossInfo = (ServerBossInfo) (new ServerBossInfo(this.getDisplayName(),
-			BossInfo.Color.PURPLE, BossInfo.Overlay.PROGRESS)).setDarkenSky(true).setCreateFog(true);
+			BossInfo.Color.PURPLE, BossInfo.Overlay.PROGRESS)).setDarkenScreen(true).setCreateWorldFog(true);
 
 	public IconofsinEntity(EntityType<IconofsinEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
@@ -68,12 +68,12 @@ public class IconofsinEntity extends DemonEntity implements IAnimatable {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("walking", true));
 			return PlayState.CONTINUE;
 		}
-		if (this.isAggressive() && !(this.dead || this.getHealth() < 0.01 || this.getShouldBeDead())) {
+		if (this.isAggressive() && !(this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("attack", true));
 			return PlayState.CONTINUE;
 		}
-		if ((this.dead || this.getHealth() < 0.01 || this.getShouldBeDead())) {
-			if (world.isRemote) {
+		if ((this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
+			if (level.isClientSide) {
 				event.getController().setAnimation(new AnimationBuilder().addAnimation("death", false));
 				return PlayState.CONTINUE;
 			}
@@ -101,22 +101,22 @@ public class IconofsinEntity extends DemonEntity implements IAnimatable {
 	}
 
 	@Override
-	protected void onDeathUpdate() {
+	protected void tickDeath() {
 		++this.deathTime;
 		if (this.deathTime == 50) {
 			this.remove();
-			if (world.isRemote) {
+			if (level.isClientSide) {
 			}
 		}
 	}
 
 	@Override
-	public boolean onLivingFall(float distance, float damageMultiplier) {
+	public boolean causeFallDamage(float distance, float damageMultiplier) {
 		return false;
 	}
 
 	@Override
-	public IPacket<?> createSpawnPacket() {
+	public IPacket<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
@@ -140,13 +140,13 @@ public class IconofsinEntity extends DemonEntity implements IAnimatable {
 	protected void applyEntityAI() {
 		this.goalSelector.addGoal(2, new DemonAttackGoal(this, 1.0D, false));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
-		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this).setCallsForHelp()));
+		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this).setAlertOthers()));
 	}
 
-	public static AttributeModifierMap.MutableAttribute func_234200_m_() {
-		return config.pushAttributes(MobEntity.func_233666_p_().createMutableAttribute(Attributes.FOLLOW_RANGE, 100.0D)
-				.createMutableAttribute(Attributes.KNOCKBACK_RESISTANCE, 1000.0D)
-				.createMutableAttribute(Attributes.MAX_HEALTH, 1000.0D));
+	public static AttributeModifierMap.MutableAttribute createAttributes() {
+		return config.pushAttributes(MobEntity.createMobAttributes().add(Attributes.FOLLOW_RANGE, 100.0D)
+				.add(Attributes.KNOCKBACK_RESISTANCE, 1000.0D)
+				.add(Attributes.MAX_HEALTH, 1000.0D));
 	}
 
 	@Override
@@ -156,11 +156,11 @@ public class IconofsinEntity extends DemonEntity implements IAnimatable {
 
 	@Nullable
 	@Override
-	public ILivingEntityData onInitialSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
+	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
 			@Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
-		spawnDataIn = super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
-		float f = difficultyIn.getClampedAdditionalDifficulty();
-		this.setCanPickUpLoot(this.rand.nextFloat() < 0.55F * f);
+		spawnDataIn = super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+		float f = difficultyIn.getSpecialMultiplier();
+		this.setCanPickUpLoot(this.random.nextFloat() < 0.55F * f);
 		return spawnDataIn;
 	}
 
@@ -172,8 +172,8 @@ public class IconofsinEntity extends DemonEntity implements IAnimatable {
 		return false;
 	}
 
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 	}
 
 	@Override
@@ -192,7 +192,7 @@ public class IconofsinEntity extends DemonEntity implements IAnimatable {
 	}
 
 	protected SoundEvent getStepSound() {
-		return SoundEvents.ENTITY_SKELETON_STEP;
+		return SoundEvents.SKELETON_STEP;
 	}
 
 	@Override
@@ -201,35 +201,35 @@ public class IconofsinEntity extends DemonEntity implements IAnimatable {
 	}
 
 	@Override
-	public CreatureAttribute getCreatureAttribute() {
+	public CreatureAttribute getMobType() {
 		return CreatureAttribute.UNDEAD;
 	}
 
 	@Override
-	public boolean isNonBoss() {
+	public boolean canChangeDimensions() {
 		return false;
 	}
 
 	@Override
-	public void addTrackingPlayer(ServerPlayerEntity player) {
-		super.addTrackingPlayer(player);
+	public void startSeenByPlayer(ServerPlayerEntity player) {
+		super.startSeenByPlayer(player);
 		this.bossInfo.addPlayer(player);
 	}
 
 	@Override
-	public void removeTrackingPlayer(ServerPlayerEntity player) {
-		super.removeTrackingPlayer(player);
+	public void stopSeenByPlayer(ServerPlayerEntity player) {
+		super.stopSeenByPlayer(player);
 		this.bossInfo.removePlayer(player);
 	}
 
 	@Override
-	public int getMaxSpawnedInChunk() {
+	public int getMaxSpawnClusterSize() {
 		return 1;
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		if (this.hasCustomName()) {
 			this.bossInfo.setName(this.getDisplayName());
 		}
@@ -242,8 +242,8 @@ public class IconofsinEntity extends DemonEntity implements IAnimatable {
 	}
 
 	@Override
-	protected void updateAITasks() {
-		super.updateAITasks();
+	protected void customServerAiStep() {
+		super.customServerAiStep();
 		this.bossInfo.setPercent(this.getHealth() / this.getMaxHealth());
 	}
 
@@ -251,17 +251,17 @@ public class IconofsinEntity extends DemonEntity implements IAnimatable {
 	public void tick() {
 		super.tick();
 		if (this.isAlive()) {
-			if (this.isEntityInsideOpaqueBlock()) {
-				this.noClip = true;
+			if (this.isInWall()) {
+				this.noPhysics = true;
 			}
-			if (!this.isEntityInsideOpaqueBlock()) {
-				this.noClip = false;
+			if (!this.isInWall()) {
+				this.noPhysics = false;
 			}
 		}
 	}
 
 	@Override
-	public int getTotalArmorValue() {
+	public int getArmorValue() {
 		float health = this.getHealth();
 		return (health < 950 && health >= 900 ? 27
 				: health < 900 && health >= 850 ? 24
@@ -276,24 +276,24 @@ public class IconofsinEntity extends DemonEntity implements IAnimatable {
 	}
 
 	@Override
-	public void livingTick() {
-		super.livingTick();
+	public void aiStep() {
+		super.aiStep();
 		if (this.getHealth() > 500.0D) {
-			if (!this.world.isRemote) {
-				this.addPotionEffect(new EffectInstance(Effects.STRENGTH, 1000000, 1));
+			if (!this.level.isClientSide) {
+				this.addEffect(new EffectInstance(Effects.DAMAGE_BOOST, 1000000, 1));
 			}
 		}
 		if (this.getHealth() < 500.0D) {
-			if (!this.world.isRemote) {
-				this.removePotionEffect(Effects.STRENGTH);
-				this.addPotionEffect(new EffectInstance(Effects.SPEED, 10000000, 2));
-				this.addPotionEffect(new EffectInstance(Effects.WEAKNESS, 10000000, 1));
+			if (!this.level.isClientSide) {
+				this.removeEffect(Effects.DAMAGE_BOOST);
+				this.addEffect(new EffectInstance(Effects.MOVEMENT_SPEED, 10000000, 2));
+				this.addEffect(new EffectInstance(Effects.WEAKNESS, 10000000, 1));
 			}
 		}
-		if (!this.world.getDimensionType().doesRespawnAnchorWorks()) {
-			if (!this.world.isRemote) {
+		if (!this.level.dimensionType().respawnAnchorWorks()) {
+			if (!this.level.isClientSide) {
 				this.setGlowing(true);
-				this.addPotionEffect(new EffectInstance(Effects.STRENGTH, 10000000, 3));
+				this.addEffect(new EffectInstance(Effects.DAMAGE_BOOST, 10000000, 3));
 			}
 		}
 	}

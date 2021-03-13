@@ -51,12 +51,12 @@ public class BiomeEvaluator {
 
         if (hasAll) {
             return (registryChecks.size() == 0 || registryChecks.contains(biome.getRegistryName().toString().toLowerCase(Locale.ROOT)))
-                    && (categoryChecks.size() == 0 || categoryChecks.contains(biome.getCategory().getName().toLowerCase(Locale.ROOT)))
+                    && (categoryChecks.size() == 0 || categoryChecks.contains(biome.getBiomeCategory().getName().toLowerCase(Locale.ROOT)))
                     && (dictionaryChecks.size() == 0 || dictionaryChecks.stream().allMatch(identifiers -> biomeTypes.contains(identifiers)));
         } else {
             if (
                     registryChecks.size() > 0 && registryChecks.contains(biome.getRegistryName().toString().toLowerCase(Locale.ROOT)) ||
-                            categoryChecks.size() > 0 && categoryChecks.contains(biome.getCategory().getName().toLowerCase(Locale.ROOT))
+                            categoryChecks.size() > 0 && categoryChecks.contains(biome.getBiomeCategory().getName().toLowerCase(Locale.ROOT))
             ) {
                 return true;
             }
@@ -88,7 +88,7 @@ public class BiomeEvaluator {
                 .collect(Collectors.toList());
 
         // Biome Dictionary
-        RegistryKey<Biome> biomeKey = RegistryKey.getOrCreateKey(Registry.BIOME_KEY, biome.getRegistryName());
+        RegistryKey<Biome> biomeKey = RegistryKey.create(Registry.BIOME_REGISTRY, biome.getRegistryName());
         List<? extends String> biomeTypes = BiomeDictionary.getTypes(biomeKey).stream()
                 .map(t -> t.toString().toLowerCase(Locale.ROOT))
                 .collect(Collectors.toList());
