@@ -82,10 +82,10 @@ public class DoomLeapEntityEvents {
 		float enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(DoomEnchantments.LEAPING_DOOM.get(),
 				event.getEntityLiving());
 
-		if (enchantmentLevel > 0 && uuidHasJumpedMap.containsKey(event.getEntityLiving().getUUID().toString())
-				&& uuidHasJumpedMap.get(event.getEntityLiving().getUUID().toString())) {
-			int i = MathHelper.ceil((event.getDistance() - 1.0F - enchantmentLevel) * 0);
-			event.setDistance(i);
+		if (enchantmentLevel > 0) {
+			event.setDamageMultiplier(0);
+			event.setCanceled(true);
+			event.setDistance(0);
 		}
 	}
 
