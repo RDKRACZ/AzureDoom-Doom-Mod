@@ -35,7 +35,7 @@ public class DoomLeapEntityEvents {
 					entity);
 			boolean usedMidAirJump = uuidHasJumpedMap.get(entity.getUUID().toString());
 			boolean playerJumping = ObfuscationReflectionHelper.getPrivateValue(LivingEntity.class, entity,
-					"jumping");
+					"field_70703_bu");
 			boolean canJump = !entity.isOnGround() && !usedMidAirJump;
 
 			if (entity.isOnGround()) {
