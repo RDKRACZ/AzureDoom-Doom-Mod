@@ -1,3 +1,3 @@
-v.3.9.10a
+v.3.9.10b
 
-- Fixes Chaingun bullets on servers.
+- See if this fixes the crashing.
