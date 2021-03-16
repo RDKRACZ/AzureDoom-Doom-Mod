@@ -149,7 +149,7 @@ public class BaronEntity extends DemonEntity implements IAnimatable {
 
 		@Override
 		public AttackSound getDefaultAttackSound() {
-			return new AttackSound(SoundEvents.FIREWORK_ROCKET_BLAST, 1, 1);
+			return new AttackSound(SoundEvents.FIREWORK_ROCKET_BLAST, 0.7F, 1);
 		}
 
 		@Override
