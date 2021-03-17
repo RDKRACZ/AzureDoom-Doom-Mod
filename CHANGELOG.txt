@@ -1,3 +1,5 @@
-v.3.9.11
+v.3.9.12
 
-- Another around of sound nerfing.
+- Baron, Cyberdemons, Hellknight, Possessed Soldiers now use Plasma firing sound effects.
+- Revenants now use the Rocket firing sound effect.
+- Added the Cueball!

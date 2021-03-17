@@ -40,7 +40,6 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
@@ -96,7 +95,7 @@ public class Cyberdemon2016Entity extends DemonEntity {
 
 		@Override
 		public AttackSound getDefaultAttackSound() {
-			return new AttackSound(SoundEvents.FIREWORK_ROCKET_BLAST, 1, 1);
+			return new AttackSound(ModSoundEvents.PLASMA_FIRING.get(), 1, 1);
 		}
 
 		@Override

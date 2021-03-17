@@ -6,6 +6,7 @@ import mod.azure.doom.entity.ArchvileEntity;
 import mod.azure.doom.entity.BaronEntity;
 import mod.azure.doom.entity.CacodemonEntity;
 import mod.azure.doom.entity.ChaingunnerEntity;
+import mod.azure.doom.entity.CueBallEntity;
 import mod.azure.doom.entity.Cyberdemon2016Entity;
 import mod.azure.doom.entity.CyberdemonEntity;
 import mod.azure.doom.entity.GargoyleEntity;
@@ -247,6 +248,12 @@ public class ModEntityTypes {
 			() -> EntityType.Builder.of(PossessedScientistEntity::new, EntityClassification.MONSTER)
 					.sized(1.5f, 1.95F).clientTrackingRange(9).fireImmune()
 					.build(new ResourceLocation(DoomMod.MODID, "possessed_scientist").toString()));
+
+	public static final RegistryObject<EntityType<CueBallEntity>> CUEBALL = ENTITY_TYPES.register(
+			"cueball",
+			() -> EntityType.Builder.of(CueBallEntity::new, EntityClassification.MONSTER)
+					.sized(1.1F, 2.1F).clientTrackingRange(9).fireImmune()
+					.build(new ResourceLocation(DoomMod.MODID, "cueball").toString()));
 
 	public static final RegistryObject<EntityType<MechaZombieEntity>> MECHAZOMBIE = ENTITY_TYPES.register("mechazombie",
 			() -> EntityType.Builder.of(MechaZombieEntity::new, EntityClassification.MONSTER).sized(1.2f, 2.3F)

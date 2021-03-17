@@ -31,4 +31,5 @@ public class DefaultBiomes {
 	public static final String[] SPIDER_DEMON = new String[] { "|#nether" };
 	public static final String[] UNWILLING = new String[] { "|#nether" };
 	public static final String[] ZOMBIEMAN = new String[] { "|#nether" };
+	public static final String[] CUEBALL = new String[] { "|#nether" };
 }

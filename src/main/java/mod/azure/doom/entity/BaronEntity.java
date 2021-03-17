@@ -36,7 +36,6 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
@@ -149,7 +148,7 @@ public class BaronEntity extends DemonEntity implements IAnimatable {
 
 		@Override
 		public AttackSound getDefaultAttackSound() {
-			return new AttackSound(SoundEvents.FIREWORK_ROCKET_BLAST, 0.7F, 1);
+			return new AttackSound(ModSoundEvents.PLASMA_FIRING.get(), 0.7F, 1);
 		}
 
 		@Override

@@ -6,6 +6,7 @@ import mod.azure.doom.entity.ArchvileEntity;
 import mod.azure.doom.entity.BaronEntity;
 import mod.azure.doom.entity.CacodemonEntity;
 import mod.azure.doom.entity.ChaingunnerEntity;
+import mod.azure.doom.entity.CueBallEntity;
 import mod.azure.doom.entity.Cyberdemon2016Entity;
 import mod.azure.doom.entity.CyberdemonEntity;
 import mod.azure.doom.entity.GargoyleEntity;
@@ -93,6 +94,7 @@ public class ModEventSubscriber {
 		event.put(ModEntityTypes.GORE_NEST.get(), GoreNestEntity.createAttributes().build());
 		event.put(ModEntityTypes.MECHAZOMBIE.get(), MechaZombieEntity.createAttributes().build());
 		event.put(ModEntityTypes.GARGOYLE.get(), GargoyleEntity.createAttributes().build());
+		event.put(ModEntityTypes.CUEBALL.get(), CueBallEntity.createAttributes().build());
 	}
 
 	public static <T extends IForgeRegistryEntry<T>> T setup(final T entry, final String name) {
@@ -192,6 +194,9 @@ public class ModEventSubscriber {
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.GARGOYLE.get(),
 				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
 				GargoyleEntity::spawning);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.CUEBALL.get(),
+				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+				CueBallEntity::spawning);
 	}
 
 }

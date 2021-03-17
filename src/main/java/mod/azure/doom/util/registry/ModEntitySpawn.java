@@ -162,6 +162,12 @@ public class ModEntitySpawn {
 					config.get(EntityConfigType.UNWILLING).MIN_GROUP,
 					config.get(EntityConfigType.UNWILLING).MAX_GROUP));
 		}
+		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.CUEBALL, biome)
+				&& config.get(EntityConfigType.CUEBALL).SPAWN_WEIGHT > 0) {
+			base.add(new Spawners(ModEntityTypes.CUEBALL.get(), config.get(EntityConfigType.CUEBALL).SPAWN_WEIGHT,
+					config.get(EntityConfigType.CUEBALL).MIN_GROUP,
+					config.get(EntityConfigType.CUEBALL).MAX_GROUP));
+		}
 		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.POSSESSED_SCIENTIST, biome)
 				&& config.get(EntityConfigType.POSSESSED_SCIENTIST).SPAWN_WEIGHT > 0) {
 			base.add(new Spawners(ModEntityTypes.POSSESSEDSCIENTIST.get(),

@@ -40,6 +40,7 @@ public class BiomeConfig {
 	public static List<? extends String> SPIDER_DEMON = Lists.newArrayList(DefaultBiomes.SPIDER_DEMON);
 	public static List<? extends String> UNWILLING = Lists.newArrayList(DefaultBiomes.UNWILLING);
 	public static List<? extends String> ZOMBIEMAN = Lists.newArrayList(DefaultBiomes.ZOMBIEMAN);
+	public static List<? extends String> CUEBALL = Lists.newArrayList(DefaultBiomes.CUEBALL);
 
 	public static Map<String, ForgeConfigSpec.ConfigValue<List<? extends String>>> biomeConfigValues = new HashMap<>();
 

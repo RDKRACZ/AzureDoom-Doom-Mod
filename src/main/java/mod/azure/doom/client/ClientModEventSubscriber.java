@@ -9,6 +9,7 @@ import mod.azure.doom.client.render.BaronRender;
 import mod.azure.doom.client.render.BarrelRender;
 import mod.azure.doom.client.render.CacodemonRender;
 import mod.azure.doom.client.render.ChaingunnerRender;
+import mod.azure.doom.client.render.CueBallRender;
 import mod.azure.doom.client.render.Cyberdemon2016Render;
 import mod.azure.doom.client.render.CyberdemonRender;
 import mod.azure.doom.client.render.GargoyleRender;
@@ -175,6 +176,7 @@ public class ClientModEventSubscriber {
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.FIRING.get(), ArchvileFiringRender::new);
 
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.SPECTRE.get(), SpectreRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.CUEBALL.get(), CueBallRender::new);
 
 		GeoArmorRenderer.registerArmorRenderer(DoomicornDoomArmor.class, new DoomicornRender());
 		GeoArmorRenderer.registerArmorRenderer(NightmareDoomArmor.class, new NightmareRender());

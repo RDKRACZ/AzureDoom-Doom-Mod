@@ -4,7 +4,6 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import mod.azure.doom.entity.ai.goal.DemonAttackGoal;
 import mod.azure.doom.util.config.Config;
 import mod.azure.doom.util.config.EntityConfig;
 import mod.azure.doom.util.config.EntityDefaults.EntityConfigType;
@@ -15,13 +14,7 @@ import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.HurtByTargetGoal;
 import net.minecraft.entity.ai.goal.LookAtGoal;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
-import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
@@ -44,9 +37,10 @@ public class CueBallEntity extends DemonEntity implements IAnimatable {
 
 	private AnimationFactory factory = new AnimationFactory(this);
 	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.CUEBALL);
+	public int flameTimer;
 
-	protected CueBallEntity(EntityType<? extends MonsterEntity> type, World worldIn) {
-		super(type, worldIn);
+	public CueBallEntity(EntityType<CueBallEntity> entityType, World worldIn) {
+		super(entityType, worldIn);
 	}
 
 	public static AttributeModifierMap.MutableAttribute createAttributes() {
@@ -61,17 +55,16 @@ public class CueBallEntity extends DemonEntity implements IAnimatable {
 	@Override
 	protected void tickDeath() {
 		++this.deathTime;
-		if (this.deathTime == 60) {
+		if (this.deathTime == 30) {
 			this.remove();
-		}
-		if (!this.level.isClientSide) {
-			this.explode();
+			if (!this.level.isClientSide) {
+				this.explode();
+			}
 		}
 	}
 
 	protected void explode() {
-		this.level.explode(this, this.getX(), this.getY(0.0625D), this.getZ(), 1.0F,
-				Explosion.Mode.NONE);
+		this.level.explode(this, this.getX(), this.getY(0.0625D), this.getZ(), 1.0F, Explosion.Mode.NONE);
 	}
 
 	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
@@ -94,7 +87,7 @@ public class CueBallEntity extends DemonEntity implements IAnimatable {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
-	public static boolean spawning(EntityType<BaronEntity> p_223337_0_, IWorld p_223337_1_, SpawnReason reason,
+	public static boolean spawning(EntityType<CueBallEntity> p_223337_0_, IWorld p_223337_1_, SpawnReason reason,
 			BlockPos p_223337_3_, Random p_223337_4_) {
 		return passPeacefulAndYCheck(config, p_223337_1_, reason, p_223337_3_, p_223337_4_);
 	}
@@ -102,12 +95,6 @@ public class CueBallEntity extends DemonEntity implements IAnimatable {
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(6, new LookAtGoal(this, PlayerEntity.class, 8.0F));
-		this.goalSelector.addGoal(6, new LookRandomlyGoal(this));
-		this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
-		this.goalSelector.addGoal(4, new DemonAttackGoal(this, 1.0D, false));
-		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
-		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, true));
-		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this).setAlertOthers()));
 	}
 
 	@Nullable
@@ -138,6 +125,16 @@ public class CueBallEntity extends DemonEntity implements IAnimatable {
 	@Override
 	public int getMaxSpawnClusterSize() {
 		return 1;
+	}
+
+	@Override
+	public void aiStep() {
+		super.aiStep();
+		flameTimer = (flameTimer + 1) % 2;
+	}
+
+	public int getFlameTimer() {
+		return flameTimer;
 	}
 
 }
