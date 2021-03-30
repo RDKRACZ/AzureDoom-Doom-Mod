@@ -15,7 +15,7 @@ public class UnwillingModel extends AnimatedGeoModel<UnwillingEntity> {
 
 	@Override
 	public ResourceLocation getModelLocation(UnwillingEntity object) {
-		return new ResourceLocation(DoomMod.MODID, "geo/shotgunzombie.geo.json");
+		return new ResourceLocation(DoomMod.MODID, "geo/unwilling.geo.json");
 	}
 
 	@Override
@@ -25,14 +25,14 @@ public class UnwillingModel extends AnimatedGeoModel<UnwillingEntity> {
 
 	@Override
 	public ResourceLocation getAnimationFileLocation(UnwillingEntity object) {
-		return new ResourceLocation(DoomMod.MODID, "animations/shotgunzombie.animation.json");
+		return new ResourceLocation(DoomMod.MODID, "animations/possessed_scientist_animation.json");
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public void setLivingAnimations(UnwillingEntity entity, Integer uniqueID, AnimationEvent customPredicate) {
 		super.setLivingAnimations(entity, uniqueID, customPredicate);
-		IBone head = this.getAnimationProcessor().getBone("bipedHead");
+		IBone head = this.getAnimationProcessor().getBone("Head");
 
 		EntityModelData extraData = (EntityModelData) customPredicate.getExtraDataOfType(EntityModelData.class).get(0);
 		head.setRotationX(extraData.headPitch * ((float) Math.PI / 180F));

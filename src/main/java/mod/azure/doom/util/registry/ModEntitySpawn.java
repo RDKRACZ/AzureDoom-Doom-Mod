@@ -20,10 +20,20 @@ public class ModEntitySpawn {
 		Biome biome = ForgeRegistries.BIOMES.getValue(event.getName());
 		List<Spawners> base = event.getSpawns().getSpawner(EntityClassification.MONSTER);
 		HashMap<EntityConfigType, EntityConfig> config = Config.SERVER.entityConfig;
+		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.PROWLER, biome)
+				&& config.get(EntityConfigType.PROWLER).SPAWN_WEIGHT > 0) {
+			base.add(new Spawners(ModEntityTypes.PROWLER.get(), config.get(EntityConfigType.PROWLER).SPAWN_WEIGHT,
+					config.get(EntityConfigType.PROWLER).MIN_GROUP, config.get(EntityConfigType.PROWLER).MAX_GROUP));
+		}
 		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.IMP, biome)
 				&& config.get(EntityConfigType.IMP).SPAWN_WEIGHT > 0) {
 			base.add(new Spawners(ModEntityTypes.IMP.get(), config.get(EntityConfigType.IMP).SPAWN_WEIGHT,
 					config.get(EntityConfigType.IMP).MIN_GROUP, config.get(EntityConfigType.IMP).MAX_GROUP));
+		}
+		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.IMP_STONE, biome)
+				&& config.get(EntityConfigType.IMP_STONE).SPAWN_WEIGHT > 0) {
+			base.add(new Spawners(ModEntityTypes.IMP_STONE.get(), config.get(EntityConfigType.IMP_STONE).SPAWN_WEIGHT,
+					config.get(EntityConfigType.IMP_STONE).MIN_GROUP, config.get(EntityConfigType.IMP_STONE).MAX_GROUP));
 		}
 		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.PINKY, biome)
 				&& config.get(EntityConfigType.PINKY).SPAWN_WEIGHT > 0) {

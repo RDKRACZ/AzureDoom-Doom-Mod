@@ -16,6 +16,7 @@ import mod.azure.doom.entity.HellknightEntity;
 import mod.azure.doom.entity.IconofsinEntity;
 import mod.azure.doom.entity.Imp2016Entity;
 import mod.azure.doom.entity.ImpEntity;
+import mod.azure.doom.entity.ImpStoneEntity;
 import mod.azure.doom.entity.LostSoulEntity;
 import mod.azure.doom.entity.MancubusEntity;
 import mod.azure.doom.entity.MarauderEntity;
@@ -25,6 +26,7 @@ import mod.azure.doom.entity.PainEntity;
 import mod.azure.doom.entity.PinkyEntity;
 import mod.azure.doom.entity.PossessedScientistEntity;
 import mod.azure.doom.entity.PossessedSoldierEntity;
+import mod.azure.doom.entity.ProwlerEntity;
 import mod.azure.doom.entity.RevenantEntity;
 import mod.azure.doom.entity.ShotgunguyEntity;
 import mod.azure.doom.entity.SpectreEntity;
@@ -95,6 +97,9 @@ public class ModEventSubscriber {
 		event.put(ModEntityTypes.MECHAZOMBIE.get(), MechaZombieEntity.createAttributes().build());
 		event.put(ModEntityTypes.GARGOYLE.get(), GargoyleEntity.createAttributes().build());
 		event.put(ModEntityTypes.CUEBALL.get(), CueBallEntity.createAttributes().build());
+		event.put(ModEntityTypes.PROWLER.get(), ProwlerEntity.createAttributes().build());
+		event.put(ModEntityTypes.DREADKNIGHT.get(), Hellknight2016Entity.createAttributes().build());
+		event.put(ModEntityTypes.IMP_STONE.get(), ImpStoneEntity.createAttributes().build());
 	}
 
 	public static <T extends IForgeRegistryEntry<T>> T setup(final T entry, final String name) {
@@ -197,6 +202,15 @@ public class ModEventSubscriber {
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.CUEBALL.get(),
 				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
 				CueBallEntity::spawning);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.PROWLER.get(),
+				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+				ProwlerEntity::spawning);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.DREADKNIGHT.get(),
+				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+				Hellknight2016Entity::spawning);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.IMP_STONE.get(),
+				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+				ImpStoneEntity::spawning);
 	}
 
 }

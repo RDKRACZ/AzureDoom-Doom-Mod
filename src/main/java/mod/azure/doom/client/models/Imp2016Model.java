@@ -32,10 +32,10 @@ public class Imp2016Model extends AnimatedGeoModel<Imp2016Entity> {
 	@Override
 	public void setLivingAnimations(Imp2016Entity entity, Integer uniqueID, AnimationEvent customPredicate) {
 		super.setLivingAnimations(entity, uniqueID, customPredicate);
-		IBone head = this.getAnimationProcessor().getBone("head");
+		IBone head = this.getAnimationProcessor().getBone("neck");
 
 		EntityModelData extraData = (EntityModelData) customPredicate.getExtraDataOfType(EntityModelData.class).get(0);
 		head.setRotationX(extraData.headPitch * ((float) Math.PI / 180F));
-		head.setRotationY(extraData.netHeadYaw * ((float) Math.PI / 180F));
+		head.setRotationY(extraData.netHeadYaw * ((float) Math.PI / 340F));
 	}
 }

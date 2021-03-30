@@ -15,7 +15,7 @@ public class ChaingunnerModel extends AnimatedGeoModel<ChaingunnerEntity> {
 
 	@Override
 	public ResourceLocation getModelLocation(ChaingunnerEntity object) {
-		return new ResourceLocation(DoomMod.MODID, "geo/chaingunner.geo.json");
+		return new ResourceLocation(DoomMod.MODID, "geo/shotgunzombie.geo.json");
 	}
 
 	@Override

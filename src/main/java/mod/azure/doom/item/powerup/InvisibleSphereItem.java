@@ -3,6 +3,7 @@ package mod.azure.doom.item.powerup;
 import java.util.List;
 
 import mod.azure.doom.DoomMod;
+import mod.azure.doom.util.PMMOCompat;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -20,6 +21,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.ModList;
 
 public class InvisibleSphereItem extends Item {
 
@@ -33,6 +35,9 @@ public class InvisibleSphereItem extends Item {
 			ServerPlayerEntity playerentity = (ServerPlayerEntity) livingEntityIn;
 			if (!worldIn.isClientSide) {
 				livingEntityIn.addEffect(new EffectInstance(Effects.INVISIBILITY, 1200, 1));
+				if (ModList.get().isLoaded("pmmo")) {
+					PMMOCompat.awardInvisibleXp(playerentity);
+				}
 				if (!playerentity.abilities.instabuild) {
 					stack.shrink(1);
 					if (stack.isEmpty()) {

@@ -1,6 +1,5 @@
 {
 	"credit": "Made with Blockbench",
-	"parent": "item/box_of_shells",
 	"textures": {
 		"shell": "doomweapon:items/shell",
 		"shell_box": "doomweapon:items/shell_box"

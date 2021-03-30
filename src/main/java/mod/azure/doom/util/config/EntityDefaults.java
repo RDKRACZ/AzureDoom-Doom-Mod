@@ -10,7 +10,7 @@ public class EntityDefaults {
 		CACODEMON("Cacodemon", new EntityDefaults(false, 2, 80).setGeneralSpeed(0.25).setRangedDamage(10)),
 		CHAINGUNNER("Chaingunner", new EntityDefaults(false, 4, 15).setMeleeDamage(4).setRangedDamage(4).setGeneralSpeed(0.25)),
 		CUEBALL("Cueball", new EntityDefaults(false, 4, 1).setMeleeDamage(0).setGeneralSpeed(0.00)),
-		CYBER_DEMON_2016("Cyber Demon 2016", new EntityDefaults(true, 1, 300).setMeleeDamage(7).setGeneralSpeed(0.25).setRangedDamage(18)),
+		CYBER_DEMON_2016("Cyber Demon 2016", new EntityDefaults(true, 1, 300).setMeleeDamage(7).setGeneralSpeed(0.15).setRangedDamage(18)),
 		CYBER_DEMON("Cyber Demon", new EntityDefaults(true, 1, 300).setMeleeDamage(7).setGeneralSpeed(0.25).setRangedDamage(18)),
 		GARGOYLE("Gargoyle", new EntityDefaults(false, 4, 30).setMeleeDamage(4).setRangedDamage(10).setGeneralSpeed(0.25).setFlySpeed(2.25)),
 		GORE_NEST("Gore Nest", new EntityDefaults(true, 1, 5).setGeneralSpeed(0).setMeleeDamage(0)),
@@ -18,6 +18,7 @@ public class EntityDefaults {
 		HELL_KNIGHT("Hell Knight", new EntityDefaults(true, 1, 90).setMeleeDamage(6).setGeneralSpeed(0.25)),
 		ICON_OF_SIN("Icon of Sin", new EntityDefaults(true, 1, 1000).setMeleeDamage(30).setGeneralSpeed(0.25)),
 		IMP_2016("Imp 2016", new EntityDefaults(false, 4, 30).setRangedDamage(4).setMeleeDamage(4).setGeneralSpeed(0.25)),
+		IMP_STONE("Stone Imp", new EntityDefaults(false, 4, 15).setMeleeDamage(4).setGeneralSpeed(0.75)),
 		IMP("Imp", new EntityDefaults(false, 4, 30).setRangedDamage(4).setMeleeDamage(4).setGeneralSpeed(0.25)),
 		LOST_SOUL("Lost Soul", new EntityDefaults(false, 4, 10).setMeleeDamage(1).setGeneralSpeed(0.25)),
 		MANCUBUS("Mancubus", new EntityDefaults(true, 1, 80).setMeleeDamage(6).setRangedDamage(13).setGeneralSpeed(0.25)),
@@ -28,11 +29,12 @@ public class EntityDefaults {
 		PINKY("Pinky", new EntityDefaults(false, 4, 75).setMeleeDamage(6).setGeneralSpeed(0.25)),
 		POSSESSED_SCIENTIST("Possessed Scientist", new EntityDefaults(false, 1, 15).setMeleeDamage(4).setGeneralSpeed(0.15)),
 		POSSESSED_SOLDIER("Possessed Soldier", new EntityDefaults(false, 4, 15).setMeleeDamage(4).setRangedDamage(3).setGeneralSpeed(0.25)),
+		PROWLER("Prowler", new EntityDefaults(false, 4, 15).setMeleeDamage(4).setGeneralSpeed(0.4)),
 		REVENANT("Revenant", new EntityDefaults (true, 1, 45).setMeleeDamage(4).setRangedDamage(10).setGeneralSpeed(0.25)),
 		SHOTGUN_GUY("Shotgun Guy", new EntityDefaults(false, 4, 15).setMeleeDamage(4).setRangedDamage(4).setGeneralSpeed(0.25)),
 		SPECTRE("spectre", new EntityDefaults(false, 4, 75).setMeleeDamage(4).setGeneralSpeed(0.25)),
 		SPIDER_DEMON("Spider Mastermind", new EntityDefaults(true, 1, 300).setRangedDamage(15).setMeleeDamage(4).setGeneralSpeed(0.25)),
-		UNWILLING("Unwilling", new EntityDefaults(false, 4, 15).setMeleeDamage(4).setGeneralSpeed(0.25)),
+		UNWILLING("Unwilling", new EntityDefaults(false, 4, 15).setMeleeDamage(4).setGeneralSpeed(0.15)),
 		ZOMBIEMAN("Zombieman", new EntityDefaults(false, 4, 15).setMeleeDamage(4).setRangedDamage(4).setGeneralSpeed(0.25));
 
 		EntityConfigType(String display, EntityDefaults defaults) {

@@ -26,6 +26,7 @@ public class ShotgunShellEntity extends AbstractArrowEntity {
 	protected int timeInAir;
 	protected boolean inAir;
 	private int ticksInAir;
+	private float directHitDamage = 3F;
 
 	public ShotgunShellEntity(EntityType<? extends AbstractArrowEntity> type, World world) {
 		super(type, world);
@@ -33,6 +34,15 @@ public class ShotgunShellEntity extends AbstractArrowEntity {
 
 	public ShotgunShellEntity(World world, LivingEntity owner) {
 		super(ModEntityTypes.SHOTGUN_SHELL.get(), owner, world);
+	}
+
+	public ShotgunShellEntity(World worldIn, double accelX, double accelY, double accelZ, float directHitDamage) {
+		super(ModEntityTypes.SHOTGUN_SHELL.get(), accelX, accelY, accelZ, worldIn);
+		this.directHitDamage = directHitDamage;
+	}
+
+	public void setDirectHitDamage(float directHitDamage) {
+		this.directHitDamage = directHitDamage;
 	}
 
 	@Override
@@ -195,8 +205,7 @@ public class ShotgunShellEntity extends AbstractArrowEntity {
 	protected void onHit(RayTraceResult result) {
 		super.onHit(result);
 		Entity entity = this.getOwner();
-		if (result.getType() != RayTraceResult.Type.ENTITY
-				|| !((EntityRayTraceResult) result).getEntity().is(entity)) {
+		if (result.getType() != RayTraceResult.Type.ENTITY || !((EntityRayTraceResult) result).getEntity().is(entity)) {
 			if (!this.level.isClientSide) {
 				this.remove();
 			}

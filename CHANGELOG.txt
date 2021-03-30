@@ -1,5 +1,16 @@
-v.3.9.12
+v.3.10.0
 
-- Baron, Cyberdemons, Hellknight, Possessed Soldiers now use Plasma firing sound effects.
-- Revenants now use the Rocket firing sound effect.
-- Added the Cueball!
+- New Textures for the Mancubus, Hell Knight 2016, Possessed Solider, and Possessed Scientist thanks to Pedroca!
+- New Textures for the Balista, Heavy Cannon, and Combat Shotgun thanks to Pedroca!
+- New Models and Textures for the BFG Eteranl, Rocket Launcher, Super Shotgun and Unmaykr thanks to Pedroca!
+- New Illager based models for the Chaingunner, Marauder, Shotgun Guy, and Zombieman!
+- New Imp 2016 model and texture thanks to Batpixxler!
+- New Cyberdemon 2016 model and texture thanks to Batpixxler!
+- New Pistol based off the Doom 2016 pistol thanks to Mikubeat and textured by Pedroca!
+- Added the Prowler, the teleporting Imp, model and texture thanks to Batpixxler!
+- Added the Dread Knight, the enhanced Hell Knight!
+- Added the Stone Imp, the fast and spinning Imp!
+- Buffed Cyberdemon 2016 a bit, due to larger size.
+- Marauder now has a shotgun and uses both melee and ranged attacks, along with a teleporting attack.
+- Slight rebalance of drops.
+- Readded Project MMO support since dev issues with other mods have been fixed.

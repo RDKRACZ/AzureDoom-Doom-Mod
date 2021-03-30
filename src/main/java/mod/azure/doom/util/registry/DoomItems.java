@@ -277,6 +277,12 @@ public class DoomItems {
 			() -> new DoomSpawnEgg(ModEntityTypes.SPECTRE));
 	public static final RegistryObject<Item> CUEBALL_SPAWN_EGG = ITEMS.register("cueball_spawn_egg",
 			() -> new DoomSpawnEgg(ModEntityTypes.CUEBALL));
+	public static final RegistryObject<Item> PROWLER_SPAWN_EGG = ITEMS.register("prowler_spawn_egg",
+			() -> new DoomSpawnEgg(ModEntityTypes.PROWLER));
+	public static final RegistryObject<Item> DREADKNIGHT_SPAWN_EGG = ITEMS.register("dreadknight_spawn_egg",
+			() -> new DoomSpawnEgg(ModEntityTypes.DREADKNIGHT));
+	public static final RegistryObject<Item> STONEIMP_SPAWN_EGG = ITEMS.register("stoneimp_spawn_egg",
+			() -> new DoomSpawnEgg(ModEntityTypes.IMP_STONE));
 
 	// WEAPONS AND TOOLS
 	public static final RegistryObject<Item> CRUCIBLESWORD = ITEMS.register("cruciblesword",

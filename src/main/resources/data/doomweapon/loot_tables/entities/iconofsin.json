@@ -7,6 +7,32 @@
 				{
 					"type": "minecraft:item",
 					"name": "doomweapon:bfg_eternal"
+				},
+				{
+					"type": "minecraft:item",
+					"name": "minecraft:netherite_scrap",
+					"functions": [
+						{
+							"function": "minecraft:set_count",
+							"count": {
+								"min": 6,
+								"max": 12
+							}
+						}
+					]
+				},
+				{
+					"type": "minecraft:item",
+					"name": "doomweapon:argent_energy",
+					"functions": [
+						{
+							"function": "minecraft:set_count",
+							"count": {
+								"min": 6,
+								"max": 12
+							}
+						}
+					]
 				}
 			]
 		},

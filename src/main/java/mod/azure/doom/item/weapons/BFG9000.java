@@ -159,7 +159,7 @@ public class BFG9000 extends DoomBaseItem implements IAnimatable {
 
 	@Override
 	public UseAction getUseAnimation(ItemStack stack) {
-		return UseAction.BLOCK;
+		return UseAction.NONE;
 	}
 
 	@Override

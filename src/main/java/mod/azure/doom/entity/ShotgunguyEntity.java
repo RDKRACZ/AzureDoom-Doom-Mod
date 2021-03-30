@@ -182,7 +182,7 @@ public class ShotgunguyEntity extends DemonEntity implements IRangedAttackMob, I
 	@Override
 	public void performRangedAttack(LivingEntity target, float distanceFactor) {
 		ItemStack itemstack = this
-				.getProjectile(this.getItemInHand(ProjectileHelper.getWeaponHoldingHand(this, DoomItems.PISTOL.get())));
+				.getProjectile(this.getItemInHand(ProjectileHelper.getWeaponHoldingHand(this, DoomItems.SG.get())));
 		ShotgunShellEntity abstractarrowentity = this.fireArrowa(itemstack, distanceFactor);
 		if (this.getMainHandItem().getItem() instanceof Shotgun)
 			abstractarrowentity = ((Shotgun) this.getMainHandItem().getItem()).customeArrow(abstractarrowentity);
@@ -191,7 +191,7 @@ public class ShotgunguyEntity extends DemonEntity implements IRangedAttackMob, I
 		double d2 = target.getZ() - this.getZ();
 		double d3 = (double) MathHelper.sqrt(d0 * d0 + d2 * d2);
 		abstractarrowentity.shoot(d0, d1 + d3 * (double) 0.05F, d2, 1.6F, 0.0F);
-		this.playSound(ModSoundEvents.PISTOL_HIT.get(), 1.0F, 1.0F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
+		this.playSound(ModSoundEvents.SHOTGUN_SHOOT.get(), 1.0F, 1.0F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
 		this.level.addFreshEntity(abstractarrowentity);
 	}
 

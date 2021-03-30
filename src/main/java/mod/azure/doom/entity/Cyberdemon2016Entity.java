@@ -1,7 +1,5 @@
 package mod.azure.doom.entity;
 
-import java.time.LocalDate;
-import java.time.temporal.ChronoField;
 import java.util.Random;
 
 import javax.annotation.Nullable;
@@ -16,7 +14,6 @@ import mod.azure.doom.util.config.EntityConfig;
 import mod.azure.doom.util.config.EntityDefaults.EntityConfigType;
 import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
@@ -34,10 +31,11 @@ import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -45,14 +43,68 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-public class Cyberdemon2016Entity extends DemonEntity {
-
+public class Cyberdemon2016Entity extends DemonEntity implements IAnimatable {
+	
+	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.defineId(Cyberdemon2016Entity.class,
+			DataSerializers.BOOLEAN);
 	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.CYBER_DEMON_2016);
+	private AnimationFactory factory = new AnimationFactory(this);
 
 	public Cyberdemon2016Entity(EntityType<Cyberdemon2016Entity> entityType, World worldIn) {
 		super(entityType, worldIn);
+	}
+
+	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+		if (event.isMoving() && !this.entityData.get(ATTACKING)) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("walking", true));
+			return PlayState.CONTINUE;
+		}
+		if (this.entityData.get(ATTACKING) && !(this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("attacking"));
+			return PlayState.CONTINUE;
+		}
+		if ((this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("death", false));
+			return PlayState.CONTINUE;
+		}
+		event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
+		return PlayState.CONTINUE;
+	}
+
+	@Override
+	public void registerControllers(AnimationData data) {
+		data.addAnimationController(new AnimationController<Cyberdemon2016Entity>(this, "controller", 0, this::predicate));
+	}
+
+	@Override
+	public AnimationFactory getFactory() {
+		return this.factory;
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	public boolean isAttacking() {
+		return this.entityData.get(ATTACKING);
+	}
+
+	public void setAttacking(boolean attacking) {
+		this.entityData.set(ATTACKING, attacking);
+	}
+
+	@Override
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(ATTACKING, false);
 	}
 
 	@Override
@@ -66,16 +118,24 @@ public class Cyberdemon2016Entity extends DemonEntity {
 	}
 
 	@Override
+	protected void tickDeath() {
+		++this.deathTime;
+		if (this.deathTime == 60) {
+			this.remove();
+			if (level.isClientSide) {
+			}
+		}
+	}
+
+	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(6, new LookAtGoal(this, PlayerEntity.class, 8.0F));
 		this.goalSelector.addGoal(6, new LookRandomlyGoal(this));
 		this.targetSelector.addGoal(1, new HurtByTargetGoal(this).setAlertOthers());
 		this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
-		this.goalSelector
-				.addGoal(4,
-						new RangedStaticAttackGoal(this, new Cyberdemon2016Entity.FireballAttack(this)
-								.setProjectileOriginOffset(0.8, 0.8, 0.8).setDamage(9), 60,
-								20, 30F));
+		this.goalSelector.addGoal(4, new RangedStaticAttackGoal(this,
+				new Cyberdemon2016Entity.FireballAttack(this).setProjectileOriginOffset(0.8, 0.8, 0.8).setDamage(9), 60,
+				20, 30F));
 		this.goalSelector.addGoal(4, new DemonAttackGoal(this, 1.0D, false));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, true));
@@ -95,7 +155,7 @@ public class Cyberdemon2016Entity extends DemonEntity {
 
 		@Override
 		public AttackSound getDefaultAttackSound() {
-			return new AttackSound(ModSoundEvents.PLASMA_FIRING.get(), 1, 1);
+			return new AttackSound(ModSoundEvents.ROCKET_FIRING.get(), 1, 1);
 		}
 
 		@Override
@@ -109,86 +169,20 @@ public class Cyberdemon2016Entity extends DemonEntity {
 		return config.pushAttributes(MobEntity.createMobAttributes().add(Attributes.FOLLOW_RANGE, 50.0D));
 	}
 
-	@Override
-	protected void defineSynchedData() {
-		super.defineSynchedData();
-	}
-
-	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
-		super.addAdditionalSaveData(compound);
-	}
-
-	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
-		super.readAdditionalSaveData(compound);
-	}
-
-	@Override
-	protected int getExperienceReward(PlayerEntity player) {
-		return super.getExperienceReward(player);
-	}
-
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
-		return 4.70F;
+		return 6.55F;
 	}
 
 	@Nullable
 	@Override
 	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
 			@Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
-		spawnDataIn = super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
-		this.populateDefaultEquipmentEnchantments(difficultyIn);
-		float f = difficultyIn.getSpecialMultiplier();
-		this.setCanPickUpLoot(this.random.nextFloat() < 0.55F * f);
-		if (spawnDataIn == null) {
-			spawnDataIn = new Cyberdemon2016Entity.GroupData(worldIn.getRandom()
-					.nextFloat() < net.minecraftforge.common.ForgeConfig.SERVER.zombieBabyChance.get());
-		}
-
-		if (spawnDataIn instanceof Cyberdemon2016Entity.GroupData) {
-			Cyberdemon2016Entity.GroupData zombieentity$groupdata = (Cyberdemon2016Entity.GroupData) spawnDataIn;
-			if (zombieentity$groupdata.isChild) {
-				this.setBaby(true);
-			}
-
-			this.populateDefaultEquipmentSlots(difficultyIn);
-			this.populateDefaultEquipmentEnchantments(difficultyIn);
-		}
-
-		if (this.getItemBySlot(EquipmentSlotType.HEAD).isEmpty()) {
-			LocalDate localdate = LocalDate.now();
-			int i = localdate.get(ChronoField.DAY_OF_MONTH);
-			int j = localdate.get(ChronoField.MONTH_OF_YEAR);
-			if (j == 10 && i == 31 && this.random.nextFloat() < 0.25F) {
-				this.setItemSlot(EquipmentSlotType.HEAD,
-						new ItemStack(this.random.nextFloat() < 0.1F ? Blocks.JACK_O_LANTERN : Blocks.CARVED_PUMPKIN));
-				this.armorDropChances[EquipmentSlotType.HEAD.getIndex()] = 0.0F;
-			}
-		}
-
-		return spawnDataIn;
-	}
-
-	public class GroupData implements ILivingEntityData {
-		public final boolean isChild;
-
-		private GroupData(boolean isChildIn) {
-			this.isChild = isChildIn;
-		}
+		return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
 
 	@Override
-	public boolean isBaby() {
-		return false;
-	}
-
-	protected boolean shouldDrown() {
-		return false;
-	}
-
-	protected boolean shouldBurnInDay() {
-		return false;
+	public int getArmorValue() {
+		return 10;
 	}
 
 	@Override

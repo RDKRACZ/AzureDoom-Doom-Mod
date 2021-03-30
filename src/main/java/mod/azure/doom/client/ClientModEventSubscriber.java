@@ -12,6 +12,7 @@ import mod.azure.doom.client.render.ChaingunnerRender;
 import mod.azure.doom.client.render.CueBallRender;
 import mod.azure.doom.client.render.Cyberdemon2016Render;
 import mod.azure.doom.client.render.CyberdemonRender;
+import mod.azure.doom.client.render.DreadKnightRender;
 import mod.azure.doom.client.render.GargoyleRender;
 import mod.azure.doom.client.render.GoreNestRender;
 import mod.azure.doom.client.render.Hellknight2016Render;
@@ -19,6 +20,7 @@ import mod.azure.doom.client.render.HellknightRender;
 import mod.azure.doom.client.render.IconofsinRender;
 import mod.azure.doom.client.render.Imp2016Render;
 import mod.azure.doom.client.render.ImpRender;
+import mod.azure.doom.client.render.ImpStoneRender;
 import mod.azure.doom.client.render.LostSoulRender;
 import mod.azure.doom.client.render.MancubusRender;
 import mod.azure.doom.client.render.MarauderRender;
@@ -28,6 +30,7 @@ import mod.azure.doom.client.render.PainRender;
 import mod.azure.doom.client.render.PinkyRender;
 import mod.azure.doom.client.render.PossessedScientistRender;
 import mod.azure.doom.client.render.PossessedSoldierRender;
+import mod.azure.doom.client.render.ProwlerRender;
 import mod.azure.doom.client.render.RevenantRender;
 import mod.azure.doom.client.render.ShotgunguyRender;
 import mod.azure.doom.client.render.SpectreRender;
@@ -174,9 +177,11 @@ public class ClientModEventSubscriber {
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.HELLKNIGHT2016.get(),
 				Hellknight2016Render::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.FIRING.get(), ArchvileFiringRender::new);
-
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.SPECTRE.get(), SpectreRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.CUEBALL.get(), CueBallRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.PROWLER.get(), ProwlerRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.DREADKNIGHT.get(), DreadKnightRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.IMP_STONE.get(), ImpStoneRender::new);
 
 		GeoArmorRenderer.registerArmorRenderer(DoomicornDoomArmor.class, new DoomicornRender());
 		GeoArmorRenderer.registerArmorRenderer(NightmareDoomArmor.class, new NightmareRender());

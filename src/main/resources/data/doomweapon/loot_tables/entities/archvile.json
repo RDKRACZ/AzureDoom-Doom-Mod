@@ -6,7 +6,16 @@
 			"entries": [
 				{
 					"type": "minecraft:item",
-					"name": "doomweapon:argent_energy"
+					"name": "doomweapon:argent_energy",
+					"functions": [
+						{
+							"function": "minecraft:set_count",
+							"count": {
+								"min": 3,
+								"max": 6
+							}
+						}
+					]
 				}
 			],
 			"conditions": [

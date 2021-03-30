@@ -2,88 +2,78 @@
   "credit": "Made with Blockbench",
   "parent": "builtin/entity",
   "texture_size": [
-    32,
-    16
+    64,
+    64
   ],
   "display": {
     "thirdperson_righthand": {
       "translation": [
-        1.05,
-        -1.5,
-        -8.5
+        0,
+        -0.75,
+        -3.75
+      ],
+      "scale": [
+        0.5,
+        0.5,
+        0.5
       ]
     },
     "thirdperson_lefthand": {
       "translation": [
-        -0.9499999999999997,
-        -1.5,
-        -8.5
+        0,
+        -0.75,
+        -3.75
+      ],
+      "scale": [
+        0.5,
+        0.5,
+        0.5
       ]
     },
     "firstperson_righthand": {
-      "rotation": [
-        -6.5,
-        0,
-        0
-      ],
       "translation": [
-        -8,
-        0.5,
-        -2
-      ],
-      "scale": [
-        1,
-        1,
-        0.8
+        -9,
+        -11.25,
+        -18.5
       ]
     },
     "firstperson_lefthand": {
-      "rotation": [
-        -6.5,
-        0,
-        0
-      ],
       "translation": [
-        -10,
-        0.5,
-        -2
-      ],
-      "scale": [
-        1,
-        1,
-        0.8
+        -9,
+        -11.25,
+        -18.5
       ]
     },
     "ground": {
       "translation": [
         0,
-        -0.7000000000000002,
-        -5
+        1,
+        0
       ],
       "scale": [
-        1.5,
-        1.5,
-        1.5
+        0.65,
+        0.65,
+        0.65
       ]
     },
     "gui": {
       "rotation": [
-        48,
-        -32,
-        0
+        65,
+        -52,
+        19
       ],
       "translation": [
-        3.55,
-        1.75,
+        0.25,
+        0,
         0
+      ],
+      "scale": [
+        0.4,
+        0.4,
+        0.4
       ]
     },
     "head": {
-      "translation": [
-        0,
-        6.8,
-        -2.5
-      ],
       "scale": [
         0,
         0,
@@ -93,13 +83,18 @@
     "fixed": {
       "rotation": [
         0,
-        270,
+        -90,
         0
       ],
       "translation": [
-        5.25,
-        -2,
+        0.75,
+        0,
         0
+      ],
+      "scale": [
+        0.4,
+        0.4,
+        0.4
       ]
     }
   }
