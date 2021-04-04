@@ -27,7 +27,7 @@ public class DoomStructures {
 
 	public static void setupStructures() {
 		setupMapSpacingAndLand(DOOM1.get(),
-				new StructureSeparationSettings(10, 5, 1234567890), true);
+				new StructureSeparationSettings(20, 11, 1234567890), true);
 	}
 
 	public static <F extends Structure<?>> void setupMapSpacingAndLand(F structure,

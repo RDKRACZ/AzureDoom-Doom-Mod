@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north": { "model": "doom:block/icon_wall14", "y": 270 },
+        "facing=south": { "model": "doom:block/icon_wall14", "y": 90 },
+        "facing=west":  { "model": "doom:block/icon_wall14", "y": 180 },
+        "facing=east":  { "model": "doom:block/icon_wall14" }
+    }
+}

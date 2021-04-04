@@ -1,0 +1,25 @@
+{
+	"result": {
+		"item": "doom:axe_marauder_open"
+	},
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"m#m",
+		"///",
+		" I "
+	],
+	"key": {
+		"#": {
+			"item": "minecraft:nether_star"
+		},
+		"m": {
+			"item": "minecraft:ghast_tear"
+		},
+		"/": {
+			"item": "doom:argent_energy"
+		},
+		"I": {
+			"item": "doom:axe_marauder_closed"
+		}
+	}
+}

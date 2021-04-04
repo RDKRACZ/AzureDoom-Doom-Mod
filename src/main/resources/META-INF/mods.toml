@@ -2,24 +2,23 @@ modLoader="javafml"
 loaderVersion="[34,)"
 license="MIT"
 [[mods]]
-modId="doomweapon"
+modId="doom"
 version="${file.jarVersion}"
 displayName="Doom Mod"
 logoFile="doomlogo.png"
 authors="AzureDoomC" 
-credits="Thanks to Narial/ulnight for the awesome Sword/Axe and textures! Also Credit to C-Legend for the tools and armor textures! Credit to Marctron for the new armor textures!"
 description='''
 Adds Doom into Minecraft
 '''
-[[dependencies.doomweapon]]
+[[dependencies.doom]]
     modId="curios"
     mandatory=true
-   	versionRange="[FORGE-1.16.1-3.0-beta1,)"
+   	versionRange="[1.16.3-4.0.2.0,)"
     ordering="NONE"
     side="BOTH"
-[[dependencies.doomweapon]]
+[[dependencies.doom]]
     modId="geckolib3"
     mandatory=true
-    versionRange="[3.0.0,)"
+    versionRange="[3.0.15,)"
     ordering="BEFORE"
     side="BOTH"

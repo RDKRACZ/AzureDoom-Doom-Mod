@@ -1,0 +1,22 @@
+{
+	"result": {
+		"item": "doom:plasmagun"
+	},
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"CmC",
+		"$C$",
+		"C C"
+	],
+	"key": {
+		"$": {
+			"item": "doom:argent_energy"
+		},
+		"C": {
+			"item": "doom:argent_plate"
+		},
+		"m": {
+			"tag": "forge:glass"
+		}
+	}
+}

@@ -1,8 +1,0 @@
-{
-    "parent": "block/inner_stairs",
-    "textures": {
-        "bottom": "doomweapon:blocks/e1m1_ceiling",
-        "top": "doomweapon:blocks/e1m1_blue_floor",
-        "side": "doomweapon:blocks/e1m1_brown_wall"
-    }
-}

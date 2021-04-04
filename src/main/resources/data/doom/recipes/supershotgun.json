@@ -1,0 +1,22 @@
+{
+	"result": {
+		"item": "doom:supershotgun"
+	},
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"CCC",
+		"$$$",
+		" IC"
+	],
+	"key": {
+		"I": {
+			"item": "minecraft:stick"
+		},
+		"$": {
+			"item": "doom:argent_energy"
+		},
+		"C": {
+			"item": "doom:argent_plate"
+		}
+	}
+}

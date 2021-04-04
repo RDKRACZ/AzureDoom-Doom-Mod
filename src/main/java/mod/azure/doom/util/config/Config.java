@@ -44,9 +44,11 @@ public class Config {
 
 		private ConfigValue<Integer> specCRUCIBLE_MARAUDER_MAX_DAMAGE;
 		private final BooleanValue specENABLE_LOCKON;
+		private final BooleanValue specENABLE_BLOCK_BREAKING;
 
 		public int CRUCIBLE_MARAUDER_MAX_DAMAGE;
 		public boolean ENABLE_LOCKON;
+		public boolean ENABLE_BLOCK_BREAKING;
 
 		/*
 		 * Spawn Weights
@@ -70,8 +72,10 @@ public class Config {
 					.define("CRUCIBLE_MARAUDER_MAX_DAMAGE", 5);
 			builder.pop();
 			builder.push("extra");
-			specENABLE_LOCKON = builder.comment("You can disable disable the lockon feature here.")
+			specENABLE_LOCKON = builder.comment("You can disable the lockon feature here.")
 					.translation(DoomMod.MODID + ".config.enable_lockon").define("ENABLE_LOCKON", true);
+			specENABLE_BLOCK_BREAKING = builder.comment("You can enable weapons breaking blocks.")
+					.translation(DoomMod.MODID + ".config.enable_block_breaking").define("ENABLE_BLOCK_BREAKING", true);
 			builder.pop();
 		}
 
@@ -88,6 +92,7 @@ public class Config {
 		public void bakeConfig() {
 			CRUCIBLE_MARAUDER_MAX_DAMAGE = specCRUCIBLE_MARAUDER_MAX_DAMAGE.get();
 			ENABLE_LOCKON = specENABLE_LOCKON.get();
+			ENABLE_BLOCK_BREAKING = specENABLE_BLOCK_BREAKING.get();
 			entityConfig.values().forEach(config -> config.bake());
 		}
 

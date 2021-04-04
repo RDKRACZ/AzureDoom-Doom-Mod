@@ -1,8 +1,0 @@
-{
-    "variants": {
-        "facing=north": { "model": "doomweapon:block/icon_wall9", "y": 270 },
-        "facing=south": { "model": "doomweapon:block/icon_wall9", "y": 90 },
-        "facing=west":  { "model": "doomweapon:block/icon_wall9", "y": 180 },
-        "facing=east":  { "model": "doomweapon:block/icon_wall9" }
-    }
-}

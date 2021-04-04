@@ -21,8 +21,14 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-public class ChaingunBulletEntity extends AbstractArrowEntity {
+public class ChaingunBulletEntity extends AbstractArrowEntity implements IAnimatable {
 
 	protected int timeInAir;
 	protected boolean inAir;
@@ -30,6 +36,23 @@ public class ChaingunBulletEntity extends AbstractArrowEntity {
 
 	public ChaingunBulletEntity(EntityType<? extends AbstractArrowEntity> type, World world) {
 		super(type, world);
+	}
+
+	private AnimationFactory factory = new AnimationFactory(this);
+
+	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+		return PlayState.CONTINUE;
+	}
+
+	@Override
+	public void registerControllers(AnimationData data) {
+		data.addAnimationController(
+				new AnimationController<ChaingunBulletEntity>(this, "controller", 0, this::predicate));
+	}
+
+	@Override
+	public AnimationFactory getFactory() {
+		return this.factory;
 	}
 
 	public ChaingunBulletEntity(World world, LivingEntity owner) {

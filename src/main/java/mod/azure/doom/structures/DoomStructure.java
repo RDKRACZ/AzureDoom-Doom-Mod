@@ -1,6 +1,7 @@
 package mod.azure.doom.structures;
 
 import java.util.List;
+import java.util.Random;
 
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Codec;
@@ -8,14 +9,19 @@ import com.mojang.serialization.Codec;
 import mod.azure.doom.DoomMod;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Rotation;
+import net.minecraft.util.SharedSeedRandom;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MutableBoundingBox;
 import net.minecraft.util.registry.DynamicRegistries;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.MobSpawnInfo;
+import net.minecraft.world.biome.provider.BiomeProvider;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.GenerationStage;
+import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraft.world.gen.feature.jigsaw.JigsawManager;
 import net.minecraft.world.gen.feature.structure.AbstractVillagePiece;
@@ -57,6 +63,36 @@ public class DoomStructure extends Structure<NoFeatureConfig> {
 		return STRUCTURE_CREATURES;
 	}
 
+	@Override
+	protected boolean isFeatureChunk(ChunkGenerator chunkGenerator, BiomeProvider biomeSource, long seed,
+			SharedSeedRandom chunkRandom, int chunkX, int chunkZ, Biome biome, ChunkPos chunkPos,
+			NoFeatureConfig featureConfig) {
+		return getYPositionForFeature(chunkX, chunkZ, chunkGenerator) >= 60;
+	}
+
+	private static int getYPositionForFeature(int p_191070_0_, int p_191070_1_, ChunkGenerator p_191070_2_) {
+		Random random = new Random((long) (p_191070_0_ + p_191070_1_ * 10387313));
+		Rotation rotation = Rotation.getRandom(random);
+		int i = 5;
+		int j = 5;
+		if (rotation == Rotation.CLOCKWISE_90) {
+			i = -5;
+		} else if (rotation == Rotation.CLOCKWISE_180) {
+			i = -5;
+			j = -5;
+		} else if (rotation == Rotation.COUNTERCLOCKWISE_90) {
+			j = -5;
+		}
+
+		int k = (p_191070_0_ << 4) + 7;
+		int l = (p_191070_1_ << 4) + 7;
+		int i1 = p_191070_2_.getFirstOccupiedHeight(k, l, Heightmap.Type.WORLD_SURFACE_WG);
+		int j1 = p_191070_2_.getFirstOccupiedHeight(k, l + j, Heightmap.Type.WORLD_SURFACE_WG);
+		int k1 = p_191070_2_.getFirstOccupiedHeight(k + i, l, Heightmap.Type.WORLD_SURFACE_WG);
+		int l1 = p_191070_2_.getFirstOccupiedHeight(k + i, l + j, Heightmap.Type.WORLD_SURFACE_WG);
+		return Math.min(Math.min(i1, j1), Math.min(k1, l1));
+	}
+
 	public static class Start extends StructureStart<NoFeatureConfig> {
 		public Start(Structure<NoFeatureConfig> structureIn, int chunkX, int chunkZ,
 				MutableBoundingBox mutableBoundingBox, int referenceIn, long seedIn) {
@@ -70,13 +106,11 @@ public class DoomStructure extends Structure<NoFeatureConfig> {
 			int z = (chunkZ << 4) + 7;
 			BlockPos blockpos = new BlockPos(x, 0, z);
 			JigsawManager.addPieces(dynamicRegistryManager,
-					new VillageConfig(
-							() -> dynamicRegistryManager.registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY)
-									.get(new ResourceLocation(DoomMod.MODID, "doom/start_pool")),
-							10),
+					new VillageConfig(() -> dynamicRegistryManager.registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY)
+							.get(new ResourceLocation(DoomMod.MODID, "doom/start_pool")), 10),
 					AbstractVillagePiece::new, chunkGenerator, templateManagerIn, blockpos, this.pieces, this.random,
 					false, true);
-			this.pieces.forEach(piece -> piece.move(0, 1, 0));
+			this.pieces.forEach(piece -> piece.move(0, 0, 0));
 			this.pieces.forEach(piece -> piece.getBoundingBox().y0 -= 1);
 			this.calculateBoundingBox();
 		}

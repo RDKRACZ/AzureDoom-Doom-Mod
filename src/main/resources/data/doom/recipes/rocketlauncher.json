@@ -1,0 +1,22 @@
+{
+	"result": {
+		"item": "doom:rocketlauncher"
+	},
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"CCC",
+		"C$C",
+		" m "
+	],
+	"key": {
+		"$": {
+			"item": "doom:argent_energy"
+		},
+		"C": {
+			"item": "doom:argent_plate"
+		},
+		"m": {
+			"item": "minecraft:tnt"
+		}
+	}
+}

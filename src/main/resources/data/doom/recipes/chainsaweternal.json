@@ -1,0 +1,22 @@
+{
+	"result": {
+		"item": "doom:chainsaweternal"
+	},
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"CmC",
+		"C$C",
+		"CC "
+	],
+	"key": {
+		"C": {
+			"item": "minecraft:iron_ingot"
+		},
+		"m": {
+			"item": "minecraft:redstone"
+		},
+		"$": {
+			"item": "minecraft:gunpowder"
+		}
+	}
+}

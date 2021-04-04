@@ -1,8 +1,0 @@
-{
-    "variants": {
-        "facing=north": { "model": "doomweapon:block/e1m1_block23", "y": 270 },
-        "facing=south": { "model": "doomweapon:block/e1m1_block23", "y": 90 },
-        "facing=west":  { "model": "doomweapon:block/e1m1_block23", "y": 180 },
-        "facing=east":  { "model": "doomweapon:block/e1m1_block23" }
-    }
-}

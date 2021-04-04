@@ -262,6 +262,12 @@ public class ModEntityTypes {
 					.sized(1.5f, 1.95F).clientTrackingRange(9).fireImmune()
 					.build(new ResourceLocation(DoomMod.MODID, "possessed_scientist").toString()));
 
+//	public static final RegistryObject<EntityType<PossessedScientistEntity>> POSSESSEDWORKER = ENTITY_TYPES.register(
+//			"possessed_worker",
+//			() -> EntityType.Builder.of(PossessedScientistEntity::new, EntityClassification.MONSTER)
+//					.sized(1.5f, 1.95F).clientTrackingRange(9).fireImmune()
+//					.build(new ResourceLocation(DoomMod.MODID, "possessed_worker").toString()));
+
 	public static final RegistryObject<EntityType<CueBallEntity>> CUEBALL = ENTITY_TYPES.register(
 			"cueball",
 			() -> EntityType.Builder.of(CueBallEntity::new, EntityClassification.MONSTER)

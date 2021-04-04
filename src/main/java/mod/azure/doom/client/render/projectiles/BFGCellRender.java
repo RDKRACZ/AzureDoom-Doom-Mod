@@ -4,10 +4,11 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import mod.azure.doom.DoomMod;
+import mod.azure.doom.client.GeoProjectilesRenderer;
+import mod.azure.doom.client.models.projectiles.BFGBallModel;
 import mod.azure.doom.entity.projectiles.BFGEntity;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.entity.LivingEntity;
@@ -17,64 +18,57 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Matrix3f;
 import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraft.util.math.vector.Vector3f;
+import software.bernie.geckolib3.geo.render.built.GeoModel;
 
-public class BFGCellRender extends EntityRenderer<BFGEntity> {
+public class BFGCellRender extends GeoProjectilesRenderer<BFGEntity> {
 
-	private static final ResourceLocation BFG_CELL_TEXTURE = new ResourceLocation(DoomMod.MODID,
-			"textures/entity/projectiles/bfg.png");
-	private static final RenderType RENDER_TYPE = RenderType.entityCutoutNoCull(BFG_CELL_TEXTURE);
 	private static final RenderType BEAM = RenderType
 			.entitySmoothCutout(new ResourceLocation(DoomMod.MODID, "textures/entity/projectiles/bfg_beam.png"));
 
 	public BFGCellRender(EntityRendererManager renderManagerIn) {
-		super(renderManagerIn);
+		super(renderManagerIn, new BFGBallModel());
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(BFGEntity entity) {
-		return BFG_CELL_TEXTURE;
+	public RenderType getRenderType(BFGEntity animatable, float partialTicks, MatrixStack stack,
+			IRenderTypeBuffer renderTypeBuffer, IVertexBuilder vertexBuilder, int packedLightIn,
+			ResourceLocation textureLocation) {
+		return RenderType.entityTranslucent(getTextureLocation(animatable));
 	}
 
 	protected int getBlockLightLevel(BFGEntity entityIn, BlockPos partialTicks) {
 		return 15;
 	}
 
-	public void render(BFGEntity entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn,
-			IRenderTypeBuffer bufferIn, int packedLightIn) {
-		matrixStackIn.pushPose();
-		float f = getY(entityIn, partialTicks);
-		matrixStackIn.scale(4.0F, 4.0F, 4.0F);
-		matrixStackIn.mulPose(this.entityRenderDispatcher.cameraOrientation());
-		matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180.0F));
-		MatrixStack.Entry matrixstack$entry = matrixStackIn.last();
-		Matrix4f matrix4f = matrixstack$entry.pose();
-		Matrix3f matrix3f = matrixstack$entry.normal();
-		IVertexBuilder ivertexbuilder = bufferIn.getBuffer(RENDER_TYPE);
-		vertex(ivertexbuilder, matrix4f, matrix3f, packedLightIn, 0.0F, 0, 0, 1);
-		vertex(ivertexbuilder, matrix4f, matrix3f, packedLightIn, 1.0F, 0, 1, 1);
-		vertex(ivertexbuilder, matrix4f, matrix3f, packedLightIn, 1.0F, 1, 1, 0);
-		vertex(ivertexbuilder, matrix4f, matrix3f, packedLightIn, 0.0F, 1, 0, 0);
-		matrixStackIn.popPose();
-		LivingEntity blockpos = entityIn.getTargetedEntity();
+	@Override
+	public void render(GeoModel model, BFGEntity animatable, float partialTicks, RenderType type,
+			MatrixStack matrixStackIn, IRenderTypeBuffer renderTypeBuffer, IVertexBuilder vertexBuilder,
+			int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
+		super.render(model, animatable, partialTicks, type, matrixStackIn, renderTypeBuffer, vertexBuilder,
+				packedLightIn, packedOverlayIn, red, green, blue, alpha);
+		float f = getY(animatable, partialTicks);
+		LivingEntity blockpos = animatable.getTargetedEntity();
 		if (blockpos != null) {
 			float f3 = (float) blockpos.getX() + 0.5F;
 			float f4 = (float) blockpos.getY() + 0.5F;
 			float f5 = (float) blockpos.getZ() + 0.5F;
-			float f6 = (float) ((double) f3 - entityIn.getX());
-			float f7 = (float) ((double) f4 - entityIn.getY());
-			float f8 = (float) ((double) f5 - entityIn.getZ());
+			float f6 = (float) ((double) f3 - animatable.getX());
+			float f7 = (float) ((double) f4 - animatable.getY());
+			float f8 = (float) ((double) f5 - animatable.getZ());
 			matrixStackIn.translate((double) f6, (double) f7, (double) f8);
-			renderCrystalBeams(-f6, -f7 + f, -f8, partialTicks, entityIn.tickCount, matrixStackIn, bufferIn,
+			renderCrystalBeams(-f6, -f7 + f, -f8, partialTicks, animatable.tickCount, matrixStackIn, renderTypeBuffer,
 					packedLightIn);
 		}
-		super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
 	}
-
-	private static void vertex(IVertexBuilder p_229045_0_, Matrix4f p_229045_1_, Matrix3f p_229045_2_,
-			int p_229045_3_, float p_229045_4_, int p_229045_5_, int p_229045_6_, int p_229045_7_) {
-		p_229045_0_.vertex(p_229045_1_, p_229045_4_ - 0.5F, (float) p_229045_5_ - 0.25F, 0.0F).color(255, 255, 255, 255)
-				.uv((float) p_229045_6_, (float) p_229045_7_).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(p_229045_3_)
-				.normal(p_229045_2_, 0.0F, 1.0F, 0.0F).endVertex();
+	
+	@Override
+	public void renderEarly(BFGEntity animatable, MatrixStack stackIn, float ticks,
+			IRenderTypeBuffer renderTypeBuffer, IVertexBuilder vertexBuilder, int packedLightIn, int packedOverlayIn,
+			float red, float green, float blue, float partialTicks) {
+		super.renderEarly(animatable, stackIn, ticks, renderTypeBuffer, vertexBuilder, packedLightIn, packedOverlayIn, red,
+				green, blue, partialTicks);
+		stackIn.scale(animatable.tickCount > 2 ? 1.0F : 0.0F, animatable.tickCount > 2 ? 1.0F : 0.0F,
+				animatable.tickCount > 2 ? 1.0F : 0.0F);
 	}
 
 	public static void renderCrystalBeams(float p_229059_0_, float p_229059_1_, float p_229059_2_, float p_229059_3_,

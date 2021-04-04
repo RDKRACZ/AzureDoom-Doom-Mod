@@ -1,5 +1,6 @@
 package mod.azure.doom.entity.projectiles.entity;
 
+import mod.azure.doom.util.config.Config;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.entity.Entity;
@@ -171,7 +172,7 @@ public class RocketMobEntity extends DamagingProjectileEntity implements IAnimat
 
 	protected void explode() {
 		this.level.explode(this, this.getX(), this.getY(0.0625D), this.getZ(), 1.0F,
-				Explosion.Mode.NONE);
+				Config.SERVER.ENABLE_BLOCK_BREAKING ? Explosion.Mode.BREAK : Explosion.Mode.NONE);
 	}
 
 	public LivingEntity getShooter() {

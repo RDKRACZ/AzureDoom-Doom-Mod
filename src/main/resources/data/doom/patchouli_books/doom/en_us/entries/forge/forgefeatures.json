@@ -1,0 +1,17 @@
+{
+	"name": "Lock On",
+	"icon": "minecraft:ender_eye",
+	"category": "doom:forge_category",
+	"pages": [
+		{
+			"type": "text",
+			"text": "Lock On is a built-in feature that locks your view to an entity when holding a weapon and hitting the Lock On button (Default O button). $(br2)To switch targets, simply press the Switch button (Default Tab button)."
+		},
+		{
+			"type": "entity",
+			"entity": "doom:rocket",
+			"name": "Lock On", 
+			"rotate" : false
+		}
+	]
+}

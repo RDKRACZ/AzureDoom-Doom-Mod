@@ -1,0 +1,22 @@
+{
+  "result": {
+    "item": "doom:unmaykr"
+  },
+  "type": "minecraft:crafting_shaped",
+   "pattern": [
+        "@C@",
+        "@#@",
+        "@#@"
+    ],
+    "key": {
+        "#": {
+            "item": "doom:argent_plate"
+        },
+		"@": {
+			"item": "minecraft:phantom_membrane"
+		},
+		"C": {
+			"item": "minecraft:nether_star"
+		}
+    }
+}

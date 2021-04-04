@@ -1,0 +1,19 @@
+{
+	"name": "Spider Mastermind",
+	"icon": "doom:soulcube",
+	"category": "doom:mob_category",	
+	"secret":false,
+	"read_by_default":true,
+	
+	"pages": [
+		{
+			"type": "text",
+			"text": "The Spider Mastermind. The mother of the Arachnotron. Watch out for her chaingun or it'll rip you apart!"
+		},
+		{
+			"type": "entity",
+			"entity": "doom:spiderdemon",
+			"scale": 0.9
+		}
+	]
+}

@@ -17,7 +17,6 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
@@ -133,9 +132,8 @@ public class ArchvileFiring extends Entity implements IAnimatable {
 				this.remove();
 			}
 		}
-		final Vector3d facing = Vector3d.directionFromRotation(this.getRotationVector()).normalize();
 		List<Entity> list = this.level.getEntities(this,
-				new AxisAlignedBB(this.blockPosition().above()).inflate(5D, 5D, 5D).move(facing.scale(1D)));
+				new AxisAlignedBB(this.blockPosition().above()).inflate(1D, 1D, 1D));
 		for (int k2 = 0; k2 < list.size(); ++k2) {
 			Entity entity = list.get(k2);
 			if (!(entity instanceof MancubusEntity) && !(entity instanceof ArchvileEntity)) {

@@ -2,6 +2,7 @@ package mod.azure.doom.entity.projectiles;
 
 import java.util.List;
 
+import mod.azure.doom.util.config.Config;
 import mod.azure.doom.util.registry.DoomItems;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import mod.azure.doom.util.registry.ModSoundEvents;
@@ -223,6 +224,8 @@ public class RocketEntity extends AbstractArrowEntity implements IAnimatable {
 				|| !((EntityRayTraceResult) p_213868_1_).getEntity().is(entity)) {
 			if (!this.level.isClientSide) {
 				this.doDamage();
+				this.level.explode(this, this.getX(), this.getY(0.0625D), this.getZ(), 1.0F,
+						Config.SERVER.ENABLE_BLOCK_BREAKING ? Explosion.Mode.BREAK : Explosion.Mode.NONE);
 				this.remove();
 			}
 		}
@@ -232,10 +235,11 @@ public class RocketEntity extends AbstractArrowEntity implements IAnimatable {
 	protected void onHit(RayTraceResult result) {
 		super.onHit(result);
 		Entity entity = this.getOwner();
-		if (result.getType() != RayTraceResult.Type.ENTITY
-				|| !((EntityRayTraceResult) result).getEntity().is(entity)) {
+		if (result.getType() != RayTraceResult.Type.ENTITY || !((EntityRayTraceResult) result).getEntity().is(entity)) {
 			if (!this.level.isClientSide) {
 				this.doDamage();
+				this.level.explode(this, this.getX(), this.getY(0.0625D), this.getZ(), 1.0F,
+						Config.SERVER.ENABLE_BLOCK_BREAKING ? Explosion.Mode.BREAK : Explosion.Mode.NONE);
 				this.remove();
 			}
 		}
@@ -259,8 +263,6 @@ public class RocketEntity extends AbstractArrowEntity implements IAnimatable {
 				if (entity instanceof LivingEntity) {
 					entity.hurt(DamageSource.playerAttack((PlayerEntity) this.shooter), 20);
 				}
-				this.level.explode(this, this.getX(), this.getY(0.0625D), this.getZ(), 0.0F,
-						Explosion.Mode.NONE);
 			}
 		}
 	}

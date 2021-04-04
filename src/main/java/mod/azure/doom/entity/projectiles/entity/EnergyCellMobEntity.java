@@ -17,8 +17,15 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-public class EnergyCellMobEntity extends DamagingProjectileEntity {
+public class EnergyCellMobEntity extends DamagingProjectileEntity implements IAnimatable {
 
 	public int explosionPower = 1;
 	protected int timeInAir;
@@ -36,6 +43,24 @@ public class EnergyCellMobEntity extends DamagingProjectileEntity {
 		super(ModEntityTypes.ENERGY_CELL_MOB.get(), shooter, accelX, accelY, accelZ, worldIn);
 		this.shooter = shooter;
 		this.directHitDamage = directHitDamage;
+	}
+
+	private AnimationFactory factory = new AnimationFactory(this);
+
+	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+		event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
+		return PlayState.CONTINUE;
+	}
+
+	@Override
+	public void registerControllers(AnimationData data) {
+		data.addAnimationController(
+				new AnimationController<EnergyCellMobEntity>(this, "controller", 0, this::predicate));
+	}
+
+	@Override
+	public AnimationFactory getFactory() {
+		return this.factory;
 	}
 
 	@Override
@@ -62,7 +87,7 @@ public class EnergyCellMobEntity extends DamagingProjectileEntity {
 		Entity entity = this.getOwner();
 		if (this.level.isClientSide
 				|| (entity == null || entity.isAlive()) && this.level.hasChunkAt(this.blockPosition())) {
-			//super.tick();
+			// super.tick();
 			RayTraceResult raytraceresult = ProjectileHelper.getHitResult(this, this::canHitEntity);
 			if (raytraceresult.getType() != RayTraceResult.Type.MISS
 					&& !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, raytraceresult)) {
@@ -142,8 +167,7 @@ public class EnergyCellMobEntity extends DamagingProjectileEntity {
 	}
 
 	protected void explode() {
-		this.level.explode(this, this.getX(), this.getY(0.0625D), this.getZ(), 1.0F,
-				Explosion.Mode.NONE);
+		this.level.explode(this, this.getX(), this.getY(0.0625D), this.getZ(), 1.0F, Explosion.Mode.NONE);
 	}
 
 	public LivingEntity getShooter() {

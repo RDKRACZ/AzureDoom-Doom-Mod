@@ -1,0 +1,22 @@
+{
+	"result": {
+		"item": "doom:shotgun"
+	},
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"   ",
+		"$II",
+		"  C"
+	],
+	"key": {
+		"I": {
+			"item": "minecraft:stick"
+		},
+		"$": {
+			"item": "doom:argent_energy"
+		},
+		"C": {
+			"item": "doom:argent_plate"
+		}
+	}
+}

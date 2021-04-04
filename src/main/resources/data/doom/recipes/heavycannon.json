@@ -1,0 +1,19 @@
+{
+	"result": {
+		"item": "doom:heavycannon"
+	},
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		" CC",
+		"$CC",
+		"  C"
+	],
+	"key": {
+		"$": {
+			"item": "doom:argent_energy"
+		},
+		"C": {
+			"item": "doom:argent_plate"
+		}
+	}
+}

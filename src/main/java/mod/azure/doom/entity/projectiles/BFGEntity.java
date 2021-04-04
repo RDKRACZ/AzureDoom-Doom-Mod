@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import mod.azure.doom.entity.GoreNestEntity;
+import mod.azure.doom.util.config.Config;
 import mod.azure.doom.util.registry.DoomItems;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import mod.azure.doom.util.registry.ModSoundEvents;
@@ -12,6 +13,7 @@ import net.minecraft.entity.AreaEffectCloudEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.boss.dragon.EnderDragonEntity;
 import net.minecraft.entity.monster.HoglinEntity;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.monster.PhantomEntity;
@@ -36,10 +38,18 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-public class BFGEntity extends AbstractArrowEntity {
+public class BFGEntity extends AbstractArrowEntity implements IAnimatable {
 
 	protected int timeInAir;
 	protected boolean inAir;
@@ -54,6 +64,23 @@ public class BFGEntity extends AbstractArrowEntity {
 
 	public BFGEntity(World world, LivingEntity shooter) {
 		super(ModEntityTypes.BFG_CELL.get(), shooter, world);
+	}
+
+	private AnimationFactory factory = new AnimationFactory(this);
+
+	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+		event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
+		return PlayState.CONTINUE;
+	}
+
+	@Override
+	public void registerControllers(AnimationData data) {
+		data.addAnimationController(new AnimationController<BFGEntity>(this, "controller", 0, this::predicate));
+	}
+
+	@Override
+	public AnimationFactory getFactory() {
+		return this.factory;
 	}
 
 	@Override
@@ -190,6 +217,15 @@ public class BFGEntity extends AbstractArrowEntity {
 					}
 				}
 			}
+			if (!(entity instanceof ServerPlayerEntity) && (entity instanceof EnderDragonEntity)) {
+				double d12 = (double) (MathHelper.sqrt(entity.distanceToSqr(vector3d1)) / f2);
+				if (d12 <= 1.0D) {
+					if (entity.isAlive()) {
+						entity.hurt(DamageSource.badRespawnPointExplosion(), 10);
+						this.setTargetedEntity(entity.getId());
+					}
+				}
+			}
 		}
 	}
 
@@ -238,6 +274,8 @@ public class BFGEntity extends AbstractArrowEntity {
 				|| !((EntityRayTraceResult) p_213868_1_).getEntity().is(entity)) {
 			if (!this.level.isClientSide) {
 				this.doDamage();
+				this.level.explode(this, this.getX(), this.getY(0.0625D), this.getZ(), 1.0F,
+						Config.SERVER.ENABLE_BLOCK_BREAKING ? Explosion.Mode.BREAK : Explosion.Mode.NONE);
 				this.remove();
 			}
 			this.playSound(ModSoundEvents.BFG_HIT.get(), 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
@@ -248,10 +286,11 @@ public class BFGEntity extends AbstractArrowEntity {
 	protected void onHit(RayTraceResult result) {
 		super.onHit(result);
 		Entity entity = this.getOwner();
-		if (result.getType() != RayTraceResult.Type.ENTITY
-				|| !((EntityRayTraceResult) result).getEntity().is(entity)) {
+		if (result.getType() != RayTraceResult.Type.ENTITY || !((EntityRayTraceResult) result).getEntity().is(entity)) {
 			if (!this.level.isClientSide) {
 				this.doDamage();
+				this.level.explode(this, this.getX(), this.getY(0.0625D), this.getZ(), 1.0F,
+						Config.SERVER.ENABLE_BLOCK_BREAKING ? Explosion.Mode.BREAK : Explosion.Mode.NONE);
 				this.remove();
 			}
 			this.playSound(ModSoundEvents.BFG_HIT.get(), 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
@@ -278,7 +317,7 @@ public class BFGEntity extends AbstractArrowEntity {
 				double d12 = (double) (MathHelper.sqrt(entity.distanceToSqr(vector3d)) / f2);
 				if (d12 <= 1.0D) {
 					entity.hurt(DamageSource.arrow(this, this), 100);
-					setTargetedEntity(entity.getId());
+					this.setTargetedEntity(entity.getId());
 					if (!this.level.isClientSide) {
 						List<LivingEntity> list1 = this.level.getEntitiesOfClass(LivingEntity.class,
 								this.getBoundingBox().inflate(4.0D, 2.0D, 4.0D));
@@ -291,12 +330,20 @@ public class BFGEntity extends AbstractArrowEntity {
 							for (LivingEntity livingentity : list1) {
 								double d0 = this.distanceToSqr(livingentity);
 								if (d0 < 16.0D) {
-									areaeffectcloudentity.setPos(entity.getX(), entity.getEyeY(),
-											entity.getZ());
+									areaeffectcloudentity.setPos(entity.getX(), entity.getEyeY(), entity.getZ());
 								}
 							}
 						}
 						entity.level.addFreshEntity(areaeffectcloudentity);
+					}
+				}
+			}
+			if (!(entity instanceof ServerPlayerEntity) && (entity instanceof EnderDragonEntity)) {
+				double d12 = (double) (MathHelper.sqrt(entity.distanceToSqr(vector3d)) / f2);
+				if (d12 <= 1.0D) {
+					if (entity.isAlive()) {
+						entity.hurt(DamageSource.badRespawnPointExplosion(), 100);
+						this.setTargetedEntity(entity.getId());
 					}
 				}
 			}

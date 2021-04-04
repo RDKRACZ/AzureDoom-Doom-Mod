@@ -1,0 +1,22 @@
+{
+	"result": {
+		"item": "doom:chaingun"
+	},
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"  C",
+		"$II",
+		"  C"
+	],
+	"key": {
+		"I": {
+			"item": "minecraft:iron_bars"
+		},
+		"$": {
+			"item": "doom:argent_energy"
+		},
+		"C": {
+			"item": "doom:argent_plate"
+		}
+	}
+}

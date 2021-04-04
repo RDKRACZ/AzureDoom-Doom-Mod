@@ -17,8 +17,15 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-public class BarenBlastEntity extends DamagingProjectileEntity {
+public class BarenBlastEntity extends DamagingProjectileEntity implements IAnimatable {
 
 	public int explosionPower = 1;
 	protected int timeInAir;
@@ -36,6 +43,23 @@ public class BarenBlastEntity extends DamagingProjectileEntity {
 		super(ModEntityTypes.BARENBLAST.get(), shooter, accelX, accelY, accelZ, worldIn);
 		this.shooter = shooter;
 		this.directHitDamage = directHitDamage;
+	}
+
+	private AnimationFactory factory = new AnimationFactory(this);
+
+	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+		event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
+		return PlayState.CONTINUE;
+	}
+
+	@Override
+	public void registerControllers(AnimationData data) {
+		data.addAnimationController(new AnimationController<BarenBlastEntity>(this, "controller", 0, this::predicate));
+	}
+
+	@Override
+	public AnimationFactory getFactory() {
+		return this.factory;
 	}
 
 	public void setDirectHitDamage(float directHitDamage) {
@@ -148,8 +172,7 @@ public class BarenBlastEntity extends DamagingProjectileEntity {
 	}
 
 	protected void explode() {
-		this.level.explode(this, this.getX(), this.getY(0.0625D), this.getZ(), 1.0F,
-				Explosion.Mode.NONE);
+		this.level.explode(this, this.getX(), this.getY(0.0625D), this.getZ(), 1.0F, Explosion.Mode.NONE);
 	}
 
 	public LivingEntity getShooter() {
