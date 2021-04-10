@@ -7,9 +7,6 @@ import software.bernie.geckolib3.model.AnimatedGeoModel;
 
 public class SpiderdemonModel extends AnimatedGeoModel<SpiderdemonEntity> {
 
-	public SpiderdemonModel() {
-	}
-
 	@Override
 	public ResourceLocation getModelLocation(SpiderdemonEntity object) {
 		return new ResourceLocation(DoomMod.MODID, "geo/spidermastermind.geo.json");

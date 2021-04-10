@@ -84,11 +84,9 @@ public class DoomItems {
 
 	// BLOCKS
 	public static final RegistryObject<Item> ITEM = ITEMS.register("barrel",
-			() -> new BlockItem(DoomBlocks.BARREL_BLOCK.get(),
-					new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
+			() -> new BlockItem(DoomBlocks.BARREL_BLOCK.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> ARGENT_BLOCK = ITEMS.register("argent_block",
-			() -> new BlockItem(DoomBlocks.ARGENT_BLOCK.get(),
-					new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
+			() -> new BlockItem(DoomBlocks.ARGENT_BLOCK.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> ARGENT_LAMP_BLOCK = ITEMS.register("argent_lamp_block",
 			() -> new BlockItem(DoomBlocks.ARGENT_LAMP_BLOCK.get(),
 					new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
@@ -283,6 +281,28 @@ public class DoomItems {
 			() -> new DoomSpawnEgg(ModEntityTypes.DREADKNIGHT));
 	public static final RegistryObject<Item> STONEIMP_SPAWN_EGG = ITEMS.register("stoneimp_spawn_egg",
 			() -> new DoomSpawnEgg(ModEntityTypes.IMP_STONE));
+	public static final RegistryObject<Item> TYRANT_SPAWN_EGG = ITEMS.register("tyrant_spawn_egg",
+			() -> new DoomSpawnEgg(ModEntityTypes.TYRANT));
+	public static final RegistryObject<Item> POSSESSED_WORKER_SPAWN_EGG = ITEMS.register("possessed_worker_spawn_egg",
+			() -> new DoomSpawnEgg(ModEntityTypes.POSSESSEDWORKER));
+	public static final RegistryObject<Item> DOOMHUNTER_SPAWN_EGG = ITEMS.register("doom_hunter_spawn_egg",
+			() -> new DoomSpawnEgg(ModEntityTypes.DOOMHUNTER));
+//	public static final RegistryObject<Item> PINKY2016_SPAWN_EGG = ITEMS.register("pinky2016_spawn_egg",
+//			() -> new DoomSpawnEgg(ModEntityTypes.PINKY2016));
+//	public static final RegistryObject<Item> WHIPLASH_SPAWN_EGG = ITEMS.register("whiplash_worker_spawn_egg",
+//			() -> new DoomSpawnEgg(ModEntityTypes.WHIPLASH));
+//	public static final RegistryObject<Item> BARON2016_SPAWN_EGG = ITEMS.register("baron2016_spawn_egg",
+//			() -> new DoomSpawnEgg(ModEntityTypes.BARON2016));
+//	public static final RegistryObject<Item> FIREBORNE_BARON_SPAWN_EGG = ITEMS.register("firebronebaron_spawn_egg",
+//			() -> new DoomSpawnEgg(ModEntityTypes.FIREBARON));
+//	public static final RegistryObject<Item> ARMORED_BARON_SPAWN_EGG = ITEMS.register("armoredbaron_spawn_egg",
+//			() -> new DoomSpawnEgg(ModEntityTypes.ARMORBARON));
+//	public static final RegistryObject<Item> MAYKR_DRONE_SPAWN_EGG = ITEMS.register("maykr_drone_spawn_egg",
+//			() -> new DoomSpawnEgg(ModEntityTypes.MAYKRDRONE));
+//	public static final RegistryObject<Item> BLOOD_MAYKR_SPAWN_EGG = ITEMS.register("blood_maykr_spawn_egg",
+//			() -> new DoomSpawnEgg(ModEntityTypes.BLOODMAYKR));
+//	public static final RegistryObject<Item> KHAN_MAKYR_SPAWN_EGG = ITEMS.register("khan_maykr_spawn_egg",
+//			() -> new DoomSpawnEgg(ModEntityTypes.KHANMAKER));
 
 	// WEAPONS AND TOOLS
 	public static final RegistryObject<Item> CRUCIBLESWORD = ITEMS.register("cruciblesword",

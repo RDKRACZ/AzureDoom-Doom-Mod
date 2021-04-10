@@ -12,6 +12,7 @@ import mod.azure.doom.client.render.ChaingunnerRender;
 import mod.azure.doom.client.render.CueBallRender;
 import mod.azure.doom.client.render.Cyberdemon2016Render;
 import mod.azure.doom.client.render.CyberdemonRender;
+import mod.azure.doom.client.render.DoomHunterRender;
 import mod.azure.doom.client.render.DreadKnightRender;
 import mod.azure.doom.client.render.GargoyleRender;
 import mod.azure.doom.client.render.GoreNestRender;
@@ -30,11 +31,13 @@ import mod.azure.doom.client.render.PainRender;
 import mod.azure.doom.client.render.PinkyRender;
 import mod.azure.doom.client.render.PossessedScientistRender;
 import mod.azure.doom.client.render.PossessedSoldierRender;
+import mod.azure.doom.client.render.PossessedWorkerRender;
 import mod.azure.doom.client.render.ProwlerRender;
 import mod.azure.doom.client.render.RevenantRender;
 import mod.azure.doom.client.render.ShotgunguyRender;
 import mod.azure.doom.client.render.SpectreRender;
 import mod.azure.doom.client.render.SpiderdemonRender;
+import mod.azure.doom.client.render.TyrantRender;
 import mod.azure.doom.client.render.UnwillingRender;
 import mod.azure.doom.client.render.ZombiemanRender;
 import mod.azure.doom.client.render.armors.AstroRender;
@@ -182,6 +185,28 @@ public class ClientModEventSubscriber {
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.PROWLER.get(), ProwlerRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.DREADKNIGHT.get(), DreadKnightRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.IMP_STONE.get(), ImpStoneRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.TYRANT.get(), TyrantRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.POSSESSEDWORKER.get(),
+				PossessedWorkerRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.DOOMHUNTER.get(),
+				DoomHunterRender::new);
+
+//		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.PINKY2016.get(),
+//				Pinky2016Render::new);
+//		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.WHIPLASH.get(),
+//				WhiplashRender::new);
+//		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BARON2016.get(),
+//				Baron2016Render::new);
+//		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.FIREBARON.get(),
+//				FireBaronRender::new);
+//		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ARMORBARON.get(),
+//				ArmorBaronRender::new);
+//		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.MAYKRDRONE.get(),
+//				MaykrDroneRender::new);
+//		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BLOODMAYKR.get(),
+//				BloodMaykrRender::new);
+//		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.KHANMAKER.get(),
+//				KhanMaykrRender::new);
 
 		GeoArmorRenderer.registerArmorRenderer(DoomicornDoomArmor.class, new DoomicornRender());
 		GeoArmorRenderer.registerArmorRenderer(NightmareDoomArmor.class, new NightmareRender());
@@ -213,6 +238,6 @@ public class ClientModEventSubscriber {
 		GeoArmorRenderer.registerArmorRenderer(ZombieDoomArmor.class, new ZombieRender());
 		GeoArmorRenderer.registerArmorRenderer(SantaDoomArmor.class, new SantaRender());
 
-		RenderTypeLookup.setRenderLayer(DoomBlocks.JUMP_PAD.get(), RenderType.cutout());
+		RenderTypeLookup.setRenderLayer(DoomBlocks.JUMP_PAD.get(), RenderType.translucent());
 	}
 }

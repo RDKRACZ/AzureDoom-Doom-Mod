@@ -9,6 +9,7 @@ import mod.azure.doom.entity.ChaingunnerEntity;
 import mod.azure.doom.entity.CueBallEntity;
 import mod.azure.doom.entity.Cyberdemon2016Entity;
 import mod.azure.doom.entity.CyberdemonEntity;
+import mod.azure.doom.entity.DoomHunterEntity;
 import mod.azure.doom.entity.GargoyleEntity;
 import mod.azure.doom.entity.GoreNestEntity;
 import mod.azure.doom.entity.Hellknight2016Entity;
@@ -146,6 +147,47 @@ public class ModEventSubscriber {
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.IMP_STONE.get(),
 				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
 				ImpStoneEntity::spawning);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.TYRANT.get(),
+				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+				Cyberdemon2016Entity::spawning);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.POSSESSEDWORKER.get(),
+				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+				PossessedScientistEntity::spawning);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.DOOMHUNTER.get(),
+				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+				DoomHunterEntity::spawning);
+		// EntitySpawnPlacementRegistry.register(ModEntityTypes.WHIPLASH.get(),
+		// EntitySpawnPlacementRegistry.PlacementType.ON_GROUND,
+		// Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+		// WhiplashEntity::spawning);
+		// EntitySpawnPlacementRegistry.register(ModEntityTypes.PINKY2016.get(),
+		// EntitySpawnPlacementRegistry.PlacementType.ON_GROUND,
+		// Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+		// PinkyEntity::spawning);
+		// EntitySpawnPlacementRegistry.register(ModEntityTypes.FIREBARON.get(),
+		// EntitySpawnPlacementRegistry.PlacementType.ON_GROUND,
+		// Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+		// FireBaronEntity::spawning);
+		// EntitySpawnPlacementRegistry.register(ModEntityTypes.BARON2016.get(),
+		// EntitySpawnPlacementRegistry.PlacementType.ON_GROUND,
+		// Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+		// BaronEntity::spawning);
+		// EntitySpawnPlacementRegistry.register(ModEntityTypes.ARMORBARON.get(),
+		// EntitySpawnPlacementRegistry.PlacementType.ON_GROUND,
+		// Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+		// ArmorBaronEntity::spawning);
+		// EntitySpawnPlacementRegistry.register(ModEntityTypes.MAYKRDRONE.get(),
+		// EntitySpawnPlacementRegistry.PlacementType.ON_GROUND,
+		// Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+		// MaykrDroneEntity::spawning);
+		// EntitySpawnPlacementRegistry.register(ModEntityTypes.BLOODMAYKR.get(),
+		// EntitySpawnPlacementRegistry.PlacementType.ON_GROUND,
+		// Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+		// BloodMaykrEntity::spawning);
+		// EntitySpawnPlacementRegistry.register(ModEntityTypes.KHANMAKER.get(),
+		// EntitySpawnPlacementRegistry.PlacementType.ON_GROUND,
+		// Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+		// KhanMakyrEntity::spawning);
 	}
 
 	@SubscribeEvent
@@ -183,6 +225,25 @@ public class ModEventSubscriber {
 		event.put(ModEntityTypes.PROWLER.get(), ProwlerEntity.createAttributes().build());
 		event.put(ModEntityTypes.DREADKNIGHT.get(), Hellknight2016Entity.createAttributes().build());
 		event.put(ModEntityTypes.IMP_STONE.get(), ImpStoneEntity.createAttributes().build());
+		event.put(ModEntityTypes.TYRANT.get(), Cyberdemon2016Entity.createAttributes().build());
+		event.put(ModEntityTypes.POSSESSEDWORKER.get(), PossessedScientistEntity.createAttributes().build());
+		event.put(ModEntityTypes.DOOMHUNTER.get(), DoomHunterEntity.createAttributes().build());
+		// event.put(ModEntityTypes.WHIPLASH.get(),
+		// WhiplashEntity.createAttributes().build());
+		// event.put(ModEntityTypes.PINKY2016.get(),
+		// PinkyEntity.createAttributes().build());
+		// event.put(ModEntityTypes.BARON2016.get(),
+		// BaronEntity.createAttributes().build());
+		// event.put(ModEntityTypes.ARMORBARON.get(),
+		// ArmorBaronEntity.createAttributes().build());
+		// event.put(ModEntityTypes.MAYKRDRONE.get(),
+		// MaykrDroneEntity.createAttributes().build());
+		// event.put(ModEntityTypes.BLOODMAYKR.get(),
+		// BloodMaykrEntity.createAttributes().build());
+		// event.put(ModEntityTypes.KHANMAKER.get(),
+		// KhanMakyrEntity.createAttributes().build());
+		// event.put(ModEntityTypes.FIREBARON.get(),
+		// FireBaronEntity.createAttributes().build());
 	}
 
 }

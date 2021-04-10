@@ -215,4 +215,25 @@ public class ModSoundEvents {
 			() -> new SoundEvent(new ResourceLocation(DoomMod.MODID, "doom.mecha_death")));
 	public static final RegistryObject<SoundEvent> MECHA_HURT = MOD_SOUNDS.register("doom.mecha_hit",
 			() -> new SoundEvent(new ResourceLocation(DoomMod.MODID, "doom.mecha_hit")));
+	
+	public static final RegistryObject<SoundEvent> WHIPLASH_AMBIENT = MOD_SOUNDS.register("doom.whiplash_ambient",
+			() -> new SoundEvent(new ResourceLocation(DoomMod.MODID, "doom.whiplash_ambient")));
+	public static final RegistryObject<SoundEvent> WHIPLASH_DEATH = MOD_SOUNDS.register("doom.whiplash_death",
+			() -> new SoundEvent(new ResourceLocation(DoomMod.MODID, "doom.whiplash_death")));
+	public static final RegistryObject<SoundEvent> WHIPLASH_HURT = MOD_SOUNDS.register("doom.whiplash_hurt",
+			() -> new SoundEvent(new ResourceLocation(DoomMod.MODID, "doom.whiplash_hurt")));
+	
+	public static final RegistryObject<SoundEvent> DOOMHUNTER_AMBIENT = MOD_SOUNDS.register("doom.doomhunter_ambient",
+			() -> new SoundEvent(new ResourceLocation(DoomMod.MODID, "doom.doomhunter_ambient")));
+	public static final RegistryObject<SoundEvent> DOOMHUNTER_DEATH = MOD_SOUNDS.register("doom.doomhunter_death",
+			() -> new SoundEvent(new ResourceLocation(DoomMod.MODID, "doom.doomhunter_death")));
+	public static final RegistryObject<SoundEvent> DOOMHUNTER_HURT = MOD_SOUNDS.register("doom.doomhunter_hurt",
+			() -> new SoundEvent(new ResourceLocation(DoomMod.MODID, "doom.doomhunter_hurt")));
+	
+	public static final RegistryObject<SoundEvent> MAKYR_AMBIENT = MOD_SOUNDS.register("doom.maykr_ambient",
+			() -> new SoundEvent(new ResourceLocation(DoomMod.MODID, "doom.maykr_ambient")));
+	public static final RegistryObject<SoundEvent> MAKYR_DEATH = MOD_SOUNDS.register("doom.maykr_death",
+			() -> new SoundEvent(new ResourceLocation(DoomMod.MODID, "doom.maykr_death")));
+	public static final RegistryObject<SoundEvent> MAKYR_HURT = MOD_SOUNDS.register("doom.maykr_hurt",
+			() -> new SoundEvent(new ResourceLocation(DoomMod.MODID, "doom.maykr_hurt")));
 }

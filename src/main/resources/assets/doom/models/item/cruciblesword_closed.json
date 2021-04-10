@@ -241,42 +241,6 @@
 			}
 		}
 	],
-	"overrides": [
-		{
-			"predicate": {
-				"pulling": 1
-			},
-			"model": "item/bow_pulling_3"
-		},
-		{
-			"predicate": {
-				"pulling": 1,
-				"pull": 0.1
-			},
-			"model": "item/bow_pulling_0"
-		},
-		{
-			"predicate": {
-				"pulling": 1,
-				"pull": 0.4
-			},
-			"model": "item/bow_pulling_1"
-		},
-		{
-			"predicate": {
-				"pulling": 1,
-				"pull": 0.8
-			},
-			"model": "item/bow_pulling_2"
-		},
-		{
-			"predicate": {
-				"pulling": 1,
-				"pull": 0.99
-			},
-			"model": "item/bow_pulling_3"
-		}
-	],
 	"display": {
 		"thirdperson_righthand": {
 			"translation": [-0.25, 7, 1.5],

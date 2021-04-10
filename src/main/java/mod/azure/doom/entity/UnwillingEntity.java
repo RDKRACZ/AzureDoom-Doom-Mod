@@ -68,7 +68,7 @@ public class UnwillingEntity extends DemonEntity implements IAnimatable {
 				return PlayState.CONTINUE;
 			}
 		}
-		if (this.isAggressive()) {
+		if (this.isAggressive() && !(this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("attack", true));
 			return PlayState.CONTINUE;
 		}

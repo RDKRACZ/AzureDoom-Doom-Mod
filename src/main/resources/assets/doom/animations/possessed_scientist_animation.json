@@ -51,7 +51,7 @@
 						}
 					}
 				},
-				"Right_arm": {
+				"right_arm": {
 					"rotation": {
 						"0.0": {
 							"vector": [0, 0, 0]
@@ -74,7 +74,7 @@
 						}
 					}
 				},
-				"Right_forearm": {
+				"right_forearm": {
 					"rotation": {
 						"0.0": {
 							"vector": [0, 0, 0]
@@ -195,7 +195,7 @@
 						}
 					}
 				},
-				"Right_arm": {
+				"right_arm": {
 					"rotation": {
 						"0.0": {
 							"vector": [0, 0, 0]
@@ -214,7 +214,7 @@
 						}
 					}
 				},
-				"Right_forearm": {
+				"right_forearm": {
 					"rotation": {
 						"0.0": {
 							"vector": [0, 0, 0]
@@ -377,7 +377,7 @@
 						}
 					}
 				},
-				"Right_arm": {
+				"right_arm": {
 					"rotation": {
 						"0.0": {
 							"vector": [-77.5, 0, 0]
@@ -393,7 +393,7 @@
 						"vector": [0, -2, 1]
 					}
 				},
-				"Right_forearm": {
+				"right_forearm": {
 					"rotation": {
 						"0.0": {
 							"vector": [0, 0, 0]
@@ -540,7 +540,7 @@
 						}
 					}
 				},
-				"Right_arm": {
+				"right_arm": {
 					"rotation": {
 						"0.0": {
 							"vector": [0, 0, 0]

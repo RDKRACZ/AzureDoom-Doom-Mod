@@ -43,6 +43,13 @@ public class BiomeConfig {
 	public static List<? extends String> CUEBALL = Lists.newArrayList(DefaultBiomes.CUEBALL);
 	public static List<? extends String> PROWLER = Lists.newArrayList(DefaultBiomes.PROWLER);
 	public static List<? extends String> IMP_STONE = Lists.newArrayList(DefaultBiomes.IMP_STONE);
+	public static List<? extends String> TYRANT = Lists.newArrayList(DefaultBiomes.TYRANT);
+	public static List<? extends String> POSSESSEDWORKER = Lists.newArrayList(DefaultBiomes.POSSESSEDWORKER);
+	public static List<? extends String> WHIPLASH = Lists.newArrayList(DefaultBiomes.WHIPLASH);
+	public static List<? extends String> DOOMHUNTER = Lists.newArrayList(DefaultBiomes.DOOMHUNTER);
+	public static List<? extends String> MAYKRDRONE = Lists.newArrayList(DefaultBiomes.MAYKRDRONE);
+	public static List<? extends String> BLOODMAYKR = Lists.newArrayList(DefaultBiomes.BLOODMAYKR);
+	public static List<? extends String> KHANMAKYR = Lists.newArrayList(DefaultBiomes.KHANMAKYR);
 
 	public static Map<String, ForgeConfigSpec.ConfigValue<List<? extends String>>> biomeConfigValues = new HashMap<>();
 

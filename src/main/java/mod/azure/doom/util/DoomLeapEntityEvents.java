@@ -46,7 +46,7 @@ public class DoomLeapEntityEvents {
 
 			if (canJump && !entity.isFallFlying() && !((PlayerEntity) entity).abilities.flying) {
 				if (playerJumping && entity.getDeltaMovement().y() < 0) {
-					entity.setDeltaMovement(entity.getDeltaMovement().x(), 0.8D, entity.getDeltaMovement().z());
+					entity.setDeltaMovement(entity.getDeltaMovement().x(), 1.6D, entity.getDeltaMovement().z());
 					uuidHasJumpedMap.put(entity.getUUID().toString(), true);
 
 					entity.playSound(SoundEvents.GENERIC_EXTINGUISH_FIRE, 0.3F, 2.0F);

@@ -10,7 +10,7 @@ import mod.azure.doom.entity.ai.goal.DemonAttackGoal;
 import mod.azure.doom.entity.ai.goal.RangedStaticAttackGoal;
 import mod.azure.doom.entity.attack.AbstractRangedAttack;
 import mod.azure.doom.entity.attack.AttackSound;
-import mod.azure.doom.entity.projectiles.entity.BarenBlastEntity;
+import mod.azure.doom.entity.projectiles.entity.RocketMobEntity;
 import mod.azure.doom.util.config.Config;
 import mod.azure.doom.util.config.EntityConfig;
 import mod.azure.doom.util.config.EntityDefaults.EntityConfigType;
@@ -152,12 +152,12 @@ public class CyberdemonEntity extends DemonEntity implements IAnimatable {
 
 		@Override
 		public AttackSound getDefaultAttackSound() {
-			return new AttackSound(ModSoundEvents.PLASMA_FIRING.get(), 1, 1);
+			return new AttackSound(ModSoundEvents.ROCKET_FIRING.get(), 1, 1);
 		}
 
 		@Override
 		public ProjectileEntity getProjectile(World world, double d2, double d3, double d4) {
-			return new BarenBlastEntity(world, this.parentEntity, d2, d3, d4, damage);
+			return new RocketMobEntity(world, this.parentEntity, d2, d3, d4, damage);
 
 		}
 	}
@@ -197,7 +197,7 @@ public class CyberdemonEntity extends DemonEntity implements IAnimatable {
 	}
 
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
-		return 4.70F;
+		return 6.55F;
 	}
 
 	@Nullable

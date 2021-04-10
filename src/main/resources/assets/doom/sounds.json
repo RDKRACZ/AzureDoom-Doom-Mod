@@ -38,9 +38,6 @@
 	"doom.arachnotron_death": {
 		"category": "music", "sounds": [{"name": "doom:arachnotron_death", "stream": true}]
 	},
-	"doom.arachnotron_attack": {
-		"category": "music", "sounds": [{"name": "doom:arachnotron_attack", "stream": true}]
-	},
 	"doom.shotgun_fire": {
 		"category": "music", "sounds": [{"name": "doom:shotgun_fire", "stream": true}]
 	},
@@ -240,7 +237,7 @@
 		"category": "music", "sounds": [{"name": "doom:psoldier_idle", "stream": true}]
 	},
 	"doom.psoldier_hit": {
-		"category": "music", "sounds": [{"name": "doom:psoldier_hit", "stream": true}]
+		"category": "music", "sounds": [{"name": "doom:psoldier_hurt", "stream": true}]
 	},
 	"doom.psoldier_death": {
 		"category": "music", "sounds": [{"name": "doom:psoldier_death", "stream": true}]
@@ -256,5 +253,32 @@
 	},
 	"doom.ballista_firing": {
 		"category": "music", "sounds": [{"name": "doom:ballista_firing", "stream": true}]
+	},
+	"doom.whiplash_death": {
+		"category": "music", "sounds": [{"name": "doom:whiplash_death", "stream": true}]
+	},
+	"doom.whiplash_hurt": {
+		"category": "music", "sounds": [{"name": "doom:whiplash_hurt", "stream": true}]
+	},
+	"doom.whiplash_ambient": {
+		"category": "music", "sounds": [{"name": "doom:whiplash_ambient", "stream": true}]
+	},
+	"doom.doomhunter_death": {
+		"category": "music", "sounds": [{"name": "doom:doomhunter_death", "stream": true}]
+	},
+	"doom.doomhunter_hurt": {
+		"category": "music", "sounds": [{"name": "doom:doomhunter_hurt", "stream": true}]
+	},
+	"doom.doomhunter_ambient": {
+		"category": "music", "sounds": [{"name": "doom:doomhunter_ambient", "stream": true}]
+	},
+	"doom.maykr_death": {
+		"category": "music", "sounds": [{"name": "doom:maykr_death", "stream": true}]
+	},
+	"doom.maykr_hurt": {
+		"category": "music", "sounds": [{"name": "doom:maykr_hurt", "stream": true}]
+	},
+	"doom.maykr_ambient": {
+		"category": "music", "sounds": [{"name": "doom:maykr_ambient", "stream": true}]
 	}
 }

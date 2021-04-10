@@ -34,4 +34,11 @@ public class DefaultBiomes {
 	public static final String[] CUEBALL = new String[] { "|#nether" };
 	public static final String[] PROWLER = new String[] { "|#nether" };
 	public static final String[] IMP_STONE = new String[] { "|#nether" };
+	public static final String[] TYRANT = new String[] { "|#nether" };
+	public static final String[] POSSESSEDWORKER = new String[] { "|#nether" };
+	public static final String[] WHIPLASH = new String[] { "|#nether" };
+	public static final String[] DOOMHUNTER = new String[] { "|#nether" };
+	public static final String[] MAYKRDRONE = new String[] { "|#the_end" };
+	public static final String[] BLOODMAYKR = new String[] { "|#the_end" };
+	public static final String[] KHANMAKYR = new String[] { "|#the_end" };
 }

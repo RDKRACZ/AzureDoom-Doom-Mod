@@ -33,6 +33,7 @@ public class ShotgunShellEntity extends AbstractArrowEntity implements IAnimatab
 	protected int timeInAir;
 	protected boolean inAir;
 	private int ticksInAir;
+	@SuppressWarnings("unused")
 	private float directHitDamage = 3F;
 
 	public ShotgunShellEntity(EntityType<? extends AbstractArrowEntity> type, World world) {

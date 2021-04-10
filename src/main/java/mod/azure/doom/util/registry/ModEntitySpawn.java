@@ -33,7 +33,8 @@ public class ModEntitySpawn {
 		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.IMP_STONE, biome)
 				&& config.get(EntityConfigType.IMP_STONE).SPAWN_WEIGHT > 0) {
 			base.add(new Spawners(ModEntityTypes.IMP_STONE.get(), config.get(EntityConfigType.IMP_STONE).SPAWN_WEIGHT,
-					config.get(EntityConfigType.IMP_STONE).MIN_GROUP, config.get(EntityConfigType.IMP_STONE).MAX_GROUP));
+					config.get(EntityConfigType.IMP_STONE).MIN_GROUP,
+					config.get(EntityConfigType.IMP_STONE).MAX_GROUP));
 		}
 		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.PINKY, biome)
 				&& config.get(EntityConfigType.PINKY).SPAWN_WEIGHT > 0) {
@@ -175,8 +176,7 @@ public class ModEntitySpawn {
 		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.CUEBALL, biome)
 				&& config.get(EntityConfigType.CUEBALL).SPAWN_WEIGHT > 0) {
 			base.add(new Spawners(ModEntityTypes.CUEBALL.get(), config.get(EntityConfigType.CUEBALL).SPAWN_WEIGHT,
-					config.get(EntityConfigType.CUEBALL).MIN_GROUP,
-					config.get(EntityConfigType.CUEBALL).MAX_GROUP));
+					config.get(EntityConfigType.CUEBALL).MIN_GROUP, config.get(EntityConfigType.CUEBALL).MAX_GROUP));
 		}
 		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.POSSESSED_SCIENTIST, biome)
 				&& config.get(EntityConfigType.POSSESSED_SCIENTIST).SPAWN_WEIGHT > 0) {
@@ -204,6 +204,18 @@ public class ModEntitySpawn {
 					config.get(EntityConfigType.CYBER_DEMON_2016).SPAWN_WEIGHT,
 					config.get(EntityConfigType.CYBER_DEMON_2016).MIN_GROUP,
 					config.get(EntityConfigType.CYBER_DEMON_2016).MAX_GROUP));
+		}
+		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.TYRANT, biome)
+				&& config.get(EntityConfigType.TYRANT).SPAWN_WEIGHT > 0) {
+			base.add(new Spawners(ModEntityTypes.TYRANT.get(), config.get(EntityConfigType.TYRANT).SPAWN_WEIGHT,
+					config.get(EntityConfigType.TYRANT).MIN_GROUP, config.get(EntityConfigType.TYRANT).MAX_GROUP));
+		}
+		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.POSSESSEDWORKER, biome)
+				&& config.get(EntityConfigType.POSSESSEDWORKER).SPAWN_WEIGHT > 0) {
+			base.add(new Spawners(ModEntityTypes.POSSESSEDWORKER.get(),
+					config.get(EntityConfigType.POSSESSEDWORKER).SPAWN_WEIGHT,
+					config.get(EntityConfigType.POSSESSEDWORKER).MIN_GROUP,
+					config.get(EntityConfigType.POSSESSEDWORKER).MAX_GROUP));
 		}
 	}
 }
