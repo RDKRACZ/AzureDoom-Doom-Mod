@@ -6,6 +6,7 @@ import java.util.UUID;
 import javax.annotation.Nullable;
 
 import mod.azure.doom.entity.ArchvileEntity;
+import mod.azure.doom.entity.IconofsinEntity;
 import mod.azure.doom.entity.MancubusEntity;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import net.minecraft.entity.Entity;
@@ -136,7 +137,8 @@ public class ArchvileFiring extends Entity implements IAnimatable {
 				new AxisAlignedBB(this.blockPosition().above()).inflate(1D, 1D, 1D));
 		for (int k2 = 0; k2 < list.size(); ++k2) {
 			Entity entity = list.get(k2);
-			if (!(entity instanceof MancubusEntity) && !(entity instanceof ArchvileEntity)) {
+			if (!(entity instanceof MancubusEntity) && !(entity instanceof ArchvileEntity)
+					&& !(entity instanceof IconofsinEntity)) {
 				double d12 = (double) (MathHelper.sqrt(entity.distanceTo(this)));
 				if (d12 <= 1.0D) {
 					if (entity.isAlive()) {

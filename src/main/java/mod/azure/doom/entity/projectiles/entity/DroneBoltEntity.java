@@ -17,24 +17,25 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class ChaingunMobEntity extends DamagingProjectileEntity {
+public class DroneBoltEntity extends DamagingProjectileEntity {
 
 	protected int timeInAir;
 	protected boolean inAir;
 	private int ticksInAir;
+	private float directHitDamage = 2;
 
-	public ChaingunMobEntity(EntityType<? extends ChaingunMobEntity> p_i50160_1_, World p_i50160_2_) {
+	public DroneBoltEntity(EntityType<DroneBoltEntity> p_i50160_1_, World p_i50160_2_) {
 		super(p_i50160_1_, p_i50160_2_);
 	}
 
-	public ChaingunMobEntity(World worldIn, LivingEntity shooter, double accelX, double accelY, double accelZ,
+	public DroneBoltEntity(World worldIn, LivingEntity shooter, double accelX, double accelY, double accelZ,
 			float directHitDamage) {
-		super(ModEntityTypes.CHAINGUN_MOB.get(), shooter, accelX, accelY, accelZ, worldIn);
+		super(ModEntityTypes.DRONEBOLT_MOB.get(), shooter, accelX, accelY, accelZ, worldIn);
 		this.directHitDamage = directHitDamage;
 	}
 
-	public ChaingunMobEntity(World worldIn, double x, double y, double z, double accelX, double accelY, double accelZ) {
-		super(ModEntityTypes.CHAINGUN_MOB.get(), x, y, z, accelX, accelY, accelZ, worldIn);
+	public DroneBoltEntity(World worldIn, double x, double y, double z, double accelX, double accelY, double accelZ) {
+		super(ModEntityTypes.DRONEBOLT_MOB.get(), x, y, z, accelX, accelY, accelZ, worldIn);
 	}
 
 	@Override
@@ -54,8 +55,6 @@ public class ChaingunMobEntity extends DamagingProjectileEntity {
 		super.readAdditionalSaveData(compound);
 		this.ticksInAir = compound.getShort("life");
 	}
-
-	private float directHitDamage = 3;
 
 	public void setDirectHitDamage(float directHitDamage) {
 		this.directHitDamage = directHitDamage;
@@ -94,8 +93,9 @@ public class ChaingunMobEntity extends DamagingProjectileEntity {
 			this.remove();
 		}
 	}
-
-	protected boolean shouldBurn() {
+	
+	@Override
+	public boolean isOnFire() {
 		return false;
 	}
 
@@ -134,6 +134,7 @@ public class ChaingunMobEntity extends DamagingProjectileEntity {
 				this.doEnchantDamageEffects((LivingEntity) entity1, entity);
 			}
 		}
-		this.playSound(ModSoundEvents.CHAINGUN_SHOOT.get(), 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
+		this.playSound(ModSoundEvents.UNMAKYR_FIRE.get(), 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
 	}
+
 }

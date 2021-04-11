@@ -35,6 +35,7 @@ public class DemonAttackGoal extends MeleeAttackGoal {
 		if (livingentity.distanceToSqr(this.zombie) < 1.0D) {
 			if (this.raiseArmTicks >= 5 && this.getTicksUntilNextAttack() < this.getAttackInterval() / 2) {
 				this.zombie.setAggressive(true);
+				//this.zombie.setMeleeAttacking(this.raiseArmTicks >= 5);
 			} else {
 				this.zombie.setAggressive(false);
 			}

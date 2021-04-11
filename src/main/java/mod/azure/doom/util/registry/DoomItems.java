@@ -297,12 +297,14 @@ public class DoomItems {
 //			() -> new DoomSpawnEgg(ModEntityTypes.FIREBARON));
 //	public static final RegistryObject<Item> ARMORED_BARON_SPAWN_EGG = ITEMS.register("armoredbaron_spawn_egg",
 //			() -> new DoomSpawnEgg(ModEntityTypes.ARMORBARON));
-//	public static final RegistryObject<Item> MAYKR_DRONE_SPAWN_EGG = ITEMS.register("maykr_drone_spawn_egg",
-//			() -> new DoomSpawnEgg(ModEntityTypes.MAYKRDRONE));
+	public static final RegistryObject<Item> MAYKR_DRONE_SPAWN_EGG = ITEMS.register("maykr_drone_spawn_egg",
+			() -> new DoomSpawnEgg(ModEntityTypes.MAYKRDRONE));
 //	public static final RegistryObject<Item> BLOOD_MAYKR_SPAWN_EGG = ITEMS.register("blood_maykr_spawn_egg",
 //			() -> new DoomSpawnEgg(ModEntityTypes.BLOODMAYKR));
 //	public static final RegistryObject<Item> KHAN_MAKYR_SPAWN_EGG = ITEMS.register("khan_maykr_spawn_egg",
 //			() -> new DoomSpawnEgg(ModEntityTypes.KHANMAKER));
+	public static final RegistryObject<Item> ARACHNOTRONETERNAL_SPAWN_EGG = ITEMS
+			.register("arachnotroneternal_spawn_egg", () -> new DoomSpawnEgg(ModEntityTypes.ARACHNOTRONETERNAL));
 
 	// WEAPONS AND TOOLS
 	public static final RegistryObject<Item> CRUCIBLESWORD = ITEMS.register("cruciblesword",

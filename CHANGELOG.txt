@@ -2,11 +2,16 @@ v.3.10.2
 
 - Added the Tyrant, thanks to Creeper2545 for the models base and Pedroca for the texture!
 - Added the Possessed Worker, thanks to Undeadmonkey for the model and Pedroca for the texture!
+- Added the Arachnotron Eternal, thanks to Creman for the model and Pedroca for the texture!
 - Updated the Unwilling model, thanks to Undeadmonkey for the model and Pedroca for the texture!
 - Scaled up the OG Cyberdemon to match the new Cyberdemon 2016/Tyrant.
+- Icon of Sin attack has been redone.
+- Redid Arachnotron and Spider Mastermind animations!
+- Added new Structures! The End will now generate a structure dedicated to the Maykrs and the only place they will spawn! There is also now Titan skulls, that will spawn through out the Overworld. These skulls show signs of being transformed into a place of Worship though it seems they were abandoned. 
 
-## Not yet implemented but assets and code are in-process of models ## 
+## Not yet implemented but assets and code are in-process awaiting creation of models ## 
 - Gargoyle remodel
+- Baron 2016
 - Fireborne Baron
 - Armored Baron
 - Pinky 2016
@@ -15,4 +20,4 @@ v.3.10.2
 - Maykr Drones
 - Blood Maykrs
 - Khan Maykr
-## Not yet implemented but assets and code are in-process of models ## 
+## Not yet implemented but assets and code are in-process awaiting creation of models ## 

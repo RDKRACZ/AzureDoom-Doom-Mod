@@ -48,6 +48,10 @@ public class DemonEntity extends MonsterEntity implements IAngerable {
 
 	}
 
+	public void setMeleeAttacking(boolean attacking) {
+
+	}
+
 	@Override
 	protected void defineSynchedData() {
 		super.defineSynchedData();

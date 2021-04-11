@@ -35,6 +35,15 @@ public class UnmaykrBoltEntity extends AbstractArrowEntity {
 		super(ModEntityTypes.UNMAYKR.get(), owner, world);
 	}
 
+	public UnmaykrBoltEntity(World worldIn, LivingEntity shooter, double accelX, double accelY, double accelZ,
+			float directHitDamage) {
+		super(ModEntityTypes.UNMAYKR.get(), accelX, accelY, accelZ, worldIn);
+	}
+
+	public UnmaykrBoltEntity(World worldIn, double x, double y, double z, double accelX, double accelY, double accelZ) {
+		super(ModEntityTypes.UNMAYKR.get(), x, y, z, worldIn);
+	}
+
 	@Override
 	protected void tickDespawn() {
 		++this.ticksInAir;

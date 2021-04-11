@@ -122,6 +122,13 @@ public class ModEntitySpawn {
 					config.get(EntityConfigType.ARACHNOTRON).MIN_GROUP,
 					config.get(EntityConfigType.ARACHNOTRON).MAX_GROUP));
 		}
+		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.ARACHNOTRON, biome)
+				&& config.get(EntityConfigType.ARACHNOTRON).SPAWN_WEIGHT > 0) {
+			base.add(new Spawners(ModEntityTypes.ARACHNOTRONETERNAL.get(),
+					config.get(EntityConfigType.ARACHNOTRON).SPAWN_WEIGHT,
+					config.get(EntityConfigType.ARACHNOTRON).MIN_GROUP,
+					config.get(EntityConfigType.ARACHNOTRON).MAX_GROUP));
+		}
 		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.CHAINGUNNER, biome)
 				&& config.get(EntityConfigType.CHAINGUNNER).SPAWN_WEIGHT > 0) {
 			base.add(new Spawners(ModEntityTypes.CHAINGUNNER.get(),

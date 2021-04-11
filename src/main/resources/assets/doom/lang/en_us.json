@@ -1,7 +1,7 @@
 {
 	"key.category.doom": "MC Doom",
 	"key.doom.reload": "Reload Doom Weapon",
-	"item.doom.daisy": "Daisy",
+	"item.doom.daisy": "Daisy's Foot",
 	"item.doom.argent_energy": "Argent Energy",
 	"item.doom.argent_plate": "Argent Plate",
 	"item.doom.shotgun_shells": "Shotgun Shells",
@@ -236,6 +236,8 @@
 	"entity.doom.armoredbaron": "Armored Baron of Hell",
 	"entity.doom.tyrant": "Tyrant",
 	"entity.doom.pinky2016": "Pinky 2016",
+	"entity.doom.arachnotroneternal": "Arachnotron Eternal",
+	"item.doom.arachnotroneternal_spawn_egg": "Arachnotron Eternal Spawn Egg",
 	"item.doom.pinky2016_spawn_egg": "Pinky 2016 Spawn Egg",
 	"item.doom.tyrant_spawn_egg": "Tyrant Spawn Egg",
 	"item.doom.arachnotron_spawn_egg": "Arachnotron Spawn Egg",

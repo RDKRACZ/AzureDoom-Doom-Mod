@@ -21,6 +21,7 @@ import mod.azure.doom.entity.ImpStoneEntity;
 import mod.azure.doom.entity.LostSoulEntity;
 import mod.azure.doom.entity.MancubusEntity;
 import mod.azure.doom.entity.MarauderEntity;
+import mod.azure.doom.entity.MaykrDroneEntity;
 import mod.azure.doom.entity.MechaZombieEntity;
 import mod.azure.doom.entity.NightmareImpEntity;
 import mod.azure.doom.entity.PainEntity;
@@ -85,7 +86,7 @@ public class ModEventSubscriber {
 				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
 				SpectreEntity::spawning);
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.CACODEMON.get(),
-				EntitySpawnPlacementRegistry.PlacementType.IN_LAVA, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
 				CacodemonEntity::spawning);
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.IMP2016.get(),
 				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
@@ -176,10 +177,12 @@ public class ModEventSubscriber {
 		// EntitySpawnPlacementRegistry.PlacementType.ON_GROUND,
 		// Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
 		// ArmorBaronEntity::spawning);
-		// EntitySpawnPlacementRegistry.register(ModEntityTypes.MAYKRDRONE.get(),
-		// EntitySpawnPlacementRegistry.PlacementType.ON_GROUND,
-		// Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
-		// MaykrDroneEntity::spawning);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.ARACHNOTRONETERNAL.get(),
+				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+				ArachnotronEntity::spawning);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.MAYKRDRONE.get(),
+				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+				MaykrDroneEntity::spawning);
 		// EntitySpawnPlacementRegistry.register(ModEntityTypes.BLOODMAYKR.get(),
 		// EntitySpawnPlacementRegistry.PlacementType.ON_GROUND,
 		// Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
@@ -236,8 +239,8 @@ public class ModEventSubscriber {
 		// BaronEntity.createAttributes().build());
 		// event.put(ModEntityTypes.ARMORBARON.get(),
 		// ArmorBaronEntity.createAttributes().build());
-		// event.put(ModEntityTypes.MAYKRDRONE.get(),
-		// MaykrDroneEntity.createAttributes().build());
+		event.put(ModEntityTypes.ARACHNOTRONETERNAL.get(), ArachnotronEntity.createAttributes().build());
+		event.put(ModEntityTypes.MAYKRDRONE.get(), MaykrDroneEntity.createAttributes().build());
 		// event.put(ModEntityTypes.BLOODMAYKR.get(),
 		// BloodMaykrEntity.createAttributes().build());
 		// event.put(ModEntityTypes.KHANMAKER.get(),

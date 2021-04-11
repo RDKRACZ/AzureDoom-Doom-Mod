@@ -10,14 +10,20 @@ import net.minecraft.world.gen.feature.StructureFeature;
 
 public class DoomConfiguredStructures {
 
-	public static StructureFeature<?, ?> CONFIGURED_DOOM1 = DoomStructures.DOOM1.get()
+	public static StructureFeature<?, ?> CONFIGURED_MAYKR = DoomStructures.MAYKR.get()
+			.configured(IFeatureConfig.NONE);
+
+	public static StructureFeature<?, ?> CONFIGURED_TITAN_SKULL = DoomStructures.TITAN_SKULL.get()
 			.configured(IFeatureConfig.NONE);
 
 	public static void registerConfiguredStructures() {
 		Registry<StructureFeature<?, ?>> registry = WorldGenRegistries.CONFIGURED_STRUCTURE_FEATURE;
-		Registry.register(registry, new ResourceLocation(DoomMod.MODID, "configured_doom1"),
-				CONFIGURED_DOOM1);
+		Registry.register(registry, new ResourceLocation(DoomMod.MODID, "configured_maykr"),
+				CONFIGURED_MAYKR);
+		Registry.register(registry, new ResourceLocation(DoomMod.MODID, "configured_titan_skull"),
+				CONFIGURED_TITAN_SKULL);
 
-		FlatGenerationSettings.STRUCTURE_FEATURES.put(DoomStructures.DOOM1.get(), CONFIGURED_DOOM1);
+		FlatGenerationSettings.STRUCTURE_FEATURES.put(DoomStructures.MAYKR.get(), CONFIGURED_MAYKR);
+		FlatGenerationSettings.STRUCTURE_FEATURES.put(DoomStructures.TITAN_SKULL.get(), CONFIGURED_TITAN_SKULL);
 	}
 }

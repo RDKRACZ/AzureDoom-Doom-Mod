@@ -77,11 +77,16 @@ public class ArachnotronEntity extends DemonEntity implements IAnimatable {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("walking", true));
 			return PlayState.CONTINUE;
 		}
-		if (this.entityData.get(ATTACKING)) {
+		if (this.entityData.get(ATTACKING) && !(this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("attacking", true));
 			return PlayState.CONTINUE;
 		}
-		return PlayState.STOP;
+		if ((this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("death", false));
+			return PlayState.CONTINUE;
+		}
+		event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
+		return PlayState.CONTINUE;
 	}
 
 	@Override
@@ -92,6 +97,16 @@ public class ArachnotronEntity extends DemonEntity implements IAnimatable {
 	@Override
 	public AnimationFactory getFactory() {
 		return this.factory;
+	}
+
+	@Override
+	protected void tickDeath() {
+		++this.deathTime;
+		if (this.deathTime == 50) {
+			this.remove();
+			if (level.isClientSide) {
+			}
+		}
 	}
 
 	@OnlyIn(Dist.CLIENT)
@@ -134,7 +149,7 @@ public class ArachnotronEntity extends DemonEntity implements IAnimatable {
 		this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
 		this.goalSelector.addGoal(4,
 				new RangedStrafeAttackGoal(this, new ArachnotronEntity.FireballAttack(this)
-						.setProjectileOriginOffset(0.8, 0.8, 0.8).setDamage(5), 1.0D, 50, 30, 15, 15F).setMultiShot(2,
+						.setProjectileOriginOffset(0.8, 0.8, 0.8).setDamage(5), 1.5D, 25, 30, 15, 15F).setMultiShot(2,
 								3));
 		this.goalSelector.addGoal(4, new DemonAttackGoal(this, 1.0D, false));
 		this.targetSelector.addGoal(1, new HurtByTargetGoal(this).setAlertOthers());

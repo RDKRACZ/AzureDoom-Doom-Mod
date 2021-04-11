@@ -30,14 +30,14 @@ import net.minecraft.world.gen.feature.structure.StructureStart;
 import net.minecraft.world.gen.feature.structure.VillageConfig;
 import net.minecraft.world.gen.feature.template.TemplateManager;
 
-public class DoomStructure extends Structure<NoFeatureConfig> {
-	public DoomStructure(Codec<NoFeatureConfig> codec) {
+public class MaykrStructure extends Structure<NoFeatureConfig> {
+	public MaykrStructure(Codec<NoFeatureConfig> codec) {
 		super(codec);
 	}
 
 	@Override
 	public IStartFactory<NoFeatureConfig> getStartFactory() {
-		return DoomStructure.Start::new;
+		return MaykrStructure.Start::new;
 	}
 
 	@Override
@@ -46,21 +46,14 @@ public class DoomStructure extends Structure<NoFeatureConfig> {
 	}
 
 	private static final List<MobSpawnInfo.Spawners> STRUCTURE_MONSTERS = ImmutableList.of(
-			new MobSpawnInfo.Spawners(ModEntityTypes.LOST_SOUL.get(), 100, 4, 9),
-			new MobSpawnInfo.Spawners(ModEntityTypes.ZOMBIEMAN.get(), 100, 4, 9));
+			new MobSpawnInfo.Spawners(ModEntityTypes.MAYKRDRONE.get(), 45, 2, 5)
+//			, new MobSpawnInfo.Spawners(ModEntityTypes.BLOODMAYKR.get(), 45, 1, 2)
+//			, new MobSpawnInfo.Spawners(ModEntityTypes.KHANMAKER.get(), 10, 1, 1)
+			);
 
 	@Override
 	public List<MobSpawnInfo.Spawners> getDefaultSpawnList() {
 		return STRUCTURE_MONSTERS;
-	}
-
-	private static final List<MobSpawnInfo.Spawners> STRUCTURE_CREATURES = ImmutableList.of(
-			new MobSpawnInfo.Spawners(ModEntityTypes.CHAINGUNNER.get(), 30, 10, 15),
-			new MobSpawnInfo.Spawners(ModEntityTypes.ARCHVILE.get(), 100, 1, 2));
-
-	@Override
-	public List<MobSpawnInfo.Spawners> getDefaultCreatureSpawnList() {
-		return STRUCTURE_CREATURES;
 	}
 
 	@Override
@@ -107,7 +100,7 @@ public class DoomStructure extends Structure<NoFeatureConfig> {
 			BlockPos blockpos = new BlockPos(x, 0, z);
 			JigsawManager.addPieces(dynamicRegistryManager,
 					new VillageConfig(() -> dynamicRegistryManager.registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY)
-							.get(new ResourceLocation(DoomMod.MODID, "doom/start_pool")), 10),
+							.get(new ResourceLocation(DoomMod.MODID, "maykr/start_pool")), 10),
 					AbstractVillagePiece::new, chunkGenerator, templateManagerIn, blockpos, this.pieces, this.random,
 					false, true);
 			this.pieces.forEach(piece -> piece.move(0, 0, 0));

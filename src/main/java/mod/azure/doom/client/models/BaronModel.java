@@ -10,9 +10,6 @@ import software.bernie.geckolib3.model.provider.data.EntityModelData;
 
 public class BaronModel extends AnimatedGeoModel<BaronEntity> {
 
-	public BaronModel() {
-	}
-
 	@Override
 	public ResourceLocation getModelLocation(BaronEntity object) {
 		return new ResourceLocation(DoomMod.MODID, "geo/baron.geo.json");
