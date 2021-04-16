@@ -30,14 +30,14 @@ import net.minecraft.world.gen.feature.structure.StructureStart;
 import net.minecraft.world.gen.feature.structure.VillageConfig;
 import net.minecraft.world.gen.feature.template.TemplateManager;
 
-public class TitanSkullStructure extends Structure<NoFeatureConfig> {
-	public TitanSkullStructure(Codec<NoFeatureConfig> codec) {
+public class PortalStructure extends Structure<NoFeatureConfig> {
+	public PortalStructure(Codec<NoFeatureConfig> codec) {
 		super(codec);
 	}
 
 	@Override
 	public IStartFactory<NoFeatureConfig> getStartFactory() {
-		return TitanSkullStructure.Start::new;
+		return PortalStructure.Start::new;
 	}
 
 	@Override
@@ -45,12 +45,28 @@ public class TitanSkullStructure extends Structure<NoFeatureConfig> {
 		return GenerationStage.Decoration.SURFACE_STRUCTURES;
 	}
 
-	private static final List<MobSpawnInfo.Spawners> STRUCTURE_MONSTERS = ImmutableList
-			.of(new MobSpawnInfo.Spawners(ModEntityTypes.LOST_SOUL.get(), 100, 4, 9));
+	private static final List<MobSpawnInfo.Spawners> STRUCTURE_MONSTERS = ImmutableList.of(
+			new MobSpawnInfo.Spawners(ModEntityTypes.LOST_SOUL.get(), 20, 1, 2),
+			new MobSpawnInfo.Spawners(ModEntityTypes.ZOMBIEMAN.get(), 20, 1, 2),
+			new MobSpawnInfo.Spawners(ModEntityTypes.CHAINGUNNER.get(), 20, 1, 2),
+			new MobSpawnInfo.Spawners(ModEntityTypes.POSSESSEDWORKER.get(), 20, 1, 2),
+			new MobSpawnInfo.Spawners(ModEntityTypes.ARACHNOTRONETERNAL.get(), 20, 1, 2));
 
 	@Override
 	public List<MobSpawnInfo.Spawners> getDefaultSpawnList() {
 		return STRUCTURE_MONSTERS;
+	}
+
+	private static final List<MobSpawnInfo.Spawners> STRUCTURE_CREATURES = ImmutableList.of(
+			new MobSpawnInfo.Spawners(ModEntityTypes.LOST_SOUL.get(), 20, 1, 2),
+			new MobSpawnInfo.Spawners(ModEntityTypes.ZOMBIEMAN.get(), 20, 1, 2),
+			new MobSpawnInfo.Spawners(ModEntityTypes.CHAINGUNNER.get(), 20, 1, 2),
+			new MobSpawnInfo.Spawners(ModEntityTypes.POSSESSEDWORKER.get(), 20, 1, 2),
+			new MobSpawnInfo.Spawners(ModEntityTypes.ARACHNOTRONETERNAL.get(), 20, 1, 2));
+
+	@Override
+	public List<MobSpawnInfo.Spawners> getDefaultCreatureSpawnList() {
+		return STRUCTURE_CREATURES;
 	}
 
 	@Override
@@ -79,7 +95,7 @@ public class TitanSkullStructure extends Structure<NoFeatureConfig> {
 			BlockPos blockpos = new BlockPos(x, chunkGenerator.getSeaLevel(), z);
 			JigsawManager.addPieces(dynamicRegistryManager,
 					new VillageConfig(() -> dynamicRegistryManager.registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY)
-							.get(new ResourceLocation(DoomMod.MODID, "titan_skull/start_pool")), 10),
+							.get(new ResourceLocation(DoomMod.MODID, "portal/start_pool")), 10),
 					AbstractVillagePiece::new, chunkGenerator, templateManagerIn, blockpos, this.pieces, this.random,
 					false, false);
 			this.pieces.forEach(piece -> piece.move(0, 1, 0));

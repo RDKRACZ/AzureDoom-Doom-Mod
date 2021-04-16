@@ -75,7 +75,7 @@ public class ClassicBronzeDoomArmor extends GeoArmorItem implements IAnimatable 
 		ItemStack stack = new ItemStack(this);
 		stack.hasTag();
 		stack.enchant(Enchantments.FIRE_PROTECTION, 1);
-		if (group == DoomMod.DoomArmorItemGroup) {
+		if ((group == DoomMod.DoomArmorItemGroup) || (group == ItemGroup.TAB_SEARCH)) {
 			items.add(stack);
 		}
 	}

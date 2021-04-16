@@ -37,6 +37,7 @@ public class GoreNestEntity extends DemonEntity implements IAnimatable {
 
 	private AnimationFactory factory = new AnimationFactory(this);
 	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.GORE_NEST);
+	public int spawnTimer = 0;
 
 	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
 		if ((this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
@@ -101,7 +102,7 @@ public class GoreNestEntity extends DemonEntity implements IAnimatable {
 	}
 
 	public static AttributeModifierMap.MutableAttribute createAttributes() {
-		return config.pushAttributes(MobEntity.createMobAttributes().add(Attributes.FOLLOW_RANGE, 50.0D));
+		return config.pushAttributes(MobEntity.createMobAttributes().add(Attributes.FOLLOW_RANGE, 25.0D));
 	}
 
 	@Override
@@ -124,16 +125,22 @@ public class GoreNestEntity extends DemonEntity implements IAnimatable {
 			this.level.addParticle(RedstoneParticleData.REDSTONE, this.getRandomX(0.5D), this.getRandomY(),
 					this.getRandomZ(0.5D), (this.random.nextDouble() - 0.5D) * 2.0D, -this.random.nextDouble(),
 					(this.random.nextDouble() - 0.5D) * 2.0D);
-			this.level.addParticle(ParticleTypes.SOUL, this.getRandomX(0.2D), this.getRandomY(),
-					this.getRandomZ(0.5D), 0.0D, 0D, 0D);
+			this.level.addParticle(ParticleTypes.SOUL, this.getRandomX(0.2D), this.getRandomY(), this.getRandomZ(0.5D),
+					0.0D, 0D, 0D);
 		}
+		spawnTimer = (spawnTimer + 1) % 8;
 		++this.tickCount;
 		if (!level.isClientSide) {
-			if (this.tickCount % 800 == 0) {
+			if (this.tickCount % 2400 == 0 && this.getSpawnTimer() <= 3) {
 				this.spawnWave();
+				spawnTimer = spawnTimer + 1;
 			}
 		}
 		super.aiStep();
+	}
+
+	public int getSpawnTimer() {
+		return spawnTimer;
 	}
 
 	public void spawnWave() {

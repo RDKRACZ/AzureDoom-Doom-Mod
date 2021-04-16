@@ -132,6 +132,16 @@
 					"type": "item",
 					"weight": 1,
 					"name": "doom:icon_wall16"
+				},
+				{
+					"type": "minecraft:item",
+					"functions": [
+						{
+							"function": "minecraft:set_nbt",
+							"tag": "{StoredEnchantments:[{id:\"doom:leaping_doom\",lvl:1s}]}"
+						}
+					],
+					"name": "minecraft:enchanted_book"
 				}
 			]
 		}

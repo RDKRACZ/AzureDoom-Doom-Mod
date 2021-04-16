@@ -21,11 +21,15 @@ public class DoomStructures {
 	public static final DeferredRegister<Structure<?>> DEFERRED_REGISTRY_STRUCTURE = DeferredRegister
 			.create(ForgeRegistries.STRUCTURE_FEATURES, DoomMod.MODID);
 
-	public static final RegistryObject<Structure<NoFeatureConfig>> MAYKR = registerStructure("doom1",
+	public static final RegistryObject<Structure<NoFeatureConfig>> MAYKR = registerStructure("maykr",
 			() -> (new MaykrStructure(NoFeatureConfig.CODEC)));
 
 	public static final RegistryObject<Structure<NoFeatureConfig>> TITAN_SKULL = registerStructure("titan_skull",
 			() -> (new TitanSkullStructure(NoFeatureConfig.CODEC)));
+
+	public static final RegistryObject<Structure<NoFeatureConfig>> PORTAL = registerStructure("portal",
+			() -> (new PortalStructure(NoFeatureConfig.CODEC)));
+
 
 	private static <T extends Structure<?>> RegistryObject<T> registerStructure(String name, Supplier<T> structure) {
 		return DEFERRED_REGISTRY_STRUCTURE.register(name, structure);
@@ -34,6 +38,7 @@ public class DoomStructures {
 	public static void setupStructures() {
 		setupMapSpacingAndLand(MAYKR.get(), new StructureSeparationSettings(20, 11, 1234567890), true);
 		setupMapSpacingAndLand(TITAN_SKULL.get(), new StructureSeparationSettings(80, 20, 1234567890), true);
+		setupMapSpacingAndLand(PORTAL.get(), new StructureSeparationSettings(80, 20, 1234567890), true);
 	}
 
 	public static <F extends Structure<?>> void setupMapSpacingAndLand(F structure,

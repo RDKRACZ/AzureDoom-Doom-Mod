@@ -143,7 +143,7 @@ public class ZombiemanEntity extends DemonEntity implements IRangedAttackMob, IA
 	}
 
 	public static AttributeModifierMap.MutableAttribute createAttributes() {
-		return config.pushAttributes(MobEntity.createMobAttributes().add(Attributes.FOLLOW_RANGE, 50.0D));
+		return config.pushAttributes(MobEntity.createMobAttributes().add(Attributes.FOLLOW_RANGE, 25.0D));
 	}
 
 	@Override

@@ -76,7 +76,7 @@ public class PainEntity extends DemonEntity implements IMob, IAnimatable {
 				return PlayState.CONTINUE;
 			}
 		}
-		if (this.entityData.get(ATTACKING) && (this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
+		if (this.entityData.get(ATTACKING) && !(this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("attacking", false));
 			return PlayState.CONTINUE;
 		}
@@ -103,7 +103,7 @@ public class PainEntity extends DemonEntity implements IMob, IAnimatable {
 	}
 
 	public static AttributeModifierMap.MutableAttribute createAttributes() {
-		return config.pushAttributes(MobEntity.createMobAttributes().add(Attributes.FOLLOW_RANGE, 50.0D));
+		return config.pushAttributes(MobEntity.createMobAttributes().add(Attributes.FOLLOW_RANGE, 25.0D));
 	}
 
 	@Override

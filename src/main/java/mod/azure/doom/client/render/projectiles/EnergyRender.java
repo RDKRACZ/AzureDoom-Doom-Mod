@@ -3,7 +3,6 @@ package mod.azure.doom.client.render.projectiles;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
-import mod.azure.doom.client.GeoProjectilesRenderer;
 import mod.azure.doom.client.models.projectiles.EnergyModel;
 import mod.azure.doom.entity.projectiles.EnergyCellEntity;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -11,6 +10,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import software.bernie.geckolib3.renderers.geo.GeoProjectilesRenderer;
 
 public class EnergyRender extends GeoProjectilesRenderer<EnergyCellEntity> {
 

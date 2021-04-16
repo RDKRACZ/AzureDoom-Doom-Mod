@@ -203,7 +203,7 @@ public class ChaingunnerEntity extends DemonEntity implements IRangedAttackMob, 
 	}
 
 	public static AttributeModifierMap.MutableAttribute createAttributes() {
-		return config.pushAttributes(MobEntity.createMobAttributes().add(Attributes.FOLLOW_RANGE, 50.0D));
+		return config.pushAttributes(MobEntity.createMobAttributes().add(Attributes.FOLLOW_RANGE, 25.0D));
 	}
 
 	@Override

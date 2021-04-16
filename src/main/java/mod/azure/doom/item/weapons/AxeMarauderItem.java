@@ -51,7 +51,7 @@ public class AxeMarauderItem extends AxeItem {
 		stack.enchant(Enchantments.MOB_LOOTING, 10);
 		stack.enchant(Enchantments.SHARPNESS, 10);
 		stack.enchant(Enchantments.SWEEPING_EDGE, 10);
-		if (group == DoomMod.DoomWeaponItemGroup) {
+		if ((group == DoomMod.DoomWeaponItemGroup) || (group == ItemGroup.TAB_SEARCH)) {
 			items.add(stack);
 		}
 	}

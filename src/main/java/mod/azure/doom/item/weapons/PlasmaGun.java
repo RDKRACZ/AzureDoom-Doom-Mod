@@ -125,17 +125,6 @@ public class PlasmaGun extends DoomBaseItem implements IAnimatable {
 		}
 	}
 
-	private static void removeAmmo(Item ammo, PlayerEntity playerEntity) {
-		if (!playerEntity.isCreative()) {
-			for (ItemStack item : playerEntity.inventory.items) {
-				if (item.getItem() == DoomItems.ENERGY_CELLS.get()) {
-					item.shrink(1);
-					break;
-				}
-			}
-		}
-	}
-
 	@Override
 	public boolean canDisableShield(ItemStack stack, ItemStack shield, LivingEntity entity, LivingEntity attacker) {
 		return true;
@@ -143,7 +132,7 @@ public class PlasmaGun extends DoomBaseItem implements IAnimatable {
 
 	@Override
 	public UseAction getUseAnimation(ItemStack stack) {
-		return UseAction.BLOCK;
+		return UseAction.BOW;
 	}
 
 	@Override

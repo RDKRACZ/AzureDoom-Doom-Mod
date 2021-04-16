@@ -16,14 +16,20 @@ public class DoomConfiguredStructures {
 	public static StructureFeature<?, ?> CONFIGURED_TITAN_SKULL = DoomStructures.TITAN_SKULL.get()
 			.configured(IFeatureConfig.NONE);
 
+	public static StructureFeature<?, ?> CONFIGURED_PORTAL = DoomStructures.PORTAL.get()
+			.configured(IFeatureConfig.NONE);
+
 	public static void registerConfiguredStructures() {
 		Registry<StructureFeature<?, ?>> registry = WorldGenRegistries.CONFIGURED_STRUCTURE_FEATURE;
 		Registry.register(registry, new ResourceLocation(DoomMod.MODID, "configured_maykr"),
 				CONFIGURED_MAYKR);
 		Registry.register(registry, new ResourceLocation(DoomMod.MODID, "configured_titan_skull"),
 				CONFIGURED_TITAN_SKULL);
+		Registry.register(registry, new ResourceLocation(DoomMod.MODID, "configured_portal"),
+				CONFIGURED_PORTAL);
 
 		FlatGenerationSettings.STRUCTURE_FEATURES.put(DoomStructures.MAYKR.get(), CONFIGURED_MAYKR);
 		FlatGenerationSettings.STRUCTURE_FEATURES.put(DoomStructures.TITAN_SKULL.get(), CONFIGURED_TITAN_SKULL);
+		FlatGenerationSettings.STRUCTURE_FEATURES.put(DoomStructures.PORTAL.get(), CONFIGURED_PORTAL);
 	}
 }

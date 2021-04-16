@@ -4,7 +4,6 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import mod.azure.doom.DoomMod;
-import mod.azure.doom.client.GeoProjectilesRenderer;
 import mod.azure.doom.client.models.projectiles.BFGBallModel;
 import mod.azure.doom.entity.projectiles.BFGEntity;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -19,6 +18,7 @@ import net.minecraft.util.math.vector.Matrix3f;
 import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraft.util.math.vector.Vector3f;
 import software.bernie.geckolib3.geo.render.built.GeoModel;
+import software.bernie.geckolib3.renderers.geo.GeoProjectilesRenderer;
 
 public class BFGCellRender extends GeoProjectilesRenderer<BFGEntity> {
 

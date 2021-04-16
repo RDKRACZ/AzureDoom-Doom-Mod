@@ -9,9 +9,11 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.IAngerable;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RangedInteger;
 import net.minecraft.util.TickRangeConverter;
 import net.minecraft.util.math.BlockPos;
@@ -42,6 +44,10 @@ public class DemonEntity extends MonsterEntity implements IAngerable {
 			return true;
 		int blockY = p_223337_3_.getY();
 		return blockY >= config.MIN_Y && blockY <= config.MAX_Y;
+	}
+
+	public boolean canStandOnFluid(Fluid p_230285_1_) {
+		return p_230285_1_.is(FluidTags.LAVA);
 	}
 
 	public void setAttacking(boolean attacking) {

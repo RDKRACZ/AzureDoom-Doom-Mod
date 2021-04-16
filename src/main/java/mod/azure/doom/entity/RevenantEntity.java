@@ -92,7 +92,7 @@ public class RevenantEntity extends DemonEntity implements IAnimatable {
 	}
 
 	public static AttributeModifierMap.MutableAttribute createAttributes() {
-		return config.pushAttributes(MobEntity.createMobAttributes().add(Attributes.FOLLOW_RANGE, 50.0D));
+		return config.pushAttributes(MobEntity.createMobAttributes().add(Attributes.FOLLOW_RANGE, 25.0D));
 	}
 
 	public static boolean spawning(EntityType<RevenantEntity> p_223337_0_, IWorld p_223337_1_, SpawnReason reason,

@@ -1,7 +1,5 @@
 package mod.azure.doom.item.weapons;
 
-import java.util.List;
-
 import mod.azure.doom.DoomMod;
 import mod.azure.doom.client.Keybindings;
 import mod.azure.doom.client.render.weapons.PistolRender;
@@ -11,7 +9,6 @@ import mod.azure.doom.util.packets.DoomPacketHandler;
 import mod.azure.doom.util.packets.PistolLoadingPacket;
 import mod.azure.doom.util.registry.DoomItems;
 import mod.azure.doom.util.registry.ModSoundEvents;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -22,9 +19,6 @@ import net.minecraft.item.UseAction;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import software.bernie.geckolib3.core.AnimationState;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -75,8 +69,8 @@ public class PistolItem extends DoomBaseItem implements IAnimatable {
 				if (!worldIn.isClientSide) {
 					BulletEntity abstractarrowentity = createArrow(worldIn, stack, playerentity);
 					abstractarrowentity = customeArrow(abstractarrowentity);
-					abstractarrowentity.shootFromRotation(playerentity, playerentity.xRot,
-							playerentity.yRot, 0.0F, 1.0F * 3.0F, 1.0F);
+					abstractarrowentity.shootFromRotation(playerentity, playerentity.xRot, playerentity.yRot, 0.0F,
+							1.0F * 3.0F, 1.0F);
 
 					abstractarrowentity.setBaseDamage(2.5);
 					abstractarrowentity.tickCount = 35;
@@ -117,21 +111,11 @@ public class PistolItem extends DoomBaseItem implements IAnimatable {
 
 	public static void reload(PlayerEntity user, Hand hand) {
 		if (user.getMainHandItem().getItem() instanceof PistolItem) {
-			while (user.getItemInHand(hand).getDamageValue() != 0 && user.inventory.countItem(DoomItems.BULLETS.get()) > 0) {
+			while (user.getItemInHand(hand).getDamageValue() != 0
+					&& user.inventory.countItem(DoomItems.BULLETS.get()) > 0) {
 				removeAmmo(DoomItems.BULLETS.get(), user);
 				user.getMainHandItem().hurtAndBreak(-10, user, s -> user.broadcastBreakEvent(hand));
 				user.getMainHandItem().setPopTime(3);
-			}
-		}
-	}
-
-	private static void removeAmmo(Item ammo, PlayerEntity playerEntity) {
-		if (!playerEntity.isCreative()) {
-			for (ItemStack item : playerEntity.inventory.items) {
-				if (item.getItem() == DoomItems.BULLETS.get()) {
-					item.shrink(1);
-					break;
-				}
 			}
 		}
 	}
@@ -147,20 +131,8 @@ public class PistolItem extends DoomBaseItem implements IAnimatable {
 	}
 
 	@Override
-	public int getUseDuration(ItemStack stack) {
-		return 72000;
-	}
-
-	@Override
 	public UseAction getUseAnimation(ItemStack stack) {
-		return UseAction.BLOCK;
-	}
-
-	@Override
-	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new TranslationTextComponent(
-				"Ammo: " + (stack.getMaxDamage() - stack.getDamageValue() - 1) + " / " + (stack.getMaxDamage() - 1))
-						.withStyle(TextFormatting.ITALIC));
+		return UseAction.BOW;
 	}
 
 	@Override

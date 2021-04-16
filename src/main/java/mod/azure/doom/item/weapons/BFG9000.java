@@ -82,8 +82,8 @@ public class BFG9000 extends DoomBaseItem implements IAnimatable {
 				if (!worldIn.isClientSide) {
 					BFGEntity abstractarrowentity = createArrow(worldIn, stack, playerentity);
 					abstractarrowentity = customeArrow(abstractarrowentity);
-					abstractarrowentity.shootFromRotation(playerentity, playerentity.xRot,
-							playerentity.yRot, 0.0F, 0.25F * 3.0F, 1.0F);
+					abstractarrowentity.shootFromRotation(playerentity, playerentity.xRot, playerentity.yRot, 0.0F,
+							0.25F * 3.0F, 1.0F);
 
 					abstractarrowentity.setBaseDamage(2.5);
 					abstractarrowentity.isNoGravity();
@@ -123,21 +123,11 @@ public class BFG9000 extends DoomBaseItem implements IAnimatable {
 
 	public static void reload(PlayerEntity user, Hand hand) {
 		if (user.getItemInHand(hand).getItem() instanceof BFG9000) {
-			while (user.getItemInHand(hand).getDamageValue() != 0 && user.inventory.countItem(DoomItems.BFG_CELL.get()) > 0) {
+			while (user.getItemInHand(hand).getDamageValue() != 0
+					&& user.inventory.countItem(DoomItems.BFG_CELL.get()) > 0) {
 				removeAmmo(DoomItems.BFG_CELL.get(), user);
 				user.getItemInHand(hand).hurtAndBreak(-20, user, s -> user.broadcastBreakEvent(hand));
 				user.getItemInHand(hand).setPopTime(3);
-			}
-		}
-	}
-
-	private static void removeAmmo(Item ammo, PlayerEntity playerEntity) {
-		if (!playerEntity.isCreative()) {
-			for (ItemStack item : playerEntity.inventory.items) {
-				if (item.getItem() == DoomItems.BFG_CELL.get()) {
-					item.shrink(1);
-					break;
-				}
 			}
 		}
 	}

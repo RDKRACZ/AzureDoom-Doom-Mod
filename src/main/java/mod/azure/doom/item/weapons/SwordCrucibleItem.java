@@ -26,7 +26,6 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import software.bernie.geckolib3.core.AnimationState;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -88,24 +87,15 @@ public class SwordCrucibleItem extends SwordItem implements IAnimatable {
 	@Override
 	public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
 		PlayerEntity playerentity = (PlayerEntity) entityIn;
+		boolean activestate = playerentity.getMainHandItem().getItem() instanceof SwordCrucibleItem && isSelected;
+		AnimationController<?> controller = GeckoLibUtil.getControllerForStack(this.factory, stack, controllerName);
+		controller.markNeedsReload();
+		controller.setAnimation(new AnimationBuilder().addAnimation((activestate ? "open_loop" : "close_loop"), false));
 		if (worldIn.isClientSide) {
 			if (playerentity.getMainHandItem().getItem() instanceof SwordCrucibleItem) {
 				while (Keybindings.RELOAD.consumeClick() && isSelected) {
 					DoomPacketHandler.CRUCIBLE.sendToServer(new CrucibleLoadingPacket(itemSlot));
 				}
-			}
-		}
-		AnimationController<?> controller = GeckoLibUtil.getControllerForStack(this.factory, stack, controllerName);
-		if (isSelected) {
-			if (controller.getAnimationState() == AnimationState.Stopped) {
-				controller.markNeedsReload();
-				controller.setAnimation(new AnimationBuilder().addAnimation("open_loop", false));
-			}
-		}
-		if (!isSelected) {
-			if (controller.getAnimationState() == AnimationState.Stopped) {
-				controller.markNeedsReload();
-				controller.setAnimation(new AnimationBuilder().addAnimation("close_loop", false));
 			}
 		}
 	}
@@ -121,12 +111,18 @@ public class SwordCrucibleItem extends SwordItem implements IAnimatable {
 		}
 	}
 
-	private static void removeAmmo(Item ammo, PlayerEntity playerEntity) {
+	public static void removeAmmo(Item ammo, PlayerEntity playerEntity) {
 		if (!playerEntity.isCreative()) {
-			for (ItemStack item : playerEntity.inventory.items) {
-				if (item.getItem() == DoomItems.ARGENT_BLOCK.get()) {
+			for (ItemStack item : playerEntity.inventory.offhand) {
+				if (item.getItem() == ammo) {
 					item.shrink(1);
 					break;
+				}
+				for (ItemStack item1 : playerEntity.inventory.items) {
+					if (item1.getItem() == ammo) {
+						item1.shrink(1);
+						break;
+					}
 				}
 			}
 		}
@@ -140,7 +136,7 @@ public class SwordCrucibleItem extends SwordItem implements IAnimatable {
 		stack.enchant(Enchantments.MOB_LOOTING, 10);
 		stack.enchant(Enchantments.SHARPNESS, 10);
 		stack.enchant(Enchantments.SWEEPING_EDGE, 10);
-		if (group == DoomMod.DoomWeaponItemGroup) {
+		if ((group == DoomMod.DoomWeaponItemGroup) || (group == ItemGroup.TAB_SEARCH)) {
 			items.add(stack);
 		}
 	}

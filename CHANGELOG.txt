@@ -1,23 +1,34 @@
-v.3.10.2
+v.4.0.0
 
 - Added the Tyrant, thanks to Creeper2545 for the models base and Pedroca for the texture!
 - Added the Possessed Worker, thanks to Undeadmonkey for the model and Pedroca for the texture!
 - Added the Arachnotron Eternal, thanks to Creman for the model and Pedroca for the texture!
 - Updated the Unwilling model, thanks to Undeadmonkey for the model and Pedroca for the texture!
-- Scaled up the OG Cyberdemon to match the new Cyberdemon 2016/Tyrant.
+- Scaled up the OG Cyberdemon.
 - Icon of Sin attack has been redone.
 - Redid Arachnotron and Spider Mastermind animations!
-- Added new Structures! The End will now generate a structure dedicated to the Maykrs and the only place they will spawn! There is also now Titan skulls, that will spawn through out the Overworld. These skulls show signs of being transformed into a place of Worship though it seems they were abandoned. 
+- Lowered the sound of the chainsaws.
+- Demons are now able to walk on Lava like striders.
+- Fixed not being able to search for the armors or a few weapons in the creative search menu.
+- Added new Structures! 
+	- The End will now generate a structure dedicated to the Maykrs and the only place they will spawn! 
+	- The Nether will now generate Titan skulls. These skulls show signs of being transformed into a place of Worship though it seems they were abandoned.
+	- The Overworld will now generate massive portals, similar to ruined portals but bigger and can spawn the mods mobs.
+- BFG Eternal, Heavy Cannon, Pistol, Plasma Gun, Rocketlauncher, Shotgun, Super Shotgun, and Unmaykr now use the bow animations for aiming.
+- Fixed the Crucible Blade glitching open and closed.
+- Massively increased cool down of Gore Nest Spawns and added a max of 3 waves per gore nest.
+- Halved all demons (expect the Icon of Sin) follow ranges to 25, in line with vanilla mobs.
+- Fixed weapons not being able to use ammo in the off hand for reloading weapons.
 
 ## Not yet implemented but assets and code are in-process awaiting creation of models ## 
-- Gargoyle remodel
-- Baron 2016
-- Fireborne Baron
-- Armored Baron
-- Pinky 2016
-- Whiplash
-- Doom Hunter
-- Maykr Drones
-- Blood Maykrs
-- Khan Maykr
+	- Gargoyle remodel
+	- Baron 2016
+	- Fireborne Baron
+	- Armored Baron
+	- Pinky 2016
+	- Whiplash
+	- Doom Hunter
+	- Maykr Drones
+	- Blood Maykrs
+	- Khan Maykr
 ## Not yet implemented but assets and code are in-process awaiting creation of models ## 

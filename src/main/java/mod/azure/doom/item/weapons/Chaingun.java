@@ -125,17 +125,6 @@ public class Chaingun extends DoomBaseItem implements IAnimatable {
 		}
 	}
 
-	private static void removeAmmo(Item ammo, PlayerEntity playerEntity) {
-		if (!playerEntity.isCreative()) {
-			for (ItemStack item : playerEntity.inventory.items) {
-				if (item.getItem() == DoomItems.CHAINGUN_BULLETS.get()) {
-					item.shrink(1);
-					break;
-				}
-			}
-		}
-	}
-
 	public static float getArrowVelocity(int charge) {
 		float f = (float) charge / 20.0F;
 		f = (f * f + f * 2.0F) / 3.0F;
@@ -148,7 +137,7 @@ public class Chaingun extends DoomBaseItem implements IAnimatable {
 
 	@Override
 	public UseAction getUseAnimation(ItemStack stack) {
-		return UseAction.BLOCK;
+		return UseAction.NONE;
 	}
 
 	@Override

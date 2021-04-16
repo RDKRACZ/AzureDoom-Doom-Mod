@@ -57,6 +57,7 @@ public class BFGEntity extends AbstractArrowEntity implements IAnimatable {
 	private static final DataParameter<Integer> TARGET_ENTITY = EntityDataManager.defineId(BFGEntity.class,
 			DataSerializers.INT);
 	private LivingEntity targetedEntity;
+	private LivingEntity shooter;
 
 	public BFGEntity(EntityType<? extends AbstractArrowEntity> type, World world) {
 		super(type, world);
@@ -64,6 +65,7 @@ public class BFGEntity extends AbstractArrowEntity implements IAnimatable {
 
 	public BFGEntity(World world, LivingEntity shooter) {
 		super(ModEntityTypes.BFG_CELL.get(), shooter, world);
+		this.shooter = shooter;
 	}
 
 	private AnimationFactory factory = new AnimationFactory(this);
@@ -212,7 +214,7 @@ public class BFGEntity extends AbstractArrowEntity implements IAnimatable {
 				double d12 = (double) (MathHelper.sqrt(entity.distanceToSqr(vector3d1)) / f2);
 				if (d12 <= 1.0D) {
 					if (entity.isAlive()) {
-						entity.hurt(DamageSource.arrow(this, this), 10);
+						entity.hurt(DamageSource.playerAttack((PlayerEntity) this.shooter), 10);
 						this.setTargetedEntity(entity.getId());
 					}
 				}
@@ -316,7 +318,7 @@ public class BFGEntity extends AbstractArrowEntity implements IAnimatable {
 					|| (entity instanceof HoglinEntity)) {
 				double d12 = (double) (MathHelper.sqrt(entity.distanceToSqr(vector3d)) / f2);
 				if (d12 <= 1.0D) {
-					entity.hurt(DamageSource.arrow(this, this), 100);
+					entity.hurt(DamageSource.playerAttack((PlayerEntity) this.shooter), 100);
 					this.setTargetedEntity(entity.getId());
 					if (!this.level.isClientSide) {
 						List<LivingEntity> list1 = this.level.getEntitiesOfClass(LivingEntity.class,

@@ -78,7 +78,7 @@ public class CacodemonEntity extends DemonEntity implements IMob, IAnimatable {
 				return PlayState.CONTINUE;
 			}
 		}
-		if (this.entityData.get(ATTACKING) && (this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
+		if (this.entityData.get(ATTACKING) && !(this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("attacking", false));
 			return PlayState.CONTINUE;
 		}
@@ -131,7 +131,7 @@ public class CacodemonEntity extends DemonEntity implements IMob, IAnimatable {
 		fireBallDirectHitDamage = config.RANGED_ATTACK_DAMAGE;
 		return config.pushAttributes(
 				MobEntity.createMobAttributes().add(Attributes.ATTACK_DAMAGE, config.MELEE_ATTACK_DAMAGE)
-						.add(Attributes.FOLLOW_RANGE, 50.0D));
+						.add(Attributes.FOLLOW_RANGE, 25.0D));
 	}
 
 	@Override

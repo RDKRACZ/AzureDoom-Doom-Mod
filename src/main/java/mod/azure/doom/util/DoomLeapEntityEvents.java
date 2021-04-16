@@ -11,6 +11,8 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraftforge.event.TickEvent.ClientTickEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -24,30 +26,37 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 public class DoomLeapEntityEvents {
 	public static HashMap<String, Boolean> uuidHasJumpedMap = new HashMap<String, Boolean>();
 	int cooldown = 0;
+	int jumpCount = 0;
 
 	@SubscribeEvent
 	public void onLivingUpdate(LivingUpdateEvent event) {
 		LivingEntity entity = event.getEntityLiving();
 
 		if (entity instanceof PlayerEntity && uuidHasJumpedMap.containsKey(entity.getUUID().toString())) {
-			float enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(DoomEnchantments.LEAPING_DOOM.get(),
-					entity);
+			float enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(DoomEnchantments.LEAPING_DOOM.get(), entity);
 			boolean usedMidAirJump = uuidHasJumpedMap.get(entity.getUUID().toString());
 			boolean playerJumping = ObfuscationReflectionHelper.getPrivateValue(LivingEntity.class, entity,
 					"field_70703_bu");
 			boolean canJump = !entity.isOnGround() && !usedMidAirJump;
 
-			if (entity.isOnGround()) {
+			if (entity.isOnGround() || this.jumpCount > 2) {
 				uuidHasJumpedMap.put(entity.getUUID().toString(), false);
 			}
 
 			if (!(enchantmentLevel > 0))
 				return;
 
-			if (canJump && !entity.isFallFlying() && !((PlayerEntity) entity).abilities.flying) {
-				if (playerJumping && entity.getDeltaMovement().y() < 0) {
-					entity.setDeltaMovement(entity.getDeltaMovement().x(), 1.6D, entity.getDeltaMovement().z());
+			if (cooldown <= 0 && canJump && !entity.isFallFlying() && !((PlayerEntity) entity).isCreative()
+					&& !((PlayerEntity) entity).abilities.flying && !((PlayerEntity) entity).verticalCollision) {
+				if (playerJumping && entity.getDeltaMovement().y() < 0.333) {
+					this.jumpCount--;
+					entity.setDeltaMovement(entity.getDeltaMovement().x, 0.8D,
+							entity.getDeltaMovement().z());
 					uuidHasJumpedMap.put(entity.getUUID().toString(), true);
+					Vector3d playerLook = ((PlayerEntity) entity).getViewVector(1);
+					Vector3d dashVec = new Vector3d(playerLook.x(), ((PlayerEntity) entity).getDeltaMovement().y,
+							playerLook.z());
+					entity.setDeltaMovement(dashVec);
 
 					entity.playSound(SoundEvents.GENERIC_EXTINGUISH_FIRE, 0.3F, 2.0F);
 					if (!entity.isOnGround()) {
@@ -68,12 +77,20 @@ public class DoomLeapEntityEvents {
 										- (double) entity.getBbWidth() - d2 * 10.0D,
 								d0, d1, d2);
 					}
+					cooldown = 50;
+					this.jumpCount--;
 				}
 
 			}
 		} else if (entity instanceof PlayerEntity) {
 			uuidHasJumpedMap.put(entity.getUUID().toString(), false);
 		}
+	}
+
+	@SubscribeEvent
+	public void onClientTick(ClientTickEvent event) {
+		if (cooldown > 0)
+			--cooldown;
 	}
 
 	@SubscribeEvent

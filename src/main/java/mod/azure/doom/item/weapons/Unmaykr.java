@@ -12,18 +12,15 @@ import mod.azure.doom.util.packets.UnmaykrLoadingPacket;
 import mod.azure.doom.util.registry.DoomItems;
 import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ShootableItem;
 import net.minecraft.item.UseAction;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -62,22 +59,6 @@ public class Unmaykr extends DoomBaseItem implements IAnimatable {
 	public Unmaykr() {
 		super(new Item.Properties().tab(DoomMod.DoomWeaponItemGroup).stacksTo(1).durability(9000)
 				.setISTER(() -> UnmaykrRender::new));
-	}
-
-	@Override
-	public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items) {
-		ItemStack stack = new ItemStack(this);
-		stack.hasTag();
-		stack.enchant(Enchantments.INFINITY_ARROWS, 1);
-		if (group == DoomMod.DoomWeaponItemGroup) {
-			items.add(stack);
-		}
-	}
-
-	@Override
-	public void onCraftedBy(ItemStack stack, World worldIn, PlayerEntity playerIn) {
-		stack.hasTag();
-		stack.enchant(Enchantments.INFINITY_ARROWS, 1);
 	}
 
 	@Override
@@ -164,17 +145,6 @@ public class Unmaykr extends DoomBaseItem implements IAnimatable {
 		}
 	}
 
-	private static void removeAmmo(Item ammo, PlayerEntity playerEntity) {
-		if (!playerEntity.isCreative()) {
-			for (ItemStack item : playerEntity.inventory.items) {
-				if (item.getItem() == DoomItems.UNMAKRY_BOLT.get()) {
-					item.shrink(1);
-					break;
-				}
-			}
-		}
-	}
-
 	public static float getArrowVelocity(int charge) {
 		float f = (float) charge / 20.0F;
 		f = (f * f + f * 2.0F) / 3.0F;
@@ -187,7 +157,7 @@ public class Unmaykr extends DoomBaseItem implements IAnimatable {
 
 	@Override
 	public UseAction getUseAnimation(ItemStack stack) {
-		return UseAction.BLOCK;
+		return UseAction.BOW;
 	}
 
 	@Override

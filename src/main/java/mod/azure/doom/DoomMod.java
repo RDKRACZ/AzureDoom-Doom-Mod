@@ -61,7 +61,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
-import net.minecraftforge.fml.loading.FMLLoader;
 import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.registries.ForgeRegistries;
 import software.bernie.geckolib3.GeckoLib;
@@ -110,11 +109,11 @@ public class DoomMod {
 		modEventBus.addListener(this::setup);
 		modEventBus.addListener(this::clientSetup);
 		modEventBus.addListener(this::enqueueIMC);
-		if (!FMLLoader.isProduction()) {
-			DoomStructures.DEFERRED_REGISTRY_STRUCTURE.register(modEventBus);
-			forgeBus.addListener(EventPriority.NORMAL, this::addDimensionalSpacing);
-			forgeBus.addListener(EventPriority.HIGH, this::biomeModification);
-		}
+		// if (!FMLLoader.isProduction()) {
+		DoomStructures.DEFERRED_REGISTRY_STRUCTURE.register(modEventBus);
+		forgeBus.addListener(EventPriority.NORMAL, this::addDimensionalSpacing);
+		forgeBus.addListener(EventPriority.HIGH, this::biomeModification);
+		// }
 		forgeBus.addGenericListener(Block.class, DoomMod::updatingBlocksID);
 		forgeBus.addGenericListener(Item.class, DoomMod::updatingItemsID);
 		MinecraftForge.EVENT_BUS.addListener(DoomVillagerTrades::onVillagerTradesEvent);
@@ -167,11 +166,11 @@ public class DoomMod {
 		if (event.getCategory().equals(Category.THEEND)) {
 			event.getGeneration().getStructures().add(() -> DoomConfiguredStructures.CONFIGURED_MAYKR);
 		}
-//		if (!(event.getCategory().equals(Category.THEEND) || event.getCategory().equals(Category.NETHER))) {
-//			event.getGeneration().getStructures().add(() -> DoomConfiguredStructures.CONFIGURED_TITAN_SKULL);
-//		}
 		if (event.getCategory().equals(Category.NETHER)) {
 			event.getGeneration().getStructures().add(() -> DoomConfiguredStructures.CONFIGURED_TITAN_SKULL);
+		}
+		if (!(event.getCategory().equals(Category.NETHER) || event.getCategory().equals(Category.THEEND))) {
+			event.getGeneration().getStructures().add(() -> DoomConfiguredStructures.CONFIGURED_PORTAL);
 		}
 	}
 
@@ -203,6 +202,8 @@ public class DoomMod {
 					DimensionStructuresSettings.DEFAULTS.get(DoomStructures.MAYKR.get()));
 			tempMap.putIfAbsent(DoomStructures.TITAN_SKULL.get(),
 					DimensionStructuresSettings.DEFAULTS.get(DoomStructures.TITAN_SKULL.get()));
+			tempMap.putIfAbsent(DoomStructures.PORTAL.get(),
+					DimensionStructuresSettings.DEFAULTS.get(DoomStructures.PORTAL.get()));
 			serverWorld.getChunkSource().generator.getSettings().structureConfig = tempMap;
 		}
 	}

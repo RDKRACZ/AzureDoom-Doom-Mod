@@ -126,17 +126,6 @@ public class RocketLauncher extends DoomBaseItem implements IAnimatable {
 		}
 	}
 
-	private static void removeAmmo(Item ammo, PlayerEntity playerEntity) {
-		if (!playerEntity.isCreative()) {
-			for (ItemStack item : playerEntity.inventory.items) {
-				if (item.getItem() == DoomItems.ROCKET.get()) {
-					item.shrink(1);
-					break;
-				}
-			}
-		}
-	}
-
 	public static float getArrowVelocity(int charge) {
 		float f = (float) charge / 20.0F;
 		f = (f * f + f * 2.0F) / 3.0F;
