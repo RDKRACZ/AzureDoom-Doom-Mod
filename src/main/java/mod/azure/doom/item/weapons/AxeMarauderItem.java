@@ -3,14 +3,20 @@ package mod.azure.doom.item.weapons;
 import java.util.List;
 
 import mod.azure.doom.DoomMod;
+import mod.azure.doom.client.Keybindings;
 import mod.azure.doom.util.enums.DoomTier;
+import mod.azure.doom.util.packets.AxeMarauderLoadingPacket;
+import mod.azure.doom.util.packets.DoomPacketHandler;
+import mod.azure.doom.util.registry.DoomItems;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantments;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -36,6 +42,46 @@ public class AxeMarauderItem extends AxeItem {
 		tooltip.add(new TranslationTextComponent("doom.marauder_axe3.text").withStyle(TextFormatting.RED)
 				.withStyle(TextFormatting.ITALIC));
 		super.appendHoverText(stack, worldIn, tooltip, flagIn);
+	}
+
+	@Override
+	public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+		PlayerEntity playerentity = (PlayerEntity) entityIn;
+		if (worldIn.isClientSide) {
+			if (playerentity.getMainHandItem().getItem() instanceof AxeMarauderItem) {
+				while (Keybindings.RELOAD.consumeClick() && isSelected) {
+					DoomPacketHandler.MARAUDERAXE.sendToServer(new AxeMarauderLoadingPacket(itemSlot));
+				}
+			}
+		}
+	}
+
+	public static void reload(PlayerEntity user, Hand hand) {
+		if (user.getItemInHand(hand).getItem() instanceof AxeMarauderItem) {
+			while (user.getItemInHand(hand).getDamageValue() != 0
+					&& user.inventory.countItem(DoomItems.ARGENT_BLOCK.get()) > 0) {
+				removeAmmo(DoomItems.ARGENT_BLOCK.get(), user);
+				user.getItemInHand(hand).hurtAndBreak(-5, user, s -> user.broadcastBreakEvent(hand));
+				user.getItemInHand(hand).setPopTime(3);
+			}
+		}
+	}
+
+	public static void removeAmmo(Item ammo, PlayerEntity playerEntity) {
+		if (!playerEntity.isCreative()) {
+			for (ItemStack item : playerEntity.inventory.offhand) {
+				if (item.getItem() == ammo) {
+					item.shrink(1);
+					break;
+				}
+				for (ItemStack item1 : playerEntity.inventory.items) {
+					if (item1.getItem() == ammo) {
+						item1.shrink(1);
+						break;
+					}
+				}
+			}
+		}
 	}
 
 	@Override

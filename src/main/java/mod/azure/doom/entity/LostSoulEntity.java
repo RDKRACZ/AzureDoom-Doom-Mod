@@ -53,9 +53,11 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 public class LostSoulEntity extends DemonEntity implements IMob, IAnimatable {
 	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.defineId(LostSoulEntity.class,
 			DataSerializers.BOOLEAN);
+	protected static final DataParameter<Byte> DATA_FLAGS_ID = EntityDataManager.defineId(LostSoulEntity.class,
+			DataSerializers.BYTE);
 	public int explosionPower = 1;
 	public int flameTimer;
-	
+
 	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.LOST_SOUL);
 
 	public LostSoulEntity(EntityType<? extends LostSoulEntity> type, World world) {
@@ -97,6 +99,7 @@ public class LostSoulEntity extends DemonEntity implements IMob, IAnimatable {
 	protected void defineSynchedData() {
 		super.defineSynchedData();
 		this.entityData.define(ATTACKING, false);
+		this.entityData.define(DATA_FLAGS_ID, (byte) 0);
 	}
 
 	@OnlyIn(Dist.CLIENT)
@@ -131,16 +134,33 @@ public class LostSoulEntity extends DemonEntity implements IMob, IAnimatable {
 
 	public static boolean spawning(EntityType<LostSoulEntity> p_223368_0_, IWorld p_223368_1_, SpawnReason reason,
 			BlockPos p_223368_3_, Random p_223368_4_) {
-		return passPeacefulAndYCheck(config, p_223368_1_, reason, p_223368_3_, p_223368_4_) && p_223368_4_.nextInt(20) == 0
+		return passPeacefulAndYCheck(config, p_223368_1_, reason, p_223368_3_, p_223368_4_)
+				&& p_223368_4_.nextInt(20) == 0
 				&& checkMobSpawnRules(p_223368_0_, p_223368_1_, reason, p_223368_3_, p_223368_4_);
 	}
 
+	private boolean getVexFlag(int p_190656_1_) {
+		int i = this.entityData.get(DATA_FLAGS_ID);
+		return (i & p_190656_1_) != 0;
+	}
+
+	private void setVexFlag(int p_190660_1_, boolean p_190660_2_) {
+		int i = this.entityData.get(DATA_FLAGS_ID);
+		if (p_190660_2_) {
+			i = i | p_190660_1_;
+		} else {
+			i = i & ~p_190660_1_;
+		}
+
+		this.entityData.set(DATA_FLAGS_ID, (byte) (i & 255));
+	}
+
 	public boolean isCharging() {
-		return true;
+		return this.getVexFlag(1);
 	}
 
 	public void setCharging(boolean charging) {
-		return;
+		this.setVexFlag(1, charging);
 	}
 
 	public boolean causeFallDamage(float distance, float damageMultiplier) {
@@ -192,9 +212,8 @@ public class LostSoulEntity extends DemonEntity implements IMob, IAnimatable {
 		}
 
 		public boolean canUse() {
-			if (LostSoulEntity.this.getTarget() != null && !LostSoulEntity.this.getMoveControl().hasWanted()
-					&& LostSoulEntity.this.random.nextInt(7) == 0) {
-				return LostSoulEntity.this.distanceToSqr(LostSoulEntity.this.getTarget()) > 4.0D;
+			if (LostSoulEntity.this.getTarget() != null && !LostSoulEntity.this.getMoveControl().hasWanted()) {
+				return true;
 			} else {
 				return false;
 			}
@@ -225,13 +244,13 @@ public class LostSoulEntity extends DemonEntity implements IMob, IAnimatable {
 			if (LostSoulEntity.this.getBoundingBox().intersects(livingentity.getBoundingBox())) {
 				LostSoulEntity.this.doHurtTarget(livingentity);
 				LostSoulEntity.this.setCharging(false);
-				--this.attackTimer;
 			} else {
 				double d0 = LostSoulEntity.this.distanceToSqr(livingentity);
-				if (d0 < 400.0D) { //this was set to 30.0D (very short) is this intended? results in tons of these mobs just sitting around
+				if (d0 < 400.0D) { // this was set to 30.0D (very short) is this intended? results in tons of these
+									// mobs just sitting around
 					Vector3d vec3d = livingentity.getEyePosition(1.0F);
 					LostSoulEntity.this.moveControl.setWantedPosition(vec3d.x, vec3d.y, vec3d.z, 1.0D);
-					this.attackTimer = -40;
+					this.attackTimer = -10;
 				}
 			}
 
@@ -268,7 +287,8 @@ public class LostSoulEntity extends DemonEntity implements IMob, IAnimatable {
 					double d0 = vector3d.length();
 					vector3d = vector3d.normalize();
 					if (this.canReach(vector3d, MathHelper.ceil(d0))) {
-						this.parentEntity.setDeltaMovement(this.parentEntity.getDeltaMovement().add(vector3d.scale(0.1D)));
+						this.parentEntity
+								.setDeltaMovement(this.parentEntity.getDeltaMovement().add(vector3d.scale(0.1D)));
 					} else {
 						this.operation = MovementController.Action.WAIT;
 					}
@@ -306,8 +326,7 @@ public class LostSoulEntity extends DemonEntity implements IMob, IAnimatable {
 		public void tick() {
 			if (this.parentEntity.getTarget() == null) {
 				Vector3d vec3d = this.parentEntity.getDeltaMovement();
-				this.parentEntity.yRot = -((float) MathHelper.atan2(vec3d.x, vec3d.z))
-						* (180F / (float) Math.PI);
+				this.parentEntity.yRot = -((float) MathHelper.atan2(vec3d.x, vec3d.z)) * (180F / (float) Math.PI);
 				this.parentEntity.yBodyRot = this.parentEntity.yRot;
 			} else {
 				LivingEntity livingentity = this.parentEntity.getTarget();

@@ -5,12 +5,12 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 
 public class DemonAttackGoal extends MeleeAttackGoal {
-	private final DemonEntity zombie;
+	private final DemonEntity entity;
 	private int raiseArmTicks;
 
 	public DemonAttackGoal(DemonEntity zombieIn, double speedIn, boolean longMemoryIn) {
 		super(zombieIn, speedIn, longMemoryIn);
-		this.zombie = zombieIn;
+		this.entity = zombieIn;
 	}
 
 	public void start() {
@@ -19,28 +19,29 @@ public class DemonAttackGoal extends MeleeAttackGoal {
 	}
 
 	public boolean canUse() {
-		return this.zombie.getTarget() != null;
+		return this.entity.getTarget() != null;
 	}
 
 	public void stop() {
 		super.stop();
-		this.zombie.setAggressive(false);
+		this.entity.setAggressive(false);
 	}
 
 	public void tick() {
 		super.tick();
-		++this.raiseArmTicks;
-		LivingEntity livingentity = this.zombie.getTarget();
-		this.zombie.getLookControl().setLookAt(livingentity, 90.0F, 30.0F);
-		if (livingentity.distanceToSqr(this.zombie) < 1.0D) {
-			if (this.raiseArmTicks >= 5 && this.getTicksUntilNextAttack() < this.getAttackInterval() / 2) {
-				this.zombie.setAggressive(true);
-				//this.zombie.setMeleeAttacking(this.raiseArmTicks >= 5);
-			} else {
-				this.zombie.setAggressive(false);
+		LivingEntity livingentity = this.entity.getTarget();
+		if (livingentity != null) {
+			++this.raiseArmTicks;
+			this.entity.getLookControl().setLookAt(livingentity, 90.0F, 30.0F);
+			if (livingentity.distanceToSqr(this.entity) < 1.0D) {
+				if (this.raiseArmTicks >= 5 && this.getTicksUntilNextAttack() < this.getAttackInterval() / 2) {
+					this.entity.setAggressive(true);
+					// this.zombie.setMeleeAttacking(this.raiseArmTicks >= 5);
+				} else {
+					this.entity.setAggressive(false);
+				}
 			}
 		}
-
 	}
 
 	@Override

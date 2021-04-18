@@ -56,6 +56,10 @@ public class DoomPacketHandler {
 			new ResourceLocation(DoomMod.MODID, "crucible"), () -> PROTOCOL_VERSION, PROTOCOL_VERSION::equals,
 			PROTOCOL_VERSION::equals);
 
+	public static final SimpleChannel MARAUDERAXE = NetworkRegistry.newSimpleChannel(
+			new ResourceLocation(DoomMod.MODID, "marauderaxe"), () -> PROTOCOL_VERSION, PROTOCOL_VERSION::equals,
+			PROTOCOL_VERSION::equals);
+
 	public static final SimpleChannel CHAINSAW = NetworkRegistry.newSimpleChannel(
 			new ResourceLocation(DoomMod.MODID, "chainsaw"), () -> PROTOCOL_VERSION, PROTOCOL_VERSION::equals,
 			PROTOCOL_VERSION::equals);
@@ -95,5 +99,7 @@ public class DoomPacketHandler {
 				ChainsawEternalLoadingPacket::handle);
 		HEAVYCANNON.registerMessage(channel_id++, HeavyCannonLoadingPacket.class, HeavyCannonLoadingPacket::encode,
 				HeavyCannonLoadingPacket::new, HeavyCannonLoadingPacket::handle);
+		MARAUDERAXE.registerMessage(channel_id++, AxeMarauderLoadingPacket.class, AxeMarauderLoadingPacket::encode,
+				AxeMarauderLoadingPacket::new, AxeMarauderLoadingPacket::handle);
 	}
 }

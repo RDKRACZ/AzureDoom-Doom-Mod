@@ -1,12 +1,13 @@
 package mod.azure.doom.entity;
 
+import java.util.EnumSet;
 import java.util.Random;
 import java.util.function.Predicate;
 
 import javax.annotation.Nullable;
 
 import mod.azure.doom.entity.ai.goal.DemonAttackGoal;
-import mod.azure.doom.entity.ai.goal.RangedStrafeAttackGoal;
+import mod.azure.doom.entity.attack.AbstractRangedAttack;
 import mod.azure.doom.entity.attack.FireballAttack;
 import mod.azure.doom.util.config.Config;
 import mod.azure.doom.util.config.EntityConfig;
@@ -21,6 +22,7 @@ import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.HurtByTargetGoal;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
@@ -127,8 +129,8 @@ public class ProwlerEntity extends DemonEntity implements IAnimatable {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
-	public static boolean spawning(EntityType<ProwlerEntity> p_223337_0_, IWorld p_223337_1_,
-			SpawnReason reason, BlockPos p_223337_3_, Random p_223337_4_) {
+	public static boolean spawning(EntityType<ProwlerEntity> p_223337_0_, IWorld p_223337_1_, SpawnReason reason,
+			BlockPos p_223337_3_, Random p_223337_4_) {
 		return passPeacefulAndYCheck(config, p_223337_1_, reason, p_223337_3_, p_223337_4_);
 	}
 
@@ -136,9 +138,9 @@ public class ProwlerEntity extends DemonEntity implements IAnimatable {
 	protected void registerGoals() {
 		this.goalSelector.addGoal(0, new SwimGoal(this));
 		this.goalSelector.addGoal(4,
-				new RangedStrafeAttackGoal(this,
-						new FireballAttack(this, false).setProjectileOriginOffset(0.8, 0.8, 0.8).setDamage(4).setSound(
-								SoundEvents.BLAZE_SHOOT, 1.0F, 1.4F + this.getRandom().nextFloat() * 0.35F),
+				new ProwlerEntity.RangedStrafeAttackGoal(this,
+						new FireballAttack(this, false).setProjectileOriginOffset(0.8, 0.8, 0.8).setDamage(4)
+								.setSound(SoundEvents.BLAZE_SHOOT, 1.0F, 1.4F + this.getRandom().nextFloat() * 0.35F),
 						1.0D, 50, 30, 15, 15F).setMultiShot(5, 3));
 		this.goalSelector.addGoal(4, new DemonAttackGoal(this, 1.0D, false));
 		this.goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8.0F));
@@ -148,6 +150,195 @@ public class ProwlerEntity extends DemonEntity implements IAnimatable {
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, true));
 		this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
 		this.targetSelector.addGoal(4, new ResetAngerGoal<>(this, false));
+	}
+
+	public class RangedStrafeAttackGoal extends Goal {
+		private final ProwlerEntity entity;
+		private double moveSpeedAmp = 1;
+		private int attackCooldown;
+		private int visibleTicksDelay = 20;
+		private float maxAttackDistance = 20;
+		private int strafeTicks = 20;
+		private int attackTime = -1;
+		private int seeTime;
+		private boolean strafingClockwise;
+		private boolean strafingBackwards;
+		private int strafingTime = -1;
+
+		private AbstractRangedAttack attack;
+
+		public RangedStrafeAttackGoal(ProwlerEntity mob, AbstractRangedAttack attack, double moveSpeedAmpIn,
+				int attackCooldownIn, int visibleTicksDelay, int strafeTicks, float maxAttackDistanceIn) {
+			this.entity = mob;
+			this.moveSpeedAmp = moveSpeedAmpIn;
+			this.attackCooldown = attackCooldownIn;
+			this.maxAttackDistance = maxAttackDistanceIn * maxAttackDistanceIn;
+			this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
+			this.attack = attack;
+			this.visibleTicksDelay = visibleTicksDelay;
+			this.strafeTicks = strafeTicks;
+		}
+
+		// use defaults
+		public RangedStrafeAttackGoal(ProwlerEntity mob, AbstractRangedAttack attack, int attackCooldownIn) {
+			this.entity = mob;
+			this.attackCooldown = attackCooldownIn;
+			this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
+			this.attack = attack;
+		}
+
+		private boolean multiShot = false;
+		private int multiShotCount = 0;
+		private int multiShotTickDelay = 0;
+
+		private boolean multiShooting = false;
+		private int multiShotsLeft = 0;
+		private int multiShotTicker = 0;
+
+		public RangedStrafeAttackGoal setMultiShot(int count, int tickDelay) {
+			multiShot = true;
+			multiShotCount = count;
+			multiShotTickDelay = tickDelay;
+			return this;
+		}
+
+		public boolean tickMultiShot() {
+			if (multiShotsLeft > 0 && multiShotTicker == 0) {
+				multiShotsLeft--;
+				if (multiShotsLeft == 0)
+					finishMultiShot();
+				multiShotTicker = multiShotTickDelay;
+				return true;
+			}
+			multiShotTicker--;
+			return false;
+		}
+
+		public void beginMultiShooting() {
+			multiShooting = true;
+			multiShotsLeft = multiShotCount - 1;
+			multiShotTicker = multiShotTickDelay;
+		}
+
+		public void finishMultiShot() {
+			multiShooting = false;
+			multiShotsLeft = 0;
+		}
+
+		public void setAttackCooldown(int attackCooldownIn) {
+			this.attackCooldown = attackCooldownIn;
+		}
+
+		/**
+		 * Returns whether execution should begin. You can also read and cache any state
+		 * necessary for execution in this method as well.
+		 */
+		public boolean canUse() {
+			return this.entity.getTarget() != null;
+		}
+
+		/**
+		 * Returns whether an in-progress EntityAIBase should continue executing
+		 */
+		public boolean canContinueToUse() {
+			return (this.canUse() || !this.entity.getNavigation().isDone());
+		}
+
+		/**
+		 * Execute a one shot task or start executing a continuous task
+		 */
+		public void start() {
+			super.start();
+			this.entity.setAggressive(true);
+		}
+
+		/**
+		 * Reset the task's internal state. Called when this task is interrupted by
+		 * another one
+		 */
+		public void stop() {
+			super.stop();
+			this.entity.setAggressive(false);
+			this.seeTime = 0;
+			this.attackTime = -1;
+			this.entity.stopUsingItem();
+		}
+
+		/**
+		 * Keep ticking a continuous task that has already been started
+		 */
+		public void tick() {
+			LivingEntity livingentity = this.entity.getTarget();
+			if (livingentity != null) {
+				double distanceToTargetSq = this.entity.distanceToSqr(livingentity.getX(), livingentity.getY(),
+						livingentity.getZ());
+				boolean inLineOfSight = this.entity.getSensing().canSee(livingentity);
+				if (inLineOfSight != this.seeTime > 0) {
+					this.seeTime = 0;
+				}
+
+				if (inLineOfSight) {
+					++this.seeTime;
+				} else {
+					if (multiShot)
+						finishMultiShot();
+					--this.seeTime;
+				}
+
+				if (distanceToTargetSq <= (double) this.maxAttackDistance && this.seeTime >= 20) {
+					this.entity.getNavigation().stop();
+					++this.strafingTime;
+				} else {
+					this.entity.getNavigation().moveTo(livingentity, this.moveSpeedAmp);
+					this.strafingTime = -1;
+				}
+
+				if (this.strafingTime >= strafeTicks) {
+					if ((double) this.entity.getRandom().nextFloat() < 0.3D) {
+						this.strafingClockwise = !this.strafingClockwise;
+					}
+
+					if ((double) this.entity.getRandom().nextFloat() < 0.3D) {
+						this.strafingBackwards = !this.strafingBackwards;
+					}
+
+					this.strafingTime = 0;
+				}
+
+				if (this.strafingTime > -1) {
+					if (distanceToTargetSq > (double) (this.maxAttackDistance * 0.75F)) {
+						this.strafingBackwards = false;
+					} else if (distanceToTargetSq < (double) (this.maxAttackDistance * 0.25F)) {
+						this.strafingBackwards = true;
+					}
+
+					this.entity.getMoveControl().strafe(this.strafingBackwards ? -0.5F : 0.5F,
+							this.strafingClockwise ? 0.5F : -0.5F);
+					this.entity.lookAt(livingentity, 30.0F, 30.0F);
+				} else {
+					this.entity.getLookControl().setLookAt(livingentity, 30.0F, 30.0F);
+				}
+
+				// attack
+				if (multiShooting) {
+					if (tickMultiShot())
+						this.attack.shoot();
+					this.entity.teleport();
+					return;
+				}
+
+				if (this.seeTime >= this.visibleTicksDelay) {
+					if (this.attackTime >= this.attackCooldown) {
+						this.attack.shoot();
+						this.entity.teleport();
+						this.attackTime = 0;
+					} else
+						this.attackTime++;
+				}
+
+				this.entity.setAttacking(this.attackTime >= this.attackCooldown - this.attackCooldown * 0.25);
+			}
+		}
 	}
 
 	static class FindPlayerGoal extends NearestAttackableTargetGoal<PlayerEntity> {
@@ -207,6 +398,12 @@ public class ProwlerEntity extends DemonEntity implements IAnimatable {
 				if (this.target != null && !this.enderman.isPassenger()) {
 					if (this.target.distanceToSqr(this.enderman) > 256.0D && this.teleportTime++ >= 30
 							&& this.enderman.teleportTowards(this.target)) {
+						if (this.target.distanceToSqr(this.enderman) < 16.0D) {
+							this.enderman.teleport();
+						}
+						this.teleportTime = 0;
+					} else if (this.target.distanceToSqr(this.enderman) > 256.0D && this.teleportTime++ >= 30
+							&& this.enderman.teleportTowards(this.target)) {
 						this.teleportTime = 0;
 					}
 				}
@@ -261,9 +458,9 @@ public class ProwlerEntity extends DemonEntity implements IAnimatable {
 
 	protected boolean teleport() {
 		if (!this.level.isClientSide() && this.isAlive()) {
-			double d0 = this.getX() + (this.random.nextDouble() - 0.5D) * 64.0D;
-			double d1 = this.getY() + (double) (this.random.nextInt(64) - 32);
-			double d2 = this.getZ() + (this.random.nextDouble() - 0.5D) * 64.0D;
+			double d0 = this.getX() + (this.random.nextDouble() - 0.5D) * 16.0D;
+			double d1 = this.getY() + (double) (this.random.nextInt(64) - 16);
+			double d2 = this.getZ() + (this.random.nextDouble() - 0.5D) * 16.0D;
 			return this.teleport(d0, d1, d2);
 		} else {
 			return false;

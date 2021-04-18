@@ -364,8 +364,8 @@ public class ModEntityTypes {
 //			() -> EntityType.Builder.of(BloodMaykrEntity::new, EntityClassification.MONSTER).sized(1.7f, 2.2F)
 //					.fireImmune().clientTrackingRange(9).build(new ResourceLocation(DoomMod.MODID, "blood_maykr").toString()));
 
-//	public static final RegistryObject<EntityType<KhanMakyrEntity>> KHANMAKER = ENTITY_TYPES.register("khan_maykr",
-//			() -> EntityType.Builder.of(KhanMakyrEntity::new, EntityClassification.MONSTER).sized(1.7f, 2.2F)
-//					.fireImmune().clientTrackingRange(9).build(new ResourceLocation(DoomMod.MODID, "khan_maykr").toString()));
+//	public static final RegistryObject<EntityType<ArchMakyrEntity>> ARCHMAKER = ENTITY_TYPES.register("arch_maykr",
+//			() -> EntityType.Builder.of(ArchMakyrEntity::new, EntityClassification.MONSTER).sized(1.7f, 2.2F)
+//					.fireImmune().clientTrackingRange(9).build(new ResourceLocation(DoomMod.MODID, "arch_maykr").toString()));
 
 }

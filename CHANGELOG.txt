@@ -19,6 +19,10 @@ v.4.0.0
 - Massively increased cool down of Gore Nest Spawns and added a max of 3 waves per gore nest.
 - Halved all demons (expect the Icon of Sin) follow ranges to 25, in line with vanilla mobs.
 - Fixed weapons not being able to use ammo in the off hand for reloading weapons.
+- Fixed Marauder Axe not being reloadable with the Argent Blocks like the Crucible.
+- More Goal related null checks added because bad "performance" mods.
+- Prowler now better teleports after attacking.
+- Pain Elemental attacking animation updated to match new style.
 
 ## Not yet implemented but assets and code are in-process awaiting creation of models ## 
 	- Gargoyle remodel
@@ -30,5 +34,5 @@ v.4.0.0
 	- Doom Hunter
 	- Maykr Drones
 	- Blood Maykrs
-	- Khan Maykr
+	- Arch Makyr
 ## Not yet implemented but assets and code are in-process awaiting creation of models ## 

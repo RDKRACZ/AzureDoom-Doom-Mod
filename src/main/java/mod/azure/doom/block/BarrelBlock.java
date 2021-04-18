@@ -94,8 +94,8 @@ public class BarrelBlock extends Block {
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
-			Hand handIn, BlockRayTraceResult hit) {
+	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn,
+			BlockRayTraceResult hit) {
 		ItemStack itemstack = player.getItemInHand(handIn);
 		Item item = itemstack.getItem();
 		if (item != Items.FLINT_AND_STEEL && item != Items.FIRE_CHARGE) {
@@ -118,8 +118,7 @@ public class BarrelBlock extends Block {
 	}
 
 	@Override
-	public void onProjectileHit(World worldIn, BlockState state, BlockRayTraceResult hit,
-			ProjectileEntity projectile) {
+	public void onProjectileHit(World worldIn, BlockState state, BlockRayTraceResult hit, ProjectileEntity projectile) {
 		if (!worldIn.isClientSide) {
 			Entity entity = projectile.getOwner();
 			BlockPos blockpos = hit.getBlockPos();

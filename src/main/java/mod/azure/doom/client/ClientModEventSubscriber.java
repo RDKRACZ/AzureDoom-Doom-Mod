@@ -208,8 +208,8 @@ public class ClientModEventSubscriber {
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.MAYKRDRONE.get(), MaykrDroneRender::new);
 //		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BLOODMAYKR.get(),
 //				BloodMaykrRender::new);
-//		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.KHANMAKER.get(),
-//				KhanMaykrRender::new);
+//		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ARCHMAKER.get(),
+//				ArchMaykrRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ARACHNOTRONETERNAL.get(),
 				ArachnotronEternalRender::new);
 
