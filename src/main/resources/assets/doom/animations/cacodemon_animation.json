@@ -226,7 +226,7 @@
 			}
 		},
 		"attacking": {
-			"loop": "hold_on_last_frame",
+			"loop": true,
 			"animation_length": 2.08,
 			"bones": {
 				"body": {
@@ -237,6 +237,9 @@
 						"1.04": {
 							"vector": [-7.5, 0, 0],
 							"easing": "easeInOutQuad"
+						},
+						"2.08": {
+							"vector": [0, 0, 0]
 						}
 					},
 					"position": {
@@ -244,11 +247,11 @@
 							"vector": [0, 0, 0]
 						},
 						"0.56": {
-							"vector": [0, 0.5, 0],
+							"vector": [0.5, 0.5, 0],
 							"easing": "easeInOutSine"
 						},
 						"1.56": {
-							"vector": [0, -0.5, 0],
+							"vector": [-0.5, -0.5, 0],
 							"easing": "easeInOutSine"
 						},
 						"2.08": {
@@ -265,6 +268,29 @@
 						"1.04": {
 							"vector": [-10, 0, 0],
 							"easing": "easeInOutQuad"
+						},
+						"2.08": {
+							"vector": [0, 0, 0],
+							"easing": "easeInOutQuad"
+						}
+					}
+				},
+				"eye": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.52": {
+							"vector": [0, -5, 0],
+							"easing": "easeInOutQuad"
+						},
+						"1.56": {
+							"vector": [0, 5, 0],
+							"easing": "easeInOutQuad"
+						},
+						"2.08": {
+							"vector": [0, 0, 0],
+							"easing": "easeInOutQuad"
 						}
 					}
 				},
@@ -276,6 +302,10 @@
 						"1.04": {
 							"vector": [27.5, 0, 0],
 							"easing": "easeInOutQuad"
+						},
+						"2.08": {
+							"vector": [0, 0, 0],
+							"easing": "easeInOutQuad"
 						}
 					},
 					"position": {
@@ -285,6 +315,9 @@
 						"1.04": {
 							"vector": [0, -1, -1],
 							"easing": "easeInOutQuad"
+						},
+						"2.08": {
+							"vector": [0, 0, 0]
 						}
 					}
 				},
@@ -296,6 +329,9 @@
 						"1.04": {
 							"vector": [0, 0, 5],
 							"easing": "easeInOutQuad"
+						},
+						"2.08": {
+							"vector": [0, 0, 0]
 						}
 					}
 				},
@@ -307,6 +343,9 @@
 						"1.04": {
 							"vector": [0, 0, -5],
 							"easing": "easeInOutQuad"
+						},
+						"2.08": {
+							"vector": [0, 0, 0]
 						}
 					}
 				}

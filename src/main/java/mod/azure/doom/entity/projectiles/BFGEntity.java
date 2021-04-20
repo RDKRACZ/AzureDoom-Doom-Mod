@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import mod.azure.doom.entity.GoreNestEntity;
+import mod.azure.doom.entity.IconofsinEntity;
 import mod.azure.doom.util.config.Config;
 import mod.azure.doom.util.registry.DoomItems;
 import mod.azure.doom.util.registry.ModEntityTypes;
@@ -95,6 +96,15 @@ public class BFGEntity extends AbstractArrowEntity implements IAnimatable {
 
 	public DamageSource getDamageSource() {
 		return DamageSource.arrow(this, this);
+	}
+
+	@Override
+	protected void doPostHurtEffects(LivingEntity living) {
+		super.doPostHurtEffects(living);
+		if (!(living instanceof PlayerEntity) && !(living instanceof IconofsinEntity)) {
+			living.setDeltaMovement(0, 0, 0);
+			living.invulnerableTime = 0;
+		}
 	}
 
 	@Override
@@ -210,20 +220,11 @@ public class BFGEntity extends AbstractArrowEntity implements IAnimatable {
 			if (!(entity instanceof ServerPlayerEntity) && !(entity instanceof GoreNestEntity)
 					&& (entity instanceof MonsterEntity) || (entity instanceof SlimeEntity)
 					|| (entity instanceof PhantomEntity) || (entity instanceof ShulkerEntity)
-					|| (entity instanceof HoglinEntity)) {
+					|| (entity instanceof HoglinEntity || entity instanceof EnderDragonEntity)) {
 				double d12 = (double) (MathHelper.sqrt(entity.distanceToSqr(vector3d1)) / f2);
 				if (d12 <= 1.0D) {
 					if (entity.isAlive()) {
 						entity.hurt(DamageSource.playerAttack((PlayerEntity) this.shooter), 10);
-						this.setTargetedEntity(entity.getId());
-					}
-				}
-			}
-			if (!(entity instanceof ServerPlayerEntity) && (entity instanceof EnderDragonEntity)) {
-				double d12 = (double) (MathHelper.sqrt(entity.distanceToSqr(vector3d1)) / f2);
-				if (d12 <= 1.0D) {
-					if (entity.isAlive()) {
-						entity.hurt(DamageSource.badRespawnPointExplosion(), 10);
 						this.setTargetedEntity(entity.getId());
 					}
 				}
@@ -315,7 +316,7 @@ public class BFGEntity extends AbstractArrowEntity implements IAnimatable {
 			if (!(entity instanceof ServerPlayerEntity) && !(entity instanceof GoreNestEntity)
 					&& (entity instanceof MonsterEntity) || (entity instanceof SlimeEntity)
 					|| (entity instanceof PhantomEntity) || (entity instanceof ShulkerEntity)
-					|| (entity instanceof HoglinEntity)) {
+					|| (entity instanceof HoglinEntity || entity instanceof EnderDragonEntity)) {
 				double d12 = (double) (MathHelper.sqrt(entity.distanceToSqr(vector3d)) / f2);
 				if (d12 <= 1.0D) {
 					entity.hurt(DamageSource.playerAttack((PlayerEntity) this.shooter), 100);
@@ -337,15 +338,6 @@ public class BFGEntity extends AbstractArrowEntity implements IAnimatable {
 							}
 						}
 						entity.level.addFreshEntity(areaeffectcloudentity);
-					}
-				}
-			}
-			if (!(entity instanceof ServerPlayerEntity) && (entity instanceof EnderDragonEntity)) {
-				double d12 = (double) (MathHelper.sqrt(entity.distanceToSqr(vector3d)) / f2);
-				if (d12 <= 1.0D) {
-					if (entity.isAlive()) {
-						entity.hurt(DamageSource.badRespawnPointExplosion(), 100);
-						this.setTargetedEntity(entity.getId());
 					}
 				}
 			}

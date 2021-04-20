@@ -23,6 +23,7 @@ import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.HurtByTargetGoal;
+import net.minecraft.entity.ai.goal.LeapAtTargetGoal;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
@@ -34,6 +35,9 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
@@ -42,6 +46,8 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -53,22 +59,25 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 public class Hellknight2016Entity extends DemonEntity implements IAnimatable {
 
+	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.defineId(Hellknight2016Entity.class,
+			DataSerializers.BOOLEAN);
+
 	private AnimationFactory factory = new AnimationFactory(this);
 	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.HELL_KNIGHT_2016);
 
 	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-		if (event.isMoving() && !this.isAggressive()) {
+		if (event.isMoving() && !this.isAggressive() && this.onGround) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("walking", true));
 			return PlayState.CONTINUE;
 		}
-		if (this.isAggressive() && animationSpeed > 0.35F) {
+		if (this.isAggressive() && animationSpeed > 0.35F && this.onGround) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("run", true));
 			return PlayState.CONTINUE;
 		}
-//		if (this.attackEntityAsMob(this)) {
-//			event.getController().setAnimation(new AnimationBuilder().addAnimation("jumpattack", false));
-//			return PlayState.CONTINUE;
-//		}
+		if (!this.onGround) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("jumpattack", true));
+			return PlayState.CONTINUE;
+		}
 		event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
 		return PlayState.CONTINUE;
 	}
@@ -86,6 +95,22 @@ public class Hellknight2016Entity extends DemonEntity implements IAnimatable {
 
 	public Hellknight2016Entity(EntityType<? extends Hellknight2016Entity> entityType, World worldIn) {
 		super(entityType, worldIn);
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	public boolean isAttacking() {
+		return this.entityData.get(ATTACKING);
+	}
+
+	@Override
+	public void setMeleeAttacking(boolean attacking) {
+		this.entityData.set(ATTACKING, attacking);
+	}
+
+	@Override
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(ATTACKING, false);
 	}
 
 	@Override
@@ -106,13 +131,18 @@ public class Hellknight2016Entity extends DemonEntity implements IAnimatable {
 	}
 
 	protected void applyEntityAI() {
-		this.goalSelector.addGoal(7, new DemonAttackGoal(this, 1.5D, false));
-		// this.goalSelector.addGoal(6, new LeapAtTargetGoal(this, 0.9F));
+		this.goalSelector.addGoal(4, new LeapAtTargetGoal(this, 0.7F));
+		this.goalSelector.addGoal(3, new DemonAttackGoal(this, 1.5D, false));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, false));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
 		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this).setAlertOthers()));
+	}
+
+	@Override
+	public int getMaxFallDistance() {
+		return 99;
 	}
 
 	public static AttributeModifierMap.MutableAttribute createAttributes() {

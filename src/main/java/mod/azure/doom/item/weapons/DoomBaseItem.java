@@ -16,12 +16,12 @@ public class DoomBaseItem extends Item {
 	public DoomBaseItem(Properties properties) {
 		super(properties);
 	}
-	
+
 	@Override
 	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
 		return false;
 	}
-	
+
 	public static void removeAmmo(Item ammo, PlayerEntity playerEntity) {
 		if (!playerEntity.isCreative()) {
 			for (ItemStack item : playerEntity.inventory.offhand) {

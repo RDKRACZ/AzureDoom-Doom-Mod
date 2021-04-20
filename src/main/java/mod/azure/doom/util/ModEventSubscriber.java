@@ -164,7 +164,7 @@ public class ModEventSubscriber {
 		// EntitySpawnPlacementRegistry.register(ModEntityTypes.PINKY2016.get(),
 		// EntitySpawnPlacementRegistry.PlacementType.ON_GROUND,
 		// Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
-		// PinkyEntity::spawning);
+		// Pinky2016::spawning);
 		// EntitySpawnPlacementRegistry.register(ModEntityTypes.FIREBARON.get(),
 		// EntitySpawnPlacementRegistry.PlacementType.ON_GROUND,
 		// Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
@@ -187,10 +187,10 @@ public class ModEventSubscriber {
 		// EntitySpawnPlacementRegistry.PlacementType.ON_GROUND,
 		// Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
 		// BloodMaykrEntity::spawning);
-		// EntitySpawnPlacementRegistry.register(ModEntityTypes.KHANMAKER.get(),
+		// EntitySpawnPlacementRegistry.register(ModEntityTypes.ARCHMAKER.get(),
 		// EntitySpawnPlacementRegistry.PlacementType.ON_GROUND,
 		// Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
-		// KhanMakyrEntity::spawning);
+		// ArchMakyrEntity::spawning);
 	}
 
 	@SubscribeEvent
@@ -234,7 +234,7 @@ public class ModEventSubscriber {
 		// event.put(ModEntityTypes.WHIPLASH.get(),
 		// WhiplashEntity.createAttributes().build());
 		// event.put(ModEntityTypes.PINKY2016.get(),
-		// PinkyEntity.createAttributes().build());
+		// Pinky2016.createAttributes().build());
 		// event.put(ModEntityTypes.BARON2016.get(),
 		// BaronEntity.createAttributes().build());
 		// event.put(ModEntityTypes.ARMORBARON.get(),
@@ -243,8 +243,8 @@ public class ModEventSubscriber {
 		event.put(ModEntityTypes.MAYKRDRONE.get(), MaykrDroneEntity.createAttributes().build());
 		// event.put(ModEntityTypes.BLOODMAYKR.get(),
 		// BloodMaykrEntity.createAttributes().build());
-		// event.put(ModEntityTypes.KHANMAKER.get(),
-		// KhanMakyrEntity.createAttributes().build());
+		// event.put(ModEntityTypes.ARCHMAKER.get(),
+		// ArchMakyrEntity.createAttributes().build());
 		// event.put(ModEntityTypes.FIREBARON.get(),
 		// FireBaronEntity.createAttributes().build());
 	}

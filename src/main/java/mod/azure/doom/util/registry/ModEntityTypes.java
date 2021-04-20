@@ -336,8 +336,8 @@ public class ModEntityTypes {
 					.fireImmune().clientTrackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "arachnotroneternal").toString()));
 
-//	public static final RegistryObject<EntityType<PinkyEntity>> PINKY2016 = ENTITY_TYPES.register("pinky2016",
-//			() -> EntityType.Builder.of(PinkyEntity::new, EntityClassification.MONSTER).sized(1.7f, 2.2F)
+//	public static final RegistryObject<EntityType<Pinky2016>> PINKY2016 = ENTITY_TYPES.register("pinky2016",
+//			() -> EntityType.Builder.of(Pinky2016::new, EntityClassification.MONSTER).sized(1.7f, 2.2F)
 //					.fireImmune().clientTrackingRange(9).build(new ResourceLocation(DoomMod.MODID, "pinky2016").toString()));
 
 //	public static final RegistryObject<EntityType<WhiplashEntity>> WHIPLASH = ENTITY_TYPES.register("whiplash",
@@ -348,7 +348,7 @@ public class ModEntityTypes {
 //			() -> EntityType.Builder.of(BaronEntity::new, EntityClassification.MONSTER).sized(1.7f, 2.2F)
 //					.fireImmune().clientTrackingRange(9).build(new ResourceLocation(DoomMod.MODID, "baron2016").toString()));
 
-//	public static final RegistryObject<EntityType<FireBaronEntity>> FIREBARON = ENTITY_TYPES.register("baron2016",
+//	public static final RegistryObject<EntityType<FireBaronEntity>> FIREBARON = ENTITY_TYPES.register("firebronebaron",
 //			() -> EntityType.Builder.of(FireBaronEntity::new, EntityClassification.MONSTER).sized(1.7f, 2.2F)
 //					.fireImmune().clientTrackingRange(9).build(new ResourceLocation(DoomMod.MODID, "baron2016").toString()));
 

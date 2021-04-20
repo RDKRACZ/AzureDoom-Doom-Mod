@@ -5,6 +5,7 @@ public class EntityDefaults {
 	public enum EntityConfigType {
 
 		ARACHNOTRON("Arachnotron", new EntityDefaults(false, 4, 100).setMeleeDamage(2).setRangedDamage(10).setGeneralSpeed(0.25)),
+		ARCHMAKYR("Arch Maykr", new EntityDefaults(true, 1, 400).setMeleeDamage(6).setRangedDamage(7).setGeneralSpeed(0.25)),
 		ARCHVILE("Archvile", new EntityDefaults(true, 2, 100).setMeleeDamage(3).setGeneralSpeed(0.25)),
 		BARON("Baron", new EntityDefaults(true, 1, 180).setMeleeDamage(7).setGeneralSpeed(0.25).setRangedDamage(12)),
 		CACODEMON("Cacodemon", new EntityDefaults(false, 2, 80).setGeneralSpeed(0.25).setRangedDamage(10)),
@@ -24,7 +25,6 @@ public class EntityDefaults {
 		LOST_SOUL("Lost Soul", new EntityDefaults(false, 4, 10).setMeleeDamage(1).setGeneralSpeed(0.25)),
 		MAYKRDRONE("Maykr Drone", new EntityDefaults(true, 1, 20).setMeleeDamage(2).setRangedDamage(3).setGeneralSpeed(0.25)),
 		BLOODMAYKR("Blood Maykr", new EntityDefaults(true, 1, 45).setMeleeDamage(4).setRangedDamage(5).setGeneralSpeed(0.25)),
-		KHANMAKYR("Khan Maykr", new EntityDefaults(true, 1, 400).setMeleeDamage(6).setRangedDamage(7).setGeneralSpeed(0.25)),
 		MANCUBUS("Mancubus", new EntityDefaults(true, 1, 80).setMeleeDamage(6).setRangedDamage(13).setGeneralSpeed(0.25)),
 		MARAUDER("Marauder", new EntityDefaults(true, 1, 300).setMeleeDamage(3).setGeneralSpeed(0.25)),
 		MECHA_ZOMBIE("Mecha Zombie", new EntityDefaults(false, 4, 25).setMeleeDamage(4).setRangedDamage(5).setGeneralSpeed(0.25)),

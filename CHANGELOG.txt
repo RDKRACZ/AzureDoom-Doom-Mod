@@ -4,16 +4,16 @@ v.4.0.0
 - Added the Possessed Worker, thanks to Undeadmonkey for the model and Pedroca for the texture!
 - Added the Arachnotron Eternal, thanks to Creman for the model and Pedroca for the texture!
 - Updated the Unwilling model, thanks to Undeadmonkey for the model and Pedroca for the texture!
+- Added new Structures! 
+	- The End will now generate a structure dedicated to the Maykrs and the only place they will spawn! 
+	- The Nether will now generate Titan skulls. These skulls show signs of being transformed into a place of Worship though it seems they were abandoned.
+	- The Overworld will now generate massive portals, similar to ruined portals but bigger and can spawn the mods mobs.
 - Scaled up the OG Cyberdemon.
 - Icon of Sin attack has been redone.
 - Redid Arachnotron and Spider Mastermind animations!
 - Lowered the sound of the chainsaws.
 - Demons are now able to walk on Lava like striders.
 - Fixed not being able to search for the armors or a few weapons in the creative search menu.
-- Added new Structures! 
-	- The End will now generate a structure dedicated to the Maykrs and the only place they will spawn! 
-	- The Nether will now generate Titan skulls. These skulls show signs of being transformed into a place of Worship though it seems they were abandoned.
-	- The Overworld will now generate massive portals, similar to ruined portals but bigger and can spawn the mods mobs.
 - BFG Eternal, Heavy Cannon, Pistol, Plasma Gun, Rocketlauncher, Shotgun, Super Shotgun, and Unmaykr now use the bow animations for aiming.
 - Fixed the Crucible Blade glitching open and closed.
 - Massively increased cool down of Gore Nest Spawns and added a max of 3 waves per gore nest.
@@ -23,6 +23,9 @@ v.4.0.0
 - More Goal related null checks added because bad "performance" mods.
 - Prowler now better teleports after attacking.
 - Pain Elemental attacking animation updated to match new style.
+- Hell Knight 2016/Dreadknight now performs his slam attack.
+- Dreadknight Hand Blades redone.
+- Added Ghast Tears to the drops of the boss tier demons loot tables.
 
 ## Not yet implemented but assets and code are in-process awaiting creation of models ## 
 	- Gargoyle remodel
