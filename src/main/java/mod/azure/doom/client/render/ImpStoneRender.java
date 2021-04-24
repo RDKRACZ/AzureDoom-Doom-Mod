@@ -4,7 +4,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import mod.azure.doom.client.models.ImpStoneModel;
-import mod.azure.doom.entity.ImpStoneEntity;
+import mod.azure.doom.entity.tierfodder.ImpStoneEntity;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererManager;

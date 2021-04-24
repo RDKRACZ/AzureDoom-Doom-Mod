@@ -5,7 +5,7 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 import mod.azure.doom.client.models.UnwillingModel;
-import mod.azure.doom.entity.UnwillingEntity;
+import mod.azure.doom.entity.tierfodder.UnwillingEntity;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererManager;

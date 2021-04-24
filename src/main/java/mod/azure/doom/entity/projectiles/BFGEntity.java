@@ -4,8 +4,8 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import mod.azure.doom.entity.GoreNestEntity;
-import mod.azure.doom.entity.IconofsinEntity;
+import mod.azure.doom.entity.tierambient.GoreNestEntity;
+import mod.azure.doom.entity.tierboss.IconofsinEntity;
 import mod.azure.doom.util.config.Config;
 import mod.azure.doom.util.registry.DoomItems;
 import mod.azure.doom.util.registry.ModEntityTypes;

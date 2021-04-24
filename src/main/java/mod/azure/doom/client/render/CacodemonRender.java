@@ -5,7 +5,7 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 import mod.azure.doom.client.models.CacodemonModel;
-import mod.azure.doom.entity.CacodemonEntity;
+import mod.azure.doom.entity.tierheavy.CacodemonEntity;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererManager;

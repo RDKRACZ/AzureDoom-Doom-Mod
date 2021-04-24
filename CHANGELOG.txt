@@ -41,4 +41,5 @@ v.4.0.0
 	- Maykr Drones
 	- Blood Maykrs
 	- Arch Makyr
+	- Spider Mastermind 2016
 ## Not yet implemented but assets and code are in-process awaiting creation of models ## 

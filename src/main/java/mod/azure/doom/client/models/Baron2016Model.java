@@ -1,7 +1,7 @@
 package mod.azure.doom.client.models;
 
 import mod.azure.doom.DoomMod;
-import mod.azure.doom.entity.BaronEntity;
+import mod.azure.doom.entity.tiersuperheavy.BaronEntity;
 import net.minecraft.util.ResourceLocation;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 

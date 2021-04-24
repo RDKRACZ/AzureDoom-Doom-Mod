@@ -5,9 +5,9 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
-import mod.azure.doom.entity.ArchvileEntity;
-import mod.azure.doom.entity.IconofsinEntity;
-import mod.azure.doom.entity.MancubusEntity;
+import mod.azure.doom.entity.tierboss.IconofsinEntity;
+import mod.azure.doom.entity.tierheavy.MancubusEntity;
+import mod.azure.doom.entity.tiersuperheavy.ArchvileEntity;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;

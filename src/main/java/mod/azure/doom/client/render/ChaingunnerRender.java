@@ -5,7 +5,7 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 import mod.azure.doom.client.models.ChaingunnerModel;
-import mod.azure.doom.entity.ChaingunnerEntity;
+import mod.azure.doom.entity.tierfodder.ChaingunnerEntity;
 import mod.azure.doom.util.registry.DoomItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;

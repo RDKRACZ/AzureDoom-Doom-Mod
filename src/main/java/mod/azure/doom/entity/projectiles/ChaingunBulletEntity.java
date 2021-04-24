@@ -1,6 +1,6 @@
 package mod.azure.doom.entity.projectiles;
 
-import mod.azure.doom.entity.IconofsinEntity;
+import mod.azure.doom.entity.tierboss.IconofsinEntity;
 import mod.azure.doom.util.registry.DoomItems;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import net.minecraft.entity.Entity;

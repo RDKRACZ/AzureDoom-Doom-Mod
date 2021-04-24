@@ -1,7 +1,7 @@
 package mod.azure.doom.client.models;
 
 import mod.azure.doom.DoomMod;
-import mod.azure.doom.entity.LostSoulEntity;
+import mod.azure.doom.entity.tierfodder.LostSoulEntity;
 import net.minecraft.util.ResourceLocation;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.processor.IBone;

@@ -5,7 +5,7 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 import mod.azure.doom.client.models.MarauderModel;
-import mod.azure.doom.entity.MarauderEntity;
+import mod.azure.doom.entity.tiersuperheavy.MarauderEntity;
 import mod.azure.doom.util.registry.DoomItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;

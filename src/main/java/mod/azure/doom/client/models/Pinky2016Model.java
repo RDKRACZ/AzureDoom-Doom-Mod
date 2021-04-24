@@ -1,7 +1,7 @@
 package mod.azure.doom.client.models;
 
 import mod.azure.doom.DoomMod;
-import mod.azure.doom.entity.Pinky2016;
+import mod.azure.doom.entity.tierheavy.Pinky2016;
 import net.minecraft.util.ResourceLocation;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.processor.IBone;

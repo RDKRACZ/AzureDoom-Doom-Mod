@@ -1,40 +1,6 @@
 package mod.azure.doom.util.registry;
 
 import mod.azure.doom.DoomMod;
-import mod.azure.doom.entity.ArachnotronEntity;
-import mod.azure.doom.entity.ArchvileEntity;
-import mod.azure.doom.entity.BaronEntity;
-import mod.azure.doom.entity.CacodemonEntity;
-import mod.azure.doom.entity.ChaingunnerEntity;
-import mod.azure.doom.entity.CueBallEntity;
-import mod.azure.doom.entity.Cyberdemon2016Entity;
-import mod.azure.doom.entity.CyberdemonEntity;
-import mod.azure.doom.entity.DoomHunterEntity;
-import mod.azure.doom.entity.GargoyleEntity;
-import mod.azure.doom.entity.GoreNestEntity;
-import mod.azure.doom.entity.Hellknight2016Entity;
-import mod.azure.doom.entity.HellknightEntity;
-import mod.azure.doom.entity.IconofsinEntity;
-import mod.azure.doom.entity.Imp2016Entity;
-import mod.azure.doom.entity.ImpEntity;
-import mod.azure.doom.entity.ImpStoneEntity;
-import mod.azure.doom.entity.LostSoulEntity;
-import mod.azure.doom.entity.MancubusEntity;
-import mod.azure.doom.entity.MarauderEntity;
-import mod.azure.doom.entity.MaykrDroneEntity;
-import mod.azure.doom.entity.MechaZombieEntity;
-import mod.azure.doom.entity.NightmareImpEntity;
-import mod.azure.doom.entity.PainEntity;
-import mod.azure.doom.entity.PinkyEntity;
-import mod.azure.doom.entity.PossessedScientistEntity;
-import mod.azure.doom.entity.PossessedSoldierEntity;
-import mod.azure.doom.entity.ProwlerEntity;
-import mod.azure.doom.entity.RevenantEntity;
-import mod.azure.doom.entity.ShotgunguyEntity;
-import mod.azure.doom.entity.SpectreEntity;
-import mod.azure.doom.entity.SpiderdemonEntity;
-import mod.azure.doom.entity.UnwillingEntity;
-import mod.azure.doom.entity.ZombiemanEntity;
 import mod.azure.doom.entity.projectiles.ArgentBoltEntity;
 import mod.azure.doom.entity.projectiles.BFGEntity;
 import mod.azure.doom.entity.projectiles.BarrelEntity;
@@ -50,6 +16,40 @@ import mod.azure.doom.entity.projectiles.entity.ChaingunMobEntity;
 import mod.azure.doom.entity.projectiles.entity.DroneBoltEntity;
 import mod.azure.doom.entity.projectiles.entity.EnergyCellMobEntity;
 import mod.azure.doom.entity.projectiles.entity.RocketMobEntity;
+import mod.azure.doom.entity.tierambient.CueBallEntity;
+import mod.azure.doom.entity.tierambient.GoreNestEntity;
+import mod.azure.doom.entity.tierboss.IconofsinEntity;
+import mod.azure.doom.entity.tierboss.SpiderMastermindEntity;
+import mod.azure.doom.entity.tierfodder.ChaingunnerEntity;
+import mod.azure.doom.entity.tierfodder.GargoyleEntity;
+import mod.azure.doom.entity.tierfodder.Imp2016Entity;
+import mod.azure.doom.entity.tierfodder.ImpEntity;
+import mod.azure.doom.entity.tierfodder.ImpStoneEntity;
+import mod.azure.doom.entity.tierfodder.LostSoulEntity;
+import mod.azure.doom.entity.tierfodder.MechaZombieEntity;
+import mod.azure.doom.entity.tierfodder.NightmareImpEntity;
+import mod.azure.doom.entity.tierfodder.PossessedScientistEntity;
+import mod.azure.doom.entity.tierfodder.PossessedSoldierEntity;
+import mod.azure.doom.entity.tierfodder.ShotgunguyEntity;
+import mod.azure.doom.entity.tierfodder.UnwillingEntity;
+import mod.azure.doom.entity.tierfodder.ZombiemanEntity;
+import mod.azure.doom.entity.tierheavy.ArachnotronEntity;
+import mod.azure.doom.entity.tierheavy.CacodemonEntity;
+import mod.azure.doom.entity.tierheavy.Hellknight2016Entity;
+import mod.azure.doom.entity.tierheavy.HellknightEntity;
+import mod.azure.doom.entity.tierheavy.MancubusEntity;
+import mod.azure.doom.entity.tierheavy.MaykrDroneEntity;
+import mod.azure.doom.entity.tierheavy.PainEntity;
+import mod.azure.doom.entity.tierheavy.PinkyEntity;
+import mod.azure.doom.entity.tierheavy.ProwlerEntity;
+import mod.azure.doom.entity.tierheavy.RevenantEntity;
+import mod.azure.doom.entity.tierheavy.SpectreEntity;
+import mod.azure.doom.entity.tiersuperheavy.ArchvileEntity;
+import mod.azure.doom.entity.tiersuperheavy.BaronEntity;
+import mod.azure.doom.entity.tiersuperheavy.Cyberdemon2016Entity;
+import mod.azure.doom.entity.tiersuperheavy.CyberdemonEntity;
+import mod.azure.doom.entity.tiersuperheavy.DoomHunterEntity;
+import mod.azure.doom.entity.tiersuperheavy.MarauderEntity;
 import mod.azure.doom.entity.tileentity.IconBlockEntity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
@@ -173,8 +173,8 @@ public class ModEntityTypes {
 					.sized(2.3F, 3.0F).fireImmune().clientTrackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "mancubus").toString()));
 
-	public static final RegistryObject<EntityType<SpiderdemonEntity>> SPIDERDEMON = ENTITY_TYPES.register("spiderdemon",
-			() -> EntityType.Builder.of(SpiderdemonEntity::new, EntityClassification.MONSTER).sized(6.0F, 4.0F)
+	public static final RegistryObject<EntityType<SpiderMastermindEntity>> SPIDERDEMON = ENTITY_TYPES.register("spiderdemon",
+			() -> EntityType.Builder.of(SpiderMastermindEntity::new, EntityClassification.MONSTER).sized(6.0F, 4.0F)
 					.fireImmune().clientTrackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "spiderdemon").toString()));
 
