@@ -47,11 +47,11 @@ public class BFGCellRender extends GeoProjectilesRenderer<BFGEntity> {
 		super.render(model, animatable, partialTicks, type, matrixStackIn, renderTypeBuffer, vertexBuilder,
 				packedLightIn, packedOverlayIn, red, green, blue, alpha);
 		float f = getY(animatable, partialTicks);
-		LivingEntity blockpos = animatable.getTargetedEntity();
-		if (blockpos != null) {
-			float f3 = (float) blockpos.getX() + 0.5F;
-			float f4 = (float) blockpos.getY() + 0.5F;
-			float f5 = (float) blockpos.getZ() + 0.5F;
+		LivingEntity target = animatable.getTargetedEntity();
+		if (target != null) {
+			float f3 = (float) target.getX();
+			float f4 = (float) target.getY();
+			float f5 = (float) target.getZ();
 			float f6 = (float) ((double) f3 - animatable.getX());
 			float f7 = (float) ((double) f4 - animatable.getY());
 			float f8 = (float) ((double) f5 - animatable.getZ());
@@ -76,7 +76,7 @@ public class BFGCellRender extends GeoProjectilesRenderer<BFGEntity> {
 		float f = MathHelper.sqrt(p_229059_0_ * p_229059_0_ + p_229059_2_ * p_229059_2_);
 		float f1 = MathHelper.sqrt(p_229059_0_ * p_229059_0_ + p_229059_1_ * p_229059_1_ + p_229059_2_ * p_229059_2_);
 		p_229059_5_.pushPose();
-		p_229059_5_.translate(0.0D, 2.0D, 0.0D);
+		p_229059_5_.translate(0.0D, 1.0D, 0.0D);
 		p_229059_5_.mulPose(Vector3f.YP
 				.rotation((float) (-Math.atan2((double) p_229059_2_, (double) p_229059_0_)) - ((float) Math.PI / 2F)));
 		p_229059_5_.mulPose(

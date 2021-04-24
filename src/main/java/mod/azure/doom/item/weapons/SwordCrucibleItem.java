@@ -90,7 +90,8 @@ public class SwordCrucibleItem extends SwordItem implements IAnimatable {
 		boolean activestate = playerentity.getMainHandItem().getItem() instanceof SwordCrucibleItem && isSelected;
 		AnimationController<?> controller = GeckoLibUtil.getControllerForStack(this.factory, stack, controllerName);
 		controller.markNeedsReload();
-		controller.setAnimation(new AnimationBuilder().addAnimation((activestate ? "open_loop" : "close_loop"), false));
+		controller.setAnimation(new AnimationBuilder().addAnimation((activestate ? "close" : "open"), false)
+				.addAnimation((activestate ? "open_loop" : "close_loop"), false));
 		if (worldIn.isClientSide) {
 			if (playerentity.getMainHandItem().getItem() instanceof SwordCrucibleItem) {
 				while (Keybindings.RELOAD.consumeClick() && isSelected) {
