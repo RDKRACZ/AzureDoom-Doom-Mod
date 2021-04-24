@@ -58,7 +58,7 @@ public class ModEventSubscriber {
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.ZOMBIEMAN.get(),
 				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
 				ZombiemanEntity::spawning);
-		EntitySpawnPlacementRegistry.register(ModEntityTypes.SPIDERDEMON.get(),
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.SPIDERMASTERMIND.get(),
 				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
 				SpiderMastermindEntity::spawning);
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.ARACHNOTRON.get(),
@@ -183,6 +183,9 @@ public class ModEventSubscriber {
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.MAYKRDRONE.get(),
 				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
 				MaykrDroneEntity::spawning);
+//		EntitySpawnPlacementRegistry.register(ModEntityTypes.SPIDERMASTERMIND2016.get(),
+//				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+//				SpiderMastermind2016Entity::spawn);
 		// EntitySpawnPlacementRegistry.register(ModEntityTypes.BLOODMAYKR.get(),
 		// EntitySpawnPlacementRegistry.PlacementType.ON_GROUND,
 		// Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
@@ -216,7 +219,7 @@ public class ModEventSubscriber {
 		event.put(ModEntityTypes.REVENANT.get(), RevenantEntity.createAttributes().build());
 		event.put(ModEntityTypes.SHOTGUNGUY.get(), ShotgunguyEntity.createAttributes().build());
 		event.put(ModEntityTypes.ARACHNOTRON.get(), ArachnotronEntity.createAttributes().build());
-		event.put(ModEntityTypes.SPIDERDEMON.get(), SpiderMastermindEntity.createAttributes().build());
+		event.put(ModEntityTypes.SPIDERMASTERMIND.get(), SpiderMastermindEntity.createAttributes().build());
 		event.put(ModEntityTypes.UNWILLING.get(), UnwillingEntity.createAttributes().build());
 		event.put(ModEntityTypes.ZOMBIEMAN.get(), ZombiemanEntity.createAttributes().build());
 		event.put(ModEntityTypes.CACODEMON.get(), CacodemonEntity.createAttributes().build());
@@ -241,6 +244,7 @@ public class ModEventSubscriber {
 		// ArmorBaronEntity.createAttributes().build());
 		event.put(ModEntityTypes.ARACHNOTRONETERNAL.get(), ArachnotronEntity.createAttributes().build());
 		event.put(ModEntityTypes.MAYKRDRONE.get(), MaykrDroneEntity.createAttributes().build());
+//		event.put(ModEntityTypes.SPIDERMASTERMIND2016.get(), SpiderMastermind2016Entity.createAttributes().build());
 		// event.put(ModEntityTypes.BLOODMAYKR.get(),
 		// BloodMaykrEntity.createAttributes().build());
 		// event.put(ModEntityTypes.ARCHMAKER.get(),

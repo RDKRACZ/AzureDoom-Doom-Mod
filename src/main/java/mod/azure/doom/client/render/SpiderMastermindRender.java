@@ -3,7 +3,7 @@ package mod.azure.doom.client.render;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
-import mod.azure.doom.client.models.SpiderdemonModel;
+import mod.azure.doom.client.models.SpiderMastermindModel;
 import mod.azure.doom.entity.tierboss.SpiderMastermindEntity;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
@@ -11,10 +11,10 @@ import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.util.ResourceLocation;
 import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 
-public class SpiderdemonRender extends GeoEntityRenderer<SpiderMastermindEntity> {
+public class SpiderMastermindRender extends GeoEntityRenderer<SpiderMastermindEntity> {
 
-	public SpiderdemonRender(EntityRendererManager renderManagerIn) {
-		super(renderManagerIn, new SpiderdemonModel());
+	public SpiderMastermindRender(EntityRendererManager renderManagerIn) {
+		super(renderManagerIn, new SpiderMastermindModel());
 	}
 
 	@Override

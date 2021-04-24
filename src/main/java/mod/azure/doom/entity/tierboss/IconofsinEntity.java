@@ -13,6 +13,7 @@ import mod.azure.doom.util.config.EntityConfig;
 import mod.azure.doom.util.config.EntityDefaults.EntityConfigType;
 import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.AreaEffectCloudEntity;
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
@@ -39,6 +40,7 @@ import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
@@ -273,6 +275,24 @@ public class IconofsinEntity extends DemonEntity implements IAnimatable {
 			if (d12 <= 1.0D) {
 				if (entity instanceof LivingEntity) {
 					entity.hurt(DamageSource.indirectMagic(this, this.getTarget()), 7);
+					if (!this.level.isClientSide) {
+						List<LivingEntity> list1 = this.level.getEntitiesOfClass(LivingEntity.class,
+								this.getBoundingBox().inflate(4.0D, 2.0D, 4.0D));
+						AreaEffectCloudEntity areaeffectcloudentity = new AreaEffectCloudEntity(entity.level,
+								entity.getX(), entity.getY(), entity.getZ());
+						areaeffectcloudentity.setParticle(ParticleTypes.EXPLOSION);
+						areaeffectcloudentity.setRadius(3.0F);
+						areaeffectcloudentity.setDuration(10);
+						if (!list1.isEmpty()) {
+							for (LivingEntity livingentity : list1) {
+								double d0 = this.distanceToSqr(livingentity);
+								if (d0 < 16.0D) {
+									areaeffectcloudentity.setPos(entity.getX(), entity.getEyeY(), entity.getZ());
+								}
+							}
+						}
+						entity.level.addFreshEntity(areaeffectcloudentity);
+					}
 				}
 			}
 		}

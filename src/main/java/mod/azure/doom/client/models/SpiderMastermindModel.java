@@ -5,7 +5,7 @@ import mod.azure.doom.entity.tierboss.SpiderMastermindEntity;
 import net.minecraft.util.ResourceLocation;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 
-public class SpiderdemonModel extends AnimatedGeoModel<SpiderMastermindEntity> {
+public class SpiderMastermindModel extends AnimatedGeoModel<SpiderMastermindEntity> {
 
 	@Override
 	public ResourceLocation getModelLocation(SpiderMastermindEntity object) {

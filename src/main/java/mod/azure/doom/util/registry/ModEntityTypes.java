@@ -173,10 +173,10 @@ public class ModEntityTypes {
 					.sized(2.3F, 3.0F).fireImmune().clientTrackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "mancubus").toString()));
 
-	public static final RegistryObject<EntityType<SpiderMastermindEntity>> SPIDERDEMON = ENTITY_TYPES.register("spiderdemon",
+	public static final RegistryObject<EntityType<SpiderMastermindEntity>> SPIDERMASTERMIND = ENTITY_TYPES.register("spidermastermind",
 			() -> EntityType.Builder.of(SpiderMastermindEntity::new, EntityClassification.MONSTER).sized(6.0F, 4.0F)
 					.fireImmune().clientTrackingRange(9)
-					.build(new ResourceLocation(DoomMod.MODID, "spiderdemon").toString()));
+					.build(new ResourceLocation(DoomMod.MODID, "spidermastermind").toString()));
 
 	public static final RegistryObject<EntityType<ArachnotronEntity>> ARACHNOTRON = ENTITY_TYPES.register("arachnotron",
 			() -> EntityType.Builder.of(ArachnotronEntity::new, EntityClassification.MONSTER).sized(4.0F, 2.0F)
@@ -350,7 +350,7 @@ public class ModEntityTypes {
 
 //	public static final RegistryObject<EntityType<FireBaronEntity>> FIREBARON = ENTITY_TYPES.register("firebronebaron",
 //			() -> EntityType.Builder.of(FireBaronEntity::new, EntityClassification.MONSTER).sized(1.7f, 2.2F)
-//					.fireImmune().clientTrackingRange(9).build(new ResourceLocation(DoomMod.MODID, "baron2016").toString()));
+//					.fireImmune().clientTrackingRange(9).build(new ResourceLocation(DoomMod.MODID, "firebronebaron").toString()));
 
 //	public static final RegistryObject<EntityType<ArmorBaronEntity>> ARMORBARON = ENTITY_TYPES.register("armoredbaron",
 //			() -> EntityType.Builder.of(ArmorBaronEntity::new, EntityClassification.MONSTER).sized(1.7f, 2.2F)
@@ -359,6 +359,11 @@ public class ModEntityTypes {
 	public static final RegistryObject<EntityType<MaykrDroneEntity>> MAYKRDRONE = ENTITY_TYPES.register("maykr_drone",
 			() -> EntityType.Builder.of(MaykrDroneEntity::new, EntityClassification.MONSTER).sized(1.7f, 2.2F)
 					.fireImmune().clientTrackingRange(9).build(new ResourceLocation(DoomMod.MODID, "maykr_drone").toString()));
+
+//	public static final RegistryObject<EntityType<SpiderMastermind2016Entity>> SPIDERMASTERMIND2016 = ENTITY_TYPES.register("spidermastermind2016",
+//			() -> EntityType.Builder.of(SpiderMastermind2016Entity::new, EntityClassification.MONSTER).sized(6.0F, 4.0F)
+//					.fireImmune().clientTrackingRange(9)
+//					.build(new ResourceLocation(DoomMod.MODID, "spidermastermind2016").toString()));
 
 //	public static final RegistryObject<EntityType<BloodMaykrEntity>> BLOODMAYKR = ENTITY_TYPES.register("blood_maykr",
 //			() -> EntityType.Builder.of(BloodMaykrEntity::new, EntityClassification.MONSTER).sized(1.7f, 2.2F)

@@ -14,6 +14,11 @@
 			"type": "entity",
 			"entity": "doom:arachnotron",
 			"scale": 0.9
+		},
+		{
+			"type": "entity",
+			"entity": "doom:arachnotroneternal",
+			"scale": 0.9
 		}
 	]
 }

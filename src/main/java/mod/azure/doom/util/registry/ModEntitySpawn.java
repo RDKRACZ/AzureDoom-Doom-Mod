@@ -80,7 +80,7 @@ public class ModEntitySpawn {
 		}
 		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.SPIDER_DEMON, biome)
 				&& config.get(EntityConfigType.SPIDER_DEMON).SPAWN_WEIGHT > 0) {
-			base.add(new Spawners(ModEntityTypes.SPIDERDEMON.get(),
+			base.add(new Spawners(ModEntityTypes.SPIDERMASTERMIND.get(),
 					config.get(EntityConfigType.SPIDER_DEMON).SPAWN_WEIGHT,
 					config.get(EntityConfigType.SPIDER_DEMON).MIN_GROUP,
 					config.get(EntityConfigType.SPIDER_DEMON).MAX_GROUP));

@@ -233,8 +233,8 @@ public class DoomItems {
 			() -> new DoomSpawnEgg(ModEntityTypes.CACODEMON));
 	public static final RegistryObject<Item> MANCUBUS_SPAWN_EGG = ITEMS.register("mancubus_spawn_egg",
 			() -> new DoomSpawnEgg(ModEntityTypes.MANCUBUS));
-	public static final RegistryObject<Item> SPIDERDEMON_SPAWN_EGG = ITEMS.register("spiderdemon_spawn_egg",
-			() -> new DoomSpawnEgg(ModEntityTypes.SPIDERDEMON));
+	public static final RegistryObject<Item> SPIDERMASTERMIND_SPAWN_EGG = ITEMS.register("spidermastermind_spawn_egg",
+			() -> new DoomSpawnEgg(ModEntityTypes.SPIDERMASTERMIND));
 	public static final RegistryObject<Item> ZOMBIEMAN_SPAWN_EGG = ITEMS.register("zombieman_spawn_egg",
 			() -> new DoomSpawnEgg(ModEntityTypes.ZOMBIEMAN));
 	public static final RegistryObject<Item> CHAINGUNNER_SPAWN_EGG = ITEMS.register("chaingunner_spawn_egg",
@@ -305,6 +305,8 @@ public class DoomItems {
 //			() -> new DoomSpawnEgg(ModEntityTypes.KHANMAKER));
 	public static final RegistryObject<Item> ARACHNOTRONETERNAL_SPAWN_EGG = ITEMS
 			.register("arachnotroneternal_spawn_egg", () -> new DoomSpawnEgg(ModEntityTypes.ARACHNOTRONETERNAL));
+//	public static final RegistryObject<Item> SPIDERMASTERMIND2016_SPAWN_EGG = ITEMS
+//			.register("spidermastermind2016_spawn_egg", () -> new DoomSpawnEgg(ModEntityTypes.SPIDERMASTERMIND2016));
 
 	// WEAPONS AND TOOLS
 	public static final RegistryObject<Item> CRUCIBLESWORD = ITEMS.register("cruciblesword",

@@ -8,11 +8,16 @@
 	"pages": [
 		{
 			"type": "text",
-			"text": "The Spider Mastermind. The mother of the Arachnotron. Watch out for her chaingun or it'll rip you apart!"
+			"text": "The Spider Mastermind. The mother of the Arachnotron. Watch out for her gun or it'll rip you apart!"
 		},
 		{
 			"type": "entity",
 			"entity": "doom:spiderdemon",
+			"scale": 0.9
+		},
+		{
+			"type": "entity",
+			"entity": "doom:spidermastermind2016",
 			"scale": 0.9
 		}
 	]

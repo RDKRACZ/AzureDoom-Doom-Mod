@@ -13,6 +13,30 @@
 		{
 			"type": "entity",
 			"entity": "doom:baron"
+		},
+		{
+			"type": "text",
+			"text": "The Baron of Hell is the highest demon among the order of the Hell Knights."
+		},
+		{
+			"type": "entity",
+			"entity": "doom:baron2016"
+		},
+		{
+			"type": "text",
+			"text": "The Fireborne Barons have evolved, the descendant clan of the Baron hell breed."
+		},
+		{
+			"type": "entity",
+			"entity": "doom:firebronebaron"
+		},
+		{
+			"type": "text",
+			"text": "The Armored Barons are grafted with the technology of The Nether with morning star gauntlets, one devastating strike obliterates both body and soul."
+		},
+		{
+			"type": "entity",
+			"entity": "doom:armoredbaron"
 		}
 	]
 }

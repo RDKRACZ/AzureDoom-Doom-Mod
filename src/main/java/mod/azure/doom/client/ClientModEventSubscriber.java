@@ -38,7 +38,7 @@ import mod.azure.doom.client.render.ProwlerRender;
 import mod.azure.doom.client.render.RevenantRender;
 import mod.azure.doom.client.render.ShotgunguyRender;
 import mod.azure.doom.client.render.SpectreRender;
-import mod.azure.doom.client.render.SpiderdemonRender;
+import mod.azure.doom.client.render.SpiderMastermindRender;
 import mod.azure.doom.client.render.TyrantRender;
 import mod.azure.doom.client.render.UnwillingRender;
 import mod.azure.doom.client.render.ZombiemanRender;
@@ -155,7 +155,8 @@ public class ClientModEventSubscriber {
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ARCHVILE.get(), ArchvileRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BARON.get(), BaronRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.MANCUBUS.get(), MancubusRender::new);
-		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.SPIDERDEMON.get(), SpiderdemonRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.SPIDERMASTERMIND.get(),
+				SpiderMastermindRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ZOMBIEMAN.get(), ZombiemanRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.REVENANT.get(), RevenantRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.IMP2016.get(), Imp2016Render::new);
@@ -192,8 +193,7 @@ public class ClientModEventSubscriber {
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.TYRANT.get(), TyrantRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.POSSESSEDWORKER.get(),
 				PossessedWorkerRender::new);
-		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.DOOMHUNTER.get(),
-				DoomHunterRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.DOOMHUNTER.get(), DoomHunterRender::new);
 
 //		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.PINKY2016.get(),
 //				Pinky2016Render::new);
@@ -210,6 +210,8 @@ public class ClientModEventSubscriber {
 //				BloodMaykrRender::new);
 //		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ARCHMAKER.get(),
 //				ArchMaykrRender::new);
+//		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.SPIDERMASTERMIND2016.get(),
+//				SpiderMastermind2016Render::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ARACHNOTRONETERNAL.get(),
 				ArachnotronEternalRender::new);
 
