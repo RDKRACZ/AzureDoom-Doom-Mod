@@ -8,6 +8,7 @@ v.4.0.0
 	- The End will now generate a structure dedicated to the Maykrs and the only place they will spawn! 
 	- The Nether will now generate Titan skulls. These skulls show signs of being transformed into a place of Worship though it seems they were abandoned.
 	- The Overworld will now generate massive portals, similar to ruined portals but bigger and can spawn the mods mobs.
+- Structures are configurable for either off or on for new worlds.
 - Scaled up the OG Cyberdemon.
 - Icon of Sin attack has been redone.
 - Redid Arachnotron and Spider Mastermind animations!
@@ -21,7 +22,7 @@ v.4.0.0
 - Fixed weapons not being able to use ammo in the off hand for reloading weapons.
 - Fixed Marauder Axe not being reloadable with the Argent Blocks like the Crucible.
 - More Goal related null checks added because bad "performance" mods.
-- Prowler now better teleports after attacking.
+- Prowler now teleports after attacking.
 - Pain Elemental attacking animation updated to match new style.
 - Hell Knight 2016/Dreadknight now performs his slam attack.
 - Dreadknight Hand Blades redone.
