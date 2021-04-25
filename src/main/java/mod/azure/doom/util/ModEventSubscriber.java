@@ -4,6 +4,7 @@ import mod.azure.doom.DoomMod;
 import mod.azure.doom.entity.tierambient.CueBallEntity;
 import mod.azure.doom.entity.tierambient.GoreNestEntity;
 import mod.azure.doom.entity.tierboss.IconofsinEntity;
+import mod.azure.doom.entity.tierboss.SpiderMastermind2016Entity;
 import mod.azure.doom.entity.tierboss.SpiderMastermindEntity;
 import mod.azure.doom.entity.tierfodder.ChaingunnerEntity;
 import mod.azure.doom.entity.tierfodder.GargoyleEntity;
@@ -183,9 +184,9 @@ public class ModEventSubscriber {
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.MAYKRDRONE.get(),
 				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
 				MaykrDroneEntity::spawning);
-//		EntitySpawnPlacementRegistry.register(ModEntityTypes.SPIDERMASTERMIND2016.get(),
-//				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
-//				SpiderMastermind2016Entity::spawn);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.SPIDERMASTERMIND2016.get(),
+				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+				SpiderMastermind2016Entity::spawn);
 		// EntitySpawnPlacementRegistry.register(ModEntityTypes.BLOODMAYKR.get(),
 		// EntitySpawnPlacementRegistry.PlacementType.ON_GROUND,
 		// Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
@@ -244,7 +245,7 @@ public class ModEventSubscriber {
 		// ArmorBaronEntity.createAttributes().build());
 		event.put(ModEntityTypes.ARACHNOTRONETERNAL.get(), ArachnotronEntity.createAttributes().build());
 		event.put(ModEntityTypes.MAYKRDRONE.get(), MaykrDroneEntity.createAttributes().build());
-//		event.put(ModEntityTypes.SPIDERMASTERMIND2016.get(), SpiderMastermind2016Entity.createAttributes().build());
+		event.put(ModEntityTypes.SPIDERMASTERMIND2016.get(), SpiderMastermind2016Entity.createAttributes().build());
 		// event.put(ModEntityTypes.BLOODMAYKR.get(),
 		// BloodMaykrEntity.createAttributes().build());
 		// event.put(ModEntityTypes.ARCHMAKER.get(),

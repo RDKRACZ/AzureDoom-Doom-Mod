@@ -37,7 +37,7 @@ public class BiomeConfig {
 	public static List<? extends String> POSSESSED_SOLDIER = Lists.newArrayList(DefaultBiomes.POSSESSED_SOLDIER);
 	public static List<? extends String> REVENANT = Lists.newArrayList(DefaultBiomes.REVENANT);
 	public static List<? extends String> SHOTGUN_GUY = Lists.newArrayList(DefaultBiomes.SHOTGUN_GUY);
-	public static List<? extends String> SPIDER_DEMON = Lists.newArrayList(DefaultBiomes.SPIDER_DEMON);
+	public static List<? extends String> SPIDERMASTERMIND = Lists.newArrayList(DefaultBiomes.SPIDER_DEMON);
 	public static List<? extends String> UNWILLING = Lists.newArrayList(DefaultBiomes.UNWILLING);
 	public static List<? extends String> ZOMBIEMAN = Lists.newArrayList(DefaultBiomes.ZOMBIEMAN);
 	public static List<? extends String> CUEBALL = Lists.newArrayList(DefaultBiomes.CUEBALL);

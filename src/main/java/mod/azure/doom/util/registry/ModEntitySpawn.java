@@ -78,12 +78,19 @@ public class ModEntitySpawn {
 			base.add(new Spawners(ModEntityTypes.REVENANT.get(), config.get(EntityConfigType.REVENANT).SPAWN_WEIGHT,
 					config.get(EntityConfigType.REVENANT).MIN_GROUP, config.get(EntityConfigType.REVENANT).MAX_GROUP));
 		}
-		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.SPIDER_DEMON, biome)
-				&& config.get(EntityConfigType.SPIDER_DEMON).SPAWN_WEIGHT > 0) {
+		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.SPIDERMASTERMIND, biome)
+				&& config.get(EntityConfigType.SPIDERMASTERMIND).SPAWN_WEIGHT > 0) {
 			base.add(new Spawners(ModEntityTypes.SPIDERMASTERMIND.get(),
-					config.get(EntityConfigType.SPIDER_DEMON).SPAWN_WEIGHT,
-					config.get(EntityConfigType.SPIDER_DEMON).MIN_GROUP,
-					config.get(EntityConfigType.SPIDER_DEMON).MAX_GROUP));
+					config.get(EntityConfigType.SPIDERMASTERMIND).SPAWN_WEIGHT,
+					config.get(EntityConfigType.SPIDERMASTERMIND).MIN_GROUP,
+					config.get(EntityConfigType.SPIDERMASTERMIND).MAX_GROUP));
+		}
+		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.SPIDERMASTERMIND, biome)
+				&& config.get(EntityConfigType.SPIDERMASTERMIND).SPAWN_WEIGHT > 0) {
+			base.add(new Spawners(ModEntityTypes.SPIDERMASTERMIND2016.get(),
+					config.get(EntityConfigType.SPIDERMASTERMIND).SPAWN_WEIGHT,
+					config.get(EntityConfigType.SPIDERMASTERMIND).MIN_GROUP,
+					config.get(EntityConfigType.SPIDERMASTERMIND).MAX_GROUP));
 		}
 		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.ZOMBIEMAN, biome)
 				&& config.get(EntityConfigType.ZOMBIEMAN).SPAWN_WEIGHT > 0) {
@@ -224,5 +231,40 @@ public class ModEntitySpawn {
 					config.get(EntityConfigType.POSSESSEDWORKER).MIN_GROUP,
 					config.get(EntityConfigType.POSSESSEDWORKER).MAX_GROUP));
 		}
+		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.SPIDERMASTERMIND, biome)
+				&& config.get(EntityConfigType.SPIDERMASTERMIND).SPAWN_WEIGHT > 0) {
+			base.add(new Spawners(ModEntityTypes.SPIDERMASTERMIND2016.get(), config.get(EntityConfigType.SPIDERMASTERMIND).SPAWN_WEIGHT,
+					config.get(EntityConfigType.SPIDERMASTERMIND).MIN_GROUP, config.get(EntityConfigType.SPIDERMASTERMIND).MAX_GROUP));
+		}
+		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.DOOMHUNTER, biome)
+				&& config.get(EntityConfigType.DOOMHUNTER).SPAWN_WEIGHT > 0) {
+			base.add(new Spawners(ModEntityTypes.DOOMHUNTER.get(), config.get(EntityConfigType.DOOMHUNTER).SPAWN_WEIGHT,
+					config.get(EntityConfigType.DOOMHUNTER).MIN_GROUP, config.get(EntityConfigType.DOOMHUNTER).MAX_GROUP));
+		}
+//		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.PINKY, biome)
+//				&& config.get(EntityConfigType.PINKY).SPAWN_WEIGHT > 0) {
+//			base.add(new Spawners(ModEntityTypes.PINKY2016.get(), config.get(EntityConfigType.PINKY).SPAWN_WEIGHT,
+//					config.get(EntityConfigType.PINKY).MIN_GROUP, config.get(EntityConfigType.PINKY).MAX_GROUP));
+//		}
+//		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.WHIPLASH, biome)
+//				&& config.get(EntityConfigType.WHIPLASH).SPAWN_WEIGHT > 0) {
+//			base.add(new Spawners(ModEntityTypes.WHIPLASH.get(), config.get(EntityConfigType.WHIPLASH).SPAWN_WEIGHT,
+//					config.get(EntityConfigType.WHIPLASH).MIN_GROUP, config.get(EntityConfigType.WHIPLASH).MAX_GROUP));
+//		}
+//		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.BARON, biome)
+//				&& config.get(EntityConfigType.BARON).SPAWN_WEIGHT > 0) {
+//			base.add(new Spawners(ModEntityTypes.BARON2016.get(), config.get(EntityConfigType.BARON).SPAWN_WEIGHT,
+//					config.get(EntityConfigType.BARON).MIN_GROUP, config.get(EntityConfigType.BARON).MAX_GROUP));
+//		}
+//		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.BARON, biome)
+//				&& config.get(EntityConfigType.BARON).SPAWN_WEIGHT > 0) {
+//			base.add(new Spawners(ModEntityTypes.FIREBARON.get(), config.get(EntityConfigType.BARON).SPAWN_WEIGHT,
+//					config.get(EntityConfigType.BARON).MIN_GROUP, config.get(EntityConfigType.BARON).MAX_GROUP));
+//		}
+//		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.BARON, biome)
+//				&& config.get(EntityConfigType.BARON).SPAWN_WEIGHT > 0) {
+//			base.add(new Spawners(ModEntityTypes.ARMORBARON.get(), config.get(EntityConfigType.BARON).SPAWN_WEIGHT,
+//					config.get(EntityConfigType.BARON).MIN_GROUP, config.get(EntityConfigType.BARON).MAX_GROUP));
+//		}
 	}
 }

@@ -19,6 +19,7 @@ import mod.azure.doom.entity.projectiles.entity.RocketMobEntity;
 import mod.azure.doom.entity.tierambient.CueBallEntity;
 import mod.azure.doom.entity.tierambient.GoreNestEntity;
 import mod.azure.doom.entity.tierboss.IconofsinEntity;
+import mod.azure.doom.entity.tierboss.SpiderMastermind2016Entity;
 import mod.azure.doom.entity.tierboss.SpiderMastermindEntity;
 import mod.azure.doom.entity.tierfodder.ChaingunnerEntity;
 import mod.azure.doom.entity.tierfodder.GargoyleEntity;
@@ -360,10 +361,10 @@ public class ModEntityTypes {
 			() -> EntityType.Builder.of(MaykrDroneEntity::new, EntityClassification.MONSTER).sized(1.7f, 2.2F)
 					.fireImmune().clientTrackingRange(9).build(new ResourceLocation(DoomMod.MODID, "maykr_drone").toString()));
 
-//	public static final RegistryObject<EntityType<SpiderMastermind2016Entity>> SPIDERMASTERMIND2016 = ENTITY_TYPES.register("spidermastermind2016",
-//			() -> EntityType.Builder.of(SpiderMastermind2016Entity::new, EntityClassification.MONSTER).sized(6.0F, 4.0F)
-//					.fireImmune().clientTrackingRange(9)
-//					.build(new ResourceLocation(DoomMod.MODID, "spidermastermind2016").toString()));
+	public static final RegistryObject<EntityType<SpiderMastermind2016Entity>> SPIDERMASTERMIND2016 = ENTITY_TYPES.register("spidermastermind2016",
+			() -> EntityType.Builder.of(SpiderMastermind2016Entity::new, EntityClassification.MONSTER).sized(6.0F, 4.0F)
+					.fireImmune().clientTrackingRange(9)
+					.build(new ResourceLocation(DoomMod.MODID, "spidermastermind2016").toString()));
 
 //	public static final RegistryObject<EntityType<BloodMaykrEntity>> BLOODMAYKR = ENTITY_TYPES.register("blood_maykr",
 //			() -> EntityType.Builder.of(BloodMaykrEntity::new, EntityClassification.MONSTER).sized(1.7f, 2.2F)

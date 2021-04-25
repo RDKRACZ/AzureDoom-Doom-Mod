@@ -305,8 +305,8 @@ public class DoomItems {
 //			() -> new DoomSpawnEgg(ModEntityTypes.KHANMAKER));
 	public static final RegistryObject<Item> ARACHNOTRONETERNAL_SPAWN_EGG = ITEMS
 			.register("arachnotroneternal_spawn_egg", () -> new DoomSpawnEgg(ModEntityTypes.ARACHNOTRONETERNAL));
-//	public static final RegistryObject<Item> SPIDERMASTERMIND2016_SPAWN_EGG = ITEMS
-//			.register("spidermastermind2016_spawn_egg", () -> new DoomSpawnEgg(ModEntityTypes.SPIDERMASTERMIND2016));
+	public static final RegistryObject<Item> SPIDERMASTERMIND2016_SPAWN_EGG = ITEMS
+			.register("spidermastermind2016_spawn_egg", () -> new DoomSpawnEgg(ModEntityTypes.SPIDERMASTERMIND2016));
 
 	// WEAPONS AND TOOLS
 	public static final RegistryObject<Item> CRUCIBLESWORD = ITEMS.register("cruciblesword",

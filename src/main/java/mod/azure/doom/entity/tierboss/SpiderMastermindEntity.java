@@ -66,7 +66,7 @@ public class SpiderMastermindEntity extends DemonEntity implements IAnimatable {
 		super(entityType, worldIn);
 	}
 
-	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.SPIDER_DEMON);
+	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.SPIDERMASTERMIND);
 
 	private AnimationFactory factory = new AnimationFactory(this);
 

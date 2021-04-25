@@ -38,6 +38,7 @@ import mod.azure.doom.client.render.ProwlerRender;
 import mod.azure.doom.client.render.RevenantRender;
 import mod.azure.doom.client.render.ShotgunguyRender;
 import mod.azure.doom.client.render.SpectreRender;
+import mod.azure.doom.client.render.SpiderMastermind2016Render;
 import mod.azure.doom.client.render.SpiderMastermindRender;
 import mod.azure.doom.client.render.TyrantRender;
 import mod.azure.doom.client.render.UnwillingRender;
@@ -210,8 +211,8 @@ public class ClientModEventSubscriber {
 //				BloodMaykrRender::new);
 //		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ARCHMAKER.get(),
 //				ArchMaykrRender::new);
-//		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.SPIDERMASTERMIND2016.get(),
-//				SpiderMastermind2016Render::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.SPIDERMASTERMIND2016.get(),
+				SpiderMastermind2016Render::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ARACHNOTRONETERNAL.get(),
 				ArachnotronEternalRender::new);
 
