@@ -5,40 +5,39 @@ v.4.0.0
 - Added the Arachnotron Eternal, thanks to Creman for the model and Pedroca for the texture!
 - Added the Spider Mastermind, thanks to Abel_ for the texture!
 - Updated the Unwilling model, thanks to Undeadmonkey for the model and Pedroca for the texture!
+- Updated the Gargoyle model and texture, thanks to Batpixxler!
 - Added all new Patchouli book entries as well as a few missing ones.
 - Added new Structures! 
 	- The End will now generate a structure dedicated to the Maykrs and the only place they will spawn! 
 	- The Nether will now generate Titan skulls. These skulls show signs of being transformed into a place of Worship though it seems they were abandoned.
 	- The Overworld will now generate massive portals, similar to ruined portals but bigger and can spawn the mods mobs.
 - Structures are configurable for either off or on for new worlds.
+- Updated Argent Tools, Ballista/Unmaykr bolts, Argent Energy/Plate, BFG Cell, Inmortal Sphere, and Daisy (Now rabbit foot) item textures.
 - Scaled up the OG Cyberdemon.
-- Icon of Sin attack has been redone.
-- Redid Arachnotron and Spider Mastermind animations!
+- Icon of Sin attack pattern has been redone.
+- New Arachnotron and Spider Mastermind animations!
 - Lowered the sound of the chainsaws.
-- Demons are now able to walk on Lava like striders.
+- Demons are now able to walk on Lava like Striders.
 - Fixed not being able to search for the armors or a few weapons in the creative search menu.
-- BFG Eternal, Heavy Cannon, Pistol, Plasma Gun, Rocketlauncher, Shotgun, Super Shotgun, and Unmaykr now use the bow animations for aiming.
+- BFG Eternal, Heavy Cannon, Pistol, Plasma Gun, Rocket Launcher, Shotgun, Super Shotgun, and Unmaykr now use the bow animations for aiming.
 - Fixed the Crucible Blade glitching open and closed.
 - Massively increased cool down of Gore Nest Spawns and added a max of 3 waves per gore nest.
 - Halved all demons (expect the Icon of Sin) follow ranges to 25, in line with vanilla mobs.
-- Fixed weapons not being able to use ammo in the off hand for reloading weapons.
+- Fixed weapons not being able to reload with ammo in the off hand.
 - Fixed Marauder Axe not being reloadable with the Argent Blocks like the Crucible.
 - More Goal related null checks added because bad "performance" mods.
 - Prowler now teleports after attacking.
 - Pain Elemental attacking animation updated to match new style.
-- Hell Knight 2016/Dreadknight now performs his slam attack.
-- Dreadknight Hand Blades redone.
+- Hell Knight 2016/Dread Knight now perform a slam attack.
+- Dread Knight Hand Blades redone.
 - Added Ghast Tears to the drops of the boss tier demons loot tables.
 - BFG now properly hurting the Ender Dragon.
 - Icon of Sin blocks now face the proper way when built and look correct.
 
 ## Not yet implemented but assets and code are in-process awaiting creation of models ## 
-	- Gargoyle remodel
 	- Baron 2016
 	- Fireborne Baron
 	- Armored Baron
-	- Pinky 2016
-	- Whiplash
 	- Doom Hunter
 	- Maykr Drones
 	- Blood Maykrs
