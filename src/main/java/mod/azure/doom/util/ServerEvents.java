@@ -3,6 +3,8 @@ package mod.azure.doom.util;
 import mod.azure.doom.DoomMod;
 import mod.azure.doom.entity.DemonEntity;
 import mod.azure.doom.item.weapons.AxeMarauderItem;
+import mod.azure.doom.item.weapons.Chainsaw;
+import mod.azure.doom.item.weapons.ChainsawAnimated;
 import mod.azure.doom.item.weapons.DoomBaseItem;
 import mod.azure.doom.item.weapons.SwordCrucibleItem;
 import net.minecraft.entity.LivingEntity;
@@ -35,9 +37,7 @@ public class ServerEvents {
 							// get current point
 							BlockPos pos = path.getNode(i).asBlockPos();
 							// get next point (or current point)
-							BlockPos nextPos = (i + 1) != path.getNodeCount()
-									? path.getNode(i + 1).asBlockPos()
-									: pos;
+							BlockPos nextPos = (i + 1) != path.getNodeCount() ? path.getNode(i + 1).asBlockPos() : pos;
 							// get difference for vector
 							BlockPos endPos = nextPos.subtract(pos);
 							// render pathpoints
@@ -63,6 +63,8 @@ public class ServerEvents {
 		if ((event.getLeft().getItem() instanceof DoomBaseItem)
 				|| (event.getLeft().getItem() instanceof AxeMarauderItem)
 				|| (event.getLeft().getItem() instanceof SwordCrucibleItem)
+				|| (event.getLeft().getItem() instanceof Chainsaw)
+				|| (event.getLeft().getItem() instanceof ChainsawAnimated)
 						&& event.getRight().getItem() == Items.ENCHANTED_BOOK) {
 			event.setCanceled(true);
 		}

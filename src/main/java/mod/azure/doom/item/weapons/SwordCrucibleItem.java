@@ -4,7 +4,6 @@ import java.util.List;
 
 import mod.azure.doom.DoomMod;
 import mod.azure.doom.client.Keybindings;
-import mod.azure.doom.client.render.weapons.CrucibleRender;
 import mod.azure.doom.util.enums.DoomTier;
 import mod.azure.doom.util.packets.CrucibleLoadingPacket;
 import mod.azure.doom.util.packets.DoomPacketHandler;
@@ -26,38 +25,12 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
 
-public class SwordCrucibleItem extends SwordItem implements IAnimatable {
-
-	public AnimationFactory factory = new AnimationFactory(this);
-	private String controllerName = "controller";
-
-	private <P extends SwordItem & IAnimatable> PlayState predicate(AnimationEvent<P> event) {
-		return PlayState.CONTINUE;
-	}
-
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@Override
-	public void registerControllers(AnimationData data) {
-		data.addAnimationController(new AnimationController(this, controllerName, 1, this::predicate));
-	}
-
-	@Override
-	public AnimationFactory getFactory() {
-		return this.factory;
-	}
+public class SwordCrucibleItem extends SwordItem {
 
 	public SwordCrucibleItem() {
-		super(DoomTier.DOOM_HIGHTEIR, 36, -2.4F, new Item.Properties().tab(DoomMod.DoomWeaponItemGroup).stacksTo(1)
-				.durability(5).setISTER(() -> CrucibleRender::new));
+		super(DoomTier.DOOM_HIGHTEIR, 36, -2.4F,
+				new Item.Properties().tab(DoomMod.DoomWeaponItemGroup).stacksTo(1).durability(5));
 	}
 
 	@Override
@@ -87,11 +60,6 @@ public class SwordCrucibleItem extends SwordItem implements IAnimatable {
 	@Override
 	public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
 		PlayerEntity playerentity = (PlayerEntity) entityIn;
-		boolean activestate = playerentity.getMainHandItem().getItem() instanceof SwordCrucibleItem && isSelected;
-		AnimationController<?> controller = GeckoLibUtil.getControllerForStack(this.factory, stack, controllerName);
-		controller.markNeedsReload();
-		controller.setAnimation(new AnimationBuilder().addAnimation((activestate ? "close" : "open"), false)
-				.addAnimation((activestate ? "open_loop" : "close_loop"), false));
 		if (worldIn.isClientSide) {
 			if (playerentity.getMainHandItem().getItem() instanceof SwordCrucibleItem) {
 				while (Keybindings.RELOAD.consumeClick() && isSelected) {

@@ -46,7 +46,7 @@ public class MaykrStructure extends Structure<NoFeatureConfig> {
 	}
 
 	private static final List<MobSpawnInfo.Spawners> STRUCTURE_MONSTERS = ImmutableList.of(
-			new MobSpawnInfo.Spawners(ModEntityTypes.MAYKRDRONE.get(), 45, 2, 5)
+//			new MobSpawnInfo.Spawners(ModEntityTypes.MAYKRDRONE.get(), 45, 2, 5)
 //			, new MobSpawnInfo.Spawners(ModEntityTypes.BLOODMAYKR.get(), 45, 1, 2)
 //			, new MobSpawnInfo.Spawners(ModEntityTypes.KHANMAKER.get(), 10, 1, 1)
 			);

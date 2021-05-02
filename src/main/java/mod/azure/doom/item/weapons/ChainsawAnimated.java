@@ -33,7 +33,7 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-public class ChainsawAnimated extends DoomBaseItem implements IAnimatable {
+public class ChainsawAnimated extends Item implements IAnimatable {
 
 	public AnimationFactory factory = new AnimationFactory(this);
 	private String controllerName = "controller";
@@ -106,6 +106,23 @@ public class ChainsawAnimated extends DoomBaseItem implements IAnimatable {
 				removeAmmo(DoomItems.GAS_BARREL.get(), user);
 				user.getItemInHand(hand).hurtAndBreak(-200, user, s -> user.broadcastBreakEvent(hand));
 				user.getItemInHand(hand).setPopTime(3);
+			}
+		}
+	}
+
+	public static void removeAmmo(Item ammo, PlayerEntity playerEntity) {
+		if (!playerEntity.isCreative()) {
+			for (ItemStack item : playerEntity.inventory.offhand) {
+				if (item.getItem() == ammo) {
+					item.shrink(1);
+					break;
+				}
+				for (ItemStack item1 : playerEntity.inventory.items) {
+					if (item1.getItem() == ammo) {
+						item1.shrink(1);
+						break;
+					}
+				}
 			}
 		}
 	}

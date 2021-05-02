@@ -399,6 +399,7 @@ public class ArchvileEntity extends DemonEntity implements IAnimatable {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	private boolean teleport(double p_70825_1_, double p_70825_3_, double p_70825_5_) {
 		BlockPos.Mutable blockpos$mutable = new BlockPos.Mutable(p_70825_1_, p_70825_3_, p_70825_5_);
 

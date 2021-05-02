@@ -1,7 +1,5 @@
 package mod.azure.doom.item.weapons;
 
-import java.util.List;
-
 import mod.azure.doom.DoomMod;
 import mod.azure.doom.client.Keybindings;
 import mod.azure.doom.client.render.weapons.BallistaRender;
@@ -11,61 +9,25 @@ import mod.azure.doom.util.packets.BallistaLoadingPacket;
 import mod.azure.doom.util.packets.DoomPacketHandler;
 import mod.azure.doom.util.registry.DoomItems;
 import mod.azure.doom.util.registry.ModSoundEvents;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.item.ShootableItem;
 import net.minecraft.item.UseAction;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
-import software.bernie.geckolib3.core.AnimationState;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
+import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.fml.network.PacketDistributor;
+import software.bernie.geckolib3.network.GeckoLibNetwork;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
-public class Ballista extends DoomBaseItem implements IAnimatable {
-
-	public AnimationFactory factory = new AnimationFactory(this);
-	private String controllerName = "controller";
-
-	private <P extends ShootableItem & IAnimatable> PlayState predicate(AnimationEvent<P> event) {
-		return PlayState.CONTINUE;
-	}
-
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@Override
-	public void registerControllers(AnimationData data) {
-		data.addAnimationController(new AnimationController(this, controllerName, 1, this::predicate));
-	}
-
-	@Override
-	public AnimationFactory getFactory() {
-		return this.factory;
-	}
+public class Ballista extends DoomBaseItem {
 
 	public Ballista() {
 		super(new Item.Properties().tab(DoomMod.DoomWeaponItemGroup).stacksTo(1).durability(11)
 				.setISTER(() -> BallistaRender::new));
-	}
-
-	@Override
-	public boolean isFoil(ItemStack stack) {
-		return false;
 	}
 
 	@Override
@@ -94,12 +56,11 @@ public class Ballista extends DoomBaseItem implements IAnimatable {
 							playerentity.getZ(), ModSoundEvents.BALLISTA_FIRING.get(), SoundCategory.PLAYERS, 1.0F,
 							1.0F / (random.nextFloat() * 0.4F + 1.2F) + 0.25F * 0.5F);
 				}
-				AnimationController<?> controller = GeckoLibUtil.getControllerForStack(this.factory, stack,
-						controllerName);
-
-				if (controller.getAnimationState() == AnimationState.Stopped) {
-					controller.markNeedsReload();
-					controller.setAnimation(new AnimationBuilder().addAnimation("firing", false));
+				if (!worldIn.isClientSide) {
+					final int id = GeckoLibUtil.guaranteeIDForStack(stack, (ServerWorld) worldIn);
+					final PacketDistributor.PacketTarget target = PacketDistributor.TRACKING_ENTITY_AND_SELF
+							.with(() -> playerentity);
+					GeckoLibNetwork.syncAnimation(target, this, id, ANIM_OPEN);
 				}
 			}
 		}
@@ -143,38 +104,8 @@ public class Ballista extends DoomBaseItem implements IAnimatable {
 	}
 
 	@Override
-	public int getUseDuration(ItemStack stack) {
-		return 72000;
-	}
-
-	@Override
 	public UseAction getUseAnimation(ItemStack stack) {
 		return UseAction.NONE;
-	}
-
-	@Override
-	public ActionResultType useOn(ItemUseContext context) {
-		World world = context.getLevel();
-		return ActionResultType.sidedSuccess(world.isClientSide);
-	}
-
-	@Override
-	public boolean onEntitySwing(ItemStack stack, LivingEntity entity) {
-		return false;
-	}
-
-	@Override
-	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new TranslationTextComponent(
-				"Ammo: " + (stack.getMaxDamage() - stack.getDamageValue() - 1) + " / " + (stack.getMaxDamage() - 1))
-						.withStyle(TextFormatting.ITALIC));
-	}
-
-	@Override
-	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		ItemStack itemstack = playerIn.getItemInHand(handIn);
-		playerIn.startUsingItem(handIn);
-		return ActionResult.consume(itemstack);
 	}
 
 	public ArgentBoltEntity customeArrow(ArgentBoltEntity arrow) {

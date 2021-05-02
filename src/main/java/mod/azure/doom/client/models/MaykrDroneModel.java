@@ -9,16 +9,16 @@ public class MaykrDroneModel extends AnimatedGeoModel<MaykrDroneEntity> {
 
 	@Override
 	public ResourceLocation getModelLocation(MaykrDroneEntity object) {
-		return new ResourceLocation(DoomMod.MODID, "geo/doomhunter.geo.json");
+		return new ResourceLocation(DoomMod.MODID, "geo/maykrdrone.geo.json");
 	}
 
 	@Override
 	public ResourceLocation getTextureLocation(MaykrDroneEntity object) {
-		return new ResourceLocation(DoomMod.MODID, "textures/entity/doomhunter.png");
+		return new ResourceLocation(DoomMod.MODID, "textures/entity/maykrdrone.png");
 	}
 
 	@Override
 	public ResourceLocation getAnimationFileLocation(MaykrDroneEntity object) {
-		return new ResourceLocation(DoomMod.MODID, "animations/empty.animation.json");
+		return new ResourceLocation(DoomMod.MODID, "animations/maykrdrone.animation.json");
 	}
 }

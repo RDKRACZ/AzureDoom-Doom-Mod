@@ -64,6 +64,7 @@ import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.registries.ForgeRegistries;
 import software.bernie.geckolib3.GeckoLib;
+import software.bernie.geckolib3.network.GeckoLibNetwork;
 import top.theillusivec4.curios.api.SlotTypeMessage;
 import top.theillusivec4.curios.api.SlotTypePreset;
 
@@ -134,6 +135,7 @@ public class DoomMod {
 			MinecraftForge.EVENT_BUS.register(new DoomLeapEntityEvents());
 		}
 		GeckoLib.initialize();
+		GeckoLibNetwork.initialize();
 	}
 
 	@SubscribeEvent

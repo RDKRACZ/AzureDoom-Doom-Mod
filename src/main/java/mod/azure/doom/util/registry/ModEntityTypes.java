@@ -12,12 +12,14 @@ import mod.azure.doom.entity.projectiles.ShotgunShellEntity;
 import mod.azure.doom.entity.projectiles.UnmaykrBoltEntity;
 import mod.azure.doom.entity.projectiles.entity.ArchvileFiring;
 import mod.azure.doom.entity.projectiles.entity.BarenBlastEntity;
+import mod.azure.doom.entity.projectiles.entity.BloodBoltEntity;
 import mod.azure.doom.entity.projectiles.entity.ChaingunMobEntity;
 import mod.azure.doom.entity.projectiles.entity.DroneBoltEntity;
 import mod.azure.doom.entity.projectiles.entity.EnergyCellMobEntity;
 import mod.azure.doom.entity.projectiles.entity.RocketMobEntity;
 import mod.azure.doom.entity.tierambient.CueBallEntity;
 import mod.azure.doom.entity.tierambient.GoreNestEntity;
+import mod.azure.doom.entity.tierboss.ArchMakyrEntity;
 import mod.azure.doom.entity.tierboss.IconofsinEntity;
 import mod.azure.doom.entity.tierboss.SpiderMastermind2016Entity;
 import mod.azure.doom.entity.tierboss.SpiderMastermindEntity;
@@ -35,21 +37,26 @@ import mod.azure.doom.entity.tierfodder.ShotgunguyEntity;
 import mod.azure.doom.entity.tierfodder.UnwillingEntity;
 import mod.azure.doom.entity.tierfodder.ZombiemanEntity;
 import mod.azure.doom.entity.tierheavy.ArachnotronEntity;
+import mod.azure.doom.entity.tierheavy.BloodMaykrEntity;
 import mod.azure.doom.entity.tierheavy.CacodemonEntity;
 import mod.azure.doom.entity.tierheavy.Hellknight2016Entity;
 import mod.azure.doom.entity.tierheavy.HellknightEntity;
 import mod.azure.doom.entity.tierheavy.MancubusEntity;
 import mod.azure.doom.entity.tierheavy.MaykrDroneEntity;
 import mod.azure.doom.entity.tierheavy.PainEntity;
+import mod.azure.doom.entity.tierheavy.Pinky2016;
 import mod.azure.doom.entity.tierheavy.PinkyEntity;
 import mod.azure.doom.entity.tierheavy.ProwlerEntity;
 import mod.azure.doom.entity.tierheavy.RevenantEntity;
 import mod.azure.doom.entity.tierheavy.SpectreEntity;
+import mod.azure.doom.entity.tierheavy.WhiplashEntity;
 import mod.azure.doom.entity.tiersuperheavy.ArchvileEntity;
+import mod.azure.doom.entity.tiersuperheavy.ArmoredBaronEntity;
 import mod.azure.doom.entity.tiersuperheavy.BaronEntity;
 import mod.azure.doom.entity.tiersuperheavy.Cyberdemon2016Entity;
 import mod.azure.doom.entity.tiersuperheavy.CyberdemonEntity;
 import mod.azure.doom.entity.tiersuperheavy.DoomHunterEntity;
+import mod.azure.doom.entity.tiersuperheavy.FireBaronEntity;
 import mod.azure.doom.entity.tiersuperheavy.MarauderEntity;
 import mod.azure.doom.entity.tileentity.IconBlockEntity;
 import net.minecraft.entity.EntityClassification;
@@ -92,6 +99,12 @@ public class ModEntityTypes {
 			() -> EntityType.Builder.<DroneBoltEntity>of(DroneBoltEntity::new, EntityClassification.MISC)
 					.sized(0.5F, 0.5F).clientTrackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "dronebolt_mob").toString()));
+
+	public static final RegistryObject<EntityType<BloodBoltEntity>> BLOODBOLT_MOB = ENTITY_TYPES.register(
+			"bloodbolt_mob",
+			() -> EntityType.Builder.<BloodBoltEntity>of(BloodBoltEntity::new, EntityClassification.MISC)
+					.sized(0.5F, 0.5F).clientTrackingRange(9)
+					.build(new ResourceLocation(DoomMod.MODID, "bloodbolt_mob").toString()));
 
 	public static final RegistryObject<EntityType<ArgentBoltEntity>> ARGENT_BOLT = ENTITY_TYPES.register("argent_bolt",
 			() -> EntityType.Builder.<ArgentBoltEntity>of(ArgentBoltEntity::new, EntityClassification.MISC)
@@ -174,7 +187,8 @@ public class ModEntityTypes {
 					.sized(2.3F, 3.0F).fireImmune().clientTrackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "mancubus").toString()));
 
-	public static final RegistryObject<EntityType<SpiderMastermindEntity>> SPIDERMASTERMIND = ENTITY_TYPES.register("spidermastermind",
+	public static final RegistryObject<EntityType<SpiderMastermindEntity>> SPIDERMASTERMIND = ENTITY_TYPES.register(
+			"spidermastermind",
 			() -> EntityType.Builder.of(SpiderMastermindEntity::new, EntityClassification.MONSTER).sized(6.0F, 4.0F)
 					.fireImmune().clientTrackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "spidermastermind").toString()));
@@ -337,41 +351,49 @@ public class ModEntityTypes {
 					.fireImmune().clientTrackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "arachnotroneternal").toString()));
 
-//	public static final RegistryObject<EntityType<Pinky2016>> PINKY2016 = ENTITY_TYPES.register("pinky2016",
-//			() -> EntityType.Builder.of(Pinky2016::new, EntityClassification.MONSTER).sized(1.7f, 2.2F)
-//					.fireImmune().clientTrackingRange(9).build(new ResourceLocation(DoomMod.MODID, "pinky2016").toString()));
+	public static final RegistryObject<EntityType<Pinky2016>> PINKY2016 = ENTITY_TYPES.register("pinky2016",
+			() -> EntityType.Builder.of(Pinky2016::new, EntityClassification.MONSTER).sized(1.7f, 2.2F).fireImmune()
+					.clientTrackingRange(9).build(new ResourceLocation(DoomMod.MODID, "pinky2016").toString()));
 
-//	public static final RegistryObject<EntityType<WhiplashEntity>> WHIPLASH = ENTITY_TYPES.register("whiplash",
-//			() -> EntityType.Builder.of(WhiplashEntity::new, EntityClassification.MONSTER).sized(1.7f, 2.2F)
-//					.fireImmune().clientTrackingRange(9).build(new ResourceLocation(DoomMod.MODID, "whiplash").toString()));
+	public static final RegistryObject<EntityType<WhiplashEntity>> WHIPLASH = ENTITY_TYPES.register("whiplash",
+			() -> EntityType.Builder.of(WhiplashEntity::new, EntityClassification.MONSTER).sized(1.7f, 2.2F)
+					.fireImmune().clientTrackingRange(9)
+					.build(new ResourceLocation(DoomMod.MODID, "whiplash").toString()));
 
-//	public static final RegistryObject<EntityType<BaronEntity>> BARON2016 = ENTITY_TYPES.register("baron2016",
-//			() -> EntityType.Builder.of(BaronEntity::new, EntityClassification.MONSTER).sized(1.7f, 2.2F)
-//					.fireImmune().clientTrackingRange(9).build(new ResourceLocation(DoomMod.MODID, "baron2016").toString()));
+	public static final RegistryObject<EntityType<BaronEntity>> BARON2016 = ENTITY_TYPES.register("baron2016",
+			() -> EntityType.Builder.of(BaronEntity::new, EntityClassification.MONSTER).sized(1.7f, 2.2F).fireImmune()
+					.clientTrackingRange(9).build(new ResourceLocation(DoomMod.MODID, "baron2016").toString()));
 
-//	public static final RegistryObject<EntityType<FireBaronEntity>> FIREBARON = ENTITY_TYPES.register("firebronebaron",
-//			() -> EntityType.Builder.of(FireBaronEntity::new, EntityClassification.MONSTER).sized(1.7f, 2.2F)
-//					.fireImmune().clientTrackingRange(9).build(new ResourceLocation(DoomMod.MODID, "firebronebaron").toString()));
+	public static final RegistryObject<EntityType<FireBaronEntity>> FIREBARON = ENTITY_TYPES.register("firebronebaron",
+			() -> EntityType.Builder.of(FireBaronEntity::new, EntityClassification.MONSTER).sized(1.7f, 2.2F)
+					.fireImmune().clientTrackingRange(9)
+					.build(new ResourceLocation(DoomMod.MODID, "firebronebaron").toString()));
 
-//	public static final RegistryObject<EntityType<ArmorBaronEntity>> ARMORBARON = ENTITY_TYPES.register("armoredbaron",
-//			() -> EntityType.Builder.of(ArmorBaronEntity::new, EntityClassification.MONSTER).sized(1.7f, 2.2F)
-//					.fireImmune().clientTrackingRange(9).build(new ResourceLocation(DoomMod.MODID, "armoredbaron").toString()));
+	public static final RegistryObject<EntityType<ArmoredBaronEntity>> ARMORBARON = ENTITY_TYPES.register(
+			"armoredbaron",
+			() -> EntityType.Builder.of(ArmoredBaronEntity::new, EntityClassification.MONSTER).sized(1.7f, 2.2F)
+					.fireImmune().clientTrackingRange(9)
+					.build(new ResourceLocation(DoomMod.MODID, "armoredbaron").toString()));
 
 	public static final RegistryObject<EntityType<MaykrDroneEntity>> MAYKRDRONE = ENTITY_TYPES.register("maykr_drone",
 			() -> EntityType.Builder.of(MaykrDroneEntity::new, EntityClassification.MONSTER).sized(1.7f, 2.2F)
-					.fireImmune().clientTrackingRange(9).build(new ResourceLocation(DoomMod.MODID, "maykr_drone").toString()));
-
-	public static final RegistryObject<EntityType<SpiderMastermind2016Entity>> SPIDERMASTERMIND2016 = ENTITY_TYPES.register("spidermastermind2016",
-			() -> EntityType.Builder.of(SpiderMastermind2016Entity::new, EntityClassification.MONSTER).sized(6.0F, 4.0F)
 					.fireImmune().clientTrackingRange(9)
-					.build(new ResourceLocation(DoomMod.MODID, "spidermastermind2016").toString()));
+					.build(new ResourceLocation(DoomMod.MODID, "maykr_drone").toString()));
 
-//	public static final RegistryObject<EntityType<BloodMaykrEntity>> BLOODMAYKR = ENTITY_TYPES.register("blood_maykr",
-//			() -> EntityType.Builder.of(BloodMaykrEntity::new, EntityClassification.MONSTER).sized(1.7f, 2.2F)
-//					.fireImmune().clientTrackingRange(9).build(new ResourceLocation(DoomMod.MODID, "blood_maykr").toString()));
+	public static final RegistryObject<EntityType<SpiderMastermind2016Entity>> SPIDERMASTERMIND2016 = ENTITY_TYPES
+			.register("spidermastermind2016",
+					() -> EntityType.Builder.of(SpiderMastermind2016Entity::new, EntityClassification.MONSTER)
+							.sized(6.0F, 4.0F).fireImmune().clientTrackingRange(9)
+							.build(new ResourceLocation(DoomMod.MODID, "spidermastermind2016").toString()));
 
-//	public static final RegistryObject<EntityType<ArchMakyrEntity>> ARCHMAKER = ENTITY_TYPES.register("arch_maykr",
-//			() -> EntityType.Builder.of(ArchMakyrEntity::new, EntityClassification.MONSTER).sized(1.7f, 2.2F)
-//					.fireImmune().clientTrackingRange(9).build(new ResourceLocation(DoomMod.MODID, "arch_maykr").toString()));
+	public static final RegistryObject<EntityType<BloodMaykrEntity>> BLOODMAYKR = ENTITY_TYPES.register("blood_maykr",
+			() -> EntityType.Builder.of(BloodMaykrEntity::new, EntityClassification.MONSTER).sized(1.7f, 2.2F)
+					.fireImmune().clientTrackingRange(9)
+					.build(new ResourceLocation(DoomMod.MODID, "blood_maykr").toString()));
+
+	public static final RegistryObject<EntityType<ArchMakyrEntity>> ARCHMAKER = ENTITY_TYPES.register("arch_maykr",
+			() -> EntityType.Builder.of(ArchMakyrEntity::new, EntityClassification.MONSTER).sized(1.7f, 2.2F)
+					.fireImmune().clientTrackingRange(9)
+					.build(new ResourceLocation(DoomMod.MODID, "arch_maykr").toString()));
 
 }

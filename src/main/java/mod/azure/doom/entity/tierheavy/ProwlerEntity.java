@@ -478,6 +478,7 @@ public class ProwlerEntity extends DemonEntity implements IAnimatable {
 		return this.teleport(d1, d2, d3);
 	}
 
+	@SuppressWarnings("deprecation")
 	private boolean teleport(double p_70825_1_, double p_70825_3_, double p_70825_5_) {
 		BlockPos.Mutable blockpos$mutable = new BlockPos.Mutable(p_70825_1_, p_70825_3_, p_70825_5_);
 		while (blockpos$mutable.getY() > 0

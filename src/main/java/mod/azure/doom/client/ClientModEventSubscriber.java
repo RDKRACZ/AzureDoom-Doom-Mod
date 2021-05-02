@@ -5,9 +5,13 @@ import org.lwjgl.glfw.GLFW;
 import mod.azure.doom.DoomMod;
 import mod.azure.doom.client.render.ArachnotronEternalRender;
 import mod.azure.doom.client.render.ArachnotronRender;
+import mod.azure.doom.client.render.ArchMaykrRender;
 import mod.azure.doom.client.render.ArchvileRender;
+import mod.azure.doom.client.render.ArmoredBaronRender;
+import mod.azure.doom.client.render.Baron2016Render;
 import mod.azure.doom.client.render.BaronRender;
 import mod.azure.doom.client.render.BarrelRender;
+import mod.azure.doom.client.render.BloodMaykrRender;
 import mod.azure.doom.client.render.CacodemonRender;
 import mod.azure.doom.client.render.ChaingunnerRender;
 import mod.azure.doom.client.render.CueBallRender;
@@ -15,6 +19,7 @@ import mod.azure.doom.client.render.Cyberdemon2016Render;
 import mod.azure.doom.client.render.CyberdemonRender;
 import mod.azure.doom.client.render.DoomHunterRender;
 import mod.azure.doom.client.render.DreadKnightRender;
+import mod.azure.doom.client.render.FireBaronRender;
 import mod.azure.doom.client.render.GargoyleRender;
 import mod.azure.doom.client.render.GoreNestRender;
 import mod.azure.doom.client.render.Hellknight2016Render;
@@ -30,6 +35,7 @@ import mod.azure.doom.client.render.MaykrDroneRender;
 import mod.azure.doom.client.render.MechaZombieRender;
 import mod.azure.doom.client.render.NightmareImpRender;
 import mod.azure.doom.client.render.PainRender;
+import mod.azure.doom.client.render.Pinky2016Render;
 import mod.azure.doom.client.render.PinkyRender;
 import mod.azure.doom.client.render.PossessedScientistRender;
 import mod.azure.doom.client.render.PossessedSoldierRender;
@@ -42,6 +48,7 @@ import mod.azure.doom.client.render.SpiderMastermind2016Render;
 import mod.azure.doom.client.render.SpiderMastermindRender;
 import mod.azure.doom.client.render.TyrantRender;
 import mod.azure.doom.client.render.UnwillingRender;
+import mod.azure.doom.client.render.WhiplashRender;
 import mod.azure.doom.client.render.ZombiemanRender;
 import mod.azure.doom.client.render.armors.AstroRender;
 import mod.azure.doom.client.render.armors.BronzeRender;
@@ -82,6 +89,7 @@ import mod.azure.doom.client.render.projectiles.RocketRender;
 import mod.azure.doom.client.render.projectiles.ShotgunShellRender;
 import mod.azure.doom.client.render.projectiles.UnmaykrBulletRender;
 import mod.azure.doom.client.render.projectiles.entity.ArchvileFiringRender;
+import mod.azure.doom.client.render.projectiles.entity.BloodBoltRender;
 import mod.azure.doom.client.render.projectiles.entity.ChaingunMobRender;
 import mod.azure.doom.client.render.projectiles.entity.DroneBoltRender;
 import mod.azure.doom.client.render.projectiles.entity.EnergyCellMobRender;
@@ -146,6 +154,8 @@ public class ClientModEventSubscriber {
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ROCKET.get(), RocketRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.CHAINGUN_BULLET.get(),
 				ChaingunBulletRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BLOODBOLT_MOB.get(),
+				BloodBoltRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BARENBLAST.get(), BarenBlastRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.LOST_SOUL.get(), LostSoulRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.IMP.get(), ImpRender::new);
@@ -196,21 +206,14 @@ public class ClientModEventSubscriber {
 				PossessedWorkerRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.DOOMHUNTER.get(), DoomHunterRender::new);
 
-//		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.PINKY2016.get(),
-//				Pinky2016Render::new);
-//		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.WHIPLASH.get(),
-//				WhiplashRender::new);
-//		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BARON2016.get(),
-//				Baron2016Render::new);
-//		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.FIREBARON.get(),
-//				FireBaronRender::new);
-//		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ARMORBARON.get(),
-//				ArmorBaronRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.PINKY2016.get(), Pinky2016Render::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.WHIPLASH.get(), WhiplashRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BARON2016.get(), Baron2016Render::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.FIREBARON.get(), FireBaronRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ARMORBARON.get(), ArmoredBaronRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.MAYKRDRONE.get(), MaykrDroneRender::new);
-//		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BLOODMAYKR.get(),
-//				BloodMaykrRender::new);
-//		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ARCHMAKER.get(),
-//				ArchMaykrRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BLOODMAYKR.get(), BloodMaykrRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ARCHMAKER.get(), ArchMaykrRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.SPIDERMASTERMIND2016.get(),
 				SpiderMastermind2016Render::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ARACHNOTRONETERNAL.get(),
@@ -247,5 +250,6 @@ public class ClientModEventSubscriber {
 		GeoArmorRenderer.registerArmorRenderer(SantaDoomArmor.class, new SantaRender());
 
 		RenderTypeLookup.setRenderLayer(DoomBlocks.JUMP_PAD.get(), RenderType.translucent());
+		ModItemModelsProperties.init();
 	}
 }

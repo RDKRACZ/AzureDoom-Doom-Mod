@@ -10,6 +10,7 @@ import net.minecraft.entity.IAngerable;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.fluid.Fluid;
+import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -20,6 +21,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.network.NetworkHooks;
 
 public class DemonEntity extends MonsterEntity implements IAngerable {
 
@@ -82,6 +84,11 @@ public class DemonEntity extends MonsterEntity implements IAngerable {
 	@Override
 	public void setPersistentAngerTarget(UUID target) {
 		this.targetUuid = target;
+	}
+
+	@Override
+	public IPacket<?> getAddEntityPacket() {
+		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
 	@Override

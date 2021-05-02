@@ -5,7 +5,6 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import mod.azure.doom.entity.DemonEntity;
-import mod.azure.doom.entity.tierheavy.ArachnotronEntity;
 import mod.azure.doom.util.config.Config;
 import mod.azure.doom.util.config.EntityConfig;
 import mod.azure.doom.util.config.EntityDefaults.EntityConfigType;
@@ -52,7 +51,7 @@ public class ArchMakyrEntity extends DemonEntity implements IAnimatable {
 	public static final DataParameter<Integer> VARIANT = EntityDataManager.defineId(ArchMakyrEntity.class,
 			DataSerializers.INT);
 
-	protected ArchMakyrEntity(EntityType<? extends ArchMakyrEntity> type, World worldIn) {
+	public ArchMakyrEntity(EntityType<ArchMakyrEntity> type, World worldIn) {
 		super(type, worldIn);
 	}
 
@@ -139,7 +138,7 @@ public class ArchMakyrEntity extends DemonEntity implements IAnimatable {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
-	public static boolean spawning(EntityType<ArachnotronEntity> p_223337_0_, IWorld p_223337_1_, SpawnReason reason,
+	public static boolean spawning(EntityType<ArchMakyrEntity> p_223337_0_, IWorld p_223337_1_, SpawnReason reason,
 			BlockPos p_223337_3_, Random p_223337_4_) {
 		return passPeacefulAndYCheck(config, p_223337_1_, reason, p_223337_3_, p_223337_4_);
 	}

@@ -1,15 +1,18 @@
 v.4.0.0
 
+- **REQUIRED VERSION OF GECKOLIB IS NOW 3.0.32**
 - Added the Tyrant, thanks to Creeper2545 for the models base and Pedroca for the texture!
 - Added the Possessed Worker, thanks to Undeadmonkey for the model and Pedroca for the texture!
 - Added the Arachnotron Eternal, thanks to Creman for the model and Pedroca for the texture!
-- Added the Spider Mastermind, thanks to Abel_ for the texture!
+- Added the Spider Mastermind, thanks to TearsOfLov for the texture and model touch ups!
+- Added the Pinky 2016/Eternal, thanks to Batpixxler!
+- Added the Whiplash, thanks to Batpixxler!
 - Updated the Unwilling model, thanks to Undeadmonkey for the model and Pedroca for the texture!
 - Updated the Gargoyle model and texture, thanks to Batpixxler!
 - Added all new Patchouli book entries as well as a few missing ones.
 - Added new Structures! 
 	- The End will now generate a structure dedicated to the Maykrs and the only place they will spawn! 
-	- The Nether will now generate Titan skulls. These skulls show signs of being transformed into a place of Worship though it seems they were abandoned.
+	- The Nether will now generate Titan skulls, that show signs of being transformed into a place of worship though it seems they were abandoned.
 	- The Overworld will now generate massive portals, similar to ruined portals but bigger and can spawn the mods mobs.
 - Structures are configurable for either off or on for new worlds.
 - Updated Argent Tools, Ballista/Unmaykr bolts, Argent Energy/Plate, BFG Cell, Inmortal Sphere, and Daisy (Now rabbit foot) item textures.

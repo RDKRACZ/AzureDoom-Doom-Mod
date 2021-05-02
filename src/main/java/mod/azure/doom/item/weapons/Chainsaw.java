@@ -25,10 +25,42 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
-public class Chainsaw extends DoomBaseItem {
+public class Chainsaw extends Item {
 
 	public Chainsaw() {
 		super(new Item.Properties().tab(DoomMod.DoomWeaponItemGroup).stacksTo(1).durability(601));
+	}
+
+	@Override
+	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+		return false;
+	}
+
+	public static void removeAmmo(Item ammo, PlayerEntity playerEntity) {
+		if (!playerEntity.isCreative()) {
+			for (ItemStack item : playerEntity.inventory.offhand) {
+				if (item.getItem() == ammo) {
+					item.shrink(1);
+					break;
+				}
+				for (ItemStack item1 : playerEntity.inventory.items) {
+					if (item1.getItem() == ammo) {
+						item1.shrink(1);
+						break;
+					}
+				}
+			}
+		}
+	}
+
+	@Override
+	public boolean isFoil(ItemStack stack) {
+		return false;
+	}
+
+	@Override
+	public int getUseDuration(ItemStack stack) {
+		return 72000;
 	}
 
 	@Override

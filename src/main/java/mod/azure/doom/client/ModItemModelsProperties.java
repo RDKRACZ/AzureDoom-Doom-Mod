@@ -7,7 +7,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class ModItemModelsProperties {
 
-	public ModItemModelsProperties() {
+	public static void init() {
 		// Crucible
 		ItemModelsProperties.register(DoomItems.CRUCIBLESWORD.get(), new ResourceLocation("broken"),
 				(p_210312_0_, p_210312_1_, p_210312_2_) -> {

@@ -81,14 +81,14 @@ repositories {
         name = "CurseForge"
         url = "https://minecraft.curseforge.com/api/maven/"
     }
-    maven { url 'https://repo.repsy.io/mvn/gandiber/geckolib' }
+    maven { url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
     maven { url 'https://maven.blamejared.com' }
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.5-36.1.2'
-    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.3-4.0.2.0")
-    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.3-4.0.2.0:api")
+    minecraft 'net.minecraftforge:forge:1.16.5-36.1.13'
+    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.5-4.0.5.1")
+    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.5-4.0.5.1:api")
 	compile fg.deobf("curse.maven:SD-392762:3069533")
 	compile fg.deobf("curse.maven:JEI-238222:3108050")
 	//compile fg.deobf("curse.maven:GTE-417802:3114274")
@@ -98,7 +98,8 @@ dependencies {
 	compile fg.deobf("curse.maven:TDI-245733:3144151")
 	compile fg.deobf("curse.maven:projectmmo-353935:3266512")
 	compile fg.deobf("curse.maven:worldedit-225608:3135187")
-	implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.16.5:3.0.31')
+	//compile fg.deobf("curse.maven:geckolib-388172:3292481")
+	implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.16.5:3.0.32')
 }
 
 jar {

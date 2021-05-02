@@ -14,41 +14,16 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ShootableItem;
 import net.minecraft.item.UseAction;
-import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
-import software.bernie.geckolib3.core.AnimationState;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
+import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.fml.network.PacketDistributor;
+import software.bernie.geckolib3.network.GeckoLibNetwork;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
-public class PistolItem extends DoomBaseItem implements IAnimatable {
-
-	public AnimationFactory factory = new AnimationFactory(this);
-	private String controllerName = "controller";
-
-	private <P extends ShootableItem & IAnimatable> PlayState predicate(AnimationEvent<P> event) {
-		return PlayState.CONTINUE;
-	}
-
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@Override
-	public void registerControllers(AnimationData data) {
-		data.addAnimationController(new AnimationController(this, controllerName, 1, this::predicate));
-	}
-
-	@Override
-	public AnimationFactory getFactory() {
-		return this.factory;
-	}
+public class PistolItem extends DoomBaseItem {
 
 	public PistolItem() {
 		super(new Item.Properties().tab(DoomMod.DoomWeaponItemGroup).stacksTo(1).durability(201)
@@ -82,12 +57,11 @@ public class PistolItem extends DoomBaseItem implements IAnimatable {
 							playerentity.getZ(), ModSoundEvents.PISTOL_HIT.get(), SoundCategory.PLAYERS, 1.0F,
 							1.0F / (random.nextFloat() * 0.4F + 1.2F) + 0.25F * 0.5F);
 				}
-				AnimationController<?> controller = GeckoLibUtil.getControllerForStack(this.factory, stack,
-						controllerName);
-
-				if (controller.getAnimationState() == AnimationState.Stopped) {
-					controller.markNeedsReload();
-					controller.setAnimation(new AnimationBuilder().addAnimation("firing", false));
+				if (!worldIn.isClientSide) {
+					final int id = GeckoLibUtil.guaranteeIDForStack(stack, (ServerWorld) worldIn);
+					final PacketDistributor.PacketTarget target = PacketDistributor.TRACKING_ENTITY_AND_SELF
+							.with(() -> playerentity);
+					GeckoLibNetwork.syncAnimation(target, this, id, ANIM_OPEN);
 				}
 			}
 		}
@@ -133,13 +107,6 @@ public class PistolItem extends DoomBaseItem implements IAnimatable {
 	@Override
 	public UseAction getUseAnimation(ItemStack stack) {
 		return UseAction.BOW;
-	}
-
-	@Override
-	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		ItemStack itemstack = playerIn.getItemInHand(handIn);
-		playerIn.startUsingItem(handIn);
-		return ActionResult.consume(itemstack);
 	}
 
 	public BulletEntity customeArrow(BulletEntity arrow) {
