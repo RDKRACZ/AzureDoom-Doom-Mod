@@ -75,7 +75,7 @@ public class Hellknight2016Entity extends DemonEntity implements IAnimatable {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("run", true));
 			return PlayState.CONTINUE;
 		}
-		if (!this.onGround) {
+		if (!this.onGround && !event.isMoving() && !this.isAggressive()) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("jumpattack", true));
 			return PlayState.CONTINUE;
 		}

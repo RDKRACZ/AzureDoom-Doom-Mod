@@ -43,6 +43,48 @@
 						}
 					],
 					"name": "minecraft:enchanted_book"
+				},
+				{
+					"name": "minecraft:map",
+					"type": "minecraft:item",
+					"weight": 1,
+					"functions": [
+						{
+							"function": "minecraft:exploration_map",
+							"destination": "doom:titan_skull",
+							"decoration": "banner_gray",
+							"zoom": 4,
+							"skip_existing_chunks": true
+						}
+					]
+				},
+				{
+					"name": "minecraft:map",
+					"type": "minecraft:item",
+					"weight": 1,
+					"functions": [
+						{
+							"function": "minecraft:exploration_map",
+							"destination": "doom:portal",
+							"decoration": "banner_gray",
+							"zoom": 4,
+							"skip_existing_chunks": true
+						}
+					]
+				},
+				{
+					"name": "minecraft:map",
+					"type": "minecraft:item",
+					"weight": 1,
+					"functions": [
+						{
+							"function": "minecraft:exploration_map",
+							"destination": "doom:maykr",
+							"decoration": "banner_gray",
+							"zoom": 4,
+							"skip_existing_chunks": true
+						}
+					]
 				}
 			]
 		}

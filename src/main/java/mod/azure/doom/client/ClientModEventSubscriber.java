@@ -6,6 +6,7 @@ import mod.azure.doom.DoomMod;
 import mod.azure.doom.client.render.ArachnotronEternalRender;
 import mod.azure.doom.client.render.ArachnotronRender;
 import mod.azure.doom.client.render.ArchMaykrRender;
+import mod.azure.doom.client.render.ArchvileEternalRender;
 import mod.azure.doom.client.render.ArchvileRender;
 import mod.azure.doom.client.render.ArmoredBaronRender;
 import mod.azure.doom.client.render.Baron2016Render;
@@ -154,8 +155,7 @@ public class ClientModEventSubscriber {
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ROCKET.get(), RocketRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.CHAINGUN_BULLET.get(),
 				ChaingunBulletRender::new);
-		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BLOODBOLT_MOB.get(),
-				BloodBoltRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BLOODBOLT_MOB.get(), BloodBoltRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BARENBLAST.get(), BarenBlastRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.LOST_SOUL.get(), LostSoulRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.IMP.get(), ImpRender::new);
@@ -218,6 +218,8 @@ public class ClientModEventSubscriber {
 				SpiderMastermind2016Render::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ARACHNOTRONETERNAL.get(),
 				ArachnotronEternalRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ARCHVILEETERNAL.get(),
+				ArchvileEternalRender::new);
 
 		GeoArmorRenderer.registerArmorRenderer(DoomicornDoomArmor.class, new DoomicornRender());
 		GeoArmorRenderer.registerArmorRenderer(NightmareDoomArmor.class, new NightmareRender());

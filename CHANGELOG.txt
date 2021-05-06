@@ -7,6 +7,7 @@ v.4.0.0
 - Added the Spider Mastermind, thanks to TearsOfLov for the texture and model touch ups!
 - Added the Pinky 2016/Eternal, thanks to Batpixxler!
 - Added the Whiplash, thanks to Batpixxler!
+- Added the Arch-vile Eternal, thanks to ssap!
 - Updated the Unwilling model, thanks to Undeadmonkey for the model and Pedroca for the texture!
 - Updated the Gargoyle model and texture, thanks to Batpixxler!
 - Added all new Patchouli book entries as well as a few missing ones.
@@ -15,6 +16,7 @@ v.4.0.0
 	- The Nether will now generate Titan skulls, that show signs of being transformed into a place of worship though it seems they were abandoned.
 	- The Overworld will now generate massive portals, similar to ruined portals but bigger and can spawn the mods mobs.
 - Structures are configurable for either off or on for new worlds.
+- Added Advancements for the 3 new Doom structures.
 - Updated Argent Tools, Ballista/Unmaykr bolts, Argent Energy/Plate, BFG Cell, Inmortal Sphere, and Daisy (Now rabbit foot) item textures.
 - Scaled up the OG Cyberdemon.
 - Icon of Sin attack pattern has been redone.

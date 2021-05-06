@@ -9,6 +9,7 @@ import net.minecraft.entity.projectile.DamagingProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileHelper;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
+import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.EntityRayTraceResult;
@@ -80,6 +81,11 @@ public class BloodBoltEntity extends DamagingProjectileEntity implements IAnimat
 
 	public void setDirectHitDamage(float directHitDamage) {
 		this.directHitDamage = directHitDamage;
+	}
+	
+	@Override
+	protected IParticleData getTrailParticle() {
+		return ParticleTypes.PORTAL;
 	}
 
 	@SuppressWarnings("deprecation")

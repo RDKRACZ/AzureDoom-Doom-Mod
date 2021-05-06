@@ -238,6 +238,8 @@
 	"entity.doom.tyrant": "Tyrant",
 	"entity.doom.pinky2016": "Pinky 2016",
 	"entity.doom.arachnotroneternal": "Arachnotron Eternal",
+	"entity.doom.archvileeternal": "Arch-Vile Eternal",
+	"item.doom.archvileeternal_spawn_egg": "Arch-Vile Eternal Spawn Egg",
 	"item.doom.arachnotroneternal_spawn_egg": "Arachnotron Eternal Spawn Egg",
 	"item.doom.pinky2016_spawn_egg": "Pinky 2016 Spawn Egg",
 	"item.doom.tyrant_spawn_egg": "Tyrant Spawn Egg",
@@ -330,5 +332,11 @@
 	"key.doom.tab": "Switch",
 	"enchantment.doom.leaping_doom": "Doom Leaping",
 	"enchantment.doom.leaping_doom.desc": "Allows the player to perform mid-air jump, similar to that of Doom 2016/Eternal",
+	"doom.achievement.titan_skull" : "Titan Skull",
+	"doom.achievement.titan_skull.desc" : "Find a skull of a long dead Titan.",
+	"doom.achievement.portal" : "Slipgate",
+	"doom.achievement.portal.desc" : "Didn't even have to blow a hole into the Overworld to find this",
+	"doom.achievement.maykr" : "Maykr Temple",
+	"doom.achievement.maykr.desc" : "Find the Maykrs.",
 	"gateways.small_imp_gate": "Small Imp Gate"
 }

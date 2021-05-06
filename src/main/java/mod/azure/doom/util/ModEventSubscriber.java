@@ -194,6 +194,9 @@ public class ModEventSubscriber {
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.ARCHMAKER.get(),
 				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
 				ArchMakyrEntity::spawning);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.ARCHVILEETERNAL.get(),
+				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+				ArchvileEntity::spawning);
 	}
 
 	@SubscribeEvent
@@ -244,6 +247,7 @@ public class ModEventSubscriber {
 		event.put(ModEntityTypes.BLOODMAYKR.get(), BloodMaykrEntity.createAttributes().build());
 		event.put(ModEntityTypes.ARCHMAKER.get(), ArchMakyrEntity.createAttributes().build());
 		event.put(ModEntityTypes.FIREBARON.get(), FireBaronEntity.createAttributes().build());
+		event.put(ModEntityTypes.ARCHVILEETERNAL.get(), ArchvileEntity.createAttributes().build());
 	}
 
 }

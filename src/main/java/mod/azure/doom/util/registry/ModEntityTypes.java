@@ -103,7 +103,7 @@ public class ModEntityTypes {
 	public static final RegistryObject<EntityType<BloodBoltEntity>> BLOODBOLT_MOB = ENTITY_TYPES.register(
 			"bloodbolt_mob",
 			() -> EntityType.Builder.<BloodBoltEntity>of(BloodBoltEntity::new, EntityClassification.MISC)
-					.sized(0.5F, 0.5F).clientTrackingRange(9)
+					.sized(1.5F, 0.25F).clientTrackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "bloodbolt_mob").toString()));
 
 	public static final RegistryObject<EntityType<ArgentBoltEntity>> ARGENT_BOLT = ENTITY_TYPES.register("argent_bolt",
@@ -340,11 +340,6 @@ public class ModEntityTypes {
 					.fireImmune().clientTrackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "gargoyle").toString()));
 
-	public static final RegistryObject<EntityType<DoomHunterEntity>> DOOMHUNTER = ENTITY_TYPES.register("doom_hunter",
-			() -> EntityType.Builder.of(DoomHunterEntity::new, EntityClassification.MONSTER).sized(3.0f, 7.0F)
-					.fireImmune().clientTrackingRange(9)
-					.build(new ResourceLocation(DoomMod.MODID, "doom_hunter").toString()));
-
 	public static final RegistryObject<EntityType<ArachnotronEntity>> ARACHNOTRONETERNAL = ENTITY_TYPES.register(
 			"arachnotroneternal",
 			() -> EntityType.Builder.of(ArachnotronEntity::new, EntityClassification.MONSTER).sized(4.0F, 3.0F)
@@ -354,6 +349,16 @@ public class ModEntityTypes {
 	public static final RegistryObject<EntityType<Pinky2016>> PINKY2016 = ENTITY_TYPES.register("pinky2016",
 			() -> EntityType.Builder.of(Pinky2016::new, EntityClassification.MONSTER).sized(1.7f, 2.2F).fireImmune()
 					.clientTrackingRange(9).build(new ResourceLocation(DoomMod.MODID, "pinky2016").toString()));
+
+	public static final RegistryObject<EntityType<ArchvileEntity>> ARCHVILEETERNAL = ENTITY_TYPES.register("archvileeternal",
+			() -> EntityType.Builder.of(ArchvileEntity::new, EntityClassification.MONSTER).sized(0.9F, 3.3F)
+					.fireImmune().clientTrackingRange(9)
+					.build(new ResourceLocation(DoomMod.MODID, "archvileeternal").toString()));
+
+	public static final RegistryObject<EntityType<DoomHunterEntity>> DOOMHUNTER = ENTITY_TYPES.register("doom_hunter",
+			() -> EntityType.Builder.of(DoomHunterEntity::new, EntityClassification.MONSTER).sized(3.0f, 7.0F)
+					.fireImmune().clientTrackingRange(9)
+					.build(new ResourceLocation(DoomMod.MODID, "doom_hunter").toString()));
 
 	public static final RegistryObject<EntityType<WhiplashEntity>> WHIPLASH = ENTITY_TYPES.register("whiplash",
 			() -> EntityType.Builder.of(WhiplashEntity::new, EntityClassification.MONSTER).sized(1.7f, 2.2F)
