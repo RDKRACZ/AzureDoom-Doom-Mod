@@ -164,6 +164,11 @@ public class IconofsinEntity extends DemonEntity implements IAnimatable {
 	}
 
 	@Override
+	protected boolean canRide(Entity p_184228_1_) {
+		return false;
+	}
+
+	@Override
 	public IPacket<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
@@ -461,6 +466,7 @@ public class IconofsinEntity extends DemonEntity implements IAnimatable {
 	@Override
 	public void aiStep() {
 		super.aiStep();
+		++this.tickCount;
 		if (this.getHealth() > 500.0D) {
 			if (!this.level.isClientSide) {
 				this.addEffect(new EffectInstance(Effects.DAMAGE_BOOST, 1000000, 1));
@@ -479,5 +485,15 @@ public class IconofsinEntity extends DemonEntity implements IAnimatable {
 				this.addEffect(new EffectInstance(Effects.DAMAGE_BOOST, 10000000, 3));
 			}
 		}
+		if (!this.level.dimensionType().respawnAnchorWorks()) {
+			if (this.tickCount % 2400 == 0) {
+				this.heal(40F);
+			}
+		}
+	}
+
+	@Override
+	public boolean hurt(DamageSource p_70097_1_, float p_70097_2_) {
+		return p_70097_1_ == DamageSource.IN_WALL ? false : super.hurt(p_70097_1_, p_70097_2_);
 	}
 }

@@ -7,7 +7,6 @@ import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Codec;
 
 import mod.azure.doom.DoomMod;
-import mod.azure.doom.util.registry.ModEntityTypes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.SharedSeedRandom;

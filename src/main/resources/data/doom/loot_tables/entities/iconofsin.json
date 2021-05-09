@@ -23,7 +23,7 @@
 				},
 				{
 					"type": "minecraft:item",
-					"name": "doom:argent_energy",
+					"name": "doom:argent_block",
 					"functions": [
 						{
 							"function": "minecraft:set_count",
@@ -41,7 +41,7 @@
 			"entries": [
 				{
 					"type": "minecraft:item",
-					"name": "doom:argent_energy"
+					"name": "doom:argent_block"
 				}
 			]
 		}

@@ -25,7 +25,7 @@ public class MarauderModel extends AnimatedGeoModel<MarauderEntity> {
 
 	@Override
 	public ResourceLocation getAnimationFileLocation(MarauderEntity object) {
-		return new ResourceLocation(DoomMod.MODID, "animations/shotgunzombie.animation.json");
+		return new ResourceLocation(DoomMod.MODID, "animations/marauder.animation.json");
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })

@@ -19,7 +19,6 @@ v.4.0.0
 - Added Advancements for the 3 new Doom structures.
 - Updated Argent Tools, Ballista/Unmaykr bolts, Argent Energy/Plate, BFG Cell, Inmortal Sphere, and Daisy (Now rabbit foot) item textures.
 - Scaled up the OG Cyberdemon.
-- Icon of Sin attack pattern has been redone.
 - New Arachnotron and Spider Mastermind animations!
 - Lowered the sound of the chainsaws.
 - Demons are now able to walk on Lava like Striders.
@@ -38,6 +37,10 @@ v.4.0.0
 - Added Ghast Tears to the drops of the boss tier demons loot tables.
 - BFG now properly hurting the Ender Dragon.
 - Icon of Sin blocks now face the proper way when built and look correct.
+- Icon of Sin drops Argent Blocks instead of Energy, making the cost very worth it to summon.
+- Icon of Sin no longer takes suffocation damage.
+- Icon of Sin attack pattern has been redone.
+- Fixed Marauder attacks.
 
 ## Not yet implemented but assets and code are in-process awaiting creation of models ## 
 	- Baron 2016
