@@ -6,6 +6,7 @@ import mod.azure.doom.entity.tierboss.IconofsinEntity;
 import mod.azure.doom.entity.tileentity.IconBlockEntity;
 import mod.azure.doom.util.registry.DoomBlocks;
 import mod.azure.doom.util.registry.ModEntityTypes;
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -16,6 +17,7 @@ import net.minecraft.block.pattern.BlockPattern;
 import net.minecraft.block.pattern.BlockPatternBuilder;
 import net.minecraft.block.pattern.BlockStateMatcher;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
@@ -95,6 +97,11 @@ public class DoomWallBlock extends ContainerBlock {
 					witherentity.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 200, 4));
 					witherentity.addEffect(new EffectInstance(Effects.DAMAGE_RESISTANCE, 200, 4));
 					worldIn.addFreshEntity(witherentity);
+
+					for (ServerPlayerEntity serverplayerentity : worldIn.getEntitiesOfClass(ServerPlayerEntity.class,
+							witherentity.getBoundingBox().inflate(50.0D))) {
+						CriteriaTriggers.SUMMONED_ENTITY.trigger(serverplayerentity, witherentity);
+					}
 
 					for (int k = 0; k < blockpattern.getWidth(); ++k) {
 						for (int l = 0; l < blockpattern.getHeight(); ++l) {

@@ -78,7 +78,7 @@ public class EnergyCellEntity extends AbstractArrowEntity implements IAnimatable
 	protected void doPostHurtEffects(LivingEntity living) {
 		super.doPostHurtEffects(living);
 		if (!(living instanceof PlayerEntity) && !(living instanceof IconofsinEntity)) {
-			living.invulnerableTime = 0;
+			living.setDeltaMovement(0, 0, 0);
 		}
 	}
 

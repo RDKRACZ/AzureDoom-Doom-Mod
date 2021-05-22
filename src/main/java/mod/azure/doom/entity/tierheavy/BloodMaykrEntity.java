@@ -98,8 +98,6 @@ public class BloodMaykrEntity extends DemonEntity implements IAnimatable {
 		++this.deathTime;
 		if (this.deathTime == 50) {
 			this.remove();
-			if (level.isClientSide) {
-			}
 		}
 	}
 
@@ -162,7 +160,6 @@ public class BloodMaykrEntity extends DemonEntity implements IAnimatable {
 		@Override
 		public ProjectileEntity getProjectile(World world, double d2, double d3, double d4) {
 			return new BloodBoltEntity(world, this.parentEntity, d2, d3, d4, damage);
-
 		}
 	}
 

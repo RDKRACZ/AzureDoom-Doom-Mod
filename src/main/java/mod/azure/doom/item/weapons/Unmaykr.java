@@ -61,11 +61,11 @@ public class Unmaykr extends DoomBaseItem {
 					abstractarrowentity2.shootFromRotation(playerentity, playerentity.xRot, playerentity.yRot - 10,
 							0.0F, 1.0F * 3.0F, 1.0F);
 
-					abstractarrowentity.setBaseDamage(5.7);
+					abstractarrowentity.setBaseDamage(3.7);
 					abstractarrowentity.isNoGravity();
-					abstractarrowentity1.setBaseDamage(5.7);
+					abstractarrowentity1.setBaseDamage(3.7);
 					abstractarrowentity1.isNoGravity();
-					abstractarrowentity2.setBaseDamage(5.7);
+					abstractarrowentity2.setBaseDamage(3.7);
 					abstractarrowentity2.isNoGravity();
 
 					stack.hurtAndBreak(1, entityLiving, p -> p.broadcastBreakEvent(entityLiving.getUsedItemHand()));

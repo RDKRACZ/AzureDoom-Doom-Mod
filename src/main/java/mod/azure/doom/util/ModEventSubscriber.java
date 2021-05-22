@@ -249,5 +249,4 @@ public class ModEventSubscriber {
 		event.put(ModEntityTypes.FIREBARON.get(), FireBaronEntity.createAttributes().build());
 		event.put(ModEntityTypes.ARCHVILEETERNAL.get(), ArchvileEntity.createAttributes().build());
 	}
-
 }

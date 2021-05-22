@@ -16,7 +16,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class ArgentPlateItem extends Item {
 
 	public ArgentPlateItem() {
-		super(new Item.Properties().tab(DoomMod.DoomBlockItemGroup).stacksTo(64));
+		super(new Item.Properties().tab(DoomMod.DoomPowerUPItemGroup).stacksTo(64));
 	}
 
 	@Override

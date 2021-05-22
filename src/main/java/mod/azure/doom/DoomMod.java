@@ -7,10 +7,8 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.google.common.collect.ImmutableMap;
 import com.mojang.serialization.Codec;
 
-import mod.azure.doom.client.LockOnHandler;
 import mod.azure.doom.client.ModItemModelsProperties;
 import mod.azure.doom.structures.DoomConfiguredStructures;
 import mod.azure.doom.structures.DoomStructures;
@@ -41,7 +39,6 @@ import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.gen.settings.DimensionStructuresSettings;
 import net.minecraft.world.gen.settings.StructureSeparationSettings;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.RegistryEvent.MissingMappings.Mapping;
@@ -60,7 +57,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.registries.ForgeRegistries;
 import software.bernie.geckolib3.GeckoLib;
@@ -74,26 +70,6 @@ public class DoomMod {
 	public static DoomMod instance;
 	public static final String MODID = "doom";
 	public static final Logger LOGGER = LogManager.getLogger();
-	public static ImmutableMap<Structure<?>, StructureSeparationSettings> DEFAULTS = ImmutableMap
-			.<Structure<?>, StructureSeparationSettings>builder()
-			.put(Structure.VILLAGE, new StructureSeparationSettings(32, 8, 10387312))
-			.put(Structure.DESERT_PYRAMID, new StructureSeparationSettings(32, 8, 14357617))
-			.put(Structure.IGLOO, new StructureSeparationSettings(32, 8, 14357618))
-			.put(Structure.JUNGLE_TEMPLE, new StructureSeparationSettings(32, 8, 14357619))
-			.put(Structure.SWAMP_HUT, new StructureSeparationSettings(32, 8, 14357620))
-			.put(Structure.PILLAGER_OUTPOST, new StructureSeparationSettings(32, 8, 165745296))
-			.put(Structure.STRONGHOLD, new StructureSeparationSettings(1, 0, 0))
-			.put(Structure.OCEAN_MONUMENT, new StructureSeparationSettings(32, 5, 10387313))
-			.put(Structure.END_CITY, new StructureSeparationSettings(20, 11, 10387313))
-			.put(Structure.WOODLAND_MANSION, new StructureSeparationSettings(80, 20, 10387319))
-			.put(Structure.BURIED_TREASURE, new StructureSeparationSettings(1, 0, 0))
-			.put(Structure.MINESHAFT, new StructureSeparationSettings(1, 0, 0))
-			.put(Structure.RUINED_PORTAL, new StructureSeparationSettings(40, 15, 34222645))
-			.put(Structure.SHIPWRECK, new StructureSeparationSettings(24, 4, 165745295))
-			.put(Structure.OCEAN_RUIN, new StructureSeparationSettings(20, 8, 14357621))
-			.put(Structure.BASTION_REMNANT, new StructureSeparationSettings(27, 4, 30084232))
-			.put(Structure.NETHER_BRIDGE, new StructureSeparationSettings(27, 4, 30084232))
-			.put(Structure.NETHER_FOSSIL, new StructureSeparationSettings(2, 1, 14357921)).build();
 
 	public DoomMod() {
 		instance = this;
@@ -125,12 +101,6 @@ public class DoomMod {
 		DoomItems.ITEMS.register(modEventBus);
 		DoomBlocks.BLOCKS.register(modEventBus);
 		MinecraftForge.EVENT_BUS.addListener(this::onBiomeLoad);
-		if (!ModList.get().isLoaded("lockon")) {
-			if (Config.SERVER.ENABLE_LOCKON) {
-				if (FMLEnvironment.dist == Dist.CLIENT)
-					modEventBus.addListener(LockOnHandler::client);
-			}
-		}
 		if (!ModList.get().isLoaded("leap")) {
 			MinecraftForge.EVENT_BUS.register(new DoomLeapEntityEvents());
 		}
