@@ -2,6 +2,7 @@ package mod.azure.doom.entity.projectiles;
 
 import java.util.List;
 
+import mod.azure.doom.entity.tierboss.IconofsinEntity;
 import mod.azure.doom.util.config.Config;
 import mod.azure.doom.util.registry.DoomItems;
 import mod.azure.doom.util.registry.ModEntityTypes;
@@ -72,6 +73,15 @@ public class RocketEntity extends AbstractArrowEntity implements IAnimatable {
 		++this.ticksInAir;
 		if (this.tickCount >= 40) {
 			this.remove();
+		}
+	}
+
+	@Override
+	protected void doPostHurtEffects(LivingEntity living) {
+		super.doPostHurtEffects(living);
+		if (!(living instanceof PlayerEntity) && !(living instanceof IconofsinEntity)) {
+			living.setDeltaMovement(0, 0, 0);
+			living.invulnerableTime = 0;
 		}
 	}
 

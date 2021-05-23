@@ -40,8 +40,10 @@ v.4.0.0
 - Icon of Sin drops Argent Blocks instead of Energy, making the cost very worth it to summon.
 - Icon of Sin no longer takes suffocation damage.
 - Icon of Sin attack pattern has been redone.
-- Ballista and Unmaykr tweaked.
+- Slight weapon tweaks.
 - Fixed Marauder attacks.
+- Fixed E1M1 music disc playing text.
+- Removed targeting stuff, hated it tbh and no one used it much.
 
 ## Not yet implemented but assets and code are in-process awaiting creation of models ## 
 	- Baron 2016

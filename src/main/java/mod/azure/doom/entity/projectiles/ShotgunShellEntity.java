@@ -1,5 +1,6 @@
 package mod.azure.doom.entity.projectiles;
 
+import mod.azure.doom.entity.tierboss.IconofsinEntity;
 import mod.azure.doom.util.registry.DoomItems;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import net.minecraft.entity.Entity;
@@ -51,6 +52,15 @@ public class ShotgunShellEntity extends AbstractArrowEntity implements IAnimatab
 	public void registerControllers(AnimationData data) {
 		data.addAnimationController(
 				new AnimationController<ShotgunShellEntity>(this, "controller", 0, this::predicate));
+	}
+
+	@Override
+	protected void doPostHurtEffects(LivingEntity living) {
+		super.doPostHurtEffects(living);
+		if (!(living instanceof PlayerEntity) && !(living instanceof IconofsinEntity)) {
+			living.setDeltaMovement(0, 0, 0);
+			living.invulnerableTime = 0;
+		}
 	}
 
 	@Override

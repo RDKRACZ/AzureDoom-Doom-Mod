@@ -1,5 +1,6 @@
 package mod.azure.doom.entity.projectiles;
 
+import mod.azure.doom.entity.tierboss.IconofsinEntity;
 import mod.azure.doom.util.registry.DoomItems;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import net.minecraft.entity.Entity;
@@ -45,8 +46,7 @@ public class BulletEntity extends AbstractArrowEntity implements IAnimatable {
 
 	@Override
 	public void registerControllers(AnimationData data) {
-		data.addAnimationController(
-				new AnimationController<BulletEntity>(this, "controller", 0, this::predicate));
+		data.addAnimationController(new AnimationController<BulletEntity>(this, "controller", 0, this::predicate));
 	}
 
 	@Override
@@ -56,6 +56,15 @@ public class BulletEntity extends AbstractArrowEntity implements IAnimatable {
 
 	public BulletEntity(World world, LivingEntity owner) {
 		super(ModEntityTypes.BULLETS.get(), owner, world);
+	}
+
+	@Override
+	protected void doPostHurtEffects(LivingEntity living) {
+		super.doPostHurtEffects(living);
+		if (!(living instanceof PlayerEntity) && !(living instanceof IconofsinEntity)) {
+			living.setDeltaMovement(0, 0, 0);
+			living.invulnerableTime = 0;
+		}
 	}
 
 	@Override
@@ -218,8 +227,7 @@ public class BulletEntity extends AbstractArrowEntity implements IAnimatable {
 	protected void onHit(RayTraceResult result) {
 		super.onHit(result);
 		Entity entity = this.getOwner();
-		if (result.getType() != RayTraceResult.Type.ENTITY
-				|| !((EntityRayTraceResult) result).getEntity().is(entity)) {
+		if (result.getType() != RayTraceResult.Type.ENTITY || !((EntityRayTraceResult) result).getEntity().is(entity)) {
 			if (!this.level.isClientSide) {
 				this.remove();
 			}
