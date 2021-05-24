@@ -202,6 +202,8 @@ public class DoomItems {
 			() -> new Item(new Item.Properties().tab(DoomMod.DoomWeaponItemGroup)));
 
 	// MISC
+	public static final RegistryObject<Item> ICON_ICON = ITEMS.register("icon_icon",
+			() -> new Item(new Item.Properties()));
 	public static final RegistryObject<Item> ARGENT_ENERGY = ITEMS.register("argent_energy",
 			() -> new ArgentEnergyItem());
 	public static final RegistryObject<Item> ARGENT_PLATE = ITEMS.register("argent_plate", () -> new ArgentPlateItem());

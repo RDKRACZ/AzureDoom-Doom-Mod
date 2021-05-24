@@ -1,7 +1,7 @@
 {
 	"display": {
 		"icon": {
-			"item": "doom:icon_wall1"
+			"item": "doom:icon_icon"
 		},
 		"title": {
 			"translate": "doom.achievement.summon_icon"
