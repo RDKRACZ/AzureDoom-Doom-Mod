@@ -10,22 +10,22 @@ import software.bernie.geckolib3.model.provider.data.EntityModelData;
 
 public class SpectreModel extends AnimatedGeoModel<SpectreEntity> {
 
-	public SpectreModel() {
-	}
-
 	@Override
 	public ResourceLocation getModelLocation(SpectreEntity object) {
-		return new ResourceLocation(DoomMod.MODID, "geo/pinky.geo.json");
+		return new ResourceLocation(DoomMod.MODID,
+				"geo/" + (object.getVariant() > 1 ? "pinky" : "pinky2016") + ".geo.json");
 	}
 
 	@Override
 	public ResourceLocation getTextureLocation(SpectreEntity object) {
-		return new ResourceLocation(DoomMod.MODID, "textures/entity/pinky-texturemap.png");
+		return new ResourceLocation(DoomMod.MODID,
+				"textures/entity/" + (object.getVariant() > 1 ? "pinky-texturemap" : "pinky2016") + ".png");
 	}
 
 	@Override
 	public ResourceLocation getAnimationFileLocation(SpectreEntity object) {
-		return new ResourceLocation(DoomMod.MODID, "animations/pinky_animation.json");
+		return new ResourceLocation(DoomMod.MODID,
+				"animations/" + (object.getVariant() > 1 ? "pinky_" : "pinky2016.") + "animation.json");
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })

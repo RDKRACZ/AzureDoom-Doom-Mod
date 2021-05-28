@@ -339,6 +339,8 @@
 	"doom.achievement.argent_plate.desc" : "Created by combining the power of Argent Energy and the metal of the Overworld",
 	"doom.achievement.summon_icon" : "The Icon Rises",
 	"doom.achievement.summon_icon.desc" : "Summon the Icon of Sin",
+	"doom.achievement.kill_icon" : "The Icon Falls",
+	"doom.achievement.kill_icon.desc" : "Kill the Icon of Sin",
 	"doom.achievement.titan_skull" : "Titan Skull",
 	"doom.achievement.titan_skull.desc" : "Find a skull of a long dead Titan.",
 	"doom.achievement.portal" : "Slipgate",
