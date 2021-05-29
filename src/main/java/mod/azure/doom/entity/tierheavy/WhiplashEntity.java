@@ -179,6 +179,7 @@ public class WhiplashEntity extends DemonEntity implements IAnimatable {
 									parentEntity.getZ() + (double) MathHelper.sin(f) * d5, d0, d1, f, j);
 						}
 					}
+					this.attackTimer = -50;
 				}
 			} else if (this.attackTimer > 0) {
 				--this.attackTimer;
