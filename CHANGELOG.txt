@@ -9,6 +9,7 @@ v.4.0.0
 - Added a Pinky 2016/Eternal variant to the Spectre!
 - Added the Whiplash, thanks to Batpixxler!
 - Added the Arch-vile Eternal, thanks to ssap!
+- Added the Tentacle, thanks to Crydigo!
 - Updated the Unwilling model, thanks to Undeadmonkey for the model and Pedroca for the texture!
 - Updated the Gargoyle model and texture, thanks to Batpixxler!
 - Added all new Patchouli book entries as well as a few missing ones.

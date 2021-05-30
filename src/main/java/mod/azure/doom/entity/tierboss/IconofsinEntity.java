@@ -214,48 +214,50 @@ public class IconofsinEntity extends DemonEntity implements IAnimatable {
 
 		public void tick() {
 			LivingEntity livingentity = this.parentEntity.getTarget();
-			if (this.parentEntity.canSee(livingentity)) {
-				++this.attackTimer;
-				Random rand = new Random();
-				double d0 = Math.min(livingentity.getY(), livingentity.getY());
-				double d1 = Math.max(livingentity.getY(), livingentity.getY()) + 1.0D;
-				float f = (float) MathHelper.atan2(livingentity.getZ() - parentEntity.getZ(),
-						livingentity.getX() - parentEntity.getX());
-				if (this.attackTimer == 35) {
-					SplittableRandom random = new SplittableRandom();
-					boolean r = random.nextInt(1, 101) <= 20;
-					if (r) {
-						for (int i = 15; i < 55; ++i) {
-							float f1 = f + (float) i * (float) Math.PI * 0.4F;
-							parentEntity.spawnFlames(
-									parentEntity.getX() + (double) MathHelper.cos(f1) * rand.nextDouble() * 11.5D,
-									parentEntity.getZ() + (double) MathHelper.sin(f1) * rand.nextDouble() * 11.5D, d0,
-									d1, f1, 0);
-							parentEntity.spawnFlames(
-									parentEntity.getX() + (double) MathHelper.cos(f1) * rand.nextDouble() * 11.5D,
-									parentEntity.getZ() + (double) MathHelper.sin(f1) * rand.nextDouble() * 11.5D, d0,
-									d1, f1, 0);
-							parentEntity.spawnFlames(
-									parentEntity.getX() + (double) MathHelper.cos(f1) * rand.nextDouble() * 11.5D,
-									parentEntity.getZ() + (double) MathHelper.sin(f1) * rand.nextDouble() * 11.5D, d0,
-									d1, f1, 0);
-							parentEntity.spawnFlames(
-									parentEntity.getX() + (double) MathHelper.cos(f1) * rand.nextDouble() * 11.5D,
-									parentEntity.getZ() + (double) MathHelper.sin(f1) * rand.nextDouble() * 11.5D, d0,
-									d1, f1, 0);
-							parentEntity.spawnFlames(
-									parentEntity.getX() + (double) MathHelper.cos(f1) * rand.nextDouble() * 11.5D,
-									parentEntity.getZ() + (double) MathHelper.sin(f1) * rand.nextDouble() * 11.5D, d0,
-									d1, f1, 0);
+			if (livingentity != null) {
+				if (this.parentEntity.canSee(livingentity)) {
+					++this.attackTimer;
+					Random rand = new Random();
+					double d0 = Math.min(livingentity.getY(), livingentity.getY());
+					double d1 = Math.max(livingentity.getY(), livingentity.getY()) + 1.0D;
+					float f = (float) MathHelper.atan2(livingentity.getZ() - parentEntity.getZ(),
+							livingentity.getX() - parentEntity.getX());
+					if (this.attackTimer == 35) {
+						SplittableRandom random = new SplittableRandom();
+						boolean r = random.nextInt(1, 101) <= 20;
+						if (r) {
+							for (int i = 15; i < 55; ++i) {
+								float f1 = f + (float) i * (float) Math.PI * 0.4F;
+								parentEntity.spawnFlames(
+										parentEntity.getX() + (double) MathHelper.cos(f1) * rand.nextDouble() * 11.5D,
+										parentEntity.getZ() + (double) MathHelper.sin(f1) * rand.nextDouble() * 11.5D,
+										d0, d1, f1, 0);
+								parentEntity.spawnFlames(
+										parentEntity.getX() + (double) MathHelper.cos(f1) * rand.nextDouble() * 11.5D,
+										parentEntity.getZ() + (double) MathHelper.sin(f1) * rand.nextDouble() * 11.5D,
+										d0, d1, f1, 0);
+								parentEntity.spawnFlames(
+										parentEntity.getX() + (double) MathHelper.cos(f1) * rand.nextDouble() * 11.5D,
+										parentEntity.getZ() + (double) MathHelper.sin(f1) * rand.nextDouble() * 11.5D,
+										d0, d1, f1, 0);
+								parentEntity.spawnFlames(
+										parentEntity.getX() + (double) MathHelper.cos(f1) * rand.nextDouble() * 11.5D,
+										parentEntity.getZ() + (double) MathHelper.sin(f1) * rand.nextDouble() * 11.5D,
+										d0, d1, f1, 0);
+								parentEntity.spawnFlames(
+										parentEntity.getX() + (double) MathHelper.cos(f1) * rand.nextDouble() * 11.5D,
+										parentEntity.getZ() + (double) MathHelper.sin(f1) * rand.nextDouble() * 11.5D,
+										d0, d1, f1, 0);
+							}
+						} else {
+							this.parentEntity.doDamage();
 						}
-					} else {
-						this.parentEntity.doDamage();
+						this.parentEntity.setAttacking(this.attackTimer >= 15);
+						this.attackTimer = -35;
 					}
-					this.parentEntity.setAttacking(this.attackTimer >= 15);
-					this.attackTimer = -35;
+				} else if (this.attackTimer > 0) {
+					--this.attackTimer;
 				}
-			} else if (this.attackTimer > 0) {
-				--this.attackTimer;
 			}
 		}
 

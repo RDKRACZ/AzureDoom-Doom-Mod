@@ -251,6 +251,12 @@ public class ModEntitySpawn {
 			base.add(new Spawners(ModEntityTypes.PINKY2016.get(), config.get(EntityConfigType.PINKY).SPAWN_WEIGHT,
 					config.get(EntityConfigType.PINKY).MIN_GROUP, config.get(EntityConfigType.PINKY).MAX_GROUP));
 		}
+		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.TENTACLE, biome)
+				&& config.get(EntityConfigType.TENTACLE).SPAWN_WEIGHT > 0) {
+			base.add(new Spawners(ModEntityTypes.TENTACLE.get(), config.get(EntityConfigType.TENTACLE).SPAWN_WEIGHT,
+					config.get(EntityConfigType.TENTACLE).MIN_GROUP,
+					config.get(EntityConfigType.TENTACLE).MAX_GROUP));
+		}
 //		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.WHIPLASH, biome)
 //				&& config.get(EntityConfigType.WHIPLASH).SPAWN_WEIGHT > 0) {
 //			base.add(new Spawners(ModEntityTypes.WHIPLASH.get(), config.get(EntityConfigType.WHIPLASH).SPAWN_WEIGHT,

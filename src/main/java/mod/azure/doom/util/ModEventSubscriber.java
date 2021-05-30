@@ -3,6 +3,7 @@ package mod.azure.doom.util;
 import mod.azure.doom.DoomMod;
 import mod.azure.doom.entity.tierambient.CueBallEntity;
 import mod.azure.doom.entity.tierambient.GoreNestEntity;
+import mod.azure.doom.entity.tierambient.TentacleEntity;
 import mod.azure.doom.entity.tierboss.ArchMakyrEntity;
 import mod.azure.doom.entity.tierboss.IconofsinEntity;
 import mod.azure.doom.entity.tierboss.SpiderMastermind2016Entity;
@@ -197,6 +198,9 @@ public class ModEventSubscriber {
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.ARCHVILEETERNAL.get(),
 				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
 				ArchvileEntity::spawning);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.TENTACLE.get(),
+				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+				TentacleEntity::spawning);
 	}
 
 	@SubscribeEvent
@@ -248,5 +252,6 @@ public class ModEventSubscriber {
 		event.put(ModEntityTypes.ARCHMAKER.get(), ArchMakyrEntity.createAttributes().build());
 		event.put(ModEntityTypes.FIREBARON.get(), FireBaronEntity.createAttributes().build());
 		event.put(ModEntityTypes.ARCHVILEETERNAL.get(), ArchvileEntity.createAttributes().build());
+		event.put(ModEntityTypes.TENTACLE.get(), TentacleEntity.createAttributes().build());
 	}
 }

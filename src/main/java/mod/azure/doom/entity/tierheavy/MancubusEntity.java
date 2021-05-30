@@ -177,6 +177,12 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 			this.attackTimer = 0;
 		}
 
+		@Override
+		public void stop() {
+			super.stop();
+			this.parentEntity.setAttacking(false);
+		}
+
 		public void tick() {
 			LivingEntity livingentity = this.parentEntity.getTarget();
 			if (this.parentEntity.canSee(livingentity)) {
@@ -213,8 +219,7 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 						}
 					} else {
 						fireballentity.setPos(this.parentEntity.getX() + vector3d.x * 2.0D,
-								this.parentEntity.getY(0.5D) + 0.5D,
-								fireballentity.getZ() + vector3d.z * 2.0D);
+								this.parentEntity.getY(0.5D) + 0.5D, fireballentity.getZ() + vector3d.z * 2.0D);
 						world.addFreshEntity(fireballentity);
 					}
 				}
@@ -240,8 +245,7 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 						}
 					} else {
 						fireballentity.setPos(this.parentEntity.getX() + vector3d.x * 2.0D,
-								this.parentEntity.getY(0.5D) + 0.5D,
-								fireballentity.getZ() + vector3d.z * 2.0D);
+								this.parentEntity.getY(0.5D) + 0.5D, fireballentity.getZ() + vector3d.z * 2.0D);
 						world.addFreshEntity(fireballentity);
 					}
 					this.attackTimer = -50;

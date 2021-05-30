@@ -19,6 +19,7 @@ import mod.azure.doom.entity.projectiles.entity.EnergyCellMobEntity;
 import mod.azure.doom.entity.projectiles.entity.RocketMobEntity;
 import mod.azure.doom.entity.tierambient.CueBallEntity;
 import mod.azure.doom.entity.tierambient.GoreNestEntity;
+import mod.azure.doom.entity.tierambient.TentacleEntity;
 import mod.azure.doom.entity.tierboss.ArchMakyrEntity;
 import mod.azure.doom.entity.tierboss.IconofsinEntity;
 import mod.azure.doom.entity.tierboss.SpiderMastermind2016Entity;
@@ -350,7 +351,8 @@ public class ModEntityTypes {
 			() -> EntityType.Builder.of(Pinky2016::new, EntityClassification.MONSTER).sized(1.7f, 2.2F).fireImmune()
 					.clientTrackingRange(9).build(new ResourceLocation(DoomMod.MODID, "pinky2016").toString()));
 
-	public static final RegistryObject<EntityType<ArchvileEntity>> ARCHVILEETERNAL = ENTITY_TYPES.register("archvileeternal",
+	public static final RegistryObject<EntityType<ArchvileEntity>> ARCHVILEETERNAL = ENTITY_TYPES.register(
+			"archvileeternal",
 			() -> EntityType.Builder.of(ArchvileEntity::new, EntityClassification.MONSTER).sized(0.9F, 3.3F)
 					.fireImmune().clientTrackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "archvileeternal").toString()));
@@ -395,6 +397,11 @@ public class ModEntityTypes {
 			() -> EntityType.Builder.of(BloodMaykrEntity::new, EntityClassification.MONSTER).sized(1.7f, 2.2F)
 					.fireImmune().clientTrackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "blood_maykr").toString()));
+
+	public static final RegistryObject<EntityType<TentacleEntity>> TENTACLE = ENTITY_TYPES.register("tentacle",
+			() -> EntityType.Builder.of(TentacleEntity::new, EntityClassification.MONSTER).sized(1.7f, 2.2F)
+					.fireImmune().clientTrackingRange(9)
+					.build(new ResourceLocation(DoomMod.MODID, "tentacle").toString()));
 
 	public static final RegistryObject<EntityType<ArchMakyrEntity>> ARCHMAKER = ENTITY_TYPES.register("arch_maykr",
 			() -> EntityType.Builder.of(ArchMakyrEntity::new, EntityClassification.MONSTER).sized(1.7f, 2.2F)
