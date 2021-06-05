@@ -80,10 +80,8 @@ public class GargoyleEntity extends DemonEntity implements IAnimatable, IFlyingA
 			return PlayState.CONTINUE;
 		}
 		if ((this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
-			if (level.isClientSide) {
-				event.getController().setAnimation(new AnimationBuilder().addAnimation("death", false));
-				return PlayState.CONTINUE;
-			}
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("death", false));
+			return PlayState.CONTINUE;
 		}
 		event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
 		return PlayState.CONTINUE;
@@ -91,7 +89,7 @@ public class GargoyleEntity extends DemonEntity implements IAnimatable, IFlyingA
 
 	@Override
 	public void registerControllers(AnimationData data) {
-		data.addAnimationController(new AnimationController<GargoyleEntity>(this, "controller", 0, this::predicate));
+		data.addAnimationController(new AnimationController<GargoyleEntity>(this, "controller", 1, this::predicate));
 	}
 
 	@Override
