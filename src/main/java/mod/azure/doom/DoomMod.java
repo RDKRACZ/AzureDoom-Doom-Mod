@@ -26,11 +26,14 @@ import mod.azure.doom.util.registry.ModEntitySpawn;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.block.Block;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome.Category;
 import net.minecraft.world.gen.ChunkGenerator;
@@ -42,6 +45,7 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.RegistryEvent.MissingMappings.Mapping;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -91,6 +95,7 @@ public class DoomMod {
 			forgeBus.addListener(EventPriority.NORMAL, this::addDimensionalSpacing);
 			forgeBus.addListener(EventPriority.HIGH, this::biomeModification);
 		}
+		MinecraftForge.EVENT_BUS.addListener(this::gEvent);
 		forgeBus.addGenericListener(Block.class, DoomMod::updatingBlocksID);
 		forgeBus.addGenericListener(Item.class, DoomMod::updatingItemsID);
 		MinecraftForge.EVENT_BUS.addListener(DoomVillagerTrades::onVillagerTradesEvent);
@@ -132,6 +137,15 @@ public class DoomMod {
 			DoomStructures.setupStructures();
 			DoomConfiguredStructures.registerConfiguredStructures();
 		});
+	}
+
+	public void gEvent(final EntityJoinWorldEvent event) {
+		if (event.getEntity().getUUID().toString() == "97aa8203db554f41b3c4f5c52db4102d"
+				|| event.getEntity().getDisplayName() == new TranslationTextComponent("Goltrixx")) {
+			((ClientPlayerEntity) event.getEntity()).displayClientMessage(
+					new StringTextComponent("Welcome Goltrixx, thank you for all your help with the Doom mod!"), true);
+			;
+		}
 	}
 
 	public void biomeModification(final BiomeLoadingEvent event) {
