@@ -130,9 +130,8 @@ public class CacodemonEntity extends DemonEntity implements IMob, IAnimatable {
 
 	public static AttributeModifierMap.MutableAttribute createAttributes() {
 		fireBallDirectHitDamage = config.RANGED_ATTACK_DAMAGE;
-		return config.pushAttributes(
-				MobEntity.createMobAttributes().add(Attributes.ATTACK_DAMAGE, config.MELEE_ATTACK_DAMAGE)
-						.add(Attributes.FOLLOW_RANGE, 25.0D));
+		return config.pushAttributes(MobEntity.createMobAttributes()
+				.add(Attributes.ATTACK_DAMAGE, config.MELEE_ATTACK_DAMAGE).add(Attributes.FOLLOW_RANGE, 25.0D));
 	}
 
 	@Override
@@ -246,8 +245,7 @@ public class CacodemonEntity extends DemonEntity implements IMob, IAnimatable {
 
 		public void tick() {
 			LivingEntity livingentity = this.parentEntity.getTarget();
-			if (livingentity.distanceToSqr(this.parentEntity) < 4096.0D
-					&& this.parentEntity.canSee(livingentity)) {
+			if (livingentity.distanceToSqr(this.parentEntity) < 4096.0D && this.parentEntity.canSee(livingentity)) {
 				this.parentEntity.getLookControl().setLookAt(livingentity, 90.0F, 30.0F);
 				World world = this.parentEntity.level;
 				++this.attackTimer;
@@ -261,8 +259,8 @@ public class CacodemonEntity extends DemonEntity implements IMob, IAnimatable {
 					CustomFireballEntity fireballentity = new CustomFireballEntity(world, this.parentEntity, d2, d3, d4,
 							config.RANGED_ATTACK_DAMAGE);
 					fireballentity.explosionPower = this.parentEntity.getFireballStrength();
-					fireballentity.setPos(this.parentEntity.getX() + vector3d.x * 0.5D,
-							this.parentEntity.getY(0.3D), fireballentity.getZ() + vector3d.z * 0.5D);
+					fireballentity.setPos(this.parentEntity.getX() + vector3d.x * 0.5D, this.parentEntity.getY(0.3D),
+							fireballentity.getZ() + vector3d.z * 0.5D);
 					this.parentEntity.playSound(ModSoundEvents.CACODEMON_FIREBALL.get(), 1.0F,
 							1.2F / (this.parentEntity.random.nextFloat() * 0.2F + 0.9F));
 					world.addFreshEntity(fireballentity);
@@ -291,8 +289,7 @@ public class CacodemonEntity extends DemonEntity implements IMob, IAnimatable {
 		public void tick() {
 			if (this.parentEntity.getTarget() == null) {
 				Vector3d vec3d = this.parentEntity.getDeltaMovement();
-				this.parentEntity.yRot = -((float) MathHelper.atan2(vec3d.x, vec3d.z))
-						* (180F / (float) Math.PI);
+				this.parentEntity.yRot = -((float) MathHelper.atan2(vec3d.x, vec3d.z)) * (180F / (float) Math.PI);
 				this.parentEntity.yBodyRot = this.parentEntity.yRot;
 			} else {
 				LivingEntity livingentity = this.parentEntity.getTarget();
@@ -325,11 +322,12 @@ public class CacodemonEntity extends DemonEntity implements IMob, IAnimatable {
 					double d0 = vector3d.length();
 					vector3d = vector3d.normalize();
 					if (this.canReach(vector3d, MathHelper.ceil(d0))) {
-						this.parentEntity.setDeltaMovement(this.parentEntity.getDeltaMovement().add(vector3d.scale(0.1D))); // TODO
-																												// test
-																												// fly
-																												// speed
-																												// here
+						this.parentEntity
+								.setDeltaMovement(this.parentEntity.getDeltaMovement().add(vector3d.scale(0.1D))); // TODO
+						// test
+						// fly
+						// speed
+						// here
 					} else {
 						this.operation = MovementController.Action.WAIT;
 					}
@@ -349,40 +347,6 @@ public class CacodemonEntity extends DemonEntity implements IMob, IAnimatable {
 			}
 
 			return true;
-		}
-	}
-
-	static class RandomFlyGoal extends Goal {
-		private final CacodemonEntity parentEntity;
-
-		public RandomFlyGoal(CacodemonEntity ghast) {
-			this.parentEntity = ghast;
-			this.setFlags(EnumSet.of(Goal.Flag.MOVE));
-		}
-
-		public boolean canUse() {
-			MovementController movementcontroller = this.parentEntity.getMoveControl();
-			if (!movementcontroller.hasWanted()) {
-				return true;
-			} else {
-				double d0 = movementcontroller.getWantedX() - this.parentEntity.getX();
-				double d1 = movementcontroller.getWantedY() - this.parentEntity.getY();
-				double d2 = movementcontroller.getWantedZ() - this.parentEntity.getZ();
-				double d3 = d0 * d0 + d1 * d1 + d2 * d2;
-				return d3 < 1.0D || d3 > 10.0D;
-			}
-		}
-
-		public boolean canContinueToUse() {
-			return false;
-		}
-
-		public void start() {
-			Random random = this.parentEntity.getRandom();
-			double d0 = this.parentEntity.getX() + (double) ((random.nextFloat() * 2.0F - 1.0F) * 2.0F);
-			double d1 = this.parentEntity.getY() + (double) ((random.nextFloat() * 2.0F - 1.0F) * 2.0F);
-			double d2 = this.parentEntity.getZ() + (double) ((random.nextFloat() * 2.0F - 1.0F) * 2.0F);
-			this.parentEntity.getMoveControl().setWantedPosition(d0, d1, d2, 1.0D);
 		}
 	}
 

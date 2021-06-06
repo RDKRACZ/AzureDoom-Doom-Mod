@@ -36,6 +36,7 @@ v.4.0.0
 - Pain Elemental attacking animation updated to match new style.
 - Hell Knight 2016/Dread Knight now perform a slam attack.
 - Dread Knight Hand Blades redone.
+- Gargoyle flying redone, will now stay in the air.
 - Added Ghast Tears to the drops of the boss tier demons loot tables.
 - BFG now properly hurting the Ender Dragon.
 - Icon of Sin blocks now face the proper way when built and look correct.
