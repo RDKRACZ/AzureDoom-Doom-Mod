@@ -83,6 +83,8 @@ public class DoomItems {
 	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, DoomMod.MODID);
 
 	// BLOCKS
+	public static final RegistryObject<Item> GUN_TABLE = ITEMS.register("gun_table",
+			() -> new BlockItem(DoomBlocks.GUN_TABLE.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> ITEM = ITEMS.register("barrel",
 			() -> new BlockItem(DoomBlocks.BARREL_BLOCK.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> ARGENT_BLOCK = ITEMS.register("argent_block",

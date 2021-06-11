@@ -59,6 +59,7 @@ import mod.azure.doom.entity.tiersuperheavy.CyberdemonEntity;
 import mod.azure.doom.entity.tiersuperheavy.DoomHunterEntity;
 import mod.azure.doom.entity.tiersuperheavy.FireBaronEntity;
 import mod.azure.doom.entity.tiersuperheavy.MarauderEntity;
+import mod.azure.doom.entity.tileentity.GunBlockEntity;
 import mod.azure.doom.entity.tileentity.IconBlockEntity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
@@ -70,15 +71,19 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class ModEntityTypes {
 
-	public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITIES,
-			DoomMod.MODID);
-
 	public static final DeferredRegister<TileEntityType<?>> TILE_TYPES = DeferredRegister
 			.create(ForgeRegistries.TILE_ENTITIES, DoomMod.MODID);
 
 	public static final RegistryObject<TileEntityType<IconBlockEntity>> ICON = TILE_TYPES.register("icon",
 			() -> TileEntityType.Builder.<IconBlockEntity>of(IconBlockEntity::new, DoomBlocks.DOOM_WALL1.get())
 					.build(null));
+
+	public static final RegistryObject<TileEntityType<GunBlockEntity>> GUN_TABLE_ENTITY = TILE_TYPES
+			.register("guntable", () -> TileEntityType.Builder
+					.<GunBlockEntity>of(GunBlockEntity::new, DoomBlocks.GUN_TABLE.get()).build(null));
+
+	public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITIES,
+			DoomMod.MODID);
 
 	public static final RegistryObject<EntityType<ArchvileFiring>> FIRING = ENTITY_TYPES.register("archvile_firing",
 			() -> EntityType.Builder.<ArchvileFiring>of(ArchvileFiring::new, EntityClassification.MISC)

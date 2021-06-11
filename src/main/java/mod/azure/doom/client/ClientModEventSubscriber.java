@@ -3,6 +3,7 @@ package mod.azure.doom.client;
 import org.lwjgl.glfw.GLFW;
 
 import mod.azure.doom.DoomMod;
+import mod.azure.doom.client.gui.GunTableScreen;
 import mod.azure.doom.client.render.ArachnotronEternalRender;
 import mod.azure.doom.client.render.ArachnotronRender;
 import mod.azure.doom.client.render.ArchMaykrRender;
@@ -126,7 +127,9 @@ import mod.azure.doom.item.armor.SentinelDoomArmor;
 import mod.azure.doom.item.armor.TwentyFiveDoomArmor;
 import mod.azure.doom.item.armor.ZombieDoomArmor;
 import mod.azure.doom.util.registry.DoomBlocks;
+import mod.azure.doom.util.registry.DoomScreens;
 import mod.azure.doom.util.registry.ModEntityTypes;
+import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.settings.KeyBinding;
@@ -255,5 +258,6 @@ public class ClientModEventSubscriber {
 
 		RenderTypeLookup.setRenderLayer(DoomBlocks.JUMP_PAD.get(), RenderType.translucent());
 		ModItemModelsProperties.init();
+		ScreenManager.register(DoomScreens.SCREEN_HANDLER_TYPE.get(), GunTableScreen::new);
 	}
 }

@@ -22,6 +22,8 @@ import mod.azure.doom.util.packets.DoomPacketHandler;
 import mod.azure.doom.util.registry.DoomBlocks;
 import mod.azure.doom.util.registry.DoomEnchantments;
 import mod.azure.doom.util.registry.DoomItems;
+import mod.azure.doom.util.registry.DoomRecipes;
+import mod.azure.doom.util.registry.DoomScreens;
 import mod.azure.doom.util.registry.ModEntitySpawn;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import mod.azure.doom.util.registry.ModSoundEvents;
@@ -102,9 +104,11 @@ public class DoomMod {
 		ModSoundEvents.MOD_SOUNDS.register(modEventBus);
 		DoomEnchantments.ENCHANTMENTS.register(modEventBus);
 		ModEntityTypes.ENTITY_TYPES.register(modEventBus);
-		ModEntityTypes.TILE_TYPES.register(modEventBus);
 		DoomItems.ITEMS.register(modEventBus);
 		DoomBlocks.BLOCKS.register(modEventBus);
+		ModEntityTypes.TILE_TYPES.register(modEventBus);
+		DoomScreens.CONTAIN.register(modEventBus);
+		DoomRecipes.SERIAL.register(modEventBus);
 		MinecraftForge.EVENT_BUS.addListener(this::onBiomeLoad);
 		if (!ModList.get().isLoaded("leap")) {
 			MinecraftForge.EVENT_BUS.register(new DoomLeapEntityEvents());
