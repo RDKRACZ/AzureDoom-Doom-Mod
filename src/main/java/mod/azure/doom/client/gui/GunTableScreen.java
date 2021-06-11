@@ -23,7 +23,7 @@ public class GunTableScreen extends ContainerScreen<GunTableScreenHandler> {
 			"textures/gui/gun_table_gui.png");
 
 	private int selectedIndex;
-	private final GunTableScreen.WidgetButtonPage[] offers = new GunTableScreen.WidgetButtonPage[7];
+	private final GunTableScreen.RecipeButton[] offers = new GunTableScreen.RecipeButton[7];
 	private int indexStartOffset;
 	private boolean scrolling;
 
@@ -33,7 +33,7 @@ public class GunTableScreen extends ContainerScreen<GunTableScreenHandler> {
 		this.inventoryLabelX = 107;
 	}
 
-	private void syncRecipeIndex() {
+	private void postButtonClick() {
 		this.menu.setRecipeIndex(this.selectedIndex);
 		this.menu.switchTo(this.selectedIndex);
 		this.minecraft.getConnection().send(new CSelectTradePacket(this.selectedIndex));
@@ -46,10 +46,10 @@ public class GunTableScreen extends ContainerScreen<GunTableScreenHandler> {
 		int k = j + 18;
 
 		for (int l = 0; l < 7; ++l) {
-			this.offers[l] = this.addButton(new WidgetButtonPage(i, k, l, (button) -> {
-				if (button instanceof WidgetButtonPage) {
-					this.selectedIndex = ((WidgetButtonPage) button).getIndex() + this.indexStartOffset;
-					this.syncRecipeIndex();
+			this.offers[l] = this.addButton(new RecipeButton(i, k, l, (button) -> {
+				if (button instanceof RecipeButton) {
+					this.selectedIndex = ((RecipeButton) button).getIndex() + this.indexStartOffset;
+					this.postButtonClick();
 				}
 			}));
 			k += 20;
@@ -70,7 +70,7 @@ public class GunTableScreen extends ContainerScreen<GunTableScreenHandler> {
 
 	}
 
-	private void renderScrollbar(MatrixStack matrices, int x, int y, List<GunTableRecipe> tradeOffers) {
+	private void renderScroller(MatrixStack matrices, int x, int y, List<GunTableRecipe> tradeOffers) {
 		int i = tradeOffers.size() + 1 - 7;
 		if (i > 1) {
 			int j = 139 - (27 + (i - 1) * 139 / i);
@@ -99,7 +99,7 @@ public class GunTableScreen extends ContainerScreen<GunTableScreenHandler> {
 			RenderSystem.pushMatrix();
 			RenderSystem.enableRescaleNormal();
 			this.minecraft.getTextureManager().bind(TEXTURE);
-			this.renderScrollbar(matrices, i, j, tradeOfferList);
+			this.renderScroller(matrices, i, j, tradeOfferList);
 			int m = 0;
 
 			for (GunTableRecipe gunTableRecipe : tradeOfferList) {
@@ -121,7 +121,7 @@ public class GunTableScreen extends ContainerScreen<GunTableScreenHandler> {
 				}
 			}
 
-			for (WidgetButtonPage widgetButtonPage : this.offers) {
+			for (RecipeButton widgetButtonPage : this.offers) {
 				if (widgetButtonPage.isHovered()) {
 					widgetButtonPage.renderToolTip(matrices, mouseX, mouseY);
 				}
@@ -200,10 +200,10 @@ public class GunTableScreen extends ContainerScreen<GunTableScreenHandler> {
 		return super.mouseClicked(mouseX, mouseY, button);
 	}
 
-	class WidgetButtonPage extends Button {
+	class RecipeButton extends Button {
 		final int index;
 
-		public WidgetButtonPage(int x, int y, int index, Button.IPressable onPress) {
+		public RecipeButton(int x, int y, int index, Button.IPressable onPress) {
 			super(x, y, 112, 20, StringTextComponent.EMPTY, onPress);
 			this.index = index;
 			this.visible = false;
