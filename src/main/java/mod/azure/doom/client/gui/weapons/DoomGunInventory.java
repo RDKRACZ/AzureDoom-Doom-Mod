@@ -1,4 +1,4 @@
-package mod.azure.doom.client.gui;
+package mod.azure.doom.client.gui.weapons;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
@@ -6,14 +6,19 @@ import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 
-public class GunTableInventory implements IInventory {
+public class DoomGunInventory implements IInventory {
 	private final GunTableScreenHandler container;
 
 	private final NonNullList<ItemStack> stacks;
 
-	public GunTableInventory(GunTableScreenHandler container) {
+	public DoomGunInventory(GunTableScreenHandler container) {
 		this.stacks = NonNullList.withSize(6, ItemStack.EMPTY);
 		this.container = container;
+	}
+
+	@Override
+	public int getContainerSize() {
+		return this.stacks.size();
 	}
 
 	@Override
@@ -24,16 +29,6 @@ public class GunTableInventory implements IInventory {
 			}
 		}
 		return true;
-	}
-
-	@Override
-	public void clearContent() {
-		this.stacks.clear();
-	}
-
-	@Override
-	public int getContainerSize() {
-		return this.stacks.size();
 	}
 
 	@Override
@@ -63,13 +58,18 @@ public class GunTableInventory implements IInventory {
 	}
 
 	@Override
+	public boolean stillValid(PlayerEntity p_70300_1_) {
+		return true;
+	}
+
+	@Override
 	public void setChanged() {
 
 	}
 
 	@Override
-	public boolean stillValid(PlayerEntity p_70300_1_) {
-		return true;
+	public void clearContent() {
+		this.stacks.clear();
 	}
 
 }

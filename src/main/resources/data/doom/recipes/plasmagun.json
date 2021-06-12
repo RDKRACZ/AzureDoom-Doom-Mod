@@ -1,22 +1,21 @@
 {
+	"type": "doom:gun_table",
+	"pattern": "abc",
+	"key": {
+		"a": {
+			"item": "doom:argent_energy",
+			"count": 10
+		},
+		"b": {
+			"item": "doom:argent_plate",
+			"count": 4
+		},
+		"c": {
+			"tag": "doom:glass",
+			"count": 6
+		}
+	},
 	"result": {
 		"item": "doom:plasmagun"
-	},
-	"type": "minecraft:crafting_shaped",
-	"pattern": [
-		"CmC",
-		"$C$",
-		"C C"
-	],
-	"key": {
-		"$": {
-			"item": "doom:argent_energy"
-		},
-		"C": {
-			"item": "doom:argent_plate"
-		},
-		"m": {
-			"tag": "forge:glass"
-		}
 	}
 }

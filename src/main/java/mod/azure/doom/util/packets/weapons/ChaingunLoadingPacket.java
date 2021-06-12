@@ -1,4 +1,4 @@
-package mod.azure.doom.util.packets;
+package mod.azure.doom.util.packets.weapons;
 
 import java.util.function.Supplier;
 

@@ -1,11 +1,13 @@
 {
 	"required": true,
-	"minVersion": "0.8",
 	"package": "mod.azure.doom.mixin",
+	"refmap": "doom.refmap.json",
 	"compatibilityLevel": "JAVA_8",
 	"mixins": [
+		"IngredientAccess"
 	],
 	"injectors": {
 		"defaultRequire": 1
-	}
+	},
+	"minVersion": "0.8"
 }

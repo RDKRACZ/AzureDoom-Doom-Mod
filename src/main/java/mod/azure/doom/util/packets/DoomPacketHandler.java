@@ -1,6 +1,21 @@
 package mod.azure.doom.util.packets;
 
 import mod.azure.doom.DoomMod;
+import mod.azure.doom.util.packets.weapons.AxeMarauderLoadingPacket;
+import mod.azure.doom.util.packets.weapons.BFG9000LoadingPacket;
+import mod.azure.doom.util.packets.weapons.BFGLoadingPacket;
+import mod.azure.doom.util.packets.weapons.BallistaLoadingPacket;
+import mod.azure.doom.util.packets.weapons.ChaingunLoadingPacket;
+import mod.azure.doom.util.packets.weapons.ChainsawEternalLoadingPacket;
+import mod.azure.doom.util.packets.weapons.ChainsawLoadingPacket;
+import mod.azure.doom.util.packets.weapons.CrucibleLoadingPacket;
+import mod.azure.doom.util.packets.weapons.HeavyCannonLoadingPacket;
+import mod.azure.doom.util.packets.weapons.PistolLoadingPacket;
+import mod.azure.doom.util.packets.weapons.PlasmaLoadingPacket;
+import mod.azure.doom.util.packets.weapons.RocketLauncherLoadingPacket;
+import mod.azure.doom.util.packets.weapons.SGLoadingPacket;
+import mod.azure.doom.util.packets.weapons.SSGLoadingPacket;
+import mod.azure.doom.util.packets.weapons.UnmaykrLoadingPacket;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
@@ -68,7 +83,15 @@ public class DoomPacketHandler {
 			new ResourceLocation(DoomMod.MODID, "chainsaweternal"), () -> PROTOCOL_VERSION, PROTOCOL_VERSION::equals,
 			PROTOCOL_VERSION::equals);
 
+	public static final SimpleChannel CRAFTING = NetworkRegistry.newSimpleChannel(
+			new ResourceLocation(DoomMod.MODID, "crafting"), () -> PROTOCOL_VERSION, PROTOCOL_VERSION::equals,
+			PROTOCOL_VERSION::equals);
+
 	public static void register() {
+		CRAFTING.registerMessage(++channel_id, DoomCraftingPacket.class, DoomCraftingPacket::encode,
+				DoomCraftingPacket::new, DoomCraftingPacket::handle);
+		BALLISTA.registerMessage(channel_id++, BallistaLoadingPacket.class, BallistaLoadingPacket::encode,
+				BallistaLoadingPacket::new, BallistaLoadingPacket::handle);
 		BALLISTA.registerMessage(channel_id++, BallistaLoadingPacket.class, BallistaLoadingPacket::encode,
 				BallistaLoadingPacket::new, BallistaLoadingPacket::handle);
 		BFG.registerMessage(channel_id++, BFGLoadingPacket.class, BFGLoadingPacket::encode, BFGLoadingPacket::new,

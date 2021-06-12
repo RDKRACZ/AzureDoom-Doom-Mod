@@ -1,9 +1,10 @@
-package mod.azure.doom.client.gui;
+package mod.azure.doom.client.gui.weapons;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import mod.azure.doom.mixin.IngredientAccess;
 import mod.azure.doom.recipes.GunTableRecipe;
 import mod.azure.doom.util.registry.DoomBlocks;
 import mod.azure.doom.util.registry.DoomScreens;
@@ -21,7 +22,7 @@ import net.minecraft.world.World;
 
 public class GunTableScreenHandler extends Container {
 	private final PlayerInventory playerInventory;
-	private final GunTableInventory gunTableInventory;
+	private final DoomGunInventory gunTableInventory;
 	private final IWorldPosCallable context;
 	@SuppressWarnings("unused")
 	private int recipeIndex;
@@ -35,7 +36,7 @@ public class GunTableScreenHandler extends Container {
 	public GunTableScreenHandler(int syncId, PlayerInventory playerInventory, IWorldPosCallable context) {
 		super(DoomScreens.SCREEN_HANDLER_TYPE.get(), syncId);
 		this.playerInventory = playerInventory;
-		this.gunTableInventory = new GunTableInventory(this);
+		this.gunTableInventory = new DoomGunInventory(this);
 		this.context = context;
 		this.addSlot(new Slot(this.gunTableInventory, 0, 155, 13));
 		this.addSlot(new Slot(this.gunTableInventory, 1, 175, 33));
@@ -58,7 +59,7 @@ public class GunTableScreenHandler extends Container {
 	}
 
 	protected static void updateResult(int syncId, World world, PlayerEntity player,
-			GunTableInventory craftingInventory) {
+			DoomGunInventory craftingInventory) {
 		if (!world.isClientSide()) {
 			ServerPlayerEntity serverPlayerEntity = (ServerPlayerEntity) player;
 			ItemStack itemStack = ItemStack.EMPTY;
@@ -157,7 +158,7 @@ public class GunTableScreenHandler extends Container {
 			for (int i = 0; i < 5; i++) {
 				Ingredient ingredient = gunTableRecipe.getIngredientForSlot(i);
 				if (!ingredient.isEmpty()) {
-					ItemStack[] possibleItems = ingredient.getItems();
+					ItemStack[] possibleItems = ((IngredientAccess) (Object) ingredient).getMatchingStacks();
 					if (possibleItems != null) {
 						ItemStack first = new ItemStack(possibleItems[0].getItem(), gunTableRecipe.countRequired(i));
 						moveFromInventoryToPaymentSlot(i, first);

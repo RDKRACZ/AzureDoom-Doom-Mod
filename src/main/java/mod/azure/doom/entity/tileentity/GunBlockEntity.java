@@ -1,6 +1,6 @@
 package mod.azure.doom.entity.tileentity;
 
-import mod.azure.doom.client.gui.GunTableScreenHandler;
+import mod.azure.doom.client.gui.weapons.GunTableScreenHandler;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;

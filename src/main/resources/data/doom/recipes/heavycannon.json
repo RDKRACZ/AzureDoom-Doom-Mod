@@ -1,19 +1,21 @@
 {
+	"type": "doom:gun_table",
+	"pattern": "abc",
+	"key": {
+		"a": {
+			"item": "doom:argent_energy",
+			"count": 10
+		},
+		"b": {
+			"item": "doom:argent_plate",
+			"count": 4
+		},
+		"c": {
+			"item": "minecraft:iron_block",
+			"count": 1
+		}
+	},
 	"result": {
 		"item": "doom:heavycannon"
-	},
-	"type": "minecraft:crafting_shaped",
-	"pattern": [
-		" CC",
-		"$CC",
-		"  C"
-	],
-	"key": {
-		"$": {
-			"item": "doom:argent_energy"
-		},
-		"C": {
-			"item": "doom:argent_plate"
-		}
 	}
 }

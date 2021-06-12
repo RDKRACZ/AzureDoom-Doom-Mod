@@ -1,7 +1,7 @@
 package mod.azure.doom.util.registry;
 
 import mod.azure.doom.DoomMod;
-import mod.azure.doom.client.gui.GunTableScreenHandler;
+import mod.azure.doom.client.gui.weapons.GunTableScreenHandler;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;

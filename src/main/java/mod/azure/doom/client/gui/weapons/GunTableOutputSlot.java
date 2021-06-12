@@ -1,4 +1,4 @@
-package mod.azure.doom.client.gui;
+package mod.azure.doom.client.gui.weapons;
 
 import java.util.Optional;
 
@@ -9,11 +9,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 
 public class GunTableOutputSlot extends Slot {
-	private final GunTableInventory gunTableInventory;
+	private final DoomGunInventory gunTableInventory;
 	private final PlayerEntity player;
 	private int removeCount;
 
-	public GunTableOutputSlot(PlayerEntity player, GunTableInventory gunTableInventory, int index, int x, int y) {
+	public GunTableOutputSlot(PlayerEntity player, DoomGunInventory gunTableInventory, int index, int x, int y) {
 		super(gunTableInventory, index, x, y);
 		this.player = player;
 		this.gunTableInventory = gunTableInventory;

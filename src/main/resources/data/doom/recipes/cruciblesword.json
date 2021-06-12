@@ -1,25 +1,25 @@
 {
-  "result": {
-    "item": "doom:cruciblesword"
-  },
-  "type": "minecraft:crafting_shaped",
-    "pattern": [
-        "m#m",
-        " / ",
-        " I "
-    ],
-    "key": {
-        "#": {
-            "item": "minecraft:nether_star"
-        },
-        "m": {
-            "item": "minecraft:ghast_tear"
-        },
-        "/": {
-            "item": "doom:argent_energy"
-        },
-        "I": {
-            "item": "doom:cruciblesword_closed"
-        }
-    }
+	"type": "doom:gun_table",
+	"pattern": "abcd",
+	"key": {
+		"a": {
+			"item": "doom:argent_energy",
+			"count": 64
+		},
+		"b": {
+			"item": "minecraft:ghast_tear",
+			"count": 3
+		},
+		"c": {
+			"item": "minecraft:nether_star",
+			"count": 3
+		},
+		"d": {
+			"item": "doom:cruciblesword_closed",
+			"count": 1
+		}
+	},
+	"result": {
+		"item": "doom:cruciblesword"
+	}
 }

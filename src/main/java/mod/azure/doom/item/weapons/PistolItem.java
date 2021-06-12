@@ -6,7 +6,7 @@ import mod.azure.doom.client.render.weapons.PistolRender;
 import mod.azure.doom.entity.projectiles.BulletEntity;
 import mod.azure.doom.util.enums.DoomTier;
 import mod.azure.doom.util.packets.DoomPacketHandler;
-import mod.azure.doom.util.packets.PistolLoadingPacket;
+import mod.azure.doom.util.packets.weapons.PistolLoadingPacket;
 import mod.azure.doom.util.registry.DoomItems;
 import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.entity.Entity;

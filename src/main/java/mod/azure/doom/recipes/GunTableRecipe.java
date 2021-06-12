@@ -3,7 +3,7 @@ package mod.azure.doom.recipes;
 import org.apache.commons.lang3.tuple.Pair;
 
 import mod.azure.doom.DoomMod;
-import mod.azure.doom.client.gui.GunTableInventory;
+import mod.azure.doom.client.gui.weapons.DoomGunInventory;
 import mod.azure.doom.util.registry.DoomRecipes;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -15,7 +15,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class GunTableRecipe implements IRecipe<GunTableInventory>, Comparable<GunTableRecipe> {
+public class GunTableRecipe implements IRecipe<DoomGunInventory>, Comparable<GunTableRecipe> {
 
 	public static ResourceLocation RECIPE_TYPE_ID = new ResourceLocation(DoomMod.MODID, "guns");
 	public static final IRecipeType<GunTableRecipe> GUN_TABLE = IRecipeType
@@ -32,7 +32,7 @@ public class GunTableRecipe implements IRecipe<GunTableInventory>, Comparable<Gu
 	}
 
 	@Override
-	public boolean matches(GunTableInventory inv, World world) {
+	public boolean matches(DoomGunInventory inv, World world) {
 		for (int i = 0; i < 5; i++) {
 			ItemStack slotStack = inv.getItem(i);
 			Pair<Ingredient, Integer> pair = ingredients[i];
@@ -54,7 +54,7 @@ public class GunTableRecipe implements IRecipe<GunTableInventory>, Comparable<Gu
 	}
 
 	@Override
-	public ItemStack assemble(GunTableInventory inv) {
+	public ItemStack assemble(DoomGunInventory inv) {
 		return this.getResultItem().copy();
 	}
 

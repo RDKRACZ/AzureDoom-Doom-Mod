@@ -1,6 +1,6 @@
 {
 	"type": "doom:gun_table",
-	"pattern": "abc",
+	"pattern": "abcd",
 	"key": {
 		"a": {
 			"item": "doom:argent_energy",
@@ -13,6 +13,10 @@
 		"c": {
 			"item": "minecraft:iron_ingot",
 			"count": 8
+		},
+		"d": {
+			"tag": "logs_that_burn",
+			"count": 2
 		}
 	},
 	"result": {

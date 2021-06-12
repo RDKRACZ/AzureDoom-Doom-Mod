@@ -4,18 +4,22 @@ buildscript {
 		maven { url  = 'https://plugins.gradle.org/m2/' }
         jcenter()
         mavenCentral()
+        maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '4.1.+', changing: true
 		classpath "com.wynprice.cursemaven:CurseMaven:2.1.5"
         classpath 'gradle.plugin.com.matthewprenger:CurseGradle:1.4.0'
+        classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
     }
 }
+
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 apply plugin: "com.wynprice.cursemaven"
 apply plugin: 'com.matthewprenger.cursegradle'
+apply plugin: 'org.spongepowered.mixin'
 
 import groovy.json.JsonSlurper
 import groovy.json.JsonOutput
@@ -32,9 +36,10 @@ minecraft {
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
     runs {
         client {
-            workingDirectory project.file('run')
             properties 'mixin.env.remapRefMap': 'true'
             property 'mixin.env.refMapRemappingFile', "${project.projectDir}/build/createSrgToMcp/output.srg"
+            workingDirectory project.file('run')
+            arg "-mixin.config=doom.mixins.json"
             mods {
                 doomweapon {
                     source sourceSets.main
@@ -42,9 +47,10 @@ minecraft {
             }
         }
         server {
-            workingDirectory project.file('run')
             properties 'mixin.env.remapRefMap': 'true'
             property 'mixin.env.refMapRemappingFile', "${project.projectDir}/build/createSrgToMcp/output.srg"
+            workingDirectory project.file('run')
+            arg "-mixin.config=doom.mixins.json"
             mods {
                 doomweapon {
                     source sourceSets.main
@@ -65,8 +71,6 @@ minecraft {
     }
 }
 
-sourceSets.main.resources { srcDir 'src/generated/resources' }
-
 repositories {
 	jcenter()
 	maven {
@@ -81,12 +85,22 @@ repositories {
         name = "CurseForge"
         url = "https://minecraft.curseforge.com/api/maven/"
     }
+    maven {
+        // location of the maven that hosts JEI files
+        name = "Progwml6 maven"
+        url = "https://dvs1.progwml6.com/files/maven/"
+    }
+    maven {
+        // location of a maven mirror for JEI files, as a fallback
+        name = "ModMaven"
+        url = "https://modmaven.dev/"
+    }
     maven { url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
     maven { url 'https://maven.blamejared.com' }
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.5-36.1.13'
+    minecraft 'net.minecraftforge:forge:1.16.5-36.1.31'
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.5-4.0.5.1")
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.5-4.0.5.1:api")
 	compileOnly fg.deobf("vazkii.patchouli:Patchouli:1.16.4-50:api")
@@ -99,13 +113,15 @@ dependencies {
 	compile fg.deobf("curse.maven:projectmmo-353935:3266512")
 	compile fg.deobf("curse.maven:worldedit-225608:3135187")
 	compile fg.deobf("curse.maven:wikizoomer-383277:3177817")
-	implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.16.5:3.0.39')
+	implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.16.5:3.0.41')
 }
+
+sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 jar {
     manifest {
         attributes([
-            "Specification-Title": "doomweapon",
+            "Specification-Title": "doom",
             "Specification-Vendor": "azuredoom",
             "Specification-Version": "1", // We are version 1 of ourselves
             "Implementation-Title": project.name,
@@ -117,7 +133,11 @@ jar {
     }
 }
 
-jar.finalizedBy('reobfJar') 
+def reobfFile = file("$buildDir/reobfJar/output.jar")
+def reobfArtifact = artifacts.add('default', reobfFile) {
+    type 'jar'
+    builtBy 'reobfJar'
+}
 
 publishing {
     publications {
@@ -173,4 +193,8 @@ if (file('key.properties').exists()) {
         	}
     	}
     }
+}
+
+mixin {
+    add sourceSets.main, "doom.refmap.json"
 }

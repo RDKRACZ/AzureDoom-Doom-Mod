@@ -3,7 +3,7 @@ package mod.azure.doom.client;
 import org.lwjgl.glfw.GLFW;
 
 import mod.azure.doom.DoomMod;
-import mod.azure.doom.client.gui.GunTableScreen;
+import mod.azure.doom.client.gui.weapons.GunTableScreen;
 import mod.azure.doom.client.render.ArachnotronEternalRender;
 import mod.azure.doom.client.render.ArachnotronRender;
 import mod.azure.doom.client.render.ArchMaykrRender;

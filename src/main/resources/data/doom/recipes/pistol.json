@@ -1,19 +1,21 @@
 {
+	"type": "doom:gun_table",
+	"pattern": "abc",
+	"key": {
+		"a": {
+			"item": "doom:argent_energy",
+			"count": 2
+		},
+		"b": {
+			"item": "doom:argent_plate",
+			"count": 1
+		},
+		"c": {
+			"item": "minecraft:iron_ingot",
+			"count": 2
+		}
+	},
 	"result": {
 		"item": "doom:pistol"
-	},
-	"type": "minecraft:crafting_shaped",
-	"pattern": [
-		"   ",
-		"$CC",
-		"  C"
-	],
-	"key": {
-		"$": {
-			"item": "doom:argent_energy"
-		},
-		"C": {
-			"item": "doom:argent_plate"
-		}
 	}
 }
