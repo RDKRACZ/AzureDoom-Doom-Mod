@@ -228,7 +228,6 @@ public class RocketEntity extends AbstractArrowEntity implements IAnimatable {
 
 	@Override
 	protected void onHitEntity(EntityRayTraceResult p_213868_1_) {
-		super.onHitEntity(p_213868_1_);
 		Entity entity = this.getOwner();
 		if (p_213868_1_.getType() != RayTraceResult.Type.ENTITY
 				|| !((EntityRayTraceResult) p_213868_1_).getEntity().is(entity)) {

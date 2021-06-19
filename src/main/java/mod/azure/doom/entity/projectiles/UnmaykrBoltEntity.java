@@ -3,14 +3,18 @@ package mod.azure.doom.entity.projectiles;
 import mod.azure.doom.entity.tierboss.IconofsinEntity;
 import mod.azure.doom.util.registry.DoomItems;
 import mod.azure.doom.util.registry.ModEntityTypes;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
+import net.minecraft.network.play.server.SChangeGameStatePacket;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -204,11 +208,39 @@ public class UnmaykrBoltEntity extends AbstractArrowEntity {
 	}
 
 	@Override
-	protected void onHitEntity(EntityRayTraceResult p_213868_1_) {
-		super.onHitEntity(p_213868_1_);
-		Entity entity = this.getOwner();
-		if (p_213868_1_.getType() != RayTraceResult.Type.ENTITY
-				|| !((EntityRayTraceResult) p_213868_1_).getEntity().is(entity)) {
+	protected void onHitEntity(EntityRayTraceResult entityHitResult) {
+		Entity entity = entityHitResult.getEntity();
+		if (entityHitResult.getType() != RayTraceResult.Type.ENTITY
+				|| !((EntityRayTraceResult) entityHitResult).getEntity().is(entity)) {
+			if (!this.level.isClientSide) {
+				this.remove();
+			}
+		}
+		Entity entity1 = this.getOwner();
+		DamageSource damagesource;
+		if (entity1 == null) {
+			damagesource = DamageSource.indirectMagic(this, this);
+		} else {
+			damagesource = DamageSource.indirectMagic(this, entity1);
+			if (entity1 instanceof LivingEntity) {
+				((LivingEntity) entity1).setLastHurtMob(entity);
+			}
+		}
+		if (entity.hurt(damagesource, 2.5F)) {
+			if (entity instanceof LivingEntity) {
+				LivingEntity livingentity = (LivingEntity) entity;
+				if (!this.level.isClientSide && entity1 instanceof LivingEntity) {
+					EnchantmentHelper.doPostHurtEffects(livingentity, entity1);
+					EnchantmentHelper.doPostDamageEffects((LivingEntity) entity1, livingentity);
+				}
+				this.doPostHurtEffects(livingentity);
+				if (entity1 != null && livingentity != entity1 && livingentity instanceof PlayerEntity
+						&& entity1 instanceof ServerPlayerEntity && !this.isSilent()) {
+					((ServerPlayerEntity) entity1).connection
+							.send(new SChangeGameStatePacket(SChangeGameStatePacket.ARROW_HIT_PLAYER, 0.0F));
+				}
+			}
+		} else {
 			if (!this.level.isClientSide) {
 				this.remove();
 			}

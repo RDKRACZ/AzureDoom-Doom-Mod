@@ -40,9 +40,6 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.DamageSource;
@@ -56,8 +53,6 @@ import net.minecraft.world.IServerWorld;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -69,28 +64,26 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 public class MarauderEntity extends DemonEntity implements IAnimatable {
 
-	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.defineId(MarauderEntity.class,
-			DataSerializers.BOOLEAN);
-	private static final DataParameter<Boolean> MELEE = EntityDataManager.defineId(MarauderEntity.class,
-			DataSerializers.BOOLEAN);
 	private AnimationFactory factory = new AnimationFactory(this);
 	private int targetChangeTime;
 
 	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.MARAUDER);
 
-	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-		if (event.isMoving() && !this.entityData.get(ATTACKING) && !this.entityData.get(MELEE)) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("walking", true));
-			return PlayState.CONTINUE;
-		}
-		if (this.entityData.get(MELEE) && !this.entityData.get(ATTACKING)
-				&& !(this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
+	private <E extends IAnimatable> PlayState predicate1(AnimationEvent<E> event) {
+		if (this.entityData.get(STATE) == 1 && !(this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("attacking", true));
 			return PlayState.CONTINUE;
 		}
-		if (this.entityData.get(ATTACKING) && !this.entityData.get(MELEE)
-				&& !(this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
+		if (this.entityData.get(STATE) == 2 && !(this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("ranged", true));
+			return PlayState.CONTINUE;
+		}
+		return PlayState.STOP;
+	}
+
+	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+		if (event.isMoving()) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("walking", true));
 			return PlayState.CONTINUE;
 		}
 		if ((this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
@@ -106,6 +99,7 @@ public class MarauderEntity extends DemonEntity implements IAnimatable {
 	@Override
 	public void registerControllers(AnimationData data) {
 		data.addAnimationController(new AnimationController<MarauderEntity>(this, "controller", 0, this::predicate));
+		data.addAnimationController(new AnimationController<MarauderEntity>(this, "controller1", 0, this::predicate1));
 	}
 
 	@Override
@@ -120,28 +114,6 @@ public class MarauderEntity extends DemonEntity implements IAnimatable {
 	@Override
 	public IPacket<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
-	}
-
-	@OnlyIn(Dist.CLIENT)
-	public boolean isAttacking() {
-		return this.entityData.get(ATTACKING);
-	}
-
-	@Override
-	public void setMeleeAttacking(boolean attacking) {
-		this.entityData.set(MELEE, attacking);
-	}
-
-	@Override
-	public void setAttacking(boolean attacking) {
-		this.entityData.set(ATTACKING, attacking);
-	}
-
-	@Override
-	protected void defineSynchedData() {
-		super.defineSynchedData();
-		this.entityData.define(ATTACKING, false);
-		this.entityData.define(MELEE, false);
 	}
 
 	public static boolean spawning(EntityType<MarauderEntity> p_223337_0_, IWorld p_223337_1_, SpawnReason reason,
@@ -159,11 +131,11 @@ public class MarauderEntity extends DemonEntity implements IAnimatable {
 
 	protected void applyEntityAI() {
 		this.targetSelector.addGoal(1, new MarauderEntity.FindPlayerGoal(this, this::isAngryAt));
-		this.goalSelector.addGoal(4, new DemonAttackGoal(this, 1.0D, false));
+		this.goalSelector.addGoal(4, new DemonAttackGoal(this, 1.0D, false, 1));
 		this.goalSelector.addGoal(4,
 				new RangedStaticAttackGoal(this,
 						new MarauderEntity.FireballAttack(this).setProjectileOriginOffset(0.8, 0.8, 0.8).setDamage(3),
-						60, 20, 30F));
+						60, 20, 30F, 2));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, false));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));

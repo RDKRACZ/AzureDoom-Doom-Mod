@@ -251,7 +251,7 @@
 		},
 		"ranged": {
 			"loop": "hold_on_last_frame",
-			"animation_length": 0.32,
+			"animation_length": 3.12,
 			"bones": {
 				"bipedRightArm_flat": {
 					"rotation": {
@@ -261,6 +261,13 @@
 						"0.32": {
 							"vector": [-52.5, 0, 0],
 							"easing": "easeInOutSine"
+						},
+						"2.6": {
+							"vector": [-52.5, 0, 0],
+							"easing": "easeInOutSine"
+						},
+						"3.12": {
+							"vector": [0, 0, 0]
 						}
 					}
 				}

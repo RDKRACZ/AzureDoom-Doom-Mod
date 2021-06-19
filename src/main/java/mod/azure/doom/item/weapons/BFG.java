@@ -46,8 +46,6 @@ public class BFG extends DoomBaseItem {
 					abstractarrowentity = customeArrow(abstractarrowentity);
 					abstractarrowentity.shootFromRotation(playerentity, playerentity.xRot, playerentity.yRot, 0.0F,
 							0.25F * 3.0F, 1.0F);
-
-					abstractarrowentity.setBaseDamage(2.5);
 					abstractarrowentity.isNoGravity();
 
 					stack.hurtAndBreak(20, entityLiving, p -> p.broadcastBreakEvent(entityLiving.getUsedItemHand()));

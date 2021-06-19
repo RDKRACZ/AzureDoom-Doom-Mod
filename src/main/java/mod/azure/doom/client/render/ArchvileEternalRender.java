@@ -28,7 +28,7 @@ public class ArchvileEternalRender extends GeoEntityRenderer<ArchvileEntity> {
 
 	@Override
 	protected int getBlockLightLevel(ArchvileEntity entityIn, BlockPos partialTicks) {
-		return entityIn.isAttacking() ? 15 : 1;
+		return entityIn.getAttckingState() == 1 ? 15 : 1;
 	}
 
 	@Override

@@ -32,9 +32,6 @@ import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.IPacket;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -43,8 +40,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -55,9 +50,6 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 public class PainEntity extends DemonEntity implements IMob, IAnimatable {
-	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.defineId(PainEntity.class,
-			DataSerializers.BOOLEAN);
-
 	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.PAIN);
 
 	public PainEntity(EntityType<? extends PainEntity> type, World worldIn) {
@@ -68,22 +60,21 @@ public class PainEntity extends DemonEntity implements IMob, IAnimatable {
 	private AnimationFactory factory = new AnimationFactory(this);
 
 	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-		if (event.isMoving() && !this.entityData.get(ATTACKING)) {
+		if (event.isMoving()) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("walking", true));
 			return PlayState.CONTINUE;
 		}
 		if ((this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
-			if (level.isClientSide) {
-				event.getController().setAnimation(new AnimationBuilder().addAnimation("death", false));
-				return PlayState.CONTINUE;
-			}
-		}
-		if (this.entityData.get(ATTACKING) && !(this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("attacking", false));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("death", false));
 			return PlayState.CONTINUE;
 		}
-		if ((animationSpeed > -0.15F && animationSpeed < 0.15F) && !this.entityData.get(ATTACKING)) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
+		event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
+		return PlayState.CONTINUE;
+	}
+
+	private <E extends IAnimatable> PlayState predicate1(AnimationEvent<E> event) {
+		if (this.entityData.get(STATE) == 1 && !(this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("attacking", true));
 			return PlayState.CONTINUE;
 		}
 		return PlayState.STOP;
@@ -92,6 +83,7 @@ public class PainEntity extends DemonEntity implements IMob, IAnimatable {
 	@Override
 	public void registerControllers(AnimationData data) {
 		data.addAnimationController(new AnimationController<PainEntity>(this, "controller", 0, this::predicate));
+		data.addAnimationController(new AnimationController<PainEntity>(this, "controller1", 0, this::predicate1));
 	}
 
 	@Override
@@ -113,8 +105,8 @@ public class PainEntity extends DemonEntity implements IMob, IAnimatable {
 		this.goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8.0F));
 		this.goalSelector.addGoal(5, new RandomFlyConvergeOnTargetGoal(this, 2, 15, 0.5));
 		this.goalSelector.addGoal(7, new PainEntity.LookAroundGoal(this));
-		this.goalSelector.addGoal(7, new PainEntity.FireballAttackGoal(this));
-		this.goalSelector.addGoal(7, new DemonAttackGoal(this, 1.0D, false));
+		this.goalSelector.addGoal(7, new PainEntity.FireballAttackGoal(this, 1));
+		this.goalSelector.addGoal(7, new DemonAttackGoal(this, 1.0D, false, 2));
 		this.targetSelector.addGoal(1,
 				new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 10, true, false, (p_213812_1_) -> {
 					return Math.abs(p_213812_1_.getY() - this.getY()) <= 4.0D;
@@ -134,21 +126,6 @@ public class PainEntity extends DemonEntity implements IMob, IAnimatable {
 			if (level.isClientSide) {
 			}
 		}
-	}
-
-	@OnlyIn(Dist.CLIENT)
-	public boolean isAttacking() {
-		return this.entityData.get(ATTACKING);
-	}
-
-	public void setAttacking(boolean attacking) {
-		this.entityData.set(ATTACKING, attacking);
-	}
-
-	@Override
-	protected void defineSynchedData() {
-		super.defineSynchedData();
-		this.entityData.define(ATTACKING, false);
 	}
 
 	public static boolean spawning(EntityType<PainEntity> p_223368_0_, IWorld p_223368_1_, SpawnReason reason,
@@ -211,9 +188,11 @@ public class PainEntity extends DemonEntity implements IMob, IAnimatable {
 	static class FireballAttackGoal extends Goal {
 		private final PainEntity parentEntity;
 		public int attackTimer;
+		private int statecheck;
 
-		public FireballAttackGoal(PainEntity ghast) {
+		public FireballAttackGoal(PainEntity ghast, int state) {
 			this.parentEntity = ghast;
+			this.statecheck = state;
 		}
 
 		public boolean canUse() {
@@ -225,20 +204,19 @@ public class PainEntity extends DemonEntity implements IMob, IAnimatable {
 		}
 
 		public void stop() {
-			this.parentEntity.setAttacking(false);
+			this.parentEntity.setAttackingState(0);
 		}
 
 		public void tick() {
 			LivingEntity livingentity = this.parentEntity.getTarget();
-			if (livingentity.distanceToSqr(this.parentEntity) < 4096.0D
-					&& this.parentEntity.canSee(livingentity)) {
+			if (livingentity.distanceToSqr(this.parentEntity) < 4096.0D && this.parentEntity.canSee(livingentity)) {
 				this.parentEntity.getLookControl().setLookAt(livingentity, 90.0F, 30.0F);
 				World world = this.parentEntity.level;
 				++this.attackTimer;
 				if (this.attackTimer == 200) {
 					LostSoulEntity lost_soul = ModEntityTypes.LOST_SOUL.get().create(world);
-					lost_soul.moveTo(this.parentEntity.getX(), this.parentEntity.getY(),
-							this.parentEntity.getZ(), 0, 0);
+					lost_soul.moveTo(this.parentEntity.getX(), this.parentEntity.getY(), this.parentEntity.getZ(), 0,
+							0);
 					lost_soul.push(1.0D, 0.0D, 0.0D);
 					world.addFreshEntity(lost_soul);
 					this.attackTimer = -400;
@@ -246,8 +224,7 @@ public class PainEntity extends DemonEntity implements IMob, IAnimatable {
 			} else if (this.attackTimer > 0) {
 				--this.attackTimer;
 			}
-
-			this.parentEntity.setAttacking(this.attackTimer > 10);
+			this.parentEntity.setAttackingState(attackTimer >= 10 ? this.statecheck : 0);
 		}
 	}
 
@@ -266,8 +243,7 @@ public class PainEntity extends DemonEntity implements IMob, IAnimatable {
 		public void tick() {
 			if (this.parentEntity.getTarget() == null) {
 				Vector3d vec3d = this.parentEntity.getDeltaMovement();
-				this.parentEntity.yRot = -((float) MathHelper.atan2(vec3d.x, vec3d.z))
-						* (180F / (float) Math.PI);
+				this.parentEntity.yRot = -((float) MathHelper.atan2(vec3d.x, vec3d.z)) * (180F / (float) Math.PI);
 				this.parentEntity.yBodyRot = this.parentEntity.yRot;
 			} else {
 				LivingEntity livingentity = this.parentEntity.getTarget();
@@ -300,7 +276,8 @@ public class PainEntity extends DemonEntity implements IMob, IAnimatable {
 					double d0 = vector3d.length();
 					vector3d = vector3d.normalize();
 					if (this.canReach(vector3d, MathHelper.ceil(d0))) {
-						this.parentEntity.setDeltaMovement(this.parentEntity.getDeltaMovement().add(vector3d.scale(0.1D)));
+						this.parentEntity
+								.setDeltaMovement(this.parentEntity.getDeltaMovement().add(vector3d.scale(0.1D)));
 					} else {
 						this.operation = MovementController.Action.WAIT;
 					}

@@ -3,7 +3,6 @@ package mod.azure.doom.entity.tierboss;
 import java.util.Random;
 
 import mod.azure.doom.entity.DemonEntity;
-import mod.azure.doom.entity.ai.goal.DemonAttackGoal;
 import mod.azure.doom.entity.ai.goal.RangedStrafeAttackGoal;
 import mod.azure.doom.entity.attack.AbstractRangedAttack;
 import mod.azure.doom.entity.attack.AttackSound;
@@ -40,9 +39,8 @@ public class SpiderMastermind2016Entity extends SpiderMastermindEntity {
 		this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
 		this.goalSelector.addGoal(4,
 				new RangedStrafeAttackGoal(this, new SpiderMastermind2016Entity.FireballAttack(this)
-						.setProjectileOriginOffset(0.8, 0.2, 0.8).setDamage(7), 1.0D, 50, 30, 15, 15F).setMultiShot(5,
-								1));
-		this.goalSelector.addGoal(4, new DemonAttackGoal(this, 1.0D, false));
+						.setProjectileOriginOffset(0.8, 0.2, 0.8).setDamage(7), 1.0D, 50, 30, 15, 15F, 1)
+								.setMultiShot(5, 1));
 		this.targetSelector.addGoal(1, new HurtByTargetGoal(this).setAlertOthers());
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, false));

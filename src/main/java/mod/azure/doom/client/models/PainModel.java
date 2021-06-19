@@ -25,7 +25,7 @@ public class PainModel extends AnimatedGeoModel<PainEntity> {
 
 	@Override
 	public ResourceLocation getTextureLocation(PainEntity object) {
-		return object.isAttacking() ? ATTACKING : NORMAL;
+		return object.getAttckingState() == 1 ? ATTACKING : NORMAL;
 	}
 
 	@Override

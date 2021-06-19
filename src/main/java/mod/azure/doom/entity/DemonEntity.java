@@ -27,6 +27,8 @@ public class DemonEntity extends MonsterEntity implements IAngerable {
 
 	private static final DataParameter<Integer> ANGER_TIME = EntityDataManager.defineId(DemonEntity.class,
 			DataSerializers.INT);
+	public static final DataParameter<Integer> STATE = EntityDataManager.defineId(DemonEntity.class,
+			DataSerializers.INT);
 	private static final RangedInteger ANGER_TIME_RANGE = TickRangeConverter.rangeOfSeconds(20, 39);
 	private UUID targetUuid;
 
@@ -52,18 +54,19 @@ public class DemonEntity extends MonsterEntity implements IAngerable {
 		return p_230285_1_.is(FluidTags.LAVA);
 	}
 
-	public void setAttacking(boolean attacking) {
-
+	public int getAttckingState() {
+		return this.entityData.get(STATE);
 	}
 
-	public void setMeleeAttacking(boolean attacking) {
-
+	public void setAttackingState(int time) {
+		this.entityData.set(STATE, time);
 	}
 
 	@Override
 	protected void defineSynchedData() {
 		super.defineSynchedData();
 		this.entityData.define(ANGER_TIME, 0);
+		this.entityData.define(STATE, 0);
 	}
 
 	@Override

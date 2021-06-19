@@ -8,7 +8,6 @@ import mod.azure.doom.entity.ai.goal.DemonAttackGoal;
 import mod.azure.doom.entity.ai.goal.RandomFlyConvergeOnTargetGoal;
 import mod.azure.doom.entity.ai.goal.RangedStaticAttackGoal;
 import mod.azure.doom.entity.attack.FireballAttack;
-import mod.azure.doom.entity.projectiles.CustomFireballEntity;
 import mod.azure.doom.util.config.Config;
 import mod.azure.doom.util.config.EntityConfig;
 import mod.azure.doom.util.config.EntityDefaults.EntityConfigType;
@@ -33,9 +32,6 @@ import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.IPacket;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -44,8 +40,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -56,9 +50,6 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 public class CacodemonEntity extends DemonEntity implements IMob, IAnimatable {
-	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.defineId(CacodemonEntity.class,
-			DataSerializers.BOOLEAN);
-
 	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.CACODEMON);
 
 	public CacodemonEntity(EntityType<? extends CacodemonEntity> type, World worldIn) {
@@ -69,7 +60,7 @@ public class CacodemonEntity extends DemonEntity implements IMob, IAnimatable {
 	private AnimationFactory factory = new AnimationFactory(this);
 
 	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-		if (event.isMoving() && !this.entityData.get(ATTACKING)) {
+		if (event.isMoving()) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("walking", true));
 			return PlayState.CONTINUE;
 		}
@@ -79,17 +70,22 @@ public class CacodemonEntity extends DemonEntity implements IMob, IAnimatable {
 				return PlayState.CONTINUE;
 			}
 		}
-		if (this.entityData.get(ATTACKING) && !(this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("attacking", false));
-			return PlayState.CONTINUE;
-		}
 		event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
 		return PlayState.CONTINUE;
+	}
+
+	private <E extends IAnimatable> PlayState predicate1(AnimationEvent<E> event) {
+		if (this.entityData.get(STATE) == 1 && !(this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("attacking", true));
+			return PlayState.CONTINUE;
+		}
+		return PlayState.STOP;
 	}
 
 	@Override
 	public void registerControllers(AnimationData data) {
 		data.addAnimationController(new AnimationController<CacodemonEntity>(this, "controller", 0, this::predicate));
+		data.addAnimationController(new AnimationController<CacodemonEntity>(this, "controller1", 0, this::predicate1));
 	}
 
 	@Override
@@ -103,22 +99,6 @@ public class CacodemonEntity extends DemonEntity implements IMob, IAnimatable {
 		if (this.deathTime == 60) {
 			this.remove();
 		}
-	}
-
-	@OnlyIn(Dist.CLIENT)
-	public boolean isAttacking() {
-		return this.entityData.get(ATTACKING);
-	}
-
-	@Override
-	public void setAttacking(boolean attacking) {
-		this.entityData.set(ATTACKING, attacking);
-	}
-
-	@Override
-	protected void defineSynchedData() {
-		super.defineSynchedData();
-		this.entityData.define(ATTACKING, false);
 	}
 
 	@Override
@@ -144,8 +124,8 @@ public class CacodemonEntity extends DemonEntity implements IMob, IAnimatable {
 						new FireballAttack(this, true).setDamage(5).setProjectileOriginOffset(1.5, 0.3, 1.5).setSound(
 								ModSoundEvents.CACODEMON_FIREBALL.get(), 1.0F,
 								1.2F / (this.getRandom().nextFloat() * 0.2F + 0.9F)),
-						60, 20, 30F));
-		this.goalSelector.addGoal(4, new DemonAttackGoal(this, 1.0D, false));
+						60, 20, 30F, 1));
+		this.goalSelector.addGoal(4, new DemonAttackGoal(this, 1.0D, false, 2));
 		this.targetSelector.addGoal(1,
 				new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 10, true, false, (p_213812_1_) -> {
 					return Math.abs(p_213812_1_.getY() - this.getY()) <= 4.0D;
@@ -221,57 +201,6 @@ public class CacodemonEntity extends DemonEntity implements IMob, IAnimatable {
 	 */
 	public boolean onClimbable() {
 		return false;
-	}
-
-	static class FireballAttackGoal extends Goal {
-		private final CacodemonEntity parentEntity;
-		public int attackTimer;
-
-		public FireballAttackGoal(CacodemonEntity ghast) {
-			this.parentEntity = ghast;
-		}
-
-		public boolean canUse() {
-			return this.parentEntity.getTarget() != null;
-		}
-
-		public void start() {
-			this.attackTimer = 0;
-		}
-
-		public void stop() {
-			this.parentEntity.setAttacking(false);
-		}
-
-		public void tick() {
-			LivingEntity livingentity = this.parentEntity.getTarget();
-			if (livingentity.distanceToSqr(this.parentEntity) < 4096.0D && this.parentEntity.canSee(livingentity)) {
-				this.parentEntity.getLookControl().setLookAt(livingentity, 90.0F, 30.0F);
-				World world = this.parentEntity.level;
-				++this.attackTimer;
-
-				if (this.attackTimer == 20) {
-					Vector3d vector3d = this.parentEntity.getViewVector(1.0F);
-					double d2 = livingentity.getX() - (this.parentEntity.getX() + vector3d.x * 0.5D);
-					double d3 = livingentity.getY(0.3D) - (0.5D + this.parentEntity.getY(0.5D));
-					double d4 = livingentity.getZ() - (this.parentEntity.getZ() + vector3d.z * 0.5D);
-
-					CustomFireballEntity fireballentity = new CustomFireballEntity(world, this.parentEntity, d2, d3, d4,
-							config.RANGED_ATTACK_DAMAGE);
-					fireballentity.explosionPower = this.parentEntity.getFireballStrength();
-					fireballentity.setPos(this.parentEntity.getX() + vector3d.x * 0.5D, this.parentEntity.getY(0.3D),
-							fireballentity.getZ() + vector3d.z * 0.5D);
-					this.parentEntity.playSound(ModSoundEvents.CACODEMON_FIREBALL.get(), 1.0F,
-							1.2F / (this.parentEntity.random.nextFloat() * 0.2F + 0.9F));
-					world.addFreshEntity(fireballentity);
-					this.attackTimer = -40;
-				}
-			} else if (this.attackTimer > 0) {
-				--this.attackTimer;
-			}
-
-			this.parentEntity.setAttacking(true);
-		}
 	}
 
 	static class LookAroundGoal extends Goal {

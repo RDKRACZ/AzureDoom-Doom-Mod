@@ -7,7 +7,7 @@ v.4.0.0
 - Added the Spider Mastermind, thanks to TearsOfLov for the texture and model touch ups!
 - Added the Pinky 2016/Eternal, thanks to Batpixxler!
 - Added a Pinky 2016/Eternal variant to the Spectre!
-- Added the Whiplash, thanks to Batpixxler!
+//- Added the Whiplash, thanks to Batpixxler!
 - Added the Arch-vile Eternal, thanks to ssap!
 - Added the Tentacle, thanks to Crydigo!
 - Updated the Unwilling model, thanks to Undeadmonkey for the model and Pedroca for the texture!
@@ -17,7 +17,7 @@ v.4.0.0
 	- The End will now generate a structure dedicated to the Maykrs and the only place they will spawn!* 
 	- The Nether will now generate Titan skulls, that show signs of being transformed into a place of worship though it seems they were abandoned.**
 	- The Overworld will now generate massive portals, similar to ruined portals but bigger and can spawn the mods mobs.***
-- Structures are configurable for either off or on for new worlds.
+- Added the Gun Crafter, which is how you will now craft all MCDoom weapons.
 - Added Advancements for the 3 new Doom structures, Argent Energy/Plate, and summoning/killing the Icon of Sin.
 - Updated Argent Tools, Ballista/Unmaykr bolts, Argent Energy/Plate, BFG Cell, Inmortal Sphere, and Daisy (Now rabbit foot) item textures.
 - Scaled up the OG Cyberdemon.

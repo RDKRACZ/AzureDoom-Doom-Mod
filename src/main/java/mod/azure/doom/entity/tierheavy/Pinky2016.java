@@ -68,7 +68,8 @@ public class Pinky2016 extends DemonEntity implements IAnimatable {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("death", false));
 			return PlayState.CONTINUE;
 		}
-		if (this.isAggressive() && animationSpeed > 0.35F  && !(this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
+		if (this.isAggressive() && animationSpeed > 0.35F
+				&& !(this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("attacking", true));
 			return PlayState.CONTINUE;
 		}
@@ -113,7 +114,7 @@ public class Pinky2016 extends DemonEntity implements IAnimatable {
 	}
 
 	protected void applyEntityAI() {
-		this.goalSelector.addGoal(2, new DemonAttackGoal(this, 1.25D, false));
+		this.goalSelector.addGoal(2, new DemonAttackGoal(this, 1.25D, false, 1));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, false));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));

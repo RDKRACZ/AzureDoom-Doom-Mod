@@ -14,14 +14,16 @@ public class RangedStaticAttackGoal extends Goal {
 	private int visibleTicksDelay = 20;
 	private float maxAttackDistance = 20;
 	private int seeTime = -1;
+	private int statecheck;
 
 	public RangedStaticAttackGoal(DemonEntity mob, AbstractRangedAttack attack, int attackCooldownIn,
-			int visibleTicksDelay, float maxAttackDistanceIn) {
+			int visibleTicksDelay, float maxAttackDistanceIn, int state) {
 		this.parentEntity = mob;
 		this.attackCooldown = attackCooldownIn;
 		this.maxAttackDistance = maxAttackDistanceIn * maxAttackDistanceIn;
 		this.attack = attack;
 		this.visibleTicksDelay = visibleTicksDelay;
+		this.statecheck = state;
 	}
 
 	public boolean canUse() {
@@ -33,7 +35,7 @@ public class RangedStaticAttackGoal extends Goal {
 	}
 
 	public void stop() {
-		this.parentEntity.setAttacking(false);
+		this.parentEntity.setAttackingState(0);
 	}
 
 	public void tick() {
@@ -60,7 +62,7 @@ public class RangedStaticAttackGoal extends Goal {
 			} else if (this.attackTimer > 0) {
 				--this.attackTimer;
 			}
-			this.parentEntity.setAttacking(attackTimer >= attackCooldown * 0.75);
+			this.parentEntity.setAttackingState(attackTimer >= attackCooldown * 0.25 ? this.statecheck : 0);
 		}
 	}
 

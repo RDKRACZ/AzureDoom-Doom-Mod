@@ -277,11 +277,10 @@ public class BFGEntity extends AbstractArrowEntity implements IAnimatable {
 	}
 
 	@Override
-	protected void onHitEntity(EntityRayTraceResult p_213868_1_) {
-		super.onHitEntity(p_213868_1_);
-		Entity entity = this.getOwner();
-		if (p_213868_1_.getType() != RayTraceResult.Type.ENTITY
-				|| !((EntityRayTraceResult) p_213868_1_).getEntity().is(entity)) {
+	protected void onHitEntity(EntityRayTraceResult entityHitResult) {
+		Entity entity = entityHitResult.getEntity();
+		if (entityHitResult.getType() != RayTraceResult.Type.ENTITY
+				|| !((EntityRayTraceResult) entityHitResult).getEntity().is(entity)) {
 			if (!this.level.isClientSide) {
 				this.doDamage();
 				this.level.explode(this, this.getX(), this.getY(0.0625D), this.getZ(), 1.0F,
@@ -289,7 +288,6 @@ public class BFGEntity extends AbstractArrowEntity implements IAnimatable {
 				this.remove();
 			}
 			this.playSound(ModSoundEvents.BFG_HIT.get(), 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
-
 		}
 	}
 

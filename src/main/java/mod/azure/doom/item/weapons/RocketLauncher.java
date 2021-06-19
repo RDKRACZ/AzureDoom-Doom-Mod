@@ -47,8 +47,6 @@ public class RocketLauncher extends DoomBaseItem {
 					abstractarrowentity.shootFromRotation(playerentity, playerentity.xRot, playerentity.yRot, 0.0F,
 							0.25F * 3.0F, 1.0F);
 					abstractarrowentity.moveTo(entityLiving.getX(), entityLiving.getY(0.5), entityLiving.getZ(), 0, 0);
-
-					abstractarrowentity.setBaseDamage(2.5);
 					abstractarrowentity.isNoGravity();
 
 					stack.hurtAndBreak(1, entityLiving, p -> p.broadcastBreakEvent(entityLiving.getUsedItemHand()));

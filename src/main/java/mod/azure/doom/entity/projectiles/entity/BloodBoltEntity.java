@@ -31,8 +31,8 @@ public class BloodBoltEntity extends DamagingProjectileEntity implements IAnimat
 	private int ticksInAir;
 	private float directHitDamage = 2;
 
-	public BloodBoltEntity(EntityType<BloodBoltEntity> p_i50160_1_, World p_i50160_2_) {
-		super(p_i50160_1_, p_i50160_2_);
+	public BloodBoltEntity(EntityType<BloodBoltEntity> entity, World world) {
+		super(entity, world);
 	}
 
 	private AnimationFactory factory = new AnimationFactory(this);

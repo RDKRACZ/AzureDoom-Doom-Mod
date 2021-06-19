@@ -31,8 +31,6 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -44,8 +42,6 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 public class ArchMakyrEntity extends DemonEntity implements IAnimatable {
 
-	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.defineId(ArchMakyrEntity.class,
-			DataSerializers.BOOLEAN);
 	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.ARCHMAKYR);
 	private AnimationFactory factory = new AnimationFactory(this);
 	public static final DataParameter<Integer> VARIANT = EntityDataManager.defineId(ArchMakyrEntity.class,
@@ -56,12 +52,8 @@ public class ArchMakyrEntity extends DemonEntity implements IAnimatable {
 	}
 
 	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-		if (event.isMoving() && !this.entityData.get(ATTACKING)) {
+		if (event.isMoving() && !(this.entityData.get(STATE) == 1)) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("walking", true));
-			return PlayState.CONTINUE;
-		}
-		if (this.entityData.get(ATTACKING) && !(this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("attacking", true));
 			return PlayState.CONTINUE;
 		}
 		if ((this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
@@ -72,9 +64,18 @@ public class ArchMakyrEntity extends DemonEntity implements IAnimatable {
 		return PlayState.CONTINUE;
 	}
 
+	private <E extends IAnimatable> PlayState predicate1(AnimationEvent<E> event) {
+		if (this.entityData.get(STATE) == 1 && !(this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("attacking", true));
+			return PlayState.CONTINUE;
+		}
+		return PlayState.STOP;
+	}
+
 	@Override
 	public void registerControllers(AnimationData data) {
 		data.addAnimationController(new AnimationController<ArchMakyrEntity>(this, "controller", 0, this::predicate));
+		data.addAnimationController(new AnimationController<ArchMakyrEntity>(this, "controller1", 0, this::predicate1));
 	}
 
 	@Override
@@ -92,20 +93,9 @@ public class ArchMakyrEntity extends DemonEntity implements IAnimatable {
 		}
 	}
 
-	@OnlyIn(Dist.CLIENT)
-	public boolean isAttacking() {
-		return this.entityData.get(ATTACKING);
-	}
-
-	@Override
-	public void setAttacking(boolean attacking) {
-		this.entityData.set(ATTACKING, attacking);
-	}
-
 	@Override
 	protected void defineSynchedData() {
 		super.defineSynchedData();
-		this.entityData.define(ATTACKING, false);
 		this.entityData.define(VARIANT, 0);
 	}
 

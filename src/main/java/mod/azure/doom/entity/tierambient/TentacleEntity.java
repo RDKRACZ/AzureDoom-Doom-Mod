@@ -26,9 +26,6 @@ import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -38,8 +35,6 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -53,8 +48,6 @@ public class TentacleEntity extends DemonEntity implements IAnimatable {
 
 	private AnimationFactory factory = new AnimationFactory(this);
 	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.TENTACLE);
-	private static final DataParameter<Boolean> MELEE = EntityDataManager.defineId(TentacleEntity.class,
-			DataSerializers.BOOLEAN);
 
 	public TentacleEntity(EntityType<TentacleEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
@@ -78,17 +71,22 @@ public class TentacleEntity extends DemonEntity implements IAnimatable {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("death", false));
 			return PlayState.CONTINUE;
 		}
-		if (this.entityData.get(MELEE) && !(this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
+		event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
+		return PlayState.CONTINUE;
+	}
+
+	private <E extends IAnimatable> PlayState predicate1(AnimationEvent<E> event) {
+		if (this.entityData.get(STATE) == 1 && !(this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("attacking", true));
 			return PlayState.CONTINUE;
 		}
-		event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
-		return PlayState.CONTINUE;
+		return PlayState.STOP;
 	}
 
 	@Override
 	public void registerControllers(AnimationData data) {
 		data.addAnimationController(new AnimationController<TentacleEntity>(this, "controller", 0, this::predicate));
+		data.addAnimationController(new AnimationController<TentacleEntity>(this, "controller1", 0, this::predicate1));
 	}
 
 	@Override
@@ -99,22 +97,6 @@ public class TentacleEntity extends DemonEntity implements IAnimatable {
 	@Override
 	public IPacket<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
-	}
-
-	@OnlyIn(Dist.CLIENT)
-	public boolean isAttacking() {
-		return this.entityData.get(MELEE);
-	}
-
-	@Override
-	public void setAttacking(boolean attacking) {
-		this.entityData.set(MELEE, attacking);
-	}
-
-	@Override
-	protected void defineSynchedData() {
-		super.defineSynchedData();
-		this.entityData.define(MELEE, false);
 	}
 
 	public static boolean spawning(EntityType<TentacleEntity> p_223337_0_, IWorld p_223337_1_, SpawnReason reason,
@@ -140,7 +122,7 @@ public class TentacleEntity extends DemonEntity implements IAnimatable {
 	protected void registerGoals() {
 		this.goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8.0F));
 		this.goalSelector.addGoal(8, new LookAtGoal(this, AbstractVillagerEntity.class, 8.0F));
-		this.goalSelector.addGoal(9, new TentacleEntity.AttackGoal(this, 15));
+		this.goalSelector.addGoal(9, new TentacleEntity.AttackGoal(this, 15, 1));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, false));
 		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this).setAlertOthers()));
@@ -149,9 +131,11 @@ public class TentacleEntity extends DemonEntity implements IAnimatable {
 	static class AttackGoal extends Goal {
 		private final TentacleEntity parentEntity;
 		public int attackTimer;
+		private int statecheck;
 
-		public AttackGoal(TentacleEntity ghast, int attackCooldownIn) {
+		public AttackGoal(TentacleEntity ghast, int attackCooldownIn, int state) {
 			this.parentEntity = ghast;
+			this.statecheck = state;
 		}
 
 		public boolean canUse() {
@@ -165,7 +149,7 @@ public class TentacleEntity extends DemonEntity implements IAnimatable {
 		@Override
 		public void stop() {
 			super.stop();
-			this.parentEntity.setAttacking(false);
+			this.parentEntity.setAttackingState(0);
 		}
 
 		public void tick() {
@@ -182,7 +166,7 @@ public class TentacleEntity extends DemonEntity implements IAnimatable {
 				} else if (this.attackTimer > 0) {
 					--this.attackTimer;
 				}
-				this.parentEntity.setAttacking(this.attackTimer >= 25);
+				this.parentEntity.setAttackingState(this.attackTimer >= 25 ? statecheck : 0);
 			}
 		}
 

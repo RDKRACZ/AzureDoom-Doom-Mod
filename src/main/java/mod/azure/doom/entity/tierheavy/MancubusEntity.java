@@ -33,9 +33,6 @@ import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
 import net.minecraft.util.SoundEvent;
@@ -60,11 +57,7 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 public class MancubusEntity extends DemonEntity implements IAnimatable {
 
-	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.defineId(MancubusEntity.class,
-			DataSerializers.BOOLEAN);
-
 	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.MANCUBUS);
-
 	private int attackTimer;
 
 	public MancubusEntity(EntityType<MancubusEntity> entityType, World worldIn) {
@@ -74,27 +67,38 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 	private AnimationFactory factory = new AnimationFactory(this);
 
 	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-		if (event.isMoving() && !this.entityData.get(ATTACKING)) {
+		if (event.isMoving()) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("walking", true));
 			return PlayState.CONTINUE;
 		}
 		if ((this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
-			if (level.isClientSide) {
-				event.getController().setAnimation(new AnimationBuilder().addAnimation("death", false));
-				return PlayState.CONTINUE;
-			}
-		}
-		if (this.entityData.get(ATTACKING) && !(this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("attacking", true));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("death", false));
 			return PlayState.CONTINUE;
 		}
 		event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
 		return PlayState.CONTINUE;
 	}
 
+	private <E extends IAnimatable> PlayState predicate1(AnimationEvent<E> event) {
+		if (this.entityData.get(STATE) == 1 && !(this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("attacking", true));
+			return PlayState.CONTINUE;
+		}
+		if (this.entityData.get(STATE) == 2 && !(this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("firing", true));
+			return PlayState.CONTINUE;
+		}
+		if (this.entityData.get(STATE) == 3 && !(this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("ground", false));
+			return PlayState.CONTINUE;
+		}
+		return PlayState.STOP;
+	}
+
 	@Override
 	public void registerControllers(AnimationData data) {
 		data.addAnimationController(new AnimationController<MancubusEntity>(this, "controller", 0, this::predicate));
+		data.addAnimationController(new AnimationController<MancubusEntity>(this, "controller1", 0, this::predicate1));
 	}
 
 	@Override
@@ -112,22 +116,6 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 		}
 	}
 
-	@OnlyIn(Dist.CLIENT)
-	public boolean isAttacking() {
-		return this.entityData.get(ATTACKING);
-	}
-
-	@Override
-	public void setAttacking(boolean attacking) {
-		this.entityData.set(ATTACKING, attacking);
-	}
-
-	@Override
-	protected void defineSynchedData() {
-		super.defineSynchedData();
-		this.entityData.define(ATTACKING, false);
-	}
-
 	@Override
 	public IPacket<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
@@ -141,6 +129,8 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8.0F));
+		this.goalSelector.addGoal(8, new LookAtGoal(this, AbstractVillagerEntity.class, 8.0F));
+		this.goalSelector.addGoal(8, new LookAtGoal(this, IronGolemEntity.class, 8.0F));
 		this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
 		this.goalSelector.addGoal(2, new MoveTowardsTargetGoal(this, 0.9D, 32.0F));
 		this.applyEntityAI();
@@ -163,7 +153,7 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 
 	static class FireballAttackGoal extends Goal {
 		private final MancubusEntity parentEntity;
-		public int attackTimer;
+	    protected int attackTimer = 0;
 
 		public FireballAttackGoal(MancubusEntity ghast) {
 			this.parentEntity = ghast;
@@ -180,7 +170,7 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 		@Override
 		public void stop() {
 			super.stop();
-			this.parentEntity.setAttacking(false);
+			this.parentEntity.setAttackingState(0);
 		}
 
 		public void tick() {
@@ -204,39 +194,32 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 							parentEntity.spawnFlames(parentEntity.getX() + (double) MathHelper.cos(f1) * 1.5D,
 									parentEntity.getZ() + (double) MathHelper.sin(f1) * 1.5D, d0, d1, f1, 0);
 						}
-
-						for (int k = 0; k < 8; ++k) {
-							float f2 = f + (float) k * (float) Math.PI * 2.0F / 8.0F + 1.2566371F;
-							parentEntity.spawnFlames(parentEntity.getX() + (double) MathHelper.cos(f2) * 2.5D,
-									parentEntity.getZ() + (double) MathHelper.sin(f2) * 2.5D, d0, d1, f2, 3);
-						}
-					} else if (parentEntity.distanceTo(livingentity) < 13.0D) {
+						this.parentEntity.setAttackingState(attackTimer > 5 ? 3 : 0);
+					} else if (parentEntity.distanceTo(livingentity) < 13.0D
+							&& parentEntity.distanceTo(livingentity) > 3.0D) {
 						for (int l = 0; l < 16; ++l) {
 							double d5 = 1.25D * (double) (l + 1);
 							int j = 1 * l;
 							parentEntity.spawnFlames(parentEntity.getX() + (double) MathHelper.cos(f) * d5,
 									parentEntity.getZ() + (double) MathHelper.sin(f) * d5, d0, d1, f, j);
+							this.parentEntity.setAttackingState(attackTimer > 5 ? 2 : 0);
 						}
 					} else {
 						fireballentity.setPos(this.parentEntity.getX() + vector3d.x * 2.0D,
 								this.parentEntity.getY(0.5D) + 0.5D, fireballentity.getZ() + vector3d.z * 2.0D);
 						world.addFreshEntity(fireballentity);
+						this.parentEntity.setAttackingState(attackTimer > 5 ? 1 : 0);
 					}
 				}
 				if (this.attackTimer == 20) {
 					if (parentEntity.distanceTo(livingentity) < 3.0D) {
-						for (int i = 0; i < 5; ++i) {
-							float f1 = f + (float) i * (float) Math.PI * 0.4F;
-							parentEntity.spawnFlames(parentEntity.getX() + (double) MathHelper.cos(f1) * 1.5D,
-									parentEntity.getZ() + (double) MathHelper.sin(f1) * 1.5D, d0, d1, f1, 0);
-						}
-
 						for (int k = 0; k < 8; ++k) {
 							float f2 = f + (float) k * (float) Math.PI * 2.0F / 8.0F + 1.2566371F;
 							parentEntity.spawnFlames(parentEntity.getX() + (double) MathHelper.cos(f2) * 2.5D,
 									parentEntity.getZ() + (double) MathHelper.sin(f2) * 2.5D, d0, d1, f2, 3);
 						}
-					} else if (parentEntity.distanceTo(livingentity) < 13.0D) {
+					} else if (parentEntity.distanceTo(livingentity) < 13.0D
+							&& parentEntity.distanceTo(livingentity) > 3.0D) {
 						for (int l = 0; l < 16; ++l) {
 							double d5 = 1.25D * (double) (l + 1);
 							int j = 1 * l;
@@ -248,13 +231,13 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 								this.parentEntity.getY(0.5D) + 0.5D, fireballentity.getZ() + vector3d.z * 2.0D);
 						world.addFreshEntity(fireballentity);
 					}
-					this.attackTimer = -50;
+					this.attackTimer = -150;
 				}
 			} else if (this.attackTimer > 0) {
 				--this.attackTimer;
+				this.parentEntity.setAttackingState(0);
 			}
 			this.parentEntity.lookAt(livingentity, 30.0F, 30.0F);
-			this.parentEntity.setAttacking(this.attackTimer > 10);
 		}
 
 	}

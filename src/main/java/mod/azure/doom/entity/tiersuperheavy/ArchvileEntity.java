@@ -30,9 +30,6 @@ import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.IPacket;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.tags.FluidTags;
@@ -46,8 +43,6 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -59,8 +54,6 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 public class ArchvileEntity extends DemonEntity implements IAnimatable {
 
-	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.defineId(ArchvileEntity.class,
-			DataSerializers.BOOLEAN);
 	private int targetChangeTime;
 	public int flameTimer;
 
@@ -112,12 +105,8 @@ public class ArchvileEntity extends DemonEntity implements IAnimatable {
 	private AnimationFactory factory = new AnimationFactory(this);
 
 	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-		if (event.isMoving() && !this.entityData.get(ATTACKING)) {
+		if (event.isMoving()) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("walking", true));
-			return PlayState.CONTINUE;
-		}
-		if (this.entityData.get(ATTACKING) && !(this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("attacking"));
 			return PlayState.CONTINUE;
 		}
 		if ((this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
@@ -128,29 +117,23 @@ public class ArchvileEntity extends DemonEntity implements IAnimatable {
 		return PlayState.CONTINUE;
 	}
 
+	private <E extends IAnimatable> PlayState predicate1(AnimationEvent<E> event) {
+		if (this.entityData.get(STATE) == 1 && !(this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("attacking", true));
+			return PlayState.CONTINUE;
+		}
+		return PlayState.STOP;
+	}
+
 	@Override
 	public void registerControllers(AnimationData data) {
 		data.addAnimationController(new AnimationController<ArchvileEntity>(this, "controller", 0, this::predicate));
+		data.addAnimationController(new AnimationController<ArchvileEntity>(this, "controller1", 0, this::predicate1));
 	}
 
 	@Override
 	public AnimationFactory getFactory() {
 		return this.factory;
-	}
-
-	@OnlyIn(Dist.CLIENT)
-	public boolean isAttacking() {
-		return this.entityData.get(ATTACKING);
-	}
-
-	public void setAttacking(boolean attacking) {
-		this.entityData.set(ATTACKING, attacking);
-	}
-
-	@Override
-	protected void defineSynchedData() {
-		super.defineSynchedData();
-		this.entityData.define(ATTACKING, false);
 	}
 
 	@Override
@@ -182,7 +165,7 @@ public class ArchvileEntity extends DemonEntity implements IAnimatable {
 		this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
 		this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
 		this.targetSelector.addGoal(2, new HurtByTargetGoal(this).setAlertOthers());
-		this.goalSelector.addGoal(4, new ArchvileEntity.AttackGoal(this));
+		this.goalSelector.addGoal(4, new ArchvileEntity.AttackGoal(this, 1));
 		this.targetSelector.addGoal(1, new ArchvileEntity.FindPlayerGoal(this, this::isAngryAt));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, true));
@@ -192,9 +175,11 @@ public class ArchvileEntity extends DemonEntity implements IAnimatable {
 	static class AttackGoal extends Goal {
 		private final ArchvileEntity parentEntity;
 		public int attackTimer;
+		private int statecheck;
 
-		public AttackGoal(ArchvileEntity ghast) {
+		public AttackGoal(ArchvileEntity ghast, int state) {
 			this.parentEntity = ghast;
+			this.statecheck = state;
 		}
 
 		public boolean canUse() {
@@ -267,7 +252,7 @@ public class ArchvileEntity extends DemonEntity implements IAnimatable {
 					}
 					this.attackTimer = -80;
 				}
-				this.parentEntity.setAttacking(this.attackTimer > 20);
+				this.parentEntity.setAttackingState(this.attackTimer > 20 ? statecheck : 0);
 			} else if (this.attackTimer > 0) {
 				--this.attackTimer;
 			}
