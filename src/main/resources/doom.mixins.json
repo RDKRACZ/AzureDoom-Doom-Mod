@@ -3,6 +3,9 @@
 	"package": "mod.azure.doom.mixin",
 	"refmap": "doom.refmap.json",
 	"compatibilityLevel": "JAVA_8",
+	"client": [
+		"WeaponRenderingMixin"
+	],
 	"mixins": [
 		"IngredientAccess"
 	],

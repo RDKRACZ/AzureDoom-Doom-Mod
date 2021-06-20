@@ -7,7 +7,7 @@ v.4.0.0
 - Added the Spider Mastermind, thanks to TearsOfLov for the texture and model touch ups!
 - Added the Pinky 2016/Eternal, thanks to Batpixxler!
 - Added a Pinky 2016/Eternal variant to the Spectre!
-//- Added the Whiplash, thanks to Batpixxler!
+- Added the Whiplash, thanks to Batpixxler!
 - Added the Arch-vile Eternal, thanks to ssap!
 - Added the Tentacle, thanks to Crydigo!
 - Updated the Unwilling model, thanks to Undeadmonkey for the model and Pedroca for the texture!
@@ -25,7 +25,7 @@ v.4.0.0
 - Lowered the sound of the chainsaws.
 - Demons are now able to walk on Lava like Striders.
 - Fixed not being able to search for the armors or a few weapons in the creative search menu.
-- BFG Eternal, Heavy Cannon, Pistol, Plasma Gun, Rocket Launcher, Shotgun, Super Shotgun, and Unmaykr now use the bow animations for aiming.
+- All guns now use the bow holding pose for aiming in 3rd person.
 - Fixed the Crucible Blade glitching open and closed.
 - Massively increased cool down of Gore Nest Spawns and added a max of 3 waves per gore nest.
 - Halved all demons (expect the Icon of Sin) follow ranges to 25, in line with vanilla mobs.
@@ -57,6 +57,7 @@ v.4.0.0
 	- Fireborne Baron
 	- Armored Baron
 	- Doom Hunter
+	- Mother Demon
 	- Maykr Drones
 	- Blood Maykrs
 	- Arch Makyr

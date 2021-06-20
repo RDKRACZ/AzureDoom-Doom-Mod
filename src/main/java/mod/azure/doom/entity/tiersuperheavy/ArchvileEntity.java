@@ -7,7 +7,7 @@ import java.util.function.Predicate;
 import javax.annotation.Nullable;
 
 import mod.azure.doom.entity.DemonEntity;
-import mod.azure.doom.entity.projectiles.entity.ArchvileFiring;
+import mod.azure.doom.entity.projectiles.entity.DoomFireEntity;
 import mod.azure.doom.util.config.Config;
 import mod.azure.doom.util.config.EntityConfig;
 import mod.azure.doom.util.config.EntityDefaults.EntityConfigType;
@@ -432,7 +432,7 @@ public class ArchvileEntity extends DemonEntity implements IAnimatable {
 		} while (blockpos.getY() >= MathHelper.floor(p_190876_5_) - 1);
 
 		if (flag) {
-			ArchvileFiring fang = new ArchvileFiring(this.level, p_190876_1_, (double) blockpos.getY() + d0,
+			DoomFireEntity fang = new DoomFireEntity(this.level, p_190876_1_, (double) blockpos.getY() + d0,
 					p_190876_3_, p_190876_9_, 1, this);
 			fang.setSecondsOnFire(tickCount);
 			fang.setInvisible(false);

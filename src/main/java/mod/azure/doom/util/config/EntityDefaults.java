@@ -42,7 +42,7 @@ public class EntityDefaults {
 		SPIDERMASTERMIND("Spider Mastermind", new EntityDefaults(true, 1, 300).setRangedDamage(15).setMeleeDamage(4).setGeneralSpeed(0.25)),
 		TYRANT("Tyrant", new EntityDefaults(true, 1, 300).setMeleeDamage(7).setGeneralSpeed(0.15).setRangedDamage(18)),
 		UNWILLING("Unwilling", new EntityDefaults(false, 4, 15).setMeleeDamage(4).setGeneralSpeed(0.15)),
-		WHIPLASH("Whiplash", new EntityDefaults(false, 4, 90).setRangedDamage(4).setMeleeDamage(4).setGeneralSpeed(0.35)),
+		WHIPLASH("Whiplash", new EntityDefaults(false, 4, 90).setRangedDamage(4).setMeleeDamage(4).setGeneralSpeed(0.45)),
 		ZOMBIEMAN("Zombieman", new EntityDefaults(false, 4, 15).setMeleeDamage(4).setRangedDamage(4).setGeneralSpeed(0.25));
 
 		EntityConfigType(String display, EntityDefaults defaults) {

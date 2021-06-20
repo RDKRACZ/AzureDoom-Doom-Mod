@@ -7,7 +7,7 @@ import java.util.SplittableRandom;
 import javax.annotation.Nullable;
 
 import mod.azure.doom.entity.DemonEntity;
-import mod.azure.doom.entity.projectiles.entity.ArchvileFiring;
+import mod.azure.doom.entity.projectiles.entity.DoomFireEntity;
 import mod.azure.doom.util.config.Config;
 import mod.azure.doom.util.config.EntityConfig;
 import mod.azure.doom.util.config.EntityDefaults.EntityConfigType;
@@ -326,7 +326,7 @@ public class IconofsinEntity extends DemonEntity implements IAnimatable {
 		} while (blockpos.getY() >= MathHelper.floor(maxY) - 1);
 
 		if (flag) {
-			ArchvileFiring fang = new ArchvileFiring(this.level, x, (double) blockpos.getY() + d0, z, yaw, 1, this);
+			DoomFireEntity fang = new DoomFireEntity(this.level, x, (double) blockpos.getY() + d0, z, yaw, 1, this);
 			fang.setSecondsOnFire(tickCount);
 			fang.setInvisible(false);
 			this.level.addFreshEntity(fang);

@@ -14,7 +14,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.UseAction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
@@ -106,11 +105,6 @@ public class SuperShotgun extends DoomBaseItem {
 	@Override
 	public int getUseDuration(ItemStack stack) {
 		return 72000;
-	}
-
-	@Override
-	public UseAction getUseAnimation(ItemStack stack) {
-		return UseAction.BOW;
 	}
 
 	public ShotgunShellEntity customeArrow(ShotgunShellEntity arrow) {

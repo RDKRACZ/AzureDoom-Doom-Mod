@@ -14,7 +14,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.UseAction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
@@ -118,11 +117,6 @@ public class Unmaykr extends DoomBaseItem {
 		}
 
 		return f;
-	}
-
-	@Override
-	public UseAction getUseAnimation(ItemStack stack) {
-		return UseAction.BOW;
 	}
 
 	public UnmaykrBoltEntity customeArrow(UnmaykrBoltEntity arrow) {

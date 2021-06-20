@@ -9,7 +9,7 @@ public class BloodMaykrModel extends AnimatedGeoModel<BloodMaykrEntity> {
 
 	@Override
 	public ResourceLocation getModelLocation(BloodMaykrEntity object) {
-		return new ResourceLocation(DoomMod.MODID, "geo/bloodmaykr.geo.json");
+		return new ResourceLocation(DoomMod.MODID, "geo/whiplash.geo.json");
 	}
 
 	@Override
@@ -19,7 +19,7 @@ public class BloodMaykrModel extends AnimatedGeoModel<BloodMaykrEntity> {
 
 	@Override
 	public ResourceLocation getAnimationFileLocation(BloodMaykrEntity object) {
-		return new ResourceLocation(DoomMod.MODID, "animations/bloodmaykr.animation.json");
+		return new ResourceLocation(DoomMod.MODID, "animations/whiplash.animation.json");
 	}
 
 }

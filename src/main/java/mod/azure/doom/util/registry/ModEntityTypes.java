@@ -10,10 +10,11 @@ import mod.azure.doom.entity.projectiles.EnergyCellEntity;
 import mod.azure.doom.entity.projectiles.RocketEntity;
 import mod.azure.doom.entity.projectiles.ShotgunShellEntity;
 import mod.azure.doom.entity.projectiles.UnmaykrBoltEntity;
-import mod.azure.doom.entity.projectiles.entity.ArchvileFiring;
 import mod.azure.doom.entity.projectiles.entity.BarenBlastEntity;
 import mod.azure.doom.entity.projectiles.entity.BloodBoltEntity;
+import mod.azure.doom.entity.projectiles.entity.ChainBladeEntity;
 import mod.azure.doom.entity.projectiles.entity.ChaingunMobEntity;
+import mod.azure.doom.entity.projectiles.entity.DoomFireEntity;
 import mod.azure.doom.entity.projectiles.entity.DroneBoltEntity;
 import mod.azure.doom.entity.projectiles.entity.EnergyCellMobEntity;
 import mod.azure.doom.entity.projectiles.entity.RocketMobEntity;
@@ -85,8 +86,13 @@ public class ModEntityTypes {
 	public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITIES,
 			DoomMod.MODID);
 
-	public static final RegistryObject<EntityType<ArchvileFiring>> FIRING = ENTITY_TYPES.register("archvile_firing",
-			() -> EntityType.Builder.<ArchvileFiring>of(ArchvileFiring::new, EntityClassification.MISC)
+	public static final RegistryObject<EntityType<DoomFireEntity>> FIRING = ENTITY_TYPES.register("archvile_firing",
+			() -> EntityType.Builder.<DoomFireEntity>of(DoomFireEntity::new, EntityClassification.MISC)
+					.sized(0.5F, 0.8F).clientTrackingRange(10)
+					.build(new ResourceLocation(DoomMod.MODID, "archvile_firing").toString()));
+
+	public static final RegistryObject<EntityType<ChainBladeEntity>> CHAINBLADE = ENTITY_TYPES.register("chain_blade",
+			() -> EntityType.Builder.<ChainBladeEntity>of(ChainBladeEntity::new, EntityClassification.MISC)
 					.sized(0.5F, 0.8F).clientTrackingRange(10)
 					.build(new ResourceLocation(DoomMod.MODID, "archvile_firing").toString()));
 

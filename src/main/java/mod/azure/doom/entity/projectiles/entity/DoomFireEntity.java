@@ -30,7 +30,7 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-public class ArchvileFiring extends Entity implements IAnimatable {
+public class DoomFireEntity extends Entity implements IAnimatable {
 
 	private AnimationFactory factory = new AnimationFactory(this);
 
@@ -40,7 +40,7 @@ public class ArchvileFiring extends Entity implements IAnimatable {
 
 	@Override
 	public void registerControllers(AnimationData data) {
-		data.addAnimationController(new AnimationController<ArchvileFiring>(this, "controller", 0, this::predicate));
+		data.addAnimationController(new AnimationController<DoomFireEntity>(this, "controller", 0, this::predicate));
 	}
 
 	private int warmupDelayTicks;
@@ -49,13 +49,13 @@ public class ArchvileFiring extends Entity implements IAnimatable {
 	private boolean clientSideAttackStarted;
 	private LivingEntity caster;
 	private UUID casterUuid;
-	private float damage = 7.0F;
+	private float damage = 2.0F;
 
-	public ArchvileFiring(EntityType<ArchvileFiring> p_i50170_1_, World p_i50170_2_) {
+	public DoomFireEntity(EntityType<DoomFireEntity> p_i50170_1_, World p_i50170_2_) {
 		super(p_i50170_1_, p_i50170_2_);
 	}
 
-	public ArchvileFiring(World worldIn, double x, double y, double z, float p_i47276_8_, int p_i47276_9_,
+	public DoomFireEntity(World worldIn, double x, double y, double z, float p_i47276_8_, int p_i47276_9_,
 			LivingEntity casterIn) {
 		this(ModEntityTypes.FIRING.get(), worldIn);
 		this.warmupDelayTicks = p_i47276_9_;

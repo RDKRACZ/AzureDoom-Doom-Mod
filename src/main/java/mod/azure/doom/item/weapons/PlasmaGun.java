@@ -14,7 +14,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.UseAction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
@@ -94,11 +93,6 @@ public class PlasmaGun extends DoomBaseItem {
 	@Override
 	public boolean canDisableShield(ItemStack stack, ItemStack shield, LivingEntity entity, LivingEntity attacker) {
 		return true;
-	}
-
-	@Override
-	public UseAction getUseAnimation(ItemStack stack) {
-		return UseAction.BOW;
 	}
 
 	public EnergyCellEntity customeArrow(EnergyCellEntity arrow) {
