@@ -74,9 +74,9 @@ public class TitanSkullStructure extends Structure<NoFeatureConfig> {
 		@Override
 		public void generatePieces(DynamicRegistries dynamicRegistryManager, ChunkGenerator chunkGenerator,
 				TemplateManager templateManagerIn, int chunkX, int chunkZ, Biome biomeIn, NoFeatureConfig config) {
-			int x = (chunkX << 4) + 7;
-			int z = (chunkZ << 4) + 7;
-			BlockPos blockpos = new BlockPos(x, chunkGenerator.getSeaLevel(), z);
+			ChunkPos chunkPos = new ChunkPos(chunkX, chunkZ);
+			BlockPos.Mutable blockpos = new BlockPos.Mutable(chunkPos.getMinBlockX() + this.random.nextInt(16), 33,
+					chunkPos.getMinBlockZ() + this.random.nextInt(16));
 			JigsawManager.addPieces(dynamicRegistryManager,
 					new VillageConfig(() -> dynamicRegistryManager.registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY)
 							.get(new ResourceLocation(DoomMod.MODID, "titan_skull/start_pool")), 10),

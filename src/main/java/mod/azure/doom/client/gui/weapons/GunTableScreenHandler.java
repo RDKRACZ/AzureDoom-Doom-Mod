@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import mod.azure.doom.mixin.IngredientAccess;
 import mod.azure.doom.recipes.GunTableRecipe;
 import mod.azure.doom.util.registry.DoomBlocks;
 import mod.azure.doom.util.registry.DoomScreens;
@@ -158,7 +157,7 @@ public class GunTableScreenHandler extends Container {
 			for (int i = 0; i < 5; i++) {
 				Ingredient ingredient = gunTableRecipe.getIngredientForSlot(i);
 				if (!ingredient.isEmpty()) {
-					ItemStack[] possibleItems = ((IngredientAccess) (Object) ingredient).getMatchingStacks();
+					ItemStack[] possibleItems = ingredient.getItems();
 					if (possibleItems != null) {
 						ItemStack first = new ItemStack(possibleItems[0].getItem(), gunTableRecipe.countRequired(i));
 						moveFromInventoryToPaymentSlot(i, first);

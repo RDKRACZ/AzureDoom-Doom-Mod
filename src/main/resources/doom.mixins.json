@@ -6,9 +6,6 @@
 	"client": [
 		"WeaponRenderingMixin"
 	],
-	"mixins": [
-		"IngredientAccess"
-	],
 	"injectors": {
 		"defaultRequire": 1
 	},

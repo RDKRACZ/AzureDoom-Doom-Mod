@@ -28,14 +28,11 @@ import mod.azure.doom.util.registry.ModEntitySpawn;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.block.Block;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome.Category;
 import net.minecraft.world.gen.ChunkGenerator;
@@ -47,7 +44,6 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.RegistryEvent.MissingMappings.Mapping;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -92,12 +88,10 @@ public class DoomMod {
 		modEventBus.addListener(this::setup);
 		modEventBus.addListener(this::clientSetup);
 		modEventBus.addListener(this::enqueueIMC);
-		if (Config.SERVER.ENABLE_STRUCTURES) {
-			DoomStructures.DEFERRED_REGISTRY_STRUCTURE.register(modEventBus);
-			forgeBus.addListener(EventPriority.NORMAL, this::addDimensionalSpacing);
-			forgeBus.addListener(EventPriority.HIGH, this::biomeModification);
-		}
-		MinecraftForge.EVENT_BUS.addListener(this::gEvent);
+		DoomStructures.DEFERRED_REGISTRY_STRUCTURE.register(modEventBus);
+		forgeBus.addListener(EventPriority.NORMAL, this::addDimensionalSpacing);
+		forgeBus.addListener(EventPriority.HIGH, this::biomeModification);
+		//MinecraftForge.EVENT_BUS.addListener(this::gEvent);
 		forgeBus.addGenericListener(Block.class, DoomMod::updatingBlocksID);
 		forgeBus.addGenericListener(Item.class, DoomMod::updatingItemsID);
 		MinecraftForge.EVENT_BUS.addListener(DoomVillagerTrades::onVillagerTradesEvent);
@@ -143,14 +137,15 @@ public class DoomMod {
 		});
 	}
 
-	public void gEvent(final EntityJoinWorldEvent event) {
-		if (event.getEntity().getUUID().toString() == "97aa8203db554f41b3c4f5c52db4102d"
-				|| event.getEntity().getDisplayName() == new TranslationTextComponent("Goltrixx")) {
-			((ClientPlayerEntity) event.getEntity()).displayClientMessage(
-					new StringTextComponent("Welcome Goltrixx, thank you for all your help with the Doom mod!"), true);
-			;
-		}
-	}
+//	public void gEvent(final EntityJoinWorldEvent event) {
+//		if (event.getEntity() instanceof PlayerEntity
+//				&& UUID.fromString("97aa8203-db55-4f41-b3c4-f5c52db4102d")
+//						.equals(((PlayerEntity) event.getEntity()).getUUID())
+//				|| UUID.fromString("380df991-f603-344c-a090-369bad2a924a")
+//						.equals(((PlayerEntity) event.getEntity()).getUUID())) {
+//			// will send thank you messages.
+//		}
+//	}
 
 	public void biomeModification(final BiomeLoadingEvent event) {
 		if (event.getCategory().equals(Category.THEEND)) {
