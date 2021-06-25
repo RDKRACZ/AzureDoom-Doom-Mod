@@ -79,7 +79,7 @@ public class IconofsinEntity extends DemonEntity implements IAnimatable {
 	private AnimationFactory factory = new AnimationFactory(this);
 
 	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-		if (event.isMoving() && this.getHealth() > 500.0D) {
+		if (event.isMoving() && this.getHealth() > (this.getMaxHealth() * 0.50)) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("walking", true));
 			return PlayState.CONTINUE;
 		}
@@ -87,11 +87,11 @@ public class IconofsinEntity extends DemonEntity implements IAnimatable {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("death", false));
 			return PlayState.CONTINUE;
 		}
-		if (event.isMoving() && this.getHealth() < 500.0D) {
+		if (event.isMoving() && this.getHealth() < (this.getMaxHealth() * 0.50)) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("walking_nohelmet", true));
 			return PlayState.CONTINUE;
 		}
-		if (this.getHealth() < 500.0D) {
+		if (this.getHealth() < (this.getMaxHealth() * 0.50)) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("idle_nohelmet", true));
 			return PlayState.CONTINUE;
 		}
@@ -177,7 +177,7 @@ public class IconofsinEntity extends DemonEntity implements IAnimatable {
 
 	static class FireballAttackGoal extends Goal {
 		private final IconofsinEntity parentEntity;
-	    protected int attackTimer = 0;
+		protected int attackTimer = 0;
 
 		public FireballAttackGoal(IconofsinEntity ghast) {
 			this.parentEntity = ghast;
@@ -452,28 +452,48 @@ public class IconofsinEntity extends DemonEntity implements IAnimatable {
 	@Override
 	public int getArmorValue() {
 		float health = this.getHealth();
-		return (health < 950 && health >= 900 ? 27
-				: health < 900 && health >= 850 ? 24
-						: health < 850 && health >= 800 ? 21
-								: health < 800 && health >= 750 ? 18
-										: health < 750 && health >= 700 ? 15
-												: health < 700 && health >= 650 ? 12
-														: health < 650 && health >= 600 ? 9
-																: health < 600 && health >= 550 ? 6
-																		: health < 550 && health >= 500 ? 3
-																				: health < 500 ? 0 : 30);
+		return (health < (this.getMaxHealth() * 0.95) && health >= (this.getMaxHealth() * 0.90) ? 27
+				: health < (this.getMaxHealth() * 0.90) && health >= (this.getMaxHealth() * 0.85) ? 24
+						: health < (this.getMaxHealth() * 0.85) && health >= (this.getMaxHealth() * 0.80) ? 21
+								: health < (this.getMaxHealth() * 0.80) && health >= (this.getMaxHealth() * 0.75) ? 18
+										: health < (this.getMaxHealth() * 0.75)
+												&& health >= (this.getMaxHealth() * 0.70)
+														? 15
+														: health < (this.getMaxHealth() * 0.70)
+																&& health >= (this.getMaxHealth() * 0.65)
+																		? 12
+																		: health < (this.getMaxHealth() * 0.65)
+																				&& health >= (this
+																						.getMaxHealth() * 0.60)
+																								? 9
+																								: health < (this
+																										.getMaxHealth()
+																										* 0.60)
+																										&& health >= (this
+																												.getMaxHealth()
+																												* 0.55) ? 6
+																														: health < (this
+																																.getMaxHealth()
+																																* 0.55)
+																																&& health >= (this
+																																		.getMaxHealth()
+																																		* 0.50) ? 3
+																																				: health < (this
+																																						.getMaxHealth()
+																																						* 0.50) ? 0
+																																								: 30);
 	}
 
 	@Override
 	public void aiStep() {
 		super.aiStep();
 		++this.tickCount;
-		if (this.getHealth() > 500.0D) {
+		if (this.getHealth() > (this.getMaxHealth() * 0.50)) {
 			if (!this.level.isClientSide) {
 				this.addEffect(new EffectInstance(Effects.DAMAGE_BOOST, 1000000, 1));
 			}
 		}
-		if (this.getHealth() < 500.0D) {
+		if (this.getHealth() < (this.getMaxHealth() * 0.50)) {
 			if (!this.level.isClientSide) {
 				this.removeEffect(Effects.DAMAGE_BOOST);
 				this.addEffect(new EffectInstance(Effects.MOVEMENT_SPEED, 10000000, 2));

@@ -3,7 +3,6 @@ package mod.azure.doom.client.render;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
-import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 import mod.azure.doom.client.models.IconofsinModel;
 import mod.azure.doom.entity.tierboss.IconofsinEntity;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -11,6 +10,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.util.ResourceLocation;
 import software.bernie.geckolib3.geo.render.built.GeoModel;
+import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 
 public class IconofsinRender extends GeoEntityRenderer<IconofsinEntity> {
 
@@ -32,7 +32,8 @@ public class IconofsinRender extends GeoEntityRenderer<IconofsinEntity> {
 		super.render(model, animatable, partialTicks, type, matrixStackIn, renderTypeBuffer, vertexBuilder,
 				packedLightIn, packedOverlayIn, red, green, blue, alpha);
 		float health = animatable.getHealth();
-		if (health >= 950) {
+		float maxhealth = animatable.getMaxHealth();
+		if (health >= (maxhealth * 0.95)) {
 			model.getBone("rShoulderArmor").get().setHidden(false);
 			model.getBone("rArmArmor1").get().setHidden(false);
 			model.getBone("rArmArmor2").get().setHidden(false);
@@ -81,33 +82,33 @@ public class IconofsinRender extends GeoEntityRenderer<IconofsinEntity> {
 			model.getBone("rToe2Armor_1").get().setHidden(false);
 			model.getBone("rToe3Armor_1").get().setHidden(false);
 		}
-		if (health < 950) {
+		if (health < (maxhealth * 0.95)) {
 			model.getBone("rShoulderArmor").get().setHidden(true);
 			model.getBone("rArmArmor1").get().setHidden(true);
 			model.getBone("rArmArmor2").get().setHidden(true);
 		}
-		if (health < 900) {
+		if (health < (maxhealth * 0.90)) {
 			model.getBone("lShoulderArmor").get().setHidden(true);
 			model.getBone("lArmArmor1").get().setHidden(true);
 			model.getBone("lArmArmor2").get().setHidden(true);
 		}
-		if (health < 850) {
+		if (health < (maxhealth * 0.85)) {
 			model.getBone("chestArmor").get().setHidden(true);
 			model.getBone("lPeckArmor").get().setHidden(true);
 			model.getBone("rPeckArmor").get().setHidden(true);
 		}
-		if (health < 800) {
+		if (health < (maxhealth * 0.80)) {
 			model.getBone("thighArmor").get().setHidden(true);
 		}
-		if (health < 750) {
+		if (health < (maxhealth * 0.75)) {
 			model.getBone("spineArmor1").get().setHidden(true);
 			model.getBone("spineArmor2").get().setHidden(true);
 			model.getBone("spineArmor3").get().setHidden(true);
 		}
-		if (health < 700) {
+		if (health < (maxhealth * 0.70)) {
 			model.getBone("neckArmor").get().setHidden(true);
 		}
-		if (health < 650) {
+		if (health < (maxhealth * 0.65)) {
 			model.getBone("lHHorn1").get().setHidden(true);
 			model.getBone("lHHorn2").get().setHidden(true);
 			model.getBone("lHHorn3").get().setHidden(true);
@@ -117,14 +118,14 @@ public class IconofsinRender extends GeoEntityRenderer<IconofsinEntity> {
 			model.getBone("rHHorn3").get().setHidden(true);
 			model.getBone("rHHorn4").get().setHidden(true);
 		}
-		if (health < 600) {
+		if (health < (maxhealth * 0.60)) {
 			model.getBone("helmetBase").get().setHidden(true);
 			model.getBone("helmetLeft").get().setHidden(true);
 			model.getBone("helmetRight").get().setHidden(true);
 			model.getBone("helmetMiddle").get().setHidden(true);
 			model.getBone("helmetTop").get().setHidden(true);
 		}
-		if (health < 550) {
+		if (health < (maxhealth * 0.55)) {
 			model.getBone("lLegArmor1").get().setHidden(true);
 			model.getBone("lLegArmor2").get().setHidden(true);
 			model.getBone("lLegArmor3").get().setHidden(true);
@@ -136,7 +137,7 @@ public class IconofsinRender extends GeoEntityRenderer<IconofsinEntity> {
 			model.getBone("lToe2Armor_1").get().setHidden(true);
 			model.getBone("lToe3Armor_1").get().setHidden(true);
 		}
-		if (health < 500) {
+		if (health < (maxhealth * 0.50)) {
 			model.getBone("rLegArmor1").get().setHidden(true);
 			model.getBone("rLegArmor2").get().setHidden(true);
 			model.getBone("rLegArmor3").get().setHidden(true);
