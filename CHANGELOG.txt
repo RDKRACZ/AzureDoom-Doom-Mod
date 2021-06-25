@@ -47,6 +47,7 @@ v.4.0.0
 - Fixed Marauder attacks.
 - Fixed E1M1 music disc playing text.
 - Fixed Icon of Sin armor render and armor vaules being hardcoded to the default health.
+- Fixed weapon animations at 1 durability when they are disabled.
 - Removed targeting stuff, hated it tbh and no one used it much.
 
 *   : Edited from: Last Structure here: https://www.planetminecraft.com/project/5-city-center-nether-portal-designs/
