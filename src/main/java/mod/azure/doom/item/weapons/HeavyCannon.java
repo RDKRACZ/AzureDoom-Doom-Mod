@@ -52,12 +52,12 @@ public class HeavyCannon extends DoomBaseItem {
 					worldIn.addFreshEntity(abstractarrowentity);
 					worldIn.playSound((PlayerEntity) null, playerentity.getX(), playerentity.getY(),
 							playerentity.getZ(), ModSoundEvents.HEAVY_CANNON.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
-				}
-				if (!worldIn.isClientSide) {
-					final int id = GeckoLibUtil.guaranteeIDForStack(stack, (ServerWorld) worldIn);
-					final PacketDistributor.PacketTarget target = PacketDistributor.TRACKING_ENTITY_AND_SELF
-							.with(() -> playerentity);
-					GeckoLibNetwork.syncAnimation(target, this, id, ANIM_OPEN);
+					if (!worldIn.isClientSide) {
+						final int id = GeckoLibUtil.guaranteeIDForStack(stack, (ServerWorld) worldIn);
+						final PacketDistributor.PacketTarget target = PacketDistributor.TRACKING_ENTITY_AND_SELF
+								.with(() -> playerentity);
+						GeckoLibNetwork.syncAnimation(target, this, id, ANIM_OPEN);
+					}
 				}
 			}
 		}

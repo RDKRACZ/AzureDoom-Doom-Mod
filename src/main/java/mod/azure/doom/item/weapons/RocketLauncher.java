@@ -53,12 +53,12 @@ public class RocketLauncher extends DoomBaseItem {
 					worldIn.playSound((PlayerEntity) null, playerentity.getX(), playerentity.getY(),
 							playerentity.getZ(), ModSoundEvents.ROCKET_FIRING.get(), SoundCategory.PLAYERS, 1.0F,
 							1.0F / (random.nextFloat() * 0.4F + 1.2F) + 0.25F * 0.5F);
-				}
-				if (!worldIn.isClientSide) {
-					final int id = GeckoLibUtil.guaranteeIDForStack(stack, (ServerWorld) worldIn);
-					final PacketDistributor.PacketTarget target = PacketDistributor.TRACKING_ENTITY_AND_SELF
-							.with(() -> playerentity);
-					GeckoLibNetwork.syncAnimation(target, this, id, ANIM_OPEN);
+					if (!worldIn.isClientSide) {
+						final int id = GeckoLibUtil.guaranteeIDForStack(stack, (ServerWorld) worldIn);
+						final PacketDistributor.PacketTarget target = PacketDistributor.TRACKING_ENTITY_AND_SELF
+								.with(() -> playerentity);
+						GeckoLibNetwork.syncAnimation(target, this, id, ANIM_OPEN);
+					}
 				}
 			}
 		}
