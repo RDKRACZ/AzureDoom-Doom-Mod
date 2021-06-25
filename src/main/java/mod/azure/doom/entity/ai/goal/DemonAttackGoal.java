@@ -30,7 +30,7 @@ public class DemonAttackGoal extends MeleeAttackGoal {
 	}
 
 	public boolean canUse() {
-		return this.entity.getTarget() != null;
+		return super.canUse();
 	}
 
 	public void stop() {
@@ -93,6 +93,11 @@ public class DemonAttackGoal extends MeleeAttackGoal {
 			this.entity.setAttackingState(statecheck);
 			this.mob.doHurtTarget(livingentity);
 		}
+	}
+	
+	@Override
+	protected int getAttackInterval() {
+		return 50;
 	}
 
 	@Override

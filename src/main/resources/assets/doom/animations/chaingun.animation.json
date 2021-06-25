@@ -3,17 +3,11 @@
 	"animations": {
 		"firing": {
 			"loop": true,
-			"animation_length": 0.24,
+			"animation_length": 0.04,
 			"bones": {
 				"group_4": {
 					"rotation": {
-						"0.0": {
-							"vector": [0, 0, 0]
-						},
-						"0.2": {
-							"vector": [0, 0, 360],
-							"easing": "easeInOutCirc"
-						}
+						"vector": [0, 0, "math.sin(query.anim_time * 360) * 18000"]
 					}
 				}
 			}

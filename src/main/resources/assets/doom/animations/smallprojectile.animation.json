@@ -7,13 +7,7 @@
 			"bones": {
 				"bone": {
 					"rotation": {
-						"0.0": {
-							"vector": [0, 0, 0]
-						},
-						"0.52": {
-							"vector": [360, 0, 360],
-							"easing": "linear"
-						}
+						"vector": ["math.cos(query.anim_time * 360) * 18000", "math.cos(query.anim_time * 360) * 18000", "math.cos(query.anim_time * 360) * 18000"]
 					}
 				}
 			}

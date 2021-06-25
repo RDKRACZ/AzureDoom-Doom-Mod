@@ -7,27 +7,12 @@
 			"bones": {
 				"bone3": {
 					"rotation": {
-						"0.0": {
-							"vector": [0, 0, 0]
-						},
-						"0.52": {
-							"vector": [0, 360, 360]
-						}
+						"vector": ["math.cos(query.anim_time * 360) * 18000", "math.cos(query.anim_time * 360) * 18000", "math.cos(query.anim_time * 360) * 18000"]
 					}
 				},
 				"bone": {
 					"scale": {
-						"0.0": {
-							"vector": [1, 1, 1]
-						},
-						"0.28": {
-							"vector": [2, 2, 2],
-							"easing": "easeInOutSine"
-						},
-						"0.52": {
-							"vector": [1, 1, 1],
-							"easing": "easeInOutSine"
-						}
+						"vector": ["1+math.sin(query.anim_time * 360) * 1", "1+math.sin(query.anim_time * 360) * 1", "1+math.sin(query.anim_time * 360) * 1"]
 					}
 				}
 			}
