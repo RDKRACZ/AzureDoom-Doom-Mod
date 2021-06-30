@@ -28,5 +28,13 @@ public class RocketRender extends GeoProjectilesRenderer<RocketEntity> {
 			ResourceLocation textureLocation) {
 		return RenderType.entityTranslucent(getTextureLocation(animatable));
 	}
+	
+	@Override
+	public void renderEarly(RocketEntity animatable, MatrixStack stackIn, float ticks,
+			IRenderTypeBuffer renderTypeBuffer, IVertexBuilder vertexBuilder, int packedLightIn, int packedOverlayIn,
+			float red, float green, float blue, float partialTicks) {
+		stackIn.scale(animatable.tickCount > 2 ? 0.5F : 0.0F, animatable.tickCount > 2 ? 0.5F : 0.0F,
+				animatable.tickCount > 2 ? 0.5F : 0.0F);
+	}
 
 }

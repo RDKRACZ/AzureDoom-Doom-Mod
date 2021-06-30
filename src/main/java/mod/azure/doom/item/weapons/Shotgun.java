@@ -45,8 +45,6 @@ public class Shotgun extends DoomBaseItem {
 					abstractarrowentity = customeArrow(abstractarrowentity);
 					abstractarrowentity.shootFromRotation(playerentity, playerentity.xRot, playerentity.yRot, 0.0F,
 							1.0F * 3.0F, 1.0F);
-
-					abstractarrowentity.setBaseDamage(3.7);
 					abstractarrowentity.isNoGravity();
 
 					stack.hurtAndBreak(1, entityLiving, p -> p.broadcastBreakEvent(entityLiving.getUsedItemHand()));

@@ -95,12 +95,7 @@ public class DoomBaseItem extends Item implements IAnimatable, ISyncable {
 	public boolean isFoil(ItemStack stack) {
 		return false;
 	}
-
-	@Override
-	public int getUseDuration(ItemStack stack) {
-		return 72000;
-	}
-
+	
 	@Override
 	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(new TranslationTextComponent(

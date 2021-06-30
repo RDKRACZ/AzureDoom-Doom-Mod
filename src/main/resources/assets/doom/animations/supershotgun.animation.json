@@ -2,6 +2,7 @@
 	"format_version": "1.8.0",
 	"animations": {
 		"firing": {
+			"loop": true,
 			"animation_length": 1.08,
 			"bones": {
 				"supershotgun_loading1": {
@@ -155,6 +156,54 @@
 						},
 						"0.64": {
 							"vector": [1, 1, 1]
+						}
+					}
+				},
+				"bone": {
+					"position": {
+						"0.0": {
+							"vector": [0, 0, -0.3]
+						},
+						"0.32": {
+							"vector": [0, 0, -0.3]
+						},
+						"0.36": {
+							"vector": [0, 0, 0]
+						}
+					},
+					"scale": {
+						"0.0": {
+							"vector": [8, 8, 1]
+						},
+						"0.32": {
+							"vector": [8, 8, 1]
+						},
+						"0.36": {
+							"vector": [0, 0, 0]
+						}
+					}
+				},
+				"bone2": {
+					"position": {
+						"0.0": {
+							"vector": [0, 0, -0.3]
+						},
+						"0.32": {
+							"vector": [0, 0, -0.3]
+						},
+						"0.36": {
+							"vector": [0, 0, 0]
+						}
+					},
+					"scale": {
+						"0.0": {
+							"vector": [8, 8, 1]
+						},
+						"0.32": {
+							"vector": [8, 8, 1]
+						},
+						"0.36": {
+							"vector": [0, 0, 0]
 						}
 					}
 				}

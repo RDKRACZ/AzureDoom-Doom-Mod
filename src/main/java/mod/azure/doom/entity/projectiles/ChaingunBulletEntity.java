@@ -1,6 +1,7 @@
 package mod.azure.doom.entity.projectiles;
 
 import mod.azure.doom.entity.tierboss.IconofsinEntity;
+import mod.azure.doom.util.config.Config;
 import mod.azure.doom.util.registry.DoomItems;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -235,7 +236,7 @@ public class ChaingunBulletEntity extends AbstractArrowEntity implements IAnimat
 				((LivingEntity) entity1).setLastHurtMob(entity);
 			}
 		}
-		if (entity.hurt(damagesource, 1.5F)) {
+		if (entity.hurt(damagesource, Config.SERVER.chaingun_bullet_damage)) {
 			if (entity instanceof LivingEntity) {
 				LivingEntity livingentity = (LivingEntity) entity;
 				if (!this.level.isClientSide && entity1 instanceof LivingEntity) {

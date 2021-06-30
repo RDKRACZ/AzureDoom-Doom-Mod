@@ -4,14 +4,14 @@
 	"category": "doom:weapons_category",	
 	"pages": [
 		{
-			"type": "crafting",
-			"title": "Marauder Axe (Closed)",
-			"recipe": "doom:axe_crucible_closed"
+			"type": "spotlight",
+			"item": "doom:axe_marauder_closed",
+			"link_recipe": true
 		},
 		{
-			"type": "crafting",
-			"title": "Marauder Axe",
-			"recipe": "doom:axe_crucible_open"
+			"type": "spotlight",
+			"item": "doom:axe_marauder_open",
+			"link_recipe": true
 		}
 	]
 }

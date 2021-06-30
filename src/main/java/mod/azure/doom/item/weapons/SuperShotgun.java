@@ -34,6 +34,21 @@ public class SuperShotgun extends DoomBaseItem {
 		return DoomTier.SHOTGUN.getRepairIngredient().test(repair) || super.isValidRepairItem(toRepair, repair);
 	}
 
+//	@Override
+//	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+//		ItemStack itemstack = player.getItemInHand(hand);
+//		if (itemstack.getDamageValue() < (itemstack.getMaxDamage() - 2)) {
+//			//player.getCooldowns().addCooldown(itemstack.getItem(), 24);
+//			if (!world.isClientSide) {
+//				world.addFreshEntity(new HookEntity(player, world));
+//				world.playSound((PlayerEntity) null, player.getX(), player.getY(),
+//						player.getZ(), ModSoundEvents.SUPER_SHOTGUN_SHOOT.get(), SoundCategory.PLAYERS, 1.0F,
+//						1.0F);
+//			}
+//		}
+//		return ActionResult.sidedSuccess(itemstack, world.isClientSide());
+//	}
+
 	@Override
 	public void releaseUsing(ItemStack stack, World worldIn, LivingEntity entityLiving, int timeLeft) {
 		if (entityLiving instanceof PlayerEntity) {
@@ -43,14 +58,18 @@ public class SuperShotgun extends DoomBaseItem {
 				if (!worldIn.isClientSide) {
 					ShotgunShellEntity abstractarrowentity = createArrow(worldIn, stack, playerentity);
 					abstractarrowentity = customeArrow(abstractarrowentity);
-					abstractarrowentity.shootFromRotation(playerentity, playerentity.xRot, playerentity.yRot, 0.0F,
+					abstractarrowentity.shootFromRotation(playerentity, playerentity.xRot, playerentity.yRot + 1, 0.0F,
 							1.0F * 3.0F, 1.0F);
-
-					abstractarrowentity.setBaseDamage(7.6);
 					abstractarrowentity.isNoGravity();
+					worldIn.addFreshEntity(abstractarrowentity);
+					ShotgunShellEntity abstractarrowentity1 = createArrow(worldIn, stack, playerentity);
+					abstractarrowentity1 = customeArrow(abstractarrowentity1);
+					abstractarrowentity1.shootFromRotation(playerentity, playerentity.xRot, playerentity.yRot - 1, 0.0F,
+							1.0F * 3.0F, 1.0F);
+					abstractarrowentity1.isNoGravity();
+					worldIn.addFreshEntity(abstractarrowentity1);
 
 					stack.hurtAndBreak(2, entityLiving, p -> p.broadcastBreakEvent(entityLiving.getUsedItemHand()));
-					worldIn.addFreshEntity(abstractarrowentity);
 					worldIn.playSound((PlayerEntity) null, playerentity.getX(), playerentity.getY(),
 							playerentity.getZ(), ModSoundEvents.SUPER_SHOTGUN_SHOOT.get(), SoundCategory.PLAYERS, 1.0F,
 							1.0F);
@@ -100,11 +119,6 @@ public class SuperShotgun extends DoomBaseItem {
 		}
 
 		return f;
-	}
-
-	@Override
-	public int getUseDuration(ItemStack stack) {
-		return 72000;
 	}
 
 	public ShotgunShellEntity customeArrow(ShotgunShellEntity arrow) {

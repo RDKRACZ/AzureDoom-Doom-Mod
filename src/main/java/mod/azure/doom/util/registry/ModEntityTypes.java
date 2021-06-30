@@ -7,6 +7,7 @@ import mod.azure.doom.entity.projectiles.BarrelEntity;
 import mod.azure.doom.entity.projectiles.BulletEntity;
 import mod.azure.doom.entity.projectiles.ChaingunBulletEntity;
 import mod.azure.doom.entity.projectiles.EnergyCellEntity;
+import mod.azure.doom.entity.projectiles.HookEntity;
 import mod.azure.doom.entity.projectiles.RocketEntity;
 import mod.azure.doom.entity.projectiles.ShotgunShellEntity;
 import mod.azure.doom.entity.projectiles.UnmaykrBoltEntity;
@@ -85,6 +86,11 @@ public class ModEntityTypes {
 
 	public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITIES,
 			DoomMod.MODID);
+
+	public static final RegistryObject<EntityType<HookEntity>> HOOK = ENTITY_TYPES.register("hook",
+			() -> EntityType.Builder.<HookEntity>createNothing(EntityClassification.MISC)
+					.sized(0.5F, 0.8F).clientTrackingRange(10)
+					.build(new ResourceLocation(DoomMod.MODID, "hook").toString()));
 
 	public static final RegistryObject<EntityType<DoomFireEntity>> FIRING = ENTITY_TYPES.register("archvile_firing",
 			() -> EntityType.Builder.<DoomFireEntity>of(DoomFireEntity::new, EntityClassification.MISC)

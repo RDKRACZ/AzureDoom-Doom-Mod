@@ -4,7 +4,7 @@
 		{
 			"description": {
 				"identifier": "geometry.heavyassaultrifle",
-				"texture_width": 64,
+				"texture_width": 128,
 				"texture_height": 64,
 				"visible_bounds_width": 5,
 				"visible_bounds_height": 2.5,
@@ -437,6 +437,25 @@
 								"west": {"uv": [45, 45], "uv_size": [4, 2]},
 								"up": {"uv": [0, 46], "uv_size": [2, 4]},
 								"down": {"uv": [2, 50], "uv_size": [2, -4]}
+							}
+						}
+					]
+				},
+				{
+					"name": "bone2",
+					"parent": "group_1",
+					"pivot": [-0.3, 4.532, -22.223],
+					"cubes": [
+						{
+							"origin": [-0.8, 4.132, -22.223],
+							"size": [1, 1, 0],
+							"uv": {
+								"north": {"uv": [64, 0], "uv_size": [64, 64]},
+								"east": {"uv": [128, 0], "uv_size": [0, 1]},
+								"south": {"uv": [128, 0], "uv_size": [-64, 64]},
+								"west": {"uv": [128, 0], "uv_size": [0, 1]},
+								"up": {"uv": [128, 1], "uv_size": [0, -1]},
+								"down": {"uv": [128, 1], "uv_size": [0, -1]}
 							}
 						}
 					]

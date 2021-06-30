@@ -88,6 +88,7 @@ import mod.azure.doom.client.render.projectiles.BarenBlastRender;
 import mod.azure.doom.client.render.projectiles.BulletsRender;
 import mod.azure.doom.client.render.projectiles.ChaingunBulletRender;
 import mod.azure.doom.client.render.projectiles.EnergyRender;
+import mod.azure.doom.client.render.projectiles.HookRender;
 import mod.azure.doom.client.render.projectiles.RocketRender;
 import mod.azure.doom.client.render.projectiles.ShotgunShellRender;
 import mod.azure.doom.client.render.projectiles.UnmaykrBulletRender;
@@ -227,6 +228,7 @@ public class ClientModEventSubscriber {
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ARCHVILEETERNAL.get(),
 				ArchvileEternalRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.TENTACLE.get(), TentacleRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.HOOK.get(), HookRender::new);
 
 		GeoArmorRenderer.registerArmorRenderer(DoomicornDoomArmor.class, new DoomicornRender());
 		GeoArmorRenderer.registerArmorRenderer(NightmareDoomArmor.class, new NightmareRender());

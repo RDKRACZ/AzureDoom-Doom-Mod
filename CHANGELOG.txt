@@ -1,6 +1,7 @@
 v.4.0.0
 
 - **REQUIRED VERSION OF GECKOLIB IS NOW 3.0.32**
+- **RESET YOUR CONFIGS**
 - Added the Tyrant, thanks to Creeper2545 for the models base and Pedroca for the texture!
 - Added the Possessed Worker, thanks to Undeadmonkey for the model and Pedroca for the texture!
 - Added the Arachnotron Eternal, thanks to Creman for the model and Pedroca for the texture!
@@ -19,6 +20,7 @@ v.4.0.0
 	- The Overworld will now generate massive portals, similar to ruined portals but bigger and can spawn the mods mobs.***
 - Added the Gun Crafter, which is how you will now craft all MCDoom weapons.
 - Added Advancements for the 3 new Doom structures, Argent Energy/Plate, and summoning/killing the Icon of Sin.
+- Added new config options for all gun projectile damages.
 - Updated Argent Tools, Ballista/Unmaykr bolts, Argent Energy/Plate, BFG Cell, Inmortal Sphere, and Daisy (Now rabbit foot) item textures.
 - Scaled up the OG Cyberdemon.
 - New Arachnotron and Spider Mastermind animations!
@@ -26,6 +28,7 @@ v.4.0.0
 - Demons are now able to walk on Lava like Striders.
 - Fixed not being able to search for the armors or a few weapons in the creative search menu.
 - All guns now use the bow holding pose for aiming in 3rd person.
+- Weapon damages have been rewriten from the ground up. 
 - Fixed the Crucible Blade glitching open and closed.
 - Massively increased cool down of Gore Nest Spawns and added a max of 3 waves per gore nest.
 - Halved all demons (expect the Icon of Sin) follow ranges to 25, in line with vanilla mobs.

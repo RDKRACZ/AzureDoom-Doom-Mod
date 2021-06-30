@@ -91,7 +91,7 @@ public class DoomMod {
 		DoomStructures.DEFERRED_REGISTRY_STRUCTURE.register(modEventBus);
 		forgeBus.addListener(EventPriority.NORMAL, this::addDimensionalSpacing);
 		forgeBus.addListener(EventPriority.HIGH, this::biomeModification);
-		//MinecraftForge.EVENT_BUS.addListener(this::gEvent);
+		// MinecraftForge.EVENT_BUS.addListener(this::gEvent);
 		forgeBus.addGenericListener(Block.class, DoomMod::updatingBlocksID);
 		forgeBus.addGenericListener(Item.class, DoomMod::updatingItemsID);
 		MinecraftForge.EVENT_BUS.addListener(DoomVillagerTrades::onVillagerTradesEvent);

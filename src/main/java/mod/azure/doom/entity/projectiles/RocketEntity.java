@@ -270,7 +270,7 @@ public class RocketEntity extends AbstractArrowEntity implements IAnimatable {
 			double d12 = (double) (MathHelper.sqrt(entity.distanceToSqr(vector3d)) / f2);
 			if (d12 <= 1.0D) {
 				if (entity instanceof LivingEntity) {
-					entity.hurt(DamageSource.playerAttack((PlayerEntity) this.shooter), 20);
+					entity.hurt(DamageSource.playerAttack((PlayerEntity) this.shooter), Config.SERVER.rocket_damage);
 				}
 			}
 		}

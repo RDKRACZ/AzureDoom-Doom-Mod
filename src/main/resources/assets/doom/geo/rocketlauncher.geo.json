@@ -4,9 +4,9 @@
 		{
 			"description": {
 				"identifier": "geometry.unknown",
-				"texture_width": 128,
+				"texture_width": 256,
 				"texture_height": 128,
-				"visible_bounds_width": 6,
+				"visible_bounds_width": 7,
 				"visible_bounds_height": 2.5,
 				"visible_bounds_offset": [0, 0.75, 0]
 			},
@@ -519,6 +519,25 @@
 								"west": {"uv": [43, 66], "uv_size": [3, 8]},
 								"up": {"uv": [66, 72], "uv_size": [3, 3]},
 								"down": {"uv": [46, 76], "uv_size": [3, -3]}
+							}
+						}
+					]
+				},
+				{
+					"name": "bone2",
+					"parent": "bone",
+					"pivot": [0.5, 12.4, -23.5],
+					"cubes": [
+						{
+							"origin": [-0.1, 11.9, -23.5],
+							"size": [1, 1, 0.1],
+							"uv": {
+								"north": {"uv": [129, 1], "uv_size": [128, 128]},
+								"east": {"uv": [256, 0], "uv_size": [0, 1]},
+								"south": {"uv": [129, 1], "uv_size": [128, 128]},
+								"west": {"uv": [256, 0], "uv_size": [0, 1]},
+								"up": {"uv": [256, 1], "uv_size": [0, -1]},
+								"down": {"uv": [256, 1], "uv_size": [0, -1]}
 							}
 						}
 					]

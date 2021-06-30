@@ -233,8 +233,10 @@ public class ModEntitySpawn {
 		}
 		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.SPIDERMASTERMIND, biome)
 				&& config.get(EntityConfigType.SPIDERMASTERMIND).SPAWN_WEIGHT > 0) {
-			base.add(new Spawners(ModEntityTypes.SPIDERMASTERMIND2016.get(), config.get(EntityConfigType.SPIDERMASTERMIND).SPAWN_WEIGHT,
-					config.get(EntityConfigType.SPIDERMASTERMIND).MIN_GROUP, config.get(EntityConfigType.SPIDERMASTERMIND).MAX_GROUP));
+			base.add(new Spawners(ModEntityTypes.SPIDERMASTERMIND2016.get(),
+					config.get(EntityConfigType.SPIDERMASTERMIND).SPAWN_WEIGHT,
+					config.get(EntityConfigType.SPIDERMASTERMIND).MIN_GROUP,
+					config.get(EntityConfigType.SPIDERMASTERMIND).MAX_GROUP));
 		}
 //		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.DOOMHUNTER, biome)
 //				&& config.get(EntityConfigType.DOOMHUNTER).SPAWN_WEIGHT > 0) {
@@ -243,8 +245,9 @@ public class ModEntitySpawn {
 //		}
 		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.ARCHVILE, biome)
 				&& config.get(EntityConfigType.ARCHVILE).SPAWN_WEIGHT > 0) {
-			base.add(new Spawners(ModEntityTypes.ARCHVILEETERNAL.get(), config.get(EntityConfigType.ARCHVILE).SPAWN_WEIGHT,
-					config.get(EntityConfigType.ARCHVILE).MIN_GROUP, config.get(EntityConfigType.ARCHVILE).MAX_GROUP));
+			base.add(new Spawners(ModEntityTypes.ARCHVILEETERNAL.get(),
+					config.get(EntityConfigType.ARCHVILE).SPAWN_WEIGHT, config.get(EntityConfigType.ARCHVILE).MIN_GROUP,
+					config.get(EntityConfigType.ARCHVILE).MAX_GROUP));
 		}
 		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.PINKY, biome)
 				&& config.get(EntityConfigType.PINKY).SPAWN_WEIGHT > 0) {
@@ -254,8 +257,7 @@ public class ModEntitySpawn {
 		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.TENTACLE, biome)
 				&& config.get(EntityConfigType.TENTACLE).SPAWN_WEIGHT > 0) {
 			base.add(new Spawners(ModEntityTypes.TENTACLE.get(), config.get(EntityConfigType.TENTACLE).SPAWN_WEIGHT,
-					config.get(EntityConfigType.TENTACLE).MIN_GROUP,
-					config.get(EntityConfigType.TENTACLE).MAX_GROUP));
+					config.get(EntityConfigType.TENTACLE).MIN_GROUP, config.get(EntityConfigType.TENTACLE).MAX_GROUP));
 		}
 //		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.WHIPLASH, biome)
 //				&& config.get(EntityConfigType.WHIPLASH).SPAWN_WEIGHT > 0) {
