@@ -88,7 +88,7 @@ public class ModEntityTypes {
 			DoomMod.MODID);
 
 	public static final RegistryObject<EntityType<HookEntity>> HOOK = ENTITY_TYPES.register("hook",
-			() -> EntityType.Builder.<HookEntity>createNothing(EntityClassification.MISC)
+			() -> EntityType.Builder.<HookEntity>of(HookEntity::new, EntityClassification.MISC)
 					.sized(0.5F, 0.8F).clientTrackingRange(10)
 					.build(new ResourceLocation(DoomMod.MODID, "hook").toString()));
 

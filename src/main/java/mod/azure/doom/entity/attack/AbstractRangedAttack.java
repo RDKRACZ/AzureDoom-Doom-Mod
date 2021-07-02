@@ -71,8 +71,7 @@ public abstract class AbstractRangedAttack implements IRangedAttack {
 		double d4 = livingentity.getZ() - (this.parentEntity.getZ() + vector3d.z * zOffSetModifier);
 		ProjectileEntity projectile = getProjectile(world, rollAccuracy(d2), rollAccuracy(d3), rollAccuracy(d4));
 		projectile.setPos(this.parentEntity.getX() + vector3d.x * xOffSetModifier,
-				this.parentEntity.getY(entityHeightFraction),
-				this.parentEntity.getZ() + vector3d.z * zOffSetModifier);
+				this.parentEntity.getY(entityHeightFraction), this.parentEntity.getZ() + vector3d.z * zOffSetModifier);
 		world.addFreshEntity(projectile);
 		if (sound == null)
 			getDefaultAttackSound().play(this.parentEntity);

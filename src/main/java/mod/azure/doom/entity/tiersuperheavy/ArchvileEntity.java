@@ -165,21 +165,26 @@ public class ArchvileEntity extends DemonEntity implements IAnimatable {
 		this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
 		this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
 		this.targetSelector.addGoal(2, new HurtByTargetGoal(this).setAlertOthers());
-		this.goalSelector.addGoal(4, new ArchvileEntity.AttackGoal(this, 1));
+		this.goalSelector.addGoal(4, new ArchvileEntity.AttackGoal(this));
 		this.targetSelector.addGoal(1, new ArchvileEntity.FindPlayerGoal(this, this::isAngryAt));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, true));
 		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this).setAlertOthers()));
 	}
 
+	@Override
+	protected void updateControlFlags() {
+		boolean flag = this.getTarget() != null && this.canSee(this.getTarget());
+		this.goalSelector.setControlFlag(Goal.Flag.LOOK, flag);
+		super.updateControlFlags();
+	}
+
 	static class AttackGoal extends Goal {
 		private final ArchvileEntity parentEntity;
 		public int attackTimer;
-		private int statecheck;
 
-		public AttackGoal(ArchvileEntity ghast, int state) {
+		public AttackGoal(ArchvileEntity ghast) {
 			this.parentEntity = ghast;
-			this.statecheck = state;
 		}
 
 		public boolean canUse() {
@@ -187,7 +192,16 @@ public class ArchvileEntity extends DemonEntity implements IAnimatable {
 		}
 
 		public void start() {
-			this.attackTimer = 0;
+			super.start();
+			this.parentEntity.setAggressive(true);
+		}
+
+		@Override
+		public void stop() {
+			super.stop();
+			this.parentEntity.setAggressive(false);
+			this.parentEntity.setAttackingState(0);
+			this.attackTimer = -1;
 		}
 
 		public void tick() {
@@ -250,9 +264,12 @@ public class ArchvileEntity extends DemonEntity implements IAnimatable {
 						this.parentEntity.playSound(ModSoundEvents.ARCHVILE_SCREAM.get(), 1.0F,
 								1.2F / (this.parentEntity.random.nextFloat() * 0.2F + 0.9F));
 					}
+					this.parentEntity.setAttackingState(1);
+				}
+				if (this.attackTimer == 60) {
+					this.parentEntity.setAttackingState(0);
 					this.attackTimer = -80;
 				}
-				this.parentEntity.setAttackingState(this.attackTimer > 20 ? statecheck : 0);
 			} else if (this.attackTimer > 0) {
 				--this.attackTimer;
 			}

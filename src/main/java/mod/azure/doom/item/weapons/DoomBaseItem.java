@@ -97,6 +97,11 @@ public class DoomBaseItem extends Item implements IAnimatable, ISyncable {
 	}
 	
 	@Override
+	public int getUseDuration(ItemStack stack) {
+		return 7200;
+	}
+	
+	@Override
 	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(new TranslationTextComponent(
 				"Ammo: " + (stack.getMaxDamage() - stack.getDamageValue() - 1) + " / " + (stack.getMaxDamage() - 1))

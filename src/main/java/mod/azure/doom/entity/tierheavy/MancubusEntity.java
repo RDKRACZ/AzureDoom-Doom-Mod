@@ -5,8 +5,8 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import mod.azure.doom.entity.DemonEntity;
-import mod.azure.doom.entity.projectiles.entity.DoomFireEntity;
 import mod.azure.doom.entity.projectiles.entity.BarenBlastEntity;
+import mod.azure.doom.entity.projectiles.entity.DoomFireEntity;
 import mod.azure.doom.util.config.Config;
 import mod.azure.doom.util.config.EntityConfig;
 import mod.azure.doom.util.config.EntityDefaults.EntityConfigType;
@@ -89,7 +89,7 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 			return PlayState.CONTINUE;
 		}
 		if (this.entityData.get(STATE) == 3 && !(this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("ground", false));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("ground", true));
 			return PlayState.CONTINUE;
 		}
 		return PlayState.STOP;
@@ -153,7 +153,7 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 
 	static class FireballAttackGoal extends Goal {
 		private final MancubusEntity parentEntity;
-	    protected int attackTimer = 0;
+		protected int attackTimer = 0;
 
 		public FireballAttackGoal(MancubusEntity ghast) {
 			this.parentEntity = ghast;
@@ -164,13 +164,16 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 		}
 
 		public void start() {
-			this.attackTimer = 0;
+			super.start();
+			this.parentEntity.setAggressive(true);
 		}
 
 		@Override
 		public void stop() {
 			super.stop();
+			this.parentEntity.setAggressive(false);
 			this.parentEntity.setAttackingState(0);
+			this.attackTimer = -1;
 		}
 
 		public void tick() {
@@ -188,38 +191,38 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 						livingentity.getX() - parentEntity.getX());
 				BarenBlastEntity fireballentity = new BarenBlastEntity(world, this.parentEntity, d2, d3, d4, 6);
 				if (this.attackTimer == 15) {
-					if (parentEntity.distanceTo(livingentity) < 3.0D) {
+					if (parentEntity.distanceTo(livingentity) <= 3.0D) {
 						for (int i = 0; i < 5; ++i) {
 							float f1 = f + (float) i * (float) Math.PI * 0.4F;
 							parentEntity.spawnFlames(parentEntity.getX() + (double) MathHelper.cos(f1) * 1.5D,
 									parentEntity.getZ() + (double) MathHelper.sin(f1) * 1.5D, d0, d1, f1, 0);
+							this.parentEntity.setAttackingState(3);
 						}
-						this.parentEntity.setAttackingState(attackTimer > 5 ? 3 : 0);
-					} else if (parentEntity.distanceTo(livingentity) < 13.0D
-							&& parentEntity.distanceTo(livingentity) > 3.0D) {
+					} else if (parentEntity.distanceTo(livingentity) <= 13.0D
+							&& parentEntity.distanceTo(livingentity) > 4.0D) {
 						for (int l = 0; l < 16; ++l) {
 							double d5 = 1.25D * (double) (l + 1);
 							int j = 1 * l;
 							parentEntity.spawnFlames(parentEntity.getX() + (double) MathHelper.cos(f) * d5,
 									parentEntity.getZ() + (double) MathHelper.sin(f) * d5, d0, d1, f, j);
-							this.parentEntity.setAttackingState(attackTimer > 5 ? 2 : 0);
+							this.parentEntity.setAttackingState(2);
 						}
 					} else {
 						fireballentity.setPos(this.parentEntity.getX() + vector3d.x * 2.0D,
 								this.parentEntity.getY(0.5D) + 0.5D, fireballentity.getZ() + vector3d.z * 2.0D);
 						world.addFreshEntity(fireballentity);
-						this.parentEntity.setAttackingState(attackTimer > 5 ? 1 : 0);
+						this.parentEntity.setAttackingState(1);
 					}
 				}
 				if (this.attackTimer == 20) {
-					if (parentEntity.distanceTo(livingentity) < 3.0D) {
+					if (parentEntity.distanceTo(livingentity) <= 3.0D) {
 						for (int k = 0; k < 8; ++k) {
 							float f2 = f + (float) k * (float) Math.PI * 2.0F / 8.0F + 1.2566371F;
 							parentEntity.spawnFlames(parentEntity.getX() + (double) MathHelper.cos(f2) * 2.5D,
 									parentEntity.getZ() + (double) MathHelper.sin(f2) * 2.5D, d0, d1, f2, 3);
 						}
-					} else if (parentEntity.distanceTo(livingentity) < 13.0D
-							&& parentEntity.distanceTo(livingentity) > 3.0D) {
+					} else if (parentEntity.distanceTo(livingentity) <= 13.0D
+							&& parentEntity.distanceTo(livingentity) > 4.0D) {
 						for (int l = 0; l < 16; ++l) {
 							double d5 = 1.25D * (double) (l + 1);
 							int j = 1 * l;
@@ -231,11 +234,13 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 								this.parentEntity.getY(0.5D) + 0.5D, fireballentity.getZ() + vector3d.z * 2.0D);
 						world.addFreshEntity(fireballentity);
 					}
+				}
+				if (this.attackTimer == 25) {
+					this.parentEntity.setAttackingState(0);
 					this.attackTimer = -150;
 				}
 			} else if (this.attackTimer > 0) {
 				--this.attackTimer;
-				this.parentEntity.setAttackingState(0);
 			}
 			this.parentEntity.lookAt(livingentity, 30.0F, 30.0F);
 		}

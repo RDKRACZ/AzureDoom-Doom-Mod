@@ -188,15 +188,17 @@ public class IconofsinEntity extends DemonEntity implements IAnimatable {
 			return this.parentEntity.getTarget() != null;
 		}
 
-		@Override
 		public void start() {
-			this.attackTimer = 0;
+			super.start();
+			this.parentEntity.setAggressive(true);
 		}
 
 		@Override
 		public void stop() {
 			super.stop();
+			this.parentEntity.setAggressive(false);
 			this.parentEntity.setAttackingState(0);
+			this.attackTimer = -1;
 		}
 
 		@Override
@@ -251,9 +253,12 @@ public class IconofsinEntity extends DemonEntity implements IAnimatable {
 							} else {
 								parentEntity.doDamage();
 							}
+							this.parentEntity.setAttackingState(1);
 						}
-						this.parentEntity.setAttackingState(attackTimer > 10 ? 1 : 0);
-						this.attackTimer = -35;
+					}
+					if (this.attackTimer == 45) {
+						this.parentEntity.setAttackingState(0);
+						this.attackTimer = -135;
 					}
 				} else if (this.attackTimer > 0) {
 					--this.attackTimer;
