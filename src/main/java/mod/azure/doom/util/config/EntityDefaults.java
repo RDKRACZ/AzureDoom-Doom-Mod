@@ -19,6 +19,7 @@ public class EntityDefaults {
 		GORE_NEST("GoreNest", new EntityDefaults(true, 1, 5).setGeneralSpeed(0).setMeleeDamage(0)),
 		HELL_KNIGHT_2016("HellKnight2016", new EntityDefaults(true, 1, 90).setMeleeDamage(6).setGeneralSpeed(0.25)),
 		HELL_KNIGHT("HellKnight", new EntityDefaults(true, 1, 90).setMeleeDamage(6).setGeneralSpeed(0.25)),
+		MOTHERDEMON("MotherDemon", new EntityDefaults(true, 1, 500).setMeleeDamage(12).setGeneralSpeed(0.25)),
 		ICON_OF_SIN("IconofSin", new EntityDefaults(true, 1, 1000).setMeleeDamage(30).setGeneralSpeed(0.25)),
 		IMP_2016("Imp2016", new EntityDefaults(false, 4, 30).setRangedDamage(4).setMeleeDamage(4).setGeneralSpeed(0.25)),
 		IMP_STONE("StoneImp", new EntityDefaults(false, 4, 15).setMeleeDamage(4).setGeneralSpeed(0.75)),

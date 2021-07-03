@@ -191,15 +191,15 @@ public class MancubusEntity extends DemonEntity implements IAnimatable {
 						livingentity.getX() - parentEntity.getX());
 				BarenBlastEntity fireballentity = new BarenBlastEntity(world, this.parentEntity, d2, d3, d4, 6);
 				if (this.attackTimer == 15) {
-					if (parentEntity.distanceTo(livingentity) <= 3.0D) {
+					if (parentEntity.distanceTo(livingentity) < 3.0D) {
 						for (int i = 0; i < 5; ++i) {
 							float f1 = f + (float) i * (float) Math.PI * 0.4F;
 							parentEntity.spawnFlames(parentEntity.getX() + (double) MathHelper.cos(f1) * 1.5D,
 									parentEntity.getZ() + (double) MathHelper.sin(f1) * 1.5D, d0, d1, f1, 0);
 							this.parentEntity.setAttackingState(3);
 						}
-					} else if (parentEntity.distanceTo(livingentity) <= 13.0D
-							&& parentEntity.distanceTo(livingentity) > 4.0D) {
+					} else if (parentEntity.distanceTo(livingentity) < 13.0D
+							&& parentEntity.distanceTo(livingentity) > 3.0D) {
 						for (int l = 0; l < 16; ++l) {
 							double d5 = 1.25D * (double) (l + 1);
 							int j = 1 * l;

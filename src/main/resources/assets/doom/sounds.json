@@ -280,5 +280,11 @@
 	},
 	"doom.maykr_ambient": {
 		"category": "music", "sounds": [{"name": "doom:maykr_ambient"}]
+	},
+	"doom.shotgunreload": {
+		"category": "music", "sounds": [{"name": "doom:shotgunreload"}]
+	},
+	"doom.clipreload": {
+		"category": "music", "sounds": [{"name": "doom:clipreload"}]
 	}
 }

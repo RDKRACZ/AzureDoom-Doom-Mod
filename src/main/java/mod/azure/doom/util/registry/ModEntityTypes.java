@@ -24,6 +24,7 @@ import mod.azure.doom.entity.tierambient.GoreNestEntity;
 import mod.azure.doom.entity.tierambient.TentacleEntity;
 import mod.azure.doom.entity.tierboss.ArchMakyrEntity;
 import mod.azure.doom.entity.tierboss.IconofsinEntity;
+import mod.azure.doom.entity.tierboss.MotherDemonEntity;
 import mod.azure.doom.entity.tierboss.SpiderMastermind2016Entity;
 import mod.azure.doom.entity.tierboss.SpiderMastermindEntity;
 import mod.azure.doom.entity.tierfodder.ChaingunnerEntity;
@@ -88,9 +89,8 @@ public class ModEntityTypes {
 			DoomMod.MODID);
 
 	public static final RegistryObject<EntityType<HookEntity>> HOOK = ENTITY_TYPES.register("hook",
-			() -> EntityType.Builder.<HookEntity>of(HookEntity::new, EntityClassification.MISC)
-					.sized(0.5F, 0.8F).clientTrackingRange(10)
-					.build(new ResourceLocation(DoomMod.MODID, "hook").toString()));
+			() -> EntityType.Builder.<HookEntity>of(HookEntity::new, EntityClassification.MISC).sized(0.5F, 0.8F)
+					.clientTrackingRange(10).build(new ResourceLocation(DoomMod.MODID, "hook").toString()));
 
 	public static final RegistryObject<EntityType<DoomFireEntity>> FIRING = ENTITY_TYPES.register("archvile_firing",
 			() -> EntityType.Builder.<DoomFireEntity>of(DoomFireEntity::new, EntityClassification.MISC)
@@ -414,6 +414,11 @@ public class ModEntityTypes {
 			() -> EntityType.Builder.of(BloodMaykrEntity::new, EntityClassification.MONSTER).sized(1.7f, 2.2F)
 					.fireImmune().clientTrackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "blood_maykr").toString()));
+
+	public static final RegistryObject<EntityType<MotherDemonEntity>> MOTHERDEMON = ENTITY_TYPES.register("motherdemon",
+			() -> EntityType.Builder.of(MotherDemonEntity::new, EntityClassification.MONSTER).sized(1.7f, 2.2F)
+					.fireImmune().clientTrackingRange(9)
+					.build(new ResourceLocation(DoomMod.MODID, "motherdemon").toString()));
 
 	public static final RegistryObject<EntityType<TentacleEntity>> TENTACLE = ENTITY_TYPES.register("tentacle",
 			() -> EntityType.Builder.of(TentacleEntity::new, EntityClassification.MONSTER).sized(1.7f, 2.2F)

@@ -35,6 +35,7 @@ import mod.azure.doom.client.render.MancubusRender;
 import mod.azure.doom.client.render.MarauderRender;
 import mod.azure.doom.client.render.MaykrDroneRender;
 import mod.azure.doom.client.render.MechaZombieRender;
+import mod.azure.doom.client.render.MotherDemonRender;
 import mod.azure.doom.client.render.NightmareImpRender;
 import mod.azure.doom.client.render.PainRender;
 import mod.azure.doom.client.render.Pinky2016Render;
@@ -228,6 +229,7 @@ public class ClientModEventSubscriber {
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ARCHVILEETERNAL.get(),
 				ArchvileEternalRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.TENTACLE.get(), TentacleRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.MOTHERDEMON.get(), MotherDemonRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.HOOK.get(), HookRender::new);
 
 		GeoArmorRenderer.registerArmorRenderer(DoomicornDoomArmor.class, new DoomicornRender());

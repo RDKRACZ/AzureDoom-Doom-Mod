@@ -85,8 +85,6 @@ public class Chainsaw extends Item {
 			entityIn.getCommandSenderWorld().getEntities(user, aabb).forEach(e -> doDamage(user, e));
 			entityIn.getCommandSenderWorld().getEntities(user, aabb).forEach(e -> damageItem(user, stack));
 			entityIn.getCommandSenderWorld().getEntities(user, aabb).forEach(e -> addParticle(e));
-		}
-		if (isSelected) {
 			worldIn.playSound((PlayerEntity) null, user.getX(), user.getY(), user.getZ(),
 					ModSoundEvents.CHAINSAW_IDLE.get(), SoundCategory.PLAYERS, 0.05F,
 					1.0F / (random.nextFloat() * 0.4F + 1.2F) + 0.25F * 0.5F);

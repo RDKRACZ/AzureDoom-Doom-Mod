@@ -44,8 +44,14 @@ public class ModSoundEvents {
 	public static final RegistryObject<SoundEvent> PISTOL_HIT = MOD_SOUNDS.register("doom.pistol_fire",
 			() -> new SoundEvent(new ResourceLocation(DoomMod.MODID, "doom.pistol_fire")));
 
+	public static final RegistryObject<SoundEvent> CLIPRELOAD = MOD_SOUNDS.register("doom.clipreload",
+			() -> new SoundEvent(new ResourceLocation(DoomMod.MODID, "doom.clipreload")));
+
 	public static final RegistryObject<SoundEvent> SHOTGUN_SHOOT = MOD_SOUNDS.register("doom.shotgun_fire",
 			() -> new SoundEvent(new ResourceLocation(DoomMod.MODID, "doom.shotgun_fire")));
+
+	public static final RegistryObject<SoundEvent> SHOTGUNRELOAD = MOD_SOUNDS.register("doom.shotgunreload",
+			() -> new SoundEvent(new ResourceLocation(DoomMod.MODID, "doom.shotgunreload")));
 
 	public static final RegistryObject<SoundEvent> SUPER_SHOTGUN_SHOOT = MOD_SOUNDS.register("doom.super_shotgun_fire",
 			() -> new SoundEvent(new ResourceLocation(DoomMod.MODID, "doom.super_shotgun_fire")));

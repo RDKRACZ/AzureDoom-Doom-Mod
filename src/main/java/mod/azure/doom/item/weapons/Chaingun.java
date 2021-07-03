@@ -88,6 +88,8 @@ public class Chaingun extends DoomBaseItem {
 				removeAmmo(DoomItems.CHAINGUN_BULLETS.get(), user);
 				user.getItemInHand(hand).hurtAndBreak(-50, user, s -> user.broadcastBreakEvent(hand));
 				user.getItemInHand(hand).setPopTime(3);
+				user.getCommandSenderWorld().playSound((PlayerEntity) null, user.getX(), user.getY(), user.getZ(),
+						ModSoundEvents.CLIPRELOAD.get(), SoundCategory.PLAYERS, 1.00F, 1.0F);
 			}
 		}
 	}
