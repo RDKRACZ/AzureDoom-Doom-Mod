@@ -12,7 +12,7 @@
 			},
 			"bones": [
 				{
-					"name": "group2",
+					"name": "bench",
 					"pivot": [-1, 0, 0],
 					"cubes": [
 						{
@@ -162,13 +162,13 @@
 					]
 				},
 				{
-					"name": "bone",
-					"parent": "group2",
-					"pivot": [-1, 0, 0]
+					"name": "gun",
+					"parent": "bench",
+					"pivot": [0.6, 21, 1]
 				},
 				{
-					"name": "gun",
-					"parent": "bone",
+					"name": "group",
+					"parent": "gun",
 					"pivot": [0.6, 21, 1],
 					"cubes": [
 						{
