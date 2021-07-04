@@ -20,7 +20,7 @@ v.4.0.0
 	- The End will now generate a structure dedicated to the Maykrs and the only place they will spawn!* 
 	- The Nether will now generate Titan skulls, that show signs of being transformed into a place of worship though it seems they were abandoned.**
 	- The Overworld will now generate massive portals, similar to ruined portals but bigger and can spawn the mods mobs.***
-- Added the Gun Crafter, which is how you will now craft all MCDoom weapons.
+- Added the Gun Crafter, which is how you will now craft all MCDoom weapons, textured by Pedroca!
 - Added Advancements for the 3 new Doom structures, Argent Energy/Plate, and summoning/killing the Icon of Sin.
 - Added new config options for all gun projectile damages.
 - Updated Argent Tools, Ballista/Unmaykr bolts, Argent Energy/Plate, BFG Cell, Inmortal Sphere, and Daisy (Now rabbit foot) item textures.
