@@ -10,6 +10,7 @@ public class EntityDefaults {
 		BARON("Baron", new EntityDefaults(true, 1, 180).setMeleeDamage(7).setGeneralSpeed(0.25).setRangedDamage(12)),
 		CACODEMON("Cacodemon", new EntityDefaults(false, 2, 80).setGeneralSpeed(0.25).setRangedDamage(10)),
 		CHAINGUNNER("Chaingunner", new EntityDefaults(false, 4, 15).setMeleeDamage(4).setRangedDamage(4).setGeneralSpeed(0.25)),
+		TURRET("Turret", new EntityDefaults(false, 4, 7).setMeleeDamage(0).setGeneralSpeed(0.00)),
 		CUEBALL("Cueball", new EntityDefaults(false, 4, 1).setMeleeDamage(0).setGeneralSpeed(0.00)),
 		TENTACLE("Tentacle", new EntityDefaults(false, 4, 5).setMeleeDamage(1).setGeneralSpeed(0.00)),
 		CYBER_DEMON_2016("CyberDemon2016", new EntityDefaults(true, 1, 300).setMeleeDamage(7).setGeneralSpeed(0.15).setRangedDamage(18)),

@@ -22,6 +22,7 @@ import mod.azure.doom.entity.projectiles.entity.RocketMobEntity;
 import mod.azure.doom.entity.tierambient.CueBallEntity;
 import mod.azure.doom.entity.tierambient.GoreNestEntity;
 import mod.azure.doom.entity.tierambient.TentacleEntity;
+import mod.azure.doom.entity.tierambient.TurretEntity;
 import mod.azure.doom.entity.tierboss.ArchMakyrEntity;
 import mod.azure.doom.entity.tierboss.IconofsinEntity;
 import mod.azure.doom.entity.tierboss.MotherDemonEntity;
@@ -64,6 +65,7 @@ import mod.azure.doom.entity.tiersuperheavy.FireBaronEntity;
 import mod.azure.doom.entity.tiersuperheavy.MarauderEntity;
 import mod.azure.doom.entity.tileentity.GunBlockEntity;
 import mod.azure.doom.entity.tileentity.IconBlockEntity;
+import mod.azure.doom.entity.tileentity.TotemEntity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.tileentity.TileEntityType;
@@ -79,6 +81,10 @@ public class ModEntityTypes {
 
 	public static final RegistryObject<TileEntityType<IconBlockEntity>> ICON = TILE_TYPES.register("icon",
 			() -> TileEntityType.Builder.<IconBlockEntity>of(IconBlockEntity::new, DoomBlocks.DOOM_WALL1.get())
+					.build(null));
+
+	public static final RegistryObject<TileEntityType<TotemEntity>> TOTEM = TILE_TYPES.register("totem",
+			() -> TileEntityType.Builder.<TotemEntity>of(TotemEntity::new, DoomBlocks.TOTEM.get())
 					.build(null));
 
 	public static final RegistryObject<TileEntityType<GunBlockEntity>> GUN_TABLE_ENTITY = TILE_TYPES
@@ -424,6 +430,10 @@ public class ModEntityTypes {
 			() -> EntityType.Builder.of(TentacleEntity::new, EntityClassification.MONSTER).sized(1.7f, 2.2F)
 					.fireImmune().clientTrackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "tentacle").toString()));
+
+	public static final RegistryObject<EntityType<TurretEntity>> TURRET = ENTITY_TYPES.register("turret",
+			() -> EntityType.Builder.of(TurretEntity::new, EntityClassification.MONSTER).sized(1.7f, 2.2F).fireImmune()
+					.clientTrackingRange(9).build(new ResourceLocation(DoomMod.MODID, "turret").toString()));
 
 	public static final RegistryObject<EntityType<ArchMakyrEntity>> ARCHMAKER = ENTITY_TYPES.register("arch_maykr",
 			() -> EntityType.Builder.of(ArchMakyrEntity::new, EntityClassification.MONSTER).sized(1.7f, 2.2F)

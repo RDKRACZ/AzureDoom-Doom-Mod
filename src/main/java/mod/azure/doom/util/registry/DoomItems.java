@@ -1,9 +1,12 @@
 package mod.azure.doom.util.registry;
 
 import mod.azure.doom.DoomMod;
+import mod.azure.doom.client.render.item.GunCraftingItemRender;
+import mod.azure.doom.client.render.item.TotemItemRender;
 import mod.azure.doom.item.ArgentEnergyItem;
 import mod.azure.doom.item.ArgentPlateItem;
 import mod.azure.doom.item.DaisyItem;
+import mod.azure.doom.item.DoomBlockItem;
 import mod.azure.doom.item.E1M1MusicDisc;
 import mod.azure.doom.item.UnopenedItem;
 import mod.azure.doom.item.ammo.ArgentBolt;
@@ -83,8 +86,12 @@ public class DoomItems {
 	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, DoomMod.MODID);
 
 	// BLOCKS
+	public static final RegistryObject<Item> TOTEM = ITEMS.register("totem",
+			() -> new DoomBlockItem(DoomBlocks.TOTEM.get(),
+					new Item.Properties().tab(DoomMod.DoomBlockItemGroup).setISTER(() -> TotemItemRender::new)));
 	public static final RegistryObject<Item> GUN_TABLE = ITEMS.register("gun_table",
-			() -> new BlockItem(DoomBlocks.GUN_TABLE.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
+			() -> new DoomBlockItem(DoomBlocks.GUN_TABLE.get(),
+					new Item.Properties().tab(DoomMod.DoomBlockItemGroup).setISTER(() -> GunCraftingItemRender::new)));
 	public static final RegistryObject<Item> ITEM = ITEMS.register("barrel",
 			() -> new BlockItem(DoomBlocks.BARREL_BLOCK.get(), new Item.Properties().tab(DoomMod.DoomBlockItemGroup)));
 	public static final RegistryObject<Item> ARGENT_BLOCK = ITEMS.register("argent_block",
@@ -315,6 +322,10 @@ public class DoomItems {
 			() -> new DoomSpawnEgg(ModEntityTypes.ARCHVILEETERNAL));
 	public static final RegistryObject<Item> TENTACLE_SPAWN_EGG = ITEMS.register("tentacle_spawn_egg",
 			() -> new DoomSpawnEgg(ModEntityTypes.TENTACLE));
+	public static final RegistryObject<Item> MOTHERDEMON_SPAWN_EGG = ITEMS.register("motherdemon_spawn_egg",
+			() -> new DoomSpawnEgg(ModEntityTypes.MOTHERDEMON));
+	public static final RegistryObject<Item> TURRET_SPAWN_EGG = ITEMS.register("turret_spawn_egg",
+			() -> new DoomSpawnEgg(ModEntityTypes.TURRET));
 
 	// WEAPONS AND TOOLS
 	public static final RegistryObject<Item> CRUCIBLESWORD = ITEMS.register("cruciblesword",

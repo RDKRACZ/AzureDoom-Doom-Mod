@@ -45,8 +45,9 @@ public class TitanSkullStructure extends Structure<NoFeatureConfig> {
 		return GenerationStage.Decoration.SURFACE_STRUCTURES;
 	}
 
-	private static final List<MobSpawnInfo.Spawners> STRUCTURE_MONSTERS = ImmutableList
-			.of(new MobSpawnInfo.Spawners(ModEntityTypes.LOST_SOUL.get(), 100, 4, 9));
+	private static final List<MobSpawnInfo.Spawners> STRUCTURE_MONSTERS = ImmutableList.of(
+			new MobSpawnInfo.Spawners(ModEntityTypes.LOST_SOUL.get(), 100, 4, 9),
+			new MobSpawnInfo.Spawners(ModEntityTypes.TURRET.get(), 20, 1, 2));
 
 	@Override
 	public List<MobSpawnInfo.Spawners> getDefaultSpawnList() {

@@ -29,15 +29,12 @@ import net.minecraft.world.World;
 public class GunTableBlock extends Block {
 
 	public static final DirectionProperty FACING = HorizontalBlock.FACING;
-	private static final VoxelShape BASE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 4.0D, 14.0D);
-	private static final VoxelShape X_LEG1 = Block.box(3.0D, 4.0D, 4.0D, 13.0D, 5.0D, 12.0D);
-	private static final VoxelShape X_LEG2 = Block.box(4.0D, 5.0D, 6.0D, 12.0D, 10.0D, 10.0D);
-	private static final VoxelShape X_TOP = Block.box(0.0D, 10.0D, 3.0D, 16.0D, 16.0D, 13.0D);
-	private static final VoxelShape Z_LEG1 = Block.box(4.0D, 4.0D, 3.0D, 12.0D, 5.0D, 13.0D);
-	private static final VoxelShape Z_LEG2 = Block.box(6.0D, 5.0D, 4.0D, 10.0D, 10.0D, 12.0D);
-	private static final VoxelShape Z_TOP = Block.box(3.0D, 10.0D, 0.0D, 13.0D, 16.0D, 16.0D);
-	private static final VoxelShape X_AXIS_AABB = VoxelShapes.or(BASE, X_LEG1, X_LEG2, X_TOP);
-	private static final VoxelShape Z_AXIS_AABB = VoxelShapes.or(BASE, Z_LEG1, Z_LEG2, Z_TOP);
+	private static final VoxelShape XBASE1 = Block.box(0, 0, -16, 16, 9, 32); 
+	private static final VoxelShape XBASE2 = Block.box(2, 9, -14, 13, 25, 30);
+	private static final VoxelShape YBASE1 = Block.box(-16, 0, 0, 32, 9, 16); 
+	private static final VoxelShape YBASE2 = Block.box(-14, 9, 2, 30, 25, 13);
+	private static final VoxelShape X_AXIS_AABB = VoxelShapes.or(XBASE1, XBASE2);
+	private static final VoxelShape Z_AXIS_AABB = VoxelShapes.or(YBASE1, YBASE2);
 	public static final BooleanProperty light = RedstoneTorchBlock.LIT;
 
 	public GunTableBlock(AbstractBlock.Properties settings) {
@@ -108,7 +105,7 @@ public class GunTableBlock extends Block {
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
 		Direction direction = state.getValue(FACING);
-		return direction.getAxis() == Direction.Axis.X ? X_AXIS_AABB : Z_AXIS_AABB;
+		return direction.getAxis() == Direction.Axis.X ? Z_AXIS_AABB : X_AXIS_AABB;
 	}
 
 }

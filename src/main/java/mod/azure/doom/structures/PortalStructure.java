@@ -47,6 +47,7 @@ public class PortalStructure extends Structure<NoFeatureConfig> {
 
 	private static final List<MobSpawnInfo.Spawners> STRUCTURE_MONSTERS = ImmutableList.of(
 			new MobSpawnInfo.Spawners(ModEntityTypes.LOST_SOUL.get(), 20, 1, 2),
+			new MobSpawnInfo.Spawners(ModEntityTypes.TURRET.get(), 20, 1, 2),
 			new MobSpawnInfo.Spawners(ModEntityTypes.ZOMBIEMAN.get(), 20, 1, 2),
 			new MobSpawnInfo.Spawners(ModEntityTypes.CHAINGUNNER.get(), 20, 1, 2),
 			new MobSpawnInfo.Spawners(ModEntityTypes.POSSESSEDWORKER.get(), 20, 1, 2),

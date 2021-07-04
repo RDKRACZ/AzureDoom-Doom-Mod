@@ -11,10 +11,12 @@ import mod.azure.doom.block.E1M1TurnableBlock;
 import mod.azure.doom.block.E1M1TurnableHurtBlock;
 import mod.azure.doom.block.GunTableBlock;
 import mod.azure.doom.block.JumppadBlock;
+import mod.azure.doom.block.TotemBlock;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -22,6 +24,11 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class DoomBlocks {
 
 	public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, DoomMod.MODID);
+
+	public static final RegistryObject<Block> TOTEM = BLOCKS.register("totem",
+			() -> new TotemBlock((AbstractBlock.Properties.of(Material.METAL).strength(4.0f).sound(SoundType.METAL)
+					.harvestLevel(3).harvestTool(ToolType.PICKAXE).noDrops().requiresCorrectToolForDrops().strength(3.0F, 3.0F)
+					.noOcclusion())));
 
 	public static final RegistryObject<Block> GUN_TABLE = BLOCKS.register("gun_table", () -> new GunTableBlock(
 			(AbstractBlock.Properties.of(Material.METAL).strength(4.0f).sound(SoundType.GRASS).noOcclusion())));
