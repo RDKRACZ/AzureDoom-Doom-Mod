@@ -19,7 +19,7 @@ public class DoomHunterModel extends AnimatedGeoModel<DoomHunterEntity> {
 
 	@Override
 	public ResourceLocation getAnimationFileLocation(DoomHunterEntity object) {
-		return new ResourceLocation(DoomMod.MODID, "animations/empty.animation.json");
+		return new ResourceLocation(DoomMod.MODID, "animations/doomhunter.animation.json");
 	}
 
 }

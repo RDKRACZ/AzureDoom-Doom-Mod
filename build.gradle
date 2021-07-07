@@ -106,11 +106,11 @@ dependencies {
 	compile fg.deobf("curse.maven:SD-392762:3069533")
 	compile fg.deobf("curse.maven:JEI-238222:3108050")
 	compile fg.deobf("curse.maven:TDI-245733:3144151")
-	compile fg.deobf("curse.maven:Tabula-229092:3313965")
-	compile fg.deobf("curse.maven:iChunUtil-229060:3313943")
-	compile fg.deobf("curse.maven:projectmmo-353935:3266512")
+	compile fg.deobf("curse.maven:projectmmo-353935:3371610")
 	compile fg.deobf("curse.maven:worldedit-225608:3135187")
 	compile fg.deobf("curse.maven:wikizoomer-383277:3177817")
+	
+	compile fg.deobf("curse.maven:epicfightmod-405076:3377306")
 	
 	implementation fg.deobf("curse.maven:citadel-331936:3346836")
 	implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.16.5:3.0.41')

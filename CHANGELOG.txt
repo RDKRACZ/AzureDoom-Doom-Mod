@@ -13,6 +13,8 @@ v.4.0.0
 - Added the Tentacle, thanks to Crydigo!
 - Added the Totem Block, thanks to Pedroca!
 - Added the Turret, thanks to Pedroca!
+- Added the Doom Hunter, thanks to Batpixxler!
+- Added the Mother Demon, thanks to Batpixxler!
 - Updated the Unwilling model, thanks to Undeadmonkey for the model and Pedroca for the texture!
 - Updated the Gargoyle model and texture, thanks to Batpixxler!
 - Added all new Patchouli book entries as well as a few missing ones.
@@ -63,8 +65,6 @@ v.4.0.0
 	- Baron 2016
 	- Fireborne Baron
 	- Armored Baron
-	- Doom Hunter
-	- Mother Demon
 	- Maykr Drones
 	- Blood Maykrs
 	- Arch Makyr

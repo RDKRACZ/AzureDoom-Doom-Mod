@@ -12,9 +12,11 @@ import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.Pose;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -32,6 +34,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -66,7 +69,11 @@ public class MotherDemonEntity extends DemonEntity implements IAnimatable {
 
 	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
 		if (event.isMoving()) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("walking", true));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("moving", true));
+			return PlayState.CONTINUE;
+		}
+		if ((this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("death", false));
 			return PlayState.CONTINUE;
 		}
 		event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
@@ -75,7 +82,11 @@ public class MotherDemonEntity extends DemonEntity implements IAnimatable {
 
 	private <E extends IAnimatable> PlayState predicate1(AnimationEvent<E> event) {
 		if (this.entityData.get(STATE) == 1 && !(this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("attacking", true));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("shooting", true));
+			return PlayState.CONTINUE;
+		}
+		if (this.entityData.get(STATE) == 2 && !(this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("fire", true));
 			return PlayState.CONTINUE;
 		}
 		return PlayState.STOP;
@@ -96,7 +107,7 @@ public class MotherDemonEntity extends DemonEntity implements IAnimatable {
 	@Override
 	protected void tickDeath() {
 		++this.deathTime;
-		if (this.deathTime == 50) {
+		if (this.deathTime == 40) {
 			this.remove();
 		}
 	}
@@ -145,22 +156,33 @@ public class MotherDemonEntity extends DemonEntity implements IAnimatable {
 	}
 
 	protected void applyEntityAI() {
-		this.goalSelector.addGoal(1, new MotherDemonEntity.AttackingGoal(this));
+		this.goalSelector.addGoal(1, new MotherDemonEntity.AttackGoal(this));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, false));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
 		this.targetSelector.addGoal(3, (new HurtByTargetGoal(this).setAlertOthers()));
 	}
 
-	static class AttackingGoal extends Goal {
-		private final MotherDemonEntity parentEntity;
-		protected int cooldown = 0;
+	@Override
+	protected void updateControlFlags() {
+		boolean flag = this.getTarget() != null && this.canSee(this.getTarget());
+		this.goalSelector.setControlFlag(Goal.Flag.LOOK, flag);
+		super.updateControlFlags();
+	}
 
-		public AttackingGoal(MotherDemonEntity parentEntity) {
-			this.parentEntity = parentEntity;
+	@Override
+	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+		return 9.05F;
+	}
+
+	static class AttackGoal extends Goal {
+		private final MotherDemonEntity parentEntity;
+		protected int attackTimer = 0;
+
+		public AttackGoal(MotherDemonEntity ghast) {
+			this.parentEntity = ghast;
 		}
-		
-		@Override
+
 		public boolean canUse() {
 			return this.parentEntity.getTarget() != null;
 		}
@@ -168,8 +190,6 @@ public class MotherDemonEntity extends DemonEntity implements IAnimatable {
 		public void start() {
 			super.start();
 			this.parentEntity.setAggressive(true);
-			this.cooldown = 0;
-			this.parentEntity.setAttackingState(0);
 		}
 
 		@Override
@@ -177,62 +197,54 @@ public class MotherDemonEntity extends DemonEntity implements IAnimatable {
 			super.stop();
 			this.parentEntity.setAggressive(false);
 			this.parentEntity.setAttackingState(0);
+			this.attackTimer = -1;
 		}
 
 		public void tick() {
-			LivingEntity livingEntity = this.parentEntity.getTarget();
-			if (this.parentEntity.canSee(livingEntity)) {
+			LivingEntity livingentity = this.parentEntity.getTarget();
+			if (this.parentEntity.canSee(livingentity)) {
 				World world = this.parentEntity.level;
-				Vector3d vec3d = this.parentEntity.getViewVector(1.0F);
-				++this.cooldown;
-				double f = livingEntity.getX() - (this.parentEntity.getX() + vec3d.x * 2.0D);
-				double g = livingEntity.getY(0.5D) - (0.5D + this.parentEntity.getY(0.5D));
-				double h = livingEntity.getZ() - (this.parentEntity.getZ() + vec3d.z * 2.0D);
-				CustomFireballEntity fireballEntity = new CustomFireballEntity(world, this.parentEntity, f, g, h, 12);
-				double d = Math.min(livingEntity.getY(), parentEntity.getY());
-				double e1 = Math.max(livingEntity.getY(), parentEntity.getY()) + 1.0D;
-				float f2 = (float) MathHelper.atan2(livingEntity.getZ() - parentEntity.getZ(),
-						livingEntity.getX() - parentEntity.getX());
-				int j;
-				if (this.cooldown == 15) {
-					if (parentEntity.distanceTo(livingEntity) < 13.0D) {
-						for (j = 0; j < 16; ++j) {
-							double l1 = 1.25D * (double) (j + 1);
-							int m = 1 * j;
-							parentEntity.spawnFlames(parentEntity.getX() + (double) MathHelper.cos(f2) * l1 + 0.5,
-									parentEntity.getZ() + (double) MathHelper.sin(f2) * l1, d, e1, f2, m);
+				++this.attackTimer;
+				Vector3d vector3d = this.parentEntity.getViewVector(1.0F);
+				double d0 = Math.min(livingentity.getY(), livingentity.getY());
+				double d1 = Math.max(livingentity.getY(), livingentity.getY()) + 1.0D;
+				double d2 = livingentity.getX() - (this.parentEntity.getX() + vector3d.x * 2.0D);
+				double d3 = livingentity.getY(0.5D) - (0.5D + this.parentEntity.getY(0.5D));
+				double d4 = livingentity.getZ() - (this.parentEntity.getZ() + vector3d.z * 2.0D);
+				float f = (float) MathHelper.atan2(livingentity.getZ() - parentEntity.getZ(),
+						livingentity.getX() - parentEntity.getX());
+				CustomFireballEntity fireballentity = new CustomFireballEntity(world, this.parentEntity, d2, d3, d4, 6);
+				if (this.attackTimer == 15) {
+					if (parentEntity.getHealth() < (parentEntity.getMaxHealth() * 0.50)) {
+						for (int l = 0; l < 16; ++l) {
+							double d5 = 1.25D * (double) (l + 1);
+							int j = 1 * l;
+							parentEntity.spawnFlames(parentEntity.getX() + (double) MathHelper.cos(f) * d5,
+									parentEntity.getZ() + (double) MathHelper.sin(f) * d5, d0, d1, f, j);
+							parentEntity.level.playLocalSound(this.parentEntity.getX(), this.parentEntity.getY(),
+									this.parentEntity.getZ(), ModSoundEvents.MOTHER_ATTACK.get(), SoundCategory.HOSTILE, 1.0F, 1.0F, true);
 							this.parentEntity.setAttackingState(2);
 						}
-					} else {
-						fireballEntity.setPos(this.parentEntity.getX() + vec3d.x * 2.0D,
-								this.parentEntity.getY(0.5D) + 0.5D, parentEntity.getZ() + vec3d.z * 2.0D);
-						world.addFreshEntity(fireballEntity);
+					}
+					if (parentEntity.getHealth() > (parentEntity.getMaxHealth() * 0.50)) {
+						fireballentity.setPos(this.parentEntity.getX() + vector3d.x * 2.0D,
+								this.parentEntity.getY(0.5D) + 0.5D, fireballentity.getZ() + vector3d.z * 2.0D);
+						world.addFreshEntity(fireballentity);
+						parentEntity.level.playLocalSound(this.parentEntity.getX(), this.parentEntity.getY(),
+								this.parentEntity.getZ(), ModSoundEvents.MOTHER_ATTACK.get(), SoundCategory.HOSTILE, 1.0F, 1.0F, true);
 						this.parentEntity.setAttackingState(1);
 					}
 				}
-				if (this.cooldown == 20) {
-					if (parentEntity.distanceTo(livingEntity) < 13.0D) {
-						for (j = 0; j < 16; ++j) {
-							double l1 = 1.25D * (double) (j + 1);
-							int m = 1 * j;
-							parentEntity.spawnFlames(parentEntity.getX() + (double) MathHelper.cos(f2) * l1,
-									parentEntity.getZ() + (double) MathHelper.sin(f2) * l1 + 0.5, d, e1, f2, m);
-						}
-					} else {
-						fireballEntity.setPos(this.parentEntity.getX() + vec3d.x * 2.0D,
-								this.parentEntity.getY(0.5D) + 0.5D, parentEntity.getZ() + vec3d.z * 2.0D);
-						world.addFreshEntity(fireballEntity);
-					}
-				}
-				if (this.cooldown == 25) {
+				if (this.attackTimer == 25) {
 					this.parentEntity.setAttackingState(0);
-					this.cooldown = -150;
+					this.attackTimer = -150;
 				}
-			} else if (this.cooldown > 0) {
-				--this.cooldown;
+			} else if (this.attackTimer > 0) {
+				--this.attackTimer;
 			}
-			this.parentEntity.lookAt(livingEntity, 30.0F, 30.0F);
+			this.parentEntity.lookAt(livingentity, 30.0F, 30.0F);
 		}
+
 	}
 
 	public void spawnFlames(double x, double z, double maxY, double y, float yaw, int warmup) {
@@ -271,17 +283,17 @@ public class MotherDemonEntity extends DemonEntity implements IAnimatable {
 
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return ModSoundEvents.ICON_AMBIENT.get();
+		return ModSoundEvents.MOTHER_AMBIENT.get();
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-		return ModSoundEvents.ICON_HURT.get();
+		return ModSoundEvents.MOTHER_HURT.get();
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return ModSoundEvents.ICON_DEATH.get();
+		return ModSoundEvents.MOTHER_DEATH.get();
 	}
 
 	@Override

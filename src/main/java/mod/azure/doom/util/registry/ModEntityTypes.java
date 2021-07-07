@@ -422,7 +422,7 @@ public class ModEntityTypes {
 					.build(new ResourceLocation(DoomMod.MODID, "blood_maykr").toString()));
 
 	public static final RegistryObject<EntityType<MotherDemonEntity>> MOTHERDEMON = ENTITY_TYPES.register("motherdemon",
-			() -> EntityType.Builder.of(MotherDemonEntity::new, EntityClassification.MONSTER).sized(1.7f, 2.2F)
+			() -> EntityType.Builder.of(MotherDemonEntity::new, EntityClassification.MONSTER).sized(6.3f, 10.0F)
 					.fireImmune().clientTrackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "motherdemon").toString()));
 

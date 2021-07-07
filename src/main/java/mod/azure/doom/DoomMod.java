@@ -153,6 +153,7 @@ public class DoomMod {
 		}
 		if (event.getCategory().equals(Category.NETHER)) {
 			event.getGeneration().getStructures().add(() -> DoomConfiguredStructures.CONFIGURED_TITAN_SKULL);
+			event.getGeneration().getStructures().add(() -> DoomConfiguredStructures.CONFIGURED_MOTHERDEMON);
 		}
 		if (!(event.getCategory().equals(Category.NETHER) || event.getCategory().equals(Category.THEEND))) {
 			event.getGeneration().getStructures().add(() -> DoomConfiguredStructures.CONFIGURED_PORTAL);
@@ -185,6 +186,8 @@ public class DoomMod {
 					serverWorld.getChunkSource().generator.getSettings().structureConfig());
 			tempMap.putIfAbsent(DoomStructures.MAYKR.get(),
 					DimensionStructuresSettings.DEFAULTS.get(DoomStructures.MAYKR.get()));
+			tempMap.putIfAbsent(DoomStructures.MOTHERDEMON.get(),
+					DimensionStructuresSettings.DEFAULTS.get(DoomStructures.MOTHERDEMON.get()));
 			tempMap.putIfAbsent(DoomStructures.TITAN_SKULL.get(),
 					DimensionStructuresSettings.DEFAULTS.get(DoomStructures.TITAN_SKULL.get()));
 			tempMap.putIfAbsent(DoomStructures.PORTAL.get(),

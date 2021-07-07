@@ -286,5 +286,17 @@
 	},
 	"doom.clipreload": {
 		"category": "music", "sounds": [{"name": "doom:clipreload"}]
+	},
+	"doom.mother_ambient": {
+		"category": "music", "sounds": [{"name": "doom:mother_ambient"}]
+	},
+	"doom.mother_attack": {
+		"category": "music", "sounds": [{"name": "doom:mother_attack"}]
+	},
+	"doom.mother_death": {
+		"category": "music", "sounds": [{"name": "doom:mother_death"}]
+	},
+	"doom.mother_pain": {
+		"category": "music", "sounds": [{"name": "doom:mother_pain"}]
 	}
 }

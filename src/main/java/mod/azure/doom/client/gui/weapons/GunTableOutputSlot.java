@@ -3,10 +3,12 @@ package mod.azure.doom.client.gui.weapons;
 import java.util.Optional;
 
 import mod.azure.doom.recipes.GunTableRecipe;
+import mod.azure.doom.util.PMMOCompat;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
+import net.minecraftforge.fml.ModList;
 
 public class GunTableOutputSlot extends Slot {
 	private final DoomGunInventory gunTableInventory;
@@ -55,6 +57,9 @@ public class GunTableOutputSlot extends Slot {
 				if (!itemStack.isEmpty()) {
 					this.gunTableInventory.removeItem(i, gunTableRecipe.countRequired(i));
 					itemStack = this.gunTableInventory.getItem(i);
+					if (ModList.get().isLoaded("pmmo")) {
+						PMMOCompat.awardCrafting(itemStack);
+					}
 				}
 
 				if (!itemStack2.isEmpty()) {
