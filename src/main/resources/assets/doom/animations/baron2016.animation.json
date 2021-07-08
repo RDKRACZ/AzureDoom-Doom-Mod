@@ -969,7 +969,7 @@
 				},
 				"thighs": {
 					"position": {
-						"vector": [0, "Math.cos(query.anim_time * 360) * -0.5", 0]
+						"vector": [0, "Math.cos(query.anim_time * 360) * -0.5", "Math.cos(query.anim_time * 360) * -0.5"]
 					}
 				},
 				"chest": {
@@ -1135,7 +1135,7 @@
 				},
 				"thighs": {
 					"position": {
-						"vector": [0, "Math.cos(query.anim_time * 360) * -0.5", 0]
+						"vector": [0, "Math.cos(query.anim_time * 360) * -0.5", "Math.cos(query.anim_time * 360) * -0.5"]
 					}
 				},
 				"chest": {
@@ -1221,7 +1221,7 @@
 				},
 				"thighs": {
 					"position": {
-						"vector": [0, "Math.cos(query.anim_time * 360) * -0.5", 0]
+						"vector": [0, "Math.cos(query.anim_time * 360) * -0.5", "Math.cos(query.anim_time * 360) * -0.5"]
 					}
 				},
 				"chest": {

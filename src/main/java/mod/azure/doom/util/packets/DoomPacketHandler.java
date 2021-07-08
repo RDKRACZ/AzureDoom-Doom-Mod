@@ -15,6 +15,7 @@ import mod.azure.doom.util.packets.weapons.PlasmaLoadingPacket;
 import mod.azure.doom.util.packets.weapons.RocketLauncherLoadingPacket;
 import mod.azure.doom.util.packets.weapons.SGLoadingPacket;
 import mod.azure.doom.util.packets.weapons.SSGLoadingPacket;
+import mod.azure.doom.util.packets.weapons.SentinelHammerLoadingPacket;
 import mod.azure.doom.util.packets.weapons.UnmaykrLoadingPacket;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkRegistry;
@@ -75,6 +76,10 @@ public class DoomPacketHandler {
 			new ResourceLocation(DoomMod.MODID, "marauderaxe"), () -> PROTOCOL_VERSION, PROTOCOL_VERSION::equals,
 			PROTOCOL_VERSION::equals);
 
+	public static final SimpleChannel SENTINELHAMMER = NetworkRegistry.newSimpleChannel(
+			new ResourceLocation(DoomMod.MODID, "sentinelhammer"), () -> PROTOCOL_VERSION, PROTOCOL_VERSION::equals,
+			PROTOCOL_VERSION::equals);
+
 	public static final SimpleChannel CHAINSAW = NetworkRegistry.newSimpleChannel(
 			new ResourceLocation(DoomMod.MODID, "chainsaw"), () -> PROTOCOL_VERSION, PROTOCOL_VERSION::equals,
 			PROTOCOL_VERSION::equals);
@@ -124,5 +129,7 @@ public class DoomPacketHandler {
 				HeavyCannonLoadingPacket::new, HeavyCannonLoadingPacket::handle);
 		MARAUDERAXE.registerMessage(channel_id++, AxeMarauderLoadingPacket.class, AxeMarauderLoadingPacket::encode,
 				AxeMarauderLoadingPacket::new, AxeMarauderLoadingPacket::handle);
+		SENTINELHAMMER.registerMessage(channel_id++, SentinelHammerLoadingPacket.class, SentinelHammerLoadingPacket::encode,
+				SentinelHammerLoadingPacket::new, SentinelHammerLoadingPacket::handle);
 	}
 }

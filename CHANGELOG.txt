@@ -2,6 +2,7 @@ v.4.0.0
 
 - **REQUIRED VERSION OF GECKOLIB IS NOW 3.0.32**
 - **RESET YOUR CONFIGS**
+- Added the Sentinel Hammer!
 - Added the Tyrant, thanks to Creeper2545 for the models base and Pedroca for the texture!
 - Added the Possessed Worker, thanks to Undeadmonkey for the model and Pedroca for the texture!
 - Added the Arachnotron Eternal, thanks to Creman for the model and Pedroca for the texture!
@@ -37,7 +38,6 @@ v.4.0.0
 - Fixed not being able to search for the armors or a few weapons in the creative search menu.
 - All guns now use the bow holding pose for aiming in 3rd person.
 - Weapon damages have been rewriten from the ground up. 
-- Fixed the Crucible Blade glitching open and closed.
 - Massively increased cool down of Gore Nest Spawns and added a max of 3 waves per gore nest.
 - Halved all demons (expect the Icon of Sin) follow ranges to 25, in line with vanilla mobs.
 - Fixed weapons not being able to reload with ammo in the off hand.
@@ -59,6 +59,7 @@ v.4.0.0
 - Fixed E1M1 music disc playing text.
 - Fixed Icon of Sin armor render and armor vaules being hardcoded to the default health.
 - Fixed weapon animations at 1 durability when they are disabled.
+- Updated the Crucible with a whole new attack, it will no longer function like a sword but will instead deal massive damage to whatever is in front of the player. 
 - Removed targeting stuff, hated it tbh and no one used it much.
 
 *   : Edited from: Last Structure here: https://www.planetminecraft.com/project/5-city-center-nether-portal-designs/

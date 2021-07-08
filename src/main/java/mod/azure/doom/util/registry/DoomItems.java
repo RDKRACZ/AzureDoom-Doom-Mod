@@ -69,6 +69,7 @@ import mod.azure.doom.item.weapons.HeavyCannon;
 import mod.azure.doom.item.weapons.PistolItem;
 import mod.azure.doom.item.weapons.PlasmaGun;
 import mod.azure.doom.item.weapons.RocketLauncher;
+import mod.azure.doom.item.weapons.SentinelHammerItem;
 import mod.azure.doom.item.weapons.Shotgun;
 import mod.azure.doom.item.weapons.SuperShotgun;
 import mod.azure.doom.item.weapons.SwordCrucibleItem;
@@ -361,6 +362,8 @@ public class DoomItems {
 	public static final RegistryObject<Item> CHAINGUN = ITEMS.register("chaingun", () -> new Chaingun());
 	public static final RegistryObject<Item> PISTOL = ITEMS.register("pistol", () -> new PistolItem());
 	public static final RegistryObject<Item> HEAVYCANNON = ITEMS.register("heavycannon", () -> new HeavyCannon());
+	public static final RegistryObject<Item> SENTINELHAMMER = ITEMS.register("sentinelhammer",
+			() -> new SentinelHammerItem());
 
 	// ARMOR
 	public static final RegistryObject<Item> DOOM_HELMET = ITEMS.register("doom_helmet",
