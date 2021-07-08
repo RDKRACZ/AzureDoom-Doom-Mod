@@ -238,11 +238,12 @@ public class ModEntitySpawn {
 					config.get(EntityConfigType.SPIDERMASTERMIND).MIN_GROUP,
 					config.get(EntityConfigType.SPIDERMASTERMIND).MAX_GROUP));
 		}
-//		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.DOOMHUNTER, biome)
-//				&& config.get(EntityConfigType.DOOMHUNTER).SPAWN_WEIGHT > 0) {
-//			base.add(new Spawners(ModEntityTypes.DOOMHUNTER.get(), config.get(EntityConfigType.DOOMHUNTER).SPAWN_WEIGHT,
-//					config.get(EntityConfigType.DOOMHUNTER).MIN_GROUP, config.get(EntityConfigType.DOOMHUNTER).MAX_GROUP));
-//		}
+		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.DOOMHUNTER, biome)
+				&& config.get(EntityConfigType.DOOMHUNTER).SPAWN_WEIGHT > 0) {
+			base.add(new Spawners(ModEntityTypes.DOOMHUNTER.get(), config.get(EntityConfigType.DOOMHUNTER).SPAWN_WEIGHT,
+					config.get(EntityConfigType.DOOMHUNTER).MIN_GROUP,
+					config.get(EntityConfigType.DOOMHUNTER).MAX_GROUP));
+		}
 		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.ARCHVILE, biome)
 				&& config.get(EntityConfigType.ARCHVILE).SPAWN_WEIGHT > 0) {
 			base.add(new Spawners(ModEntityTypes.ARCHVILEETERNAL.get(),
@@ -259,11 +260,16 @@ public class ModEntitySpawn {
 			base.add(new Spawners(ModEntityTypes.TENTACLE.get(), config.get(EntityConfigType.TENTACLE).SPAWN_WEIGHT,
 					config.get(EntityConfigType.TENTACLE).MIN_GROUP, config.get(EntityConfigType.TENTACLE).MAX_GROUP));
 		}
-//		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.WHIPLASH, biome)
-//				&& config.get(EntityConfigType.WHIPLASH).SPAWN_WEIGHT > 0) {
-//			base.add(new Spawners(ModEntityTypes.WHIPLASH.get(), config.get(EntityConfigType.WHIPLASH).SPAWN_WEIGHT,
-//					config.get(EntityConfigType.WHIPLASH).MIN_GROUP, config.get(EntityConfigType.WHIPLASH).MAX_GROUP));
-//		}
+		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.WHIPLASH, biome)
+				&& config.get(EntityConfigType.WHIPLASH).SPAWN_WEIGHT > 0) {
+			base.add(new Spawners(ModEntityTypes.WHIPLASH.get(), config.get(EntityConfigType.WHIPLASH).SPAWN_WEIGHT,
+					config.get(EntityConfigType.WHIPLASH).MIN_GROUP, config.get(EntityConfigType.WHIPLASH).MAX_GROUP));
+		}
+		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.SUMMONER, biome)
+				&& config.get(EntityConfigType.SUMMONER).SPAWN_WEIGHT > 0) {
+			base.add(new Spawners(ModEntityTypes.SUMMONER.get(), config.get(EntityConfigType.SUMMONER).SPAWN_WEIGHT,
+					config.get(EntityConfigType.SUMMONER).MIN_GROUP, config.get(EntityConfigType.SUMMONER).MAX_GROUP));
+		}
 //		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.BARON, biome)
 //				&& config.get(EntityConfigType.BARON).SPAWN_WEIGHT > 0) {
 //			base.add(new Spawners(ModEntityTypes.BARON2016.get(), config.get(EntityConfigType.BARON).SPAWN_WEIGHT,

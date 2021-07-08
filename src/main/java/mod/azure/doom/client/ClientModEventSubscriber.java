@@ -49,6 +49,7 @@ import mod.azure.doom.client.render.ShotgunguyRender;
 import mod.azure.doom.client.render.SpectreRender;
 import mod.azure.doom.client.render.SpiderMastermind2016Render;
 import mod.azure.doom.client.render.SpiderMastermindRender;
+import mod.azure.doom.client.render.SummonerRender;
 import mod.azure.doom.client.render.TentacleRender;
 import mod.azure.doom.client.render.TurretRender;
 import mod.azure.doom.client.render.TyrantRender;
@@ -234,6 +235,7 @@ public class ClientModEventSubscriber {
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.TENTACLE.get(), TentacleRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.MOTHERDEMON.get(), MotherDemonRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.TURRET.get(), TurretRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.SUMMONER.get(), SummonerRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.HOOK.get(), HookRender::new);
 
 		ClientRegistry.bindTileEntityRenderer(ModEntityTypes.TOTEM.get(), TotemRender::new);

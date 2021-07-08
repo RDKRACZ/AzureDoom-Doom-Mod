@@ -245,6 +245,8 @@
 	"entity.doom.tentacle": "Tentacle",
 	"entity.doom.motherdemon": "Mother Demon",
 	"entity.doom.turret": "Turret",
+	"entity.doom.summoner": "Summoner",
+	"item.doom.summoner_spawn_egg": "Summoner Spawn Egg",
 	"item.doom.turret_spawn_egg": "Turret Spawn Egg",
 	"item.doom.motherdemon_spawn_egg": "Mother Demon Spawn Egg",
 	"item.doom.archvileeternal_spawn_egg": "Arch-Vile Eternal Spawn Egg",

@@ -78,7 +78,7 @@ public class HellknightEntity extends DemonEntity implements IAnimatable {
 
 	private <E extends IAnimatable> PlayState predicate1(AnimationEvent<E> event) {
 		if (this.entityData.get(STATE) == 1 && !(this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("attacking", true));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("ranged", true));
 			return PlayState.CONTINUE;
 		}
 		return PlayState.STOP;

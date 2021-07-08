@@ -42,4 +42,5 @@ public class DefaultBiomes {
 	public static final String[] BLOODMAYKR = new String[] { "|#the_end" };
 	public static final String[] KHANMAKYR = new String[] { "|#the_end" };
 	public static final String[] TENTACLE = new String[] { "|#nether" };
+	public static final String[] SUMMONER = new String[] { "|#nether" };
 }

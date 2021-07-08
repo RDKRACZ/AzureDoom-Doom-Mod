@@ -12,7 +12,7 @@ public class ArmoredBaronModel extends AnimatedGeoModel<ArmoredBaronEntity> {
 
 	@Override
 	public ResourceLocation getModelLocation(ArmoredBaronEntity object) {
-		return new ResourceLocation(DoomMod.MODID, "geo/armoredbaron.geo.json");
+		return new ResourceLocation(DoomMod.MODID, "geo/baron2016.geo.json");
 	}
 
 	@Override
@@ -22,7 +22,7 @@ public class ArmoredBaronModel extends AnimatedGeoModel<ArmoredBaronEntity> {
 
 	@Override
 	public ResourceLocation getAnimationFileLocation(ArmoredBaronEntity object) {
-		return new ResourceLocation(DoomMod.MODID, "animations/armoredbaron.animation.json");
+		return new ResourceLocation(DoomMod.MODID, "animations/baron2016.animation.json");
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })

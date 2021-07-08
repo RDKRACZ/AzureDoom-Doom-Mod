@@ -63,6 +63,7 @@ import mod.azure.doom.entity.tiersuperheavy.CyberdemonEntity;
 import mod.azure.doom.entity.tiersuperheavy.DoomHunterEntity;
 import mod.azure.doom.entity.tiersuperheavy.FireBaronEntity;
 import mod.azure.doom.entity.tiersuperheavy.MarauderEntity;
+import mod.azure.doom.entity.tiersuperheavy.SummonerEntity;
 import mod.azure.doom.entity.tileentity.GunBlockEntity;
 import mod.azure.doom.entity.tileentity.IconBlockEntity;
 import mod.azure.doom.entity.tileentity.TotemEntity;
@@ -106,7 +107,7 @@ public class ModEntityTypes {
 	public static final RegistryObject<EntityType<ChainBladeEntity>> CHAINBLADE = ENTITY_TYPES.register("chain_blade",
 			() -> EntityType.Builder.<ChainBladeEntity>of(ChainBladeEntity::new, EntityClassification.MISC)
 					.sized(0.5F, 0.8F).clientTrackingRange(10)
-					.build(new ResourceLocation(DoomMod.MODID, "archvile_firing").toString()));
+					.build(new ResourceLocation(DoomMod.MODID, "chain_blade").toString()));
 
 	public static final RegistryObject<EntityType<BarrelEntity>> BARREL = ENTITY_TYPES.register("barrel",
 			() -> EntityType.Builder.<BarrelEntity>of(BarrelEntity::new, EntityClassification.MISC).sized(0.98F, 0.98F)
@@ -391,17 +392,17 @@ public class ModEntityTypes {
 					.build(new ResourceLocation(DoomMod.MODID, "whiplash").toString()));
 
 	public static final RegistryObject<EntityType<BaronEntity>> BARON2016 = ENTITY_TYPES.register("baron2016",
-			() -> EntityType.Builder.of(BaronEntity::new, EntityClassification.MONSTER).sized(1.7f, 2.2F).fireImmune()
+			() -> EntityType.Builder.of(BaronEntity::new, EntityClassification.MONSTER).sized(1.7f, 4.2F).fireImmune()
 					.clientTrackingRange(9).build(new ResourceLocation(DoomMod.MODID, "baron2016").toString()));
 
 	public static final RegistryObject<EntityType<FireBaronEntity>> FIREBARON = ENTITY_TYPES.register("firebronebaron",
-			() -> EntityType.Builder.of(FireBaronEntity::new, EntityClassification.MONSTER).sized(1.7f, 2.2F)
+			() -> EntityType.Builder.of(FireBaronEntity::new, EntityClassification.MONSTER).sized(1.7f, 4.2F)
 					.fireImmune().clientTrackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "firebronebaron").toString()));
 
 	public static final RegistryObject<EntityType<ArmoredBaronEntity>> ARMORBARON = ENTITY_TYPES.register(
 			"armoredbaron",
-			() -> EntityType.Builder.of(ArmoredBaronEntity::new, EntityClassification.MONSTER).sized(1.7f, 2.2F)
+			() -> EntityType.Builder.of(ArmoredBaronEntity::new, EntityClassification.MONSTER).sized(1.7f, 4.2F)
 					.fireImmune().clientTrackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "armoredbaron").toString()));
 
@@ -439,5 +440,10 @@ public class ModEntityTypes {
 			() -> EntityType.Builder.of(ArchMakyrEntity::new, EntityClassification.MONSTER).sized(1.7f, 2.2F)
 					.fireImmune().clientTrackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "arch_maykr").toString()));
+
+	public static final RegistryObject<EntityType<SummonerEntity>> SUMMONER = ENTITY_TYPES.register("summoner",
+			() -> EntityType.Builder.of(SummonerEntity::new, EntityClassification.MONSTER).sized(0.9F, 4.3F)
+					.fireImmune().clientTrackingRange(9)
+					.build(new ResourceLocation(DoomMod.MODID, "summoner").toString()));
 
 }

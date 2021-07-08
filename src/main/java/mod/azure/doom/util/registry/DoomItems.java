@@ -326,6 +326,8 @@ public class DoomItems {
 			() -> new DoomSpawnEgg(ModEntityTypes.MOTHERDEMON));
 	public static final RegistryObject<Item> TURRET_SPAWN_EGG = ITEMS.register("turret_spawn_egg",
 			() -> new DoomSpawnEgg(ModEntityTypes.TURRET));
+	public static final RegistryObject<Item> SUMMONER_SPAWN_EGG = ITEMS.register("summoner_spawn_egg",
+			() -> new DoomSpawnEgg(ModEntityTypes.SUMMONER));
 
 	// WEAPONS AND TOOLS
 	public static final RegistryObject<Item> CRUCIBLESWORD = ITEMS.register("cruciblesword",

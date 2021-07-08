@@ -45,6 +45,7 @@ import mod.azure.doom.entity.tiersuperheavy.CyberdemonEntity;
 import mod.azure.doom.entity.tiersuperheavy.DoomHunterEntity;
 import mod.azure.doom.entity.tiersuperheavy.FireBaronEntity;
 import mod.azure.doom.entity.tiersuperheavy.MarauderEntity;
+import mod.azure.doom.entity.tiersuperheavy.SummonerEntity;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EntityType;
@@ -209,6 +210,9 @@ public class ModEventSubscriber {
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.TURRET.get(),
 				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
 				TurretEntity::spawning);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.SUMMONER.get(),
+				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+				SummonerEntity::spawning);
 	}
 
 	@SubscribeEvent
@@ -263,5 +267,6 @@ public class ModEventSubscriber {
 		event.put(ModEntityTypes.TENTACLE.get(), TentacleEntity.createAttributes().build());
 		event.put(ModEntityTypes.MOTHERDEMON.get(), MotherDemonEntity.createAttributes().build());
 		event.put(ModEntityTypes.TURRET.get(), TurretEntity.createAttributes().build());
+		event.put(ModEntityTypes.SUMMONER.get(), SummonerEntity.createAttributes().build());
 	}
 }

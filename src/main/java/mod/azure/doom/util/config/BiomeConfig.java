@@ -51,6 +51,7 @@ public class BiomeConfig {
 	public static List<? extends String> BLOODMAYKR = Lists.newArrayList(DefaultBiomes.BLOODMAYKR);
 	public static List<? extends String> KHANMAKYR = Lists.newArrayList(DefaultBiomes.KHANMAKYR);
 	public static List<? extends String> TENTACLE = Lists.newArrayList(DefaultBiomes.TENTACLE);
+	public static List<? extends String> SUMMONER = Lists.newArrayList(DefaultBiomes.SUMMONER);
 
 	public static Map<String, ForgeConfigSpec.ConfigValue<List<? extends String>>> biomeConfigValues = new HashMap<>();
 

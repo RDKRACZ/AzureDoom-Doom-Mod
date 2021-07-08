@@ -7,6 +7,7 @@ public class EntityDefaults {
 		ARACHNOTRON("Arachnotron", new EntityDefaults(false, 4, 100).setMeleeDamage(2).setRangedDamage(10).setGeneralSpeed(0.25)),
 		ARCHMAKYR("ArchMaykr", new EntityDefaults(true, 1, 400).setMeleeDamage(6).setRangedDamage(7).setGeneralSpeed(0.25)),
 		ARCHVILE("Archvile", new EntityDefaults(true, 2, 100).setMeleeDamage(3).setGeneralSpeed(0.25)),
+		SUMMONER("Summoner", new EntityDefaults(true, 2, 100).setMeleeDamage(3).setGeneralSpeed(0.25)),
 		BARON("Baron", new EntityDefaults(true, 1, 180).setMeleeDamage(7).setGeneralSpeed(0.25).setRangedDamage(12)),
 		CACODEMON("Cacodemon", new EntityDefaults(false, 2, 80).setGeneralSpeed(0.25).setRangedDamage(10)),
 		CHAINGUNNER("Chaingunner", new EntityDefaults(false, 4, 15).setMeleeDamage(4).setRangedDamage(4).setGeneralSpeed(0.25)),

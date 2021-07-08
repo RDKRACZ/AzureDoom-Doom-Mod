@@ -11,7 +11,9 @@
 		},
 		{
 			"type": "entity",
-			"entity": "doom:whiplash"
+			"entity": "doom:whiplash",
+			"scale": 0.9,
+			"offset": 0.3
 		}
 	]
 }

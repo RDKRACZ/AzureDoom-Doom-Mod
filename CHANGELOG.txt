@@ -15,6 +15,10 @@ v.4.0.0
 - Added the Turret, thanks to Pedroca!
 - Added the Doom Hunter, thanks to Batpixxler!
 - Added the Mother Demon, thanks to Batpixxler!
+- Added the Summoner, thanks to Pedroca for the texture!
+- Added the Baron 2016, thanks to Batpixxler!
+- Added the Fireborne Baron, thanks to Batpixxler!
+- Added the Armored Baron, thanks to Batpixxler!
 - Updated the Unwilling model, thanks to Undeadmonkey for the model and Pedroca for the texture!
 - Updated the Gargoyle model and texture, thanks to Batpixxler!
 - Added all new Patchouli book entries as well as a few missing ones.
@@ -62,9 +66,6 @@ v.4.0.0
 *** : Edited from: https://www.planetminecraft.com/project/minecraft-nether-gate-world-download/
 
 ## Not yet implemented but assets and code are in-process awaiting creation of models ## 
-	- Baron 2016
-	- Fireborne Baron
-	- Armored Baron
 	- Maykr Drones
 	- Blood Maykrs
 	- Arch Makyr

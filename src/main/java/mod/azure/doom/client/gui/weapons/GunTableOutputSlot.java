@@ -57,9 +57,6 @@ public class GunTableOutputSlot extends Slot {
 				if (!itemStack.isEmpty()) {
 					this.gunTableInventory.removeItem(i, gunTableRecipe.countRequired(i));
 					itemStack = this.gunTableInventory.getItem(i);
-					if (ModList.get().isLoaded("pmmo")) {
-						PMMOCompat.awardCrafting(itemStack);
-					}
 				}
 
 				if (!itemStack2.isEmpty()) {
@@ -74,6 +71,9 @@ public class GunTableOutputSlot extends Slot {
 					}
 				}
 			}
+		}
+		if (ModList.get().isLoaded("pmmo")) {
+			PMMOCompat.awardCrafting(stack);
 		}
 		return stack;
 	}

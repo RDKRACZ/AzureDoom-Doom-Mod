@@ -12,7 +12,9 @@
 		},
 		{
 			"type": "entity",
-			"entity": "doom:gargoyle"
+			"entity": "doom:gargoyle",
+			"scale": 0.7,
+			"offset": 0.6
 		}
 	]
 }
