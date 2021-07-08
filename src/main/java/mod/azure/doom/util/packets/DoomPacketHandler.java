@@ -9,6 +9,7 @@ import mod.azure.doom.util.packets.weapons.ChaingunLoadingPacket;
 import mod.azure.doom.util.packets.weapons.ChainsawEternalLoadingPacket;
 import mod.azure.doom.util.packets.weapons.ChainsawLoadingPacket;
 import mod.azure.doom.util.packets.weapons.CrucibleLoadingPacket;
+import mod.azure.doom.util.packets.weapons.DarkLordCrucibleLoadingPacket;
 import mod.azure.doom.util.packets.weapons.HeavyCannonLoadingPacket;
 import mod.azure.doom.util.packets.weapons.PistolLoadingPacket;
 import mod.azure.doom.util.packets.weapons.PlasmaLoadingPacket;
@@ -88,6 +89,10 @@ public class DoomPacketHandler {
 			new ResourceLocation(DoomMod.MODID, "chainsaweternal"), () -> PROTOCOL_VERSION, PROTOCOL_VERSION::equals,
 			PROTOCOL_VERSION::equals);
 
+	public static final SimpleChannel DARKLORDCRUCIBLE = NetworkRegistry.newSimpleChannel(
+			new ResourceLocation(DoomMod.MODID, "darklordcrucible"), () -> PROTOCOL_VERSION, PROTOCOL_VERSION::equals,
+			PROTOCOL_VERSION::equals);
+
 	public static final SimpleChannel CRAFTING = NetworkRegistry.newSimpleChannel(
 			new ResourceLocation(DoomMod.MODID, "crafting"), () -> PROTOCOL_VERSION, PROTOCOL_VERSION::equals,
 			PROTOCOL_VERSION::equals);
@@ -129,7 +134,11 @@ public class DoomPacketHandler {
 				HeavyCannonLoadingPacket::new, HeavyCannonLoadingPacket::handle);
 		MARAUDERAXE.registerMessage(channel_id++, AxeMarauderLoadingPacket.class, AxeMarauderLoadingPacket::encode,
 				AxeMarauderLoadingPacket::new, AxeMarauderLoadingPacket::handle);
-		SENTINELHAMMER.registerMessage(channel_id++, SentinelHammerLoadingPacket.class, SentinelHammerLoadingPacket::encode,
-				SentinelHammerLoadingPacket::new, SentinelHammerLoadingPacket::handle);
+		SENTINELHAMMER.registerMessage(channel_id++, SentinelHammerLoadingPacket.class,
+				SentinelHammerLoadingPacket::encode, SentinelHammerLoadingPacket::new,
+				SentinelHammerLoadingPacket::handle);
+		DARKLORDCRUCIBLE.registerMessage(channel_id++, DarkLordCrucibleLoadingPacket.class,
+				DarkLordCrucibleLoadingPacket::encode, DarkLordCrucibleLoadingPacket::new,
+				DarkLordCrucibleLoadingPacket::handle);
 	}
 }

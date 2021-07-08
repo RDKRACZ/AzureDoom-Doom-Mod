@@ -3,6 +3,7 @@ v.4.0.0
 - **REQUIRED VERSION OF GECKOLIB IS NOW 3.0.32**
 - **RESET YOUR CONFIGS**
 - Added the Sentinel Hammer!
+- Added the Dark Lord Crucible!
 - Added the Tyrant, thanks to Creeper2545 for the models base and Pedroca for the texture!
 - Added the Possessed Worker, thanks to Undeadmonkey for the model and Pedroca for the texture!
 - Added the Arachnotron Eternal, thanks to Creman for the model and Pedroca for the texture!
