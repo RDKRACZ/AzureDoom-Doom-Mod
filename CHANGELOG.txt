@@ -2,6 +2,8 @@ v.4.0.0
 
 - **REQUIRED VERSION OF GECKOLIB IS NOW 3.0.32**
 - **RESET YOUR CONFIGS**
+
+**Added** 
 - Added the Sentinel Hammer!
 - Added the Dark Lord Crucible!
 - Added the Tyrant, thanks to Creeper2545 for the models base and Pedroca for the texture!
@@ -21,16 +23,19 @@ v.4.0.0
 - Added the Baron 2016, thanks to Batpixxler!
 - Added the Fireborne Baron, thanks to Batpixxler!
 - Added the Armored Baron, thanks to Batpixxler!
-- Updated the Unwilling model, thanks to Undeadmonkey for the model and Pedroca for the texture!
-- Updated the Gargoyle model and texture, thanks to Batpixxler!
 - Added all new Patchouli book entries as well as a few missing ones.
 - Added new Structures! 
 	- The End will now generate 2 new structures dedicated to the Maykrs and the only place they will spawn!* 
 	- The Nether will now generate 2 new structures, Titan Skulls and the Demon Mothers Arena**
 	- The Overworld will now generate massive portals, similar to ruined portals but bigger and can spawn the mods mobs.***
 - Added the Gun Crafter, which is how you will now craft all MCDoom weapons, textured by Pedroca!
-- Added Advancements for the 3 new Doom structures, Argent Energy/Plate, and summoning/killing the Icon of Sin.
+- Added Advancements for the 3 new Doom structures, Argent Energy/Plate, and summoning/killing the Demon Mother/Arch Maykr/Icon of Sin.
 - Added new config options for all gun projectile damages.
+- Added Ghast Tears to the drops of the boss tier demons loot tables.
+
+**Updated/Fixed**
+- Updated the Unwilling model, thanks to Undeadmonkey for the model and Pedroca for the texture!
+- Updated the Gargoyle model and texture, thanks to Batpixxler!
 - Updated Argent Tools, Ballista/Unmaykr bolts, Argent Energy/Plate, BFG Cell, Inmortal Sphere, and Daisy (Now rabbit foot) item textures.
 - Scaled up the OG Cyberdemon.
 - New Arachnotron and Spider Mastermind animations!
@@ -38,7 +43,7 @@ v.4.0.0
 - Demons are now able to walk on Lava like Striders.
 - Fixed not being able to search for the armors or a few weapons in the creative search menu.
 - All guns now use the bow holding pose for aiming in 3rd person.
-- Weapon damages have been rewriten from the ground up. 
+- Weapon damages have been rewritten from the ground up. 
 - Massively increased cool down of Gore Nest Spawns and added a max of 3 waves per gore nest.
 - Halved all demons (expect the Icon of Sin) follow ranges to 25, in line with vanilla mobs.
 - Fixed weapons not being able to reload with ammo in the off hand.
@@ -49,13 +54,11 @@ v.4.0.0
 - Hell Knight 2016/Dread Knight now perform a slam attack.
 - Dread Knight Hand Blades redone.
 - Gargoyle flying redone, will now stay in the air.
-- Added Ghast Tears to the drops of the boss tier demons loot tables.
 - BFG now properly hurting the Ender Dragon.
 - Icon of Sin blocks now face the proper way when built and look correct.
 - Icon of Sin drops Argent Blocks instead of Energy, making the cost very worth it to summon.
 - Icon of Sin no longer takes suffocation damage.
 - Icon of Sin attack pattern has been redone.
-- Slight weapon tweaks.
 - Fixed Marauder attacks.
 - Fixed E1M1 music disc playing text.
 - Fixed Icon of Sin armor render and armor vaules being hardcoded to the default health.
