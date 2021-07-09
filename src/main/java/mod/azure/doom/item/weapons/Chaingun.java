@@ -47,7 +47,6 @@ public class Chaingun extends DoomBaseItem {
 					abstractarrowentity.shootFromRotation(playerentity, playerentity.xRot, playerentity.yRot, 0.0F,
 							1.0F * 3.0F, 1.0F);
 					abstractarrowentity.isNoGravity();
-					abstractarrowentity.tickCount = 35;
 
 					stack.hurtAndBreak(1, entityLiving, p -> p.broadcastBreakEvent(entityLiving.getUsedItemHand()));
 					worldIn.addFreshEntity(abstractarrowentity);

@@ -270,20 +270,20 @@ public class ModEntitySpawn {
 			base.add(new Spawners(ModEntityTypes.SUMMONER.get(), config.get(EntityConfigType.SUMMONER).SPAWN_WEIGHT,
 					config.get(EntityConfigType.SUMMONER).MIN_GROUP, config.get(EntityConfigType.SUMMONER).MAX_GROUP));
 		}
-//		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.BARON, biome)
-//				&& config.get(EntityConfigType.BARON).SPAWN_WEIGHT > 0) {
-//			base.add(new Spawners(ModEntityTypes.BARON2016.get(), config.get(EntityConfigType.BARON).SPAWN_WEIGHT,
-//					config.get(EntityConfigType.BARON).MIN_GROUP, config.get(EntityConfigType.BARON).MAX_GROUP));
-//		}
-//		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.BARON, biome)
-//				&& config.get(EntityConfigType.BARON).SPAWN_WEIGHT > 0) {
-//			base.add(new Spawners(ModEntityTypes.FIREBARON.get(), config.get(EntityConfigType.BARON).SPAWN_WEIGHT,
-//					config.get(EntityConfigType.BARON).MIN_GROUP, config.get(EntityConfigType.BARON).MAX_GROUP));
-//		}
-//		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.BARON, biome)
-//				&& config.get(EntityConfigType.BARON).SPAWN_WEIGHT > 0) {
-//			base.add(new Spawners(ModEntityTypes.ARMORBARON.get(), config.get(EntityConfigType.BARON).SPAWN_WEIGHT,
-//					config.get(EntityConfigType.BARON).MIN_GROUP, config.get(EntityConfigType.BARON).MAX_GROUP));
-//		}
+		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.BARON, biome)
+				&& config.get(EntityConfigType.BARON).SPAWN_WEIGHT > 0) {
+			base.add(new Spawners(ModEntityTypes.BARON2016.get(), config.get(EntityConfigType.BARON).SPAWN_WEIGHT,
+					config.get(EntityConfigType.BARON).MIN_GROUP, config.get(EntityConfigType.BARON).MAX_GROUP));
+		}
+		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.BARON, biome)
+				&& config.get(EntityConfigType.BARON).SPAWN_WEIGHT > 0) {
+			base.add(new Spawners(ModEntityTypes.FIREBARON.get(), config.get(EntityConfigType.BARON).SPAWN_WEIGHT,
+					config.get(EntityConfigType.BARON).MIN_GROUP, config.get(EntityConfigType.BARON).MAX_GROUP));
+		}
+		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.BARON, biome)
+				&& config.get(EntityConfigType.BARON).SPAWN_WEIGHT > 0) {
+			base.add(new Spawners(ModEntityTypes.ARMORBARON.get(), config.get(EntityConfigType.BARON).SPAWN_WEIGHT,
+					config.get(EntityConfigType.BARON).MIN_GROUP, config.get(EntityConfigType.BARON).MAX_GROUP));
+		}
 	}
 }

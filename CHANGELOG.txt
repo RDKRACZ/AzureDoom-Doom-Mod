@@ -25,8 +25,8 @@ v.4.0.0
 - Updated the Gargoyle model and texture, thanks to Batpixxler!
 - Added all new Patchouli book entries as well as a few missing ones.
 - Added new Structures! 
-	- The End will now generate a structure dedicated to the Maykrs and the only place they will spawn!* 
-	- The Nether will now generate Titan skulls, that show signs of being transformed into a place of worship though it seems they were abandoned.**
+	- The End will now generate 2 new structures dedicated to the Maykrs and the only place they will spawn!* 
+	- The Nether will now generate 2 new structures, Titan Skulls and the Demon Mothers Arena**
 	- The Overworld will now generate massive portals, similar to ruined portals but bigger and can spawn the mods mobs.***
 - Added the Gun Crafter, which is how you will now craft all MCDoom weapons, textured by Pedroca!
 - Added Advancements for the 3 new Doom structures, Argent Energy/Plate, and summoning/killing the Icon of Sin.
@@ -63,8 +63,8 @@ v.4.0.0
 - Updated the Crucible with a whole new attack, it will no longer function like a sword but will instead deal massive damage to whatever is in front of the player. 
 - Removed targeting stuff, hated it tbh and no one used it much.
 
-*   : Edited from: Last Structure here: https://www.planetminecraft.com/project/5-city-center-nether-portal-designs/
-**  : Edited from: https://www.planetminecraft.com/project/japanese-hannya-mask-nether-portal-castle-entrance-build-idea/
+*   : Edited from: Last Structure here: https://www.planetminecraft.com/project/5-city-center-nether-portal-designs/ for the temple and https://www.planetminecraft.com/project/sumo-map-5153829/ for the Arch Maykr Arena
+**  : Edited from: https://www.planetminecraft.com/project/japanese-hannya-mask-nether-portal-castle-entrance-build-idea/ for the Titan Skull and https://www.planetminecraft.com/project/nether-arena-structure/ for the Mother Demon Arena
 *** : Edited from: https://www.planetminecraft.com/project/minecraft-nether-gate-world-download/
 
 ## Not yet implemented but assets and code are in-process awaiting creation of models ## 

@@ -14,7 +14,7 @@ public class EntityDefaults {
 		TURRET("Turret", new EntityDefaults(false, 4, 7).setMeleeDamage(0).setGeneralSpeed(0.00)),
 		CUEBALL("Cueball", new EntityDefaults(false, 4, 1).setMeleeDamage(0).setGeneralSpeed(0.00)),
 		TENTACLE("Tentacle", new EntityDefaults(false, 4, 5).setMeleeDamage(1).setGeneralSpeed(0.00)),
-		CYBER_DEMON_2016("CyberDemon2016", new EntityDefaults(true, 1, 300).setMeleeDamage(7).setGeneralSpeed(0.15).setRangedDamage(18)),
+		CYBER_DEMON_2016("CyberDemon2016", new EntityDefaults(true, 1, 300).setMeleeDamage(7).setGeneralSpeed(0.25).setRangedDamage(18)),
 		CYBER_DEMON("CyberDemon", new EntityDefaults(true, 1, 300).setMeleeDamage(7).setGeneralSpeed(0.25).setRangedDamage(18)),
 		DOOMHUNTER("DoomHunter", new EntityDefaults(true, 1, 150).setMeleeDamage(5).setGeneralSpeed(0.25).setRangedDamage(18)),
 		GARGOYLE("Gargoyle", new EntityDefaults(false, 4, 30).setMeleeDamage(4).setRangedDamage(10).setGeneralSpeed(0.25).setFlySpeed(2.25)),
