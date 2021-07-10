@@ -18,6 +18,8 @@ import net.minecraft.entity.Pose;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
@@ -27,10 +29,13 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.BossInfo;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerBossInfo;
 import net.minecraftforge.fml.network.NetworkHooks;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -46,6 +51,8 @@ public class ArchMakyrEntity extends DemonEntity implements IAnimatable {
 	private AnimationFactory factory = new AnimationFactory(this);
 	public static final DataParameter<Integer> VARIANT = EntityDataManager.defineId(ArchMakyrEntity.class,
 			DataSerializers.INT);
+	private final ServerBossInfo bossInfo = (ServerBossInfo) (new ServerBossInfo(this.getDisplayName(),
+			BossInfo.Color.PURPLE, BossInfo.Overlay.PROGRESS)).setDarkenScreen(true).setCreateWorldFog(true);
 
 	public ArchMakyrEntity(EntityType<ArchMakyrEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -93,6 +100,17 @@ public class ArchMakyrEntity extends DemonEntity implements IAnimatable {
 		}
 	}
 
+	public ServerBossInfo getBossInfo() {
+		return bossInfo;
+	}
+
+	@Override
+	protected void updateControlFlags() {
+		boolean flag = this.getTarget() != null && this.canSee(this.getTarget());
+		this.goalSelector.setControlFlag(Goal.Flag.LOOK, flag);
+		super.updateControlFlags();
+	}
+
 	@Override
 	protected void defineSynchedData() {
 		super.defineSynchedData();
@@ -100,9 +118,12 @@ public class ArchMakyrEntity extends DemonEntity implements IAnimatable {
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT tag) {
-		super.readAdditionalSaveData(tag);
-		this.setVariant(tag.getInt("Variant"));
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
+		this.setVariant(compound.getInt("Variant"));
+		if (this.hasCustomName()) {
+			this.bossInfo.setName(this.getDisplayName());
+		}
 	}
 
 	@Override
@@ -186,7 +207,31 @@ public class ArchMakyrEntity extends DemonEntity implements IAnimatable {
 
 	@Override
 	public int getMaxSpawnClusterSize() {
-		return 2;
+		return 1;
+	}
+
+	@Override
+	public void startSeenByPlayer(ServerPlayerEntity player) {
+		super.startSeenByPlayer(player);
+		this.bossInfo.addPlayer(player);
+	}
+
+	@Override
+	public void stopSeenByPlayer(ServerPlayerEntity player) {
+		super.stopSeenByPlayer(player);
+		this.bossInfo.removePlayer(player);
+	}
+
+	@Override
+	public void setCustomName(ITextComponent name) {
+		super.setCustomName(name);
+		this.bossInfo.setName(this.getDisplayName());
+	}
+
+	@Override
+	protected void customServerAiStep() {
+		super.customServerAiStep();
+		this.bossInfo.setPercent(this.getHealth() / this.getMaxHealth());
 	}
 
 }

@@ -9,7 +9,7 @@ public class ArchMaykrModel extends AnimatedGeoModel<ArchMakyrEntity> {
 
 	@Override
 	public ResourceLocation getModelLocation(ArchMakyrEntity object) {
-		return new ResourceLocation(DoomMod.MODID, "geo/archmaykr_" + object.getVariant() + ".geo.json");
+		return new ResourceLocation(DoomMod.MODID, "geo/archmaykr.geo.json");
 	}
 
 	@Override

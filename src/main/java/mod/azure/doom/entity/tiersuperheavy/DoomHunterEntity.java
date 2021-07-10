@@ -66,7 +66,7 @@ public class DoomHunterEntity extends DemonEntity implements IAnimatable {
 	private AnimationFactory factory = new AnimationFactory(this);
 
 	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-		if (event.isMoving()) {
+		if (event.isMoving() && this.getHealth() > (this.getMaxHealth() * 0.50)) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("idle2walking_transition", false)
 					.addAnimation("walking", true));
 			return PlayState.CONTINUE;
@@ -246,7 +246,7 @@ public class DoomHunterEntity extends DemonEntity implements IAnimatable {
 			double d0 = this.getAttackReachSqr(livingentity);
 			if (squaredDistance <= d0 && this.getTicksUntilNextAttack() <= 0) {
 				this.resetAttackCooldown();
-				this.entity.setAttackingState(entity.getHealth() < (entity.getMaxHealth() * 0.50) ? 3 : 5);
+				this.entity.setAttackingState(entity.getHealth() < (entity.getMaxHealth() * 0.50) ? 5 : 3);
 				this.mob.doHurtTarget(livingentity);
 			}
 		}
@@ -309,9 +309,9 @@ public class DoomHunterEntity extends DemonEntity implements IAnimatable {
 							parentEntity.spawnFlames(parentEntity.getX() + (double) MathHelper.cos(f) * d5,
 									parentEntity.getZ() + (double) MathHelper.sin(f) * d5, d0, d1, f, j);
 							if (parentEntity.getHealth() < (parentEntity.getMaxHealth() * 0.50)) {
-								this.parentEntity.setAttackingState(2);
-							} else {
 								this.parentEntity.setAttackingState(4);
+							} else {
+								this.parentEntity.setAttackingState(2);
 							}
 						}
 					}
@@ -415,7 +415,7 @@ public class DoomHunterEntity extends DemonEntity implements IAnimatable {
 		float health = this.getHealth();
 		return (health < 140 && health >= 150 ? 8
 				: health < 140 && health >= 120 ? 6
-						: health < 120 && health >= 100 ? 4 : health < 100 && health >= 80 ? 2 : health < 75 ? 0 : 10);
+						: health < 120 && health >= 100 ? 4 : health < 100 && health >= 76 ? 2 : health < 75 ? 0 : 10);
 	}
 
 	@Override

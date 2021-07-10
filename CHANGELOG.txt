@@ -29,7 +29,7 @@ v.4.0.0
 	- The Nether will now generate 2 new structures, Titan Skulls and the Demon Mothers Arena**
 	- The Overworld will now generate massive portals, similar to ruined portals but bigger and can spawn the mods mobs.***
 - Added the Gun Crafter, which is how you will now craft all MCDoom weapons, textured by Pedroca!
-- Added Advancements for the 3 new Doom structures, Argent Energy/Plate, and summoning/killing the Demon Mother/Arch Maykr/Icon of Sin.
+- Added Advancements for the 5 new Doom structures, Argent Energy/Plate, and summoning/killing the Demon Mother/Arch Maykr/Icon of Sin.
 - Added new config options for all gun projectile damages.
 - Added Ghast Tears to the drops of the boss tier demons loot tables.
 

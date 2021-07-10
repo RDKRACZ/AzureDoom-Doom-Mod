@@ -7,6 +7,7 @@ import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Codec;
 
 import mod.azure.doom.DoomMod;
+import mod.azure.doom.util.registry.ModEntityTypes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.SharedSeedRandom;
@@ -45,9 +46,8 @@ public class MaykrStructure extends Structure<NoFeatureConfig> {
 	}
 
 	private static final List<MobSpawnInfo.Spawners> STRUCTURE_MONSTERS = ImmutableList.of(
-//			new MobSpawnInfo.Spawners(ModEntityTypes.MAYKRDRONE.get(), 50, 2, 5)
-//			, new MobSpawnInfo.Spawners(ModEntityTypes.BLOODMAYKR.get(), 50, 1, 2)
-			);
+			new MobSpawnInfo.Spawners(ModEntityTypes.MAYKRDRONE.get(), 50, 2, 5),
+			new MobSpawnInfo.Spawners(ModEntityTypes.BLOODMAYKR.get(), 50, 1, 2));
 
 	@Override
 	public List<MobSpawnInfo.Spawners> getDefaultSpawnList() {

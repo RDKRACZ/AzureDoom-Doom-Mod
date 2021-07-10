@@ -150,7 +150,7 @@ public class DoomMod {
 	public void biomeModification(final BiomeLoadingEvent event) {
 		if (event.getCategory().equals(Category.THEEND)) {
 			event.getGeneration().getStructures().add(() -> DoomConfiguredStructures.CONFIGURED_MAYKR);
-//			event.getGeneration().getStructures().add(() -> DoomConfiguredStructures.CONFIGURED_ARCHMAYKR);
+			event.getGeneration().getStructures().add(() -> DoomConfiguredStructures.CONFIGURED_ARCHMAYKR);
 		}
 		if (event.getCategory().equals(Category.NETHER)) {
 			event.getGeneration().getStructures().add(() -> DoomConfiguredStructures.CONFIGURED_TITAN_SKULL);
@@ -187,8 +187,8 @@ public class DoomMod {
 					serverWorld.getChunkSource().generator.getSettings().structureConfig());
 			tempMap.putIfAbsent(DoomStructures.MAYKR.get(),
 					DimensionStructuresSettings.DEFAULTS.get(DoomStructures.MAYKR.get()));
-//			tempMap.putIfAbsent(DoomStructures.ARCHMAYKR.get(),
-//					DimensionStructuresSettings.DEFAULTS.get(DoomStructures.ARCHMAYKR.get()));
+			tempMap.putIfAbsent(DoomStructures.ARCHMAYKR.get(),
+					DimensionStructuresSettings.DEFAULTS.get(DoomStructures.ARCHMAYKR.get()));
 			tempMap.putIfAbsent(DoomStructures.MOTHERDEMON.get(),
 					DimensionStructuresSettings.DEFAULTS.get(DoomStructures.MOTHERDEMON.get()));
 			tempMap.putIfAbsent(DoomStructures.TITAN_SKULL.get(),

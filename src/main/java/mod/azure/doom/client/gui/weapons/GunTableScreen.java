@@ -97,7 +97,7 @@ public class GunTableScreen extends ContainerScreen<GunTableScreenHandler> {
 			int j = (this.height - this.imageHeight) / 2;
 			int yPos = j + 17;
 			int xPos = i + 3;
-			RenderSystem.pushMatrix();
+			matrices.pushPose();
 			RenderSystem.enableRescaleNormal();
 			this.minecraft.getTextureManager().bind(TEXTURE);
 			this.renderScroller(matrices, i, j, tradeOfferList);
@@ -129,7 +129,7 @@ public class GunTableScreen extends ContainerScreen<GunTableScreenHandler> {
 				widgetButtonPage.visible = widgetButtonPage.index < this.menu.getRecipes().size();
 			}
 
-			RenderSystem.popMatrix();
+			matrices.popPose();
 			RenderSystem.enableDepthTest();
 		}
 
@@ -147,7 +147,6 @@ public class GunTableScreen extends ContainerScreen<GunTableScreenHandler> {
 		for (int i = 0; i < 5; i++) {
 			ItemStack[] displayStacks = gunTableRecipe.getIngredientForSlot(i).getItems();
 			if (displayStacks.length > 0) {
-				// probably slow, but subclassing ingredient is hard in fabric
 				ItemStack stack = new ItemStack(displayStacks[0].getItem(), gunTableRecipe.countRequired(i));
 				if (!stack.isEmpty()) {
 					this.itemRenderer.renderGuiItem(stack, x, y);

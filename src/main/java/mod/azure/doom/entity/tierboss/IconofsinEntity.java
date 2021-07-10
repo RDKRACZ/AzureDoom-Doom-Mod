@@ -104,6 +104,18 @@ public class IconofsinEntity extends DemonEntity implements IAnimatable {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("summoned", true));
 			return PlayState.CONTINUE;
 		}
+		if (this.entityData.get(STATE) == 2 && !(this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("summoned_nohelmet", true));
+			return PlayState.CONTINUE;
+		}
+		if (this.entityData.get(STATE) == 3 && !(this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("slam", true));
+			return PlayState.CONTINUE;
+		}
+		if (this.entityData.get(STATE) == 4 && !(this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("slam_nohelmet", true));
+			return PlayState.CONTINUE;
+		}
 		return PlayState.STOP;
 	}
 
@@ -249,14 +261,23 @@ public class IconofsinEntity extends DemonEntity implements IAnimatable {
 											parentEntity.getZ()
 													+ (double) MathHelper.sin(f1) * rand.nextDouble() * 11.5D,
 											d0, d1, f1, 0);
+									if (parentEntity.getHealth() < (parentEntity.getMaxHealth() * 0.50)) {
+										this.parentEntity.setAttackingState(2);
+									} else {
+										this.parentEntity.setAttackingState(1);
+									}
 								}
 							} else {
 								parentEntity.doDamage();
+								if (parentEntity.getHealth() < (parentEntity.getMaxHealth() * 0.50)) {
+									this.parentEntity.setAttackingState(4);
+								} else {
+									this.parentEntity.setAttackingState(3);
+								}
 							}
-							this.parentEntity.setAttackingState(1);
 						}
 					}
-					if (this.attackTimer == 45) {
+					if (this.attackTimer == 55) {
 						this.parentEntity.setAttackingState(0);
 						this.attackTimer = -135;
 					}

@@ -222,7 +222,8 @@ public class MotherDemonEntity extends DemonEntity implements IAnimatable {
 							parentEntity.spawnFlames(parentEntity.getX() + (double) MathHelper.cos(f) * d5,
 									parentEntity.getZ() + (double) MathHelper.sin(f) * d5, d0, d1, f, j);
 							parentEntity.level.playLocalSound(this.parentEntity.getX(), this.parentEntity.getY(),
-									this.parentEntity.getZ(), ModSoundEvents.MOTHER_ATTACK.get(), SoundCategory.HOSTILE, 1.0F, 1.0F, true);
+									this.parentEntity.getZ(), ModSoundEvents.MOTHER_ATTACK.get(), SoundCategory.HOSTILE,
+									1.0F, 1.0F, true);
 							this.parentEntity.setAttackingState(2);
 						}
 					}
@@ -231,11 +232,12 @@ public class MotherDemonEntity extends DemonEntity implements IAnimatable {
 								this.parentEntity.getY(0.5D) + 0.5D, fireballentity.getZ() + vector3d.z * 2.0D);
 						world.addFreshEntity(fireballentity);
 						parentEntity.level.playLocalSound(this.parentEntity.getX(), this.parentEntity.getY(),
-								this.parentEntity.getZ(), ModSoundEvents.MOTHER_ATTACK.get(), SoundCategory.HOSTILE, 1.0F, 1.0F, true);
+								this.parentEntity.getZ(), ModSoundEvents.MOTHER_ATTACK.get(), SoundCategory.HOSTILE,
+								1.0F, 1.0F, true);
 						this.parentEntity.setAttackingState(1);
 					}
 				}
-				if (this.attackTimer == 25) {
+				if (this.attackTimer == 30) {
 					this.parentEntity.setAttackingState(0);
 					this.attackTimer = -150;
 				}

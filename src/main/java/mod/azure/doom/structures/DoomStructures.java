@@ -24,8 +24,8 @@ public class DoomStructures {
 	public static final RegistryObject<Structure<NoFeatureConfig>> MAYKR = registerStructure("maykr",
 			() -> (new MaykrStructure(NoFeatureConfig.CODEC)));
 
-//	public static final RegistryObject<Structure<NoFeatureConfig>> ARCHMAYKR = registerStructure("archmaykr",
-//			() -> (new ArchMaykrStructure(NoFeatureConfig.CODEC)));
+	public static final RegistryObject<Structure<NoFeatureConfig>> ARCHMAYKR = registerStructure("archmaykr",
+			() -> (new ArchMaykrStructure(NoFeatureConfig.CODEC)));
 
 	public static final RegistryObject<Structure<NoFeatureConfig>> TITAN_SKULL = registerStructure("titan_skull",
 			() -> (new TitanSkullStructure(NoFeatureConfig.CODEC)));
@@ -42,7 +42,7 @@ public class DoomStructures {
 
 	public static void setupStructures() {
 		setupMapSpacingAndLand(MAYKR.get(), new StructureSeparationSettings(20, 11, 1234567890), true);
-//		setupMapSpacingAndLand(ARCHMAYKR.get(), new StructureSeparationSettings(20, 11, 1234567898), true);
+		setupMapSpacingAndLand(ARCHMAYKR.get(), new StructureSeparationSettings(20, 11, 1234567898), true);
 		setupMapSpacingAndLand(TITAN_SKULL.get(), new StructureSeparationSettings(80, 20, 1234567890), true);
 		setupMapSpacingAndLand(MOTHERDEMON.get(), new StructureSeparationSettings(80, 20, 1234567899), true);
 		setupMapSpacingAndLand(PORTAL.get(), new StructureSeparationSettings(80, 20, 1234567890), true);
