@@ -209,6 +209,11 @@ public class ArchMakyrEntity extends DemonEntity implements IAnimatable {
 	public int getMaxSpawnClusterSize() {
 		return 1;
 	}
+	
+	@Override
+	public boolean isMaxGroupSizeReached(int p_204209_1_) {
+		return this.isAlive() ? true : super.isMaxGroupSizeReached(p_204209_1_);
+	}
 
 	@Override
 	public void startSeenByPlayer(ServerPlayerEntity player) {

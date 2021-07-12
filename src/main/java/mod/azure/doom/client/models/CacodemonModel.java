@@ -10,17 +10,19 @@ import software.bernie.geckolib3.model.provider.data.EntityModelData;
 
 public class CacodemonModel extends AnimatedGeoModel<CacodemonEntity> {
 
-	public CacodemonModel() {
-	}
+	public ResourceLocation classic_model = new ResourceLocation(DoomMod.MODID, "geo/cacodemon.geo.json");
+	public ResourceLocation doom64_model = new ResourceLocation(DoomMod.MODID, "geo/cacodemon64.geo.json");
+	public ResourceLocation classic_texture = new ResourceLocation(DoomMod.MODID, "textures/entity/cacodemon.png");
+	public ResourceLocation doom64_texture = new ResourceLocation(DoomMod.MODID, "textures/entity/cacodemon64.png");
 
 	@Override
 	public ResourceLocation getModelLocation(CacodemonEntity object) {
-		return new ResourceLocation(DoomMod.MODID, "geo/cacodemon.geo.json");
+		return object.getVariant() == 1 ? classic_model : doom64_model;
 	}
 
 	@Override
 	public ResourceLocation getTextureLocation(CacodemonEntity object) {
-		return new ResourceLocation(DoomMod.MODID, "textures/entity/cacodemon.png");
+		return object.getVariant() == 1 ? classic_texture : doom64_texture;
 	}
 
 	@Override

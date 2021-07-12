@@ -10,22 +10,25 @@ import software.bernie.geckolib3.model.provider.data.EntityModelData;
 
 public class PainModel extends AnimatedGeoModel<PainEntity> {
 
-	private static final ResourceLocation NORMAL = new ResourceLocation(DoomMod.MODID,
+	public ResourceLocation classic_model = new ResourceLocation(DoomMod.MODID, "geo/pain.geo.json");
+	public ResourceLocation doom64_model = new ResourceLocation(DoomMod.MODID, "geo/pain64.geo.json");
+	public ResourceLocation classic_texture = new ResourceLocation(DoomMod.MODID,
 			"textures/entity/painelemental-normal.png");
-	private static final ResourceLocation ATTACKING = new ResourceLocation(DoomMod.MODID,
+	public ResourceLocation classic_texture_attacking = new ResourceLocation(DoomMod.MODID,
 			"textures/entity/painelemental-attacking.png");
-
-	public PainModel() {
-	}
+	public ResourceLocation doom64_texture = new ResourceLocation(DoomMod.MODID, "textures/entity/pain64.png");
+	public ResourceLocation doom64_texture_attacking = new ResourceLocation(DoomMod.MODID,
+			"textures/entity/pain64.png");
 
 	@Override
 	public ResourceLocation getModelLocation(PainEntity object) {
-		return new ResourceLocation(DoomMod.MODID, "geo/pain.geo.json");
+		return object.getVariant() == 1 ? classic_model : doom64_model;
 	}
 
 	@Override
 	public ResourceLocation getTextureLocation(PainEntity object) {
-		return object.getAttckingState() == 1 ? ATTACKING : NORMAL;
+		return object.getVariant() == 1 ? (object.getAttckingState() == 1 ? classic_texture_attacking : classic_texture)
+				: (object.getAttckingState() == 1 ? doom64_texture_attacking : doom64_texture);
 	}
 
 	@Override

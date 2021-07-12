@@ -2,7 +2,6 @@ buildscript {
     repositories {
         maven { url = 'https://maven.minecraftforge.net/' }
 		maven { url  = 'https://plugins.gradle.org/m2/' }
-        jcenter()
         mavenCentral()
         maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
     }
@@ -112,6 +111,7 @@ dependencies {
 	
 	//compile fg.deobf("curse.maven:epicfightmod-405076:3377306")
 	implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.16.5:3.0.41')
+	annotationProcessor 'org.spongepowered:mixin:0.8:processor'
 }
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }

@@ -367,5 +367,10 @@
 	"doom.achievement.portal.desc" : "Didn't even have to blow a hole into the Overworld to find this",
 	"doom.achievement.maykr" : "Maykr Temple",
 	"doom.achievement.maykr.desc" : "Find the Maykrs.",
-	"gateways.small_imp_gate": "Small Imp Gate"
+	"gateways.small_imp_gate": "Small Imp Gate",
+    "filled_map.doom:titan_skull": "Titan Skull Map",
+    "filled_map.doom:portal": "Invasion Portal Map",
+    "filled_map.doom:maykr": "Maykr Temple Map",
+    "filled_map.doom:motherdemon": "Mother Demon Arena Map",
+    "filled_map.doom:archmaykr": "Arch Maykr Arena Map"
 }

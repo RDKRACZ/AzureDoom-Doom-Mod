@@ -6,7 +6,7 @@ import mod.azure.doom.DoomMod;
 import mod.azure.doom.client.Keybindings;
 import mod.azure.doom.client.render.weapons.SentinelHammerRender;
 import mod.azure.doom.util.packets.DoomPacketHandler;
-import mod.azure.doom.util.packets.weapons.AxeMarauderLoadingPacket;
+import mod.azure.doom.util.packets.weapons.SentinelHammerLoadingPacket;
 import mod.azure.doom.util.registry.DoomItems;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.AreaEffectCloudEntity;
@@ -132,7 +132,7 @@ public class SentinelHammerItem extends Item implements IAnimatable, ISyncable {
 		if (worldIn.isClientSide) {
 			if (playerentity.getMainHandItem().getItem() instanceof SentinelHammerItem) {
 				while (Keybindings.RELOAD.consumeClick() && isSelected) {
-					DoomPacketHandler.SENTINELHAMMER.sendToServer(new AxeMarauderLoadingPacket(itemSlot));
+					DoomPacketHandler.SENTINELHAMMER.sendToServer(new SentinelHammerLoadingPacket(itemSlot));
 				}
 			}
 		}

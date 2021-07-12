@@ -85,6 +85,34 @@
 							"skip_existing_chunks": true
 						}
 					]
+				},
+				{
+					"name": "minecraft:map",
+					"type": "minecraft:item",
+					"weight": 1,
+					"functions": [
+						{
+							"function": "minecraft:exploration_map",
+							"destination": "doom:motherdemon",
+							"decoration": "banner_gray",
+							"zoom": 4,
+							"skip_existing_chunks": true
+						}
+					]
+				},
+				{
+					"name": "minecraft:map",
+					"type": "minecraft:item",
+					"weight": 1,
+					"functions": [
+						{
+							"function": "minecraft:exploration_map",
+							"destination": "doom:archmaykr",
+							"decoration": "banner_gray",
+							"zoom": 4,
+							"skip_existing_chunks": true
+						}
+					]
 				}
 			]
 		}

@@ -6,7 +6,7 @@ import mod.azure.doom.DoomMod;
 import mod.azure.doom.client.Keybindings;
 import mod.azure.doom.client.render.weapons.DarkLordCrucibleRender;
 import mod.azure.doom.util.packets.DoomPacketHandler;
-import mod.azure.doom.util.packets.weapons.CrucibleLoadingPacket;
+import mod.azure.doom.util.packets.weapons.DarkLordCrucibleLoadingPacket;
 import mod.azure.doom.util.registry.DoomItems;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -118,7 +118,7 @@ public class DarkLordCrucibleItem extends Item implements IAnimatable, ISyncable
 		if (worldIn.isClientSide) {
 			if (playerentity.getMainHandItem().getItem() instanceof DarkLordCrucibleItem) {
 				while (Keybindings.RELOAD.consumeClick() && isSelected) {
-					DoomPacketHandler.CRUCIBLE.sendToServer(new CrucibleLoadingPacket(itemSlot));
+					DoomPacketHandler.DARKLORDCRUCIBLE.sendToServer(new DarkLordCrucibleLoadingPacket(itemSlot));
 				}
 			}
 		}
