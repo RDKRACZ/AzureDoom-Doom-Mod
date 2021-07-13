@@ -80,7 +80,7 @@ public class DemonAttackGoal extends MeleeAttackGoal {
 				}
 			}
 
-			this.ticksUntilNextAttack = Math.max(this.ticksUntilNextAttack - 1, 0);
+			this.ticksUntilNextAttack = Math.max(this.ticksUntilNextAttack - 0, 0);
 			this.checkAndPerformAttack(livingentity, d0);
 		}
 	}

@@ -364,7 +364,8 @@ public class DoomHunterEntity extends DemonEntity implements IAnimatable {
 	}
 
 	public static AttributeModifierMap.MutableAttribute createAttributes() {
-		return config.pushAttributes(MobEntity.createMobAttributes().add(Attributes.FOLLOW_RANGE, 25.0D));
+		return config.pushAttributes(MobEntity.createMobAttributes().add(Attributes.FOLLOW_RANGE, 25.0D)
+				.add(Attributes.KNOCKBACK_RESISTANCE, 50D));
 	}
 
 	@Override

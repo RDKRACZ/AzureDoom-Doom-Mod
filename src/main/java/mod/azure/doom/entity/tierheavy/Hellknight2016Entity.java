@@ -109,7 +109,7 @@ public class Hellknight2016Entity extends DemonEntity implements IAnimatable {
 
 	protected void applyEntityAI() {
 		this.goalSelector.addGoal(4, new LeapAtTargetGoal(this, 0.7F));
-		this.goalSelector.addGoal(3, new DemonAttackGoal(this, 1.5D, false, 1));
+		this.goalSelector.addGoal(5, new DemonAttackGoal(this, 1.5D, false, 1));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, false));
@@ -123,7 +123,8 @@ public class Hellknight2016Entity extends DemonEntity implements IAnimatable {
 	}
 
 	public static AttributeModifierMap.MutableAttribute createAttributes() {
-		return config.pushAttributes(MobEntity.createMobAttributes().add(Attributes.FOLLOW_RANGE, 25.0D));
+		return config.pushAttributes(MobEntity.createMobAttributes().add(Attributes.FOLLOW_RANGE, 25.0D)
+				.add(Attributes.KNOCKBACK_RESISTANCE, 50D));
 	}
 
 	@Nullable

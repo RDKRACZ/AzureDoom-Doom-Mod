@@ -38,6 +38,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -118,19 +119,35 @@ public class LostSoulEntity extends DemonEntity implements IMob, IAnimatable {
 	}
 
 	public static AttributeModifierMap.MutableAttribute createAttributes() {
-		return config.pushAttributes(MobEntity.createMobAttributes().add(Attributes.FOLLOW_RANGE, 25.0D));
+		return config.pushAttributes(
+				MobEntity.createMobAttributes().add(Attributes.FOLLOW_RANGE, 25.0D).add(Attributes.JUMP_STRENGTH, 2.D).add(Attributes.JUMP_STRENGTH, 2.D));
 	}
 
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8.0F));
 		this.goalSelector.addGoal(8, new LostSoulEntity.LookAroundGoal(this));
-		this.goalSelector.addGoal(4, new LostSoulEntity.ChargeAttackGoal());
+		this.goalSelector.addGoal(4, new LostSoulEntity.ChargeAttackGoal(this));
 		this.goalSelector.addGoal(5, new RandomFlyConvergeOnTargetGoal(this, 4, 15, 0.5));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, false));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
 		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this).setAlertOthers()));
+	}
+
+	@Override
+	protected void tickDeath() {
+		++this.deathTime;
+		if (this.deathTime == 5) {
+			this.remove();
+			if (!this.level.isClientSide) {
+				this.explode();
+			}
+		}
+	}
+
+	protected void explode() {
+		this.level.explode(this, this.getX(), this.getY(0.0625D), this.getZ(), 1.0F, Explosion.Mode.NONE);
 	}
 
 	public static boolean spawning(EntityType<LostSoulEntity> p_223368_0_, IWorld p_223368_1_, SpawnReason reason,
@@ -187,13 +204,12 @@ public class LostSoulEntity extends DemonEntity implements IMob, IAnimatable {
 				f = this.level.getBlockState(ground).getSlipperiness(this.level, ground, this) * 0.91F;
 			}
 
-			float f1 = 0.16277137F / (f * f * f);
 			f = 0.91F;
 			if (this.onGround) {
 				f = this.level.getBlockState(ground).getSlipperiness(this.level, ground, this) * 0.91F;
 			}
 
-			this.moveRelative(this.onGround ? 0.1F * f1 : 0.02F, travelVector);
+			this.moveRelative(0.02F, travelVector);
 			this.move(MoverType.SELF, this.getDeltaMovement());
 			this.setDeltaMovement(this.getDeltaMovement().scale((double) f));
 		}
@@ -202,60 +218,50 @@ public class LostSoulEntity extends DemonEntity implements IMob, IAnimatable {
 	}
 
 	public boolean onClimbable() {
-		return false;
+		return true;
 	}
 
 	class ChargeAttackGoal extends Goal {
 		public int attackTimer;
+		private final LostSoulEntity parentEntity;
 
-		public ChargeAttackGoal() {
+		public ChargeAttackGoal(LostSoulEntity ghast) {
 			this.setFlags(EnumSet.of(Goal.Flag.MOVE));
+			this.parentEntity = ghast;
 		}
 
 		public boolean canUse() {
-			if (LostSoulEntity.this.getTarget() != null && !LostSoulEntity.this.getMoveControl().hasWanted()) {
-				return true;
-			} else {
-				return false;
-			}
+			return parentEntity.getTarget() != null;
 		}
 
 		public boolean canContinueToUse() {
-			return LostSoulEntity.this.getMoveControl().hasWanted() && LostSoulEntity.this.isCharging()
-					&& LostSoulEntity.this.getTarget() != null && LostSoulEntity.this.getTarget().isAlive();
+			return parentEntity.getTarget() != null && parentEntity.getTarget().isAlive();
 		}
 
 		public void start() {
-			LivingEntity livingentity = LostSoulEntity.this.getTarget();
+			LivingEntity livingentity = parentEntity.getTarget();
 			Vector3d vec3d = livingentity.getEyePosition(1.0F);
-			LostSoulEntity.this.moveControl.setWantedPosition(vec3d.x, vec3d.y, vec3d.z, 4.0D);
-			LostSoulEntity.this.setCharging(true);
-			LostSoulEntity.this.playSound(ModSoundEvents.LOST_SOUL_AMBIENT.get(), 1.0F, 1.0F);
+			parentEntity.moveControl.setWantedPosition(vec3d.x, vec3d.y, vec3d.z, 4.0D);
+			parentEntity.setCharging(true);
+			parentEntity.playSound(ModSoundEvents.LOST_SOUL_AMBIENT.get(), 1.0F, 1.0F);
 			this.attackTimer = 0;
 		}
 
 		public void stop() {
-			LostSoulEntity.this.setCharging(false);
-			LostSoulEntity.this.setAttacking(false);
+			parentEntity.setCharging(false);
+			parentEntity.setAttacking(false);
 		}
 
 		public void tick() {
-			LivingEntity livingentity = LostSoulEntity.this.getTarget();
+			LivingEntity livingentity = parentEntity.getTarget();
 			++this.attackTimer;
-			if (LostSoulEntity.this.getBoundingBox().intersects(livingentity.getBoundingBox())) {
-				LostSoulEntity.this.doHurtTarget(livingentity);
-				LostSoulEntity.this.setCharging(false);
-			} else {
-				double d0 = LostSoulEntity.this.distanceToSqr(livingentity);
-				if (d0 < 400.0D) { // this was set to 30.0D (very short) is this intended? results in tons of these
-									// mobs just sitting around
-					Vector3d vec3d = livingentity.getEyePosition(1.0F);
-					LostSoulEntity.this.moveControl.setWantedPosition(vec3d.x, vec3d.y, vec3d.z, 1.0D);
-					this.attackTimer = -10;
-				}
+			parentEntity.setCharging(false);
+			Vector3d vec3d = livingentity.getEyePosition(1.0F);
+			parentEntity.moveControl.setWantedPosition(vec3d.x, vec3d.y, vec3d.z, 5.0D);
+			if (this.parentEntity.getBoundingBox().inflate((double) 0.2F).intersects(livingentity.getBoundingBox())) {
+				this.parentEntity.doHurtTarget(livingentity);
 			}
-
-			LostSoulEntity.this.setAttacking(this.attackTimer > 10);
+			this.attackTimer = Math.max(this.attackTimer - 0, 0);
 		}
 	}
 

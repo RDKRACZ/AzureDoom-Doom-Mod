@@ -208,7 +208,7 @@ public class ArchvileEntity extends DemonEntity implements IAnimatable {
 			LivingEntity livingentity = this.parentEntity.getTarget();
 			if (this.parentEntity.canSee(livingentity)) {
 				++this.attackTimer;
-				if (this.attackTimer == 40) {
+				if (this.attackTimer == 20) {
 					if (!this.parentEntity.level.isClientSide) {
 						float f2 = 24.0F;
 						int k1 = MathHelper.floor(this.parentEntity.getX() - (double) f2 - 1.0D);
@@ -241,19 +241,19 @@ public class ArchvileEntity extends DemonEntity implements IAnimatable {
 								livingentity.getX() - parentEntity.getX());
 						if (parentEntity.distanceToSqr(livingentity) < 9.0D
 								&& parentEntity.getTarget().canSee(livingentity)) {
-							for (int i = 0; i < 5; ++i) {
+							for (int i = 0; i < 15; ++i) {
 								float f1 = f + (float) i * (float) Math.PI * 0.4F;
 								parentEntity.spawnFangs(parentEntity.getX() + (double) MathHelper.cos(f1) * 1.5D,
 										parentEntity.getZ() + (double) MathHelper.sin(f1) * 1.5D, d0, d1, f1, 0);
 							}
 
-							for (int k = 0; k < 8; ++k) {
+							for (int k = 0; k < 18; ++k) {
 								float f21 = f + (float) k * (float) Math.PI * 2.0F / 8.0F + 1.2566371F;
 								parentEntity.spawnFangs(parentEntity.getX() + (double) MathHelper.cos(f21) * 2.5D,
 										parentEntity.getZ() + (double) MathHelper.sin(f21) * 2.5D, d0, d1, f21, 3);
 							}
 						} else {
-							for (int l = 0; l < 16; ++l) {
+							for (int l = 0; l < 26; ++l) {
 								double d2 = 1.25D * (double) (l + 1);
 								parentEntity.spawnFangs(parentEntity.getX() + (double) MathHelper.cos(f) * d2,
 										parentEntity.getZ() + (double) MathHelper.sin(f) * d2, d0, d1, f, 32);
@@ -266,9 +266,9 @@ public class ArchvileEntity extends DemonEntity implements IAnimatable {
 					}
 					this.parentEntity.setAttackingState(1);
 				}
-				if (this.attackTimer == 60) {
+				if (this.attackTimer == 40) {
 					this.parentEntity.setAttackingState(0);
-					this.attackTimer = -80;
+					this.attackTimer = -50;
 				}
 			} else if (this.attackTimer > 0) {
 				--this.attackTimer;

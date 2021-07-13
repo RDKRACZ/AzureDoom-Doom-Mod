@@ -42,6 +42,7 @@ public class EnergyCellMobEntity extends DamagingProjectileEntity implements IAn
 			float directHitDamage) {
 		super(ModEntityTypes.ENERGY_CELL_MOB.get(), shooter, accelX, accelY, accelZ, worldIn);
 		this.shooter = shooter;
+		this.walkDist = 3.0F;
 		this.directHitDamage = directHitDamage;
 	}
 

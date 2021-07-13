@@ -261,7 +261,7 @@ public class PainEntity extends DemonEntity implements IMob, IAnimatable {
 				this.parentEntity.getLookControl().setLookAt(livingentity, 90.0F, 30.0F);
 				World world = this.parentEntity.level;
 				++this.attackTimer;
-				if (this.attackTimer == 200) {
+				if (this.attackTimer == 20) {
 					if (this.parentEntity.getVariant() == 1) {
 						LostSoulEntity lost_soul = ModEntityTypes.LOST_SOUL.get().create(world);
 						lost_soul.moveTo(this.parentEntity.getX(), this.parentEntity.getY(), this.parentEntity.getZ(),
@@ -282,9 +282,9 @@ public class PainEntity extends DemonEntity implements IMob, IAnimatable {
 					}
 					this.parentEntity.setAttackingState(1);
 				}
-				if (this.attackTimer == 215) {
+				if (this.attackTimer == 35) {
 					this.parentEntity.setAttackingState(0);
-					this.attackTimer = -400;
+					this.attackTimer = -45;
 				}
 			} else if (this.attackTimer > 0) {
 				--this.attackTimer;

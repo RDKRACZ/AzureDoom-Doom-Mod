@@ -32,12 +32,42 @@
 				},
 				"lArm1": {
 					"rotation": {
-						"vector": ["Math.cos(query.anim_time * 180) * 5", 0, "Math.cos(query.anim_time * 180) * 5"]
+						"vector": ["-60+Math.cos(query.anim_time * 180) * 5", 0, "Math.cos(query.anim_time * 180) * 5"]
 					}
 				},
 				"rArm1": {
 					"rotation": {
-						"vector": ["Math.cos(query.anim_time * 180) * 5", 0, "Math.cos(query.anim_time * 180) * -5"]
+						"vector": ["-60+Math.cos(query.anim_time * 180) * 5", 0, "Math.cos(query.anim_time * 180) * -5"]
+					}
+				},
+				"bone4": {
+					"rotation": {
+						"vector": ["Math.cos(query.anim_time * 180) * 10", "Math.sin(query.anim_time * 180) * 10", "Math.cos(query.anim_time * 180) * 10"]
+					}
+				},
+				"bone5": {
+					"rotation": {
+						"vector": ["Math.cos(query.anim_time * 180) * -10", "Math.sin(query.anim_time * 180) * -10", "Math.cos(query.anim_time * 180) * -10"]
+					}
+				},
+				"bone6": {
+					"rotation": {
+						"vector": ["Math.cos(query.anim_time * 180) * 10", "Math.sin(query.anim_time * 180) * 10", "Math.cos(query.anim_time * 180) * 10"]
+					}
+				},
+				"bone2": {
+					"rotation": {
+						"vector": ["Math.cos(query.anim_time * 180) * -10", "Math.sin(query.anim_time * 180) * -10", "Math.cos(query.anim_time * 180) * -10"]
+					}
+				},
+				"bone7": {
+					"rotation": {
+						"vector": ["Math.cos(query.anim_time * 180) * 10", "Math.sin(query.anim_time * 180) * 10", "Math.cos(query.anim_time * 180) * 10"]
+					}
+				},
+				"bone8": {
+					"rotation": {
+						"vector": ["Math.cos(query.anim_time * 180) * -10", "Math.sin(query.anim_time * 180) * -10", "Math.cos(query.anim_time * 180) * -10"]
 					}
 				}
 			}
@@ -73,12 +103,42 @@
 				},
 				"lArm1": {
 					"rotation": {
-						"vector": ["Math.cos(query.anim_time * 360) * 5", 0, "Math.cos(query.anim_time * 360) * 5"]
+						"vector": ["-60+Math.cos(query.anim_time * 360) * 5", 0, "Math.cos(query.anim_time * 360) * 5"]
 					}
 				},
 				"rArm1": {
 					"rotation": {
-						"vector": ["Math.cos(query.anim_time * 360) * 5", 0, "Math.cos(query.anim_time * 360) * -5"]
+						"vector": ["-60+Math.cos(query.anim_time * 360) * 5", 0, "Math.cos(query.anim_time * 360) * -5"]
+					}
+				},
+				"bone2": {
+					"rotation": {
+						"vector": ["Math.cos(query.anim_time * 360) * -10", "Math.sin(query.anim_time * 360) * -10", "Math.cos(query.anim_time * 360) * -10"]
+					}
+				},
+				"bone7": {
+					"rotation": {
+						"vector": ["Math.cos(query.anim_time * 360) * 10", "Math.sin(query.anim_time * 360) * 10", "Math.cos(query.anim_time * 360) * 10"]
+					}
+				},
+				"bone8": {
+					"rotation": {
+						"vector": ["Math.cos(query.anim_time * 360) * -10", "Math.sin(query.anim_time * 360) * -10", "Math.cos(query.anim_time * 360) * -10"]
+					}
+				},
+				"bone4": {
+					"rotation": {
+						"vector": ["Math.cos(query.anim_time * 360) * 10", "Math.sin(query.anim_time * 360) * 10", "Math.cos(query.anim_time * 360) * 10"]
+					}
+				},
+				"bone5": {
+					"rotation": {
+						"vector": ["Math.cos(query.anim_time * 360) * -10", "Math.sin(query.anim_time * 360) * -10", "Math.cos(query.anim_time * 360) * -10"]
+					}
+				},
+				"bone6": {
+					"rotation": {
+						"vector": ["Math.cos(query.anim_time * 360) * 10", "Math.sin(query.anim_time * 360) * 10", "Math.cos(query.anim_time * 360) * 10"]
 					}
 				}
 			}

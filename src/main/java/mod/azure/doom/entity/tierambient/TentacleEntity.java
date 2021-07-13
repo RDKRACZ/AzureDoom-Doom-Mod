@@ -122,7 +122,7 @@ public class TentacleEntity extends DemonEntity implements IAnimatable {
 	protected void registerGoals() {
 		this.goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8.0F));
 		this.goalSelector.addGoal(8, new LookAtGoal(this, AbstractVillagerEntity.class, 8.0F));
-		this.goalSelector.addGoal(9, new TentacleEntity.AttackGoal(this, 15, 1));
+		this.goalSelector.addGoal(9, new TentacleEntity.AttackGoal(this, 15));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, false));
 		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this).setAlertOthers()));
@@ -131,11 +131,9 @@ public class TentacleEntity extends DemonEntity implements IAnimatable {
 	static class AttackGoal extends Goal {
 		private final TentacleEntity parentEntity;
 		public int attackTimer;
-		private int statecheck;
 
-		public AttackGoal(TentacleEntity ghast, int attackCooldownIn, int state) {
+		public AttackGoal(TentacleEntity ghast, int attackCooldownIn) {
 			this.parentEntity = ghast;
-			this.statecheck = state;
 		}
 
 		public boolean canUse() {
@@ -158,15 +156,18 @@ public class TentacleEntity extends DemonEntity implements IAnimatable {
 				if (this.parentEntity.canSee(livingentity)) {
 					if (parentEntity.distanceTo(livingentity) < 3.0D) {
 						++this.attackTimer;
-						if (this.attackTimer == 35) {
+						if (this.attackTimer == 15) {
 							this.parentEntity.doDamage();
-							this.attackTimer = -35;
+							this.parentEntity.setAttackingState(1);
+						}
+						if (this.attackTimer == 40) {
+							this.parentEntity.setAttackingState(0);
+							this.attackTimer = -45;
 						}
 					}
 				} else if (this.attackTimer > 0) {
 					--this.attackTimer;
 				}
-				this.parentEntity.setAttackingState(this.attackTimer >= 25 ? statecheck : 0);
 			}
 		}
 
@@ -186,7 +187,7 @@ public class TentacleEntity extends DemonEntity implements IAnimatable {
 		for (int k2 = 0; k2 < list.size(); ++k2) {
 			Entity entity = list.get(k2);
 			double d12 = (double) (MathHelper.sqrt(entity.distanceToSqr(vector3d)) / f2);
-			if (d12 <= 1.0D) {
+			if (d12 <= 2.0D) {
 				if (entity instanceof LivingEntity) {
 					entity.hurt(DamageSource.indirectMagic(this, this.getTarget()), 1);
 				}
