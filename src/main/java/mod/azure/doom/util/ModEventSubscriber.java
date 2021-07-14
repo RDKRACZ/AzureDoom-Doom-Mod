@@ -34,6 +34,7 @@ import mod.azure.doom.entity.tierheavy.PainEntity;
 import mod.azure.doom.entity.tierheavy.Pinky2016;
 import mod.azure.doom.entity.tierheavy.PinkyEntity;
 import mod.azure.doom.entity.tierheavy.ProwlerEntity;
+import mod.azure.doom.entity.tierheavy.Revenant2016Entity;
 import mod.azure.doom.entity.tierheavy.RevenantEntity;
 import mod.azure.doom.entity.tierheavy.SpectreEntity;
 import mod.azure.doom.entity.tierheavy.WhiplashEntity;
@@ -213,6 +214,9 @@ public class ModEventSubscriber {
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.SUMMONER.get(),
 				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
 				SummonerEntity::spawning);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.REVENANT2016.get(),
+				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+				Revenant2016Entity::spawning);
 	}
 
 	@SubscribeEvent
@@ -268,5 +272,6 @@ public class ModEventSubscriber {
 		event.put(ModEntityTypes.MOTHERDEMON.get(), MotherDemonEntity.createAttributes().build());
 		event.put(ModEntityTypes.TURRET.get(), TurretEntity.createAttributes().build());
 		event.put(ModEntityTypes.SUMMONER.get(), SummonerEntity.createAttributes().build());
+		event.put(ModEntityTypes.REVENANT2016.get(), Revenant2016Entity.createAttributes().build());
 	}
 }

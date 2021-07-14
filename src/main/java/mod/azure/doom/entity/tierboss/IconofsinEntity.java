@@ -223,100 +223,87 @@ public class IconofsinEntity extends DemonEntity implements IAnimatable {
 		public void tick() {
 			LivingEntity livingentity = this.parentEntity.getTarget();
 			if (livingentity != null) {
-				if (this.parentEntity.canSee(livingentity) && parentEntity.distanceTo(livingentity) < 10.0D) {
+				if (parentEntity.distanceTo(livingentity) < 10000.0D) {
 					attackTimer++;
 					Random rand = new Random();
 					float f = (float) MathHelper.atan2(livingentity.getZ() - parentEntity.getZ(),
 							livingentity.getX() - parentEntity.getX());
 					if (this.attackTimer == 35) {
 						SplittableRandom random = new SplittableRandom();
-						boolean r = random.nextInt(1, 101) <= 20;
-						if (parentEntity.distanceTo(livingentity) < 13.0D) {
-							if (r) {
-								for (int i = 15; i < 55; ++i) {
-									double d0 = Math.min(livingentity.getY(), livingentity.getY());
-									double d1 = Math.max(livingentity.getY(), livingentity.getY()) + 1.0D;
-									float f1 = f + (float) i * (float) Math.PI * 0.4F;
-									parentEntity.spawnFlames(
-											parentEntity.getX()
-													+ (double) MathHelper.cos(f1) * rand.nextDouble() * 11.5D,
-											parentEntity.getZ()
-													+ (double) MathHelper.sin(f1) * rand.nextDouble() * 11.5D,
-											d0, d1, f1, 0);
-									parentEntity.spawnFlames(
-											parentEntity.getX()
-													+ (double) MathHelper.cos(f1) * rand.nextDouble() * 11.5D,
-											parentEntity.getZ()
-													+ (double) MathHelper.sin(f1) * rand.nextDouble() * 11.5D,
-											d0, d1, f1, 0);
-									parentEntity.spawnFlames(
-											parentEntity.getX()
-													+ (double) MathHelper.cos(f1) * rand.nextDouble() * 11.5D,
-											parentEntity.getZ()
-													+ (double) MathHelper.sin(f1) * rand.nextDouble() * 11.5D,
-											d0, d1, f1, 0);
-									parentEntity.spawnFlames(
-											parentEntity.getX()
-													+ (double) MathHelper.cos(f1) * rand.nextDouble() * 11.5D,
-											parentEntity.getZ()
-													+ (double) MathHelper.sin(f1) * rand.nextDouble() * 11.5D,
-											d0, d1, f1, 0);
-									parentEntity.spawnFlames(
-											parentEntity.getX()
-													+ (double) MathHelper.cos(f1) * rand.nextDouble() * 11.5D,
-											parentEntity.getZ()
-													+ (double) MathHelper.sin(f1) * rand.nextDouble() * 11.5D,
-											d0, d1, f1, 0);
-									if (parentEntity.getHealth() < (parentEntity.getMaxHealth() * 0.50)) {
-										this.parentEntity.setAttackingState(2);
-									} else {
-										this.parentEntity.setAttackingState(1);
-									}
-								}
-							} else if (random.nextInt(1, 101) == 40) {
-								if (!parentEntity.level.isClientSide) {
-									float f2 = 50.0F;
-									int k1 = MathHelper.floor(parentEntity.getX() - (double) f2 - 1.0D);
-									int l1 = MathHelper.floor(parentEntity.getX() + (double) f2 + 1.0D);
-									int i2 = MathHelper.floor(parentEntity.getY() - (double) f2 - 1.0D);
-									int i1 = MathHelper.floor(parentEntity.getY() + (double) f2 + 1.0D);
-									int j2 = MathHelper.floor(parentEntity.getZ() - (double) f2 - 1.0D);
-									int j1 = MathHelper.floor(parentEntity.getZ() + (double) f2 + 1.0D);
-									List<Entity> list = parentEntity.level.getEntities(parentEntity,
-											new AxisAlignedBB((double) k1, (double) i2, (double) j2, (double) l1,
-													(double) i1, (double) j1));
-									for (int k2 = 0; k2 < list.size(); ++k2) {
-										Entity entity = list.get(k2);
-										if (entity.isAlive()) {
-											double d0 = (this.parentEntity.getBoundingBox().minX
-													+ this.parentEntity.getBoundingBox().maxX) / 2.0D;
-											double d1 = (this.parentEntity.getBoundingBox().minZ
-													+ this.parentEntity.getBoundingBox().maxZ) / 2.0D;
-											double d2 = entity.getX() - d0;
-											double d3 = entity.getZ() - d1;
-											double d4 = Math.max(d2 * d2 + d3 * d3, 0.1D);
-											entity.push(d2 / d4 * 10.0D, (double) 0.2F * 10.0D, d3 / d4 * 10.0D);
-										}
-									}
-								}
+						int r = random.nextInt(0, 3);
+						if (r == 1) {
+							for (int i = 15; i < 55; ++i) {
+								double d0 = Math.min(livingentity.getY(), livingentity.getY());
+								double d1 = Math.max(livingentity.getY(), livingentity.getY()) + 1.0D;
+								float f1 = f + (float) i * (float) Math.PI * 0.4F;
+								parentEntity.spawnFlames(
+										parentEntity.getX() + (double) MathHelper.cos(f1) * rand.nextDouble() * 11.5D,
+										parentEntity.getZ() + (double) MathHelper.sin(f1) * rand.nextDouble() * 11.5D,
+										d0, d1, f1, 0);
+								parentEntity.spawnFlames(
+										parentEntity.getX() + (double) MathHelper.cos(f1) * rand.nextDouble() * 11.5D,
+										parentEntity.getZ() + (double) MathHelper.sin(f1) * rand.nextDouble() * 11.5D,
+										d0, d1, f1, 0);
+								parentEntity.spawnFlames(
+										parentEntity.getX() + (double) MathHelper.cos(f1) * rand.nextDouble() * 11.5D,
+										parentEntity.getZ() + (double) MathHelper.sin(f1) * rand.nextDouble() * 11.5D,
+										d0, d1, f1, 0);
+								parentEntity.spawnFlames(
+										parentEntity.getX() + (double) MathHelper.cos(f1) * rand.nextDouble() * 11.5D,
+										parentEntity.getZ() + (double) MathHelper.sin(f1) * rand.nextDouble() * 11.5D,
+										d0, d1, f1, 0);
+								parentEntity.spawnFlames(
+										parentEntity.getX() + (double) MathHelper.cos(f1) * rand.nextDouble() * 11.5D,
+										parentEntity.getZ() + (double) MathHelper.sin(f1) * rand.nextDouble() * 11.5D,
+										d0, d1, f1, 0);
 								if (parentEntity.getHealth() < (parentEntity.getMaxHealth() * 0.50)) {
-									this.parentEntity.setAttackingState(6);
+									this.parentEntity.setAttackingState(2);
 								} else {
-									this.parentEntity.setAttackingState(5);
+									this.parentEntity.setAttackingState(1);
 								}
+							}
+						} else if (r == 2) {
+							if (!parentEntity.level.isClientSide) {
+								float f2 = 50.0F;
+								int k1 = MathHelper.floor(parentEntity.getX() - (double) f2 - 1.0D);
+								int l1 = MathHelper.floor(parentEntity.getX() + (double) f2 + 1.0D);
+								int i2 = MathHelper.floor(parentEntity.getY() - (double) f2 - 1.0D);
+								int i1 = MathHelper.floor(parentEntity.getY() + (double) f2 + 1.0D);
+								int j2 = MathHelper.floor(parentEntity.getZ() - (double) f2 - 1.0D);
+								int j1 = MathHelper.floor(parentEntity.getZ() + (double) f2 + 1.0D);
+								List<Entity> list = parentEntity.level.getEntities(parentEntity, new AxisAlignedBB(
+										(double) k1, (double) i2, (double) j2, (double) l1, (double) i1, (double) j1));
+								for (int k2 = 0; k2 < list.size(); ++k2) {
+									Entity entity = list.get(k2);
+									if (entity.isAlive()) {
+										double d0 = (this.parentEntity.getBoundingBox().minX
+												+ this.parentEntity.getBoundingBox().maxX) / 2.0D;
+										double d1 = (this.parentEntity.getBoundingBox().minZ
+												+ this.parentEntity.getBoundingBox().maxZ) / 2.0D;
+										double d2 = entity.getX() - d0;
+										double d3 = entity.getZ() - d1;
+										double d4 = Math.max(d2 * d2 + d3 * d3, 0.1D);
+										entity.push(d2 / d4 * 10.0D, (double) 0.2F * 10.0D, d3 / d4 * 10.0D);
+									}
+								}
+							}
+							if (parentEntity.getHealth() < (parentEntity.getMaxHealth() * 0.50)) {
+								this.parentEntity.setAttackingState(6);
 							} else {
-								parentEntity.doDamage();
-								if (parentEntity.getHealth() < (parentEntity.getMaxHealth() * 0.50)) {
-									this.parentEntity.setAttackingState(4);
-								} else {
-									this.parentEntity.setAttackingState(3);
-								}
+								this.parentEntity.setAttackingState(5);
+							}
+						} else {
+							parentEntity.doDamage();
+							if (parentEntity.getHealth() < (parentEntity.getMaxHealth() * 0.50)) {
+								this.parentEntity.setAttackingState(4);
+							} else {
+								this.parentEntity.setAttackingState(3);
 							}
 						}
 					}
 					if (this.attackTimer == 65) {
 						this.parentEntity.setAttackingState(0);
-						this.attackTimer = -135;
+						this.attackTimer = -75;
 					}
 				} else if (this.attackTimer > 0) {
 					--this.attackTimer;

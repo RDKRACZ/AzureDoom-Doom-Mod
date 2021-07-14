@@ -14,8 +14,6 @@ public class DemonAttackGoal extends MeleeAttackGoal {
 	private double pathedTargetX;
 	private double pathedTargetY;
 	private double pathedTargetZ;
-	private int failedPathFindingPenalty = 0;
-	private boolean canPenalize = false;
 
 	public DemonAttackGoal(DemonEntity zombieIn, double speedIn, boolean longMemoryIn, int state) {
 		super(zombieIn, speedIn, longMemoryIn);
@@ -55,20 +53,6 @@ public class DemonAttackGoal extends MeleeAttackGoal {
 				this.pathedTargetY = livingentity.getY();
 				this.pathedTargetZ = livingentity.getZ();
 				this.ticksUntilNextPathRecalculation = 4 + this.mob.getRandom().nextInt(7);
-				if (this.canPenalize) {
-					this.ticksUntilNextPathRecalculation += failedPathFindingPenalty;
-					if (this.mob.getNavigation().getPath() != null) {
-						net.minecraft.pathfinding.PathPoint finalPathPoint = this.mob.getNavigation().getPath()
-								.getEndNode();
-						if (finalPathPoint != null
-								&& livingentity.distanceToSqr(finalPathPoint.x, finalPathPoint.y, finalPathPoint.z) < 1)
-							failedPathFindingPenalty = 0;
-						else
-							failedPathFindingPenalty += 10;
-					} else {
-						failedPathFindingPenalty += 10;
-					}
-				}
 				if (d0 > 1024.0D) {
 					this.ticksUntilNextPathRecalculation += 10;
 				} else if (d0 > 256.0D) {

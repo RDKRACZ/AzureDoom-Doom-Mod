@@ -13,6 +13,10 @@
 		{
 			"type": "entity",
 			"entity": "doom:revenant"
+		},
+		{
+			"type": "entity",
+			"entity": "doom:revenant2016"
 		}
 	]
 }

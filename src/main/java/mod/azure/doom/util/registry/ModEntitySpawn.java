@@ -78,6 +78,11 @@ public class ModEntitySpawn {
 			base.add(new Spawners(ModEntityTypes.REVENANT.get(), config.get(EntityConfigType.REVENANT).SPAWN_WEIGHT,
 					config.get(EntityConfigType.REVENANT).MIN_GROUP, config.get(EntityConfigType.REVENANT).MAX_GROUP));
 		}
+		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.REVENANT, biome)
+				&& config.get(EntityConfigType.REVENANT).SPAWN_WEIGHT > 0) {
+			base.add(new Spawners(ModEntityTypes.REVENANT2016.get(), config.get(EntityConfigType.REVENANT).SPAWN_WEIGHT,
+					config.get(EntityConfigType.REVENANT).MIN_GROUP, config.get(EntityConfigType.REVENANT).MAX_GROUP));
+		}
 		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.SPIDERMASTERMIND, biome)
 				&& config.get(EntityConfigType.SPIDERMASTERMIND).SPAWN_WEIGHT > 0) {
 			base.add(new Spawners(ModEntityTypes.SPIDERMASTERMIND.get(),

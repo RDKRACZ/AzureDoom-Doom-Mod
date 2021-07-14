@@ -161,4 +161,9 @@ public class IconofsinRender extends GeoEntityRenderer<IconofsinEntity> {
 		stackIn.scale(2F, 2F, 2F);
 	}
 
+	@Override
+	protected float getDeathMaxRotation(IconofsinEntity entityLivingBaseIn) {
+		return 0.0F;
+	}
+
 }

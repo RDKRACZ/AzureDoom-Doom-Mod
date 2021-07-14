@@ -16,9 +16,10 @@ public class PainModel extends AnimatedGeoModel<PainEntity> {
 			"textures/entity/painelemental-normal.png");
 	public ResourceLocation classic_texture_attacking = new ResourceLocation(DoomMod.MODID,
 			"textures/entity/painelemental-attacking.png");
-	public ResourceLocation doom64_texture = new ResourceLocation(DoomMod.MODID, "textures/entity/pain64.png");
+	public ResourceLocation doom64_texture = new ResourceLocation(DoomMod.MODID,
+			"textures/entity/painelemental64-normal.png");
 	public ResourceLocation doom64_texture_attacking = new ResourceLocation(DoomMod.MODID,
-			"textures/entity/pain64.png");
+			"textures/entity/painelemental64-attacking.png");
 
 	@Override
 	public ResourceLocation getModelLocation(PainEntity object) {

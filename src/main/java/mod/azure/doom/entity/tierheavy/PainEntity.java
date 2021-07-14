@@ -173,6 +173,17 @@ public class PainEntity extends DemonEntity implements IMob, IAnimatable {
 		++this.deathTime;
 		if (this.deathTime == 30) {
 			this.remove();
+			if (!this.level.isClientSide()) {
+				LostSoulEntity lost_soul = ModEntityTypes.LOST_SOUL.get().create(level);
+				lost_soul.moveTo(this.getX(), this.getY(), this.getZ(), 0, 0);
+				this.level.addFreshEntity(lost_soul);
+				LostSoulEntity lost_soul1 = ModEntityTypes.LOST_SOUL.get().create(level);
+				lost_soul1.moveTo(this.getX(), this.getY(), this.getZ(), 0, 0);
+				this.level.addFreshEntity(lost_soul1);
+				LostSoulEntity lost_soul2 = ModEntityTypes.LOST_SOUL.get().create(level);
+				lost_soul2.moveTo(this.getX(), this.getY(), this.getZ(), 0, 0);
+				this.level.addFreshEntity(lost_soul2);
+			}
 		}
 	}
 

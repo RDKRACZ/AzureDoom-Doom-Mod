@@ -44,6 +44,7 @@ import mod.azure.doom.client.render.PossessedScientistRender;
 import mod.azure.doom.client.render.PossessedSoldierRender;
 import mod.azure.doom.client.render.PossessedWorkerRender;
 import mod.azure.doom.client.render.ProwlerRender;
+import mod.azure.doom.client.render.Revenant2016Render;
 import mod.azure.doom.client.render.RevenantRender;
 import mod.azure.doom.client.render.ShotgunguyRender;
 import mod.azure.doom.client.render.SpectreRender;
@@ -237,6 +238,7 @@ public class ClientModEventSubscriber {
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.TURRET.get(), TurretRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.SUMMONER.get(), SummonerRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.HOOK.get(), HookRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.REVENANT2016.get(), Revenant2016Render::new);
 
 		ClientRegistry.bindTileEntityRenderer(ModEntityTypes.TOTEM.get(), TotemRender::new);
 		ClientRegistry.bindTileEntityRenderer(ModEntityTypes.GUN_TABLE_ENTITY.get(), GunCraftingRender::new);

@@ -24,4 +24,9 @@ public class ArmoredBaronRender extends GeoEntityRenderer<ArmoredBaronEntity> {
 		return RenderType.entityTranslucent(getTextureLocation(animatable));
 	}
 
+	@Override
+	protected float getDeathMaxRotation(ArmoredBaronEntity entityLivingBaseIn) {
+		return 0.0F;
+	}
+
 }

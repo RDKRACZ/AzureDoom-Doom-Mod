@@ -23,8 +23,9 @@ v.4.0.0
 - Added the Baron 2016, thanks to Batpixxler!
 - Added the Fireborne Baron, thanks to Batpixxler!
 - Added the Armored Baron, thanks to Batpixxler!
-- Added the Cacodemon 64 variant of the Cacodemon, thanks to Batpixxler for the model and Pedroca for the texture!
-- Added the Pain Elemental 64 variant of the Pain Elemental, thanks to Batpixxler for the model and Pedroca for the texture!
+- Added the Cacodemon 64 variant of the Cacodemon, thanks to Batpixxler for the model!
+- Added the Pain Elemental 64 variant of the Pain Elemental, thanks to Batpixxler for the model!
+- Added the Revenant 2016, model based off UnnamedMarine's Revenant, of which we already use a modified version of.
 - Added all new Patchouli book entries as well as a few missing ones.
 - Added new Structures! 
 	- The End will now generate 2 new structures dedicated to the Maykrs and the only place they will spawn!* 
@@ -36,6 +37,10 @@ v.4.0.0
 - Added Ghast Tears to the drops of the boss tier demons loot tables.
 
 **Updated/Fixed**
+- Pain Elementals now spawn 3 lost souls on death.
+- Death rotation now fixed on all mobs.
+- Lost Souls now explode on death.
+- Completely rebalanced most demons attacks.
 - Updated the Unwilling model, thanks to Undeadmonkey for the model and Pedroca for the texture!
 - Updated the Gargoyle model and texture, thanks to Batpixxler!
 - Updated Argent Tools, Ballista/Unmaykr bolts, Argent Energy/Plate, BFG Cell, Inmortal Sphere, and Daisy (Now rabbit foot) item textures.

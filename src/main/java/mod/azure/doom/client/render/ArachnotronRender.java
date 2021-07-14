@@ -25,4 +25,9 @@ public class ArachnotronRender extends GeoEntityRenderer<ArachnotronEntity> {
 		return RenderType.entityTranslucent(getTextureLocation(animatable));
 	}
 
+	@Override
+	protected float getDeathMaxRotation(ArachnotronEntity entityLivingBaseIn) {
+		return 0.0F;
+	}
+
 }
