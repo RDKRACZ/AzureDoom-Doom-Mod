@@ -1,4 +1,4 @@
-package mod.azure.doom.structures;
+package mod.azure.doom.structures.templates;
 
 import java.util.List;
 
@@ -6,6 +6,7 @@ import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Codec;
 
 import mod.azure.doom.DoomMod;
+import mod.azure.doom.structures.DoomStructures;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.ResourceLocation;
@@ -29,15 +30,16 @@ import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.gen.feature.structure.StructureStart;
 import net.minecraft.world.gen.feature.structure.VillageConfig;
 import net.minecraft.world.gen.feature.template.TemplateManager;
+import net.minecraft.world.gen.settings.StructureSeparationSettings;
 
-public class PortalStructure extends Structure<NoFeatureConfig> {
-	public PortalStructure(Codec<NoFeatureConfig> codec) {
+public class TitanSkullStructure extends Structure<NoFeatureConfig> {
+	public TitanSkullStructure(Codec<NoFeatureConfig> codec) {
 		super(codec);
 	}
 
 	@Override
 	public IStartFactory<NoFeatureConfig> getStartFactory() {
-		return PortalStructure.Start::new;
+		return TitanSkullStructure.Start::new;
 	}
 
 	@Override
@@ -46,28 +48,12 @@ public class PortalStructure extends Structure<NoFeatureConfig> {
 	}
 
 	private static final List<MobSpawnInfo.Spawners> STRUCTURE_MONSTERS = ImmutableList.of(
-			new MobSpawnInfo.Spawners(ModEntityTypes.LOST_SOUL.get(), 20, 1, 2),
-			new MobSpawnInfo.Spawners(ModEntityTypes.TURRET.get(), 20, 1, 2),
-			new MobSpawnInfo.Spawners(ModEntityTypes.ZOMBIEMAN.get(), 20, 1, 2),
-			new MobSpawnInfo.Spawners(ModEntityTypes.CHAINGUNNER.get(), 20, 1, 2),
-			new MobSpawnInfo.Spawners(ModEntityTypes.POSSESSEDWORKER.get(), 20, 1, 2),
-			new MobSpawnInfo.Spawners(ModEntityTypes.ARACHNOTRONETERNAL.get(), 20, 1, 2));
+			new MobSpawnInfo.Spawners(ModEntityTypes.LOST_SOUL.get(), 100, 4, 9),
+			new MobSpawnInfo.Spawners(ModEntityTypes.TURRET.get(), 20, 1, 2));
 
 	@Override
 	public List<MobSpawnInfo.Spawners> getDefaultSpawnList() {
 		return STRUCTURE_MONSTERS;
-	}
-
-	private static final List<MobSpawnInfo.Spawners> STRUCTURE_CREATURES = ImmutableList.of(
-			new MobSpawnInfo.Spawners(ModEntityTypes.LOST_SOUL.get(), 20, 1, 2),
-			new MobSpawnInfo.Spawners(ModEntityTypes.ZOMBIEMAN.get(), 20, 1, 2),
-			new MobSpawnInfo.Spawners(ModEntityTypes.CHAINGUNNER.get(), 20, 1, 2),
-			new MobSpawnInfo.Spawners(ModEntityTypes.POSSESSEDWORKER.get(), 20, 1, 2),
-			new MobSpawnInfo.Spawners(ModEntityTypes.ARACHNOTRONETERNAL.get(), 20, 1, 2));
-
-	@Override
-	public List<MobSpawnInfo.Spawners> getDefaultCreatureSpawnList() {
-		return STRUCTURE_CREATURES;
 	}
 
 	@Override
@@ -79,7 +65,29 @@ public class PortalStructure extends Structure<NoFeatureConfig> {
 				Heightmap.Type.WORLD_SURFACE_WG);
 		IBlockReader columnOfBlocks = chunkGenerator.getBaseColumn(centerOfChunk.getX(), centerOfChunk.getZ());
 		BlockState topBlock = columnOfBlocks.getBlockState(centerOfChunk.above(landHeight));
-		return topBlock.getFluidState().isEmpty();
+		return !this.isNear(chunkGenerator, seed, chunkRandom, chunkX, chunkZ) ? topBlock.getFluidState().isEmpty()
+				: false;
+	}
+
+	private boolean isNear(ChunkGenerator p_242782_1_, long p_242782_2_, SharedSeedRandom p_242782_4_, int p_242782_5_,
+			int p_242782_6_) {
+		StructureSeparationSettings structureseparationsettings = p_242782_1_.getSettings()
+				.getConfig(DoomStructures.MOTHERDEMON.get());
+		if (structureseparationsettings == null) {
+			return false;
+		} else {
+			for (int i = p_242782_5_ - 10; i <= p_242782_5_ + 10; ++i) {
+				for (int j = p_242782_6_ - 10; j <= p_242782_6_ + 10; ++j) {
+					ChunkPos chunkpos = DoomStructures.MOTHERDEMON.get()
+							.getPotentialFeatureChunk(structureseparationsettings, p_242782_2_, p_242782_4_, i, j);
+					if (i == chunkpos.x && j == chunkpos.z) {
+						return true;
+					}
+				}
+			}
+
+			return false;
+		}
 	}
 
 	public static class Start extends StructureStart<NoFeatureConfig> {
@@ -91,12 +99,12 @@ public class PortalStructure extends Structure<NoFeatureConfig> {
 		@Override
 		public void generatePieces(DynamicRegistries dynamicRegistryManager, ChunkGenerator chunkGenerator,
 				TemplateManager templateManagerIn, int chunkX, int chunkZ, Biome biomeIn, NoFeatureConfig config) {
-			int x = (chunkX << 4) + 7;
-			int z = (chunkZ << 4) + 7;
-			BlockPos blockpos = new BlockPos(x, chunkGenerator.getSeaLevel(), z);
+			ChunkPos chunkPos = new ChunkPos(chunkX, chunkZ);
+			BlockPos.Mutable blockpos = new BlockPos.Mutable(chunkPos.getMinBlockX() + this.random.nextInt(16), 33,
+					chunkPos.getMinBlockZ() + this.random.nextInt(16));
 			JigsawManager.addPieces(dynamicRegistryManager,
 					new VillageConfig(() -> dynamicRegistryManager.registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY)
-							.get(new ResourceLocation(DoomMod.MODID, "portal/start_pool")), 10),
+							.get(new ResourceLocation(DoomMod.MODID, "titan_skull/start_pool")), 10),
 					AbstractVillagePiece::new, chunkGenerator, templateManagerIn, blockpos, this.pieces, this.random,
 					false, false);
 			this.pieces.forEach(piece -> piece.move(0, 1, 0));

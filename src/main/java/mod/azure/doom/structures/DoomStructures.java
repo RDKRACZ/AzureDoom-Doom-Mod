@@ -8,6 +8,12 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 
 import mod.azure.doom.DoomMod;
+import mod.azure.doom.structures.templates.ArchMaykrStructure;
+import mod.azure.doom.structures.templates.MaykrStructure;
+import mod.azure.doom.structures.templates.MotherDemonStructure;
+import mod.azure.doom.structures.templates.NetherPortalStructure;
+import mod.azure.doom.structures.templates.PortalStructure;
+import mod.azure.doom.structures.templates.TitanSkullStructure;
 import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraft.world.gen.feature.structure.Structure;
@@ -33,6 +39,9 @@ public class DoomStructures {
 	public static final RegistryObject<Structure<NoFeatureConfig>> PORTAL = registerStructure("portal",
 			() -> (new PortalStructure(NoFeatureConfig.CODEC)));
 
+	public static final RegistryObject<Structure<NoFeatureConfig>> NETHERPORTAL = registerStructure("netherportal",
+			() -> (new NetherPortalStructure(NoFeatureConfig.CODEC)));
+
 	public static final RegistryObject<Structure<NoFeatureConfig>> MOTHERDEMON = registerStructure("motherdemon",
 			() -> (new MotherDemonStructure(NoFeatureConfig.CODEC)));
 
@@ -41,11 +50,12 @@ public class DoomStructures {
 	}
 
 	public static void setupStructures() {
-		setupMapSpacingAndLand(MAYKR.get(), new StructureSeparationSettings(20, 11, 1234567890), true);
-		setupMapSpacingAndLand(ARCHMAYKR.get(), new StructureSeparationSettings(20, 11, 1234567898), true);
+		setupMapSpacingAndLand(MAYKR.get(), new StructureSeparationSettings(80, 20, 1234567890), true);
+		setupMapSpacingAndLand(ARCHMAYKR.get(), new StructureSeparationSettings(80, 20, 1234567898), true);
 		setupMapSpacingAndLand(TITAN_SKULL.get(), new StructureSeparationSettings(80, 20, 1234567890), true);
 		setupMapSpacingAndLand(MOTHERDEMON.get(), new StructureSeparationSettings(80, 20, 1234567899), true);
 		setupMapSpacingAndLand(PORTAL.get(), new StructureSeparationSettings(80, 20, 1234567890), true);
+		setupMapSpacingAndLand(NETHERPORTAL.get(), new StructureSeparationSettings(80, 20, 1234567895), true);
 	}
 
 	public static <F extends Structure<?>> void setupMapSpacingAndLand(F structure,

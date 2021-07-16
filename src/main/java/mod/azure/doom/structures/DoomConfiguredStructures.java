@@ -22,6 +22,9 @@ public class DoomConfiguredStructures {
 	public static StructureFeature<?, ?> CONFIGURED_PORTAL = DoomStructures.PORTAL.get()
 			.configured(IFeatureConfig.NONE);
 
+	public static StructureFeature<?, ?> CONFIGURED_NETHERPORTAL = DoomStructures.NETHERPORTAL.get()
+			.configured(IFeatureConfig.NONE);
+
 	public static StructureFeature<?, ?> CONFIGURED_MOTHERDEMON = DoomStructures.MOTHERDEMON.get()
 			.configured(IFeatureConfig.NONE);
 
@@ -35,6 +38,8 @@ public class DoomConfiguredStructures {
 				CONFIGURED_TITAN_SKULL);
 		Registry.register(registry, new ResourceLocation(DoomMod.MODID, "configured_portal"),
 				CONFIGURED_PORTAL);
+		Registry.register(registry, new ResourceLocation(DoomMod.MODID, "configured_netherportal"),
+				CONFIGURED_NETHERPORTAL);
 		Registry.register(registry, new ResourceLocation(DoomMod.MODID, "configured_motherdemon"),
 				CONFIGURED_MOTHERDEMON);
 
@@ -42,6 +47,7 @@ public class DoomConfiguredStructures {
 		FlatGenerationSettings.STRUCTURE_FEATURES.put(DoomStructures.ARCHMAYKR.get(), CONFIGURED_ARCHMAYKR);
 		FlatGenerationSettings.STRUCTURE_FEATURES.put(DoomStructures.TITAN_SKULL.get(), CONFIGURED_TITAN_SKULL);
 		FlatGenerationSettings.STRUCTURE_FEATURES.put(DoomStructures.PORTAL.get(), CONFIGURED_PORTAL);
+		FlatGenerationSettings.STRUCTURE_FEATURES.put(DoomStructures.NETHERPORTAL.get(), CONFIGURED_NETHERPORTAL);
 		FlatGenerationSettings.STRUCTURE_FEATURES.put(DoomStructures.MOTHERDEMON.get(), CONFIGURED_MOTHERDEMON);
 	}
 }

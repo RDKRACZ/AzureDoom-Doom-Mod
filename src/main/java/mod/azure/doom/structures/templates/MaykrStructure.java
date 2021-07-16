@@ -1,4 +1,4 @@
-package mod.azure.doom.structures;
+package mod.azure.doom.structures.templates;
 
 import java.util.List;
 import java.util.Random;
@@ -7,6 +7,7 @@ import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Codec;
 
 import mod.azure.doom.DoomMod;
+import mod.azure.doom.structures.DoomStructures;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Rotation;
@@ -29,15 +30,16 @@ import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.gen.feature.structure.StructureStart;
 import net.minecraft.world.gen.feature.structure.VillageConfig;
 import net.minecraft.world.gen.feature.template.TemplateManager;
+import net.minecraft.world.gen.settings.StructureSeparationSettings;
 
-public class ArchMaykrStructure extends Structure<NoFeatureConfig> {
-	public ArchMaykrStructure(Codec<NoFeatureConfig> codec) {
+public class MaykrStructure extends Structure<NoFeatureConfig> {
+	public MaykrStructure(Codec<NoFeatureConfig> codec) {
 		super(codec);
 	}
 
 	@Override
 	public IStartFactory<NoFeatureConfig> getStartFactory() {
-		return ArchMaykrStructure.Start::new;
+		return MaykrStructure.Start::new;
 	}
 
 	@Override
@@ -45,8 +47,9 @@ public class ArchMaykrStructure extends Structure<NoFeatureConfig> {
 		return GenerationStage.Decoration.SURFACE_STRUCTURES;
 	}
 
-	private static final List<MobSpawnInfo.Spawners> STRUCTURE_MONSTERS = ImmutableList
-			.of(new MobSpawnInfo.Spawners(ModEntityTypes.ARCHMAKER.get(), 100, 1, 1));
+	private static final List<MobSpawnInfo.Spawners> STRUCTURE_MONSTERS = ImmutableList.of(
+			new MobSpawnInfo.Spawners(ModEntityTypes.MAYKRDRONE.get(), 50, 2, 5),
+			new MobSpawnInfo.Spawners(ModEntityTypes.BLOODMAYKR.get(), 50, 1, 2));
 
 	@Override
 	public List<MobSpawnInfo.Spawners> getDefaultSpawnList() {
@@ -57,7 +60,9 @@ public class ArchMaykrStructure extends Structure<NoFeatureConfig> {
 	protected boolean isFeatureChunk(ChunkGenerator chunkGenerator, BiomeProvider biomeSource, long seed,
 			SharedSeedRandom chunkRandom, int chunkX, int chunkZ, Biome biome, ChunkPos chunkPos,
 			NoFeatureConfig featureConfig) {
-		return getYPositionForFeature(chunkX, chunkZ, chunkGenerator) >= 60;
+		return !this.isNear(chunkGenerator, seed, chunkRandom, chunkX, chunkZ)
+				? getYPositionForFeature(chunkX, chunkZ, chunkGenerator) >= 60
+				: false;
 	}
 
 	private static int getYPositionForFeature(int p_191070_0_, int p_191070_1_, ChunkGenerator p_191070_2_) {
@@ -83,6 +88,27 @@ public class ArchMaykrStructure extends Structure<NoFeatureConfig> {
 		return Math.min(Math.min(i1, j1), Math.min(k1, l1));
 	}
 
+	private boolean isNear(ChunkGenerator p_242782_1_, long p_242782_2_, SharedSeedRandom p_242782_4_,
+			int p_242782_5_, int p_242782_6_) {
+		StructureSeparationSettings structureseparationsettings = p_242782_1_.getSettings()
+				.getConfig(DoomStructures.ARCHMAYKR.get());
+		if (structureseparationsettings == null) {
+			return false;
+		} else {
+			for (int i = p_242782_5_ - 10; i <= p_242782_5_ + 10; ++i) {
+				for (int j = p_242782_6_ - 10; j <= p_242782_6_ + 10; ++j) {
+					ChunkPos chunkpos = DoomStructures.ARCHMAYKR.get().getPotentialFeatureChunk(structureseparationsettings,
+							p_242782_2_, p_242782_4_, i, j);
+					if (i == chunkpos.x && j == chunkpos.z) {
+						return true;
+					}
+				}
+			}
+
+			return false;
+		}
+	}
+
 	public static class Start extends StructureStart<NoFeatureConfig> {
 		public Start(Structure<NoFeatureConfig> structureIn, int chunkX, int chunkZ,
 				MutableBoundingBox mutableBoundingBox, int referenceIn, long seedIn) {
@@ -97,7 +123,7 @@ public class ArchMaykrStructure extends Structure<NoFeatureConfig> {
 			BlockPos blockpos = new BlockPos(x, 0, z);
 			JigsawManager.addPieces(dynamicRegistryManager,
 					new VillageConfig(() -> dynamicRegistryManager.registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY)
-							.get(new ResourceLocation(DoomMod.MODID, "archmaykr/start_pool")), 10),
+							.get(new ResourceLocation(DoomMod.MODID, "maykr/start_pool")), 10),
 					AbstractVillagePiece::new, chunkGenerator, templateManagerIn, blockpos, this.pieces, this.random,
 					false, true);
 			this.pieces.forEach(piece -> piece.move(0, 0, 0));

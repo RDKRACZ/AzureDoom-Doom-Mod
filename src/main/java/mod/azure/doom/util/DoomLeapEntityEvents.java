@@ -38,7 +38,6 @@ public class DoomLeapEntityEvents {
 			boolean playerJumping = ObfuscationReflectionHelper.getPrivateValue(LivingEntity.class, entity,
 					"field_70703_bu");
 			boolean canJump = !entity.isOnGround() && !usedMidAirJump;
-
 			if (entity.isOnGround() || this.jumpCount > 2) {
 				uuidHasJumpedMap.put(entity.getUUID().toString(), false);
 			}
@@ -48,17 +47,15 @@ public class DoomLeapEntityEvents {
 
 			if (cooldown <= 0 && canJump && !entity.isFallFlying() && !((PlayerEntity) entity).isCreative()
 					&& !((PlayerEntity) entity).abilities.flying && !((PlayerEntity) entity).verticalCollision) {
-				if (playerJumping && entity.getDeltaMovement().y() < 0.333) {
+				this.jumpCount = this.getMultiJumps();
+				if (playerJumping && this.jumpCount > 0 && entity.getDeltaMovement().y() < 0.333) {
 					this.jumpCount--;
-					entity.setDeltaMovement(entity.getDeltaMovement().x, 0.8D,
-							entity.getDeltaMovement().z());
 					uuidHasJumpedMap.put(entity.getUUID().toString(), true);
-					Vector3d playerLook = ((PlayerEntity) entity).getViewVector(1);
-					Vector3d dashVec = new Vector3d(playerLook.x(), ((PlayerEntity) entity).getDeltaMovement().y,
-							playerLook.z());
+					Vector3d playerLook = entity.getViewVector(1);
+					Vector3d dashVec = new Vector3d(playerLook.x, entity.getDeltaMovement().y, playerLook.z);
 					entity.setDeltaMovement(dashVec);
-
-					entity.playSound(SoundEvents.GENERIC_EXTINGUISH_FIRE, 0.3F, 2.0F);
+					entity.push(0, (double) 0.2F * 2.0D, 0);
+					entity.playSound(SoundEvents.FIRE_EXTINGUISH, 1.0F, 2.0F);
 					if (!entity.isOnGround()) {
 						if (entity instanceof ServerPlayerEntity) {
 							entity.addEffect(new EffectInstance(Effects.DAMAGE_RESISTANCE, 100, 4));
@@ -68,7 +65,6 @@ public class DoomLeapEntityEvents {
 						double d0 = entity.level.random.nextGaussian() * 0.02D;
 						double d1 = entity.level.random.nextGaussian() * 0.02D;
 						double d2 = entity.level.random.nextGaussian() * 0.02D;
-
 						entity.level.addParticle(ParticleTypes.CRIT,
 								entity.getX() + (double) (entity.level.random.nextFloat() * entity.getBbWidth() * 2.0F)
 										- (double) entity.getBbWidth() - d0 * 10.0D,
@@ -77,14 +73,19 @@ public class DoomLeapEntityEvents {
 										- (double) entity.getBbWidth() - d2 * 10.0D,
 								d0, d1, d2);
 					}
-					cooldown = 50;
-					this.jumpCount--;
+					cooldown = 25;
 				}
 
 			}
 		} else if (entity instanceof PlayerEntity) {
 			uuidHasJumpedMap.put(entity.getUUID().toString(), false);
 		}
+	}
+
+	private int getMultiJumps() {
+		int jumpCount = 0;
+		jumpCount += 1;
+		return jumpCount;
 	}
 
 	@SubscribeEvent
@@ -102,6 +103,7 @@ public class DoomLeapEntityEvents {
 			event.setDamageMultiplier(0);
 			event.setCanceled(true);
 			event.setDistance(0);
+			event.setDamageMultiplier(0F);
 		}
 	}
 

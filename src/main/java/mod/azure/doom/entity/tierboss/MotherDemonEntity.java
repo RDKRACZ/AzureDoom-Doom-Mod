@@ -1,5 +1,6 @@
 package mod.azure.doom.entity.tierboss;
 
+import java.util.List;
 import java.util.Random;
 
 import mod.azure.doom.entity.DemonEntity;
@@ -37,6 +38,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.shapes.VoxelShape;
@@ -327,16 +329,36 @@ public class MotherDemonEntity extends DemonEntity implements IAnimatable {
 	public int getMaxSpawnClusterSize() {
 		return 1;
 	}
-	
+
 	@Override
 	public boolean isMaxGroupSizeReached(int p_204209_1_) {
 		return this.isAlive() ? true : super.isMaxGroupSizeReached(p_204209_1_);
 	}
-	
+
 	@Override
 	public ILivingEntityData finalizeSpawn(IServerWorld p_213386_1_, DifficultyInstance p_213386_2_,
 			SpawnReason p_213386_3_, ILivingEntityData p_213386_4_, CompoundNBT p_213386_5_) {
 		return super.finalizeSpawn(p_213386_1_, p_213386_2_, p_213386_3_, p_213386_4_, p_213386_5_);
+	}
+
+	@Override
+	public void baseTick() {
+		super.baseTick();
+		float f2 = 50.0F;
+		int k1 = MathHelper.floor(this.getX() - (double) f2 - 1.0D);
+		int l1 = MathHelper.floor(this.getX() + (double) f2 + 1.0D);
+		int i2 = MathHelper.floor(this.getY() - (double) f2 - 1.0D);
+		int i1 = MathHelper.floor(this.getY() + (double) f2 + 1.0D);
+		int j2 = MathHelper.floor(this.getZ() - (double) f2 - 1.0D);
+		int j1 = MathHelper.floor(this.getZ() + (double) f2 + 1.0D);
+		List<Entity> list = this.level.getEntities(this,
+				new AxisAlignedBB((double) k1, (double) i2, (double) j2, (double) l1, (double) i1, (double) j1));
+		for (int k2 = 0; k2 < list.size(); ++k2) {
+			Entity entity = list.get(k2);
+			if (entity.isAddedToWorld() && entity instanceof MotherDemonEntity && entity.tickCount < 1) {
+				entity.remove();
+			}
+		}
 	}
 
 	@Override

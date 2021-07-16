@@ -1,5 +1,6 @@
 package mod.azure.doom.entity.tierboss;
 
+import java.util.List;
 import java.util.Random;
 
 import javax.annotation.Nullable;
@@ -10,6 +11,7 @@ import mod.azure.doom.util.config.EntityConfig;
 import mod.azure.doom.util.config.EntityDefaults.EntityConfigType;
 import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.entity.CreatureAttribute;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
@@ -27,6 +29,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
@@ -209,10 +212,30 @@ public class ArchMakyrEntity extends DemonEntity implements IAnimatable {
 	public int getMaxSpawnClusterSize() {
 		return 1;
 	}
-	
+
 	@Override
 	public boolean isMaxGroupSizeReached(int p_204209_1_) {
 		return this.isAlive() ? true : super.isMaxGroupSizeReached(p_204209_1_);
+	}
+
+	@Override
+	public void baseTick() {
+		super.baseTick();
+		float f2 = 50.0F;
+		int k1 = MathHelper.floor(this.getX() - (double) f2 - 1.0D);
+		int l1 = MathHelper.floor(this.getX() + (double) f2 + 1.0D);
+		int i2 = MathHelper.floor(this.getY() - (double) f2 - 1.0D);
+		int i1 = MathHelper.floor(this.getY() + (double) f2 + 1.0D);
+		int j2 = MathHelper.floor(this.getZ() - (double) f2 - 1.0D);
+		int j1 = MathHelper.floor(this.getZ() + (double) f2 + 1.0D);
+		List<Entity> list = this.level.getEntities(this, new AxisAlignedBB(
+				(double) k1, (double) i2, (double) j2, (double) l1, (double) i1, (double) j1));
+		for (int k2 = 0; k2 < list.size(); ++k2) {
+			Entity entity = list.get(k2);
+			if (entity.isAddedToWorld() && entity instanceof ArchMakyrEntity && entity.tickCount < 1) {
+				entity.remove();
+			}
+		}
 	}
 
 	@Override
