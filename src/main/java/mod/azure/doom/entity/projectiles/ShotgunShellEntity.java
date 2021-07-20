@@ -242,9 +242,9 @@ public class ShotgunShellEntity extends AbstractArrowEntity implements IAnimatab
 		Entity entity1 = this.getOwner();
 		DamageSource damagesource;
 		if (entity1 == null) {
-			damagesource = DamageSource.indirectMagic(this, this);
+			damagesource = DamageSource.arrow(this, this);
 		} else {
-			damagesource = DamageSource.indirectMagic(this, entity1);
+			damagesource = DamageSource.arrow(this, entity1);
 			if (entity1 instanceof LivingEntity) {
 				((LivingEntity) entity1).setLastHurtMob(entity);
 			}

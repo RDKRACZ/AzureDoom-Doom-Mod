@@ -163,7 +163,7 @@ public class BarenBlastEntity extends DamagingProjectileEntity implements IAnima
 		if (!this.level.isClientSide) {
 			Entity entity = p_213868_1_.getEntity();
 			Entity entity1 = this.getOwner();
-			entity.hurt(DamageSource.indirectMagic(this, entity1), directHitDamage);
+			entity.hurt(DamageSource.mobAttack((LivingEntity) entity1), directHitDamage);
 			if (entity1 instanceof LivingEntity) {
 				this.doEnchantDamageEffects((LivingEntity) entity1, entity);
 			}
