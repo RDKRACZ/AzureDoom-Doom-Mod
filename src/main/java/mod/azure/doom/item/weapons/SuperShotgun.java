@@ -34,6 +34,20 @@ public class SuperShotgun extends DoomBaseItem {
 		return DoomTier.SHOTGUN.getRepairIngredient().test(repair) || super.isValidRepairItem(toRepair, repair);
 	}
 
+//	@Override
+//	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+//		ItemStack stack = player.getItemInHand(hand);
+//		if (!world.isClientSide) {
+//			double maxRange = 24D;
+//			double maxSpeed = 2D;
+//			HookEntity hookshot = new HookEntity(ModEntityTypes.HOOK.get(), player, world);
+//			hookshot.shootFromRotation(stack, maxRange, maxSpeed, player.xRot, player.yHeadRot, 0f,
+//					1.5f * (float) (maxSpeed / 10));
+//			world.addFreshEntity(hookshot);
+//		}
+//		return super.use(world, player, hand);
+//	}
+
 	@Override
 	public void releaseUsing(ItemStack stack, World worldIn, LivingEntity entityLiving, int timeLeft) {
 		if (entityLiving instanceof PlayerEntity) {

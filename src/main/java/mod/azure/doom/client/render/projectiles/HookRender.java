@@ -31,7 +31,7 @@ public class HookRender extends EntityRenderer<HookEntity> {
 
 	public void render(HookEntity p_225623_1_, float p_225623_2_, float p_225623_3_, MatrixStack p_225623_4_,
 			IRenderTypeBuffer p_225623_5_, int p_225623_6_) {
-		PlayerEntity playerentity = p_225623_1_.getPlayerOwner();
+		PlayerEntity playerentity = (PlayerEntity) p_225623_1_.getOwner();
 		if (playerentity != null) {
 			p_225623_4_.pushPose();
 			p_225623_4_.pushPose();
