@@ -11,7 +11,13 @@ import software.bernie.geckolib3.model.provider.data.EntityModelData;
 public class Revenant2016Model extends AnimatedGeoModel<Revenant2016Entity> {
 
 	private static final ResourceLocation[] TEX = { new ResourceLocation(DoomMod.MODID, "textures/entity/revenant.png"),
-			new ResourceLocation(DoomMod.MODID, "textures/entity/revenant_1.png") };
+			new ResourceLocation(DoomMod.MODID, "textures/entity/revenant_1.png"),
+			new ResourceLocation(DoomMod.MODID, "textures/entity/revenant_2.png"),
+			new ResourceLocation(DoomMod.MODID, "textures/entity/revenant_3.png"),
+			new ResourceLocation(DoomMod.MODID, "textures/entity/revenant_4.png"),
+			new ResourceLocation(DoomMod.MODID, "textures/entity/revenant_5.png"),
+			new ResourceLocation(DoomMod.MODID, "textures/entity/revenant_6.png"),
+			new ResourceLocation(DoomMod.MODID, "textures/entity/revenant_7.png") };
 
 	@Override
 	public ResourceLocation getModelLocation(Revenant2016Entity object) {
