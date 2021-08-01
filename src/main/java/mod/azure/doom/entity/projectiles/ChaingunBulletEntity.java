@@ -236,7 +236,7 @@ public class ChaingunBulletEntity extends AbstractArrowEntity implements IAnimat
 				((LivingEntity) entity1).setLastHurtMob(entity);
 			}
 		}
-		if (entity.hurt(damagesource, Config.SERVER.chaingun_bullet_damage)) {
+		if (entity.hurt(damagesource, Config.SERVER.chaingun_bullet_damage.floatValue())) {
 			if (entity instanceof LivingEntity) {
 				LivingEntity livingentity = (LivingEntity) entity;
 				if (!this.level.isClientSide && entity1 instanceof LivingEntity) {

@@ -13,9 +13,7 @@ import com.electronwill.nightconfig.core.io.WritingMode;
 import mod.azure.doom.DoomMod;
 import mod.azure.doom.util.config.EntityDefaults.EntityConfigType;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.ForgeConfigSpec.Builder;
-import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 
 public class Config {
 
@@ -25,7 +23,6 @@ public class Config {
 	public static final BiomeConfig BIOME;
 
 	static {
-
 		{
 			final Pair<ServerConfig, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder()
 					.configure(ServerConfig::new);
@@ -42,31 +39,31 @@ public class Config {
 
 	public static class ServerConfig {
 
-		private ConfigValue<Integer> specCRUCIBLE_MARAUDER_MAX_DAMAGE;
-		private final BooleanValue specENABLE_BLOCK_BREAKING;
-		private ConfigValue<Float> specargent_bolt_damage;
-		private ConfigValue<Float> specbfgball_damage;
-		private ConfigValue<Float> specbfgball_damage_dragon;
-		private ConfigValue<Float> specbfgball_damage_aoe;
-		private ConfigValue<Float> specbullet_damage;
-		private ConfigValue<Float> specchaingun_bullet_damage;
-		private ConfigValue<Float> specenergycell_damage;
-		private ConfigValue<Float> specrocket_damage;
-		private ConfigValue<Float> specshotgun_damage;
-		private ConfigValue<Float> specunmaykr_damage;
+		private ForgeConfigSpec.IntValue specCRUCIBLE_MARAUDER_MAX_DAMAGE;
+		private ForgeConfigSpec.BooleanValue specENABLE_BLOCK_BREAKING;
+		private ForgeConfigSpec.DoubleValue specargent_bolt_damage;
+		private ForgeConfigSpec.DoubleValue specbfgball_damage;
+		private ForgeConfigSpec.DoubleValue specbfgball_damage_dragon;
+		private ForgeConfigSpec.DoubleValue specbfgball_damage_aoe;
+		private ForgeConfigSpec.DoubleValue specbullet_damage;
+		private ForgeConfigSpec.DoubleValue specchaingun_bullet_damage;
+		private ForgeConfigSpec.DoubleValue specenergycell_damage;
+		private ForgeConfigSpec.DoubleValue specrocket_damage;
+		private ForgeConfigSpec.DoubleValue specshotgun_damage;
+		private ForgeConfigSpec.DoubleValue specunmaykr_damage;
 
 		public int CRUCIBLE_MARAUDER_MAX_DAMAGE;
 		public boolean ENABLE_BLOCK_BREAKING;
-		public float argent_bolt_damage;
-		public float bfgball_damage;
-		public float bfgball_damage_dragon;
-		public float bfgball_damage_aoe;
-		public float bullet_damage;
-		public float chaingun_bullet_damage;
-		public float energycell_damage;
-		public float rocket_damage;
-		public float shotgun_damage;
-		public float unmaykr_damage;
+		public Double argent_bolt_damage;
+		public Double bfgball_damage;
+		public Double bfgball_damage_dragon;
+		public Double bfgball_damage_aoe;
+		public Double bullet_damage;
+		public Double chaingun_bullet_damage;
+		public Double energycell_damage;
+		public Double rocket_damage;
+		public Double shotgun_damage;
+		public Double unmaykr_damage;
 
 		/*
 		 * Spawn Weights
@@ -87,28 +84,33 @@ public class Config {
 			builder.push("gear");
 			specCRUCIBLE_MARAUDER_MAX_DAMAGE = builder.comment("Crucible Sword/Marauder Axe Max Damage")
 					.translation(DoomMod.MODID + ".config.crucible_marauder_max_damage")
-					.define("CRUCIBLE_MARAUDER_MAX_DAMAGE", 5);
+					.defineInRange("CRUCIBLE_MARAUDER_MAX_DAMAGE", 5, 0, Integer.MAX_VALUE);
 			specargent_bolt_damage = builder.comment("Argent Bolt Damage")
-					.translation(DoomMod.MODID + ".config.argent_bolt_damage").define("argent_bolt_damage", 14.5F);
+					.translation(DoomMod.MODID + ".config.argent_bolt_damage")
+					.defineInRange("argent_bolt_damage", 14.5F, 0, Double.MAX_VALUE);
 			specbfgball_damage = builder.comment("BFG Ball Damage")
-					.translation(DoomMod.MODID + ".config.bfgball_damage").define("bfgball_damage", 100.0F);
+					.translation(DoomMod.MODID + ".config.bfgball_damage")
+					.defineInRange("bfgball_damage", 100.0F, 0, Double.MAX_VALUE);
 			specbfgball_damage_dragon = builder.comment("BFG Ball Dragon Damage")
-					.translation(DoomMod.MODID + ".config.bfgball_damage_dragon").define("bfgball_damage_dragon", 30F);
+					.translation(DoomMod.MODID + ".config.bfgball_damage_dragon")
+					.defineInRange("bfgball_damage_dragon", 30F, 0, Double.MAX_VALUE);
 			specbfgball_damage_aoe = builder.comment("BFG Ball AoE Damage")
-					.translation(DoomMod.MODID + ".config.bfgball_damage_aoe").define("bfgball_damage_aoe", 10F);
+					.translation(DoomMod.MODID + ".config.bfgball_damage_aoe")
+					.defineInRange("bfgball_damage_aoe", 10F, 0, Double.MAX_VALUE);
 			specbullet_damage = builder.comment("Bullet Damage").translation(DoomMod.MODID + ".config.bullet_damage")
-					.define("bullet_damage", 1.5F);
+					.defineInRange("bullet_damage", 1.5F, 0, Double.MAX_VALUE);
 			specchaingun_bullet_damage = builder.comment("Chaingun Bullet Damage")
 					.translation(DoomMod.MODID + ".config.chaingun_bullet_damage")
-					.define("chaingun_bullet_damage", 1.5F);
+					.defineInRange("chaingun_bullet_damage", 1.5F, 0, Double.MAX_VALUE);
 			specenergycell_damage = builder.comment("Energy Cell Damage")
-					.translation(DoomMod.MODID + ".config.energycell_damage").define("energycell_damage", 0.5F);
+					.translation(DoomMod.MODID + ".config.energycell_damage")
+					.defineInRange("energycell_damage", 0.5F, 0, Double.MAX_VALUE);
 			specrocket_damage = builder.comment("Rocket Damage").translation(DoomMod.MODID + ".config.rocket_damage")
-					.define("rocket_damage", 20.0F);
+					.defineInRange("rocket_damage", 20.0F, 0, Double.MAX_VALUE);
 			specshotgun_damage = builder.comment("Shotgun Damage").translation(DoomMod.MODID + ".config.shotgun_damage")
-					.define("shotgun_damage", 10.0F);
+					.defineInRange("shotgun_damage", 10.0F, 0, Double.MAX_VALUE);
 			specunmaykr_damage = builder.comment("Unmakyr Damage").translation(DoomMod.MODID + ".config.unmaykr_damage")
-					.define("unmaykr_damage", 2.0F);
+					.defineInRange("unmaykr_damage", 2.0F, 0, Double.MAX_VALUE);
 			builder.pop();
 			builder.push("extra");
 			specENABLE_BLOCK_BREAKING = builder.comment("You can enable weapons breaking blocks.")

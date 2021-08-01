@@ -242,7 +242,7 @@ public class EnergyCellEntity extends AbstractArrowEntity implements IAnimatable
 				((LivingEntity) entity1).setLastHurtMob(entity);
 			}
 		}
-		if (entity.hurt(damagesource, Config.SERVER.energycell_damage)) {
+		if (entity.hurt(damagesource, Config.SERVER.energycell_damage.floatValue())) {
 			if (entity instanceof LivingEntity) {
 				LivingEntity livingentity = (LivingEntity) entity;
 				if (!this.level.isClientSide && entity1 instanceof LivingEntity) {

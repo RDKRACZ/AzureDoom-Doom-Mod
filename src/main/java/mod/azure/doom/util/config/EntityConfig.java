@@ -5,6 +5,7 @@ import java.util.List;
 import mod.azure.doom.DoomMod;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap.MutableAttribute;
 import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.Builder;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 
@@ -14,11 +15,11 @@ public class EntityConfig {
 	private String lName;
 	private String uName;
 
-	private ConfigValue<Integer> specSPAWN_WEIGHT;
-	private ConfigValue<Integer> specMIN_GROUP;
-	private ConfigValue<Integer> specMAX_GROUP;
-	private ConfigValue<Integer> specMIN_Y;
-	private ConfigValue<Integer> specMAX_Y;
+	private ForgeConfigSpec.IntValue specSPAWN_WEIGHT;
+	private ForgeConfigSpec.IntValue specMIN_GROUP;
+	private ForgeConfigSpec.IntValue specMAX_GROUP;
+	private ForgeConfigSpec.IntValue specMIN_Y;
+	private ForgeConfigSpec.IntValue specMAX_Y;
 
 	public int SPAWN_WEIGHT;
 	public int MIN_GROUP;

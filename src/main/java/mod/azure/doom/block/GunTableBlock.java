@@ -4,7 +4,6 @@ import mod.azure.doom.entity.tileentity.GunBlockEntity;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.HorizontalBlock;
 import net.minecraft.block.RedstoneTorchBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.InventoryHelper;
@@ -13,6 +12,7 @@ import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
@@ -28,7 +28,7 @@ import net.minecraft.world.World;
 
 public class GunTableBlock extends Block {
 
-	public static final DirectionProperty FACING = HorizontalBlock.FACING;
+	public static final DirectionProperty FACING = BlockStateProperties.FACING;
 	private static final VoxelShape XBASE1 = Block.box(0, 0, -16, 16, 9, 32); 
 	private static final VoxelShape XBASE2 = Block.box(2, 9, -14, 13, 25, 30);
 	private static final VoxelShape YBASE1 = Block.box(-16, 0, 0, 32, 9, 16); 
@@ -39,7 +39,7 @@ public class GunTableBlock extends Block {
 
 	public GunTableBlock(AbstractBlock.Properties settings) {
 		super(settings);
-		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
+		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.WEST));
 	}
 
 	@Override
@@ -84,7 +84,7 @@ public class GunTableBlock extends Block {
 
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
-		return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getCounterClockWise());
+		return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection());
 	}
 
 	@Override
@@ -105,7 +105,7 @@ public class GunTableBlock extends Block {
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
 		Direction direction = state.getValue(FACING);
-		return direction.getAxis() == Direction.Axis.X ? Z_AXIS_AABB : X_AXIS_AABB;
+		return direction.getAxis() == Direction.Axis.X ? X_AXIS_AABB : Z_AXIS_AABB;
 	}
 
 }
