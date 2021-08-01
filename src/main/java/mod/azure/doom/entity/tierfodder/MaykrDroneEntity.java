@@ -1,4 +1,4 @@
-package mod.azure.doom.entity.tierheavy;
+package mod.azure.doom.entity.tierfodder;
 
 import java.util.Random;
 
@@ -29,9 +29,13 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.IWorld;
@@ -48,6 +52,8 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 public class MaykrDroneEntity extends DemonEntity implements IAnimatable {
 
 	private AnimationFactory factory = new AnimationFactory(this);
+	public static final DataParameter<Integer> VARIANT = EntityDataManager.defineId(MaykrDroneEntity.class,
+			DataSerializers.INT);
 	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.MAYKRDRONE);
 
 	public MaykrDroneEntity(EntityType<MaykrDroneEntity> type, World worldIn) {
@@ -89,6 +95,36 @@ public class MaykrDroneEntity extends DemonEntity implements IAnimatable {
 	public static boolean spawning(EntityType<MaykrDroneEntity> p_223337_0_, IWorld p_223337_1_, SpawnReason reason,
 			BlockPos p_223337_3_, Random p_223337_4_) {
 		return passPeacefulAndYCheck(config, p_223337_1_, reason, p_223337_3_, p_223337_4_);
+	}
+
+	@Override
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(VARIANT, 0);
+	}
+
+	@Override
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
+		this.setVariant(compound.getInt("Variant"));
+	}
+
+	@Override
+	public void addAdditionalSaveData(CompoundNBT tag) {
+		super.addAdditionalSaveData(tag);
+		tag.putInt("Variant", this.getVariant());
+	}
+
+	public int getVariant() {
+		return MathHelper.clamp((Integer) this.entityData.get(VARIANT), 1, 2);
+	}
+
+	public void setVariant(int variant) {
+		this.entityData.set(VARIANT, variant);
+	}
+
+	public int getVariants() {
+		return 2;
 	}
 
 	@Override
