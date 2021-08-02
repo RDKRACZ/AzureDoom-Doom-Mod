@@ -408,7 +408,7 @@ public class ModEntityTypes {
 					.build(new ResourceLocation(DoomMod.MODID, "armoredbaron").toString()));
 
 	public static final RegistryObject<EntityType<MaykrDroneEntity>> MAYKRDRONE = ENTITY_TYPES.register("maykr_drone",
-			() -> EntityType.Builder.of(MaykrDroneEntity::new, EntityClassification.MONSTER).sized(1.7f, 2.2F)
+			() -> EntityType.Builder.of(MaykrDroneEntity::new, EntityClassification.MONSTER).sized(1.2f, 2.7F)
 					.fireImmune().clientTrackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "maykr_drone").toString()));
 

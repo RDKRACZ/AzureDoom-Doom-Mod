@@ -12,7 +12,7 @@
 				},
 				"lowJaw": {
 					"rotation": {
-						"vector": ["Math.sin(query.anim_time * 180 ) * 5", 0, 0]
+						"vector": ["1+Math.sin(query.anim_time*180)*15", 0, 0]
 					}
 				},
 				"lArm1_1": {
@@ -47,9 +47,6 @@
 			"animation_length": 2,
 			"bones": {
 				"chest": {
-					"rotation": {
-						"vector": [25, 0, 0]
-					},
 					"position": {
 						"vector": ["math.cos(query.anim_time * 360 ) * 2", "7+math.sin(query.anim_time * 360 ) * 2", "40+math.cos(query.anim_time * 360 ) * 2"]
 					}

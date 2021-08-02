@@ -73,6 +73,10 @@ public class MaykrDroneEntity extends DemonEntity implements IAnimatable {
 	}
 
 	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+		if ((this.dead || this.getHealth() < 0.01 || this.isDeadOrDying())) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("death", false));
+			return PlayState.CONTINUE;
+		}
 		event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
 		return PlayState.CONTINUE;
 	}
@@ -170,10 +174,7 @@ public class MaykrDroneEntity extends DemonEntity implements IAnimatable {
 	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
 			@Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
 		spawnDataIn = super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
-		float f = difficultyIn.getSpecialMultiplier();
-		this.setCanPickUpLoot(this.random.nextFloat() < 0.55F * f);
-		this.populateDefaultEquipmentEnchantments(difficultyIn);
-
+		this.setVariant(this.random.nextInt());
 		return spawnDataIn;
 	}
 
