@@ -28,5 +28,4 @@ public class FireBaronRender extends GeoEntityRenderer<FireBaronEntity> {
 	protected float getDeathMaxRotation(FireBaronEntity entityLivingBaseIn) {
 		return 0.0F;
 	}
-
 }

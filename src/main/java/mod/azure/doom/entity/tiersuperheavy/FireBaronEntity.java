@@ -53,6 +53,7 @@ public class FireBaronEntity extends DemonEntity implements IAnimatable {
 
 	public static EntityConfig config = Config.SERVER.entityConfig.get(EntityConfigType.BARON);
 	private AnimationFactory factory = new AnimationFactory(this);
+	public int flameTimer;
 
 	public FireBaronEntity(EntityType<FireBaronEntity> entityType, World worldIn) {
 		super(entityType, worldIn);
@@ -99,6 +100,16 @@ public class FireBaronEntity extends DemonEntity implements IAnimatable {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
+	@Override
+	public void aiStep() {
+		super.aiStep();
+		flameTimer = (flameTimer + 1) % 3;
+	}
+
+	public int getFlameTimer() {
+		return flameTimer;
+	}
+
 	public static boolean spawning(EntityType<FireBaronEntity> p_223337_0_, IWorld p_223337_1_, SpawnReason reason,
 			BlockPos p_223337_3_, Random p_223337_4_) {
 		return passPeacefulAndYCheck(config, p_223337_1_, reason, p_223337_3_, p_223337_4_);
@@ -113,7 +124,7 @@ public class FireBaronEntity extends DemonEntity implements IAnimatable {
 				new RangedStaticAttackGoal(this,
 						new FireBaronEntity.FireballAttack(this).setProjectileOriginOffset(0.8, 0.8, 0.8).setDamage(6),
 						60, 20, 30F, 2));
-		this.goalSelector.addGoal(4, new DemonAttackGoal(this, 1.0D, false, 1));
+		this.goalSelector.addGoal(4, new DemonAttackGoal(this, 1.20D, false, 1));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, true));
 		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this).setAlertOthers()));
@@ -155,11 +166,6 @@ public class FireBaronEntity extends DemonEntity implements IAnimatable {
 	@Override
 	public void tick() {
 		super.tick();
-	}
-
-	@Override
-	public void aiStep() {
-		super.aiStep();
 	}
 
 	@Override

@@ -98,13 +98,13 @@ public class Config {
 					.translation(DoomMod.MODID + ".config.bfgball_damage_aoe")
 					.defineInRange("bfgball_damage_aoe", 10F, 0, Double.MAX_VALUE);
 			specbullet_damage = builder.comment("Bullet Damage").translation(DoomMod.MODID + ".config.bullet_damage")
-					.defineInRange("bullet_damage", 1.5F, 0, Double.MAX_VALUE);
+					.defineInRange("bullet_damage", 5.5F, 0, Double.MAX_VALUE);
 			specchaingun_bullet_damage = builder.comment("Chaingun Bullet Damage")
 					.translation(DoomMod.MODID + ".config.chaingun_bullet_damage")
-					.defineInRange("chaingun_bullet_damage", 1.5F, 0, Double.MAX_VALUE);
+					.defineInRange("chaingun_bullet_damage", 5.5F, 0, Double.MAX_VALUE);
 			specenergycell_damage = builder.comment("Energy Cell Damage")
 					.translation(DoomMod.MODID + ".config.energycell_damage")
-					.defineInRange("energycell_damage", 0.5F, 0, Double.MAX_VALUE);
+					.defineInRange("energycell_damage", 1.5F, 0, Double.MAX_VALUE);
 			specrocket_damage = builder.comment("Rocket Damage").translation(DoomMod.MODID + ".config.rocket_damage")
 					.defineInRange("rocket_damage", 20.0F, 0, Double.MAX_VALUE);
 			specshotgun_damage = builder.comment("Shotgun Damage").translation(DoomMod.MODID + ".config.shotgun_damage")

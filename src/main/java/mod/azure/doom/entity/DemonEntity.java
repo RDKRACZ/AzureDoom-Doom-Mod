@@ -3,8 +3,8 @@ package mod.azure.doom.entity;
 import java.util.Random;
 import java.util.UUID;
 
-import mod.azure.doom.util.config.Config;
 import mod.azure.doom.util.config.EntityConfig;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.IAngerable;
 import net.minecraft.entity.SpawnReason;
@@ -37,17 +37,15 @@ public class DemonEntity extends MonsterEntity implements IAngerable {
 		this.noCulling = true;
 	}
 
-	public static boolean passPeacefulAndYCheck(EntityConfig config, IWorld p_223337_1_, SpawnReason reason,
-			BlockPos p_223337_3_, Random p_223337_4_) {
+	public static boolean passPeacefulAndYCheck(EntityConfig config, IWorld world,
+			SpawnReason reason, BlockPos pos, Random random) {
 		// peaceful check
-		if (p_223337_1_.getDifficulty() == Difficulty.PEACEFUL)
+		if (world.getDifficulty() == Difficulty.PEACEFUL)
 			return false;
 		// pass through if natural spawn and using individual spawn rules
-		if (!Config.SERVER.USE_INDIVIDUAL_SPAWN_RULES
-				|| (reason != SpawnReason.CHUNK_GENERATION && reason != SpawnReason.NATURAL))
-			return true;
-		int blockY = p_223337_3_.getY();
-		return blockY >= config.MIN_Y && blockY <= config.MAX_Y;
+		if ((reason != SpawnReason.CHUNK_GENERATION && reason != SpawnReason.NATURAL))
+			return !world.getBlockState(pos.below()).is(Blocks.NETHER_WART_BLOCK);
+		return !world.getBlockState(pos.below()).is(Blocks.NETHER_WART_BLOCK);
 	}
 
 	public boolean canStandOnFluid(Fluid p_230285_1_) {

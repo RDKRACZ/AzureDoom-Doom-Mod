@@ -119,8 +119,8 @@ public class LostSoulEntity extends DemonEntity implements IMob, IAnimatable {
 	}
 
 	public static AttributeModifierMap.MutableAttribute createAttributes() {
-		return config.pushAttributes(
-				MobEntity.createMobAttributes().add(Attributes.FOLLOW_RANGE, 25.0D).add(Attributes.JUMP_STRENGTH, 2.D).add(Attributes.JUMP_STRENGTH, 2.D));
+		return config.pushAttributes(MobEntity.createMobAttributes().add(Attributes.FOLLOW_RANGE, 25.0D)
+				.add(Attributes.JUMP_STRENGTH, 2.D).add(Attributes.JUMP_STRENGTH, 2.D));
 	}
 
 	@Override
@@ -309,9 +309,6 @@ public class LostSoulEntity extends DemonEntity implements IMob, IAnimatable {
 
 			for (int i = 1; i < p_220673_2_; ++i) {
 				axisalignedbb = axisalignedbb.move(p_220673_1_);
-				if (!this.parentEntity.level.noCollision(this.parentEntity, axisalignedbb)) {
-					return false;
-				}
 			}
 
 			return true;

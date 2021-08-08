@@ -31,7 +31,7 @@ v.4.0.0-beta1
 - Added the Cacodemon 64 variant of the Cacodemon, thanks to Batpixxler for the model!
 - Added the Pain Elemental 64 variant of the Pain Elemental, thanks to Batpixxler for the model!
 - Added the Revenant 2016, model based off UnnamedMarine's Revenant, of which we already use a modified version of.
-- Added the Maykr Drone, model and texture thanks to _T_#2269!
+- Added the Maykr Drone, model and texture thanks to @T22129511!
 - Added all new Patchouli book entries as well as a few missing ones.
 - Added new Structures! 
 	- The End will now generate 2 new structures dedicated to the Maykrs and the only place they will spawn!* 
@@ -43,6 +43,7 @@ v.4.0.0-beta1
 - Added Ghast Tears to the drops of the boss tier demons loot tables.
 
 **Updated/Fixed**
+- All demons no longer spawn on wart blocks.
 - Pain Elementals now spawn 3 lost souls on death.
 - Death rotation now fixed on all mobs.
 - Lost Souls now explode on death.
