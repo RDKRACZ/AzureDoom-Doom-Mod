@@ -9,7 +9,11 @@ import mod.azure.doom.util.config.Config;
 import mod.azure.doom.util.config.EntityConfig;
 import mod.azure.doom.util.config.EntityDefaults.EntityConfigType;
 import net.minecraft.entity.EntityClassification;
+import net.minecraft.util.RegistryKey;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.Biomes;
 import net.minecraft.world.biome.MobSpawnInfo.Spawners;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -20,6 +24,25 @@ public class ModEntitySpawn {
 		Biome biome = ForgeRegistries.BIOMES.getValue(event.getName());
 		List<Spawners> base = event.getSpawns().getSpawner(EntityClassification.MONSTER);
 		HashMap<EntityConfigType, EntityConfig> config = Config.SERVER.entityConfig;
+        if (event.getName() != null ) {
+            ResourceLocation name = event.getName();
+            RegistryKey<Biome> biome1 = RegistryKey.create(Registry.BIOME_REGISTRY, name);
+            if (biome1 == Biomes.SOUL_SAND_VALLEY) {
+            	
+            }
+            if (biome1 == Biomes.NETHER_WASTES) {
+            	
+            }
+            if (biome1 == Biomes.CRIMSON_FOREST) {
+            	
+            }
+            if (biome1 == Biomes.WARPED_FOREST) {
+            	
+            }
+            if (biome1 == Biomes.BASALT_DELTAS) {
+            	
+            }
+        }
 		if (BiomeEvaluator.parseListForBiomeCheck(BiomeConfig.PROWLER, biome)
 				&& config.get(EntityConfigType.PROWLER).SPAWN_WEIGHT > 0) {
 			base.add(new Spawners(ModEntityTypes.PROWLER.get(), config.get(EntityConfigType.PROWLER).SPAWN_WEIGHT,

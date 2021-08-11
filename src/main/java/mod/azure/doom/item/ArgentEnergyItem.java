@@ -44,4 +44,9 @@ public class ArgentEnergyItem extends Item {
 	public int GetFuelValue() {
 		return 1200;
 	}
+	
+	@Override
+	public boolean isFireResistant() {
+		return true;
+	}
 }

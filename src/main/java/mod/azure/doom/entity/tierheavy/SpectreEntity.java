@@ -124,7 +124,7 @@ public class SpectreEntity extends DemonEntity implements IAnimatable {
 	}
 
 	public int getVariant() {
-		return MathHelper.clamp((Integer) this.entityData.get(VARIANT), 1, 2);
+		return MathHelper.clamp((Integer) this.entityData.get(VARIANT), 1, 3);
 	}
 
 	public void setVariant(int variant) {
@@ -132,7 +132,7 @@ public class SpectreEntity extends DemonEntity implements IAnimatable {
 	}
 
 	public int getVariants() {
-		return 2;
+		return 3;
 	}
 
 	@Override

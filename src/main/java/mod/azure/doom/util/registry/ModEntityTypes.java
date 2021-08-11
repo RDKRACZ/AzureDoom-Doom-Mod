@@ -129,7 +129,7 @@ public class ModEntityTypes {
 	public static final RegistryObject<EntityType<BloodBoltEntity>> BLOODBOLT_MOB = ENTITY_TYPES.register(
 			"bloodbolt_mob",
 			() -> EntityType.Builder.<BloodBoltEntity>of(BloodBoltEntity::new, EntityClassification.MISC)
-					.sized(1.5F, 0.25F).clientTrackingRange(9)
+					.sized(0.25F, 2.0F).clientTrackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "bloodbolt_mob").toString()));
 
 	public static final RegistryObject<EntityType<ArgentBoltEntity>> ARGENT_BOLT = ENTITY_TYPES.register("argent_bolt",
@@ -419,7 +419,7 @@ public class ModEntityTypes {
 							.build(new ResourceLocation(DoomMod.MODID, "spidermastermind2016").toString()));
 
 	public static final RegistryObject<EntityType<BloodMaykrEntity>> BLOODMAYKR = ENTITY_TYPES.register("blood_maykr",
-			() -> EntityType.Builder.of(BloodMaykrEntity::new, EntityClassification.MONSTER).sized(1.7f, 2.2F)
+			() -> EntityType.Builder.of(BloodMaykrEntity::new, EntityClassification.MONSTER).sized(2.7f, 5.5F)
 					.fireImmune().clientTrackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "blood_maykr").toString()));
 
@@ -438,7 +438,7 @@ public class ModEntityTypes {
 					.clientTrackingRange(9).build(new ResourceLocation(DoomMod.MODID, "turret").toString()));
 
 	public static final RegistryObject<EntityType<ArchMakyrEntity>> ARCHMAKER = ENTITY_TYPES.register("arch_maykr",
-			() -> EntityType.Builder.of(ArchMakyrEntity::new, EntityClassification.MONSTER).sized(1.7f, 2.2F)
+			() -> EntityType.Builder.of(ArchMakyrEntity::new, EntityClassification.MONSTER).sized(4.7f, 11.2F)
 					.fireImmune().clientTrackingRange(9)
 					.build(new ResourceLocation(DoomMod.MODID, "arch_maykr").toString()));
 

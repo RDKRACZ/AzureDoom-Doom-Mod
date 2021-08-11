@@ -26,4 +26,9 @@ public class ArgentPlateItem extends Item {
 				.withStyle(TextFormatting.ITALIC));
 		super.appendHoverText(stack, worldIn, tooltip, flagIn);
 	}
+	
+	@Override
+	public boolean isFireResistant() {
+		return true;
+	}
 }

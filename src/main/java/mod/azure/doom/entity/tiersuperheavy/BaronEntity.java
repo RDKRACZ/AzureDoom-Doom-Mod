@@ -10,6 +10,7 @@ import mod.azure.doom.entity.ai.goal.RangedStaticAttackGoal;
 import mod.azure.doom.entity.attack.AbstractRangedAttack;
 import mod.azure.doom.entity.attack.AttackSound;
 import mod.azure.doom.entity.projectiles.entity.BarenBlastEntity;
+import mod.azure.doom.entity.tierfodder.LostSoulEntity;
 import mod.azure.doom.util.config.Config;
 import mod.azure.doom.util.config.EntityConfig;
 import mod.azure.doom.util.config.EntityDefaults.EntityConfigType;
@@ -33,9 +34,12 @@ import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.IWorld;
@@ -56,6 +60,8 @@ public class BaronEntity extends DemonEntity implements IAnimatable {
 	}
 
 	private AnimationFactory factory = new AnimationFactory(this);
+	public static final DataParameter<Integer> VARIANT = EntityDataManager.defineId(LostSoulEntity.class,
+			DataSerializers.INT);
 
 	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
 		if (event.isMoving()) {
@@ -91,6 +97,45 @@ public class BaronEntity extends DemonEntity implements IAnimatable {
 	@Override
 	public AnimationFactory getFactory() {
 		return this.factory;
+	}
+
+	@Override
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(VARIANT, 0);
+	}
+
+	@Override
+	public void readAdditionalSaveData(CompoundNBT tag) {
+		super.readAdditionalSaveData(tag);
+		this.setVariant(tag.getInt("Variant"));
+	}
+
+	@Override
+	public void addAdditionalSaveData(CompoundNBT tag) {
+		super.addAdditionalSaveData(tag);
+		tag.putInt("Variant", this.getVariant());
+	}
+
+	public int getVariant() {
+		return MathHelper.clamp((Integer) this.entityData.get(VARIANT), 1, 2);
+	}
+
+	public void setVariant(int variant) {
+		this.entityData.set(VARIANT, variant);
+	}
+
+	public int getVariants() {
+		return 2;
+	}
+
+	@Nullable
+	@Override
+	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
+			@Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
+		spawnDataIn = super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+		this.setVariant(this.random.nextInt());
+		return spawnDataIn;
 	}
 
 	@Override
@@ -161,28 +206,6 @@ public class BaronEntity extends DemonEntity implements IAnimatable {
 	@Override
 	public void aiStep() {
 		super.aiStep();
-	}
-
-	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
-		super.addAdditionalSaveData(compound);
-	}
-
-	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
-		super.readAdditionalSaveData(compound);
-	}
-
-	@Nullable
-	@Override
-	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
-			@Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
-		spawnDataIn = super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
-		float f = difficultyIn.getSpecialMultiplier();
-		this.setCanPickUpLoot(this.random.nextFloat() < 0.55F * f);
-		this.populateDefaultEquipmentEnchantments(difficultyIn);
-
-		return spawnDataIn;
 	}
 
 	protected boolean shouldDrown() {

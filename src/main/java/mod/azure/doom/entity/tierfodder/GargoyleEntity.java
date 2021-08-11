@@ -107,8 +107,6 @@ public class GargoyleEntity extends DemonEntity implements IAnimatable, IMob {
 		++this.deathTime;
 		if (this.deathTime == 50) {
 			this.remove();
-			if (level.isClientSide) {
-			}
 		}
 	}
 

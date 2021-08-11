@@ -17,7 +17,8 @@ public class BaronModel extends AnimatedGeoModel<BaronEntity> {
 
 	@Override
 	public ResourceLocation getTextureLocation(BaronEntity object) {
-		return new ResourceLocation(DoomMod.MODID, "textures/entity/baronofhell-texturemap.png");
+		return new ResourceLocation(DoomMod.MODID,
+				"textures/entity/baronofhell-" + (object.getVariant() == 2 ? "green" : "texturemap") + ".png");
 	}
 
 	@Override

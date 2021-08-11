@@ -3,6 +3,8 @@ package mod.azure.doom.entity.tierfodder;
 import java.util.EnumSet;
 import java.util.Random;
 
+import javax.annotation.Nullable;
+
 import mod.azure.doom.entity.DemonEntity;
 import mod.azure.doom.entity.ai.goal.RandomFlyConvergeOnTargetGoal;
 import mod.azure.doom.util.config.Config;
@@ -13,6 +15,7 @@ import mod.azure.doom.util.registry.ModSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.MoverType;
@@ -28,6 +31,7 @@ import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -38,7 +42,9 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.Explosion;
+import net.minecraft.world.IServerWorld;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -53,10 +59,10 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 public class LostSoulEntity extends DemonEntity implements IMob, IAnimatable {
-	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.defineId(LostSoulEntity.class,
-			DataSerializers.BOOLEAN);
 	protected static final DataParameter<Byte> DATA_FLAGS_ID = EntityDataManager.defineId(LostSoulEntity.class,
 			DataSerializers.BYTE);
+	public static final DataParameter<Integer> VARIANT = EntityDataManager.defineId(LostSoulEntity.class,
+			DataSerializers.INT);
 	public int explosionPower = 1;
 	public int flameTimer;
 
@@ -88,20 +94,44 @@ public class LostSoulEntity extends DemonEntity implements IMob, IAnimatable {
 		return this.factory;
 	}
 
-	@OnlyIn(Dist.CLIENT)
-	public boolean isAttacking() {
-		return this.entityData.get(ATTACKING);
-	}
-
-	public void setAttacking(boolean attacking) {
-		this.entityData.set(ATTACKING, attacking);
-	}
-
 	@Override
 	protected void defineSynchedData() {
 		super.defineSynchedData();
-		this.entityData.define(ATTACKING, false);
 		this.entityData.define(DATA_FLAGS_ID, (byte) 0);
+		this.entityData.define(VARIANT, 0);
+	}
+
+	@Override
+	public void readAdditionalSaveData(CompoundNBT tag) {
+		super.readAdditionalSaveData(tag);
+		this.setVariant(tag.getInt("Variant"));
+	}
+
+	@Override
+	public void addAdditionalSaveData(CompoundNBT tag) {
+		super.addAdditionalSaveData(tag);
+		tag.putInt("Variant", this.getVariant());
+	}
+
+	public int getVariant() {
+		return MathHelper.clamp((Integer) this.entityData.get(VARIANT), 1, 2);
+	}
+
+	public void setVariant(int variant) {
+		this.entityData.set(VARIANT, variant);
+	}
+
+	public int getVariants() {
+		return 2;
+	}
+
+	@Nullable
+	@Override
+	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
+			@Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
+		spawnDataIn = super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+		this.setVariant(this.random.nextInt());
+		return spawnDataIn;
 	}
 
 	@OnlyIn(Dist.CLIENT)
@@ -249,7 +279,6 @@ public class LostSoulEntity extends DemonEntity implements IMob, IAnimatable {
 
 		public void stop() {
 			parentEntity.setCharging(false);
-			parentEntity.setAttacking(false);
 		}
 
 		public void tick() {

@@ -1,9 +1,4 @@
-v.4.0.0-beta1
-
-*** THIS IS A BETA BUILD AND IS CURRENTLY MISSING TEXTURES FOR THE DOOM HUNTER, MOTHER DEMON, BARON OF HELL 2016, ***  
-*** FIREBORNE BARON, AND ARMORED BARON. THE MAYKRS ARE CURRENTLY MISSING MODELS/TEXTURES/ANIMATIONS AND ARE JUST  *** 
-*** CUBE MODELS. THEY WILL BE RELEASED IN THE FINAL RELEASE OF THE MOD. THIS VERSION IS FOR LOOKING FOR BUGS, SO  *** 
-*** EXPECT BUGS AND PLEASE PROPERLY REPORT THEM!                                                                  *** 
+v.4.0.0
 
 - **REQUIRED VERSION OF GECKOLIB IS NOW 3.0.32**
 - **RESET YOUR CONFIGS**
@@ -32,6 +27,8 @@ v.4.0.0-beta1
 - Added the Pain Elemental 64 variant of the Pain Elemental, thanks to Batpixxler for the model!
 - Added the Revenant 2016, model based off UnnamedMarine's Revenant, of which we already use a modified version of.
 - Added the Maykr Drone, model and texture thanks to @T22129511!
+- Added the Blood Maykr, thanks to Batpixxler!
+- Added the Arch Maykr, thanks to Batpixxler!
 - Added all new Patchouli book entries as well as a few missing ones.
 - Added new Structures! 
 	- The End will now generate 2 new structures dedicated to the Maykrs and the only place they will spawn!* 
@@ -83,8 +80,3 @@ v.4.0.0-beta1
 *   : Edited from: Last Structure here: https://www.planetminecraft.com/project/5-city-center-nether-portal-designs/ for the temple and https://www.planetminecraft.com/project/sumo-map-5153829/ for the Arch Maykr Arena
 **  : Edited from: https://www.planetminecraft.com/project/japanese-hannya-mask-nether-portal-castle-entrance-build-idea/ for the Titan Skull and https://www.planetminecraft.com/project/nether-arena-structure/ for the Mother Demon Arena
 *** : Edited from: https://www.planetminecraft.com/project/minecraft-nether-gate-world-download/
-
-## Not yet implemented but assets and code are in-process awaiting creation of models ## 
-	- Blood Maykrs
-	- Arch Makyr
-## Not yet implemented but assets and code are in-process awaiting creation of models ## 

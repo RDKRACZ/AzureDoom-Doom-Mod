@@ -23,8 +23,15 @@ public class LostSoulModel extends AnimatedGeoModel<LostSoulEntity> {
 			new ResourceLocation(DoomMod.MODID, "textures/entity/lost_soul_fire_7.png"),
 			new ResourceLocation(DoomMod.MODID, "textures/entity/lost_soul_fire_8.png") };
 
-	public LostSoulModel() {
-	}
+	private static final ResourceLocation[] TEX1 = {
+			new ResourceLocation(DoomMod.MODID, "textures/entity/lost_soul_green_fire_1.png"),
+			new ResourceLocation(DoomMod.MODID, "textures/entity/lost_soul_green_fire_2.png"),
+			new ResourceLocation(DoomMod.MODID, "textures/entity/lost_soul_green_fire_3.png"),
+			new ResourceLocation(DoomMod.MODID, "textures/entity/lost_soul_green_fire_4.png"),
+			new ResourceLocation(DoomMod.MODID, "textures/entity/lost_soul_green_fire_5.png"),
+			new ResourceLocation(DoomMod.MODID, "textures/entity/lost_soul_green_fire_6.png"),
+			new ResourceLocation(DoomMod.MODID, "textures/entity/lost_soul_green_fire_7.png"),
+			new ResourceLocation(DoomMod.MODID, "textures/entity/lost_soul_green_fire_8.png") };
 
 	@Override
 	public ResourceLocation getModelLocation(LostSoulEntity object) {
@@ -33,7 +40,7 @@ public class LostSoulModel extends AnimatedGeoModel<LostSoulEntity> {
 
 	@Override
 	public ResourceLocation getTextureLocation(LostSoulEntity object) {
-		return TEX[(object.getFlameTimer())];
+		return object.getVariant() == 2 ? TEX1[(object.getFlameTimer())] : TEX[(object.getFlameTimer())];
 	}
 
 	@Override
