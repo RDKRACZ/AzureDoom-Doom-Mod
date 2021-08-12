@@ -352,7 +352,7 @@
 		},
 		"attacking_ranged": {
 			"loop": true,
-			"animation_length": 0.52,
+			"animation_length": 1.68,
 			"bones": {
 				"body": {
 					"rotation": {
@@ -486,7 +486,7 @@
 		},
 		"attacking_aoe": {
 			"loop": true,
-			"animation_length": 0.52,
+			"animation_length": 1.64,
 			"bones": {
 				"body": {
 					"rotation": {

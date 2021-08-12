@@ -220,16 +220,18 @@ public class MotherDemonEntity extends DemonEntity implements IAnimatable {
 				float f = (float) MathHelper.atan2(livingentity.getZ() - parentEntity.getZ(),
 						livingentity.getX() - parentEntity.getX());
 				CustomFireballEntity fireballentity = new CustomFireballEntity(world, this.parentEntity, d2, d3, d4, 6);
+				CustomFireballEntity fireballentity1 = new CustomFireballEntity(world, this.parentEntity, d2, d3, d4,
+						6);
+				CustomFireballEntity fireballentity2 = new CustomFireballEntity(world, this.parentEntity, d2, d3, d4,
+						6);
 				if (this.attackTimer == 15) {
 					if (parentEntity.getHealth() <= (parentEntity.getMaxHealth() * 0.50)) {
 						for (int l = 0; l < 32; ++l) {
 							float f1 = f + (float) l * (float) Math.PI * 0.4F;
 							for (int y = 0; y < 5; ++y) {
 								parentEntity.spawnFlames(
-										parentEntity.getX()
-												+ (double) MathHelper.cos(f1) * rand.nextDouble() * 11.5D,
-										parentEntity.getZ()
-												+ (double) MathHelper.sin(f1) * rand.nextDouble() * 11.5D,
+										parentEntity.getX() + (double) MathHelper.cos(f1) * rand.nextDouble() * 11.5D,
+										parentEntity.getZ() + (double) MathHelper.sin(f1) * rand.nextDouble() * 11.5D,
 										d0, d1, f1, 0);
 							}
 							parentEntity.level.playLocalSound(this.parentEntity.getX(), this.parentEntity.getY(),
@@ -238,9 +240,15 @@ public class MotherDemonEntity extends DemonEntity implements IAnimatable {
 							this.parentEntity.setAttackingState(2);
 						}
 					} else {
-						fireballentity.setPos(this.parentEntity.getX() + vector3d.x * 2.0D,
-								this.parentEntity.getY(0.5D) + 0.5D, fireballentity.getZ() + vector3d.z * 2.0D);
+						fireballentity.setPos(this.parentEntity.getX() + vector3d.x * 1.0D,
+								this.parentEntity.getY(0.5D) + 0.5D, fireballentity.getZ() + vector3d.z * 1.0D);
 						world.addFreshEntity(fireballentity);
+						fireballentity1.setPos((this.parentEntity.getX() + 3) + vector3d.x * 1.0D,
+								this.parentEntity.getY(0.5D) + 0.5D, fireballentity.getZ() + vector3d.z * 1.0D);
+						world.addFreshEntity(fireballentity1);
+						fireballentity2.setPos((this.parentEntity.getX() - 3) + vector3d.x * 1.0D,
+								this.parentEntity.getY(0.5D) + 0.5D, fireballentity.getZ() + vector3d.z * 1.0D);
+						world.addFreshEntity(fireballentity2);
 						parentEntity.level.playLocalSound(this.parentEntity.getX(), this.parentEntity.getY(),
 								this.parentEntity.getZ(), ModSoundEvents.MOTHER_ATTACK.get(), SoundCategory.HOSTILE,
 								1.0F, 1.0F, true);

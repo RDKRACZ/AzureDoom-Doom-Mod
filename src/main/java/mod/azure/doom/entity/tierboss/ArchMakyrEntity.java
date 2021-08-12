@@ -3,6 +3,7 @@ package mod.azure.doom.entity.tierboss;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Random;
+import java.util.SplittableRandom;
 
 import javax.annotation.Nullable;
 
@@ -324,12 +325,42 @@ public class ArchMakyrEntity extends DemonEntity implements IAnimatable {
 				double d2 = livingentity.getX() - (this.parentEntity.getX() + vector3d.x * 2.0D);
 				double d3 = livingentity.getY(0.5D) - (0.5D + this.parentEntity.getY(0.5D));
 				double d4 = livingentity.getZ() - (this.parentEntity.getZ() + vector3d.z * 2.0D);
-				CustomFireballEntity fireballentity = new CustomFireballEntity(world, this.parentEntity, d2, d3, d4, 9);
+				CustomFireballEntity fireballentity = new CustomFireballEntity(world, this.parentEntity, d2, d3, d4, 14);
 				if (this.attackTimer == 15) {
-					fireballentity.setPos(this.parentEntity.getX() + vector3d.x * 2.0D,
-							this.parentEntity.getY(0.5D) + 0.5D, fireballentity.getZ() + vector3d.z * 2.0D);
-					world.addFreshEntity(fireballentity);
-					this.parentEntity.setAttackingState(1);
+					SplittableRandom random = new SplittableRandom();
+					int r = random.nextInt(0, 2);
+					if (r == 1) {
+						fireballentity.setPos(this.parentEntity.getX() + vector3d.x * 2.0D,
+								this.parentEntity.getY(0.5D) + 0.5D, fireballentity.getZ() + vector3d.z * 2.0D);
+						world.addFreshEntity(fireballentity);
+						this.parentEntity.setAttackingState(1);
+					} else {
+						if (!parentEntity.level.isClientSide) {
+							float f2 = 50.0F;
+							int k1 = MathHelper.floor(parentEntity.getX() - (double) f2 - 1.0D);
+							int l1 = MathHelper.floor(parentEntity.getX() + (double) f2 + 1.0D);
+							int i2 = MathHelper.floor(parentEntity.getY() - (double) f2 - 1.0D);
+							int i1 = MathHelper.floor(parentEntity.getY() + (double) f2 + 1.0D);
+							int j2 = MathHelper.floor(parentEntity.getZ() - (double) f2 - 1.0D);
+							int j1 = MathHelper.floor(parentEntity.getZ() + (double) f2 + 1.0D);
+							List<Entity> list = parentEntity.level.getEntities(parentEntity, new AxisAlignedBB(
+									(double) k1, (double) i2, (double) j2, (double) l1, (double) i1, (double) j1));
+							for (int k2 = 0; k2 < list.size(); ++k2) {
+								Entity entity = list.get(k2);
+								if (entity.isAlive()) {
+									double d0 = (this.parentEntity.getBoundingBox().minX
+											+ this.parentEntity.getBoundingBox().maxX) / 2.0D;
+									double d1 = (this.parentEntity.getBoundingBox().minZ
+											+ this.parentEntity.getBoundingBox().maxZ) / 2.0D;
+									double d21 = entity.getX() - d0;
+									double d31 = entity.getZ() - d1;
+									double d41 = Math.max(d21 * d21 + d31 * d31, 0.1D);
+									entity.push(d21 / d41 * 5.0D, (double) 0.2F * 5.0D, d31 / d41 * 5.0D);
+								}
+							}
+						}
+						this.parentEntity.setAttackingState(2);
+					}
 				}
 				if (this.attackTimer == 25) {
 					this.parentEntity.setAttackingState(0);

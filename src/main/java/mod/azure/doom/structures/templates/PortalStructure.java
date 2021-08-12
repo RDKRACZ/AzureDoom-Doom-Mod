@@ -6,7 +6,6 @@ import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Codec;
 
 import mod.azure.doom.DoomMod;
-import mod.azure.doom.structures.DoomStructures;
 import mod.azure.doom.util.registry.ModEntityTypes;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.ResourceLocation;
@@ -30,7 +29,6 @@ import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.gen.feature.structure.StructureStart;
 import net.minecraft.world.gen.feature.structure.VillageConfig;
 import net.minecraft.world.gen.feature.template.TemplateManager;
-import net.minecraft.world.gen.settings.StructureSeparationSettings;
 
 public class PortalStructure extends Structure<NoFeatureConfig> {
 	public PortalStructure(Codec<NoFeatureConfig> codec) {
@@ -81,29 +79,7 @@ public class PortalStructure extends Structure<NoFeatureConfig> {
 				Heightmap.Type.WORLD_SURFACE_WG);
 		IBlockReader columnOfBlocks = chunkGenerator.getBaseColumn(centerOfChunk.getX(), centerOfChunk.getZ());
 		BlockState topBlock = columnOfBlocks.getBlockState(centerOfChunk.above(landHeight));
-		return !this.isNear(chunkGenerator, seed, chunkRandom, chunkX, chunkZ) ? topBlock.getFluidState().isEmpty()
-				: false;
-	}
-
-	private boolean isNear(ChunkGenerator p_242782_1_, long p_242782_2_, SharedSeedRandom p_242782_4_, int p_242782_5_,
-			int p_242782_6_) {
-		StructureSeparationSettings structureseparationsettings = p_242782_1_.getSettings()
-				.getConfig(DoomStructures.PORTAL.get());
-		if (structureseparationsettings == null) {
-			return false;
-		} else {
-			for (int i = p_242782_5_ - 10; i <= p_242782_5_ + 10; ++i) {
-				for (int j = p_242782_6_ - 10; j <= p_242782_6_ + 10; ++j) {
-					ChunkPos chunkpos = DoomStructures.PORTAL.get()
-							.getPotentialFeatureChunk(structureseparationsettings, p_242782_2_, p_242782_4_, i, j);
-					if (i == chunkpos.x && j == chunkpos.z) {
-						return true;
-					}
-				}
-			}
-
-			return false;
-		}
+		return topBlock.getFluidState().isEmpty();
 	}
 
 	public static class Start extends StructureStart<NoFeatureConfig> {
