@@ -225,7 +225,7 @@ public class IconofsinEntity extends DemonEntity implements IAnimatable {
 							livingentity.getX() - parentEntity.getX());
 					if (this.attackTimer == 35) {
 						SplittableRandom random = new SplittableRandom();
-						int r = random.nextInt(0, 3);
+						int r = random.nextInt(0, 4);
 						if (r == 1) {
 							for (int i = 15; i < 55; ++i) {
 								double d0 = Math.min(livingentity.getY(), livingentity.getY());
